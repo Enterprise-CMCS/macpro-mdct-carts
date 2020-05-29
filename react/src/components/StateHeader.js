@@ -9,8 +9,8 @@ class StateHeader extends Component{
         return (
             <div class="state-header">
                 <div class="state-image">
-                <img src={this.props.stateInfo.imageUri} alt={this.props.stateInfo.name} />
-            </div>
+                    <img src={this.props.stateInfo.imageUri} alt={this.props.stateInfo.name} />
+                </div>
             <div class="state-name">
                 {this.props.stateInfo.name}
                 </div>
