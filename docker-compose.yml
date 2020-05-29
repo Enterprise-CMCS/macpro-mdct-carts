@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  react:
+    build:
+      context: ./react
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./react/node_modules:/app/node_modules
+      - ./react:/app
