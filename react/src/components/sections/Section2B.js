@@ -4,16 +4,6 @@ import Objective2b from "./objectives/Objective2b";
 import { connect } from "react-redux";
 
 class Section2b extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      stateInfo: {
-        name: "New York",
-        imageUri: process.env.PUBLIC_URL + "/img/new-york-temp.png",
-      },
-    };
-  }
   render() {
     console.log("NAME?", this.props.name);
 
@@ -21,7 +11,7 @@ class Section2b extends Component {
       <div className="section-2b">
         <div className="sidebar">
           <h1> SOME OUTPUT</h1>
-          <Sidebar stateInfo={this.state.stateInfo} />
+          <Sidebar />
         </div>
 
         <div className="main">
@@ -50,9 +40,4 @@ class Section2b extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.name,
-  imageUri: state.imageUri,
-});
-
-export default connect(mapStateToProps)(Section2b);
+export default Section2b;

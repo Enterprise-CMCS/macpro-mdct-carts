@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Objective2b extends Component {
   render() {
-    return <div class="Objective">Objective 1</div>;
+    return <div className="Objective">Objective 1</div>;
   }
 }
 

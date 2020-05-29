@@ -1,23 +1,14 @@
 import React, { Component } from "react";
 import Sidebar from "../Sidebar";
+import { connect } from "react-redux";
 
 class Section3c extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      stateInfo: {
-        name: "New York",
-        imageUri: process.env.PUBLIC_URL + "/img/new-york-temp.png",
-      },
-    };
-  }
   render() {
     return (
       <div className="section-3c">
         <div className="sidebar">
-          <h1> SOME OUTPUT</h1>
-          <Sidebar stateInfo={this.state.stateInfo} />
+          <h1>{this.props.name} CARTS FY2020</h1>
+          <Sidebar />
         </div>
 
         <div className="main">

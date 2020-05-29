@@ -19,8 +19,8 @@ const stateDetails = (name, imageURI) => {
 };
 
 const initialState = {
-  name: "MD",
-  imageURI: process.env.PUBLIC_URL + "/img/new-york-temp.png",
+  name: "New York",
+  imageURI: `${process.env.PUBLIC_URL + "/img/new-york-temp.png"}`,
 };
 
 export const reducer = (state = initialState, action) => {
