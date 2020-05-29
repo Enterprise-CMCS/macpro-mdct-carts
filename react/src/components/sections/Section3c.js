@@ -14,14 +14,14 @@ class Section3c extends Component {
   }
   render() {
     return (
-      <div class="section-3c">
-        <div class="sidebar">
+      <div className="section-3c">
+        <div className="sidebar">
           <h1> SOME OUTPUT</h1>
           <Sidebar stateInfo={this.state.stateInfo} />
         </div>
 
-        <div class="main">
-          <div class="tabs section-tabs">
+        <div className="main">
+          <div className="tabs section-tabs">
             <ul>
               <li>
                 <a href="/3c">Section 3C: Performance Goals</a>
@@ -31,7 +31,7 @@ class Section3c extends Component {
               </li>
             </ul>
           </div>
-          <div class="section-content">
+          <div className="section-content">
             <p>
               Your performance goals should match those reflected in your CHIP
               State Plan, Section 9. If your goals are different, submit a State

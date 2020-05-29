@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Sidebar from "../Sidebar";
 import Objective2b from "./objectives/Objective2b";
+import { connect } from "react-redux";
 
 class Section2b extends Component {
   constructor(props) {
@@ -14,15 +15,17 @@ class Section2b extends Component {
     };
   }
   render() {
+    console.log("NAME?", this.props.name);
+
     return (
-      <div class="section-2b">
-        <div class="sidebar">
+      <div className="section-2b">
+        <div className="sidebar">
           <h1> SOME OUTPUT</h1>
           <Sidebar stateInfo={this.state.stateInfo} />
         </div>
 
-        <div class="main">
-          <div class="tabs section-tabs">
+        <div className="main">
+          <div className="tabs section-tabs">
             <ul>
               <li>
                 <a href="/2b">Section 2B: Performance Goals</a>
@@ -32,7 +35,7 @@ class Section2b extends Component {
               </li>
             </ul>
           </div>
-          <div class="section-content">
+          <div className="section-content">
             <p>
               Your performance goals should match those reflected in your CHIP
               State Plan, Section 9. If your goals are different, submit a State
@@ -47,4 +50,9 @@ class Section2b extends Component {
   }
 }
 
-export default Section2b;
+const mapStateToProps = (state) => ({
+  name: state.name,
+  imageUri: state.imageUri,
+});
+
+export default connect(mapStateToProps)(Section2b);

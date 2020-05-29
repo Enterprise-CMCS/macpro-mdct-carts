@@ -26,7 +26,7 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case STATE_INFO:
-      return { ...state, action };
+      return { ...state, ...action.name, ...action.imageURI };
     default:
       return state;
   }
