@@ -1,13 +1,17 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Section2b from "./components/sections/Section2B";
+import Section3c from "./components/sections/Section3c";
+import Homepage from "./components/Homepage";
 
-const routes = (
-  <Route>
-    <Route exact path="/" component={Section2b} />
-    {/* <Route exact path="/2b" component={} />
-    <Route exact path="/3c" component={} /> */}
-  </Route>
+const Routes = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Homepage} />
+      <Route exact path="/2b" component={Section2b} />
+      <Route exact path="/3c" component={Section3c} />
+    </Switch>
+  </Router>
 );
 
-export default routes;
+export default Routes;
