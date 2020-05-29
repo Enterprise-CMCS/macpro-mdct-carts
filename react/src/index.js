@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Sidebar from "./components/Sidebar";
+import Section2b from "./components/sections/Section2B";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Route exact path='/' component={Section2b} />
+    </Router>
+
+
   </React.StrictMode>,
   document.getElementById('root')
 );
