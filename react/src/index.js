@@ -4,7 +4,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Sidebar from "./components/Sidebar";
+import App from "./App";
 import Section2b from "./components/sections/Section2B";
 
 ReactDOM.render(
@@ -13,6 +13,7 @@ ReactDOM.render(
       <Route exact path='/' component={Section2b} />
     </Router>
 
+    <App />
 
   </React.StrictMode>,
   document.getElementById('root')
