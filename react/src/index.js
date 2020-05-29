@@ -1,9 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import Section2b from "./components/sections/Section2B";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducer from "./reducers/storeIndex";

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Sidebar from "../Sidebar";
 import Objective2b from "./objectives/Objective2b";
-import { connect } from "react-redux";
 
 class Section2b extends Component {
   render() {
@@ -10,7 +9,6 @@ class Section2b extends Component {
     return (
       <div className="section-2b">
         <div className="sidebar">
-          <h1> SOME OUTPUT</h1>
           <Sidebar />
         </div>
 
@@ -21,7 +19,7 @@ class Section2b extends Component {
                 <a href="/2b">Section 2B: Performance Goals</a>
               </li>
               <li>
-                <a href="#">FY2019 answers</a>
+                <a href="#FYLastYear">FY2019 answers</a>
               </li>
             </ul>
           </div>

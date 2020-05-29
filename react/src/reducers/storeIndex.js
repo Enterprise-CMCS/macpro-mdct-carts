@@ -1,16 +1,8 @@
-// import thunkMiddleware from 'redux-thunk'
-import {
-  createStore,
-  combineReducers,
-  applyMiddleware,
-  bindActionCreators,
-} from "redux";
-
 //ACTION TYPES
 const STATE_INFO = "STATE_INFO";
 
 //ACTION CREATORS
-const stateDetails = (name, imageURI) => {
+export const stateDetails = (name, imageURI) => {
   return {
     type: STATE_INFO,
     name,

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Sidebar from "../Sidebar";
-import { connect } from "react-redux";
 
 class Section3c extends Component {
   render() {
@@ -18,7 +17,7 @@ class Section3c extends Component {
                 <a href="/3c">Section 3C: Performance Goals</a>
               </li>
               <li>
-                <a href="#">FY2019 answers</a>
+                <a href="#FYLastYear">FY2019 answers</a>
               </li>
             </ul>
           </div>
