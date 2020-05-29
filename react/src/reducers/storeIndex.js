@@ -9,7 +9,7 @@ function stateDetails (name, imageURI){
     return {
         type: STATE_INFO,
         name,
-        imageURI
+        imageURI,
     }
 }
 
@@ -21,9 +21,10 @@ const initialState = {
 export const reducer = (state= initialState, action) => {
     switch(action.type){
         case STATE_INFO: 
-        return {...state, action.name, action.imageURI}
+            return {...state, action}
         default: 
-        return state 
+            return state
     }
 }
+export default reducer;
 
