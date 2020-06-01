@@ -1,5 +1,7 @@
+@import '../node_modules/@cmsgov/design-system-core/dist/index.css';
+
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
