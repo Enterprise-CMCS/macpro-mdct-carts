@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Sidebar from "../Sidebar";
+import Sidebar from "../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b";
 
 class Section2b extends Component {
