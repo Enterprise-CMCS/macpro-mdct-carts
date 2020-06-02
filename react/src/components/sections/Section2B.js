@@ -9,7 +9,7 @@ class Section2b extends Component {
     return (
       <div className="section-2b">
         <div className="ds-l-container">
-          <div class="ds-l-row">
+          <div className="ds-l-row">
             <div className="sidebar ds-l-col--4">
               <Sidebar />
             </div>

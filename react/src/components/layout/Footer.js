@@ -6,19 +6,19 @@ class Footer extends Component {
       <div className="footer">
         <div className="adverts">
           <div className="ds-l-container">
-            <div class="ds-l-row">
-              <div class="chip-info ds-l-col--6">
+            <div className="ds-l-row">
+              <div className="chip-info ds-l-col--6">
                 <img src="/img/new-york-temp.png" alt="Medicaid.gov" />
                 <img src="/img/new-york-temp.png" alt="MACPro.gov" />
               </div>
               <div className="cms-branding ds-l-col--6">
-                <div class="cms-logo">
+                <div className="cms-logo">
                   <img
                     src="/img/new-york-temp.png"
                     alt="Department of Health and Human Services, USA"
                   />
                 </div>
-                <div class="cms-copy">
+                <div className="cms-copy">
                   A federal government website managed and paid for by the U.S.
                   Centers for Medicare and Medicaid Services and part of the
                   MACPro suite.
@@ -29,8 +29,8 @@ class Footer extends Component {
         </div>
         <div className="info">
           <div className="ds-l-container">
-            <div class="ds-l-row">
-              <div class="help ds-l-col--6">
+            <div className="ds-l-row">
+              <div className="help ds-l-col--6">
                 Email{" "}
                 <a href="mailto:cartshelp@cms.hhs.gov">CARTSHELP@cms.hhs.gov</a>{" "}
                 for help or feedback.

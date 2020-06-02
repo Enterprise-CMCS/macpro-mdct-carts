@@ -123,7 +123,71 @@
   text-transform: uppercase;
 }
 .header .save-status {
+  border-right: 2px solid #fff;
   font-style: italic;
+  text-align: right;
+}
+
+.header .nav-user ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.header .nav-user .menu-block {
+  display: none;
+  position: relative;
+  transition: all 2s;
+}
+
+.header .nav-user .menu-block.open {
+  background: #112e51;
+  display: block;
+  padding: 16px;
+  position: absolute;
+  right: 0;
+  transition: all 2s;
+  background-image: url("/react/public/img/new-york-temp.png");
+}
+
+.header-row {
+  position: relative;
+}
+
+.header .nav-user .menu-block .manage-account {
+  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
+  background-repeat: no-repeat;
+  padding-left: 32px;
+}
+
+.header .nav-user .menu-block .logout {
+  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
+  background-repeat: no-repeat;
+  padding-left: 32px;
+}
+
+.header .nav-user ul.user-email-button {
+  margin: 0;
+  padding: 0;
+  padding-right: 30px;
+  position: relative;
+  text-align: right;
+}
+
+.header .nav-user ul.user-email-button:after {
+  content: "";
+  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
+  background-repeat: no-repeat;
+  height: 20px;
+  pointer-events: all;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(180deg);
+  width: 26px;
+}
+
+.header .nav-user.open ul:after {
+  transform: rotate(0deg);
 }
 
 /**********************

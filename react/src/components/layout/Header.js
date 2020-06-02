@@ -1,30 +1,47 @@
 import React, { Component } from "react";
+import { $CombinedState } from "redux";
 
 class Header extends Component {
+  constructor() {
+    super();
+
+    this.toggleUserNav = this.toggleUserNav.bind(this);
+  }
+
+  toggleUserNav(e) {
+    e.preventDefault();
+    document.getElementById("menu-block").classList.toggle("open");
+    document.getElementById("nav-user").classList.toggle("open");
+  }
+
   render() {
     return (
       <div className="header">
         <div className="ds-l-container">
-          <div class="ds-l-row">
+          <div className="ds-l-row header-row">
             <div className="site-title ds-l-col--6 ds-u-padding--2">
               <a href="/">Carts</a>
             </div>
             <div className="user-details ds-l-col--6 ds-u-padding--2">
-              <div className="save-status">Autosaved</div>
-              <div className="nav-user">
-                <ul>
-                  <li>
-                    karen.dalton@state.gov
-                    <ul>
-                      <li className="manage-account">
-                        <a href="#">Manage account</a>
-                      </li>
-                      <li className="logout">
-                        <a href="#">Log out</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+              <div className="ds-l-row">
+                <div className="save-status ds-l-col--6">Autosaved</div>
+                <div className="nav-user ds-l-col--6" id="nav-user">
+                  <ul className="user-email-button">
+                    <li>
+                      <a href="#menu" onClick={this.toggleUserNav.bind(this)}>
+                        karen.dalton@state.gov
+                      </a>
+                    </li>
+                  </ul>
+                  <ul className="menu-block" id="menu-block">
+                    <li className="manage-account">
+                      <a href="#">Manage account</a>
+                    </li>
+                    <li className="logout">
+                      <a href="#">Log out</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

@@ -12,13 +12,13 @@ class Section3c extends Component {
     return (
       <div className="section-3c">
         <div className="ds-l-container">
-          <div class="ds-l-row">
+          <div className="ds-l-row">
             <div className="sidebar ds-l-col--4">
               <Sidebar />
             </div>
 
             <div className="main ds-l-col--8">
-              <div class="page-info">
+              <div className="page-info">
                 <div className="edit-info">
                   <img src="/img/new-york-temp.png" alt="Status" /> Draft | Last
                   Edit: 4/3/20
@@ -42,7 +42,7 @@ class Section3c extends Component {
                       Part 1: Eligibility Renewal and Retention
                     </h3>
                     <div className="question-container">
-                      <fieldset class="ds-c-fieldset">
+                      <fieldset className="ds-c-fieldset">
                         <div className="fillForm">
                           <a href="#same">Same as last year</a>
                         </div>
@@ -80,7 +80,7 @@ class Section3c extends Component {
                     </div>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -125,7 +125,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -143,7 +143,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -161,7 +161,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -180,7 +180,7 @@ class Section3c extends Component {
                   </div>
                   <h3 className="part-header">Part 2: Eligibility Data</h3>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -200,7 +200,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -213,7 +213,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -226,7 +226,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -238,7 +238,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>
@@ -250,7 +250,7 @@ class Section3c extends Component {
                     </fieldset>
                   </div>
                   <div className="question-container">
-                    <fieldset class="ds-c-fieldset">
+                    <fieldset className="ds-c-fieldset">
                       <div className="fillForm">
                         <a href="#same">Same as last year</a>
                       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, VerticalNav } from "@cmsgov/design-system-core";
+import { VerticalNav } from "@cmsgov/design-system-core";
 
 const TOC = () => {
   return (
