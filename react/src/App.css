@@ -221,9 +221,9 @@
 
 .footer .info a,
 .footer .info a:visited {
+  border-bottom: 1px dotted #fff;
   color: #fff;
   text-decoration: none;
-  border-bottom: 1px dotted #fff;
 }
 
 .footer .info a:hover,
@@ -244,15 +244,15 @@
 }
 
 .sidebar .state-header {
-  position: relative;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .sidebar .state-image {
   position: absolute;
+  text-align: center;
   top: 50%;
   transform: translateY(-50%);
-  text-align: center;
   width: 70px;
 }
 
@@ -272,6 +272,38 @@
 
 .form-options button {
   margin-right: 24px;
+}
+
+.question-container {
+  padding-right: 24px;
+  position: relative;
+}
+
+.question-container .fill-form.active,
+.question-container .clear-form {
+  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.question-container .fill-form {
+  display: none;
+}
+
+.question-container .fill-form.active {
+  display: block;
+}
+
+.question-container .clear-form {
+  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
+  background-repeat: no-repeat;
+  display: none;
+}
+
+.question-container .clear-form.active {
+  display: block;
 }
 
 /* Conditionals */
@@ -305,34 +337,99 @@
   margin-top: 0;
 }
 
-.question-container {
-  position: relative;
-  padding-right: 24px;
+.omb-info {
+  color: #81858d;
+  font-size: 0.85rem;
+  line-height: 1.6rem;
+  margin: 64px 0;
 }
 
-.question-container .fill-form.active,
-.question-container .clear-form {
-  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
-  background-repeat: no-repeat;
-  position: absolute;
-  top: 0;
-  right: 0;
+.reports {
+  color: #81858d;
+  width: 100%;
 }
 
-.question-container .fill-form {
-  display: none;
+.reports table {
+  width: 100%;
 }
 
-.question-container .fill-form.active {
-  display: block;
+.reports table a {
+  text-decoration: none;
 }
 
-.question-container .clear-form {
-  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
-  background-repeat: no-repeat;
-  display: none;
+.reports .ds-c-table th {
+  background: none;
+  color: #333;
+  font-size: 0.85rem;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
-.question-container .clear-form.active {
-  display: block;
+.reports table .name {
+  color: #333;
+  font-weight: 700;
+}
+
+.reports .ds-c-table td,
+.reports .ds-c-table th {
+  border: none;
+}
+
+.reports-footer {
+  color: #999;
+  margin-top: 32px;
+  width: 100%;
+}
+
+.reports-footer .pager {
+  text-align: right;
+}
+
+.reports-footer .count {
+  color: #333;
+  font-weight: 700;
+}
+
+[class^="number-"] {
+  border-radius: 2px;
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  text-align: center;
+}
+
+.number-primary {
+  background: #0872b9;
+  color: #fff;
+}
+
+.number-outline {
+  border: 1px solid #999;
+}
+
+.homepage .updates h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.homepage .updates h3 {
+  color: #000;
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin-top: 0;
+}
+
+.homepage .updates .update {
+  border: 2px solid #eee;
+  border-left: none;
+  border-right: none;
+  color: #999;
+  padding: 32px 0;
+}
+
+.homepage .updates .update .date {
+  text-align: right;
+}
+
+.homepage .updates p {
+  line-height: 2rem;
 }
