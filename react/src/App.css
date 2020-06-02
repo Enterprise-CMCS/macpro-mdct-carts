@@ -124,7 +124,9 @@
 }
 .header .save-status {
   border-right: 2px solid #fff;
+  font-size: 0.85rem;
   font-style: italic;
+  padding-top: 0.1rem;
   text-align: right;
 }
 
