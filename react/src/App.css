@@ -148,7 +148,6 @@
   position: absolute;
   right: 0;
   transition: all 2s;
-  background-image: url("/react/public/img/new-york-temp.png");
 }
 
 .header-row {
@@ -197,10 +196,43 @@
 **********************/
 .footer {
   background: #f1f1f1;
+  font-size: 0.85rem;
+  color: #3f3f3f;
+}
+
+.footer .adverts {
+  padding: 48px 8px;
+}
+
+.footer .cms-logo {
+  display: inline-block;
+  width: 70px;
+}
+.footer .cms-copy {
+  display: inline-block;
+  width: calc(100% - 70px);
 }
 
 .footer .info {
   background-color: #112e51;
+  color: #fff;
+  padding: 16px 8px;
+}
+
+.footer .info a,
+.footer .info a:visited {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px dotted #fff;
+}
+
+.footer .info a:hover,
+.footer .info a:active {
+  color: #f1f1f1;
+}
+
+.footer .info .address {
+  text-align: right;
 }
 
 /**********************
