@@ -22,6 +22,14 @@ class Section3c extends Component {
       "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
     let textFieldCopy = "This is what you wrote last year.";
 
+    el.target.parentNode.parentNode
+      .getElementsByClassName("clear-form")[0]
+      .classList.toggle("active");
+
+    el.target.parentNode.parentNode
+      .getElementsByClassName("fill-form")[0]
+      .classList.toggle("active");
+
     switch (el.target.name) {
       case "p1_q1":
         document.getElementById("radio_p1_q1_34").checked = true;
@@ -68,6 +76,14 @@ class Section3c extends Component {
 
   clearAnswers(el) {
     el.preventDefault();
+
+    el.target.parentNode.parentNode
+      .getElementsByClassName("clear-form")[0]
+      .classList.toggle("active");
+
+    el.target.parentNode.parentNode
+      .getElementsByClassName("fill-form")[0]
+      .classList.toggle("active");
 
     switch (el.target.name) {
       case "p1_q1":
@@ -150,7 +166,7 @@ class Section3c extends Component {
                         </h3>
                         <div className="question-container">
                           <fieldset className="ds-c-fieldset">
-                            <div className="fillForm">
+                            <div className="fill-form active">
                               <a
                                 href="#same"
                                 onClick={this.loadAnswers}
@@ -159,7 +175,7 @@ class Section3c extends Component {
                                 Same as last year
                               </a>
                             </div>
-                            <div className="clearForm">
+                            <div className="clear-form">
                               <a
                                 href="#same"
                                 onClick={this.clearAnswers}
@@ -203,7 +219,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -212,7 +228,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -263,7 +279,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -272,7 +288,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -296,7 +312,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -305,7 +321,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -329,7 +345,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -338,7 +354,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -363,7 +379,7 @@ class Section3c extends Component {
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -372,7 +388,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -398,7 +414,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -407,7 +423,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -426,7 +442,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -435,7 +451,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -454,7 +470,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -463,7 +479,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -481,7 +497,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -490,7 +506,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
@@ -508,7 +524,7 @@ class Section3c extends Component {
                       </div>
                       <div className="question-container">
                         <fieldset className="ds-c-fieldset">
-                          <div className="fillForm">
+                          <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
@@ -517,7 +533,7 @@ class Section3c extends Component {
                               Same as last year
                             </a>
                           </div>
-                          <div className="clearForm">
+                          <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
