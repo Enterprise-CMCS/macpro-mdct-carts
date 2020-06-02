@@ -238,3 +238,48 @@
 /**********************
   SIDEBAR
 **********************/
+
+.sidebar {
+  margin-top: 24px;
+}
+
+.sidebar .state-header {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.sidebar .state-image {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 70px;
+}
+
+.sidebar .state-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 70px;
+  padding-left: 70px;
+}
+
+/**********************
+  BODY / MAIN
+**********************/
+.main {
+  padding: 16px 0;
+}
+
+.page-info .edit-info {
+  color: #777;
+  text-transform: uppercase;
+}
+
+.page-info .edit-info img {
+  width: 20px;
+}
+
+.page-info h1 {
+  font-weight: 500;
+  margin-top: 0;
+}

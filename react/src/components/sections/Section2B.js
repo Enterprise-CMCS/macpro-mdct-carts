@@ -10,11 +10,11 @@ class Section2b extends Component {
       <div className="section-2b">
         <div className="ds-l-container">
           <div className="ds-l-row">
-            <div className="sidebar ds-l-col--4">
+            <div className="sidebar ds-l-col--3">
               <Sidebar />
             </div>
 
-            <div className="main ds-l-col--8">
+            <div className="main ds-l-col--9">
               <div className="tabs section-tabs">
                 <ul>
                   <li>
