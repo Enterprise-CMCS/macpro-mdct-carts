@@ -14,6 +14,18 @@ class Section3c extends Component {
     super();
 
     this.loadAnswers = this.loadAnswers.bind(this);
+    this.setConditional = this.setConditional.bind(this);
+  }
+
+  setConditional(el) {
+    let radio = document.getElementById("radio_p1_q1_34");
+    let textField = document.getElementById("textfield_39");
+
+    if (radio.checked) {
+      textField.parentNode.parentNode.classList.remove("hide");
+    } else {
+      textField.parentNode.parentNode.classList.add("hide");
+    }
   }
 
   loadAnswers(el) {
@@ -35,6 +47,7 @@ class Section3c extends Component {
         document.getElementById("radio_p1_q1_34").checked = true;
         document.getElementById("textfield_39").value = textAreaCopy;
         document.getElementById("textfield_43").value = textAreaCopy;
+        this.setConditional(el);
         break;
 
       case "p1_q2":
@@ -146,16 +159,6 @@ class Section3c extends Component {
                 </div>
                 <h1>{this.props.name} CARTS FY2020</h1>
               </div>
-              <div className="tabs section-tabs">
-                <ul>
-                  <li>
-                    <a href="/3c">Section 3C: Performance Goals</a>
-                  </li>
-                  <li>
-                    <a href="#FYLastYear">FY2019 answers</a>
-                  </li>
-                </ul>
-              </div>
               <div className="section-content">
                 <Tabs>
                   <TabPanel id="tab-form" tab="Section 3C: Eligibility">
@@ -191,15 +194,19 @@ class Section3c extends Component {
                             </div>
                             <ChoiceList
                               choices={[
-                                { label: "Yes", value: "yes" },
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                },
                                 { label: "No", value: "no" },
                               ]}
                               className="ds-u-margin-top--0 p1_q1"
                               label=""
                               name="p1_q1"
+                              onChange={this.setConditional}
                               hint="Note: This question may not apply to Medicaid Expansion states."
                             />
-                            <div className="conditional">
+                            <div className="conditional hide">
                               <TextField
                                 label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
                                 multiline
