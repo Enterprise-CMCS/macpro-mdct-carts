@@ -131,7 +131,7 @@ class Goal extends Component {
         </div>
 
         <div className="question-container">
-          <h4> What is the date rannge for your data?</h4>
+          <h4> What is the date range for your data?</h4>
           <div className="date-range">
             <DateField
               label="Start"
