@@ -71,8 +71,6 @@ class Section2b extends Component {
                       different, submit a State Plan Amendment (SPA) to
                       reconcile any differences
                     </p>
-                    <h1> Before </h1>
-
                     <Accordion>
                       {this.state.objectiveArray.map((element) => (
                         <AccordionItem key={element.id}>
@@ -87,7 +85,6 @@ class Section2b extends Component {
                       ))}
                     </Accordion>
 
-                    <h1> after</h1>
                     <div>
                       <h3> Add another objective</h3>
                       <p className="ds-base color-gray-light">Optional</p>
