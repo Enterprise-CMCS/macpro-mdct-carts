@@ -133,3 +133,6 @@ dmypy.json
 
 #NPM
 node_modules
+
+#
+.jenkins/infra

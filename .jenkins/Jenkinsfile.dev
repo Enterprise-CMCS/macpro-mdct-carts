@@ -1,0 +1,174 @@
+pipeline {
+  agent { label "ec2-jnlp-slave" }
+  options {
+    disableConcurrentBuilds()
+    quietPeriod(0)
+    ansiColor('xterm')
+  }
+  parameters {
+    choice(
+      name: 'ACTION',
+      choices: ['apply', 'destroy'],
+      description: 'The terraform action to take; allows the destruction/cleanup of pipeline infrastructure, most commonly performed before branch deletion.'
+    )
+  }
+  environment {
+    BUILD_TAG = resolveBuildTag()
+  }
+  stages {
+    stage("Prep Agent") {
+      steps {
+        script {
+          // Set the build name
+          currentBuild.displayName = env.BUILD_TAG
+        }
+        script {
+          sh '''
+            set -e
+
+            # Update and configure the AWS CLI
+            pip install --user --upgrade awscli >/dev/null
+            if [ -z "${AWS_REGION}" ]; then
+              AWS_REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`
+            fi
+            aws configure set region $AWS_REGION
+            aws configure set output json
+          '''
+        }
+        script {
+          sh '''
+            set -e
+
+            # Install Terraform
+            curl -O https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+            unzip ./terraform_0.12.24_linux_amd64.zip -d ~/.local/bin/
+          '''
+        }
+      }
+    }
+    stage("Build and Scan Images") {
+      when {
+        expression { env.ACTION != 'destroy' }
+      }
+      steps {
+        script {
+          lock('docker_socket') {
+            sh '''
+              set -e
+
+              # Build image
+              docker build -t ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_UI}:${GIT_BRANCH#*/} app/react
+
+              # Login to ECR repository
+              set +x
+              eval $(aws ecr get-login --region us-east-1 --no-include-email)
+              set -x
+
+              # Push image
+              docker push ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG}
+              docker push ${ECR_REPOSITORY_URL_UI}:${BRANCH_NAME}
+            '''
+          }
+
+          sh '''
+            # Fetch ECR static scan results
+            aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_UI##*/} --image-id imageTag=${BUILD_TAG}
+            aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_UI##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_ui.json >/dev/null
+          '''
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_ui.json'
+          }
+        }
+      }
+    }
+    stage("Deploy Environment") {
+      steps {
+        script {
+          sh '''
+            set -e
+
+            export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
+            export TF_VAR_application_version=${BUILD_TAG}
+            PATH=~/.local/bin:$PATH
+
+            cd infra
+            terraform init -backend-config="bucket=${APPLICATION_BUCKET}" -input=false
+            if ! terraform workspace list | grep -q " $BRANCH_NAME$" ; then
+              terraform workspace new ${BRANCH_NAME}
+            fi
+            terraform workspace select ${BRANCH_NAME}
+            terraform plan > log_tfplan.txt
+            terraform ${ACTION:-apply} -input=false -auto-approve
+          '''
+          dir('infra') {
+            env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'infra/log*'
+          }
+        }
+      }
+    }
+    stage("Test") {
+      when {
+        expression { env.ACTION != 'destroy' }
+      }
+      steps {
+        script {
+          sh '''
+            set -e
+            echo $APPLICATION_ENDPOINT
+            cd tests
+            docker build . -t loaded_testcafe:${BRANCH_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
+            docker run --rm --name ${BRANCH_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${BRANCH_NAME} chromium /tests/**/*.js
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      script {
+        withCredentials([usernameColonPassword(credentialsId: 'GIT_CREDENTIAL', variable: 'GIT_CREDENTIAL')]) {
+          if (env.ACTION != "destroy") {
+            if (env.BRANCH_NAME == 'master') {
+              sh '''
+                set -e
+                remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
+                git config user.name 'Jenkins'
+                git config user.email 'jenkins@mycompany.com'
+                git tag $BUILD_TAG
+                git push https://$GIT_CREDENTIAL@$remote_url refs/tags/$BUILD_TAG
+              '''
+              build job: 'staging',
+                parameters: [
+                  string(name: 'VERSION', value: "${BUILD_TAG}")
+                ],
+                wait: false
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+def resolveBuildTag() {
+  if (env.BRANCH_NAME == 'master') {
+      tag_prefix = sh(script: 'cat versionPrefix', returnStdout: true).trim()
+      commit_count = sh(script: 'git rev-list --count $GIT_COMMIT', returnStdout: true).trim()
+      build_tag = "${tag_prefix}.${commit_count}"
+  } else {
+      build_tag = "${BRANCH_NAME}.${GIT_COMMIT}"
+  }
+  return build_tag
+}
