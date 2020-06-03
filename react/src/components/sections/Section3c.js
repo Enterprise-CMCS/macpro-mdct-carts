@@ -168,69 +168,11 @@ class Section3c extends Component {
                           Part 1: Eligibility Renewal and Retention
                         </h3>
                         <div className="question-container">
-                          <fieldset className="ds-c-fieldset">
-                            <div className="fill-form active">
-                              <a
-                                href="#same"
-                                onClick={this.loadAnswers}
-                                name="p1_q1"
-                              >
-                                Same as last year
-                              </a>
-                            </div>
-                            <div className="clear-form">
-                              <a
-                                href="#same"
-                                onClick={this.clearAnswers}
-                                name="p1_q1"
-                              >
-                                Undo
-                              </a>
-                            </div>
-                            <div className="question">
-                              1. Do you have authority in your CHIP state plan
-                              to provide for presumptive eligibility, and have
-                              you implemented this?
-                            </div>
-                            <ChoiceList
-                              choices={[
-                                {
-                                  label: "Yes",
-                                  value: "yes",
-                                },
-                                { label: "No", value: "no" },
-                              ]}
-                              className="ds-u-margin-top--0 p1_q1"
-                              label=""
-                              name="p1_q1"
-                              onChange={this.setConditional}
-                              hint="Note: This question may not apply to Medicaid Expansion states."
-                            />
-                            <div className="conditional hide">
-                              <TextField
-                                label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
-                                multiline
-                                name="p1_q1__a"
-                                rows="6"
-                              />
-                              <TextField
-                                hint="Maximum 7,500 characters"
-                                label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
-                                multiline
-                                name="p1_q1__b"
-                                rows="6"
-                              />
-                            </div>
-                          </fieldset>
-                        </div>
-                      </div>
-                      <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
                           <div className="fill-form active">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
-                              name="p1_q2"
+                              name="p1_q1"
                             >
                               Same as last year
                             </a>
@@ -239,22 +181,77 @@ class Section3c extends Component {
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
-                              name="p1_q2"
+                              name="p1_q1"
                             >
                               Undo
                             </a>
                           </div>
                           <div className="question">
-                            2. Tell us how your state simplifies the eligibility
-                            renewal process for families in order to retain more
-                            children in CHIP.
+                            1. Do you have authority in your CHIP state plan to
+                            provide for presumptive eligibility, and have you
+                            implemented this?
                           </div>
+                          <ChoiceList
+                            choices={[
+                              {
+                                label: "Yes",
+                                value: "yes",
+                              },
+                              { label: "No", value: "no" },
+                            ]}
+                            className="p1_q1"
+                            label=""
+                            name="p1_q1"
+                            onChange={this.setConditional}
+                            hint="Note: This question may not apply to Medicaid Expansion states."
+                          />
+                          <div className="conditional hide">
+                            <TextField
+                              label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
+                              multiline
+                              name="p1_q1__a"
+                              rows="6"
+                            />
+                            <TextField
+                              hint="Maximum 7,500 characters"
+                              label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
+                              multiline
+                              name="p1_q1__b"
+                              rows="6"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="question-container">
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
+                            name="p1_q2"
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p1_q2"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <div className="question">
+                          2. Tell us how your state simplifies the eligibility
+                          renewal process for families in order to retain more
+                          children in CHIP.
+                        </div>
+                        <div className="sub-questions">
                           <ChoiceList
                             choices={[
                               { label: "Yes", value: "yes" },
                               { label: "No", value: "no" },
                             ]}
-                            className="ds-u-margin-top--0"
                             label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
                             name="p1_q1__a"
                           />
@@ -263,301 +260,282 @@ class Section3c extends Component {
                               { label: "Yes", value: "yes" },
                               { label: "No", value: "no" },
                             ]}
-                            className="ds-u-margin-top--0"
                             label="b. Do you send renewal reminder notices to all families?"
                             name="p1_q1__b"
                           />
                           <TextField
                             label="c. How many notices do you send to families before disenrolling a child from the program?"
-                            labelClassName="ds-u-margin-top--0 p1_q1__c"
+                            labelClassName="p1_q1__c"
                             name="p1_q1__c"
                           />
                           <TextField
                             label="d. How many notices do you send to families before disenrolling a child from the program?"
-                            labelClassName="ds-u-margin-top--0 p1_q1__d"
+                            labelClassName="p1_q1__d"
                             name="p1_q1__d"
                           />
                           <TextField
                             label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
-                            labelClassName="ds-u-margin-top--0 p1_q1__e"
+                            labelClassName="p1_q1__e"
                             name="p1_q1__e"
                           />
-                        </fieldset>
+                        </div>
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p1_q3"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p1_q3"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <div className="question">
-                            3. Which retention strategies have been most
-                            effective in your state?
-                          </div>
-                          <TextField
-                            hint="Maximum 7,500 characters"
-                            label=""
-                            multiline
-                            rows="6"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p1_q3"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p1_q3"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <div className="question">
+                          3. Which retention strategies have been most effective
+                          in your state?
+                        </div>
+                        <TextField
+                          hint="Maximum 7,500 characters"
+                          label=""
+                          multiline
+                          rows="6"
+                          name="p1_q3"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p1_q4"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p1_q4"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <div className="question">
-                            4. How have you evaluated the effectiveness of your
-                            strategies?
-                          </div>
-                          <TextField
-                            hint="Maximum 7,500 characters"
-                            label=""
-                            multiline
-                            rows="6"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p1_q4"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p1_q4"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <div className="question">
+                          4. How have you evaluated the effectiveness of your
+                          strategies?
+                        </div>
+                        <TextField
+                          hint="Maximum 7,500 characters"
+                          label=""
+                          multiline
+                          rows="6"
+                          name="p1_q4"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p1_q5"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p1_q5"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <div className="question">
-                            5. What data sources and methodology do you use for
-                            tracking effectiveness?
-                          </div>
-                          <TextField
-                            hint="Maximum 7,500 characters"
-                            label=""
-                            multiline
-                            rows="6"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p1_q5"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p1_q5"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <div className="question">
+                          5. What data sources and methodology do you use for
+                          tracking effectiveness?
+                        </div>
+                        <TextField
+                          hint="Maximum 7,500 characters"
+                          label=""
+                          multiline
+                          rows="6"
+                          name="p1_q5"
+                        />
                       </div>
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p2_q1"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p2_q1"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <div className="question">
-                            A. Denials of Title XXI Coverage in FFY 2019
-                            <div className="hint">
-                              Enter your data below and the percentages will be
-                              automatically calculated in the final report.
-                            </div>
-                          </div>
-                          <TextField
-                            hint="This only includes denials for Title XXI at the time of initial application, not redetermination"
-                            label="1. How many applicants were denied Title XXI coverage?"
-                            labelClassName="ds-u-margin-top--0 p2_q1"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p2_q1"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p2_q1"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <div className="question">
+                          A. Denials of Title XXI Coverage in FFY 2019
+                          <div className="hint">
+                            Enter your data below and the percentages will be
+                            automatically calculated in the final report.
+                          </div>
+                        </div>
+                        <TextField
+                          hint="This only includes denials for Title XXI at the time of initial application, not redetermination"
+                          label="1. How many applicants were denied Title XXI coverage?"
+                          labelClassName="p2_q1"
+                          name="p2_q1"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p2_q2"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p2_q2"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <TextField
-                            hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
-                            label="2. How many applications were denied Title XXI coverage for procedural denials?"
-                            labelClassName="ds-u-margin-top--0 p2_q2"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p2_q2"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p2_q2"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <TextField
+                          hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
+                          label="2. How many applications were denied Title XXI coverage for procedural denials?"
+                          labelClassName="p2_q2"
+                          name="p2_q2"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p2_q3"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p2_q3"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <TextField
-                            hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
-                            label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
-                            labelClassName="ds-u-margin-top--0 p2_q3"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p2_q3"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p2_q3"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <TextField
+                          hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
+                          label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
+                          labelClassName="p2_q3"
+                          name="p2_q3"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p2_q4"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p2_q4"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <TextField
-                            label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
-                            labelClassName="ds-u-margin-top--0 p2_q4"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p2_q4"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p2_q4"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <TextField
+                          label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
+                          labelClassName="p2_q4"
+                          name="p2_q4"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p2_q5"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p2_q5"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <TextField
-                            label="5. How many applicants were denied Title XXI coverage for other reasons?"
-                            labelClassName="ds-u-margin-top--0 p2_q5"
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p2_q5"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p2_q5"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <TextField
+                          label="5. How many applicants were denied Title XXI coverage for other reasons?"
+                          labelClassName="p2_q5"
+                          name="p2_q5"
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="fill-form active">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p2_q6"
-                            >
-                              Same as last year
-                            </a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p2_q6"
-                            >
-                              Undo
-                            </a>
-                          </div>
-                          <TextField
-                            hint="(Maximum 7,500 characters)"
-                            label="6. Did you run into any limitations when collecting data? Anything else you'd like to add about this section that wasn't already covered?"
-                            labelClassName="ds-u-margin-top--0 p2_q6"
-                            multiline
+                        <div className="fill-form active">
+                          <a
+                            href="#same"
+                            onClick={this.loadAnswers}
                             name="p2_q6"
-                            rows="6"
-                          />
-                        </fieldset>
+                          >
+                            Same as last year
+                          </a>
+                        </div>
+                        <div className="clear-form">
+                          <a
+                            href="#same"
+                            onClick={this.clearAnswers}
+                            name="p2_q6"
+                          >
+                            Undo
+                          </a>
+                        </div>
+                        <TextField
+                          hint="(Maximum 7,500 characters)"
+                          label="6. Did you run into any limitations when collecting data? Anything else you'd like to add about this section that wasn't already covered?"
+                          labelClassName="p2_q6"
+                          multiline
+                          name="p2_q6"
+                          rows="6"
+                        />
                       </div>
                       <div className="form-options">
                         <button
@@ -579,223 +557,199 @@ class Section3c extends Component {
                           Part 1: Eligibility Renewal and Retention
                         </h3>
                         <div className="question-container">
-                          <fieldset className="ds-c-fieldset">
-                            <div className="question">
-                              1. Do you have authority in your CHIP state plan
-                              to provide for presumptive eligibility, and have
-                              you implemented this?
-                            </div>
-                            <ChoiceList
-                              choices={[
-                                {
-                                  defaultChecked: true,
-                                  label: "Yes",
-                                  value: "yes",
-                                  disabled: true,
-                                },
-                                { label: "No", value: "no", disabled: true },
-                              ]}
-                              className="ds-u-margin-top--0 p1_q1"
-                              label=""
-                              name="p1_q1"
-                              hint="Note: This question may not apply to Medicaid Expansion states."
-                            />
-                            <div className="conditional">
-                              <TextField
-                                label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
-                                multiline
-                                name="p1_q1__a"
-                                rows="6"
-                                value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
-                              />
-                              <TextField
-                                hint="Maximum 7,500 characters"
-                                label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
-                                multiline
-                                name="p1_q1__b"
-                                rows="6"
-                                value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
-                              />
-                            </div>
-                          </fieldset>
-                        </div>
-                      </div>
-                      <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
                           <div className="question">
-                            2. Tell us how your state simplifies the eligibility
-                            renewal process for families in order to retain more
-                            children in CHIP.
+                            1. Do you have authority in your CHIP state plan to
+                            provide for presumptive eligibility, and have you
+                            implemented this?
                           </div>
                           <ChoiceList
                             choices={[
-                              { label: "Yes", value: "yes", disabled: true },
                               {
-                                label: "No",
-                                value: "no",
                                 defaultChecked: true,
-                                disabled: true,
-                              },
-                            ]}
-                            className="ds-u-margin-top--0"
-                            label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
-                            name="p1_q1__a"
-                          />
-                          <ChoiceList
-                            choices={[
-                              {
                                 label: "Yes",
                                 value: "yes",
-                                defaultChecked: true,
                                 disabled: true,
                               },
                               { label: "No", value: "no", disabled: true },
                             ]}
-                            className="ds-u-margin-top--0"
-                            label="b. Do you send renewal reminder notices to all families?"
-                            name="p1_q1__b"
+                            className="p1_q1"
+                            label=""
+                            name="p1_q1"
+                            hint="Note: This question may not apply to Medicaid Expansion states."
                           />
-                          <TextField
-                            label="c. How many notices do you send to families before disenrolling a child from the program?"
-                            labelClassName="ds-u-margin-top--0 p1_q1__c"
-                            name="p1_q1__c"
-                            value="This is what you wrote last year."
-                          />
-                          <TextField
-                            label="d. How many notices do you send to families before disenrolling a child from the program?"
-                            labelClassName="ds-u-margin-top--0 p1_q1__d"
-                            name="p1_q1__d"
-                            value="This is what you wrote last year."
-                          />
-                          <TextField
-                            label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
-                            labelClassName="ds-u-margin-top--0 p1_q1__e"
-                            name="p1_q1__e"
-                            value="This is what you wrote last year."
-                          />
-                        </fieldset>
+                          <div className="conditional">
+                            <TextField
+                              label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
+                              multiline
+                              name="p1_q1__a"
+                              rows="6"
+                              value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                            />
+                            <TextField
+                              hint="Maximum 7,500 characters"
+                              label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
+                              multiline
+                              name="p1_q1__b"
+                              rows="6"
+                              value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                            />
+                          </div>
+                        </div>
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="question">
-                            3. Which retention strategies have been most
-                            effective in your state?
-                          </div>
-                          <TextField
-                            hint="Maximum 7,500 characters"
-                            label=""
-                            multiline
-                            rows="6"
-                            name="p1_q3"
-                            value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
-                          />
-                        </fieldset>
+                        <div className="question">
+                          2. Tell us how your state simplifies the eligibility
+                          renewal process for families in order to retain more
+                          children in CHIP.
+                        </div>
+                        <ChoiceList
+                          choices={[
+                            { label: "Yes", value: "yes", disabled: true },
+                            {
+                              label: "No",
+                              value: "no",
+                              defaultChecked: true,
+                              disabled: true,
+                            },
+                          ]}
+                          label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
+                          name="p1_q1__a"
+                        />
+                        <ChoiceList
+                          choices={[
+                            {
+                              label: "Yes",
+                              value: "yes",
+                              defaultChecked: true,
+                              disabled: true,
+                            },
+                            { label: "No", value: "no", disabled: true },
+                          ]}
+                          label="b. Do you send renewal reminder notices to all families?"
+                          name="p1_q1__b"
+                        />
+                        <TextField
+                          label="c. How many notices do you send to families before disenrolling a child from the program?"
+                          labelClassName="p1_q1__c"
+                          name="p1_q1__c"
+                          value="This is what you wrote last year."
+                        />
+                        <TextField
+                          label="d. How many notices do you send to families before disenrolling a child from the program?"
+                          labelClassName="p1_q1__d"
+                          name="p1_q1__d"
+                          value="This is what you wrote last year."
+                        />
+                        <TextField
+                          label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
+                          labelClassName="p1_q1__e"
+                          name="p1_q1__e"
+                          value="This is what you wrote last year."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="question">
-                            4. How have you evaluated the effectiveness of your
-                            strategies?
-                          </div>
-                          <TextField
-                            hint="Maximum 7,500 characters"
-                            label=""
-                            multiline
-                            rows="6"
-                            name="p1_q4"
-                            value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
-                          />
-                        </fieldset>
+                        <div className="question">
+                          3. Which retention strategies have been most effective
+                          in your state?
+                        </div>
+                        <TextField
+                          hint="Maximum 7,500 characters"
+                          label=""
+                          multiline
+                          rows="6"
+                          name="p1_q3"
+                          value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="question">
-                            5. What data sources and methodology do you use for
-                            tracking effectiveness?
-                          </div>
-                          <TextField
-                            hint="Maximum 7,500 characters"
-                            label=""
-                            multiline
-                            rows="6"
-                            name="p1_q5"
-                            value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
-                          />
-                        </fieldset>
+                        <div className="question">
+                          4. How have you evaluated the effectiveness of your
+                          strategies?
+                        </div>
+                        <TextField
+                          hint="Maximum 7,500 characters"
+                          label=""
+                          multiline
+                          rows="6"
+                          name="p1_q4"
+                          value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                        />
+                      </div>
+                      <div className="question-container">
+                        <div className="question">
+                          5. What data sources and methodology do you use for
+                          tracking effectiveness?
+                        </div>
+                        <TextField
+                          hint="Maximum 7,500 characters"
+                          label=""
+                          multiline
+                          rows="6"
+                          name="p1_q5"
+                          value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                        />
                       </div>
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <div className="question">
-                            A. Denials of Title XXI Coverage in FFY 2019
-                            <div className="hint">
-                              Enter your data below and the percentages will be
-                              automatically calculated in the final report.
-                            </div>
+                        <div className="question">
+                          A. Denials of Title XXI Coverage in FFY 2019
+                          <div className="hint">
+                            Enter your data below and the percentages will be
+                            automatically calculated in the final report.
                           </div>
-                          <TextField
-                            hint="This only includes denials for Title XXI at the time of initial application, not redetermination"
-                            label="1. How many applicants were denied Title XXI coverage?"
-                            labelClassName="ds-u-margin-top--0 p2_q1"
-                            name="p2_q1"
-                            value="This is what you wrote last year."
-                          />
-                        </fieldset>
+                        </div>
+                        <TextField
+                          hint="This only includes denials for Title XXI at the time of initial application, not redetermination"
+                          label="1. How many applicants were denied Title XXI coverage?"
+                          labelClassName="p2_q1"
+                          name="p2_q1"
+                          value="This is what you wrote last year."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <TextField
-                            hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
-                            label="2. How many applications were denied Title XXI coverage for procedural denials?"
-                            labelClassName="ds-u-margin-top--0 p2_q2"
-                            name="p2_q2"
-                            value="This is what you wrote last year."
-                          />
-                        </fieldset>
+                        <TextField
+                          hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
+                          label="2. How many applications were denied Title XXI coverage for procedural denials?"
+                          labelClassName="p2_q2"
+                          name="p2_q2"
+                          value="This is what you wrote last year."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <TextField
-                            hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
-                            label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
-                            labelClassName="ds-u-margin-top--0 p2_q3"
-                            name="p2_q3"
-                            value="This is what you wrote last year."
-                          />
-                        </fieldset>
+                        <TextField
+                          hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
+                          label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
+                          labelClassName="p2_q3"
+                          name="p2_q3"
+                          value="This is what you wrote last year."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <TextField
-                            label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
-                            labelClassName="ds-u-margin-top--0 p2_q4"
-                            name="p2_q4"
-                            value="This is what you wrote last year."
-                          />
-                        </fieldset>
+                        <TextField
+                          label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
+                          labelClassName="p2_q4"
+                          name="p2_q4"
+                          value="This is what you wrote last year."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <TextField
-                            label="5. How many applicants were denied Title XXI coverage for other reasons?"
-                            labelClassName="ds-u-margin-top--0 p2_q5"
-                            name="p2_q5"
-                            value="This is what you wrote last year."
-                          />
-                        </fieldset>
+                        <TextField
+                          label="5. How many applicants were denied Title XXI coverage for other reasons?"
+                          labelClassName="p2_q5"
+                          name="p2_q5"
+                          value="This is what you wrote last year."
+                        />
                       </div>
                       <div className="question-container">
-                        <fieldset className="ds-c-fieldset">
-                          <TextField
-                            hint="(Maximum 7,500 characters)"
-                            label="6. Did you run into any limitations when collecting data? Anything else you'd like to add about this section that wasn't already covered?"
-                            labelClassName="ds-u-margin-top--0 p2_q6"
-                            multiline
-                            name="p2_q6"
-                            rows="6"
-                            value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
-                          />
-                        </fieldset>
+                        <TextField
+                          hint="(Maximum 7,500 characters)"
+                          label="6. Did you run into any limitations when collecting data? Anything else you'd like to add about this section that wasn't already covered?"
+                          labelClassName="p2_q6"
+                          multiline
+                          name="p2_q6"
+                          rows="6"
+                          value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                        />
                       </div>
                       <div className="form-options">
                         <button
