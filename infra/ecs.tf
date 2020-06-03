@@ -32,8 +32,8 @@ resource "aws_ecs_task_definition" "ui" {
   family                   = "service"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 1024
-  memory                   = 4096
+  cpu                      = 256
+  memory                   = 512
   task_role_arn            = aws_iam_role.ecs_task.arn
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
@@ -65,7 +65,7 @@ resource "aws_ecs_service" "service" {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count = 3
+  desired_count = 6
   network_configuration {
     subnets         = module.vpc.private_subnets
     security_groups = [aws_security_group.ui.id]
