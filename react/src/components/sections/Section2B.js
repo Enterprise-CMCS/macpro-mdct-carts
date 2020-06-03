@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Sidebar from "../Sidebar";
+import Sidebar from "../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
+import { connect } from "react-redux";
 
 class Section2b extends Component {
   constructor(props) {
@@ -40,42 +41,63 @@ class Section2b extends Component {
   render() {
     return (
       <div className="section-2b">
-        <div className="sidebar">{/* <Sidebar /> */}</div>
-        <Tabs>
-          <TabPanel id="section2b" tab="Section 2B: Performance Goals">
-            <div className="section-content">
-              <p>
-                Your performance goals should match those reflected in your CHIP
-                State Plan, Section 9. If your goals are different, submit a
-                State Plan Amendment (SPA) to reconcile any differences
-              </p>
-              <ul>
-                {this.state.objectiveArray.map((element) => (
-                  <li key={element.id}>{element.component}</li>
-                ))}
-              </ul>
-
-              <div>
-                <h3> Add another objective</h3>
-                <p className="ds-base color-gray-light">Optional</p>
-                <button
-                  onClick={this.newObjective}
-                  type="button"
-                  className="ds-c-button ds-c-button--primary"
-                >
-                  Add another objective
-                </button>
-              </div>
+        <div className="ds-1-container">
+          <div className="ds-l-row">
+            <div className="sidebar ds-l-col--3">
+              <Sidebar />
             </div>
-          </TabPanel>
 
-          <TabPanel id="section2bPrevious" tab="FY2019 answers">
-            Redirect
-          </TabPanel>
-        </Tabs>
+            <div className="main ds-l-col--9">
+              <div className="page-info">
+                <div className="edit-info">
+                  <img src="/img/new-york-temp.png" alt="Status" /> Draft | Last
+                  Edit: 4/3/20
+                </div>
+                <h1>{this.props.name} CARTS FY2020</h1>
+              </div>
+              <Tabs>
+                <TabPanel id="section2b" tab="Section 2B: Performance Goals">
+                  <div className="section-content">
+                    <p>
+                      Your performance goals should match those reflected in
+                      your CHIP State Plan, Section 9. If your goals are
+                      different, submit a State Plan Amendment (SPA) to
+                      reconcile any differences
+                    </p>
+                    <ul>
+                      {this.state.objectiveArray.map((element) => (
+                        <li key={element.id}>{element.component}</li>
+                      ))}
+                    </ul>
+
+                    <div>
+                      <h3> Add another objective</h3>
+                      <p className="ds-base color-gray-light">Optional</p>
+                      <button
+                        onClick={this.newObjective}
+                        type="button"
+                        className="ds-c-button ds-c-button--primary"
+                      >
+                        Add another objective
+                      </button>
+                    </div>
+                  </div>
+                </TabPanel>
+
+                <TabPanel id="section2bPrevious" tab="FY2019 answers">
+                  Redirect
+                </TabPanel>
+              </Tabs>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default Section2b;
+const mapStateToProps = (state) => ({
+  name: state.name,
+});
+
+export default connect(mapStateToProps)(Section2b);

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { TextField, ChoiceList } from "@cmsgov/design-system-core";
+import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
 
 class Goal extends Component {
   constructor(props) {
@@ -24,78 +24,72 @@ class Goal extends Component {
     return (
       <Fragment>
         <h2> Goal {this.props.goalCount}: </h2>
+        <div className="question-container">
+          <TextField
+            label="Briefly describe your goal"
+            hint="For example: Our goal is to enroll 75% of CHIP-eligible children with family income below 247% of the federal poverty level"
+            multiline
+            name="goal_description"
+          />
+        </div>
 
-        <TextField
-          label="Briefly describe your goal"
-          hint="For example: Our goal is to enroll 75% of CHIP-eligible children with family income below 247% of the federal poverty level"
-          multiline
-          name="goal_description"
-          className="ds-u-margin-top--5"
-        />
+        <div className="question-container">
+          <ChoiceList
+            choices={[
+              { label: "New goal", value: "new" },
+              { label: "Continuing goal", value: "continuing" },
+              { label: "Discontinued goal", value: "discontinued" },
+            ]}
+            label="What type of goal is it?"
+            name="goal_type"
+          />
+        </div>
 
-        <ChoiceList
-          choices={[
-            { label: "New goal", value: "new" },
-            { label: "Continuing goal", value: "continuing" },
-            { label: "Discontinued goal", value: "discontinued" },
-          ]}
-          className="ds-u-margin-top--5"
-          label="What type of goal is it?"
-          name="goal_type"
-        />
+        <div className="question-container">
+          <TextField
+            label="What measurement will you use to track this goal?"
+            hint="For example: We'll measure the percent of eligible children who enrolled in CHIP"
+            multiline
+            name="goal_measurement"
+          />
+        </div>
 
-        <TextField
-          label="What measurement will you use to track this goal?"
-          hint="For example: We'll measure the percent of eligible children who enrolled in CHIP"
-          multiline
-          name="goal_measurement"
-          className="ds-u-margin-top--5"
-        />
+        <div className="question-container">
+          <h3 className="question"> Define the numerator you're measuring</h3>
 
-        <h3 className="ds-u-margin-bottom--0">
-          {" "}
-          Define the numerator you're measuring
-        </h3>
+          <TextField
+            label="How do you define this population?"
+            hint="For example: The number of children below 247% of the FPL who enrolled in CHIP in the last federal fiscal year."
+            multiline
+            name="goal_numerator_definition"
+          />
 
-        <TextField
-          label="How do you define this population?"
-          hint="For example: The number of children below 247% of the FPL who enrolled in CHIP in the last federal fiscal year."
-          multiline
-          name="goal_numerator_definition"
-          className="ds-u-margin-top--0"
-        />
+          <TextField
+            label="Numerator"
+            hint="Total number"
+            name="goal_numerator_digit"
+            size="medium"
+            onChange={this.percentageCalculator}
+          />
+          <h4> Define the denominator you're measuring</h4>
+          <TextField
+            label="How do you define this population?"
+            hint="For example: The total number of children below 247% of the FPL in the last federal fiscal year."
+            multiline
+            name="goal_denominator_definition"
+          />
 
-        <TextField
-          label="Numerator"
-          hint="Total number"
-          name="goal_numerator_digit"
-          className="ds-u-margin-top--5"
-          onChange={this.percentageCalculator}
-        />
-
-        <h3 className="ds-u-margin-bottom--0">
-          {" "}
-          Define the denominator you're measuring
-        </h3>
-
-        <TextField
-          label="How do you define this population?"
-          hint="For example: The total number of children below 247% of the FPL in the last federal fiscal year."
-          multiline
-          name="goal_denominator_definition"
-          className="ds-u-margin-top--0"
-        />
-
-        <TextField
-          label="Denominator"
-          hint="Total number"
-          name="goal_denominator_digit"
-          className="ds-u-margin-top--5"
-          onChange={this.percentageCalculator}
-        />
+          <TextField
+            label="Denominator"
+            hint="Total number"
+            name="goal_denominator_digit"
+            size="medium"
+            onChange={this.percentageCalculator}
+          />
+        </div>
 
         <div className="ds-u-border--2">
-          <form className="ds-u-margin-top--0">
+          <form>
             <div className="ds-1-container">
               <div className="ds-1-row">
                 <div className="ds-l--auto">
@@ -136,8 +130,25 @@ class Goal extends Component {
           </form>
         </div>
 
-        <div>
-          <h3>What is the date range for your data?</h3>
+        <div className="question-container">
+          <h4> What is the date rannge for your data?</h4>
+          <div className="date-range">
+            <DateField
+              label="Start"
+              hint={"From mm/yyyy to mm/yyyy"}
+              monthValue={12}
+              yearValue={1999}
+              dayDefaultValue={null}
+            />
+
+            <DateField
+              label="End"
+              hint={"From mm/yyyy to mm/yyyy"}
+              monthValue={12}
+              yearValue={1999}
+              dayDefaultValue={null}
+            />
+          </div>
         </div>
 
         <ChoiceList

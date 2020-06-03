@@ -323,6 +323,15 @@
 .sub-questions {
   margin-left: 16px;
 }
+.date-range {
+  border-left: 4px solid #0872b9;
+  margin-left: 14px;
+  padding-left: 16px;
+}
+
+.ds-c-field--day {
+  display: none;
+}
 /* Conditionals */
 .hide {
   display: none;
