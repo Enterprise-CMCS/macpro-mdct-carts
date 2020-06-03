@@ -165,28 +165,34 @@ class Goal extends Component {
           label="Which data source did you use?"
           name="data_source"
         />
+        <div className="question-container">
+          <TextField
+            label="How did your progress last year compare to your previous year's progress towards your goal?"
+            multiline
+            name="progress_comparison"
+            className="ds-u-margin-top--0"
+          />
+        </div>
 
-        <TextField
-          label="How did your progress last year compare to your previous year's progress towards your goal?"
-          multiline
-          name="progress_comparison"
-          className="ds-u-margin-top--0"
-        />
+        <div className="question-container">
+          <TextField
+            label="What are you doing to continually make progress towards your goal?"
+            multiline
+            name="progress_action"
+            className="ds-u-margin-top--0"
+          />
+        </div>
 
-        <TextField
-          label="What are you doing to continually make progress towards your goal?"
-          multiline
-          name="progress_action"
-          className="ds-u-margin-top--0"
-        />
+        <div className="question-container">
+          <TextField
+            label="Anything else you'd like to tell us about this goal?"
+            multiline
+            name="additional_information"
+            className="ds-u-margin-top--0"
+          />
+        </div>
 
-        <TextField
-          label="Anything else you'd like to tell us about this goal?"
-          multiline
-          name="additional_information"
-          className="ds-u-margin-top--0"
-        />
-        <div>
+        <div className="question-container">
           <TextField
             label="Do you have any supporting documentation?"
             hint="Optional"

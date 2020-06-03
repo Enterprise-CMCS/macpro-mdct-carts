@@ -1,6 +1,13 @@
 import React, { Component, Fragment } from "react";
 import Goal from "./goals/Goal2b";
 import { TextField } from "@cmsgov/design-system-core";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@reach/accordion";
+import "@reach/accordion/styles.css";
 
 class Objective2b extends Component {
   constructor(props) {
@@ -47,11 +54,16 @@ class Objective2b extends Component {
             multiline
             name={"objective_" + this.props.objectiveCount + "_text"}
           />
-          <ul>
+          <Accordion>
             {this.state.goalArray.map((element) => (
-              <li key={element.id}>{element.component}</li>
+              <AccordionItem key={element.id}>
+                <h3>
+                  <AccordionButton>Goal {element.id}:</AccordionButton>
+                </h3>
+                <AccordionPanel>{element.component}</AccordionPanel>
+              </AccordionItem>
             ))}
-          </ul>
+          </Accordion>
         </div>
 
         <div>
