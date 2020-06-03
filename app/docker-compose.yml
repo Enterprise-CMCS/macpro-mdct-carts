@@ -1,12 +1,16 @@
-version: '3'
-
+version: "3.4"
 services:
   react:
+    image: react:app
     build:
       context: ./react
-    stdin_open: true
+      dockerfile: ./Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - ./react/node_modules:/app/node_modules
-      - ./react:/app
+      - "80:80"
+    networks:
+      - backend_app
+    environment:
+      - API_URL=http://api.dev.com
+networks:
+  backend_app:
+    driver: bridge

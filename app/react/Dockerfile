@@ -1,14 +1,47 @@
-FROM node
+# ==============================================================================
+# => Build container
+FROM node:14.2.0-alpine as builder
 
-WORKDIR '/app'
+# Set working directory
+WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
+# Install modules from the package-json.lock
+RUN npm install
 
-COPY . ./
+# Copy source code
+COPY . .
 
-CMD ["npm", "start"]
+# Create static build
+RUN npm run build
+
+
+# ==============================================================================
+# => Run container
+FROM nginx:1.15.2-alpine as runner
+
+# Copy nginx config
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
+
+# Copy static build from the builder container
+COPY --from=builder /app/build /usr/share/nginx/html/
+
+# Expose port 80 for nginx
+EXPOSE 80
+
+# Copy .env file and shell script to container; this sets runtime variables
+WORKDIR /usr/share/nginx/html
+COPY ./env.sh .
+COPY .env .
+
+# Add bash to image, so env.sh can be run
+RUN apk add --no-cache bash
+
+# Make env.sh executable
+RUN chmod +x env.sh
+
+# Start Nginx server; env.sh is run first, setting runtime variables on boot
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
