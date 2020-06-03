@@ -38,12 +38,6 @@ class Section2b extends Component {
   }
 
   render() {
-    // let objectiveArray = [];
-
-    // for (let i = 0; i < this.state.objectiveCount; i += 1) {
-    //   objectiveArray.push(<Objective2b objectiveCount={i + 1} />);
-    // }
-
     return (
       <div className="section-2b">
         <div className="sidebar">{/* <Sidebar /> */}</div>
