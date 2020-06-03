@@ -26,7 +26,10 @@ class Homepage extends Component {
               <h4>Updates from Central Office</h4>
               <div className="update ds-l-row">
                 <div className="icon ds-l-col--2">
-                  <img src="/img/new-york-temp.png" alt="Medicaid.gov" />
+                  <img
+                    src={process.env.PUBLIC_URL + "/img/new-york-temp.png"}
+                    alt="Medicaid.gov"
+                  />
                 </div>
                 <div className="update-contents ds-l-col--10">
                   <div className="title-date ds-l-row">
@@ -45,15 +48,11 @@ class Homepage extends Component {
                   </p>
                   <div className="download">
                     <button class="ds-c-button ds-c-button--primary">
-                      <svg
-                        class="ds-u-margin-left--1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        viewBox="0 0 24 24"
-                      >
-                        <use xlinkHref="/public/images/symbols.svg#arrow-right"></use>
-                      </svg>
                       Download template
+                      <img
+                        src={process.env.PUBLIC_URL + "/img/arrow-white.svg"}
+                        alt="Download template"
+                      />
                     </button>
                   </div>
                 </div>
