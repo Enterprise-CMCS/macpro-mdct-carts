@@ -132,7 +132,6 @@ class Section3c extends Component {
         break;
       case "p2_q4":
         document.getElementById("textfield_91").value = "";
-        break;
       case "p2_q5":
         document.getElementById("textfield_95").value = "";
         break;
