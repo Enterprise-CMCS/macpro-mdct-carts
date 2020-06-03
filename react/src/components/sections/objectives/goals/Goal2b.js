@@ -25,7 +25,6 @@ class Goal extends Component {
       denominator > 0 &&
       this.state.shouldCalculate === true
     ) {
-      console.log("hot milk");
       dividend = (numerator * 100) / denominator;
       this.setState({
         percentage: dividend,
