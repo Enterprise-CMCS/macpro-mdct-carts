@@ -140,7 +140,7 @@ pipeline {
       script {
         withCredentials([usernameColonPassword(credentialsId: 'GIT_CREDENTIAL', variable: 'GIT_CREDENTIAL')]) {
           if (env.ACTION != "destroy") {
-            if (env.BRANCH_NAME == 'master') {
+            if (env.BRANCH_NAME == 'devci') {
               sh '''
                 set -e
                 remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
@@ -163,7 +163,7 @@ pipeline {
 }
 
 def resolveBuildTag() {
-  if (env.BRANCH_NAME == 'master') {
+  if (env.BRANCH_NAME == 'devci') {
       tag_prefix = sh(script: 'cat versionPrefix', returnStdout: true).trim()
       commit_count = sh(script: 'git rev-list --count $GIT_COMMIT', returnStdout: true).trim()
       build_tag = "${tag_prefix}.${commit_count}"
