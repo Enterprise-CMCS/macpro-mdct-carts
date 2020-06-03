@@ -8,22 +8,41 @@ class Section2b extends Component {
     super(props);
     this.state = {
       objectiveCount: 1,
+      objectiveArray: [],
     };
     this.newObjective = this.newObjective.bind(this);
   }
 
-  newObjective() {
+  componentDidMount() {
+    const initialObjective = {
+      id: 1,
+      component: <Objective2b objectiveCount={1} />,
+    };
+
     this.setState({
-      objectiveCount: this.state.objectiveCount + 1,
+      objectiveArray: [initialObjective],
+    });
+  }
+
+  newObjective() {
+    let newObjectiveId = this.state.objectiveCount + 1;
+    let newObjective = {
+      id: newObjectiveId,
+      component: <Objective2b objectiveCount={newObjectiveId} />,
+    };
+
+    this.setState({
+      objectiveCount: newObjectiveId,
+      objectiveArray: this.state.objectiveArray.concat(newObjective),
     });
   }
 
   render() {
-    let objectiveArray = [];
+    // let objectiveArray = [];
 
-    for (let i = 0; i < this.state.objectiveCount; i += 1) {
-      objectiveArray.push(<Objective2b objectiveCount={i + 1} />);
-    }
+    // for (let i = 0; i < this.state.objectiveCount; i += 1) {
+    //   objectiveArray.push(<Objective2b objectiveCount={i + 1} />);
+    // }
 
     return (
       <div className="section-2b">
@@ -37,8 +56,8 @@ class Section2b extends Component {
                 State Plan Amendment (SPA) to reconcile any differences
               </p>
               <ul>
-                {objectiveArray.map((element, index) => (
-                  <li key={index}>{element}</li>
+                {this.state.objectiveArray.map((element) => (
+                  <li key={element.id}>{element.component}</li>
                 ))}
               </ul>
 

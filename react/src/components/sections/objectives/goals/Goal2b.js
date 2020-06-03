@@ -136,7 +136,10 @@ class Goal extends Component {
           </form>
         </div>
 
-        <div> date month year </div>
+        <div>
+          <h3>What is the date range for your data?</h3>
+        </div>
+
         <ChoiceList
           choices={[
             {
