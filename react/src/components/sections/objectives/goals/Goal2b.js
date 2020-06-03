@@ -165,21 +165,9 @@ class Goal extends Component {
         <div className="question-container">
           <h4> What is the date range for your data?</h4>
           <div className="date-range">
-            <DateField
-              label="Start"
-              hint={"From mm/yyyy to mm/yyyy"}
-              monthValue={12}
-              yearValue={1999}
-              dayDefaultValue={null}
-            />
+            <DateField label="Start" hint={"From mm/yyyy to mm/yyyy"} />
 
-            <DateField
-              label="End"
-              hint={"From mm/yyyy to mm/yyyy"}
-              monthValue={12}
-              yearValue={1999}
-              dayDefaultValue={null}
-            />
+            <DateField label="End" hint={"From mm/yyyy to mm/yyyy"} />
           </div>
         </div>
 
