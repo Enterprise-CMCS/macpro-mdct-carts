@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
-import Accordion from "react-bootstrap/Accordion";
-
 class Goal extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +12,22 @@ class Goal extends Component {
   }
 
   percentageCalculator(evt) {
+    if (typeof evt.target.value !== "number") {
+      evt.target.errorMessage = "Numbers only";
+    }
+    let dividend =
+      (this.state.goal_numerator_digit * 100) /
+      this.state.goal_denominator_digit;
+    let calculatedPercentage;
+
+    if (typeof dividend !== "number") {
+      calculatedPercentage = "-";
+    } else {
+      calculatedPercentage = dividend;
+    }
     this.setState({
       [evt.target.name]: evt.target.value,
-      percentage:
-        this.state.goal_numerator_digit / this.state.goal_denominator_digit,
+      percentage: calculatedPercentage,
     });
   }
 
@@ -120,10 +130,7 @@ class Goal extends Component {
                     label="Percentage"
                     name="goal_percentage"
                     size="small"
-                    value={`${
-                      this.state.goal_numerator_digit /
-                      this.state.goal_denominator_digit
-                    }%`}
+                    value={`${this.state.percentage}%`}
                   />
                 </div>
               </div>
