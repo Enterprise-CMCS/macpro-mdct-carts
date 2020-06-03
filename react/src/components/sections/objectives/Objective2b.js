@@ -7,22 +7,36 @@ class Objective2b extends Component {
     super(props);
     this.state = {
       goalCount: 1,
+      goalArray: [],
     };
     this.newGoal = this.newGoal.bind(this);
   }
 
-  newGoal() {
+  componentDidMount() {
+    const initialGoal = {
+      id: 1,
+      component: <Goal goalCount={1} />,
+    };
+
     this.setState({
-      goalCount: this.state.goalCount + 1,
+      goalArray: [initialGoal],
+    });
+  }
+
+  newGoal() {
+    let newGoalId = this.state.goalCount + 1;
+    let newGoal = {
+      id: newGoalId,
+      component: <Goal goalCount={newGoalId} />,
+    };
+
+    this.setState({
+      goalCount: newGoalId,
+      goalArray: this.state.goalArray.concat(newGoal),
     });
   }
 
   render() {
-    let goalArray = [];
-
-    for (let i = 0; i < this.state.goalCount; i += 1) {
-      goalArray.push(<Goal goalCount={i + 1} />);
-    }
     return (
       <Fragment>
         <div>
@@ -34,8 +48,8 @@ class Objective2b extends Component {
             name={"objective_" + this.props.objectiveCount + "_text"}
           />
           <ul>
-            {goalArray.map((element, index) => (
-              <li key={index}>{element}</li>
+            {this.state.goalArray.map((element) => (
+              <li key={element.id}>{element.component}</li>
             ))}
           </ul>
         </div>
