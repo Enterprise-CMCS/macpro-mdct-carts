@@ -1,0 +1,189 @@
+import React, { Component, Fragment } from "react";
+import { TextField, ChoiceList } from "@cmsgov/design-system-core";
+
+class Goal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      goal_numerator_digit: 0,
+      goal_denominator_digit: 0,
+      percentage: 0,
+    };
+    this.percentageCalculator = this.percentageCalculator.bind(this);
+  }
+
+  percentageCalculator(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+      percentage:
+        this.state.goal_numerator_digit / this.state.goal_denominator_digit,
+    });
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <h2> Goal {this.props.goalCount}: </h2>
+
+        <TextField
+          label="Briefly describe your goal"
+          hint="For example: Our goal is to enroll 75% of CHIP-eligible children with family income below 247% of the federal poverty level"
+          multiline
+          name="goal_description"
+          className="ds-u-margin-top--5"
+        />
+
+        <ChoiceList
+          choices={[
+            { label: "New goal", value: "new" },
+            { label: "Continuing goal", value: "continuing" },
+            { label: "Discontinued goal", value: "discontinued" },
+          ]}
+          className="ds-u-margin-top--5"
+          label="What type of goal is it?"
+          name="goal_type"
+        />
+
+        <TextField
+          label="What measurement will you use to track this goal?"
+          hint="For example: We'll measure the percent of eligible children who enrolled in CHIP"
+          multiline
+          name="goal_measurement"
+          className="ds-u-margin-top--5"
+        />
+
+        <h3 className="ds-u-margin-bottom--0">
+          {" "}
+          Define the numerator you're measuring
+        </h3>
+
+        <TextField
+          label="How do you define this population?"
+          hint="For example: The number of children below 247% of the FPL who enrolled in CHIP in the last federal fiscal year."
+          multiline
+          name="goal_numerator_definition"
+          className="ds-u-margin-top--0"
+        />
+
+        <TextField
+          label="Numerator"
+          hint="Total number"
+          name="goal_numerator_digit"
+          className="ds-u-margin-top--5"
+          onChange={this.percentageCalculator}
+        />
+
+        <h3 className="ds-u-margin-bottom--0">
+          {" "}
+          Define the denominator you're measuring
+        </h3>
+
+        <TextField
+          label="How do you define this population?"
+          hint="For example: The total number of children below 247% of the FPL in the last federal fiscal year."
+          multiline
+          name="goal_denominator_definition"
+          className="ds-u-margin-top--0"
+        />
+
+        <TextField
+          label="Denominator"
+          hint="Total number"
+          name="goal_denominator_digit"
+          className="ds-u-margin-top--5"
+          onChange={this.percentageCalculator}
+        />
+
+        <div className="ds-u-border--2">
+          <form className="ds-u-margin-top--0">
+            <div className="ds-1-container">
+              <div className="ds-1-row">
+                <div className="ds-l--auto">
+                  <h3>Percentage</h3>
+                  <h4>Auto-calculated</h4>
+                  <TextField
+                    label="Numerator"
+                    name="goal_numerator_digit"
+                    size="small"
+                    value={this.state.goal_numerator_digit}
+                    className="ds-l--auto"
+                  />
+                </div>
+                <div className="ds-l--auto">
+                  <span>&divide;</span>
+                  <TextField
+                    label="Denominator"
+                    name="goal_denominator_digit"
+                    size="small"
+                    value={this.state.goal_denominator_digit}
+                    className="ds-l--auto"
+                  />
+                </div>
+                <div className="ds-l--auto">
+                  <span> &#61; </span>
+                  <TextField
+                    label="Percentage"
+                    name="goal_percentage"
+                    size="small"
+                    value={`${
+                      this.state.goal_numerator_digit /
+                      this.state.goal_denominator_digit
+                    }%`}
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div> date month year </div>
+        <ChoiceList
+          choices={[
+            {
+              label: "Eligibility or enrollment data",
+              value: "enrollment_data",
+            },
+            { label: "Survey data", value: "survey_data" },
+            { label: "Another data source", value: "other_data" },
+          ]}
+          className="ds-u-margin-top--5"
+          label="Which data source did you use?"
+          name="data_source"
+        />
+
+        <TextField
+          label="How did your progress last year compare to your previous year's progress towards your goal?"
+          multiline
+          name="progress_comparison"
+          className="ds-u-margin-top--0"
+        />
+
+        <TextField
+          label="What are you doing to continually make progress towards your goal?"
+          multiline
+          name="progress_action"
+          className="ds-u-margin-top--0"
+        />
+
+        <TextField
+          label="Anything else you'd like to tell us about this goal?"
+          multiline
+          name="additional_information"
+          className="ds-u-margin-top--0"
+        />
+        <div>
+          <TextField
+            label="Do you have any supporting documentation?"
+            hint="Optional"
+            name="supporting_documentation"
+            className="ds-u-margin-top--0"
+            button="YYYYYYY"
+          />
+          <button className="ds-c-button">Browse</button>
+        </div>
+      </Fragment>
+    );
+  }
+}
+
+export default Goal;

@@ -19,7 +19,7 @@ class Section3c extends Component {
               <li>
                 <a href="#FYLastYear">FY2019 answers</a>
               </li>
-            </ul>
+            </ul>{" "}
           </div>
           <div className="section-content">
             <p>
