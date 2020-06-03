@@ -31,25 +31,13 @@ class Goal extends Component {
         percentage: dividend,
       });
     }
-
-    // if (isNaN(numerator) || isNaN(denominator)) {
-    //   // dividend = "--";
-    //   console.log("numbers only!");
-    //   this.setState({
-    //     percentageErrorMessage: "numbers only",
-    //     percentage: "--",
-    //   });
-    // } else {
-    //   console.log("cool you put in a number");
-    //   dividend = (numerator * 100) / denominator;
-    //   this.setState({
-    //     percentage: dividend,
-    //   });
-    // }
   }
 
   addDivisors(evt) {
-    if (isNaN(parseInt(evt.target.value))) {
+    if (
+      isNaN(parseInt(evt.target.value)) ||
+      /^\d+$/.test(evt.target.value) === false
+    ) {
       console.log("nope, numbers only");
       this.setState({
         [`${evt.target.name}Err`]: "numbers only",
@@ -64,27 +52,6 @@ class Goal extends Component {
       console.log(evt.target.value);
       this.percentageCalculator();
     }
-
-    // let numerator = this.state.goal_numerator_digit;
-    // let denominator = this.state.goal_denominator_digit;
-
-    // this.setState({
-    //   [evt.target.name]: evt.target.value,
-    // });
-
-    // console.log("nummmm", numerator);
-    // console.log("dennnnn", denominator);
-    // if (
-    //   numerator !== "" &&
-    //   numerator > 0 &&
-    //   denominator !== "" &&
-    //   denominator > 0
-    // ) {
-    //   console.log("hot milk");
-    //   // this.percentageCalculator()
-    // }
-    // console.log("nummmm", numerator);
-    // console.log("dennnnn", denominator);
   }
 
   render() {
