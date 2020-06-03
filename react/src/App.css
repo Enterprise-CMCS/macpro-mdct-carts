@@ -332,6 +332,14 @@
 .ds-c-field--day {
   display: none;
 }
+
+/** Hack: Workaround for DateField limitations **/
+/** Hides DAY label, input, and slash          **/
+.date-range fieldset > div > div:nth-child(3),
+.date-range fieldset > div > span:nth-of-type(1) {
+  display: none;
+}
+
 /* Conditionals */
 .hide {
   display: none;
