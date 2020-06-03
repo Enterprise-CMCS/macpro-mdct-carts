@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
+import Accordion from "react-bootstrap/Accordion";
 
 class Goal extends Component {
   constructor(props) {
@@ -131,7 +132,7 @@ class Goal extends Component {
         </div>
 
         <div className="question-container">
-          <h4> What is the date rannge for your data?</h4>
+          <h4> What is the date range for your data?</h4>
           <div className="date-range">
             <DateField
               label="Start"

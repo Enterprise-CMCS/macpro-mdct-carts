@@ -3,6 +3,13 @@ import Sidebar from "../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@reach/accordion";
+import "@reach/accordion/styles.css";
 
 class Section2b extends Component {
   constructor(props) {
@@ -64,12 +71,23 @@ class Section2b extends Component {
                       different, submit a State Plan Amendment (SPA) to
                       reconcile any differences
                     </p>
-                    <ul>
-                      {this.state.objectiveArray.map((element) => (
-                        <li key={element.id}>{element.component}</li>
-                      ))}
-                    </ul>
+                    <h1> Before </h1>
 
+                    <Accordion>
+                      {this.state.objectiveArray.map((element) => (
+                        <AccordionItem key={element.id}>
+                          <h3>
+                            {" "}
+                            <AccordionButton>
+                              Objective {element.id} :{" "}
+                            </AccordionButton>
+                          </h3>
+                          <AccordionPanel>{element.component}</AccordionPanel>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+
+                    <h1> after</h1>
                     <div>
                       <h3> Add another objective</h3>
                       <p className="ds-base color-gray-light">Optional</p>
