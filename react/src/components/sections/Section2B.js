@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Sidebar from "../Sidebar";
+import Sidebar from "../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b";
 
 class Section2b extends Component {
@@ -8,29 +8,34 @@ class Section2b extends Component {
 
     return (
       <div className="section-2b">
-        <div className="sidebar">
-          <Sidebar />
-        </div>
+        <div className="ds-l-container">
+          <div className="ds-l-row">
+            <div className="sidebar ds-l-col--3">
+              <Sidebar />
+            </div>
 
-        <div className="main">
-          <div className="tabs section-tabs">
-            <ul>
-              <li>
-                <a href="/2b">Section 2B: Performance Goals</a>
-              </li>
-              <li>
-                <a href="#FYLastYear">FY2019 answers</a>
-              </li>
-            </ul>
-          </div>
-          <div className="section-content">
-            <p>
-              Your performance goals should match those reflected in your CHIP
-              State Plan, Section 9. If your goals are different, submit a State
-              Plan Amendment (SPA) to reconcile any differences
-            </p>
+            <div className="main ds-l-col--9">
+              <div className="tabs section-tabs">
+                <ul>
+                  <li>
+                    <a href="/2b">Section 2B: Performance Goals</a>
+                  </li>
+                  <li>
+                    <a href="#FYLastYear">FY2019 answers</a>
+                  </li>
+                </ul>
+              </div>
+              <div className="section-content">
+                <p>
+                  Your performance goals should match those reflected in your
+                  CHIP State Plan, Section 9. If your goals are different,
+                  submit a State Plan Amendment (SPA) to reconcile any
+                  differences
+                </p>
 
-            <Objective2b />
+                <Objective2b />
+              </div>
+            </div>
           </div>
         </div>
       </div>
