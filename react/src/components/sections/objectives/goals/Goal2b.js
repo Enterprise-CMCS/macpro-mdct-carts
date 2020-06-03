@@ -7,28 +7,84 @@ class Goal extends Component {
       goal_numerator_digit: 0,
       goal_denominator_digit: 0,
       percentage: 0,
+      shouldCalculate: true,
     };
     this.percentageCalculator = this.percentageCalculator.bind(this);
+    this.addDivisors = this.addDivisors.bind(this);
   }
 
-  percentageCalculator(evt) {
-    if (typeof evt.target.value !== "number") {
-      evt.target.errorMessage = "Numbers only";
-    }
-    let dividend =
-      (this.state.goal_numerator_digit * 100) /
-      this.state.goal_denominator_digit;
-    let calculatedPercentage;
+  percentageCalculator() {
+    let numerator = this.state.goal_numerator_digit;
+    let denominator = this.state.goal_denominator_digit;
+    let dividend;
 
-    if (typeof dividend !== "number") {
-      calculatedPercentage = "-";
-    } else {
-      calculatedPercentage = dividend;
+    if (
+      numerator !== "" &&
+      numerator > 0 &&
+      denominator !== "" &&
+      denominator > 0 &&
+      this.state.shouldCalculate === true
+    ) {
+      console.log("hot milk");
+      dividend = (numerator * 100) / denominator;
+      this.setState({
+        percentage: dividend,
+      });
     }
-    this.setState({
-      [evt.target.name]: evt.target.value,
-      percentage: calculatedPercentage,
-    });
+
+    // if (isNaN(numerator) || isNaN(denominator)) {
+    //   // dividend = "--";
+    //   console.log("numbers only!");
+    //   this.setState({
+    //     percentageErrorMessage: "numbers only",
+    //     percentage: "--",
+    //   });
+    // } else {
+    //   console.log("cool you put in a number");
+    //   dividend = (numerator * 100) / denominator;
+    //   this.setState({
+    //     percentage: dividend,
+    //   });
+    // }
+  }
+
+  addDivisors(evt) {
+    if (isNaN(parseInt(evt.target.value))) {
+      console.log("nope, numbers only");
+      this.setState({
+        [`${evt.target.name}Err`]: "numbers only",
+        shouldCalculate: false,
+      });
+    } else {
+      this.setState({
+        [evt.target.name]: evt.target.value,
+        [`${evt.target.name}Err`]: false,
+        shouldCalculate: true,
+      });
+      console.log(evt.target.value);
+      this.percentageCalculator();
+    }
+
+    // let numerator = this.state.goal_numerator_digit;
+    // let denominator = this.state.goal_denominator_digit;
+
+    // this.setState({
+    //   [evt.target.name]: evt.target.value,
+    // });
+
+    // console.log("nummmm", numerator);
+    // console.log("dennnnn", denominator);
+    // if (
+    //   numerator !== "" &&
+    //   numerator > 0 &&
+    //   denominator !== "" &&
+    //   denominator > 0
+    // ) {
+    //   console.log("hot milk");
+    //   // this.percentageCalculator()
+    // }
+    // console.log("nummmm", numerator);
+    // console.log("dennnnn", denominator);
   }
 
   render() {
@@ -80,7 +136,8 @@ class Goal extends Component {
             hint="Total number"
             name="goal_numerator_digit"
             size="medium"
-            onChange={this.percentageCalculator}
+            errorMessage={this.state.goal_numerator_digitErr}
+            onChange={this.addDivisors}
           />
           <h4> Define the denominator you're measuring</h4>
           <TextField
@@ -95,7 +152,8 @@ class Goal extends Component {
             hint="Total number"
             name="goal_denominator_digit"
             size="medium"
-            onChange={this.percentageCalculator}
+            errorMessage={this.state.goal_denominator_digitErr}
+            onChange={this.addDivisors}
           />
         </div>
 
