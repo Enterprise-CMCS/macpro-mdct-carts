@@ -25,7 +25,10 @@ SECRET_KEY = 'a2opkn_bg+sn%l^uwuhw%(vphy5#9b*3f)=e6l9%_^=sq9%1tg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# We should find the ip of the host and add it here.
+# See: https://stackoverflow.com/questions/49828259/when-deploying-django-into-aws-fargate-how-do-you-add-the-local-ip-into-allowed
+# For demo purposes at the moment, I'm OK with this
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
