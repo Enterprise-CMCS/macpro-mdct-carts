@@ -3,8 +3,8 @@ resource "aws_ecs_task_definition" "api" {
   family                   = "api-${terraform.workspace}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 2048
-  memory                   = 4096
+  cpu                      = 256
+  memory                   = 512
   task_role_arn            = aws_iam_role.ecs_task.arn
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_api.json.tpl", {
