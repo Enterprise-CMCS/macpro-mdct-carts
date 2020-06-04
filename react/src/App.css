@@ -239,11 +239,12 @@ img {
   display: inline-block;
   max-width: calc(50% - 16px);
   margin: 8px;
+  vertical-align: middle;
 }
 
 .footer .chip-info div img {
   max-height: 70px;
-  max-width: 100%;
+  max-width: 92%;
 }
 
 .footer .info {
