@@ -37,7 +37,6 @@ class Goal extends Component {
       isNaN(parseInt(evt.target.value)) ||
       /^\d+$/.test(evt.target.value) === false
     ) {
-      console.log("nope, numbers only");
       this.setState({
         [`${evt.target.name}Err`]: "numbers only",
         shouldCalculate: false,
@@ -48,7 +47,6 @@ class Goal extends Component {
         [`${evt.target.name}Err`]: false,
         shouldCalculate: true,
       });
-      console.log(evt.target.value);
       this.percentageCalculator();
     }
   }
