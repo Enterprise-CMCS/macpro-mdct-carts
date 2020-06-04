@@ -115,6 +115,7 @@ pipeline {
           '''
           dir('infra') {
             env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
+            env.API_ENDPOINT = sh(script: '~/.local/bin/terraform output api_endpoint', returnStdout: true).trim()
           }
         }
       }
@@ -122,6 +123,7 @@ pipeline {
         always {
           script {
             archiveArtifacts allowEmptyArchive: true, artifacts: 'infra/log*'
+            buildDescription("app url: ${APPLICATION_ENDPOINT} \rapi endpoint: ${API_ENDPOINT}")
           }
         }
       }
