@@ -91,6 +91,12 @@
     transform: rotate(360deg);
   }
 }
+/**********************
+  GLOBALS
+**********************/
+img {
+  max-width: 100%;
+}
 
 /**********************
   HEADER
@@ -211,7 +217,20 @@
 }
 .footer .cms-copy {
   display: inline-block;
-  width: calc(100% - 70px);
+  padding-left: 16px;
+  vertical-align: top;
+  width: calc(100% - 86px);
+}
+
+.footer .chip-info div {
+  display: inline-block;
+  max-width: calc(50% - 16px);
+  margin: 8px;
+}
+
+.footer .chip-info div img {
+  max-height: 70px;
+  max-width: 100%;
 }
 
 .footer .info {
