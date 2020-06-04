@@ -13,11 +13,9 @@ class Goal extends Component {
     this.addDivisors = this.addDivisors.bind(this);
   }
 
-  percentageCalculator() {
-    let numerator = this.state.goal_numerator_digit;
-    let denominator = this.state.goal_denominator_digit;
-    let dividend;
-
+  // This method validates the input before returning calculated percentage
+  percentageCalculator(numerator, denominator) {
+    let quotient;
     if (
       numerator !== "" &&
       numerator > 0 &&
@@ -25,14 +23,17 @@ class Goal extends Component {
       denominator > 0 &&
       this.state.shouldCalculate === true
     ) {
-      dividend = (numerator * 100) / denominator;
-      this.setState({
-        percentage: dividend,
-      });
+      quotient = (numerator * 100) / denominator;
+      return quotient;
     }
+    return "--";
   }
 
+  // this method checks the input and sets it to the state for the elements to render
   addDivisors(evt) {
+    let num;
+    let denom;
+    // Checks if the input includes any numbers
     if (
       isNaN(parseInt(evt.target.value)) ||
       /^\d+$/.test(evt.target.value) === false
@@ -41,15 +42,37 @@ class Goal extends Component {
         [`${evt.target.name}Err`]: "numbers only",
         shouldCalculate: false,
       });
+      return;
     } else {
+      if (evt.target.name === "goal_numerator_digit") {
+        num = evt.target.value;
+        denom = this.state.goal_denominator_digit || 0;
+      } else if (evt.target.name === "goal_denominator_digit") {
+        num = this.state.goal_numerator_digit || 0;
+        denom = evt.target.value;
+      }
+
       this.setState({
         [evt.target.name]: evt.target.value,
         [`${evt.target.name}Err`]: false,
         shouldCalculate: true,
+        percentage: this.percentageCalculator(num, denom),
       });
-      this.percentageCalculator();
     }
   }
+
+  // this.addEventListener("keyup", function () {
+  //   let numerator = document.getElementById("numerator").value;
+  //   document.getElementById("percentages-numerator").value(numerator);
+  //   let denom = document.getElementById("denom").value;
+  //   document.getElementById("percentages-denom").value(denom);
+  //   calculatePercentage();
+  // });
+  // percentageCalculator() {
+  //   let numerator = document.getElementById("percentages-numerator").value;
+  //   let denom = document.getElementById("percentages-denom").value;
+  //   document.getElementById("percentages-total").value(numerator/denom);
+  // }
 
   render() {
     return (
@@ -99,6 +122,7 @@ class Goal extends Component {
             label="Numerator"
             hint="Total number"
             name="goal_numerator_digit"
+            id="percentages-numerator"
             size="medium"
             errorMessage={this.state.goal_numerator_digitErr}
             onChange={this.addDivisors}
@@ -115,6 +139,7 @@ class Goal extends Component {
             label="Denominator"
             hint="Total number"
             name="goal_denominator_digit"
+            id="percentages-denom"
             size="medium"
             errorMessage={this.state.goal_denominator_digitErr}
             onChange={this.addDivisors}
