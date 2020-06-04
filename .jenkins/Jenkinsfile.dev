@@ -123,7 +123,7 @@ pipeline {
         always {
           script {
             archiveArtifacts allowEmptyArchive: true, artifacts: 'infra/log*'
-            buildDescription("app url: ${APPLICATION_ENDPOINT} \rapi endpoint: ${API_ENDPOINT}")
+            currentBuild.setDescription("app url: ${APPLICATION_ENDPOINT} \rapi endpoint: ${API_ENDPOINT}")
           }
         }
       }
