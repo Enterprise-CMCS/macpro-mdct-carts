@@ -24,7 +24,6 @@ class Goal extends Component {
   render() {
     return (
       <Fragment>
-        <h2> Goal {this.props.goalCount}: </h2>
         <div className="question-container">
           <TextField
             label="Briefly describe your goal"
@@ -91,41 +90,43 @@ class Goal extends Component {
 
         <div className="ds-u-border--2">
           <form>
-            <div className="ds-1-container">
-              <div className="ds-1-row">
-                <div className="ds-l--auto">
-                  <h3>Percentage</h3>
-                  <h4>Auto-calculated</h4>
-                  <TextField
-                    label="Numerator"
-                    name="goal_numerator_digit"
-                    size="small"
-                    value={this.state.goal_numerator_digit}
-                    className="ds-l--auto"
-                  />
-                </div>
-                <div className="ds-l--auto">
-                  <span>&divide;</span>
-                  <TextField
-                    label="Denominator"
-                    name="goal_denominator_digit"
-                    size="small"
-                    value={this.state.goal_denominator_digit}
-                    className="ds-l--auto"
-                  />
-                </div>
-                <div className="ds-l--auto">
-                  <span> &#61; </span>
-                  <TextField
-                    label="Percentage"
-                    name="goal_percentage"
-                    size="small"
-                    value={`${
-                      this.state.goal_numerator_digit /
-                      this.state.goal_denominator_digit
-                    }%`}
-                  />
-                </div>
+            <div className="ds-1-row percentages-info">
+              <div className="ds-l--auto">
+                <h3>Percentage</h3>
+                <h4>Auto-calculated</h4>
+              </div>
+            </div>
+            <div className="ds-1-row percentages">
+              <div>
+                <TextField
+                  label="Numerator"
+                  name="goal_numerator_digit"
+                  size="small"
+                  value={this.state.goal_numerator_digit}
+                  className="ds-l--auto"
+                />
+              </div>
+              <div>
+                <div className="divide">&divide;</div>
+                <TextField
+                  label="Denominator"
+                  name="goal_denominator_digit"
+                  size="small"
+                  value={this.state.goal_denominator_digit}
+                  className="ds-l--auto"
+                />
+              </div>
+              <div>
+                <div className="divide"> &#61; </div>
+                <TextField
+                  label="Percentage"
+                  name="goal_percentage"
+                  size="small"
+                  value={`${
+                    this.state.goal_numerator_digit /
+                    this.state.goal_denominator_digit
+                  }%`}
+                />
               </div>
             </div>
           </form>

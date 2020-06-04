@@ -46,27 +46,28 @@ class Objective2b extends Component {
   render() {
     return (
       <Fragment>
-        <div>
-          <h2> Objective {this.props.objectiveCount}: </h2>
+        <div className="objective-body">
           <TextField
             hint="For example: Our objective is to increase enrollment in our CHIP program."
             label="What is your first objective as listed in your CHIP State Plan?"
             multiline
             name={"objective_" + this.props.objectiveCount + "_text"}
           />
-          <Accordion>
-            {this.state.goalArray.map((element) => (
-              <AccordionItem key={element.id}>
-                <h3>
-                  <AccordionButton>Goal {element.id}:</AccordionButton>
-                </h3>
-                <AccordionPanel>{element.component}</AccordionPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <div className="goals">
+            <Accordion>
+              {this.state.goalArray.map((element) => (
+                <AccordionItem key={element.id}>
+                  <h3>
+                    <AccordionButton>Goal {element.id}:</AccordionButton>
+                  </h3>
+                  <AccordionPanel>{element.component}</AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
 
-        <div>
+        <div className="objective-footer">
           <h3> Do you have another goal for this objective?</h3>
           <p className="ds-base color-gray-light">Optional</p>
           <button
@@ -75,6 +76,7 @@ class Objective2b extends Component {
             className="ds-c-button ds-c-button--primary"
           >
             Add another goal
+            <i class="fas fa-plus"></i>
           </button>
         </div>
       </Fragment>

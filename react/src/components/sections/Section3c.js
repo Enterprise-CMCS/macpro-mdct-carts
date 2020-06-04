@@ -152,10 +152,7 @@ class Section3c extends Component {
 
             <div className="main ds-l-col--9">
               <div className="page-info">
-                <div className="edit-info">
-                  <img src="/img/new-york-temp.png" alt="Status" /> Draft | Last
-                  Edit: 4/3/20
-                </div>
+                <div className="edit-info">Draft | Last Edit: 4/3/20</div>
                 <h1>{this.props.name} CARTS FY2020</h1>
               </div>
               <div className="section-content">
