@@ -9,7 +9,6 @@ class Goal extends Component {
       percentage: 0,
       shouldCalculate: true,
     };
-    this.percentageCalculator = this.percentageCalculator.bind(this);
     this.addDivisors = this.addDivisors.bind(this);
   }
 
