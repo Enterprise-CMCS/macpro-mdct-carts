@@ -27,7 +27,7 @@ class Homepage extends Component {
               <div className="update ds-l-row">
                 <div className="icon ds-l-col--2">
                   <img
-                    src={process.env.PUBLIC_URL + "/img/new-york-temp.png"}
+                    src={process.env.PUBLIC_URL + "/img/states/ny.svg"}
                     alt="Medicaid.gov"
                   />
                 </div>
@@ -49,10 +49,7 @@ class Homepage extends Component {
                   <div className="download">
                     <button class="ds-c-button ds-c-button--primary">
                       Download template
-                      <img
-                        src={process.env.PUBLIC_URL + "/img/arrow-white.svg"}
-                        alt="Download template"
-                      />
+                      <i class="fas fa-plus"></i>
                     </button>
                   </div>
                 </div>

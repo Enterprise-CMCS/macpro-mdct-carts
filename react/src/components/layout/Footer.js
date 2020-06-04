@@ -8,13 +8,17 @@ class Footer extends Component {
           <div className="ds-l-container">
             <div className="ds-l-row">
               <div className="chip-info ds-l-col--6">
-                <img src="/img/new-york-temp.png" alt="Medicaid.gov" />
-                <img src="/img/new-york-temp.png" alt="MACPro.gov" />
+                <div className="medicaid-logo">
+                  <img src="/img/medicadelogo.png" alt="Medicaid.gov" />
+                </div>
+                <div className="macpro-logo">
+                  <img src="/img/MACProLogotransparent.png" alt="MACPro.gov" />
+                </div>
               </div>
               <div className="cms-branding ds-l-col--6">
                 <div className="cms-logo">
                   <img
-                    src="/img/new-york-temp.png"
+                    src="/img/hhs-logo.png"
                     alt="Department of Health and Human Services, USA"
                   />
                 </div>

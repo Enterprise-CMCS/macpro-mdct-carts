@@ -48,7 +48,7 @@ class Section2b extends Component {
   render() {
     return (
       <div className="section-2b">
-        <div className="ds-1-container">
+        <div className="ds-l-container">
           <div className="ds-l-row">
             <div className="sidebar ds-l-col--3">
               <Sidebar />
@@ -56,10 +56,7 @@ class Section2b extends Component {
 
             <div className="main ds-l-col--9">
               <div className="page-info">
-                <div className="edit-info">
-                  <img src="/img/new-york-temp.png" alt="Status" /> Draft | Last
-                  Edit: 4/3/20
-                </div>
+                <div className="edit-info">Draft | Last Edit: 4/3/20</div>
                 <h1>{this.props.name} CARTS FY2020</h1>
               </div>
               <Tabs>
@@ -71,19 +68,25 @@ class Section2b extends Component {
                       different, submit a State Plan Amendment (SPA) to
                       reconcile any differences
                     </p>
-                    <Accordion>
-                      {this.state.objectiveArray.map((element) => (
-                        <AccordionItem key={element.id}>
-                          <h3>
-                            {" "}
-                            <AccordionButton>
-                              Objective {element.id} :{" "}
-                            </AccordionButton>
-                          </h3>
-                          <AccordionPanel>{element.component}</AccordionPanel>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
+                    <div className="objective-accordiion">
+                      <Accordion>
+                        {this.state.objectiveArray.map((element) => (
+                          <AccordionItem key={element.id}>
+                            <div className="accordion-header">
+                              <h3>
+                                <AccordionButton>
+                                  <div className="title">
+                                    Objective {element.id}:
+                                  </div>
+                                  <div className="arrow"></div>
+                                </AccordionButton>
+                              </h3>
+                            </div>
+                            <AccordionPanel>{element.component}</AccordionPanel>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </div>
 
                     <div>
                       <h3> Add another objective</h3>
@@ -94,6 +97,7 @@ class Section2b extends Component {
                         className="ds-c-button ds-c-button--primary"
                       >
                         Add another objective
+                        <i class="fas fa-plus"></i>
                       </button>
                     </div>
                   </div>
