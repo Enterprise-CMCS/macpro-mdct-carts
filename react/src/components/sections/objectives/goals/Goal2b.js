@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
-import Accordion from "react-bootstrap/Accordion";
-
 class Goal extends Component {
   constructor(props) {
     super(props);
@@ -9,16 +7,48 @@ class Goal extends Component {
       goal_numerator_digit: 0,
       goal_denominator_digit: 0,
       percentage: 0,
+      shouldCalculate: true,
     };
     this.percentageCalculator = this.percentageCalculator.bind(this);
+    this.addDivisors = this.addDivisors.bind(this);
   }
 
-  percentageCalculator(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-      percentage:
-        this.state.goal_numerator_digit / this.state.goal_denominator_digit,
-    });
+  percentageCalculator() {
+    let numerator = this.state.goal_numerator_digit;
+    let denominator = this.state.goal_denominator_digit;
+    let dividend;
+
+    if (
+      numerator !== "" &&
+      numerator > 0 &&
+      denominator !== "" &&
+      denominator > 0 &&
+      this.state.shouldCalculate === true
+    ) {
+      dividend = (numerator * 100) / denominator;
+      this.setState({
+        percentage: dividend,
+      });
+    }
+  }
+
+  addDivisors(evt) {
+    if (
+      isNaN(parseInt(evt.target.value)) ||
+      /^\d+$/.test(evt.target.value) === false
+    ) {
+      this.setState({
+        [`${evt.target.name}Err`]: "numbers only",
+        shouldCalculate: false,
+      });
+    } else {
+      this.setState({
+        [evt.target.name]: evt.target.value,
+        [`${evt.target.name}Err`]: false,
+        shouldCalculate: true,
+      });
+      this.percentageCalculator();
+    }
   }
 
   render() {
@@ -70,7 +100,8 @@ class Goal extends Component {
             hint="Total number"
             name="goal_numerator_digit"
             size="medium"
-            onChange={this.percentageCalculator}
+            errorMessage={this.state.goal_numerator_digitErr}
+            onChange={this.addDivisors}
           />
           <h4> Define the denominator you're measuring</h4>
           <TextField
@@ -85,7 +116,8 @@ class Goal extends Component {
             hint="Total number"
             name="goal_denominator_digit"
             size="medium"
-            onChange={this.percentageCalculator}
+            errorMessage={this.state.goal_denominator_digitErr}
+            onChange={this.addDivisors}
           />
         </div>
 
@@ -120,10 +152,7 @@ class Goal extends Component {
                     label="Percentage"
                     name="goal_percentage"
                     size="small"
-                    value={`${
-                      this.state.goal_numerator_digit /
-                      this.state.goal_denominator_digit
-                    }%`}
+                    value={`${this.state.percentage}%`}
                   />
                 </div>
               </div>
@@ -134,21 +163,9 @@ class Goal extends Component {
         <div className="question-container">
           <h4> What is the date range for your data?</h4>
           <div className="date-range">
-            <DateField
-              label="Start"
-              hint={"From mm/yyyy to mm/yyyy"}
-              monthValue={12}
-              yearValue={1999}
-              dayDefaultValue={null}
-            />
+            <DateField label="Start" hint={"From mm/yyyy to mm/yyyy"} />
 
-            <DateField
-              label="End"
-              hint={"From mm/yyyy to mm/yyyy"}
-              monthValue={12}
-              yearValue={1999}
-              dayDefaultValue={null}
-            />
+            <DateField label="End" hint={"From mm/yyyy to mm/yyyy"} />
           </div>
         </div>
 
