@@ -56,17 +56,22 @@ pipeline {
             sh '''
               set -e
 
-              # Build image
+              # Build images
               docker build -t ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_UI}:${GIT_BRANCH#*/} app/react
+
+              docker build -t ${ECR_REPOSITORY_URL_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_API}:${GIT_BRANCH#*/} app/api
 
               # Login to ECR repository
               set +x
               eval $(aws ecr get-login --region us-east-1 --no-include-email)
               set -x
 
-              # Push image
+              # Push images
               docker push ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG}
               docker push ${ECR_REPOSITORY_URL_UI}:${BRANCH_NAME}
+
+              docker push ${ECR_REPOSITORY_URL_API}:${BUILD_TAG}
+              docker push ${ECR_REPOSITORY_URL_API}:${BRANCH_NAME}
             '''
           }
 
@@ -74,13 +79,16 @@ pipeline {
             # Fetch ECR static scan results
             aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_UI##*/} --image-id imageTag=${BUILD_TAG}
             aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_UI##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_ui.json >/dev/null
+
+            aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_API##*/} --image-id imageTag=${BUILD_TAG}
+            aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_API##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_api.json >/dev/null
           '''
         }
       }
       post {
         always {
           script {
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_ui.json'
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_*.json'
           }
         }
       }
