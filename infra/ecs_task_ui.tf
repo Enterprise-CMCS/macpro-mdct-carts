@@ -26,6 +26,15 @@ resource "aws_security_group_rule" "ui_ingress" {
   security_group_id        = aws_security_group.ui.id
 }
 
+resource "aws_security_group_rule" "ui_egress_ecr_pull" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.ui.id
+}
+
 resource "aws_ecs_service" "ui" {
   name            = "ui-${terraform.workspace}"
   cluster         = aws_ecs_cluster.application.id

@@ -38,6 +38,15 @@ resource "aws_security_group_rule" "api_egress" {
   security_group_id        = aws_security_group.api.id
 }
 
+resource "aws_security_group_rule" "api_egress_ecr_pull" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.api.id
+}
+
 resource "aws_ecs_service" "api" {
   name            = "api-${terraform.workspace}"
   cluster         = aws_ecs_cluster.application.id

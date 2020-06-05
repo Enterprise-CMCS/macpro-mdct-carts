@@ -9,15 +9,12 @@ class Goal extends Component {
       percentage: 0,
       shouldCalculate: true,
     };
-    this.percentageCalculator = this.percentageCalculator.bind(this);
     this.addDivisors = this.addDivisors.bind(this);
   }
 
-  percentageCalculator() {
-    let numerator = this.state.goal_numerator_digit;
-    let denominator = this.state.goal_denominator_digit;
-    let dividend;
-
+  // Validate the input before returning calculated percentage
+  percentageCalculator(numerator, denominator) {
+    let quotient;
     if (
       numerator !== "" &&
       numerator > 0 &&
@@ -25,29 +22,43 @@ class Goal extends Component {
       denominator > 0 &&
       this.state.shouldCalculate === true
     ) {
-      dividend = (numerator * 100) / denominator;
-      this.setState({
-        percentage: dividend,
-      });
+      quotient = (numerator * 100) / denominator;
+      return quotient;
     }
+    // default value
+    return "--";
   }
 
+  // Validate the input and set the state
   addDivisors(evt) {
+    let num;
+    let denom;
+    // If the input includes letters, give the box an error message
     if (
       isNaN(parseInt(evt.target.value)) ||
       /^\d+$/.test(evt.target.value) === false
     ) {
       this.setState({
-        [`${evt.target.name}Err`]: "numbers only",
+        [`${evt.target.name}Err`]: "This input takes numbers only",
         shouldCalculate: false,
       });
+      return;
     } else {
+      // Calculate without waiting for the input to be added to state
+      if (evt.target.name === "goal_numerator_digit") {
+        num = evt.target.value;
+        denom = this.state.goal_denominator_digit || 0;
+      } else if (evt.target.name === "goal_denominator_digit") {
+        num = this.state.goal_numerator_digit || 0;
+        denom = evt.target.value;
+      }
+
       this.setState({
         [evt.target.name]: evt.target.value,
         [`${evt.target.name}Err`]: false,
         shouldCalculate: true,
+        percentage: this.percentageCalculator(num, denom),
       });
-      this.percentageCalculator();
     }
   }
 
