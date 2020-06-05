@@ -98,6 +98,13 @@ img {
   max-width: 100%;
 }
 
+.fa-plus {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-left: 58px;
+  padding: 2px;
+}
+
 /**********************
   HEADER
 **********************/
@@ -507,6 +514,18 @@ img {
   border-right: none;
   color: #999;
   padding: 32px 0;
+}
+
+.homepage .updates .update .icon .icon-inner {
+  background: #e1f3f8;
+  border-radius: 4px;
+  color: #0872b9;
+  display: inline-block;
+  font-size: 80px;
+  height: auto;
+  padding: 16px 40px;
+  text-align: center;
+  width: auto;
 }
 
 .homepage .updates .update .date {

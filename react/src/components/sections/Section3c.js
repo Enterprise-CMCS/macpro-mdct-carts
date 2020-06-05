@@ -7,6 +7,8 @@ import {
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../layout/Sidebar";
 
 class Section3c extends Component {
@@ -170,6 +172,7 @@ class Section3c extends Component {
                               onClick={this.loadAnswers}
                               name="p1_q1"
                             >
+                              <i class="fas fa-undo"></i>
                               Same as last year
                             </a>
                           </div>
