@@ -19,6 +19,10 @@
       {
         "name": "POSTGRES_PASSWORD",
         "value": "${postgres_password}"
+      },
+      {
+        "name": "DATABASE",
+        "value": "postgres"
       }
     ],
     "portMappings": [
