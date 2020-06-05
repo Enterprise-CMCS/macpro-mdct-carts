@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "api" {
     postgres_host     = module.db.this_db_instance_address
     postgres_db       = module.db.this_db_instance_name
     postgres_user     = module.db.this_db_instance_username
-    postgres_password = "weakPASSWORD"
+    postgres_password = var.postgres_password
   })
 }
 

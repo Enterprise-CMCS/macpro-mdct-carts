@@ -14,6 +14,7 @@ pipeline {
   }
   environment {
     BUILD_TAG = resolveBuildTag()
+    POSTGRES_CREDENTIAL_NAME = 'POSTGRES_CREDENTIAL'
   }
   stages {
     stage("Prep Agent") {
@@ -96,25 +97,27 @@ pipeline {
     stage("Deploy Environment") {
       steps {
         script {
-          sh '''
-            set -e
+          withCredentials([usernamePassword(credentialsId: '${POSTGRES_CREDENTIAL_NAME}', passwordVariable: 'TF_VAR_postgres_password', usernameVariable: 'TF_VAR_postgres_user')]) {
+            sh '''
+              set -e
 
-            export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
-            export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_API}
-            export TF_VAR_application_version=${BUILD_TAG}
-            PATH=~/.local/bin:$PATH
+              export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
+              export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_API}
+              export TF_VAR_application_version=${BUILD_TAG}
+              PATH=~/.local/bin:$PATH
 
-            cd infra
-            terraform init -backend-config="bucket=${APPLICATION_BUCKET}" -input=false
-            if ! terraform workspace list | grep -q " $BRANCH_NAME$" ; then
-              terraform workspace new ${BRANCH_NAME}
-            fi
-            terraform workspace select ${BRANCH_NAME}
-            terraform plan > log_tfplan.txt
-            terraform ${ACTION:-apply} -input=false -auto-approve
-          '''
-          dir('infra') {
-            env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
+              cd infra
+              terraform init -backend-config="bucket=${APPLICATION_BUCKET}" -input=false
+              if ! terraform workspace list | grep -q " $BRANCH_NAME$" ; then
+                terraform workspace new ${BRANCH_NAME}
+              fi
+              terraform workspace select ${BRANCH_NAME}
+              terraform plan > log_tfplan.txt
+              terraform ${ACTION:-apply} -input=false -auto-approve
+            '''
+            dir('infra') {
+              env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
+            }
           }
         }
       }

@@ -9,8 +9,8 @@ module "db" {
   allocated_storage       = 50
   storage_encrypted       = true
   name                    = "postgres"
-  username                = "postgres"
-  password                = "weakPASSWORD"
+  username                = var.postgres_user
+  password                = var.postgres_password
   port                    = "5432"
   vpc_security_group_ids  = [aws_security_group.db.id]
   maintenance_window      = "Mon:00:00-Mon:03:00"
