@@ -28,10 +28,13 @@ module "db" {
 
 resource "aws_security_group" "db" {
   vpc_id = module.vpc.vpc_id
-  ingress {
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    security_groups = [aws_security_group.api.id]
-  }
+}
+
+resource "aws_security_group_rule" "db_ingress" {
+  type                     = "ingress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.api.id
+  security_group_id        = aws_security_group.db.id
 }

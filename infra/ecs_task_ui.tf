@@ -15,12 +15,15 @@ resource "aws_ecs_task_definition" "ui" {
 
 resource "aws_security_group" "ui" {
   vpc_id = module.vpc.vpc_id
-  ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb_ui.id]
-  }
+}
+
+resource "aws_security_group_rule" "ui_ingress" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.alb_ui.id
+  security_group_id        = aws_security_group.ui.id
 }
 
 resource "aws_ecs_service" "ui" {

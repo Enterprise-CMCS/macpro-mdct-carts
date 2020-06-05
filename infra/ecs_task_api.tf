@@ -18,18 +18,24 @@ resource "aws_ecs_task_definition" "api" {
 
 resource "aws_security_group" "api" {
   vpc_id = module.vpc.vpc_id
-  ingress {
-    from_port       = 8000
-    to_port         = 8000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb_api.id]
-  }
-  egress {
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    security_groups = [aws_security_group.db.id]
-  }
+}
+
+resource "aws_security_group_rule" "api_ingress" {
+  type                     = "ingress"
+  from_port                = 8000
+  to_port                  = 8000
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.alb_api.id
+  security_group_id        = aws_security_group.api.id
+}
+
+resource "aws_security_group_rule" "api_egress" {
+  type                     = "egress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.db.id
+  security_group_id        = aws_security_group.api.id
 }
 
 resource "aws_ecs_service" "api" {
