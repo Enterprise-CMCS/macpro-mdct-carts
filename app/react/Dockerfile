@@ -1,6 +1,6 @@
 # ==============================================================================
 # => Build container
-FROM node:14.2.0-alpine as builder
+FROM node:14.4.0-alpine as builder
 
 # Set working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN npm run build
 
 # ==============================================================================
 # => Run container
-FROM nginx:1.15.2-alpine as runner
+FROM nginx:1.19.0-alpine as runner
 
 # Copy nginx config
 RUN rm -rf /etc/nginx/conf.d
