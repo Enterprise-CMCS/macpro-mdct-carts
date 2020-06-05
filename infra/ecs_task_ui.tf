@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "ui_egress_ecr_pull" {
 }
 
 resource "aws_ecs_service" "ui" {
-  name            = "ui-${terraform.workspace}"
+  name            = "ui"
   cluster         = aws_ecs_cluster.application.id
   task_definition = aws_ecs_task_definition.ui.arn
   capacity_provider_strategy {

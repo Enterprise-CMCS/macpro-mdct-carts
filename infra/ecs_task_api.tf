@@ -48,7 +48,7 @@ resource "aws_security_group_rule" "api_egress_ecr_pull" {
 }
 
 resource "aws_ecs_service" "api" {
-  name            = "api-${terraform.workspace}"
+  name            = "api"
   cluster         = aws_ecs_cluster.application.id
   task_definition = aws_ecs_task_definition.api.arn
   capacity_provider_strategy {
