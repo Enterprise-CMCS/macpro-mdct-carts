@@ -97,7 +97,7 @@ class Section2b extends Component {
                         className="ds-c-button ds-c-button--primary"
                       >
                         Add another objective
-                        <i class="fas fa-plus"></i>
+                        {/* <i class="fas fa-fire"></i> */}
                       </button>
                     </div>
                   </div>

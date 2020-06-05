@@ -161,7 +161,7 @@ img {
 }
 
 .header .nav-user .menu-block .manage-account {
-  padding-left: 32px;
+  padding: 8px 0 8px 32px;
   position: relative;
 }
 
@@ -169,7 +169,7 @@ img {
   content: "\f044";
   font-family: "FontAwesome";
   position: absolute;
-  top: 0;
+  top: 12px;
   left: 0;
 }
 
@@ -179,10 +179,10 @@ img {
 }
 
 .header .nav-user .menu-block .logout a:before {
-  content: "\f2f5";
+  content: "\f08b";
   font-family: "FontAwesome";
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
 }
 
@@ -430,6 +430,11 @@ img {
   text-decoration: none;
 }
 
+.reports table a,
+.reports table a:visited {
+  color: #0872b9;
+}
+
 .reports .ds-c-table th {
   background: none;
   color: #333;
@@ -510,6 +515,10 @@ img {
 
 .homepage .updates p {
   line-height: 2rem;
+}
+
+.homepage .updates .update h3 {
+  margin-bottom: 0;
 }
 
 .accordion-header h3 {

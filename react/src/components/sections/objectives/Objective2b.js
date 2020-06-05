@@ -76,7 +76,7 @@ class Objective2b extends Component {
             className="ds-c-button ds-c-button--primary"
           >
             Add another goal
-            <i class="fas fa-plus"></i>
+            {/* <i class="fas fa-plus"></i> */}
           </button>
         </div>
       </Fragment>

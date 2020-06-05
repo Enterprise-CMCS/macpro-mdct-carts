@@ -49,7 +49,7 @@ class Homepage extends Component {
                   <div className="download">
                     <button class="ds-c-button ds-c-button--primary">
                       Download template
-                      <i class="fas fa-plus"></i>
+                      {/* <i class="fas fa-plus"></i> */}
                     </button>
                   </div>
                 </div>
