@@ -52,25 +52,27 @@ pipeline {
     stage("Deploy Environment") {
       steps {
         script {
-          sh '''
-            set -e
+          withCredentials([usernamePassword(credentialsId: env.POSTGRES_CREDENTIAL_NAME, passwordVariable: 'TF_VAR_postgres_password', usernameVariable: 'TF_VAR_postgres_user')]) {
+            sh '''
+              set -e
 
-            export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
-            export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_API}
-            export TF_VAR_application_version=${VERSION}
-            PATH=~/.local/bin:$PATH
+              export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
+              export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_API}
+              export TF_VAR_application_version=${VERSION}
+              PATH=~/.local/bin:$PATH
 
-            cd infra
-            terraform init -backend-config="bucket=${APPLICATION_BUCKET}" -input=false
-            if ! terraform workspace list | grep -q " $JOB_NAME$" ; then
-              terraform workspace new ${JOB_NAME}
-            fi
-            terraform workspace select ${JOB_NAME}
-            terraform plan > log_tfplan.txt
-            terraform ${ACTION:-apply} -input=false -auto-approve
-          '''
-          dir('infra') {
-            env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
+              cd infra
+              terraform init -backend-config="bucket=${APPLICATION_BUCKET}" -input=false
+              if ! terraform workspace list | grep -q " $JOB_NAME$" ; then
+                terraform workspace new ${JOB_NAME}
+              fi
+              terraform workspace select ${JOB_NAME}
+              terraform plan > log_tfplan.txt
+              terraform ${ACTION:-apply} -input=false -auto-approve
+            '''
+            dir('infra') {
+              env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
+            }
           }
         }
       }
