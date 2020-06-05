@@ -14,7 +14,7 @@ services:
   api:
     image: api:app
     build:
-      context: ./api
+      context: ./django
       dockerfile: Dockerfile
     command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     ports:

@@ -59,7 +59,7 @@ pipeline {
               # Build images
               docker build -t ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_UI}:${GIT_BRANCH#*/} app/react
 
-              docker build -t ${ECR_REPOSITORY_URL_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_API}:${GIT_BRANCH#*/} app/api
+              docker build -t ${ECR_REPOSITORY_URL_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_API}:${GIT_BRANCH#*/} app/django
 
               # Login to ECR repository
               set +x
