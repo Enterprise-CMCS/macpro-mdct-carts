@@ -19,7 +19,7 @@ module "db" {
   tags = {
     Environment = terraform.workspace
   }
-  subnet_ids                = module.vpc.private_subnets
+  subnet_ids                = data.aws_subnet_ids.private.ids
   family                    = "postgres9.6"
   major_engine_version      = "9.6"
   final_snapshot_identifier = "postgres-${terraform.workspace}"
@@ -27,7 +27,7 @@ module "db" {
 }
 
 resource "aws_security_group" "db" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = data.aws_vpc.app.id
 }
 
 resource "aws_security_group_rule" "db_ingress" {
