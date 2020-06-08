@@ -1,0 +1,246 @@
+/**********************
+  MAIN
+**********************/
+.main {
+  padding: ($padding * 2) 0;
+}
+
+.page-info {
+  margin-top: ($margin * 2);
+
+  .edit-info {
+    color: $color-gray-light;
+    padding-left: 20px;
+    position: relative;
+    text-transform: uppercase;
+
+    &:before {
+      content: "\f15b";
+      font-family: "FontAwesome";
+      position: absolute;
+      top: 2px;
+      left: 0;
+    }
+
+    img {
+      width: 24px;
+    }
+  }
+
+  h1 {
+    font-weight: 500;
+    margin-top: 0;
+  }
+}
+
+.omb-info {
+  color: $color-hint;
+  font-size: 0.85rem;
+  line-height: 1.6rem;
+  margin: 64px 0;
+}
+
+.reports {
+  color: $color-hint;
+  width: 100%;
+
+  h3 {
+    color: $black;
+  }
+
+  table {
+    width: 100%;
+
+    a,
+    a:visited {
+      color: $brand-primary;
+      text-decoration: none;
+    }
+
+    .name {
+      color: $color-gray;
+      font-weight: $font-weight-semi-bold;
+    }
+  }
+
+  .ds-c-table th {
+    background: none;
+    color: $color-gray;
+    font-size: 0.85rem;
+    font-weight: $font-weight-light;
+    text-transform: uppercase;
+  }
+
+  .ds-c-table td,
+  .ds-c-table th {
+    border: none;
+  }
+}
+
+.reports-footer {
+  color: $color-hint;
+  margin-top: ($margin * 3);
+  width: 100%;
+
+  .pager {
+    text-align: right;
+  }
+  .count {
+    color: $color-gray;
+    font-weight: $font-weight-semi-bold;
+  }
+
+  [class^="number-"] {
+    border-radius: $border-radius;
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    text-align: center;
+  }
+}
+
+.number-primary {
+  background: $brand-primary;
+  color: $white;
+}
+
+.number-outline {
+  border: 1px solid $color-hint;
+}
+
+.homepage {
+  .page-title {
+    margin-top: ($margin * 4);
+    margin-bottom: $margin;
+  }
+
+  .updates {
+    h3 {
+      color: $black;
+      font-weight: $font-weight-normal;
+      font-size: 1.4rem;
+      margin-top: 0;
+    }
+    h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+    p {
+      line-height: 2rem;
+    }
+
+    .update {
+      border: 2px solid $color-gray-lightest;
+      border-left: none;
+      border-right: none;
+      color: $color-hint;
+      padding: ($padding * 4) 0;
+
+      h3 {
+        margin-bottom: 0;
+      }
+
+      .icon {
+        .icon-inner {
+          background: $lily-white;
+          border-radius: $border-radius;
+          color: $brand-primary;
+          display: inline-block;
+          font-size: 80px;
+          height: auto;
+          padding: ($padding * 2) ($padding * 5);
+          text-align: center;
+          width: auto;
+        }
+      }
+      .date {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.accordion-header {
+  h3 {
+    margin-bottom: 0;
+
+    button {
+      background: $lily-white;
+      border: none;
+      border-top: 6px solid $brand-primary;
+      border-bottom: 1px solid $color-gray-light;
+      font-size: 1.6rem;
+      font-weight: bold;
+      padding: ($padding * 4) ($padding * 2);
+      position: relative;
+      text-align: left;
+      width: 100%;
+
+      .arrow {
+        position: absolute;
+        top: calc(50% - 30px);
+        right: 16px;
+
+        &:before {
+          content: "\f106";
+          font-family: "FontAwesome";
+          position: absolute;
+          top: ($margin * 2);
+          right: 0;
+        }
+      }
+    }
+  }
+}
+
+.objective-body,
+.objective-footer {
+  background: $color-gray-lightest;
+  padding: ($padding * 2);
+}
+
+.objective-body {
+  h3 > button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+  }
+
+  .goals {
+    padding-left: ($padding * 2);
+  }
+}
+
+.objective-body .percentages-info {
+  padding: 0 ($padding * 2);
+}
+
+.percentages-info {
+  h4 {
+    margin-bottom: 0;
+  }
+}
+
+.percentages {
+  padding: ($padding * 2);
+}
+.percentages {
+  & > div {
+    display: inline-block;
+    width: auto;
+
+    &:last-of-type {
+      div:first-of-type {
+        margin-left: 4px;
+      }
+    }
+
+    & > div {
+      display: inline-block;
+    }
+  }
+
+  .divide {
+    margin: ($margin * 2);
+  }
+}
