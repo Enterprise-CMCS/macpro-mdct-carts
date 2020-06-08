@@ -7,13 +7,13 @@ data "aws_vpc" "app" {
 data "aws_subnet_ids" "private" {
   vpc_id = data.aws_vpc.app.id
   tags = {
-    Tier = "Private"
+    Type = "private"
   }
 }
 
 data "aws_subnet_ids" "public" {
   vpc_id = data.aws_vpc.app.id
   tags = {
-    Tier = "Public"
+    Type = "public"
   }
 }

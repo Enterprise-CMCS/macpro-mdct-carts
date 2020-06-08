@@ -15,7 +15,7 @@ pipeline {
   environment {
     BUILD_TAG = resolveBuildTag()
     POSTGRES_CREDENTIAL_NAME = 'POSTGRES_CREDENTIAL'
-    VPC_NAME = "app_dev"
+    VPC_NAME = "macpro-dev"
   }
   stages {
     stage("Prep Agent") {
