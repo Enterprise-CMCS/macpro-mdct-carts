@@ -169,18 +169,16 @@ class Section3c extends Component {
                               href="#same"
                               onClick={this.loadAnswers}
                               name="p1_q1"
-                            >
-                              Same as last year
-                            </a>
+                              title="Same as last year"
+                            ></a>
                           </div>
                           <div className="clear-form">
                             <a
                               href="#same"
                               onClick={this.clearAnswers}
                               name="p1_q1"
-                            >
-                              Undo
-                            </a>
+                              title="Undo"
+                            ></a>
                           </div>
                           <div className="question">
                             1. Do you have authority in your CHIP state plan to
@@ -224,18 +222,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q2"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p1_q2"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <div className="question">
                           2. Tell us how your state simplifies the eligibility
@@ -282,18 +278,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q3"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p1_q3"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <div className="question">
                           3. Which retention strategies have been most effective
@@ -313,18 +307,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q4"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p1_q4"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <div className="question">
                           4. How have you evaluated the effectiveness of your
@@ -344,18 +336,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q5"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p1_q5"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <div className="question">
                           5. What data sources and methodology do you use for
@@ -376,18 +366,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q1"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p2_q1"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <div className="question">
                           A. Denials of Title XXI Coverage in FFY 2019
@@ -409,18 +397,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q2"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p2_q2"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <TextField
                           hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
@@ -435,18 +421,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q3"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p2_q3"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <TextField
                           hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
@@ -461,18 +445,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q4"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p2_q4"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <TextField
                           label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
@@ -486,18 +468,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q5"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p2_q5"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <TextField
                           label="5. How many applicants were denied Title XXI coverage for other reasons?"
@@ -511,18 +491,16 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q6"
-                          >
-                            Same as last year
-                          </a>
+                            title="Same as last year"
+                          ></a>
                         </div>
                         <div className="clear-form">
                           <a
                             href="#same"
                             onClick={this.clearAnswers}
                             name="p2_q6"
-                          >
-                            Undo
-                          </a>
+                            title="Undo"
+                          ></a>
                         </div>
                         <TextField
                           hint="(Maximum 7,500 characters)"

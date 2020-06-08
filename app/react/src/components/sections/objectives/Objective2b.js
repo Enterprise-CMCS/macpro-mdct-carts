@@ -7,6 +7,8 @@ import {
   AccordionButton,
   AccordionPanel,
 } from "@reach/accordion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 
 class Objective2b extends Component {
@@ -76,7 +78,7 @@ class Objective2b extends Component {
             className="ds-c-button ds-c-button--primary"
           >
             Add another goal
-            <i class="fas fa-plus"></i>
+            <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
       </Fragment>
