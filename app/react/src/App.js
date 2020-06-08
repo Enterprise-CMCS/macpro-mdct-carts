@@ -1,5 +1,6 @@
 import React from "react";
-import "./App.css";
+import "font-awesome/css/font-awesome.min.css";
+import "./App.scss";
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";

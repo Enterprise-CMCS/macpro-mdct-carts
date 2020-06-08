@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Button as button } from "@cmsgov/design-system-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 
 class Homepage extends Component {
   constructor(props) {
@@ -26,10 +28,9 @@ class Homepage extends Component {
               <h4>Updates from Central Office</h4>
               <div className="update ds-l-row">
                 <div className="icon ds-l-col--2">
-                  <img
-                    src={process.env.PUBLIC_URL + "/img/states/ny.svg"}
-                    alt="Medicaid.gov"
-                  />
+                  <div className="icon-inner">
+                    <FontAwesomeIcon icon={faFileAlt} />
+                  </div>
                 </div>
                 <div className="update-contents ds-l-col--10">
                   <div className="title-date ds-l-row">
@@ -48,8 +49,8 @@ class Homepage extends Component {
                   </p>
                   <div className="download">
                     <button class="ds-c-button ds-c-button--primary">
-                      Download template
-                      <i class="fas fa-plus"></i>
+                      <span>Download template</span>
+                      <FontAwesomeIcon icon={faPlus} />
                     </button>
                   </div>
                 </div>
