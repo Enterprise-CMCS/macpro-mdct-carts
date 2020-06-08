@@ -59,6 +59,7 @@ pipeline {
               export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
               export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_API}
               export TF_VAR_application_version=${VERSION}
+              export TF_VAR_vpc_name=${VPC_NAME}
               PATH=~/.local/bin:$PATH
 
               cd infra

@@ -14,7 +14,7 @@ resource "aws_ecs_task_definition" "ui" {
 }
 
 resource "aws_security_group" "ui" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = data.aws_vpc.app.id
 }
 
 resource "aws_security_group_rule" "ui_ingress" {
@@ -45,7 +45,7 @@ resource "aws_ecs_service" "ui" {
   }
   desired_count = 6
   network_configuration {
-    subnets         = module.vpc.private_subnets
+    subnets         = data.aws_subnet_ids.private.ids
     security_groups = [aws_security_group.ui.id]
   }
   load_balancer {
@@ -68,7 +68,7 @@ resource "null_resource" "wait_for_ecs_stability_ui" {
 
 
 resource "aws_security_group" "alb_ui" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = data.aws_vpc.app.id
   ingress {
     from_port   = 80
     to_port     = 80
@@ -87,7 +87,7 @@ resource "aws_alb" "ui" {
   name            = "ui-alb-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_ui.id]
-  subnets         = module.vpc.public_subnets
+  subnets         = data.aws_subnet_ids.public.ids
 }
 
 resource "aws_alb_target_group" "ui" {
@@ -96,7 +96,7 @@ resource "aws_alb_target_group" "ui" {
   target_type          = "ip"
   protocol             = "HTTP"
   deregistration_delay = "0"
-  vpc_id               = module.vpc.vpc_id
+  vpc_id               = data.aws_vpc.app.id
 
   depends_on = [aws_alb.ui]
 }
