@@ -1,0 +1,7 @@
+# => Build container
+FROM node:14.4.0 as dev
+
+# Set working directory
+WORKDIR /app
+
+CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start"]
