@@ -98,6 +98,13 @@ img {
   max-width: 100%;
 }
 
+.fa-plus {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-left: 58px;
+  padding: 2px;
+}
+
 /**********************
   HEADER
 **********************/
@@ -161,7 +168,7 @@ img {
 }
 
 .header .nav-user .menu-block .manage-account {
-  padding-left: 32px;
+  padding: 8px 0 8px 32px;
   position: relative;
 }
 
@@ -169,7 +176,7 @@ img {
   content: "\f044";
   font-family: "FontAwesome";
   position: absolute;
-  top: 0;
+  top: 12px;
   left: 0;
 }
 
@@ -179,10 +186,10 @@ img {
 }
 
 .header .nav-user .menu-block .logout a:before {
-  content: "\f2f5";
+  content: "\f08b";
   font-family: "FontAwesome";
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
 }
 
@@ -316,15 +323,33 @@ img {
 
 .question-container .fill-form.active,
 .question-container .clear-form {
-  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
-  background-repeat: no-repeat;
+  float: right;
   height: 30px;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   right: 0;
-  text-indent: -999rem;
   top: 0;
   width: 30px;
+}
+
+.question-container .fill-form.active a,
+.question-container .clear-form a {
+  display: block;
+  height: 100%;
+  pointer-events: all;
+  width: 100%;
+}
+
+.question-container .fill-form a:after,
+.question-container .clear-form a:after {
+  content: "\f019";
+  color: black;
+  font-family: "FontAwesome";
+  height: 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
 }
 
 .question-container .fill-form {
@@ -335,11 +360,12 @@ img {
   display: block;
 }
 
+.question-container .clear-form a:after {
+  content: "\f0e2";
+}
+
 .question-container .clear-form {
-  background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%2226%22%3E%3Cpath%20d%3D%22M14.502%204.62L25.37%2015.498c.42.403.631.9.631%201.502a1.99%201.99%200%2001-.631%201.502l-1.251%201.269c-.41.409-.912.62-1.502.62a2.125%202.125%200%2001-1.52-.62L13%2011.663l-8.107%208.108c-.41.409-.912.62-1.503.62a2.125%202.125%200%2001-1.52-.62L.62%2018.502C.21%2018.093%200%2017.59%200%2017s.205-1.093.62-1.502L11.48%204.62A2.15%202.15%200%200113%204c.59%200%201.093.205%201.502.62z%22%2F%3E%3C%2Fsvg%3E);
-  background-repeat: no-repeat;
   display: none;
-  transform: rotate(180deg);
 }
 
 .question-container .clear-form.active {
@@ -430,6 +456,11 @@ img {
   text-decoration: none;
 }
 
+.reports table a,
+.reports table a:visited {
+  color: #0872b9;
+}
+
 .reports .ds-c-table th {
   background: none;
   color: #333;
@@ -504,12 +535,28 @@ img {
   padding: 32px 0;
 }
 
+.homepage .updates .update .icon .icon-inner {
+  background: #e1f3f8;
+  border-radius: 4px;
+  color: #0872b9;
+  display: inline-block;
+  font-size: 80px;
+  height: auto;
+  padding: 16px 40px;
+  text-align: center;
+  width: auto;
+}
+
 .homepage .updates .update .date {
   text-align: right;
 }
 
 .homepage .updates p {
   line-height: 2rem;
+}
+
+.homepage .updates .update h3 {
+  margin-bottom: 0;
 }
 
 .accordion-header h3 {
