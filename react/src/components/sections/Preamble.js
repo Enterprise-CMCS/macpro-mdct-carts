@@ -16,24 +16,28 @@ class Preamble extends Component {
             </div>
 
             <div className="main ds-l-col--9">
-              <div className="page-info">
+              <div className="ds-base">
                 <h2> Preamble </h2>
-                <p>
-                  Completing the CHIP Annual Report Template System (CARTS) is
-                  required under Title XXI, Section 2108(a) and Section 2108(e)
-                  of the Social Security Act.
-                </p>
-                <p>
-                  Each state or territory must assess their CHIP (Children’s
-                  Health Insurance Program) operations and their progress in
-                  reducing the number of uninsured low-income children after
-                  each federal fiscal year.
-                </p>
+                <div className="ds-base--inverse">
+                  <div classname="preamble">
+                    <p>
+                      Completing the CHIP Annual Report Template System (CARTS)
+                      is required under Title XXI, Section 2108(a) and Section
+                      2108(e) of the Social Security Act.
+                    </p>
+                    <p>
+                      Each state or territory must assess their CHIP (Children’s
+                      Health Insurance Program) operations and their progress in
+                      reducing the number of uninsured low-income children after
+                      each federal fiscal year.
+                    </p>
 
-                <p>
-                  A state or territory must complete CARTS, including all
-                  relevant sections to their program, by January 1.
-                </p>
+                    <p>
+                      A state or territory must complete CARTS, including all
+                      relevant sections to their program, by January 1.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

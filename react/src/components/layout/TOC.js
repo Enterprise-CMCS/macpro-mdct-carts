@@ -8,6 +8,11 @@ const TOC = () => {
         selectedId="toc"
         items={[
           {
+            label: "Preamble",
+            url: "/preamble",
+            id: "preamble",
+          },
+          {
             label: "Your basic information",
             url: "javascript:void(0);",
             id: "overview",
