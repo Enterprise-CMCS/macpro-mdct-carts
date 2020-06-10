@@ -16,7 +16,7 @@ class Homepage extends Component {
       <div class="homepage">
         <div className="ds-l-container">
           <div className="ds-l-row">
-            <div className="page-title">
+            <div className="page-title ds-l-col--12">
               <h1>
                 Children's Health Insurance Program Annual Report Template
                 System (CARTS)
@@ -24,7 +24,7 @@ class Homepage extends Component {
             </div>
           </div>
           <div className="ds-l-row">
-            <div className="updates">
+            <div className="updates ds-l-col--12">
               <h4>Updates from Central Office</h4>
               <div className="update ds-l-row">
                 <div className="icon ds-l-col--2">
@@ -58,7 +58,7 @@ class Homepage extends Component {
             </div>
           </div>
           <div className="ds-l-row">
-            <div className="reports">
+            <div className="reports ds-l-col--12">
               <h3>CARTS reports</h3>
               <table className="ds-c-table ds-c-table--borderless">
                 <thead>
@@ -180,12 +180,14 @@ class Homepage extends Component {
             </div>
           </div>
           <div className="ds-l-row">
-            <div class="omb-info">
-              The OMB control number for this information is OMB 0938-1148. The
-              time required to complete this information collection is estimated
-              to 40 hours per response, including the time to review
-              instructions, search existing data resources, gather data, and
-              review and submit the information.
+            <div class="omb-info ds-l-col--12">
+              <p>
+                The OMB control number for this information is OMB 0938-1148.
+                The time required to complete this information collection is
+                estimated to 40 hours per response, including the time to review
+                instructions, search existing data resources, gather data, and
+                review and submit the information.
+              </p>
             </div>
           </div>
         </div>
