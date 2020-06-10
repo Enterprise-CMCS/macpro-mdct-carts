@@ -11,7 +11,6 @@
 
 .question-container {
   margin-bottom: ($padding * 4);
-  padding-right: ($padding * 3);
   position: relative;
 
   .fill-form.active,
@@ -21,7 +20,7 @@
     overflow: hidden;
     position: relative;
     right: 0;
-    top: 0;
+    top: 28px;
     width: 30px;
 
     a {
