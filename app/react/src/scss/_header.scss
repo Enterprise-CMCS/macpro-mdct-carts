@@ -6,6 +6,10 @@
   background: $brand-tertiary;
   color: $white;
 
+  @media only screen and (max-width: 767px) {
+    text-align: center;
+  }
+
   &:after {
     content: "";
     clear: both;
@@ -26,14 +30,23 @@
   .site-title {
     font-weight: $font-weight-bold;
     text-transform: uppercase;
+    font-size: 1rem;
+
+    @media only screen and (max-width: 767px) {
+      font-size: 1.6rem;
+    }
   }
 
   .save-status {
-    border-right: 2px solid $white;
     font-size: 0.85rem;
     font-style: italic;
     padding-top: 0.1rem;
-    text-align: right;
+    text-align: center;
+
+    @media only screen and (min-width: 768px) {
+      border-right: 2px solid $white;
+      text-align: right;
+    }
   }
 
   .nav-user {
@@ -51,7 +64,11 @@
         padding: 0;
         padding-right: ($padding * 3);
         position: relative;
-        text-align: right;
+        text-align: center;
+
+        @media only screen and (min-width: 768px) {
+          text-align: right;
+        }
 
         a {
           &:after {

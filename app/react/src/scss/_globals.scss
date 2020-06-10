@@ -1,6 +1,10 @@
 /**********************
   GLOBALS
 **********************/
+* {
+  box-sizing: border-box;
+}
+
 h1 {
   font-weight: $font-weight-normal;
 }
