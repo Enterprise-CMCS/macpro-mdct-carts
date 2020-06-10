@@ -8,16 +8,21 @@ const TOC = () => {
         selectedId="toc"
         items={[
           {
-            label: "Overview",
+            label: "Preamble",
+            url: "/preamble",
+            id: "preamble",
+          },
+          {
+            label: "Basic Information",
             url: "javascript:void(0);",
             id: "overview",
           },
           {
-            label: "Section 1: Snapshot of CHIP Programs",
+            label: "Section 1: Program Fees and Policy Changes",
             url: "javascript:void(0);",
           },
           {
-            label: "Section 2: Program's Performance Measurement",
+            label: "Section 2: Eligibility and Enrollment",
             select: true,
             items: [
               {
@@ -32,7 +37,7 @@ const TOC = () => {
             ],
           },
           {
-            label: "Section 3: Assessment of State Plan and Program Operation",
+            label: "Section 3: Program Operations",
             select: true,
             items: [
               {
@@ -70,11 +75,15 @@ const TOC = () => {
             ],
           },
           {
-            label: "Section 4: Program Financing",
+            label: "Section 4: State Plan Goals and Objectives",
             url: "javascript:void(0);",
           },
           {
-            label: "Section 5: Challenges and Accomplishments",
+            label: "Section 5: Budget and Finances",
+            url: "javascript:void(0);",
+          },
+          {
+            label: "Section 6: Challenges and Accomplishments",
             url: "javascript:void(0);",
           },
           {
