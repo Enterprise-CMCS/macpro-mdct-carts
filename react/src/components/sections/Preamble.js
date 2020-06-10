@@ -17,9 +17,9 @@ class Preamble extends Component {
 
             <div className="main ds-l-col--9">
               <div className="ds-base">
-                <h2> Preamble </h2>
-                <div className="ds-base--inverse">
-                  <div classname="preamble">
+                <h1> Preamble </h1>
+                <div className="ds-base">
+                  <div className="preamble">
                     <p>
                       Completing the CHIP Annual Report Template System (CARTS)
                       is required under Title XXI, Section 2108(a) and Section

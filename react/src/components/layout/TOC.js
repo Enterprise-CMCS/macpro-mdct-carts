@@ -13,7 +13,7 @@ const TOC = () => {
             id: "preamble",
           },
           {
-            label: "Your basic information",
+            label: "Basic Information",
             url: "javascript:void(0);",
             id: "overview",
           },
