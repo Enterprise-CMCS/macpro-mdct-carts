@@ -13,7 +13,8 @@ services:
       - API_URL=http://localhost:8000 # This is how a browser would call the api
     stdin_open: true
     volumes:
-      - ./react:/app:cached
+      - ./react:/app
+      - /app/node_modules
   api:
     image: api:dev
     build:
