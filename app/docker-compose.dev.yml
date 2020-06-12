@@ -11,9 +11,11 @@ services:
       - backend_app
     environment:
       - API_URL=http://localhost:8000 # This is how a browser would call the api
+      - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     volumes:
-      - ./react:/app:cached
+      - ./react:/app
+      - /app/node_modules
   api:
     image: api:dev
     build:
