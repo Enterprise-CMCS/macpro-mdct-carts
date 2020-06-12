@@ -6,7 +6,7 @@ services:
       context: ./react
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "81:80"
     networks:
       - backend_app
     environment:
