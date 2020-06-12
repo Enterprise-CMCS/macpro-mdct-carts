@@ -8,16 +8,23 @@ class BasicInfo extends Component {
   }
   render() {
     return (
-      <div className="section-3c">
+      <div className="section-basic-info">
         <div className="ds-l-container">
           <div className="ds-l-row">
-            <dijhglv className="sidebar ds-l-col--3">
+            <div className="sidebar ds-l-col--3">
               <Sidebar />
-            </dijhglv>
+            </div>
 
             <div className="main ds-l-col--9">
               <div className="ds-base">
-                <h1> Mic check, 1-2, 1-2</h1>
+                <h1> Welcome!</h1>
+                <h3> Let’s start with your basic information. </h3>
+
+                <h3>
+                  {" "}
+                  Who should we contact if we have any questions about your
+                  report?{" "}
+                </h3>
               </div>
             </div>
           </div>

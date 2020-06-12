@@ -8,7 +8,7 @@ class Preamble extends Component {
   }
   render() {
     return (
-      <div className="section-3c">
+      <div className="section-preamble">
         <div className="ds-l-container">
           <div className="ds-l-row">
             <div className="sidebar ds-l-col--3">
