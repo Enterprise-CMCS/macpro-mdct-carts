@@ -1,21 +1,34 @@
 # ==============================================================================
-# => Build container
-FROM node:14.4.0-alpine as builder
+# => Dev container
+FROM node:14.4.0 as dev
 
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Set yarn global cache to be inside /app; allows for dev persistence and simple management.
+RUN yarn config set cache-folder /app/.cache
 
-# Install modules from the package-json.lock
-RUN npm install
+RUN yarn config set network-timeout 600000 -g
+
+# Start up sequence for the dev container
+CMD ["/bin/bash", "-c", "yarn install && ./env.sh && cp ./env-config.js ./public/ && yarn start"]
+
+
+# ==============================================================================
+# => Build container
+FROM dev as builder
+
+# Copy package.json and yarn.lock
+COPY package.json yarn.lock ./
+
+# Install modules from the yarn.lock
+RUN yarn install --frozen-lockfile
 
 # Copy source code
 COPY . .
 
 # Create static build
-RUN npm run build
+RUN yarn run build
 
 
 # ==============================================================================
