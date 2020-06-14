@@ -15,6 +15,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     volumes:
+      - /app/node_modules
       - ./react:/app
   api:
     image: api:dev
