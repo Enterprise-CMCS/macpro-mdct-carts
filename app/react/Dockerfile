@@ -5,15 +5,8 @@ FROM node:14.4.0 as dev
 # Set working directory
 WORKDIR /app
 
-# Set yarn global cache to be inside /app; allows for dev persistence and simple management.
-RUN yarn config set cache-folder /app/.cache
-
-RUN yarn config set network-timeout 600000 -g
-
 # Start up sequence for the dev container
-#CMD ["/bin/bash", "-c", "yarn install && ./env.sh && cp ./env-config.js ./public/ && yarn start"]
-#CMD ["/bin/bash", "-c", "sleep 999999999"]
-CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/ && echo asdfasdf && sleep 9999"]
+CMD ["/bin/bash", "-c", "chmod 777 * && npm install && sh env.sh && cp ./env-config.js ./public/ && npm run start"]
 # ==============================================================================
 # => Build container
 FROM dev as builder
