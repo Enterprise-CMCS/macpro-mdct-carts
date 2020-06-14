@@ -6,7 +6,7 @@ FROM node:14.4.0 as dev
 WORKDIR /app
 
 # Start up sequence for the dev container
-CMD ["/bin/bash", "-c", "chmod 777 * && npm install && sh env.sh && cp ./env-config.js ./public/ && npm run start"]
+CMD ["/bin/bash", "-c", "chmod 777 * && npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start"]
 # ==============================================================================
 # => Build container
 FROM dev as builder
