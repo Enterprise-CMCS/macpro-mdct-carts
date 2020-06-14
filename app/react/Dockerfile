@@ -11,9 +11,9 @@ RUN yarn config set cache-folder /app/.cache
 RUN yarn config set network-timeout 600000 -g
 
 # Start up sequence for the dev container
-CMD ["/bin/bash", "-c", "yarn install && ./env.sh && cp ./env-config.js ./public/ && yarn start"]
-
-
+#CMD ["/bin/bash", "-c", "yarn install && ./env.sh && cp ./env-config.js ./public/ && yarn start"]
+#CMD ["/bin/bash", "-c", "sleep 999999999"]
+CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/ && echo asdfasdf && sleep 9999"]
 # ==============================================================================
 # => Build container
 FROM dev as builder
