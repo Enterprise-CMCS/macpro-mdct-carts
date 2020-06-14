@@ -13,17 +13,17 @@ CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/
 # => Build container
 FROM dev as builder
 
-# Copy package.json and yarn.lock
-COPY package.json yarn.lock ./
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Install modules from the yarn.lock
-RUN yarn install --frozen-lockfile
+# Install modules from the package-lock.json
+RUN npm ci
 
 # Copy source code
 COPY . .
 
 # Create static build
-RUN yarn run build
+RUN npm run build
 
 
 # ==============================================================================
