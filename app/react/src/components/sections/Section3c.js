@@ -57,13 +57,13 @@ class Section3c extends Component {
     el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
-    var textFieldCopy = "";
-    var textAreaCopy = "";
+    let textFieldCopy = "";
+    let textAreaCopy = "";
 
     // Set values on active
     if (el.target.classList.contains("active")) {
-      var textFieldCopy = "This is what you wrote last year.";
-      var textAreaCopy =
+      textFieldCopy = "This is what you wrote last year.";
+      textAreaCopy =
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
       el.target.title = "Undo";
     }
