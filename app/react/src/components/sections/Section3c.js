@@ -36,6 +36,7 @@ class Section3c extends Component {
       p2_q4: "",
       p2_q5: "",
       p2_q6: "",
+      fillFormTitle: "Same as last year",
     };
   }
 
@@ -53,18 +54,20 @@ class Section3c extends Component {
   loadAnswers(el) {
     el.preventDefault();
 
-    let copyLastTitle = "Copy from last year";
-    let undo = "Undo";
+    el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
     var textFieldCopy = "";
     var textAreaCopy = "";
 
+    // Set values on active
     if (el.target.classList.contains("active")) {
       var textFieldCopy = "This is what you wrote last year.";
       var textAreaCopy =
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
+      el.target.title = "Undo";
     }
+
     switch (el.target.name) {
       case "p1_q1":
         this.setState({ p1_q1__a_1: "checked" });
@@ -138,7 +141,7 @@ class Section3c extends Component {
                               href="#same"
                               onClick={this.loadAnswers}
                               name="p1_q1"
-                              title="Same as last year"
+                              title={this.state.fillFormTitle}
                             ></a>
                           </div>
                           <div className="question">
@@ -192,7 +195,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q2"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -259,7 +262,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q3"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -281,7 +284,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q4"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                             value={this.state.p1_q4}
                           ></a>
                         </div>
@@ -304,7 +307,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q5"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -327,7 +330,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q1"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -351,7 +354,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q2"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -368,7 +371,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q3"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -385,7 +388,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q4"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -401,7 +404,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q5"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -417,7 +420,7 @@ class Section3c extends Component {
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q6"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
