@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Section2b from "./components/sections/section2b/Section2B";
 import Section3c from "./components/sections/section3c/Section3c";
-import Homepage from "./components/Homepage";
+import Homepage from "./components/sections/homepage/Homepage";
 import Preamble from "./components/sections/Preamble";
 import BasicInfo from "./components/sections/BasicInfo";
 

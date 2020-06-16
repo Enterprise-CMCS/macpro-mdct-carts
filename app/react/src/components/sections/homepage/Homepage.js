@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
+import ReportItem from "./ReportItem";
 
 class Homepage extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class Homepage extends Component {
                   <div className="actions ds-l-col">Actions</div>
                 </div>
 
-                <div className="report-item ds-l-row">
+                {/* <div className="report-item ds-l-row">
                   <div className="name ds-l-col">NY-CARTS-FY2020</div>
                   <div className="status ds-l-col">Draft</div>
                   <div className="last-edited ds-l-col">1:32pm | 9/21/20</div>
@@ -95,9 +96,21 @@ class Homepage extends Component {
                   <div className="actions ds-l-col">
                     <a href="#">Download</a> | <a href="#">Uncertify</a>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="report-item ds-l-row">
+                <ReportItem
+                  year="NY-CARTS-2018"
+                  status={'<a href="#">Posted on Medicaid.gov</a>'}
+                  lastEditedTime="5:43pm"
+                  lastEditedDate="1/26/19"
+                  link1Text="#"
+                  link1URL="#"
+                  link2Text="#"
+                  link2URL="#"
+                  current={false}
+                />
+
+                {/* <div className="report-item ds-l-row">
                   <div className="name ds-l-col">NY-CARTS-FY2017</div>
                   <div className="status ds-l-col">
                     <a href="#">Posted on Medicaid.gov</a>
@@ -172,7 +185,7 @@ class Homepage extends Component {
                   <div className="actions ds-l-col">
                     <a href="#">Download</a> | <a href="#">Uncertify</a>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="ds-l-row reports-footer">
