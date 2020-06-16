@@ -13,14 +13,16 @@
   margin-bottom: ($padding * 4);
   position: relative;
 
-  .fill-form.active,
-  .clear-form {
+  .fill-form {
+    border: 2px solid $color-gray-lightest;
+    border-radius: $border-radius;
     float: right;
     height: 30px;
     overflow: hidden;
+
     position: relative;
     right: 0;
-    top: 28px;
+    top: 0px;
     width: 30px;
 
     a {
@@ -29,22 +31,39 @@
       pointer-events: all;
       width: 100%;
 
-      &:after,
       &:after {
-        content: "\f019";
+        background-image: url(/img/burger-arrow.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 85%;
         color: $black;
+        content: "";
         font-family: "FontAwesome";
-        height: 20px;
+        height: 24px;
         position: absolute;
         right: 0;
         top: 0;
-        width: 20px;
+        width: 24px;
       }
     }
   }
 
   .fill-form {
-    display: none;
+    a.active {
+      &:after {
+        background: none;
+        color: $color-icon;
+        content: "\f0e2";
+        font-family: "FontAwesome";
+        height: 24px;
+        padding: 4px 0 0 12px;
+        position: absolute;
+        text-indent: 6px;
+        right: 0;
+        top: 0;
+        width: 24px;
+      }
+    }
   }
 
   .fill-form.active {

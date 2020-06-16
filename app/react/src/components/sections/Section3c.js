@@ -15,12 +15,13 @@ class Section3c extends Component {
 
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
+    this.selectInput = this.selectInput.bind(this);
 
     this.state = {
       p1_q1: true,
       p1_q1__a: "",
-      p1_q1__a_1: false,
-      p1_q1__a_2: false,
+      p1_q1__a_1: true,
+      p1_q1__a_2: "",
       p1_q1__b: "",
       p1_q2__a: "",
       p1_q2__b: "",
@@ -36,6 +37,7 @@ class Section3c extends Component {
       p2_q4: "",
       p2_q5: "",
       p2_q6: "",
+      fillFormTitle: "Same as last year",
     };
   }
 
@@ -50,17 +52,50 @@ class Section3c extends Component {
     }
   }
 
+  selectInput(id, option, active) {
+    let selection = document.getElementById(id).getElementsByTagName("input");
+
+    if (active) {
+      selection[option].checked = true;
+    } else {
+      for (let input of selection) {
+        input.checked = false;
+      }
+    }
+  }
+
   loadAnswers(el) {
     el.preventDefault();
-    let textFieldCopy = "This is what you wrote last year.";
-    let textAreaCopy =
-      "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
+
+    el.target.title = this.state.fillFormTitle;
+
+    el.target.classList.toggle("active");
+    let textFieldCopy = "";
+    let textAreaCopy = "";
+
+    // Set values on active
+    let isActive = el.target.classList.contains("active");
+
+    if (isActive) {
+      textFieldCopy = "This is what you wrote last year.";
+      textAreaCopy =
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
+      el.target.title = "Undo";
+    }
 
     switch (el.target.name) {
       case "p1_q1":
-        this.setState({ p1_q1__a_1: true });
+        this.selectInput(el.target.name, 0, isActive);
+
+        this.setState({ p1_q1__b: textAreaCopy });
+        this.setState({ p1_q1__c: textAreaCopy });
         break;
       case "p1_q2":
+        this.selectInput(el.target.name, 0, isActive);
+        this.selectInput(el.target.name, 0, isActive);
+
+        this.setState({ p1_q2__a_2: "checked" });
+        this.setState({ p1_q2__b_1: "checked" });
         this.setState({ p1_q2__c: textAreaCopy });
         this.setState({ p1_q2__d: textAreaCopy });
         this.setState({ p1_q2__e: textAreaCopy });
@@ -95,23 +130,6 @@ class Section3c extends Component {
       default:
         break;
     }
-  }
-
-  clearAnswers(el) {
-    el.preventDefault();
-    switch (el.target.name) {
-      case "p1_q1":
-        // TODO: Figure out radio buttons
-        break;
-      case "p1_q2":
-        // TODO: Figure out radio buttons
-        break;
-      case "p1_q3":
-        this.setState({ p1_q3: "" });
-        break;
-      default:
-        break;
-    }
 
     // TODO: Clear answers
   }
@@ -139,20 +157,12 @@ class Section3c extends Component {
                           Part 1: Eligibility Renewal and Retention
                         </h3>
                         <div className="question-container">
-                          <div className="fill-form active">
+                          <div className="fill-form">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
                               name="p1_q1"
-                              title="Same as last year"
-                            ></a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p1_q1"
-                              title="Undo"
+                              title={this.state.fillFormTitle}
                             ></a>
                           </div>
                           <div className="question">
@@ -166,12 +176,10 @@ class Section3c extends Component {
                                 {
                                   label: "Yes",
                                   value: "yes",
-                                  checked: this.state.p1_q1__a_1,
                                 },
                                 {
                                   label: "No",
                                   value: "no",
-                                  checked: this.state.p1_q1__a_2,
                                 },
                               ]}
                               className="p1_q1"
@@ -185,36 +193,28 @@ class Section3c extends Component {
                             <TextField
                               label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
                               multiline
-                              name="p1_q1__a"
+                              name="p1_q1__b"
                               rows="6"
-                              value={this.state.p1_q1__a}
+                              value={this.state.p1_q1__b}
                             />
                             <TextField
                               hint="Maximum 7,500 characters"
                               label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
                               multiline
-                              name="p1_q1__b"
+                              name="p1_q1__c"
                               rows="6"
-                              value={this.state.p1_q1__b}
+                              value={this.state.p1_q1__c}
                             />
                           </div>
                         </div>
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q2"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q2"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -223,22 +223,42 @@ class Section3c extends Component {
                           children in CHIP.
                         </div>
                         <div className="sub-questions">
-                          <ChoiceList
-                            choices={[
-                              { label: "Yes", value: "yes" },
-                              { label: "No", value: "no" },
-                            ]}
-                            label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
-                            name="p1_q2__a"
-                          />
-                          <ChoiceList
-                            choices={[
-                              { label: "Yes", value: "yes" },
-                              { label: "No", value: "no" },
-                            ]}
-                            label="b. Do you send renewal reminder notices to all families?"
-                            name="p1_q2__b"
-                          />
+                          <div id="p1_q2__a">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                  checked: this.state.p1_q2__a_1,
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                  checked: this.state.p1_q2__a_2,
+                                },
+                              ]}
+                              label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
+                              name="p1_q2__a"
+                            />
+                          </div>
+                          <div id="p1_q2__b">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                  checked: this.state.p1_q2__b_1,
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                  checked: this.state.p1_q2__b_2,
+                                },
+                              ]}
+                              label="b. Do you send renewal reminder notices to all families?"
+                              name="p1_q2__b"
+                            />
+                          </div>
                           <TextField
                             label="c. How many notices do you send to families before disenrolling a child from the program?"
                             labelClassName="p1_q1__c"
@@ -260,20 +280,12 @@ class Section3c extends Component {
                         </div>
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q3"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q3"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -290,21 +302,13 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q4"
-                            title="Same as last year"
+                            title={this.state.fillFormTitle}
                             value={this.state.p1_q4}
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q4"
-                            title="Undo"
                           ></a>
                         </div>
                         <div className="question">
@@ -321,20 +325,12 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q5"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q5"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -352,20 +348,12 @@ class Section3c extends Component {
                       </div>
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q1"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q1"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -384,20 +372,12 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q2"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q2"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -409,20 +389,12 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q3"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q3"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -434,20 +406,12 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q4"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q4"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -458,20 +422,12 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q5"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q5"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -482,20 +438,12 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q6"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q6"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField

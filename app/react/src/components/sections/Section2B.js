@@ -59,7 +59,9 @@ class Section2b extends Component {
             <div className="main ds-l-col--9">
               <div className="page-info">
                 <div className="edit-info">Draft | Last Edit: 4/3/20</div>
-                <h1>{this.props.name} CARTS FY2020</h1>
+                <h1>
+                  {this.props.name} CARTS{} FY2020
+                </h1>
               </div>
               <Tabs>
                 <TabPanel id="section2b" tab="Section 2B: Performance Goals">

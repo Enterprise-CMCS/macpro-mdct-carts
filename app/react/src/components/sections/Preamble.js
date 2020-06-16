@@ -8,7 +8,7 @@ class Preamble extends Component {
   }
   render() {
     return (
-      <div className="section-3c">
+      <div className="section-preamble">
         <div className="ds-l-container">
           <div className="ds-l-row">
             <div className="sidebar ds-l-col--3">
@@ -31,11 +31,45 @@ class Preamble extends Component {
                       reducing the number of uninsured low-income children after
                       each federal fiscal year.
                     </p>
-
                     <p>
                       A state or territory must complete CARTS, including all
                       relevant sections to their program, by January 1.
                     </p>
+                    <div className="preamble-carts-sections">
+                      <ul>CARTS is organized into sections:</ul>
+                      <li>Your basic information</li>
+                      <li>Section I: Program Fees and Policy Changes</li>
+                      <li>Section 2: Eligibility and Enrollment</li>
+                      <li>Section 3: Program Operations</li>
+                      <li>Section 4: State Plan Goals and Objectives</li>
+                      <li>Section 5: Budget and Finances</li>
+                      <li>Section 6: Challenges and Accomplishments</li>
+                    </div>
+
+                    <div className="preamble-framework-design">
+                      <ul>The framework of CARTS is designed to:</ul>
+                      <li>
+                        Recognize the diversity of each state and territory,
+                        allowing for flexibility to highlight key
+                        accomplishments and progress of individual CHIP programs
+                      </li>
+
+                      <li>
+                        Build on data already collected by CMS in quarterly
+                        reports
+                      </li>
+
+                      <li>
+                        Make information about the achievements and challenges
+                        of each state and territory more accessible to
+                        stakeholders
+                      </li>
+
+                      <li>
+                        Provide consistency in the structure, content, and
+                        format of reporting across states and territories
+                      </li>
+                    </div>
                   </div>
                 </div>
               </div>
