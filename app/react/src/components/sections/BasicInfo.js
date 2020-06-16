@@ -77,11 +77,7 @@ class BasicInfo extends Component {
                   {" "}
                   Who should we contact if we have any questions about your
                   report? <TextField label="Contact name" name="contactName" />
-                  <TextField
-                    label="Title"
-                    hint="Administrator"
-                    name="contactTitle"
-                  />
+                  <TextField label="Job title" name="contactTitle" />
                   <TextField label="Email" name="contactEmail" />
                   <TextField
                     label="Address"

@@ -1,4 +1,4 @@
-exports.statesArray = [
+const statesArray = [
   { value: "AL", label: "Alabama" },
   { value: "AK", label: "Alaska" },
   { value: "AZ", label: "Arizona" },
@@ -50,3 +50,4 @@ exports.statesArray = [
   { value: "WI", label: "Wisconsin" },
   { value: "WY", label: "Wyoming" },
 ];
+export default statesArray;
