@@ -12,6 +12,17 @@ class Header extends Component {
     e.preventDefault();
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
+
+    // Close menu when leaving focus
+    let root = document.getElementById("root");
+    root.addEventListener(
+      "click",
+      () => {
+        document.getElementById("menu-block").classList.toggle("open");
+        document.getElementById("nav-user").classList.toggle("open");
+      },
+      false
+    );
   }
 
   render() {

@@ -15,11 +15,35 @@ class Section3c extends Component {
 
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
+    this.selectInput = this.selectInput.bind(this);
+
+    this.state = {
+      p1_q1: true,
+      p1_q1__a: "",
+      p1_q1__a_1: true,
+      p1_q1__a_2: "",
+      p1_q1__b: "",
+      p1_q2__a: "",
+      p1_q2__b: "",
+      p1_q2__c: "",
+      p1_q2__d: "",
+      p1_q2__e: "",
+      p1_q3: "",
+      p1_q4: "",
+      p1_q5: "",
+      p2_q1: "",
+      p2_q2: "",
+      p2_q3: "",
+      p2_q4: "",
+      p2_q5: "",
+      p2_q6: "",
+      fillFormTitle: "Same as last year",
+    };
   }
 
   setConditional(el) {
-    let radio = document.getElementById("radio_p1_q1_34");
-    let textField = document.getElementById("textfield_39");
+    let radio = document.getElementById("radio_p1_q1_36");
+    let textField = document.getElementById("textfield_41");
 
     if (radio.checked) {
       textField.parentNode.parentNode.classList.remove("hide");
@@ -28,115 +52,82 @@ class Section3c extends Component {
     }
   }
 
-  loadAnswers(el) {
-    el.preventDefault();
-    let textAreaCopy =
-      "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
-    let textFieldCopy = "This is what you wrote last year.";
+  selectInput(id, option, active) {
+    let selection = document.getElementById(id).getElementsByTagName("input");
 
-    el.target.parentNode.parentNode
-      .getElementsByClassName("clear-form")[0]
-      .classList.toggle("active");
-
-    el.target.parentNode.parentNode
-      .getElementsByClassName("fill-form")[0]
-      .classList.toggle("active");
-
-    switch (el.target.name) {
-      case "p1_q1":
-        document.getElementById("radio_p1_q1_34").checked = true;
-        document.getElementById("textfield_39").value = textAreaCopy;
-        document.getElementById("textfield_43").value = textAreaCopy;
-        this.setConditional(el);
-        break;
-
-      case "p1_q2":
-        document.getElementById("radio_p1_q1__a_46").checked = true;
-        document.getElementById("radio_p1_q1__b_52").checked = true;
-        document.getElementById("textfield_55").value = textFieldCopy;
-        document.getElementById("textfield_59").value = textFieldCopy;
-        document.getElementById("textfield_63").value = textFieldCopy;
-        break;
-      case "p1_q3":
-        document.getElementById("textfield_67").value = textAreaCopy;
-        break;
-      case "p1_q4":
-        document.getElementById("textfield_71").value = textAreaCopy;
-        break;
-      case "p1_q5":
-        document.getElementById("textfield_75").value = textAreaCopy;
-        break;
-      case "p2_q1":
-        document.getElementById("textfield_79").value = textFieldCopy;
-        break;
-      case "p2_q2":
-        document.getElementById("textfield_83").value = textFieldCopy;
-        break;
-      case "p2_q3":
-        document.getElementById("textfield_87").value = textFieldCopy;
-        break;
-      case "p2_q4":
-        document.getElementById("textfield_91").value = textFieldCopy;
-        break;
-      case "p2_q5":
-        document.getElementById("textfield_95").value = textFieldCopy;
-        break;
-      case "p2_q6":
-        document.getElementById("textfield_99").value = textAreaCopy;
-        break;
+    if (active) {
+      selection[option].checked = true;
+    } else {
+      for (let input of selection) {
+        input.checked = false;
+      }
     }
   }
 
-  clearAnswers(el) {
+  loadAnswers(el) {
     el.preventDefault();
 
-    el.target.parentNode.parentNode
-      .getElementsByClassName("clear-form")[0]
-      .classList.toggle("active");
+    el.target.title = this.state.fillFormTitle;
 
-    el.target.parentNode.parentNode
-      .getElementsByClassName("fill-form")[0]
-      .classList.toggle("active");
+    el.target.classList.toggle("active");
+    let textFieldCopy = "";
+    let textAreaCopy = "";
+
+    // Set values on active
+    let isActive = el.target.classList.contains("active");
+
+    if (isActive) {
+      textFieldCopy = "This is what you wrote last year.";
+      textAreaCopy =
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
+      el.target.title = "Undo";
+    }
 
     switch (el.target.name) {
       case "p1_q1":
-        document.getElementById("radio_p1_q1_34").checked = false;
-        document.getElementById("textfield_39").value = "";
-        document.getElementById("textfield_43").value = "";
-        break;
+        this.selectInput(el.target.name, 0, isActive);
 
+        this.setState({ p1_q1__b: textAreaCopy });
+        this.setState({ p1_q1__c: textAreaCopy });
+        break;
       case "p1_q2":
-        document.getElementById("radio_p1_q1__a_46").checked = false;
-        document.getElementById("radio_p1_q1__b_52").checked = false;
-        document.getElementById("textfield_55").value = "";
-        document.getElementById("textfield_59").value = "";
-        document.getElementById("textfield_63").value = "";
+        this.selectInput(el.target.name, 0, isActive);
+        this.selectInput(el.target.name, 0, isActive);
+
+        this.setState({ p1_q2__a_2: "checked" });
+        this.setState({ p1_q2__b_1: "checked" });
+        this.setState({ p1_q2__c: textAreaCopy });
+        this.setState({ p1_q2__d: textAreaCopy });
+        this.setState({ p1_q2__e: textAreaCopy });
         break;
       case "p1_q3":
-        document.getElementById("textfield_67").value = "";
+        this.setState({ p1_q3: textAreaCopy });
         break;
       case "p1_q4":
-        document.getElementById("textfield_71").value = "";
+        this.setState({ p1_q4: textAreaCopy });
         break;
       case "p1_q5":
-        document.getElementById("textfield_75").value = "";
+        this.setState({ p1_q5: textAreaCopy });
         break;
       case "p2_q1":
-        document.getElementById("textfield_79").value = "";
+        this.setState({ p2_q1: textFieldCopy });
         break;
       case "p2_q2":
-        document.getElementById("textfield_83").value = "";
+        this.setState({ p2_q2: textFieldCopy });
         break;
       case "p2_q3":
-        document.getElementById("textfield_87").value = "";
+        this.setState({ p2_q3: textFieldCopy });
         break;
       case "p2_q4":
-        document.getElementById("textfield_91").value = "";
+        this.setState({ p2_q4: textFieldCopy });
+        break;
       case "p2_q5":
-        document.getElementById("textfield_95").value = "";
+        this.setState({ p2_q5: textFieldCopy });
         break;
       case "p2_q6":
-        document.getElementById("textfield_99").value = "";
+        this.setState({ p2_q6: textAreaCopy });
+        break;
+      default:
         break;
     }
   }
@@ -164,20 +155,12 @@ class Section3c extends Component {
                           Part 1: Eligibility Renewal and Retention
                         </h3>
                         <div className="question-container">
-                          <div className="fill-form active">
+                          <div className="fill-form">
                             <a
                               href="#same"
                               onClick={this.loadAnswers}
                               name="p1_q1"
-                              title="Same as last year"
-                            ></a>
-                          </div>
-                          <div className="clear-form">
-                            <a
-                              href="#same"
-                              onClick={this.clearAnswers}
-                              name="p1_q1"
-                              title="Undo"
+                              title={this.state.fillFormTitle}
                             ></a>
                           </div>
                           <div className="question">
@@ -185,52 +168,51 @@ class Section3c extends Component {
                             provide for presumptive eligibility, and have you
                             implemented this?
                           </div>
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                              },
-                              { label: "No", value: "no" },
-                            ]}
-                            className="p1_q1"
-                            label=""
-                            name="p1_q1"
-                            onChange={this.setConditional}
-                            hint="Note: This question may not apply to Medicaid Expansion states."
-                          />
+                          <div id="p1_q1">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                },
+                              ]}
+                              className="p1_q1"
+                              label=""
+                              name="p1_q1"
+                              onChange={this.setConditional}
+                              hint="Note: This question may not apply to Medicaid Expansion states."
+                            />
+                          </div>
                           <div className="conditional hide">
                             <TextField
                               label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
                               multiline
-                              name="p1_q1__a"
+                              name="p1_q1__b"
                               rows="6"
+                              value={this.state.p1_q1__b}
                             />
                             <TextField
                               hint="Maximum 7,500 characters"
                               label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
                               multiline
-                              name="p1_q1__b"
+                              name="p1_q1__c"
                               rows="6"
+                              value={this.state.p1_q1__c}
                             />
                           </div>
                         </div>
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q2"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q2"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -239,54 +221,69 @@ class Section3c extends Component {
                           children in CHIP.
                         </div>
                         <div className="sub-questions">
-                          <ChoiceList
-                            choices={[
-                              { label: "Yes", value: "yes" },
-                              { label: "No", value: "no" },
-                            ]}
-                            label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
-                            name="p1_q1__a"
-                          />
-                          <ChoiceList
-                            choices={[
-                              { label: "Yes", value: "yes" },
-                              { label: "No", value: "no" },
-                            ]}
-                            label="b. Do you send renewal reminder notices to all families?"
-                            name="p1_q1__b"
-                          />
+                          <div id="p1_q2__a">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                  checked: this.state.p1_q2__a_1,
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                  checked: this.state.p1_q2__a_2,
+                                },
+                              ]}
+                              label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
+                              name="p1_q2__a"
+                            />
+                          </div>
+                          <div id="p1_q2__b">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                  checked: this.state.p1_q2__b_1,
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                  checked: this.state.p1_q2__b_2,
+                                },
+                              ]}
+                              label="b. Do you send renewal reminder notices to all families?"
+                              name="p1_q2__b"
+                            />
+                          </div>
                           <TextField
                             label="c. How many notices do you send to families before disenrolling a child from the program?"
                             labelClassName="p1_q1__c"
-                            name="p1_q1__c"
+                            name="p1_q2__c"
+                            value={this.state.p1_q2__c}
                           />
                           <TextField
                             label="d. How many notices do you send to families before disenrolling a child from the program?"
                             labelClassName="p1_q1__d"
-                            name="p1_q1__d"
+                            name="p1_q2__d"
+                            value={this.state.p1_q2__d}
                           />
                           <TextField
                             label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
                             labelClassName="p1_q1__e"
-                            name="p1_q1__e"
+                            name="p1_q2__e"
+                            value={this.state.p1_q2__e}
                           />
                         </div>
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q3"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q3"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -299,23 +296,17 @@ class Section3c extends Component {
                           multiline
                           rows="6"
                           name="p1_q3"
+                          value={this.state.p1_q3}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q4"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q4"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
+                            value={this.state.p1_q4}
                           ></a>
                         </div>
                         <div className="question">
@@ -328,23 +319,16 @@ class Section3c extends Component {
                           multiline
                           rows="6"
                           name="p1_q4"
+                          value={this.state.p1_q4}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p1_q5"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p1_q5"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -357,24 +341,17 @@ class Section3c extends Component {
                           multiline
                           rows="6"
                           name="p1_q5"
+                          value={this.state.p1_q5}
                         />
                       </div>
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q1"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q1"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <div className="question">
@@ -389,23 +366,16 @@ class Section3c extends Component {
                           label="1. How many applicants were denied Title XXI coverage?"
                           labelClassName="p2_q1"
                           name="p2_q1"
+                          value={this.state.p2_q1}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q2"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q2"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -413,23 +383,16 @@ class Section3c extends Component {
                           label="2. How many applications were denied Title XXI coverage for procedural denials?"
                           labelClassName="p2_q2"
                           name="p2_q2"
+                          value={this.state.p2_q2}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q3"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q3"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -437,69 +400,48 @@ class Section3c extends Component {
                           label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
                           labelClassName="p2_q3"
                           name="p2_q3"
+                          value={this.state.p2_q3}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q4"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q4"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
                           label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
                           labelClassName="p2_q4"
                           name="p2_q4"
+                          value={this.state.p2_q4}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q5"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q5"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
                           label="5. How many applicants were denied Title XXI coverage for other reasons?"
                           labelClassName="p2_q5"
                           name="p2_q5"
+                          value={this.state.p2_q5}
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form active">
+                        <div className="fill-form">
                           <a
                             href="#same"
                             onClick={this.loadAnswers}
                             name="p2_q6"
-                            title="Same as last year"
-                          ></a>
-                        </div>
-                        <div className="clear-form">
-                          <a
-                            href="#same"
-                            onClick={this.clearAnswers}
-                            name="p2_q6"
-                            title="Undo"
+                            title={this.state.fillFormTitle}
                           ></a>
                         </div>
                         <TextField
@@ -509,6 +451,7 @@ class Section3c extends Component {
                           multiline
                           name="p2_q6"
                           rows="6"
+                          value={this.state.p2_q6}
                         />
                       </div>
                       <div className="form-options">
