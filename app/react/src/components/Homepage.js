@@ -61,113 +61,121 @@ class Homepage extends Component {
           <div className="ds-l-row">
             <div className="reports ds-l-col--12">
               <h3>CARTS reports</h3>
-              <table className="ds-c-table ds-c-table--borderless">
-                <thead>
-                  <th>Name</th>
-                  <th>Status</th>
-                  <th>Last Edited</th>
-                  <th>Actions</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2020</td>
-                    <td>Draft</td>
-                    <td>1:32pm | 9/21/20</td>
-                    <td>
-                      <Link to="/preamble">Edit</Link> |{" "}
-                      <a href="#">Download</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2019</td>
-                    <td>Under review</td>
-                    <td>7:46am | 3/20/20</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2018</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>5:43pm | 1/26/19</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2017</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>5:00am | 2/13/18</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2016</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>9:13pm | 3/20/17</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2015</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>9:00am | 1/20/16</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2014</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>4:44pm | 3/20/15</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2013</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>5:05pm | 3/24/14</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2012</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>9:00am | 2/02/13</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="name">NY-CARTS-FY2011</td>
-                    <td>
-                      <a href="#">Posted on Medicaid.gov</a>
-                    </td>
-                    <td>11:30pm | 3/20/12</td>
-                    <td>
-                      <a href="#">Download</a> | <a href="#">Uncertify</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+              <div className="carts-report ds-l-container preview__grid">
+                <div className="report-header ds-l-row">
+                  <div className="name ds-l-col">Name</div>
+                  <div className="status ds-l-col">Status</div>
+                  <div className="last-edited ds-l-col">Last Edited</div>
+                  <div className="actions ds-l-col">Actions</div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2020</div>
+                  <div className="status ds-l-col">Draft</div>
+                  <div className="last-edited ds-l-col">1:32pm | 9/21/20</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Edit</a> | <a href="#">Download</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2019</div>
+                  <div className="status ds-l-col">Under Review</div>
+                  <div className="last-edited ds-l-col">7:46am | 3/20/20</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2018</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">5:43pm | 1/26/19</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2017</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">5:00am | 2/13/18</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2016</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">9:13pm | 3/20/17</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2015</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">9:00am | 1/20/16</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2014</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">4:44pm | 3/20/15</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2013</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">5:05pm | 3/24/14</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2012</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">11:46am | 2/02/13</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+
+                <div className="report-item ds-l-row">
+                  <div className="name ds-l-col">NY-CARTS-FY2011</div>
+                  <div className="status ds-l-col">
+                    <a href="#">Posted on Medicaid.gov</a>
+                  </div>
+                  <div className="last-edited ds-l-col">1:30pm | 3/20/12</div>
+                  <div className="actions ds-l-col">
+                    <a href="#">Download</a> | <a href="#">Uncertify</a>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="ds-l-row reports-footer">
               <div className="displaying ds-l-col--6">
