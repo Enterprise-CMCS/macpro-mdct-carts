@@ -4,7 +4,8 @@ services:
     image: react:dev
     build:
       context: ./react
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      target: dev
     ports:
       - "81:3000"
     networks:

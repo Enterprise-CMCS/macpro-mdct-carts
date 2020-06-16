@@ -1,15 +1,23 @@
 # ==============================================================================
-# => Build container
-FROM node:14.4.0-alpine as builder
+# => Dev container
+FROM node:14.4.0 as dev
 
 # Set working directory
 WORKDIR /app
 
+# Start up sequence for the dev container
+CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start"]
+
+
+# ==============================================================================
+# => Build container
+FROM dev as builder
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install modules from the package-json.lock
-RUN npm install
+# Install modules from the package-lock.json
+RUN npm ci
 
 # Copy source code
 COPY . .
