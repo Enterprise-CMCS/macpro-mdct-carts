@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button as button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 class Homepage extends Component {
   constructor(props) {

@@ -14,8 +14,8 @@ const TOC = () => {
           },
           {
             label: "Basic Information",
-            url: "javascript:void(0);",
-            id: "overview",
+            url: "/basic-info",
+            id: "basic-info",
           },
           {
             label: "Section 1: Program Fees and Policy Changes",
