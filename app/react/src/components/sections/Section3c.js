@@ -15,21 +15,13 @@ class Section3c extends Component {
 
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
-<<<<<<< HEAD
-=======
     this.selectInput = this.selectInput.bind(this);
->>>>>>> 615620a58a09a55fa504a7707f397c829d02e22e
 
     this.state = {
       p1_q1: true,
       p1_q1__a: "",
-<<<<<<< HEAD
-      p1_q1__a_1: false,
-      p1_q1__a_2: false,
-=======
       p1_q1__a_1: true,
       p1_q1__a_2: "",
->>>>>>> 615620a58a09a55fa504a7707f397c829d02e22e
       p1_q1__b: "",
       p1_q2__a: "",
       p1_q2__b: "",
