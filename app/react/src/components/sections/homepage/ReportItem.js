@@ -10,11 +10,20 @@ class ReportItem extends Component {
     let link1URL;
     let link2Text = this.props.link2Text ? this.props.link2Text : "Uncertify";
     let link2URL;
+    let statusText = this.props.statusText
+      ? this.props.statusText
+      : "Posted on Medicaid.gov";
+
+    let statusURL = this.props.statusURL ? (
+      <a href={this.props.statusURL}> {statusText} </a>
+    ) : (
+      statusText
+    );
 
     return (
       <div className="report-item ds-l-row">
         <div className="name ds-l-col">{this.props.year}</div>
-        <div className="status ds-l-col">{this.props.status}</div>
+        <div className="status ds-l-col">{statusURL}</div>
         <div className="last-edited ds-l-col">
           {this.props.lastEditedTime}|{this.props.lastEditedDate}{" "}
         </div>

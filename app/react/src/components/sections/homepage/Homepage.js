@@ -100,11 +100,13 @@ class Homepage extends Component {
 
                 <ReportItem
                   year="NY-CARTS-2018"
-                  status={'<a href="#">Posted on Medicaid.gov</a>'}
+                  status='<a href="#">Posted on Medicaid.gov</a>'
                   lastEditedTime="5:43pm"
                   lastEditedDate="1/26/19"
                   link1URL="#"
                   link2URL="#"
+                  // statusURL="#"
+                  statusText="Draft"
                   current={false}
                 />
 
