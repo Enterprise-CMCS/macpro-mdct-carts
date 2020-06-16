@@ -53,32 +53,21 @@
     color: $black;
   }
 
-  table {
+  .report-header {
+    color: $black;
+    font-size: 0.8rem;
+    margin-bottom: ($margin * 2);
+    text-transform: uppercase;
+    width: 100%;
+  }
+  .report-item {
+    padding: ($padding * 2) 0;
     width: 100%;
 
-    a,
-    a:visited {
-      color: $brand-primary;
-      text-decoration: none;
-    }
-
     .name {
-      color: $color-gray;
-      font-weight: $font-weight-semi-bold;
+      color: $black;
+      font-weight: $font-weight-bold;
     }
-  }
-
-  .ds-c-table th {
-    background: none;
-    color: $color-gray;
-    font-size: 0.85rem;
-    font-weight: $font-weight-light;
-    text-transform: uppercase;
-  }
-
-  .ds-c-table td,
-  .ds-c-table th {
-    border: none;
   }
 }
 
