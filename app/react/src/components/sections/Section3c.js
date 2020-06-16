@@ -15,11 +15,12 @@ class Section3c extends Component {
 
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
+    this.selectInput = this.selectInput.bind(this);
 
     this.state = {
       p1_q1: true,
       p1_q1__a: "",
-      p1_q1__a_1: "",
+      p1_q1__a_1: true,
       p1_q1__a_2: "",
       p1_q1__b: "",
       p1_q2__a: "",
@@ -51,6 +52,18 @@ class Section3c extends Component {
     }
   }
 
+  selectInput(id, option, active) {
+    let selection = document.getElementById(id).getElementsByTagName("input");
+
+    if (active) {
+      selection[option].checked = true;
+    } else {
+      for (let input of selection) {
+        input.checked = false;
+      }
+    }
+  }
+
   loadAnswers(el) {
     el.preventDefault();
 
@@ -61,7 +74,9 @@ class Section3c extends Component {
     let textAreaCopy = "";
 
     // Set values on active
-    if (el.target.classList.contains("active")) {
+    let isActive = el.target.classList.contains("active");
+
+    if (isActive) {
       textFieldCopy = "This is what you wrote last year.";
       textAreaCopy =
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
@@ -70,11 +85,15 @@ class Section3c extends Component {
 
     switch (el.target.name) {
       case "p1_q1":
-        this.setState({ p1_q1__a_1: "checked" });
+        this.selectInput(el.target.name, 0, isActive);
+
         this.setState({ p1_q1__b: textAreaCopy });
         this.setState({ p1_q1__c: textAreaCopy });
         break;
       case "p1_q2":
+        this.selectInput(el.target.name, 0, isActive);
+        this.selectInput(el.target.name, 0, isActive);
+
         this.setState({ p1_q2__a_2: "checked" });
         this.setState({ p1_q2__b_1: "checked" });
         this.setState({ p1_q2__c: textAreaCopy });
@@ -155,12 +174,10 @@ class Section3c extends Component {
                                 {
                                   label: "Yes",
                                   value: "yes",
-                                  checked: this.state.p1_q1__a_1,
                                 },
                                 {
                                   label: "No",
                                   value: "no",
-                                  checked: this.state.p1_q1__a_2,
                                 },
                               ]}
                               className="p1_q1"
@@ -204,38 +221,42 @@ class Section3c extends Component {
                           children in CHIP.
                         </div>
                         <div className="sub-questions">
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                                checked: this.state.p1_q2__a_1,
-                              },
-                              {
-                                label: "No",
-                                value: "no",
-                                checked: this.state.p1_q2__a_2,
-                              },
-                            ]}
-                            label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
-                            name="p1_q2__a"
-                          />
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                                checked: this.state.p1_q2__b_1,
-                              },
-                              {
-                                label: "No",
-                                value: "no",
-                                checked: this.state.p1_q2__b_2,
-                              },
-                            ]}
-                            label="b. Do you send renewal reminder notices to all families?"
-                            name="p1_q2__b"
-                          />
+                          <div id="p1_q2__a">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                  checked: this.state.p1_q2__a_1,
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                  checked: this.state.p1_q2__a_2,
+                                },
+                              ]}
+                              label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
+                              name="p1_q2__a"
+                            />
+                          </div>
+                          <div id="p1_q2__b">
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                  checked: this.state.p1_q2__b_1,
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                  checked: this.state.p1_q2__b_2,
+                                },
+                              ]}
+                              label="b. Do you send renewal reminder notices to all families?"
+                              name="p1_q2__b"
+                            />
+                          </div>
                           <TextField
                             label="c. How many notices do you send to families before disenrolling a child from the program?"
                             labelClassName="p1_q1__c"
