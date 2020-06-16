@@ -69,123 +69,107 @@ class Homepage extends Component {
                   <div className="actions ds-l-col">Actions</div>
                 </div>
 
-                {/* <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2020</div>
-                  <div className="status ds-l-col">Draft</div>
-                  <div className="last-edited ds-l-col">1:32pm | 9/21/20</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Edit</a> | <a href="#">Download</a>
-                  </div>
-                </div>
-
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2019</div>
-                  <div className="status ds-l-col">Under Review</div>
-                  <div className="last-edited ds-l-col">7:46am | 3/20/20</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
-
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2018</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">5:43pm | 1/26/19</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div> */}
-
                 <ReportItem
-                  year="NY-CARTS-2018"
-                  status='<a href="#">Posted on Medicaid.gov</a>'
-                  lastEditedTime="5:43pm"
-                  lastEditedDate="1/26/19"
-                  link1URL="#"
+                  year="NY-CARTS-FY2020"
+                  lastEditedTime="10:42am"
+                  lastEditedDate="04/28/20"
+                  link1URL="/preamble"
+                  link1Text="Edit"
                   link2URL="#"
-                  // statusURL="#"
+                  link2Text="Download"
                   statusText="Draft"
                   current={false}
                 />
 
-                {/* <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2017</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">5:00am | 2/13/18</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
+                <ReportItem
+                  year="NY-CARTS-FY2019"
+                  lastEditedTime="7:32am"
+                  lastEditedDate="3/20/20"
+                  link1URL="#"
+                  link2URL="#"
+                  statusText="Under review"
+                  current={false}
+                />
 
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2016</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">9:13pm | 3/20/17</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
+                <ReportItem
+                  year="NY-CARTS-FY2018"
+                  lastEditedTime="5:43pm"
+                  lastEditedDate="1/26/19"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
 
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2015</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">9:00am | 1/20/16</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
+                <ReportItem
+                  year="NY-CARTS-FY2017"
+                  lastEditedTime="5:00am"
+                  lastEditedDate="2/13/18"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
 
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2014</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">4:44pm | 3/20/15</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
+                <ReportItem
+                  year="NY-CARTS-FY2016"
+                  lastEditedTime="9:13pm"
+                  lastEditedDate="3/20/17"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
 
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2013</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">5:05pm | 3/24/14</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
+                <ReportItem
+                  year="NY-CARTS-FY2015"
+                  lastEditedTime="9:00am"
+                  lastEditedDate="1/20/16"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
 
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2012</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">11:46am | 2/02/13</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div>
+                <ReportItem
+                  year="NY-CARTS-FY2014"
+                  lastEditedTime="4:44pm"
+                  lastEditedDate="3/20/15"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
 
-                <div className="report-item ds-l-row">
-                  <div className="name ds-l-col">NY-CARTS-FY2011</div>
-                  <div className="status ds-l-col">
-                    <a href="#">Posted on Medicaid.gov</a>
-                  </div>
-                  <div className="last-edited ds-l-col">1:30pm | 3/20/12</div>
-                  <div className="actions ds-l-col">
-                    <a href="#">Download</a> | <a href="#">Uncertify</a>
-                  </div>
-                </div> */}
+                <ReportItem
+                  year="NY-CARTS-FY2013"
+                  lastEditedTime="5:05am"
+                  lastEditedDate="3/24/14"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
+
+                <ReportItem
+                  year="NY-CARTS-FY2012"
+                  lastEditedTime="9:00am"
+                  lastEditedDate="2/02/13"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
+
+                <ReportItem
+                  year="NY-CARTS-FY2011"
+                  lastEditedTime="11:30am"
+                  lastEditedDate="3/20/12"
+                  link1URL="#"
+                  link2URL="#"
+                  statusURL="#"
+                  current={false}
+                />
               </div>
             </div>
             <div className="ds-l-row reports-footer">

@@ -7,9 +7,9 @@ class ReportItem extends Component {
   }
   render() {
     let link1Text = this.props.link1Text ? this.props.link1Text : "Download";
-    let link1URL;
+    let link1URL = this.props.link1URL ? this.props.link1URL : "#";
     let link2Text = this.props.link2Text ? this.props.link2Text : "Uncertify";
-    let link2URL;
+    let link2URL = this.props.link2URL ? this.props.link2URL : "#";
     let statusText = this.props.statusText
       ? this.props.statusText
       : "Posted on Medicaid.gov";
@@ -28,7 +28,8 @@ class ReportItem extends Component {
           {this.props.lastEditedTime}|{this.props.lastEditedDate}{" "}
         </div>
         <div className="actions ds-l-col">
-          <a href={link1URL}>{link1Text}</a> |<a href={link2URL}>{link2Text}</a>
+          <a href={link1URL}>{link1Text}</a> |{" "}
+          <a href={link2URL}>{link2Text}</a>
         </div>
       </div>
     );
