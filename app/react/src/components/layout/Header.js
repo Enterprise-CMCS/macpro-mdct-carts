@@ -12,8 +12,9 @@ class Header extends Component {
     e.preventDefault();
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
-    let root = document.getElementById("root");
 
+    // Close menu when leaving focus
+    let root = document.getElementById("root");
     root.addEventListener(
       "click",
       () => {
