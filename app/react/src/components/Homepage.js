@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button as button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 class Homepage extends Component {
   constructor(props) {
@@ -73,7 +74,8 @@ class Homepage extends Component {
                     <td>Draft</td>
                     <td>1:32pm | 9/21/20</td>
                     <td>
-                      <a href="#">Edit</a> | <a href="#">Download</a>
+                      <Link to="/preamble">Edit</Link> |{" "}
+                      <a href="#">Download</a>
                     </td>
                   </tr>
                   <tr>
