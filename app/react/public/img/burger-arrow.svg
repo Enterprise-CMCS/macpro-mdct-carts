@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 23" width="24" height="23">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #7b7b7b } 
+	</style>
+	<path id="Layer 1" class="shp0" d="M8 1L23 1L23 3L8 3L8 1Z" />
+	<path id="Shape 1" class="shp0" d="M8 5L23 5L23 7L8 7L8 5Z" />
+	<path id="Shape 2" class="shp0" d="M8 9L23 9L23 11L8 11L8 9Z" />
+	<path id="Shape 3" class="shp0" d="M8 13L23 13L23 15L8 15L8 13Z" />
+	<path id="Shape 4" class="shp0" d="M1 17L15 17L15 19L1 19L1 17Z" />
+	<path id="Shape 5" class="shp0" d="M2 16L5 16L5 18L2 18L2 16Z" />
+	<path id="Shape 6" class="shp0" d="M3 15L5 15L5 17L3 17L3 15Z" />
+	<path id="Shape 7" class="shp0" d="M4 14L5 14L5 16L4 16L4 14Z" />
+	<path id="Shape 8" class="shp0" d="M2 18L5 18L5 20L2 20L2 18Z" />
+	<path id="Shape 9" class="shp0" d="M3 19L5 19L5 21L3 21L3 19Z" />
+	<path id="Shape 10" class="shp0" d="M4 20L5 20L5 22L4 22L4 20Z" />
+</svg>
