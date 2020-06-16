@@ -6,17 +6,10 @@ class ReportItem extends Component {
     this.state = {};
   }
   render() {
-    let link1Text;
+    let link1Text = this.props.link1Text ? this.props.link1Text : "Download";
     let link1URL;
-    let link2Text;
+    let link2Text = this.props.link2Text ? this.props.link2Text : "Uncertify";
     let link2URL;
-
-    if (this.props.current === false) {
-      // need download, uncertify
-    } else {
-      // need edit link, need download link
-      actions = '<a href="/preamble">Edit</a> | <a href="#">Download</a>';
-    }
 
     return (
       <div className="report-item ds-l-row">
@@ -26,10 +19,7 @@ class ReportItem extends Component {
           {this.props.lastEditedTime}|{this.props.lastEditedDate}{" "}
         </div>
         <div className="actions ds-l-col">
-          {<a href={link1URL}>{link1Text}</a> |
-          <a href={link2URL}>{link2Text}</a>}
-
-          {this.props.propInQuestion ? <a href="#">link</a> : null}
+          <a href={link1URL}>{link1Text}</a> |<a href={link2URL}>{link2Text}</a>
         </div>
       </div>
     );

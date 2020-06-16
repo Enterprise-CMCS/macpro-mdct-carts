@@ -103,9 +103,7 @@ class Homepage extends Component {
                   status={'<a href="#">Posted on Medicaid.gov</a>'}
                   lastEditedTime="5:43pm"
                   lastEditedDate="1/26/19"
-                  link1Text="#"
                   link1URL="#"
-                  link2Text="#"
                   link2URL="#"
                   current={false}
                 />
