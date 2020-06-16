@@ -130,8 +130,6 @@ class Section3c extends Component {
       default:
         break;
     }
-
-    // TODO: Clear answers
   }
 
   render() {
