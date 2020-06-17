@@ -20,7 +20,7 @@ class Section3c extends Component {
     this.setConditionalFromToggle = this.setConditionalFromToggle.bind(this);
 
     this.state = {
-      p1_q1: "yes",
+      p1_q1: "no",
       p1_q1__a: "",
       p1_q1__a_1: "",
       p1_q1__a_2: "",
@@ -44,20 +44,10 @@ class Section3c extends Component {
   }
 
   setConditional(el) {
-    console.log("WHAT CHOICE HAS BEEN MADE?", el.target.value);
-    console.log("WHO AM I?", el.target);
     this.setState({
       [el.target.name]: el.target.value,
     });
     el.target.defaultChecked = true;
-
-    // let parent = document.getElementById(el.target.name);
-    // let conditionals = parent.getElementsByClassName("conditional");
-
-    // let array = [].slice.call(conditionals);
-    // array.forEach(function (conditional) {
-    //   conditional.classList.toggle("hide");
-    // });
   }
 
   setConditionalFromToggle(name, value) {
@@ -67,14 +57,14 @@ class Section3c extends Component {
   }
 
   selectInput(id, option, active) {
-    // let selection = document.getElementById(id).getElementsByTagName("input");
-    // if (active) {
-    //   selection[option].checked = true;
-    // } else {
-    //   for (let input of selection) {
-    //     input.checked = false;
-    //   }
-    // }
+    let selection = document.getElementById(id).getElementsByTagName("input");
+    if (active) {
+      selection[option].checked = true;
+    } else {
+      for (let input of selection) {
+        input.checked = false;
+      }
+    }
   }
 
   loadAnswers(el) {
@@ -99,7 +89,7 @@ class Section3c extends Component {
 
     switch (el.target.name) {
       case "p1_q1":
-        // this.selectInput(el.target.name, 0, isActive);
+        this.selectInput(el.target.name, 0, isActive);
         this.setState({
           p1_q1: "yes",
           p1_q1__b: textAreaCopy,
@@ -113,9 +103,6 @@ class Section3c extends Component {
       case "p1_q2":
         this.selectInput("p1_q2__a", 0, isActive);
         this.selectInput("p1_q2__b", 1, isActive);
-
-        // this.setState({ p1_q2__a_2: "checked" });
-        // this.setState({ p1_q2__b_1: "checked" });
 
         this.setState({
           p1_q2__c: textAreaCopy,
