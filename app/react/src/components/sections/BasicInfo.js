@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
+import PageInfo from "../layout/PageInfo";
 import { TextField, Dropdown, ChoiceList } from "@cmsgov/design-system-core";
 import statesArray from "../Utils/statesArray";
 
@@ -36,7 +37,8 @@ class BasicInfo extends Component {
 
             <div className="main ds-l-col--9">
               <div className="ds-base">
-                <h1> Welcome!</h1>
+                <PageInfo />
+
                 <h3> Let’s start with your basic information. </h3>
 
                 <Dropdown
