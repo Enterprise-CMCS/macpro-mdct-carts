@@ -73,7 +73,7 @@ class Section2b extends Component {
                       reconcile any differences
                     </p>
                     <div className="objective-accordiion">
-                      <Accordion>
+                      <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                         {this.state.objectiveArray.map((element) => (
                           <AccordionItem key={element.id}>
                             <div className="accordion-header">
