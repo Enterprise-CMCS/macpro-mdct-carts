@@ -163,11 +163,15 @@ pipeline {
                 git tag $BUILD_TAG
                 git push https://$GIT_CREDENTIAL@$remote_url refs/tags/$BUILD_TAG
               '''
-              build job: 'staging',
-                parameters: [
-                  string(name: 'VERSION', value: "${BUILD_TAG}")
-                ],
-                wait: false
+              try {
+                build job: 'staging',
+                  parameters: [
+                    string(name: 'VERSION', value: "${BUILD_TAG}")
+                  ],
+                  wait: false
+              } catch (err) {
+                echo err.getMessage()
+              }
             }
           }
         }

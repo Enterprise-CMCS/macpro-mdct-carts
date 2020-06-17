@@ -116,11 +116,15 @@ pipeline {
               git push https://$GIT_CREDENTIAL@$remote_url refs/tags/$JOB_NAME -f
             '''
             if (env.DOWNSTREAM_JOB) {
-              build job: "${DOWNSTREAM_JOB}",
-                parameters: [
-                  string(name: 'VERSION', value: "${VERSION}")
-                ],
-                wait: false
+              try {
+                build job: "${DOWNSTREAM_JOB}",
+                  parameters: [
+                    string(name: 'VERSION', value: "${VERSION}")
+                  ],
+                  wait: false
+              } catch (err) {
+                  echo err.getMessage()
+              }
             }
           }
         }
