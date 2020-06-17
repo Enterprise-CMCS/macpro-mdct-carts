@@ -91,11 +91,9 @@ class Section3c extends Component {
         this.setState({ p1_q1__c: textAreaCopy });
         break;
       case "p1_q2":
-        this.selectInput(el.target.name, 0, isActive);
-        this.selectInput(el.target.name, 0, isActive);
+        this.selectInput("p1_q2__a", 0, isActive);
+        this.selectInput("p1_q2__b", 1, isActive);
 
-        this.setState({ p1_q2__a_2: "checked" });
-        this.setState({ p1_q2__b_1: "checked" });
         this.setState({ p1_q2__c: textAreaCopy });
         this.setState({ p1_q2__d: textAreaCopy });
         this.setState({ p1_q2__e: textAreaCopy });
