@@ -59,7 +59,9 @@ class Homepage extends Component {
           </div>
           <div className="ds-l-row">
             <div className="reports ds-l-col--12">
-              <h3>CARTS reports</h3>
+              <h3 className="report-section-title ds-l-col--12">
+                CARTS reports
+              </h3>
 
               <div className="carts-report ds-l-container preview__grid">
                 <div className="report-header ds-l-row">
@@ -71,8 +73,8 @@ class Homepage extends Component {
 
                 <ReportItem
                   year="NY-CARTS-FY2020"
-                  lastEditedTime="10:42am"
-                  lastEditedDate="04/28/20"
+                  lastEditedTime="1:32pm"
+                  lastEditedDate="9/21/20"
                   link1URL="/preamble"
                   link1Text="Edit"
                   link2URL="#"

@@ -120,6 +120,10 @@
     margin-bottom: $margin;
   }
 
+  .report-section-title {
+    margin-left: ($margin * 2);
+  }
+
   .updates {
     h3 {
       color: $black;
