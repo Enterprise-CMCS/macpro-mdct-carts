@@ -22,7 +22,7 @@ class ReportItem extends Component {
 
     return (
       <div className="report-item ds-l-row">
-        <div className="name ds-l-col">{this.props.year}</div>
+        <div className="name ds-l-col">{this.props.name}</div>
         <div className="status ds-l-col">{statusURL}</div>
         <div className="last-edited ds-l-col">
           {this.props.lastEditedTime}|{this.props.lastEditedDate}{" "}

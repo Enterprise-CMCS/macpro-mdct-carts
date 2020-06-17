@@ -72,7 +72,7 @@ class Homepage extends Component {
                 </div>
 
                 <ReportItem
-                  year="NY-CARTS-FY2020"
+                  name="NY-CARTS-FY2020"
                   lastEditedTime="1:32pm"
                   lastEditedDate="9/21/20"
                   link1URL="/preamble"
@@ -80,97 +80,87 @@ class Homepage extends Component {
                   link2URL="#"
                   link2Text="Download"
                   statusText="Draft"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2019"
+                  name="NY-CARTS-FY2019"
                   lastEditedTime="7:32am"
                   lastEditedDate="3/20/20"
                   link1URL="#"
                   link2URL="#"
                   statusText="Under review"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2018"
+                  name="NY-CARTS-FY2018"
                   lastEditedTime="5:43pm"
                   lastEditedDate="1/26/19"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2017"
+                  name="NY-CARTS-FY2017"
                   lastEditedTime="5:00am"
                   lastEditedDate="2/13/18"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2016"
+                  name="NY-CARTS-FY2016"
                   lastEditedTime="9:13pm"
                   lastEditedDate="3/20/17"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2015"
+                  name="NY-CARTS-FY2015"
                   lastEditedTime="9:00am"
                   lastEditedDate="1/20/16"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2014"
+                  name="NY-CARTS-FY2014"
                   lastEditedTime="4:44pm"
                   lastEditedDate="3/20/15"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2013"
+                  name="NY-CARTS-FY2013"
                   lastEditedTime="5:05am"
                   lastEditedDate="3/24/14"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2012"
+                  name="NY-CARTS-FY2012"
                   lastEditedTime="9:00am"
                   lastEditedDate="2/02/13"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
 
                 <ReportItem
-                  year="NY-CARTS-FY2011"
+                  name="NY-CARTS-FY2011"
                   lastEditedTime="11:30am"
                   lastEditedDate="3/20/12"
                   link1URL="#"
                   link2URL="#"
                   statusURL="#"
-                  current={false}
                 />
               </div>
             </div>
