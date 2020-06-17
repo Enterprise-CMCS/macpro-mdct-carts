@@ -7,7 +7,8 @@ import {
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
+import PageInfo from "../../layout/PageInfo";
 
 class Section3c extends Component {
   constructor() {
@@ -103,11 +104,11 @@ class Section3c extends Component {
         // Show/hide conditionals
         this.setConditionalFromToggle(el.target.name, el.target.value);
         console.log("NAME?", el.target.name);
-        console.log("VALUE??", value);
+        // console.log("VALUE??", value);
         break;
       case "p1_q2":
-        this.selectInput(el.target.name, 0, isActive);
-        this.selectInput(el.target.name, 0, isActive);
+        this.selectInput("p1_q2__a", 0, isActive);
+        this.selectInput("p1_q2__b", 1, isActive);
 
         // this.setState({ p1_q2__a_2: "checked" });
         // this.setState({ p1_q2__b_1: "checked" });
@@ -157,10 +158,7 @@ class Section3c extends Component {
             </div>
 
             <div className="main ds-l-col--9">
-              <div className="page-info">
-                <div className="edit-info">Draft | Last Edit: 4/3/20</div>
-                <h1>{this.props.name} CARTS FY2020</h1>
-              </div>
+              <PageInfo />
               <div className="section-content">
                 <Tabs>
                   <TabPanel id="tab-form" tab="Section 3C: Eligibility">
