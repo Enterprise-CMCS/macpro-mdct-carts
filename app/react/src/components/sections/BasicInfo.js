@@ -40,7 +40,7 @@ class BasicInfo extends Component {
                 <h3> Let’s start with your basic information. </h3>
 
                 <Dropdown
-                  label="1. State or territory name"
+                  label="1. State or Territory Name"
                   size="medium"
                   name="selectedState"
                   options={statesArray}
@@ -48,7 +48,7 @@ class BasicInfo extends Component {
                   onChange={this.handleChange}
                 />
                 <TextField
-                  label="2. CHIP program name(s):"
+                  label="2. CHIP Program Name(s):"
                   name="programName"
                   onChange={this.handleChange}
                 />
@@ -76,8 +76,8 @@ class BasicInfo extends Component {
                 <h3>
                   {" "}
                   Who should we contact if we have any questions about your
-                  report? <TextField label="Contact name" name="contactName" />
-                  <TextField label="Job title" name="contactTitle" />
+                  report? <TextField label="Contact Name" name="contactName" />
+                  <TextField label="Job Title" name="contactTitle" />
                   <TextField label="Email" name="contactEmail" />
                   <TextField
                     label="Address"
