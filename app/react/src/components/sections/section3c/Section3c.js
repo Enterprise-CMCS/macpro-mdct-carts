@@ -7,7 +7,8 @@ import {
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
+import PageInfo from "../../layout/PageInfo";
 
 class Section3c extends Component {
   constructor() {
@@ -140,10 +141,7 @@ class Section3c extends Component {
             </div>
 
             <div className="main ds-l-col--9">
-              <div className="page-info">
-                <div className="edit-info">Draft | Last Edit: 4/3/20</div>
-                <h1>{this.props.name} CARTS FY2020</h1>
-              </div>
+              <PageInfo />
               <div className="section-content">
                 <Tabs>
                   <TabPanel id="tab-form" tab="Section 3C: Eligibility">

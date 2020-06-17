@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
+import PageInfo from "../../layout/PageInfo";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import {
@@ -57,12 +58,7 @@ class Section2b extends Component {
             </div>
 
             <div className="main ds-l-col--9">
-              <div className="page-info">
-                <div className="edit-info">Draft | Last Edit: 4/3/20</div>
-                <h1>
-                  {this.props.name} CARTS{} FY2020
-                </h1>
-              </div>
+              <PageInfo />
               <Tabs>
                 <TabPanel id="section2b" tab="Section 2B: Performance Goals">
                   <div className="section-content">
