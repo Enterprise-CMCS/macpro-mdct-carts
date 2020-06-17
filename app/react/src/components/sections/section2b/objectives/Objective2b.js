@@ -56,7 +56,7 @@ class Objective2b extends Component {
             name={"objective_" + this.props.objectiveCount + "_text"}
           />
           <div className="goals">
-            <Accordion>
+            <Accordion multiple defaultIndex={[...Array(100).keys()]}>
               {this.state.goalArray.map((element) => (
                 <AccordionItem key={element.id}>
                   <h3>
