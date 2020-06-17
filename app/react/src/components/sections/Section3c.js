@@ -42,14 +42,13 @@ class Section3c extends Component {
   }
 
   setConditional(el) {
-    let radio = document.getElementById("radio_p1_q1_36");
-    let textField = document.getElementById("textfield_41");
+    let parent = document.getElementById(el.target.name);
+    let conditionals = parent.getElementsByClassName("conditional");
 
-    if (radio.checked) {
-      textField.parentNode.parentNode.classList.remove("hide");
-    } else {
-      textField.parentNode.parentNode.classList.add("hide");
-    }
+    let array = [].slice.call(conditionals);
+    array.forEach(function (conditional) {
+      conditional.classList.toggle("hide");
+    });
   }
 
   selectInput(id, option, active) {
@@ -89,13 +88,16 @@ class Section3c extends Component {
 
         this.setState({ p1_q1__b: textAreaCopy });
         this.setState({ p1_q1__c: textAreaCopy });
+
+        // Show/hide conditionals
+        this.setConditional(el);
         break;
       case "p1_q2":
         this.selectInput(el.target.name, 0, isActive);
         this.selectInput(el.target.name, 0, isActive);
 
-        this.setState({ p1_q2__a_2: "checked" });
-        this.setState({ p1_q2__b_1: "checked" });
+        // this.setState({ p1_q2__a_2: "checked" });
+        // this.setState({ p1_q2__b_1: "checked" });
         this.setState({ p1_q2__c: textAreaCopy });
         this.setState({ p1_q2__d: textAreaCopy });
         this.setState({ p1_q2__e: textAreaCopy });
@@ -186,23 +188,24 @@ class Section3c extends Component {
                               onChange={this.setConditional}
                               hint="Note: This question may not apply to Medicaid Expansion states."
                             />
-                          </div>
-                          <div className="conditional hide">
-                            <TextField
-                              label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
-                              multiline
-                              name="p1_q1__b"
-                              rows="6"
-                              value={this.state.p1_q1__b}
-                            />
-                            <TextField
-                              hint="Maximum 7,500 characters"
-                              label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
-                              multiline
-                              name="p1_q1__c"
-                              rows="6"
-                              value={this.state.p1_q1__c}
-                            />
+
+                            <div className="conditional hide">
+                              <TextField
+                                label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
+                                multiline
+                                name="p1_q1__b"
+                                rows="6"
+                                value={this.state.p1_q1__b}
+                              />
+                              <TextField
+                                hint="Maximum 7,500 characters"
+                                label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
+                                multiline
+                                name="p1_q1__c"
+                                rows="6"
+                                value={this.state.p1_q1__c}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
