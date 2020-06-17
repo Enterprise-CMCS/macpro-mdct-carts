@@ -20,7 +20,7 @@ class Section3c extends Component {
     this.state = {
       p1_q1: true,
       p1_q1__a: "",
-      p1_q1__a_1: true,
+      p1_q1__a_1: "",
       p1_q1__a_2: "",
       p1_q1__b: "",
       p1_q2__a: "",
@@ -42,12 +42,23 @@ class Section3c extends Component {
   }
 
   setConditional(el) {
-    let parent = document.getElementById(el.target.name);
-    let conditionals = parent.getElementsByClassName("conditional");
+    console.log("WHAT CHOICE HAS BEEN MADE?", el.target.value);
+    this.setState({
+      [el.target.name]: el.target.value,
+    });
 
-    let array = [].slice.call(conditionals);
-    array.forEach(function (conditional) {
-      conditional.classList.toggle("hide");
+    // let parent = document.getElementById(el.target.name);
+    // let conditionals = parent.getElementsByClassName("conditional");
+
+    // let array = [].slice.call(conditionals);
+    // array.forEach(function (conditional) {
+    //   conditional.classList.toggle("hide");
+    // });
+  }
+
+  setConditionalFromToggle(name, value) {
+    this.setState({
+      name: value,
     });
   }
 
@@ -90,7 +101,9 @@ class Section3c extends Component {
         this.setState({ p1_q1__c: textAreaCopy });
 
         // Show/hide conditionals
-        this.setConditional(el);
+        this.setConditionalFromToggle(el.target.name, el.target.value);
+        console.log("NAME?", el.target.name);
+        console.log("VALUE??", value);
         break;
       case "p1_q2":
         this.selectInput(el.target.name, 0, isActive);
@@ -188,24 +201,27 @@ class Section3c extends Component {
                               onChange={this.setConditional}
                               hint="Note: This question may not apply to Medicaid Expansion states."
                             />
-
-                            <div className="conditional hide">
-                              <TextField
-                                label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
-                                multiline
-                                name="p1_q1__b"
-                                rows="6"
-                                value={this.state.p1_q1__b}
-                              />
-                              <TextField
-                                hint="Maximum 7,500 characters"
-                                label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
-                                multiline
-                                name="p1_q1__c"
-                                rows="6"
-                                value={this.state.p1_q1__c}
-                              />
-                            </div>
+                            {this.state.p1_q1 === "yes" ? (
+                              <div className="conditional">
+                                <TextField
+                                  label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
+                                  multiline
+                                  name="p1_q1__b"
+                                  rows="6"
+                                  value={this.state.p1_q1__b}
+                                />
+                                <TextField
+                                  hint="Maximum 7,500 characters"
+                                  label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
+                                  multiline
+                                  name="p1_q1__c"
+                                  rows="6"
+                                  value={this.state.p1_q1__c}
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       </div>
