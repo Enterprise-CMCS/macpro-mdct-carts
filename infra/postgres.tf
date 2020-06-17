@@ -4,7 +4,7 @@ module "db" {
   version                 = "~> 2.0"
   identifier              = "postgres-${terraform.workspace}"
   engine                  = "postgres"
-  engine_version          = "9.6.9"
+  engine_version          = "9.6"
   instance_class          = "db.t3.large"
   allocated_storage       = 50
   storage_encrypted       = true
