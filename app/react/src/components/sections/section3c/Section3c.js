@@ -17,9 +17,10 @@ class Section3c extends Component {
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
     this.selectInput = this.selectInput.bind(this);
+    this.setConditionalFromToggle = this.setConditionalFromToggle.bind(this);
 
     this.state = {
-      p1_q1: true,
+      p1_q1: "yes",
       p1_q1__a: "",
       p1_q1__a_1: "",
       p1_q1__a_2: "",
@@ -44,9 +45,11 @@ class Section3c extends Component {
 
   setConditional(el) {
     console.log("WHAT CHOICE HAS BEEN MADE?", el.target.value);
+    console.log("WHO AM I?", el.target);
     this.setState({
       [el.target.name]: el.target.value,
     });
+    el.target.defaultChecked = true;
 
     // let parent = document.getElementById(el.target.name);
     // let conditionals = parent.getElementsByClassName("conditional");
@@ -64,27 +67,27 @@ class Section3c extends Component {
   }
 
   selectInput(id, option, active) {
-    let selection = document.getElementById(id).getElementsByTagName("input");
-
-    if (active) {
-      selection[option].checked = true;
-    } else {
-      for (let input of selection) {
-        input.checked = false;
-      }
-    }
+    // let selection = document.getElementById(id).getElementsByTagName("input");
+    // if (active) {
+    //   selection[option].checked = true;
+    // } else {
+    //   for (let input of selection) {
+    //     input.checked = false;
+    //   }
+    // }
   }
 
   loadAnswers(el) {
     el.preventDefault();
 
+    // button title: Undo or Same as Last year
     el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
     let textFieldCopy = "";
     let textAreaCopy = "";
 
-    // Set values on active
+    // Boolean, Set values on active
     let isActive = el.target.classList.contains("active");
 
     if (isActive) {
@@ -96,15 +99,16 @@ class Section3c extends Component {
 
     switch (el.target.name) {
       case "p1_q1":
-        this.selectInput(el.target.name, 0, isActive);
-
-        this.setState({ p1_q1__b: textAreaCopy });
-        this.setState({ p1_q1__c: textAreaCopy });
+        // this.selectInput(el.target.name, 0, isActive);
+        this.setState({
+          p1_q1: "yes",
+          p1_q1__b: textAreaCopy,
+          p1_q1__c: textAreaCopy,
+        });
 
         // Show/hide conditionals
-        this.setConditionalFromToggle(el.target.name, el.target.value);
-        console.log("NAME?", el.target.name);
-        // console.log("VALUE??", value);
+        this.setConditionalFromToggle(el.target.name, isActive);
+
         break;
       case "p1_q2":
         this.selectInput("p1_q2__a", 0, isActive);
@@ -112,9 +116,12 @@ class Section3c extends Component {
 
         // this.setState({ p1_q2__a_2: "checked" });
         // this.setState({ p1_q2__b_1: "checked" });
-        this.setState({ p1_q2__c: textAreaCopy });
-        this.setState({ p1_q2__d: textAreaCopy });
-        this.setState({ p1_q2__e: textAreaCopy });
+
+        this.setState({
+          p1_q2__c: textAreaCopy,
+          p1_q2__d: textAreaCopy,
+          p1_q2__e: textAreaCopy,
+        });
         break;
       case "p1_q3":
         this.setState({ p1_q3: textAreaCopy });
@@ -187,10 +194,12 @@ class Section3c extends Component {
                                 {
                                   label: "Yes",
                                   value: "yes",
+                                  // defaultChecked: this.state.,
                                 },
                                 {
                                   label: "No",
                                   value: "no",
+                                  // defaultChecked: false,
                                 },
                               ]}
                               className="p1_q1"
