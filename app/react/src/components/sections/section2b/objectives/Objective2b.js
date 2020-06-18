@@ -17,6 +17,7 @@ class Objective2b extends Component {
     this.state = {
       goalCount: 1,
       goalArray: [],
+      objective2bDummyData: "",
     };
     this.newGoal = this.newGoal.bind(this);
   }
@@ -29,6 +30,8 @@ class Objective2b extends Component {
 
     this.setState({
       goalArray: [initialGoal],
+      objective2bDummyData:
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim.",
     });
   }
 
