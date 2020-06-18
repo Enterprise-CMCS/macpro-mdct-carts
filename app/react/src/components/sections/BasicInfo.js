@@ -1,13 +1,20 @@
 import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
-import { TextField, Dropdown, ChoiceList } from "@cmsgov/design-system-core";
+import PageInfo from "../layout/PageInfo";
+import NavigationButton from "../layout/NavigationButtons";
+import {
+  TextField,
+  Dropdown,
+  ChoiceList,
+  Button as button,
+} from "@cmsgov/design-system-core";
 import statesArray from "../Utils/statesArray";
 
 class BasicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedState: "NY",
+      selectedState: "AL",
       programName: "",
       programType: "",
       contactName: "",
@@ -35,12 +42,13 @@ class BasicInfo extends Component {
             </div>
 
             <div className="main ds-l-col--9">
+              <PageInfo />
               <div className="ds-base">
-                <h1> Welcome!</h1>
+                <h4> Welcome!</h4>
                 <h3> Let’s start with your basic information. </h3>
 
                 <Dropdown
-                  label="1. State or territory name"
+                  label="1. State or Territory Name"
                   size="medium"
                   name="selectedState"
                   options={statesArray}
@@ -48,7 +56,7 @@ class BasicInfo extends Component {
                   onChange={this.handleChange}
                 />
                 <TextField
-                  label="2. CHIP program name(s):"
+                  label="2. CHIP Program Name(s):"
                   name="programName"
                   onChange={this.handleChange}
                 />
@@ -73,19 +81,40 @@ class BasicInfo extends Component {
                   onChange={this.handleChange}
                 />
 
-                <h3>
-                  {" "}
-                  Who should we contact if we have any questions about your
-                  report? <TextField label="Contact name" name="contactName" />
-                  <TextField label="Job title" name="contactTitle" />
-                  <TextField label="Email" name="contactEmail" />
+                <div>
+                  <h3>
+                    Who should we contact if we have any questions about your
+                    report?
+                  </h3>
+                  <TextField label="4. Contact Name" name="contactName" />
+                  <TextField label="5. Job Title" name="contactTitle" />
+                  <TextField label="6. Email" name="contactEmail" />
                   <TextField
-                    label="Address"
-                    hint="Office address"
+                    label="7. Address"
+                    hint="Include city, state and zip code"
                     name="contactAddress"
                   />
-                  <TextField label="Phone Number" name="contactPhone" />
-                </h3>
+                  <TextField label="8. Phone Number" name="contactPhone" />
+                  <div className="form-options">
+                    <button
+                      type="submit"
+                      className="ds-c-button ds-c-button--disabled"
+                    >
+                      Saved
+                    </button>
+                    <a href="#export" id="export">
+                      Export
+                    </a>
+                  </div>
+                </div>
+                <div className="nav-buttons">
+                  <NavigationButton
+                    direction="Previous"
+                    destination="/preamble"
+                  />
+
+                  <NavigationButton direction="Next" destination="/2b" />
+                </div>
               </div>
             </div>
           </div>

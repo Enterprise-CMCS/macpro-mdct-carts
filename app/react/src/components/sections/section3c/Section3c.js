@@ -10,6 +10,7 @@ import {
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FillForm from "../../layout/FillForm";
+import NavigationButton from "../../layout/NavigationButtons";
 
 class Section3c extends Component {
   constructor() {
@@ -666,6 +667,12 @@ class Section3c extends Component {
                     </form>
                   </TabPanel>
                 </Tabs>
+              </div>
+
+              <div className="nav-buttons">
+                <NavigationButton direction="Previous" destination="/2b" />
+
+                <NavigationButton direction="Next" destination="#" />
               </div>
             </div>
           </div>
