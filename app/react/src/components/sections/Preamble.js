@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
+import NavigationButton from "../layout/NavigationButtons";
 
 class Preamble extends Component {
   constructor(props) {
@@ -80,6 +81,9 @@ class Preamble extends Component {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="nav-buttons">
+                <NavigationButton direction="Next" destination="/basic-info" />
               </div>
             </div>
           </div>

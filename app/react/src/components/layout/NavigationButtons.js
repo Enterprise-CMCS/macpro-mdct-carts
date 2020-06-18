@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Button } from "@cmsgov/design-system-core";
 
-class NavButton extends Component {
+class NavigationButton extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -19,4 +19,4 @@ class NavButton extends Component {
   }
 }
 
-export default NavButton;
+export default NavigationButton;
