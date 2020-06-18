@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
+import NavigationButton from "../layout/NavigationButtons";
 import { TextField, Dropdown, ChoiceList } from "@cmsgov/design-system-core";
 import statesArray from "../Utils/statesArray";
 
@@ -75,19 +76,28 @@ class BasicInfo extends Component {
                   onChange={this.handleChange}
                 />
 
-                <h3>
+                <div>
                   {" "}
                   Who should we contact if we have any questions about your
-                  report? <TextField label="Contact Name" name="contactName" />
-                  <TextField label="Job Title" name="contactTitle" />
-                  <TextField label="Email" name="contactEmail" />
+                  report?{" "}
+                  <TextField label="4. Contact Name" name="contactName" />
+                  <TextField label="5. Job Title" name="contactTitle" />
+                  <TextField label="6. Email" name="contactEmail" />
                   <TextField
-                    label="Address"
-                    hint="Office address"
+                    label="7. Address"
+                    hint="Include city, state and zip code"
                     name="contactAddress"
                   />
-                  <TextField label="Phone Number" name="contactPhone" />
-                </h3>
+                  <TextField label="8. Phone Number" name="contactPhone" />
+                </div>
+                <div className="nav-buttons">
+                  <NavigationButton
+                    direction="Previous"
+                    destination="/preamble"
+                  />
+
+                  <NavigationButton direction="Next" destination="/2b" />
+                </div>
               </div>
             </div>
           </div>
