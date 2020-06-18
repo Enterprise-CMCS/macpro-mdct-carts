@@ -86,7 +86,7 @@ class Objective2b extends Component {
                 ))}
               </Accordion>
             ) : (
-              <Accordion>
+              <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.goalArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>

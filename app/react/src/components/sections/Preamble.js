@@ -60,36 +60,34 @@ class Preamble extends Component {
                         accomplishments and progress of individual CHIP programs
                       </li>
 
-                        <li>
-                          Recognize the diversity of each state and territory,
-                          allowing for flexibility to highlight key
-                          accomplishments and progress of individual CHIP
-                          programs
-                        </li>
+                      <li>
+                        Recognize the diversity of each state and territory,
+                        allowing for flexibility to highlight key
+                        accomplishments and progress of individual CHIP programs
+                      </li>
 
-                        <li>
-                          Build on data already collected by CMS in quarterly
-                          reports
-                        </li>
+                      <li>
+                        Build on data already collected by CMS in quarterly
+                        reports
+                      </li>
 
-                        <li>
-                          Make information about the achievements and challenges
-                          of each state and territory more accessible to
-                          stakeholders
-                        </li>
+                      <li>
+                        Make information about the achievements and challenges
+                        of each state and territory more accessible to
+                        stakeholders
+                      </li>
 
-                        <li>
-                          Provide consistency in the structure, content, and
-                          format of reporting across states and territories
-                        </li>
-                      </ul>
-                    </div>
+                      <li>
+                        Provide consistency in the structure, content, and
+                        format of reporting across states and territories
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-              <div className="nav-buttons">
-                <NavigationButton direction="Next" destination="/basic-info" />
-              </div>
+            </div>
+            <div className="nav-buttons">
+              <NavigationButton direction="Next" destination="/basic-info" />
             </div>
           </div>
         </div>
