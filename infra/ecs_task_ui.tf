@@ -17,7 +17,7 @@ resource "aws_security_group" "ui" {
   vpc_id = data.aws_vpc.app.id
 }
 
-resource "aws_security_group_rule" "ui_ingress" {
+resource "aws_security_group_rule" "ui_ingress_80" {
   type                     = "ingress"
   from_port                = 80
   to_port                  = 80
@@ -66,21 +66,36 @@ resource "null_resource" "wait_for_ecs_stability_ui" {
   depends_on = [aws_ecs_service.ui]
 }
 
-
 resource "aws_security_group" "alb_ui" {
   vpc_id = data.aws_vpc.app.id
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.ui.id]
-  }
+}
+
+resource "aws_security_group_rule" "alb_ui_egress" {
+  type                     = "egress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ui.id
+  security_group_id        = aws_security_group.alb_ui.id
+}
+
+resource "aws_security_group_rule" "alb_ui_ingress_80" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_ui.id
+}
+
+resource "aws_security_group_rule" "alb_ui_ingress_443" {
+  count             = var.acm_certificate_domain_ui == "" ? 0 : 1
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_ui.id
 }
 
 resource "aws_alb" "ui" {
@@ -101,13 +116,47 @@ resource "aws_alb_target_group" "ui" {
   depends_on = [aws_alb.ui]
 }
 
+data "aws_acm_certificate" "ui" {
+  count    = var.acm_certificate_domain_ui == "" ? 0 : 1
+  domain   = var.acm_certificate_domain_ui
+  statuses = ["ISSUED"]
+}
+
+resource "aws_alb_listener" "https_forward_ui" {
+  count             = var.acm_certificate_domain_ui == "" ? 0 : 1
+  load_balancer_arn = aws_alb.alb_ui.id
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = data.aws_acm_certificate.ui.arn
+  default_action {
+    target_group_arn = aws_alb_target_group.ui.id
+    type             = "forward"
+  }
+}
 
 resource "aws_alb_listener" "http_forward_ui" {
-  load_balancer_arn = aws_alb.ui.id
+  count             = var.acm_certificate_domain_ui == "" ? 1 : 0
+  load_balancer_arn = aws_alb.alb_ui.id
   port              = "80"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.ui.id
     type             = "forward"
+  }
+}
+
+resource "aws_alb_listener" "http_to_https_redirect_ui" {
+  count             = var.acm_certificate_domain_ui == "" ? 0 : 1
+  load_balancer_arn = aws_alb.alb_ui.id
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    target_group_arn = aws_alb_target_group.ui.id
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_302"
+    }
   }
 }

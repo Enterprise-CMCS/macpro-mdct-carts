@@ -78,21 +78,36 @@ resource "null_resource" "wait_for_ecs_stability_api" {
   depends_on = [aws_ecs_service.api]
 }
 
-
 resource "aws_security_group" "alb_api" {
   vpc_id = data.aws_vpc.app.id
-  ingress {
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port       = 8000
-    to_port         = 8000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.api.id]
-  }
+}
+
+resource "aws_security_group_rule" "alb_api_egress" {
+  type                     = "egress"
+  from_port                = 8000
+  to_port                  = 8000
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.api.id
+  security_group_id        = aws_security_group.alb_api.id
+}
+
+resource "aws_security_group_rule" "alb_api_ingress_80" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_api.id
+}
+
+resource "aws_security_group_rule" "alb_api_ingress_443" {
+  count             = var.acm_certificate_domain_api == "" ? 0 : 1
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_api.id
 }
 
 resource "aws_alb" "api" {
@@ -113,13 +128,47 @@ resource "aws_alb_target_group" "api" {
   depends_on = [aws_alb.api]
 }
 
+data "aws_acm_certificate" "api" {
+  count    = var.acm_certificate_domain_api == "" ? 0 : 1
+  domain   = var.acm_certificate_domain_api
+  statuses = ["ISSUED"]
+}
+
+resource "aws_alb_listener" "https_forward_api" {
+  count             = var.acm_certificate_domain_api == "" ? 0 : 1
+  load_balancer_arn = aws_alb.alb_api.id
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = data.aws_acm_certificate.api.arn
+  default_action {
+    target_group_arn = aws_alb_target_group.api.id
+    type             = "forward"
+  }
+}
 
 resource "aws_alb_listener" "http_forward_api" {
-  load_balancer_arn = aws_alb.api.id
-  port              = "8000"
+  count             = var.acm_certificate_domain_api == "" ? 1 : 0
+  load_balancer_arn = aws_alb.alb_api.id
+  port              = "80"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api.id
     type             = "forward"
+  }
+}
+
+resource "aws_alb_listener" "http_to_https_redirect_api" {
+  count             = var.acm_certificate_domain_api == "" ? 0 : 1
+  load_balancer_arn = aws_alb.alb_api.id
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    target_group_arn = aws_alb_target_group.api.id
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_302"
+    }
   }
 }
