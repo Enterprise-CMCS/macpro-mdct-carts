@@ -2,6 +2,10 @@
   Layout
 **********************/
 
+.ds-base {
+  margin-left: 2em;
+}
+
 @media only screen and (max-width: 767px) {
   div[class*="ds-l-col--"] {
     max-width: 100%;

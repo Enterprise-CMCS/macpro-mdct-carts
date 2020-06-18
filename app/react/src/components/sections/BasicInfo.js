@@ -42,9 +42,9 @@ class BasicInfo extends Component {
             </div>
 
             <div className="main ds-l-col--9">
+              <PageInfo />
               <div className="ds-base">
-                <PageInfo />
-
+                <h4> Welcome!</h4>
                 <h3> Let’s start with your basic information. </h3>
 
                 <Dropdown
@@ -82,9 +82,10 @@ class BasicInfo extends Component {
                 />
 
                 <div>
-                  {" "}
-                  Who should we contact if we have any questions about your
-                  report?{" "}
+                  <h3>
+                    Who should we contact if we have any questions about your
+                    report?
+                  </h3>
                   <TextField label="4. Contact Name" name="contactName" />
                   <TextField label="5. Job Title" name="contactTitle" />
                   <TextField label="6. Email" name="contactEmail" />

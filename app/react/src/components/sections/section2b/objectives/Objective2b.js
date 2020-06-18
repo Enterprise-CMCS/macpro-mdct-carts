@@ -75,7 +75,7 @@ class Objective2b extends Component {
           />
           <div className="goals">
             {this.props.previousEntry === "true" ? (
-              <Accordion>
+              <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.previousGoalsArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
