@@ -19,6 +19,7 @@ class Objective2b extends Component {
       goalArray: [],
       objective2bDummyData: "",
       objectiveDescription: "",
+      previousGoalsArray: [],
     };
     this.newGoal = this.newGoal.bind(this);
   }
@@ -29,8 +30,16 @@ class Objective2b extends Component {
       component: <Goal goalCount={1} />,
     };
 
+    let dummyDataArray = [];
+    for (let i = 1; i < 4; i++) {
+      dummyDataArray.push({
+        id: i,
+        component: <Goal goalCount={i} previousEntry="true" />,
+      });
+    }
     this.setState({
       goalArray: [initialGoal],
+      previousGoalsArray: dummyDataArray,
       objective2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim.",
     });
@@ -65,16 +74,29 @@ class Objective2b extends Component {
             }
           />
           <div className="goals">
-            <Accordion>
-              {this.state.goalArray.map((element) => (
-                <AccordionItem key={element.id}>
-                  <h3>
-                    <AccordionButton>Goal {element.id}:</AccordionButton>
-                  </h3>
-                  <AccordionPanel>{element.component}</AccordionPanel>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            {this.props.previousEntry === "true" ? (
+              <Accordion>
+                {this.state.previousGoalsArray.map((element) => (
+                  <AccordionItem key={element.id}>
+                    <h3>
+                      <AccordionButton>Goal {element.id}:</AccordionButton>
+                    </h3>
+                    <AccordionPanel>{element.component}</AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            ) : (
+              <Accordion>
+                {this.state.goalArray.map((element) => (
+                  <AccordionItem key={element.id}>
+                    <h3>
+                      <AccordionButton>Goal {element.id}:</AccordionButton>
+                    </h3>
+                    <AccordionPanel>{element.component}</AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            )}
           </div>
         </div>
 

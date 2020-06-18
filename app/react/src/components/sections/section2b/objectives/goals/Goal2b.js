@@ -8,8 +8,12 @@ class Goal extends Component {
       goal_denominator_digit: 0,
       percentage: 0,
       shouldCalculate: true,
+      goal2bDummyData:
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      goal2bDummyDigit: 10,
     };
     this.addDivisors = this.addDivisors.bind(this);
+    this.percentageCalculator = this.percentageCalculator.bind(this);
   }
 
   // Validate the input before returning calculated percentage
@@ -71,6 +75,11 @@ class Goal extends Component {
             hint="For example: Our goal is to enroll 75% of CHIP-eligible children with family income below 247% of the federal poverty level"
             multiline
             name="goal_description"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
         </div>
 
@@ -92,6 +101,11 @@ class Goal extends Component {
             hint="For example: We'll measure the percent of eligible children who enrolled in CHIP"
             multiline
             name="goal_measurement"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
         </div>
 
@@ -103,6 +117,11 @@ class Goal extends Component {
             hint="For example: The number of children below 247% of the FPL who enrolled in CHIP in the last federal fiscal year."
             multiline
             name="goal_numerator_definition"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
 
           <TextField
@@ -112,6 +131,11 @@ class Goal extends Component {
             size="medium"
             errorMessage={this.state.goal_numerator_digitErr}
             onChange={this.addDivisors}
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyDigit
+                : null
+            }
           />
           <h4> Define the denominator you're measuring</h4>
           <TextField
@@ -119,6 +143,11 @@ class Goal extends Component {
             hint="For example: The total number of children below 247% of the FPL in the last federal fiscal year."
             multiline
             name="goal_denominator_definition"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
 
           <TextField
@@ -128,6 +157,11 @@ class Goal extends Component {
             size="medium"
             errorMessage={this.state.goal_denominator_digitErr}
             onChange={this.addDivisors}
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyDigit
+                : null
+            }
           />
         </div>
 
@@ -145,8 +179,12 @@ class Goal extends Component {
                   label="Numerator"
                   name="goal_numerator_digit"
                   size="small"
-                  value={this.state.goal_numerator_digit}
                   className="ds-l--auto"
+                  value={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit
+                      : this.state.goal_numerator_digit
+                  }
                 />
               </div>
               <div>
@@ -155,8 +193,12 @@ class Goal extends Component {
                   label="Denominator"
                   name="goal_denominator_digit"
                   size="small"
-                  value={this.state.goal_denominator_digit}
                   className="ds-l--auto"
+                  value={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit
+                      : this.state.goal_denominator_digit
+                  }
                 />
               </div>
               <div>
@@ -165,7 +207,11 @@ class Goal extends Component {
                   label="Percentage"
                   name="goal_percentage"
                   size="small"
-                  value={`${this.state.percentage}%`}
+                  value={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit
+                      : `${this.state.percentage}%`
+                  }
                 />
               </div>
             </div>
@@ -175,9 +221,45 @@ class Goal extends Component {
         <div className="question-container">
           <h4> What is the date range for your data?</h4>
           <div className="date-range">
-            <DateField label="Start" hint={"From mm/yyyy to mm/yyyy"} />
+            <DateField
+              label="Start"
+              hint={"From mm/yyyy to mm/yyyy"}
+              monthValue={
+                this.props.previousEntry === "true"
+                  ? this.state.goal2bDummyDigit - 5
+                  : null
+              }
+              dayValue={
+                this.props.previousEntry === "true"
+                  ? this.state.goal2bDummyDigit
+                  : null
+              }
+              yearValue={
+                this.props.previousEntry === "true"
+                  ? this.state.goal2bDummyDigit * 202
+                  : null
+              }
+            />
 
-            <DateField label="End" hint={"From mm/yyyy to mm/yyyy"} />
+            <DateField
+              label="End"
+              hint={"From mm/yyyy to mm/yyyy"}
+              monthValue={
+                this.props.previousEntry === "true"
+                  ? this.state.goal2bDummyDigit
+                  : null
+              }
+              dayValue={
+                this.props.previousEntry === "true"
+                  ? this.state.goal2bDummyDigit
+                  : null
+              }
+              yearValue={
+                this.props.previousEntry === "true"
+                  ? this.state.goal2bDummyDigit * 202
+                  : null
+              }
+            />
           </div>
         </div>
 
@@ -200,6 +282,11 @@ class Goal extends Component {
             multiline
             name="progress_comparison"
             className="ds-u-margin-top--0"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
         </div>
 
@@ -209,6 +296,11 @@ class Goal extends Component {
             multiline
             name="progress_action"
             className="ds-u-margin-top--0"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
         </div>
 
@@ -218,6 +310,11 @@ class Goal extends Component {
             multiline
             name="additional_information"
             className="ds-u-margin-top--0"
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.goal2bDummyData
+                : null
+            }
           />
         </div>
 
@@ -227,7 +324,6 @@ class Goal extends Component {
             hint="Optional"
             name="supporting_documentation"
             className="ds-u-margin-top--0"
-            button="YYYYYYY"
           />
           <button className="ds-c-button">Browse</button>
         </div>
