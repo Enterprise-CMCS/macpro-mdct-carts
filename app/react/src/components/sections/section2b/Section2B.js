@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "../../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import PageInfo from "../../layout/PageInfo";
+import NavigationButton from "../../layout/NavigationButtons";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import {
@@ -107,6 +108,14 @@ class Section2b extends Component {
                   Redirect
                 </TabPanel>
               </Tabs>
+              <div className="nav-buttons">
+                <NavigationButton
+                  direction="Previous"
+                  destination="/basic-info"
+                />
+
+                <NavigationButton direction="Next" destination="/3c" />
+              </div>
             </div>
           </div>
         </div>
