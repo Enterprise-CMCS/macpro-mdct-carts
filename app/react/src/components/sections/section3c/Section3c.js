@@ -9,6 +9,7 @@ import {
 } from "@cmsgov/design-system-core";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
+import FillForm from "../../layout/FillForm";
 import NavigationButton from "../../layout/NavigationButtons";
 
 class Section3c extends Component {
@@ -18,11 +19,12 @@ class Section3c extends Component {
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
     this.selectInput = this.selectInput.bind(this);
+    this.setConditionalFromToggle = this.setConditionalFromToggle.bind(this);
 
     this.state = {
-      p1_q1: true,
+      p1_q1: "no",
       p1_q1__a: "",
-      p1_q1__a_1: true,
+      p1_q1__a_1: "",
       p1_q1__a_2: "",
       p1_q1__b: "",
       p1_q2__a: "",
@@ -43,20 +45,25 @@ class Section3c extends Component {
     };
   }
 
+  /**
+   * If conditional value is triggered, set state to value
+   * @param {Event} el
+   */
   setConditional(el) {
-    let radio = document.getElementById("radio_p1_q1_36");
-    let textField = document.getElementById("textfield_41");
+    this.setState({
+      [el.target.name]: el.target.value,
+    });
+    // el.target.defaultChecked = true;
+  }
 
-    if (radio.checked) {
-      textField.parentNode.parentNode.classList.remove("hide");
-    } else {
-      textField.parentNode.parentNode.classList.add("hide");
-    }
+  setConditionalFromToggle(name, value) {
+    this.setState({
+      name: value,
+    });
   }
 
   selectInput(id, option, active) {
     let selection = document.getElementById(id).getElementsByTagName("input");
-
     if (active) {
       selection[option].checked = true;
     } else {
@@ -69,13 +76,14 @@ class Section3c extends Component {
   loadAnswers(el) {
     el.preventDefault();
 
+    // button title: Undo or Same as Last year
     el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
     let textFieldCopy = "";
     let textAreaCopy = "";
 
-    // Set values on active
+    // Boolean, Set values on active
     let isActive = el.target.classList.contains("active");
 
     if (isActive) {
@@ -89,16 +97,25 @@ class Section3c extends Component {
       case "p1_q1":
         this.selectInput(el.target.name, 0, isActive);
 
-        this.setState({ p1_q1__b: textAreaCopy });
-        this.setState({ p1_q1__c: textAreaCopy });
+        // Show/hide conditionals
+        this.setConditionalFromToggle(el.target.name, isActive);
+
+        this.setState({
+          p1_q1: "yes",
+          p1_q1__b: textAreaCopy,
+          p1_q1__c: textAreaCopy,
+        });
+
         break;
       case "p1_q2":
         this.selectInput("p1_q2__a", 0, isActive);
         this.selectInput("p1_q2__b", 1, isActive);
 
-        this.setState({ p1_q2__c: textAreaCopy });
-        this.setState({ p1_q2__d: textAreaCopy });
-        this.setState({ p1_q2__e: textAreaCopy });
+        this.setState({
+          p1_q2__c: textAreaCopy,
+          p1_q2__d: textAreaCopy,
+          p1_q2__e: textAreaCopy,
+        });
         break;
       case "p1_q3":
         this.setState({ p1_q3: textAreaCopy });
@@ -152,14 +169,11 @@ class Section3c extends Component {
                           Part 1: Eligibility Renewal and Retention
                         </h3>
                         <div className="question-container">
-                          <div className="fill-form">
-                            <a
-                              href="#same"
-                              onClick={this.loadAnswers}
-                              name="p1_q1"
-                              title={this.state.fillFormTitle}
-                            ></a>
-                          </div>
+                          <FillForm
+                            name="p1_q1"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                          />
                           <div className="question">
                             1. Do you have authority in your CHIP state plan to
                             provide for presumptive eligibility, and have you
@@ -183,35 +197,37 @@ class Section3c extends Component {
                               onChange={this.setConditional}
                               hint="Note: This question may not apply to Medicaid Expansion states."
                             />
-                          </div>
-                          <div className="conditional hide">
-                            <TextField
-                              label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
-                              multiline
-                              name="p1_q1__b"
-                              rows="6"
-                              value={this.state.p1_q1__b}
-                            />
-                            <TextField
-                              hint="Maximum 7,500 characters"
-                              label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
-                              multiline
-                              name="p1_q1__c"
-                              rows="6"
-                              value={this.state.p1_q1__c}
-                            />
+                            {this.state.p1_q1 === "yes" ? (
+                              <div className="conditional">
+                                <TextField
+                                  label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
+                                  multiline
+                                  name="p1_q1__b"
+                                  rows="6"
+                                  value={this.state.p1_q1__b}
+                                />
+                                <TextField
+                                  hint="Maximum 7,500 characters"
+                                  label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
+                                  multiline
+                                  name="p1_q1__c"
+                                  rows="6"
+                                  value={this.state.p1_q1__c}
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p1_q2"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p1_q2"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
+
                         <div className="question">
                           2. Tell us how your state simplifies the eligibility
                           renewal process for families in order to retain more
@@ -275,14 +291,11 @@ class Section3c extends Component {
                         </div>
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p1_q3"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p1_q3"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <div className="question">
                           3. Which retention strategies have been most effective
                           in your state?
@@ -297,15 +310,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p1_q4"
-                            title={this.state.fillFormTitle}
-                            value={this.state.p1_q4}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p1_q4"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <div className="question">
                           4. How have you evaluated the effectiveness of your
                           strategies?
@@ -320,14 +329,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p1_q5"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p1_q5"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <div className="question">
                           5. What data sources and methodology do you use for
                           tracking effectiveness?
@@ -343,14 +349,11 @@ class Section3c extends Component {
                       </div>
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p2_q1"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p2_q1"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <div className="question">
                           A. Denials of Title XXI Coverage in FFY 2019
                           <div className="hint">
@@ -367,14 +370,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p2_q2"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p2_q2"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <TextField
                           hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
                           label="2. How many applications were denied Title XXI coverage for procedural denials?"
@@ -384,14 +384,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p2_q3"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p2_q3"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <TextField
                           hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
                           label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
@@ -401,14 +398,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p2_q4"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p2_q4"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <TextField
                           label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
                           labelClassName="p2_q4"
@@ -417,14 +411,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p2_q5"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p2_q5"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <TextField
                           label="5. How many applicants were denied Title XXI coverage for other reasons?"
                           labelClassName="p2_q5"
@@ -433,14 +424,11 @@ class Section3c extends Component {
                         />
                       </div>
                       <div className="question-container">
-                        <div className="fill-form">
-                          <a
-                            href="#same"
-                            onClick={this.loadAnswers}
-                            name="p2_q6"
-                            title={this.state.fillFormTitle}
-                          ></a>
-                        </div>
+                        <FillForm
+                          name="p2_q6"
+                          title={this.state.fillFormTitle}
+                          onClick={this.loadAnswers}
+                        />
                         <TextField
                           hint="(Maximum 7,500 characters)"
                           label="6. Did you run into any limitations when collecting data? Anything else you'd like to add about this section that wasn't already covered?"
