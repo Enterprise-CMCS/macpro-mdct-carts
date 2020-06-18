@@ -18,6 +18,7 @@ class Objective2b extends Component {
       goalCount: 1,
       goalArray: [],
       objective2bDummyData: "",
+      objectiveDescription: "",
     };
     this.newGoal = this.newGoal.bind(this);
   }
@@ -57,6 +58,11 @@ class Objective2b extends Component {
             label="What is your first objective as listed in your CHIP State Plan?"
             multiline
             name={"objective_" + this.props.objectiveCount + "_text"}
+            value={
+              this.props.previousEntry === "true"
+                ? this.state.objective2bDummyData
+                : null
+            }
           />
           <div className="goals">
             <Accordion>
