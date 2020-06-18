@@ -18,8 +18,8 @@ class Header extends Component {
     root.addEventListener(
       "click",
       () => {
-        document.getElementById("menu-block").classList.toggle("open");
-        document.getElementById("nav-user").classList.toggle("open");
+        document.getElementById("menu-block").classList.remove("open");
+        document.getElementById("nav-user").classList.remove("open");
       },
       false
     );
