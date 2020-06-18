@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
+import PageInfo from "../layout/PageInfo";
+import NavigationButton from "../layout/NavigationButtons";
+import { Button as button } from "@cmsgov/design-system-core";
 
 class Preamble extends Component {
   constructor(props) {
@@ -17,6 +20,7 @@ class Preamble extends Component {
 
             <div className="main ds-l-col--9">
               <div className="ds-base">
+                <PageInfo />
                 <h1> Preamble </h1>
                 <div className="ds-base">
                   <div className="preamble">
@@ -36,42 +40,51 @@ class Preamble extends Component {
                       relevant sections to their program, by January 1.
                     </p>
                     <div className="preamble-carts-sections">
-                      <ul>CARTS is organized into sections:</ul>
-                      <li>Your basic information</li>
-                      <li>Section I: Program Fees and Policy Changes</li>
-                      <li>Section 2: Eligibility and Enrollment</li>
-                      <li>Section 3: Program Operations</li>
-                      <li>Section 4: State Plan Goals and Objectives</li>
-                      <li>Section 5: Budget and Finances</li>
-                      <li>Section 6: Challenges and Accomplishments</li>
+                      <ul>
+                        <h3>CARTS is organized into sections:</h3>
+                        <li>Your basic information</li>
+                        <li>Section I: Program Fees and Policy Changes</li>
+                        <li>Section 2: Eligibility and Enrollment</li>
+                        <li>Section 3: Program Operations</li>
+                        <li>Section 4: State Plan Goals and Objectives</li>
+                        <li>Section 5: Budget and Finances</li>
+                        <li>Section 6: Challenges and Accomplishments</li>
+                      </ul>
                     </div>
 
                     <div className="preamble-framework-design">
-                      <ul>The framework of CARTS is designed to:</ul>
-                      <li>
-                        Recognize the diversity of each state and territory,
-                        allowing for flexibility to highlight key
-                        accomplishments and progress of individual CHIP programs
-                      </li>
+                      <ul>
+                        <h3>The framework of CARTS is designed to:</h3>
 
-                      <li>
-                        Build on data already collected by CMS in quarterly
-                        reports
-                      </li>
+                        <li>
+                          Recognize the diversity of each state and territory,
+                          allowing for flexibility to highlight key
+                          accomplishments and progress of individual CHIP
+                          programs
+                        </li>
 
-                      <li>
-                        Make information about the achievements and challenges
-                        of each state and territory more accessible to
-                        stakeholders
-                      </li>
+                        <li>
+                          Build on data already collected by CMS in quarterly
+                          reports
+                        </li>
 
-                      <li>
-                        Provide consistency in the structure, content, and
-                        format of reporting across states and territories
-                      </li>
+                        <li>
+                          Make information about the achievements and challenges
+                          of each state and territory more accessible to
+                          stakeholders
+                        </li>
+
+                        <li>
+                          Provide consistency in the structure, content, and
+                          format of reporting across states and territories
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="nav-buttons">
+                <NavigationButton direction="Next" destination="/basic-info" />
               </div>
             </div>
           </div>

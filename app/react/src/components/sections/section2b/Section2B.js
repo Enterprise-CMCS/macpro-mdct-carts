@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "../../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import PageInfo from "../../layout/PageInfo";
+import NavigationButton from "../../layout/NavigationButtons";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import {
@@ -20,6 +21,7 @@ class Section2b extends Component {
     this.state = {
       objectiveCount: 1,
       objectiveArray: [],
+      previousObjectivesArray: [],
     };
     this.newObjective = this.newObjective.bind(this);
   }
@@ -30,8 +32,17 @@ class Section2b extends Component {
       component: <Objective2b objectiveCount={1} />,
     };
 
+    let dummyDataArray = [];
+    for (let i = 1; i < 4; i++) {
+      dummyDataArray.push({
+        id: i,
+        component: <Objective2b objectiveCount={i} previousEntry="true" />,
+      });
+    }
+
     this.setState({
       objectiveArray: [initialObjective],
+      previousObjectivesArray: dummyDataArray,
     });
   }
 
@@ -103,10 +114,38 @@ class Section2b extends Component {
                   </div>
                 </TabPanel>
 
-                <TabPanel id="section2bPrevious" tab="FY2019 answers">
-                  Redirect
+                <TabPanel className="section2b-previous" tab="FY2019 answers">
+                  <div className="section-content">
+                    <div className="objective-accordiion">
+                      <Accordion>
+                        {this.state.previousObjectivesArray.map((element) => (
+                          <AccordionItem key={element.id}>
+                            <div className="accordion-header">
+                              <h3>
+                                <AccordionButton>
+                                  <div className="title">
+                                    Objective {element.id}:
+                                  </div>
+                                  <div className="arrow"></div>
+                                </AccordionButton>
+                              </h3>
+                            </div>
+                            <AccordionPanel>{element.component}</AccordionPanel>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </div>
+                  </div>
                 </TabPanel>
               </Tabs>
+              <div className="nav-buttons">
+                <NavigationButton
+                  direction="Previous"
+                  destination="/basic-info"
+                />
+
+                <NavigationButton direction="Next" destination="/3c" />
+              </div>
             </div>
           </div>
         </div>
