@@ -2,14 +2,19 @@ import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
 import NavigationButton from "../layout/NavigationButtons";
-import { TextField, Dropdown, ChoiceList } from "@cmsgov/design-system-core";
+import {
+  TextField,
+  Dropdown,
+  ChoiceList,
+  Button as button,
+} from "@cmsgov/design-system-core";
 import statesArray from "../Utils/statesArray";
 
 class BasicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedState: "NY",
+      selectedState: "AL",
       programName: "",
       programType: "",
       contactName: "",
@@ -89,6 +94,17 @@ class BasicInfo extends Component {
                     name="contactAddress"
                   />
                   <TextField label="8. Phone Number" name="contactPhone" />
+                  <div className="form-options">
+                    <button
+                      type="submit"
+                      className="ds-c-button ds-c-button--disabled"
+                    >
+                      Saved
+                    </button>
+                    <a href="#export" id="export">
+                      Export
+                    </a>
+                  </div>
                 </div>
                 <div className="nav-buttons">
                   <NavigationButton
