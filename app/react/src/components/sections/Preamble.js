@@ -85,9 +85,9 @@ class Preamble extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="nav-buttons">
-              <NavigationButton direction="Next" destination="/basic-info" />
+              <div className="nav-buttons">
+                <NavigationButton direction="Next" destination="/basic-info" />
+              </div>
             </div>
           </div>
         </div>
