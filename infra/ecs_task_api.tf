@@ -142,7 +142,7 @@ resource "aws_alb_listener" "https_forward_api" {
   load_balancer_arn = aws_alb.api.id
   port              = "443"
   protocol          = "HTTPS"
-  certificate_arn   = data.aws_acm_certificate.api.arn
+  certificate_arn   = data.aws_acm_certificate.api[0].arn
   default_action {
     target_group_arn = aws_alb_target_group.api.id
     type             = "forward"

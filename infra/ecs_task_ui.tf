@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "ui" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
     image   = "${var.ecr_repository_url_ui}:${var.application_version}",
-    api_url = "http://${aws_alb.api.dns_name}:${aws_alb_listener.http_forward_api.port}"
+    api_url = local.endpoint_api
   })
 }
 
@@ -130,7 +130,7 @@ resource "aws_alb_listener" "https_forward_ui" {
   load_balancer_arn = aws_alb.ui.id
   port              = "443"
   protocol          = "HTTPS"
-  certificate_arn   = data.aws_acm_certificate.ui.arn
+  certificate_arn   = data.aws_acm_certificate.ui[0].arn
   default_action {
     target_group_arn = aws_alb_target_group.ui.id
     type             = "forward"
