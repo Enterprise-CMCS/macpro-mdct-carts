@@ -127,7 +127,7 @@ data "aws_acm_certificate" "ui" {
 
 resource "aws_alb_listener" "https_forward_ui" {
   count             = var.acm_certificate_domain_ui == "" ? 0 : 1
-  load_balancer_arn = aws_alb.alb_ui.id
+  load_balancer_arn = aws_alb.ui.id
   port              = "443"
   protocol          = "HTTPS"
   certificate_arn   = data.aws_acm_certificate.ui.arn
@@ -139,7 +139,7 @@ resource "aws_alb_listener" "https_forward_ui" {
 
 resource "aws_alb_listener" "http_forward_ui" {
   count             = var.acm_certificate_domain_ui == "" ? 1 : 0
-  load_balancer_arn = aws_alb.alb_ui.id
+  load_balancer_arn = aws_alb.ui.id
   port              = "80"
   protocol          = "HTTP"
   default_action {
@@ -150,7 +150,7 @@ resource "aws_alb_listener" "http_forward_ui" {
 
 resource "aws_alb_listener" "http_to_https_redirect_ui" {
   count             = var.acm_certificate_domain_ui == "" ? 0 : 1
-  load_balancer_arn = aws_alb.alb_ui.id
+  load_balancer_arn = aws_alb.ui.id
   port              = "80"
   protocol          = "HTTP"
   default_action {
