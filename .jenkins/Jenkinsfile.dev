@@ -99,6 +99,9 @@ pipeline {
       steps {
         script {
           withCredentials([usernamePassword(credentialsId: env.POSTGRES_CREDENTIAL_NAME, passwordVariable: 'TF_VAR_postgres_password', usernameVariable: 'TF_VAR_postgres_user')]) {
+            if (env.BRANCH_NAME == 'master-cert') {
+              env.TF_VAR_acm_certificate_domain_ui = "cartsdemo.cms.gov"
+            }
             sh '''
               set -e
 
