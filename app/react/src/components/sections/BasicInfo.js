@@ -47,74 +47,80 @@ class BasicInfo extends Component {
                 <h4> Welcome!</h4>
                 <h3> Let’s start with your basic information. </h3>
 
-                <Dropdown
-                  label="1. State or Territory Name"
-                  size="medium"
-                  name="selectedState"
-                  options={statesArray}
-                  value={this.state.selectedState}
-                  onChange={this.handleChange}
-                />
-                <TextField
-                  label="2. CHIP Program Name(s):"
-                  name="programName"
-                  onChange={this.handleChange}
-                />
-
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Combination state (M-CHIP and S-CHIP)",
-                      value: "comboCHIP",
-                    },
-                    {
-                      label: "CHIP Medicaid Expansion only (M-CHIP)",
-                      value: "mCHIP",
-                    },
-                    {
-                      label: "CHIP Separate Program only (S-CHIP) ",
-                      value: "sCHIP",
-                    },
-                  ]}
-                  label="3. Program Type: "
-                  name="programType"
-                  onChange={this.handleChange}
-                />
-
-                <div>
-                  <h3>
-                    Who should we contact if we have any questions about your
-                    report?
-                  </h3>
-                  <TextField label="4. Contact Name" name="contactName" />
-                  <TextField label="5. Job Title" name="contactTitle" />
-                  <TextField label="6. Email" name="contactEmail" />
+                <form>
+                  <Dropdown
+                    label="1. State or Territory Name"
+                    size="medium"
+                    name="selectedState"
+                    options={statesArray}
+                    value={this.state.selectedState}
+                    onChange={this.handleChange}
+                  />
                   <TextField
-                    label="7. Address"
-                    hint="Include city, state and zip code"
-                    name="contactAddress"
-                  />
-                  <TextField label="8. Phone Number" name="contactPhone" />
-                  <div className="form-options">
-                    <button
-                      type="submit"
-                      className="ds-c-button ds-c-button--disabled"
-                    >
-                      Saved
-                    </button>
-                    <a href="#export" id="export">
-                      Export
-                    </a>
-                  </div>
-                </div>
-                <div className="nav-buttons">
-                  <NavigationButton
-                    direction="Previous"
-                    destination="/preamble"
+                    label="2. CHIP Program Name(s):"
+                    name="programName"
+                    onChange={this.handleChange}
                   />
 
-                  <NavigationButton direction="Next" destination="/2b" />
-                </div>
+                  <ChoiceList
+                    choices={[
+                      {
+                        label: "Combination state (M-CHIP and S-CHIP)",
+                        value: "comboCHIP",
+                      },
+                      {
+                        label: "CHIP Medicaid Expansion only (M-CHIP)",
+                        value: "mCHIP",
+                      },
+                      {
+                        label: "CHIP Separate Program only (S-CHIP) ",
+                        value: "sCHIP",
+                      },
+                    ]}
+                    label="3. Program Type: "
+                    name="programType"
+                    onChange={this.handleChange}
+                  />
+
+                  <div>
+                    <h3>
+                      Who should we contact if we have any questions about your
+                      report?
+                    </h3>
+                    <TextField label="4. Contact Name" name="contactName" />
+                    <TextField label="5. Job Title" name="contactTitle" />
+                    <TextField 
+                      input type="email"
+                      label="6. Email" name="contactEmail"
+                    />
+                    <TextField
+                      label="7. Address"
+                      hint="Include city, state and zip code"
+                      name="contactAddress"
+                    />
+                    <TextField label="8. Phone Number" name="contactPhone" />
+
+                    <div className="form-options">
+                      <button
+                        type="submit"
+                        className="ds-c-button ds-c-button--disabled"
+                      >
+                        Saved
+                      </button>
+                      <a href="#export" id="export">
+                        Export
+                      </a>
+                    </div>
+                  </div>
+                  <div className="nav-buttons">
+                    <NavigationButton
+                      direction="Previous"
+                      destination="/preamble"
+                    />
+
+                    <NavigationButton direction="Next" destination="/2b" />
+                  </div>
+                </form>
               </div>
             </div>
           </div>
