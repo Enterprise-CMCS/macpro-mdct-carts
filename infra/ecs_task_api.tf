@@ -1,3 +1,6 @@
+locals {
+  endpoint_api = var.acm_certificate_domain_api == "" ? "http://${aws_alb.api.dns_name}:8000" : "https://${aws_alb.api.dns_name}"
+}
 
 resource "aws_ecs_task_definition" "api" {
   family                   = "api-${terraform.workspace}"

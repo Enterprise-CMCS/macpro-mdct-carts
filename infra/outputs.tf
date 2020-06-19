@@ -1,8 +1,8 @@
 
 output "application_endpoint" {
-  value = "http://${aws_alb.ui.dns_name}"
+  value = local.endpoint_ui
 }
 
 output "api_endpoint" {
-  value = "http://${aws_alb.api.dns_name}:${aws_alb_listener.http_forward_api.port}"
+  value = local.endpoint_api
 }
