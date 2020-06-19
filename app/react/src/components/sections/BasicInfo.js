@@ -49,16 +49,11 @@ class BasicInfo extends Component {
 
                 <form>
                   <Dropdown
-                    label="1. State or Territory Name"
+                    label="1. State or territory Name:"
                     size="medium"
                     name="selectedState"
                     options={statesArray}
                     value={this.state.selectedState}
-                    onChange={this.handleChange}
-                  />
-                  <TextField
-                    label="2. CHIP Program Name(s):"
-                    name="programName"
                     onChange={this.handleChange}
                   />
 
@@ -77,8 +72,14 @@ class BasicInfo extends Component {
                         value: "sCHIP",
                       },
                     ]}
-                    label="3. Program Type: "
+                    label="2. Program type: "
                     name="programType"
+                    onChange={this.handleChange}
+                  />
+
+                <TextField
+                    label="2. CHIP program name(s):"
+                    name="programName"
                     onChange={this.handleChange}
                   />
 
@@ -87,20 +88,20 @@ class BasicInfo extends Component {
                       Who should we contact if we have any questions about your
                       report?
                     </h3>
-                    <TextField label="4. Contact Name" name="contactName" />
-                    <TextField label="5. Job Title" name="contactTitle" />
+                    <TextField label="4. Contact name" name="contactName" />
+                    <TextField label="5. Job title:" name="contactTitle" />
                     <TextField 
                       input type="email"
-                      label="6. Email" name="contactEmail"
+                      label="6. Email:" name="contactEmail"
                     />
                     <TextField
-                      label="7. Address"
+                      label="7. Address:"
                       hint="Include City, State and Zip Code"
                       name="contactAddress"
                     />
                     <TextField 
                       input type="tel"
-                      label="8. Phone Number" 
+                      label="8. Phone number:" 
                       name="contactPhone"
                       hint="123-456-7890"
                       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
