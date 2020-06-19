@@ -94,10 +94,10 @@ resource "aws_security_group_rule" "alb_api_egress" {
   security_group_id        = aws_security_group.alb_api.id
 }
 
-resource "aws_security_group_rule" "alb_api_ingress_80" {
+resource "aws_security_group_rule" "alb_api_ingress_8000" {
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 8000
+  to_port           = 8000
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.alb_api.id
@@ -152,7 +152,7 @@ resource "aws_alb_listener" "https_forward_api" {
 resource "aws_alb_listener" "http_forward_api" {
   count             = var.acm_certificate_domain_api == "" ? 1 : 0
   load_balancer_arn = aws_alb.api.id
-  port              = "80"
+  port              = "8000"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api.id
@@ -163,7 +163,7 @@ resource "aws_alb_listener" "http_forward_api" {
 resource "aws_alb_listener" "http_to_https_redirect_api" {
   count             = var.acm_certificate_domain_api == "" ? 0 : 1
   load_balancer_arn = aws_alb.api.id
-  port              = "80"
+  port              = "8000"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api.id
