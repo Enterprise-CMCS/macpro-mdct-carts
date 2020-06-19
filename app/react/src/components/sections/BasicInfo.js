@@ -95,10 +95,16 @@ class BasicInfo extends Component {
                     />
                     <TextField
                       label="7. Address"
-                      hint="Include city, state and zip code"
+                      hint="Include City, State and Zip Code"
                       name="contactAddress"
                     />
-                    <TextField label="8. Phone Number" name="contactPhone" />
+                    <TextField 
+                      input type="tel"
+                      label="8. Phone Number" 
+                      name="contactPhone"
+                      hint="123-456-7890"
+                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    />
 
                     <div className="form-options">
                       <button
