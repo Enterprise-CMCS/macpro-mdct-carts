@@ -1,5 +1,5 @@
 locals {
-  endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}:8000" : "https://${aws_alb.ui.dns_name}"
+  endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}" : "https://${aws_alb.ui.dns_name}"
 }
 
 resource "aws_ecs_task_definition" "ui" {
