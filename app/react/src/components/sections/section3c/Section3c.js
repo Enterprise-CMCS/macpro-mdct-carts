@@ -64,6 +64,12 @@ class Section3c extends Component {
 
   selectInput(id, option, active) {
     let selection = document.getElementById(id).getElementsByTagName("input");
+
+    //clear any selections made by the user
+    for (let input of selection) {
+      input.checked = false;
+    }
+
     if (active) {
       selection[option].checked = true;
     } else {
