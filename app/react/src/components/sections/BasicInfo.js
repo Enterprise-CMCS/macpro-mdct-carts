@@ -49,7 +49,7 @@ class BasicInfo extends Component {
 
                 <form>
                   <Dropdown
-                    label="1. State or territory name"
+                    label="1. State or territory name: "
                     size="medium"
                     name="selectedState"
                     options={statesArray}
@@ -78,7 +78,7 @@ class BasicInfo extends Component {
                   />
 
                   <TextField
-                    label="3. CHIP program name(s):"
+                    label="3. CHIP program name(s): "
                     name="programName"
                     onChange={this.handleChange}
                   />
@@ -88,19 +88,19 @@ class BasicInfo extends Component {
                       Who should we contact if we have any questions about your
                       report?
                     </h3>
-                    <TextField label="4. Contact Name" name="contactName" />
-                    <TextField label="5. Job Title" name="contactTitle" />
+                    <TextField label="4. Contact Name: " name="contactName" />
+                    <TextField label="5. Job Title: " name="contactTitle" />
                     <TextField 
                       type="email"
-                      label="6. Email" 
+                      label="6. Email: " 
                       name="contactEmail" 
                       />
                     <TextField
-                      label="7. Address"
+                      label="7. Address: "
                       hint="Include city, state and zip code"
                       name="contactAddress"
                     />
-                    <TextField label="8. Phone Number" name="contactPhone" />
+                    <TextField label="8. Phone Number: " name="contactPhone" />
                     <div className="form-options">
                       <button
                         type="submit"
