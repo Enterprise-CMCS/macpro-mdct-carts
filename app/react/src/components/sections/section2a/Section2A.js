@@ -44,6 +44,25 @@ class Section2a extends Component {
                       and refresh the page. There may be a slight delay when updating data.
                     </p>
                     {/* SEDS Data Table */}
+                    <div className="seds-data-table">
+                      <h4>SEDS DATA TABLE GOES HERE</h4>
+                    </div>
+                    {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
+                    <div className="question-container">
+                      <div className="question">
+                        1. What are some possible reasons why your state had more than a 10% change in enrollment numbers? 
+                      </div>
+                      <TextField
+                        hint="Maximum 7,500 characters"
+                        label=""
+                        multiline
+                        rows="6"
+                        name="p2_q2"
+                        // value={this.state.p1_q1}
+                      />
+                    </div>
+                    {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
+                    <div><p>Since your percent change didn't exceed 10%, you can skip to the next question.</p></div>
 
                     <h3 className="part-header">
                       Part 2: Number of Uninsured Children
@@ -53,6 +72,25 @@ class Section2a extends Component {
                       annual estimates from the American Community Survey. 
                     </p>
                     {/* American Community Survey Table */}
+                    {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
+                    <div className="seds-data-table">
+                      <h4>AMERICAN COMMUNITY SURVEY TABLE GOES HERE</h4>
+                    </div>
+                    <div className="question-container">
+                      <div className="question">
+                        1. What are some possible reasons why your state had more than a 10% change in enrollment?
+                      </div>
+                      <TextField
+                        hint="Maximum 7,500 characters"
+                        label=""
+                        multiline
+                        rows="6"
+                        name="p2_q1"
+                        // value={this.state.p2_q1}
+                      />
+                    </div>
+                    {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
+                    <div><p>Since your percent change didn't exceed 10%, you can skip to the next question.</p></div>
 
                     <div className="question-container">
                       <div className="question">
@@ -66,6 +104,20 @@ class Section2a extends Component {
                         rows="6"
                         name="p2_q2"
                         // value={this.state.p2_q2}
+                      />
+                    </div>
+
+                    <div className="question-container">
+                      <div className="question">
+                        3. Do you have any alternate data source(s) or methodology for measuring the number and/or percent of uninsured children in your state?
+                      </div>
+                      <TextField
+                        hint="Maximum 7,500 characters"
+                        label=""
+                        multiline
+                        rows="6"
+                        name="p2_q3"
+                        // value={this.state.p2_q3}
                       />
                     </div>
 
