@@ -141,7 +141,7 @@ class Section2b extends Component {
               <div className="nav-buttons">
                 <NavigationButton
                   direction="Previous"
-                  destination="/basic-info"
+                  destination="/2a"
                 />
 
                 <NavigationButton direction="Next" destination="/3c" />

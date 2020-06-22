@@ -125,7 +125,7 @@ class BasicInfo extends Component {
                       destination="/preamble"
                     />
 
-                    <NavigationButton direction="Next" destination="/2b" />
+                    <NavigationButton direction="Next" destination="/2a" />
                   </div>
                 </form>
               </div>
