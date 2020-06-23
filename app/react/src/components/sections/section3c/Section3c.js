@@ -49,7 +49,6 @@ class Section3c extends Component {
   setConditional(el) {
     switch (el.target.name) {
       case "p1_q1":
-        let array;
         if (el.target.value == "yes") {
           this.setState({
             p1_q1__a_1: true,
@@ -61,6 +60,21 @@ class Section3c extends Component {
             p1_q1_conditional: false,
           });
         }
+        break;
+
+      case "p1_q2":
+        if (el.target.value == "yes") {
+          this.setState({
+            p1_q2__a_1: true,
+          });
+        } else {
+          this.setState({
+            p1_q2__a_1: false,
+          });
+        }
+        break;
+
+      default:
         break;
     }
   }
@@ -265,18 +279,21 @@ class Section3c extends Component {
                             labelClassName="p1_q1__c"
                             name="p1_q2__c"
                             value={this.state.p1_q2__c}
+                            onChange={this.changeText}
                           />
                           <TextField
                             label="d. How many notices do you send to families before disenrolling a child from the program?"
                             labelClassName="p1_q1__d"
                             name="p1_q2__d"
                             value={this.state.p1_q2__d}
+                            onChange={this.changeText}
                           />
                           <TextField
                             label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
                             labelClassName="p1_q1__e"
                             name="p1_q2__e"
                             value={this.state.p1_q2__e}
+                            onChange={this.changeText}
                           />
                         </div>
                       </div>
@@ -297,6 +314,7 @@ class Section3c extends Component {
                           rows="6"
                           name="p1_q3"
                           value={this.state.p1_q3}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -316,6 +334,7 @@ class Section3c extends Component {
                           rows="6"
                           name="p1_q4"
                           value={this.state.p1_q4}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -335,6 +354,7 @@ class Section3c extends Component {
                           rows="6"
                           name="p1_q5"
                           value={this.state.p1_q5}
+                          onChange={this.changeText}
                         />
                       </div>
                       <h3 className="part-header">Part 2: Eligibility Data</h3>
@@ -357,6 +377,7 @@ class Section3c extends Component {
                           labelClassName="p2_q1"
                           name="p2_q1"
                           value={this.state.p2_q1}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -371,6 +392,7 @@ class Section3c extends Component {
                           labelClassName="p2_q2"
                           name="p2_q2"
                           value={this.state.p2_q2}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -385,6 +407,7 @@ class Section3c extends Component {
                           labelClassName="p2_q3"
                           name="p2_q3"
                           value={this.state.p2_q3}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -398,6 +421,7 @@ class Section3c extends Component {
                           labelClassName="p2_q4"
                           name="p2_q4"
                           value={this.state.p2_q4}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -411,6 +435,7 @@ class Section3c extends Component {
                           labelClassName="p2_q5"
                           name="p2_q5"
                           value={this.state.p2_q5}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="question-container">
@@ -427,6 +452,7 @@ class Section3c extends Component {
                           name="p2_q6"
                           rows="6"
                           value={this.state.p2_q6}
+                          onChange={this.changeText}
                         />
                       </div>
                       <div className="form-options">
