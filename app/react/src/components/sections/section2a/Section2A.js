@@ -15,6 +15,35 @@ import NavigationButton from "../../layout/NavigationButtons";
 class Section2a extends Component {
   constructor(props) {
     super(props);
+
+    this.setConditional = this.setConditional.bind(this);
+
+    this.state = {
+      p1_q1: "",
+      p2_q1: "",
+      p2_q2: "",
+      p2_q3: "",
+      p2_q3__a: "",
+      p2_q3__b: "",
+      p2_q3__c: "",
+      p2_q3__d: "",
+      p2_q3__e: "",
+      p2_q3__f: "",
+      p2_q3__g: "",
+      p2_q3__h: "",
+      p2_q4: "",
+      fillFormTitle: "Same as last year",
+    };
+  }
+
+  /**
+   * If conditional value is triggered, set state to value
+   * @param {Event} el
+   */
+  setConditional(el) {
+    this.setState({
+      [el.target.name]: el.target.value,
+    });
   }
 
   render() {
@@ -111,13 +140,100 @@ class Section2a extends Component {
                       <div className="question">
                         3. Do you have any alternate data source(s) or methodology for measuring the number and/or percent of uninsured children in your state?
                       </div>
+                      <div id="p2_q3">
+                        <ChoiceList
+                          choices={[
+                            {
+                              label: "Yes",
+                              value: "yes",
+                            },
+                            {
+                              label: "No",
+                              value: "no",
+                            },
+                          ]}
+                          className="p2_q3"
+                          label=""
+                          name="p2_q3"
+                          onChange={this.setConditional}
+                        />
+                        {this.state.p2_q3 === "yes" ? (
+                              <div className="conditional">
+                                <TextField
+                                  label="a) What is the alternate data source or methodology?"
+                                  multiline
+                                  name="p2_q3__a"
+                                  rows="6"
+                                  value={this.state.p2_q3__a}
+                                />
+                                <TextField
+                                  hint="(from mm/yyyy to mm/yyyy)"
+                                  label="b) Give a date range for your data"
+                                  multiline
+                                  name="p2_q3__b"
+                                  rows="1"
+                                  value={this.state.p2_q3__b}
+                                />
+                                <TextField
+                                  label="c) Define the population you’re measuring, including ages and federal poverty levels. "
+                                  multiline
+                                  name="p2_q3__c"
+                                  rows="6"
+                                  value={this.state.p2_q3__c}
+                                />
+                                <TextField
+                                  label="d) Give numbers and/or the percent of uninsured children for at least two points in time."
+                                  multiline
+                                  name="p2_q3__d"
+                                  rows="6"
+                                  value={this.state.p2_q3__d}
+                                />
+                                <TextField
+                                  label="e) Why did your state choose to adopt this alternate data source?"
+                                  multiline
+                                  name="p2_q3__e"
+                                  rows="6"
+                                  value={this.state.p2_q3__e}
+                                />
+                                <TextField
+                                  label="f) How reliable are these estimates? Provide standard errors, confidence intervals, and/or p-values if available."
+                                  multiline
+                                  name="p2_q3__f"
+                                  rows="6"
+                                  value={this.state.p2_q3__f}
+                                />
+                                <TextField
+                                  label="g) What are the limitations of this alternate data source or methodology?"
+                                  multiline
+                                  name="p2_q3__g"
+                                  rows="6"
+                                  value={this.state.p2_q3__g}
+                                />
+                                <TextField
+                                  label="h) How do you use this alternate data source in CHIP program planning?"
+                                  multiline
+                                  name="p2_q3__h"
+                                  rows="6"
+                                  value={this.state.p2_q3__h}
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                      </div>
+                    </div>
+                    
+                    <div className="question-container">
+                      <div className="question">
+                        4. Anything else you’d like to add about your data on enrolled and uninsured children? 
+                      </div>
                       <TextField
                         hint="Maximum 7,500 characters"
                         label=""
                         multiline
                         rows="6"
-                        name="p2_q3"
-                        // value={this.state.p2_q3}
+                        name="p2_q4"
+                        value={this.state.p2_q4}
                       />
                     </div>
 
