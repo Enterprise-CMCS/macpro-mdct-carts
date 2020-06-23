@@ -6,6 +6,7 @@ import {
   Tabs,
   TabPanel,
   TextField,
+  Table,
 } from "@cmsgov/design-system-core";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
@@ -19,6 +20,10 @@ class Section2a extends Component {
     this.setConditional = this.setConditional.bind(this);
 
     this.state = {
+      t1_m1: "284143",
+      t1_m2: "300579",
+      t1_s1: "478542",
+      t1_s2: "511473",
       p1_q1: "",
       p2_q1: "",
       p2_q2: "",
@@ -72,10 +77,34 @@ class Section2a extends Component {
                       If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) 
                       and refresh the page. There may be a slight delay when updating data.
                     </p>
+
                     {/* SEDS Data Table */}
-                    <div className="seds-data-table">
-                      <h4>SEDS DATA TABLE GOES HERE</h4>
-                    </div>
+                    <table class="ds-c-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Program</th>
+                          <th scope="col">Number of children enrolled (FFY 2018)</th>
+                          <th scope="col">Number of children enrolled (FFY 2019)</th>
+                          <th scope="col">Percent change</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">M-CHIP (Medicaid Expansion Program)</th>
+                          <td value={this.state.t1_s1}></td>
+                          <td>Acme Co.</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">S-CHIP (Separate CHIP Program)</th>
+                          <td>456 King's Landing</td>
+                          <td>Acme Co.</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p></p>
+
                     {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
                     <div className="question-container">
                       <div className="question">
@@ -87,7 +116,7 @@ class Section2a extends Component {
                         multiline
                         rows="6"
                         name="p2_q2"
-                        // value={this.state.p1_q1}
+                        value={this.state.p1_q1}
                       />
                     </div>
                     {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
@@ -115,7 +144,7 @@ class Section2a extends Component {
                         multiline
                         rows="6"
                         name="p2_q1"
-                        // value={this.state.p2_q1}
+                        value={this.state.p2_q1}
                       />
                     </div>
                     {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
@@ -132,7 +161,7 @@ class Section2a extends Component {
                         multiline
                         rows="6"
                         name="p2_q2"
-                        // value={this.state.p2_q2}
+                        value={this.state.p2_q2}
                       />
                     </div>
 
@@ -236,8 +265,19 @@ class Section2a extends Component {
                         value={this.state.p2_q4}
                       />
                     </div>
-
                   </div>
+
+                  <div className="form-options">
+                        <button
+                          type="submit"
+                          className="ds-c-button ds-c-button--disabled"
+                        >
+                          Saved
+                        </button>
+                        <a href="#export" id="export">
+                          Export
+                        </a>
+                      </div>
                 </form>
 
               </div>
