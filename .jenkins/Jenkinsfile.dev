@@ -61,7 +61,7 @@ pipeline {
               # Build images
               docker build -t ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_UI}:${GIT_BRANCH#*/} app/react
 
-              docker build -t ${ECR_REPOSITORY_URL_POSTGRES_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_POSTGRES_API}:${GIT_BRANCH#*/} app/django
+              docker build -t ${ECR_REPOSITORY_URL_POSTGRES_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_POSTGRES_API}:${GIT_BRANCH#*/} app/postgres-api
 
               # Login to ECR repository
               set +x

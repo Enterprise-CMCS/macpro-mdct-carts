@@ -11,10 +11,10 @@ services:
       - backend_app
     environment:
       - API_URL=http://localhost:8000 # This is how a browser would call the api
-  api:
-    image: api:app
+  postgres-api:
+    image: postgres-api:app
     build:
-      context: ./django
+      context: ./postgres-api
       dockerfile: Dockerfile
     command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     ports:
@@ -25,6 +25,22 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
+    # depends_on:
+    #   - db
+  sqlserver-api:
+    image: sqlserver-api:app
+    build:
+      context: ./sqlserver-api
+      dockerfile: Dockerfile
+    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8001
+    ports:
+      - 8001:8001
+    environment:
+      - SQLSERVER_DB=sqlserver
+      - SQLSERVER_USER=sqlserver
+      - SQLSERVER_PASSWORD=sqlserver
+      - SQLSERVER_HOST=db # The api can address the db by its service name over the docker bridge network
+      - DATABASE=sqlserver
     # depends_on:
     #   - db
   db:
