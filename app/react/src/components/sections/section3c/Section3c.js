@@ -63,20 +63,26 @@ class Section3c extends Component {
     el.preventDefault();
 
     // button title: Undo or Same as Last year
-    el.target.title = this.state.fillFormTitle;
-
+    el.target.classList.toggle("active");
     let textFieldCopy = "";
     let textAreaCopy = "";
 
-    textFieldCopy = "This is what you wrote last year.";
-    textAreaCopy =
-      "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
-    el.target.title = "Undo";
+    // Boolean, Set values on active
+    let isActive = el.target.classList.contains("active");
+
+    if (isActive) {
+      textFieldCopy = "This is what you wrote last year.";
+      textAreaCopy =
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
+      el.target.title = "Undo";
+    } else {
+      textFieldCopy = "";
+      textAreaCopy = "";
+    }
 
     switch (el.target.name) {
       case "p1_q1":
         this.setState({
-          p1_q1: "yes",
           p1_q1__a_1: true,
           p1_q1_conditional: true,
           p1_q1__b: textAreaCopy,
@@ -180,7 +186,7 @@ class Section3c extends Component {
                                   multiline
                                   name="p1_q1__b"
                                   rows="6"
-                                  defaultValue={this.state.p1_q1__b}
+                                  value={this.state.p1_q1__b}
                                 />
                                 <TextField
                                   hint="Maximum 7,500 characters"
@@ -188,7 +194,7 @@ class Section3c extends Component {
                                   multiline
                                   name="p1_q1__c"
                                   rows="6"
-                                  defaultValue={this.state.p1_q1__c}
+                                  value={this.state.p1_q1__c}
                                 />
                               </div>
                             ) : (
