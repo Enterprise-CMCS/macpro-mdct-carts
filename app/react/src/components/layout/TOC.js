@@ -27,7 +27,7 @@ const TOC = () => {
             items: [
               {
                 label: "Section 2A: Enrollment and Uninsured Data",
-                url: "javascript:void(0);",
+                url: "/2a",
               },
               {
                 label:
