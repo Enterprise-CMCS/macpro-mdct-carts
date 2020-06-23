@@ -18,13 +18,12 @@ class Section3c extends Component {
 
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
+    this.changeText = this.changeText.bind(this);
 
     this.state = {
       p1_q1: "",
       p1_q1_conditional: false,
-      p1_q1__a: "",
       p1_q1__a_1: null,
-      p1_q1__a_2: "",
       p1_q1__b: "",
       p1_q2__a: "",
       p1_q2__b: "",
@@ -44,18 +43,25 @@ class Section3c extends Component {
     };
   }
 
+  changeText(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
   setConditional(el) {
-    let array;
-    if (el.target.value == "yes") {
-      this.setState({
-        p1_q1__a_1: true,
-        p1_q1_conditional: true,
-      });
-    } else {
-      this.setState({
-        p1_q1__a_1: false,
-        p1_q1_conditional: false,
-      });
+    switch (el.target.name) {
+      case "p1_q1":
+        let array;
+        if (el.target.value == "yes") {
+          this.setState({
+            p1_q1__a_1: true,
+            p1_q1_conditional: true,
+          });
+        } else {
+          this.setState({
+            p1_q1__a_1: false,
+            p1_q1_conditional: false,
+          });
+        }
+        break;
     }
   }
 
@@ -187,6 +193,7 @@ class Section3c extends Component {
                                   name="p1_q1__b"
                                   rows="6"
                                   value={this.state.p1_q1__b}
+                                  onChange={this.changeText}
                                 />
                                 <TextField
                                   hint="Maximum 7,500 characters"
@@ -195,6 +202,7 @@ class Section3c extends Component {
                                   name="p1_q1__c"
                                   rows="6"
                                   value={this.state.p1_q1__c}
+                                  onChange={this.changeText}
                                 />
                               </div>
                             ) : (
