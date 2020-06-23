@@ -18,13 +18,12 @@ class Section3c extends Component {
 
     this.loadAnswers = this.loadAnswers.bind(this);
     this.setConditional = this.setConditional.bind(this);
-    this.selectInput = this.selectInput.bind(this);
-    this.setConditionalFromToggle = this.setConditionalFromToggle.bind(this);
 
     this.state = {
-      p1_q1: "no",
+      p1_q1: "",
+      p1_q1_conditional: false,
       p1_q1__a: "",
-      p1_q1__a_1: "",
+      p1_q1__a_1: null,
       p1_q1__a_2: "",
       p1_q1__b: "",
       p1_q2__a: "",
@@ -45,31 +44,18 @@ class Section3c extends Component {
     };
   }
 
-  /**
-   * If conditional value is triggered, set state to value
-   * @param {Event} el
-   */
   setConditional(el) {
-    this.setState({
-      [el.target.name]: el.target.value,
-    });
-    // el.target.defaultChecked = true;
-  }
-
-  setConditionalFromToggle(name, value) {
-    this.setState({
-      name: value,
-    });
-  }
-
-  selectInput(id, option, active) {
-    let selection = document.getElementById(id).getElementsByTagName("input");
-    if (active) {
-      selection[option].checked = true;
+    let array;
+    if (el.target.value == "yes") {
+      this.setState({
+        p1_q1__a_1: true,
+        p1_q1_conditional: true,
+      });
     } else {
-      for (let input of selection) {
-        input.checked = false;
-      }
+      this.setState({
+        p1_q1__a_1: false,
+        p1_q1_conditional: false,
+      });
     }
   }
 
@@ -79,38 +65,26 @@ class Section3c extends Component {
     // button title: Undo or Same as Last year
     el.target.title = this.state.fillFormTitle;
 
-    el.target.classList.toggle("active");
     let textFieldCopy = "";
     let textAreaCopy = "";
 
-    // Boolean, Set values on active
-    let isActive = el.target.classList.contains("active");
-
-    if (isActive) {
-      textFieldCopy = "This is what you wrote last year.";
-      textAreaCopy =
-        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
-      el.target.title = "Undo";
-    }
+    textFieldCopy = "This is what you wrote last year.";
+    textAreaCopy =
+      "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
+    el.target.title = "Undo";
 
     switch (el.target.name) {
       case "p1_q1":
-        this.selectInput(el.target.name, 0, isActive);
-
-        // Show/hide conditionals
-        this.setConditionalFromToggle(el.target.name, isActive);
-
         this.setState({
           p1_q1: "yes",
+          p1_q1__a_1: true,
+          p1_q1_conditional: true,
           p1_q1__b: textAreaCopy,
           p1_q1__c: textAreaCopy,
         });
 
         break;
       case "p1_q2":
-        this.selectInput("p1_q2__a", 0, isActive);
-        this.selectInput("p1_q2__b", 1, isActive);
-
         this.setState({
           p1_q2__c: textAreaCopy,
           p1_q2__d: textAreaCopy,
@@ -185,10 +159,12 @@ class Section3c extends Component {
                                 {
                                   label: "Yes",
                                   value: "yes",
+                                  checked: this.state.p1_q1__a_1,
                                 },
                                 {
                                   label: "No",
                                   value: "no",
+                                  checked: this.state.p1_q1__a_1 === false,
                                 },
                               ]}
                               className="p1_q1"
@@ -197,14 +173,14 @@ class Section3c extends Component {
                               onChange={this.setConditional}
                               hint="Note: This question may not apply to Medicaid Expansion states."
                             />
-                            {this.state.p1_q1 === "yes" ? (
+                            {this.state.p1_q1_conditional === true ? (
                               <div className="conditional">
                                 <TextField
                                   label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
                                   multiline
                                   name="p1_q1__b"
                                   rows="6"
-                                  value={this.state.p1_q1__b}
+                                  defaultValue={this.state.p1_q1__b}
                                 />
                                 <TextField
                                   hint="Maximum 7,500 characters"
@@ -212,7 +188,7 @@ class Section3c extends Component {
                                   multiline
                                   name="p1_q1__c"
                                   rows="6"
-                                  value={this.state.p1_q1__c}
+                                  defaultValue={this.state.p1_q1__c}
                                 />
                               </div>
                             ) : (
