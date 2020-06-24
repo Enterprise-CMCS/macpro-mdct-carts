@@ -103,23 +103,13 @@ class Section3c extends Component {
 
     switch (el.target.name) {
       case "p1_q1":
-        if (this.state.p1_q1_ly == false) {
-          this.setState({
-            p1_q1__a_1: true,
-            p1_q1_conditional: true,
-            p1_q1_ly: true,
-            p1_q1__b: textAreaCopy,
-            p1_q1__c: textAreaCopy,
-          });
-        } else {
-          this.setState({
-            p1_q1__a_1: null,
-            p1_q1_conditional: true,
-            p1_q1_ly: false,
-            p1_q1__b: textAreaCopy,
-            p1_q1__c: textAreaCopy,
-          });
-        }
+        this.setState({
+          p1_q1__a_1: this.state.p1_q1_ly ? null : true,
+          p1_q1_conditional: true,
+          p1_q1_ly: this.state.p1_q1_ly ? false : true,
+          p1_q1__b: textAreaCopy,
+          p1_q1__c: textAreaCopy,
+        });
 
         break;
       case "p1_q2":
