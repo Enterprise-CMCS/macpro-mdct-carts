@@ -114,14 +114,14 @@ resource "aws_security_group_rule" "alb_api_postgres_ingress_443" {
 }
 
 resource "aws_alb" "api_postgres" {
-  name            = "api-postgres-alb-${terraform.workspace}"
+  name            = "api-postgres-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_postgres.id]
   subnets         = data.aws_subnet_ids.public.ids
 }
 
 resource "aws_alb_target_group" "api_postgres" {
-  name                 = "api_postgres-target-group-${terraform.workspace}"
+  name                 = "api-postgres-target-group-${terraform.workspace}"
   port                 = 8000
   target_type          = "ip"
   protocol             = "HTTP"

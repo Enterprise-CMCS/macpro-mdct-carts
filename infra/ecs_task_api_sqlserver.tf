@@ -110,14 +110,14 @@ resource "aws_security_group_rule" "alb_api_sqlserver_ingress_443" {
 }
 
 resource "aws_alb" "api_sqlserver" {
-  name            = "api-sqlserver-alb-${terraform.workspace}"
+  name            = "api-sqlserver-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_sqlserver.id]
   subnets         = data.aws_subnet_ids.public.ids
 }
 
 resource "aws_alb_target_group" "api_sqlserver" {
-  name                 = "api_sqlserver-target-group-${terraform.workspace}"
+  name                 = "api-sqlserver-target-group-${terraform.workspace}"
   port                 = 8001
   target_type          = "ip"
   protocol             = "HTTP"
