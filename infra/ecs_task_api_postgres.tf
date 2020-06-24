@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_ecs_task_definition" "api_postgres" {
-  family                   = "api-postgres-${terraform.workspace}"
+  family                   = "api_postgres-${terraform.workspace}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
