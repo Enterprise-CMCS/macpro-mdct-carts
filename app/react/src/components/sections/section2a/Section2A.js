@@ -26,6 +26,26 @@ class Section2a extends Component {
       t1_s1: "478542",
       t1_s2: "511473",
       p1_q1: "",
+      t2_y1_n1: "103",
+      t2_y1_m1: "7.0",
+      t2_y1_p1: "2.3",
+      t2_y1_m2: ".2",
+      t2_y2_n1: "86",
+      t2_y2_m1: "7.0",
+      t2_y2_p1: "2.0",
+      t2_y2_m2: ".2",
+      t2_y3_n1: "61",
+      t2_y3_m1: "6.0",
+      t2_y3_p1: "1.4",
+      t2_y3_m2: ".1",
+      t2_y4_n1: "58",
+      t2_y4_m1: "7.0",
+      t2_y4_p1: "1.3",
+      t2_y4_m2: ".2",
+      t2_y5_n1: "57",
+      t2_y5_m1: "7.0",
+      t2_y5_p1: "1.3",
+      t2_y5_m2: ".2",
       p2_q1: "",
       p2_q2: "",
       p2_q3: "",
@@ -136,28 +156,60 @@ class Section2a extends Component {
                       annual estimates from the American Community Survey. 
                     </p>
 
-                    {/* American Community Survey Table */}
+                    {/* American Community Survey Table
+                    Tables with Irregular Headers: https://www.w3.org/WAI/tutorials/tables/irregular/ */}
                     <table className="t2-american-community-survey-table" class="ds-c-table">
                       <thead>
-                        <tr>
-                          <th scope="col">Year</th>
-                          <th scope="col">Number of children enrolled (FFY 2018)</th>
-                          <th scope="col">Number of children enrolled (FFY 2019)</th>
-                          <th scope="col">Percent change</th>
-                        </tr>
+                          <colgroup span="1"></colgroup>
+                          <colgroup span="2"></colgroup>
+                          <colgroup span="2"></colgroup>
+                          <tr>
+                            <th scope="col" rowspan="2">Year</th>
+                            <th scope="col" colspan="2" scope="colgroup">Estimated number of uninsured children</th>
+                            <th scope="col" colspan="2" scope="colgroup">Uninsured children as a percent of total children</th>
+                          </tr>
+                          <tr>
+                            <th scope="col">Number</th>
+                            <th scope="col">Margin of error</th>
+                            <th scope="col">Percent</th>
+                            <th scope="col">Margin of error</th>
+                          </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">M-CHIP (Medicaid Expansion Program)</th>
-                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_m1}/></td>
-                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_m2}/></td>
-                          <td><NumberFormat displayType="text" decimalScale="2" value={this.calcPercentChange(this.state.t1_m1,this.state.t1_m2)}/>%</td>
+                          <th scope="row">2016</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y1_n1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y1_m1}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y1_p1}/>%</td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y1_m2}/></td>
                         </tr>
                         <tr>
-                          <th scope="row">S-CHIP (Separate CHIP Program)</th>
-                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_s1}/></td>
-                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_s2}/></td>
-                          <td><NumberFormat displayType="text" decimalScale="2" value={this.calcPercentChange(this.state.t1_s1,this.state.t1_s2)}/>%</td>
+                          <th scope="row">2017</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y2_n1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y2_m1}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y2_p1}/>%</td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y2_m2}/></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2018</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y3_n1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y3_m1}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y3_p1}/>%</td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y3_m2}/></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2019</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y4_n1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y4_m1}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y4_p1}/>%</td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y4_m2}/></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2020</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y5_n1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y5_m1}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y5_p1}/>%</td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y5_m2}/></td>
                         </tr>
                       </tbody>
                     </table>
