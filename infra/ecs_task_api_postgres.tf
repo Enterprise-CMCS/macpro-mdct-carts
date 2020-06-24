@@ -23,7 +23,7 @@ resource "aws_security_group" "api_postgres" {
   vpc_id = data.aws_vpc.app.id
 }
 
-resource "aws_security_group_rule" "api_postgress_ingress" {
+resource "aws_security_group_rule" "api_postgres_ingress" {
   type                     = "ingress"
   from_port                = 8000
   to_port                  = 8000
@@ -32,28 +32,28 @@ resource "aws_security_group_rule" "api_postgress_ingress" {
   security_group_id        = aws_security_group.api.id
 }
 
-resource "aws_security_group_rule" "api_postgress_egress" {
+resource "aws_security_group_rule" "api_postgres_egress" {
   type                     = "egress"
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.db.id
-  security_group_id        = aws_security_group.api_postgress.id
+  security_group_id        = aws_security_group.api_postgres.id
 }
 
-resource "aws_security_group_rule" "api_postgress_egress_ecr_pull" {
+resource "aws_security_group_rule" "api_postgres_egress_ecr_pull" {
   type              = "egress"
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.api_postgress.id
+  security_group_id = aws_security_group.api_postgres.id
 }
 
-resource "aws_ecs_service" "api_postgress" {
-  name            = "api_postgress"
+resource "aws_ecs_service" "api_postgres" {
+  name            = "api_postgres"
   cluster         = aws_ecs_cluster.application.id
-  task_definition = aws_ecs_task_definition.api_postgress.arn
+  task_definition = aws_ecs_task_definition.api_postgres.arn
   capacity_provider_strategy {
     capacity_provider = "FARGATE"
     weight            = "100"
@@ -61,11 +61,11 @@ resource "aws_ecs_service" "api_postgress" {
   desired_count = 6
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
-    security_groups = [aws_security_group.api_postgress.id]
+    security_groups = [aws_security_group.api_postgres.id]
   }
   load_balancer {
-    target_group_arn = aws_alb_target_group.api_postgress.arn
-    container_name   = "api_postgress"
+    target_group_arn = aws_alb_target_group.api_postgres.arn
+    container_name   = "api_postgres"
     container_port   = 8000
   }
   deployment_minimum_healthy_percent = local.deployment_minimum_healthy_percent
@@ -73,100 +73,100 @@ resource "aws_ecs_service" "api_postgress" {
 
 resource "null_resource" "wait_for_ecs_stability_api_postgres" {
   triggers = {
-    ecs_task_def_id = aws_ecs_task_definition.api_postgress.id
+    ecs_task_def_id = aws_ecs_task_definition.api_postgres.id
   }
   provisioner "local-exec" {
-    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.application.name} --services ${aws_ecs_service.api_postgress.name}"
+    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.application.name} --services ${aws_ecs_service.api_postgres.name}"
   }
-  depends_on = [aws_ecs_service.api_postgress]
+  depends_on = [aws_ecs_service.api_postgres]
 }
 
-resource "aws_security_group" "alb_api_postgress" {
+resource "aws_security_group" "alb_api_postgres" {
   vpc_id = data.aws_vpc.app.id
 }
 
-resource "aws_security_group_rule" "alb_api_postgress_egress" {
+resource "aws_security_group_rule" "alb_api_postgres_egress" {
   type                     = "egress"
   from_port                = 8000
   to_port                  = 8000
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.api_postgress.id
-  security_group_id        = aws_security_group.alb_api_postgress.id
+  source_security_group_id = aws_security_group.api_postgres.id
+  security_group_id        = aws_security_group.alb_api_postgres.id
 }
 
-resource "aws_security_group_rule" "alb_api_postgress_ingress_8000" {
+resource "aws_security_group_rule" "alb_api_postgres_ingress_8000" {
   type              = "ingress"
   from_port         = 8000
   to_port           = 8000
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.alb_api_postgress.id
+  security_group_id = aws_security_group.alb_api_postgres.id
 }
 
-resource "aws_security_group_rule" "alb_api_postgress_ingress_443" {
-  count             = var.acm_certificate_domain_api_postgress == "" ? 0 : 1
+resource "aws_security_group_rule" "alb_api_postgres_ingress_443" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
   type              = "ingress"
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.alb_api_postgress.id
+  security_group_id = aws_security_group.alb_api_postgres.id
 }
 
-resource "aws_alb" "api_postgress" {
-  name            = "api_postgress-alb-${terraform.workspace}"
+resource "aws_alb" "api_postgres" {
+  name            = "api-postgres-alb-${terraform.workspace}"
   internal        = false
-  security_groups = [aws_security_group.alb_api_postgress.id]
+  security_groups = [aws_security_group.alb_api_postgres.id]
   subnets         = data.aws_subnet_ids.public.ids
 }
 
-resource "aws_alb_target_group" "api_postgress" {
-  name                 = "api_postgress-target-group-${terraform.workspace}"
+resource "aws_alb_target_group" "api_postgres" {
+  name                 = "api_postgres-target-group-${terraform.workspace}"
   port                 = 8000
   target_type          = "ip"
   protocol             = "HTTP"
   deregistration_delay = "0"
   vpc_id               = data.aws_vpc.app.id
 
-  depends_on = [aws_alb.api_postgress]
+  depends_on = [aws_alb.api_postgres]
 }
 
-data "aws_acm_certificate" "api_postgress" {
-  count    = var.acm_certificate_domain_api_postgress == "" ? 0 : 1
-  domain   = var.acm_certificate_domain_api_postgress
+data "aws_acm_certificate" "api_postgres" {
+  count    = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  domain   = var.acm_certificate_domain_api_postgres
   statuses = ["ISSUED"]
 }
 
-resource "aws_alb_listener" "https_forward_api_postgress" {
-  count             = var.acm_certificate_domain_api_postgress == "" ? 0 : 1
-  load_balancer_arn = aws_alb.api_postgress.id
+resource "aws_alb_listener" "https_forward_api_postgres" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  load_balancer_arn = aws_alb.api_postgres.id
   port              = "443"
   protocol          = "HTTPS"
-  certificate_arn   = data.aws_acm_certificate.api_postgress[0].arn
+  certificate_arn   = data.aws_acm_certificate.api_postgres[0].arn
   default_action {
-    target_group_arn = aws_alb_target_group.api_postgress.id
+    target_group_arn = aws_alb_target_group.api_postgres.id
     type             = "forward"
   }
 }
 
-resource "aws_alb_listener" "http_forward_api_postgress" {
-  count             = var.acm_certificate_domain_api_postgress == "" ? 1 : 0
-  load_balancer_arn = aws_alb.api_postgress.id
+resource "aws_alb_listener" "http_forward_api_postgres" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 1 : 0
+  load_balancer_arn = aws_alb.api_postgres.id
   port              = "8000"
   protocol          = "HTTP"
   default_action {
-    target_group_arn = aws_alb_target_group.api_postgress.id
+    target_group_arn = aws_alb_target_group.api_postgres.id
     type             = "forward"
   }
 }
 
-resource "aws_alb_listener" "http_to_https_redirect_api_postgress" {
-  count             = var.acm_certificate_domain_api_postgress == "" ? 0 : 1
-  load_balancer_arn = aws_alb.api_postgress.id
+resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  load_balancer_arn = aws_alb.api_postgres.id
   port              = "8000"
   protocol          = "HTTP"
   default_action {
-    target_group_arn = aws_alb_target_group.api_postgress.id
+    target_group_arn = aws_alb_target_group.api_postgres.id
     type             = "redirect"
     redirect {
       port        = "443"

@@ -12,10 +12,6 @@ resource "aws_ecs_task_definition" "api_sqlserver" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_api_sqlserver.json.tpl", {
     image             = "${var.ecr_repository_url_api_sqlserver}:${var.application_version}"
-    postgres_host     = module.db.this_db_instance_address
-    postgres_db       = module.db.this_db_instance_name
-    postgres_user     = module.db.this_db_instance_username
-    postgres_password = var.postgres_password
   })
 }
 
@@ -114,7 +110,7 @@ resource "aws_security_group_rule" "alb_api_sqlserver_ingress_443" {
 }
 
 resource "aws_alb" "api_sqlserver" {
-  name            = "api_sqlserver-alb-${terraform.workspace}"
+  name            = "api-sqlserver-alb-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_sqlserver.id]
   subnets         = data.aws_subnet_ids.public.ids
