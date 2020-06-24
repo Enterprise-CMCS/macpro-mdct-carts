@@ -22,11 +22,11 @@ class Section3c extends Component {
 
     this.state = {
       p1_q1: "",
-      p1_q1_conditional: false,
-      p1_q1_ly: false,
+      p1_q1_conditional: false, // Is conditional showing
+      p1_q1_ly: false, // copy from last year
       p1_q1__a_1: null,
       p1_q1__b: "",
-      p1_q2_ly: false,
+      p1_q2_ly: false, // copy from last year
       p1_q2__a: "",
       p1_q2__b: "",
       p1_q2__c: "",
@@ -73,6 +73,7 @@ class Section3c extends Component {
     }
   }
 
+  // Show/Hide answers from last year
   loadAnswers(el) {
     el.preventDefault();
 
