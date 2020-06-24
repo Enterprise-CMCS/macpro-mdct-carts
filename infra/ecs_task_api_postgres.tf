@@ -28,7 +28,7 @@ resource "aws_security_group_rule" "api_postgres_ingress" {
   from_port                = 8000
   to_port                  = 8000
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.alb_api.id
+  source_security_group_id = aws_security_group.alb_api_postgres.id
   security_group_id        = aws_security_group.api.id
 }
 
