@@ -19,7 +19,7 @@ const TOC = () => {
           },
           {
             label: "Section 1: Program Fees and Policy Changes",
-            url: "javascript:void(0);",
+            url: "/1",
           },
           {
             label: "Section 2: Eligibility and Enrollment",
