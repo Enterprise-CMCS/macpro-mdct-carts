@@ -78,6 +78,7 @@ pipeline {
 
               docker push ${ECR_REPOSITORY_URL_API_SQLSERVER}:${BUILD_TAG}
               docker push ${ECR_REPOSITORY_URL_API_SQLSERVER}:${BRANCH_NAME}
+            '''
           }
 
           sh '''
