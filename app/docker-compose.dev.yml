@@ -17,10 +17,10 @@ services:
     volumes:
       - ./react:/app
       - /app/node_modules
-  api-postgres:
-    image: api-postgres:dev
+  api_postgres:
+    image: api_postgres:dev
     build:
-      context: ./api-postgres
+      context: ./api_postgres
       dockerfile: Dockerfile.dev
     command: python manage.py runserver 0.0.0.0:8000
     ports:
@@ -32,13 +32,13 @@ services:
       - POSTGRES_HOST=db # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
     volumes:
-      - ./api-postgres/:/usr/src/app/
+      - ./api_postgres/:/usr/src/app/
     depends_on:
       - db
-  api-sqlserver:
-    image: api-sqlserver:dev
+  api_sqlserver:
+    image: api_sqlserver:dev
     build:
-      context: ./api-sqlserver
+      context: ./api_sqlserver
       dockerfile: Dockerfile.dev
     command: python manage.py runserver 0.0.0.0:8001
     ports:
@@ -50,7 +50,7 @@ services:
       - SQLSERVER_HOST=db # The api can address the db by its service name over the docker bridge network
       - DATABASE=sqlserver
     volumes:
-      - ./api-sqlserver/:/usr/src/app/
+      - ./api_sqlserver/:/usr/src/app/
     #depends_on:
       #- db
   db:

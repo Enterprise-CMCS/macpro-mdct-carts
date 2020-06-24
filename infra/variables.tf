@@ -1,7 +1,8 @@
 
 variable "application_version" {}
 variable "ecr_repository_url_ui" {}
-variable "ecr_repository_url_api" {}
+variable "ecr_repository_url_api_postgres" {}
+variable "ecr_repository_url_api_sqlserver" {}
 variable "postgres_user" {}
 variable "postgres_password" {}
 variable "vpc_name" {}
