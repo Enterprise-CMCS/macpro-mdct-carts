@@ -117,7 +117,7 @@ resource "aws_alb" "api_sqlserver" {
 }
 
 resource "aws_alb_target_group" "api_sqlserver" {
-  name                 = "api-sqlserver-target-group-${terraform.workspace}"
+  name                 = "api-sqlserver-tg-${terraform.workspace}"
   port                 = 8001
   target_type          = "ip"
   protocol             = "HTTP"
