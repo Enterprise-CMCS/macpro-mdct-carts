@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "api_postgres" {
   memory                   = 512
   task_role_arn            = aws_iam_role.ecs_task.arn
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
-  container_definitions = templatefile("templates/ecs_task_def_api.json.tpl", {
+  container_definitions = templatefile("templates/ecs_task_def_api_postgres.json.tpl", {
     image             = "${var.ecr_repository_url_api_postgres}:${var.application_version}"
     postgres_host     = module.db.this_db_instance_address
     postgres_db       = module.db.this_db_instance_name
