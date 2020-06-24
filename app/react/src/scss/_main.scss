@@ -198,6 +198,7 @@
       border: none;
       border-top: 6px solid $brand-primary;
       border-bottom: 1px solid $color-gray-light;
+      cursor: pointer;
       font-size: 1.6rem;
       font-weight: bold;
       padding: ($padding * 4) ($padding * 2);
@@ -214,12 +215,17 @@
           content: "\f106";
           font-family: "FontAwesome";
           position: absolute;
-          top: ($margin * 2);
           right: 0;
+          top: ($margin * 2);
+          transform: rotate(180deg);
         }
       }
     }
   }
+}
+
+div[data-state="open"] .accordion-header .arrow:before {
+  transform: rotate(0deg);
 }
 
 .objective-body,
