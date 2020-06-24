@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import NumberFormat from "react-number-format";
 import {
   Button as button,
   ChoiceList,
@@ -51,6 +52,11 @@ class Section2a extends Component {
     });
   }
 
+  //Calculate the year over year percent change
+  calcPercentChange(prevYear, currYear) {
+    return (((currYear - prevYear) / prevYear) * 100)
+  }
+
   render() {
     return (
       <div className="section-2a">
@@ -79,7 +85,7 @@ class Section2a extends Component {
                     </p>
 
                     {/* SEDS Data Table */}
-                    <table class="ds-c-table">
+                    <table className="t1-seds-data-table" class="ds-c-table">
                       <thead>
                         <tr>
                           <th scope="col">Program</th>
@@ -91,15 +97,15 @@ class Section2a extends Component {
                       <tbody>
                         <tr>
                           <th scope="row">M-CHIP (Medicaid Expansion Program)</th>
-                          <td value={this.state.t1_s1}></td>
-                          <td>Acme Co.</td>
-                          <td></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_m1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_m2}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.calcPercentChange(this.state.t1_m1,this.state.t1_m2)}/>%</td>
                         </tr>
                         <tr>
                           <th scope="row">S-CHIP (Separate CHIP Program)</th>
-                          <td>456 King's Landing</td>
-                          <td>Acme Co.</td>
-                          <td></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_s1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_s2}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.calcPercentChange(this.state.t1_s1,this.state.t1_s2)}/>%</td>
                         </tr>
                       </tbody>
                     </table>
@@ -129,11 +135,35 @@ class Section2a extends Component {
                       This table is pre-filled with data on uninsured children (age 19 and under) who are below 200% of the Federal Poverty Line (FPL) based on 
                       annual estimates from the American Community Survey. 
                     </p>
+
                     {/* American Community Survey Table */}
+                    <table className="t2-american-community-survey-table" class="ds-c-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Year</th>
+                          <th scope="col">Number of children enrolled (FFY 2018)</th>
+                          <th scope="col">Number of children enrolled (FFY 2019)</th>
+                          <th scope="col">Percent change</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">M-CHIP (Medicaid Expansion Program)</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_m1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_m2}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.calcPercentChange(this.state.t1_m1,this.state.t1_m2)}/>%</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">S-CHIP (Separate CHIP Program)</th>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_s1}/></td>
+                          <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t1_s2}/></td>
+                          <td><NumberFormat displayType="text" decimalScale="2" value={this.calcPercentChange(this.state.t1_s1,this.state.t1_s2)}/>%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p></p>
+
                     {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
-                    <div className="seds-data-table">
-                      <h4>AMERICAN COMMUNITY SURVEY TABLE GOES HERE</h4>
-                    </div>
                     <div className="question-container">
                       <div className="question">
                         1. What are some possible reasons why your state had more than a 10% change in enrollment?
