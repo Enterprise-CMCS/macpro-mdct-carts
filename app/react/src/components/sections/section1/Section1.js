@@ -53,7 +53,7 @@ class Section1 extends Component {
                     destination="/basic-info"
                   />
 
-                  <NavigationButton direction="Next" destination="/2b" />
+                  <NavigationButton direction="Next" destination="/2a" />
                 </div>
               </div>
             </div>
