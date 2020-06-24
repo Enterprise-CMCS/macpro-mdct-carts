@@ -139,10 +139,7 @@ class Section2b extends Component {
                 </TabPanel>
               </Tabs>
               <div className="nav-buttons">
-                <NavigationButton
-                  direction="Previous"
-                  destination="/basic-info"
-                />
+                <NavigationButton direction="Previous" destination="/1" />
 
                 <NavigationButton direction="Next" destination="/3c" />
               </div>
