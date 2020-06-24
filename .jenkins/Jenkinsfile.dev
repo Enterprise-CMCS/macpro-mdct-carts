@@ -61,8 +61,8 @@ pipeline {
               # Build images
               docker build -t ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_UI}:${GIT_BRANCH#*/} app/react
 
-              docker build -t ${ECR_REPOSITORY_URL_POSTGRES_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_POSTGRES_API}:${GIT_BRANCH#*/} app/api-postgres
-              docker build -t ${ECR_REPOSITORY_URL_SQLSERVER_API}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_SQLSERVER_API}:${GIT_BRANCH#*/} app/api-sqlserver
+              docker build -t ${ECR_REPOSITORY_URL_API_POSTGRES}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_API_POSTGRES}:${GIT_BRANCH#*/} app/api-postgres
+              docker build -t ${ECR_REPOSITORY_URL_API_SQLSERVER}:${BUILD_TAG} -t ${ECR_REPOSITORY_URL_API_SQLSERVER}:${GIT_BRANCH#*/} app/api-sqlserver
 
               # Login to ECR repository
               set +x
@@ -73,11 +73,11 @@ pipeline {
               docker push ${ECR_REPOSITORY_URL_UI}:${BUILD_TAG}
               docker push ${ECR_REPOSITORY_URL_UI}:${BRANCH_NAME}
 
-              docker push ${ECR_REPOSITORY_URL_POSTGRES_API}:${BUILD_TAG}
-              docker push ${ECR_REPOSITORY_URL_POSTGRES_API}:${BRANCH_NAME}
+              docker push ${ECR_REPOSITORY_URL_API_POSTGRES}:${BUILD_TAG}
+              docker push ${ECR_REPOSITORY_URL_API_POSTGRES}:${BRANCH_NAME}
 
-              docker push ${ECR_REPOSITORY_URL_SQLSERVER_API}:${BUILD_TAG}
-              docker push ${ECR_REPOSITORY_URL_SQLSERVER_API}:${BRANCH_NAME}
+              docker push ${ECR_REPOSITORY_URL_API_SQLSERVER}:${BUILD_TAG}
+              docker push ${ECR_REPOSITORY_URL_API_SQLSERVER}:${BRANCH_NAME}
           }
 
           sh '''
@@ -85,11 +85,11 @@ pipeline {
             aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_UI##*/} --image-id imageTag=${BUILD_TAG}
             aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_UI##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_ui.json >/dev/null
 
-            aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_POSTGRES_API##*/} --image-id imageTag=${BUILD_TAG}
-            aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_POSTGRES_API##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_api_postgres.json >/dev/null
+            aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_API_POSTGRES##*/} --image-id imageTag=${BUILD_TAG}
+            aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_API_POSTGRES##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_api_postgres.json >/dev/null
 
-            aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_SQLSERVER_API##*/} --image-id imageTag=${BUILD_TAG}
-            aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_SQLSERVER_API##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_api_sqlserver.json >/dev/null
+            aws ecr wait image-scan-complete --repository-name ${ECR_REPOSITORY_URL_API_SQLSERVER##*/} --image-id imageTag=${BUILD_TAG}
+            aws ecr describe-image-scan-findings --repository-name ${ECR_REPOSITORY_URL_API_SQLSERVER##*/} --image-id imageTag=${BUILD_TAG} --output json | tee ecr_scan_api_sqlserver.json >/dev/null
           '''
         }
       }
@@ -112,8 +112,8 @@ pipeline {
               set -e
 
               export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
-              export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_POSTGRES_API}
-              export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_SQLSERVER_API}
+              export TF_VAR_ecr_repository_url_api_postgres=${ECR_REPOSITORY_URL_API_POSTGRES}
+              export TF_VAR_ecr_repository_url_api_sqlserver=${ECR_REPOSITORY_URL_API_SQLSERVER}
               export TF_VAR_application_version=${BUILD_TAG}
               export TF_VAR_vpc_name=${VPC_NAME}
               PATH=~/.local/bin:$PATH

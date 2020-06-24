@@ -11,7 +11,8 @@ services:
     networks:
       - backend_app
     environment:
-      - API_URL=http://localhost:8000 # This is how a browser would call the api
+      - API_POSTGRES_URL=http://localhost:8000 # This is how a browser would call the api
+      - API_SQLSERVER_URL=http://localhost:8001 # This is how a browser would call the api
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     volumes:
