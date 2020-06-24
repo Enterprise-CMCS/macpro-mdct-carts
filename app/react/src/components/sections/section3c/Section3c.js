@@ -26,6 +26,7 @@ class Section3c extends Component {
       p1_q1_ly: false,
       p1_q1__a_1: null,
       p1_q1__b: "",
+      p1_q2_ly: false,
       p1_q2__a: "",
       p1_q2__b: "",
       p1_q2__c: "",
@@ -44,10 +45,14 @@ class Section3c extends Component {
     };
   }
 
+  // Allows updating text when value is set to state
   changeText(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
+
+  // Show/hide conditional elements
   setConditional(el) {
+    // Use name to determine which conditional to fire
     switch (el.target.name) {
       case "p1_q1":
         if (el.target.value == "yes") {
@@ -59,18 +64,6 @@ class Section3c extends Component {
           this.setState({
             p1_q1__a_1: false,
             p1_q1_conditional: false,
-          });
-        }
-        break;
-
-      case "p1_q2":
-        if (el.target.value == "yes") {
-          this.setState({
-            p1_q2__a_1: true,
-          });
-        } else {
-          this.setState({
-            p1_q2__a_1: false,
           });
         }
         break;
@@ -91,14 +84,12 @@ class Section3c extends Component {
     // Boolean, Set values on active
     let isActive = el.target.classList.contains("active");
 
+    // Add text is copying from last year
     if (isActive) {
       textFieldCopy = "This is what you wrote last year.";
       textAreaCopy =
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies.";
       el.target.title = "Undo";
-    } else {
-      textFieldCopy = "";
-      textAreaCopy = "";
     }
 
     switch (el.target.name) {
@@ -114,6 +105,9 @@ class Section3c extends Component {
         break;
       case "p1_q2":
         this.setState({
+          p1_q2__a: this.state.p1_q2_ly ? null : true,
+          p1_q2__b: this.state.p1_q2_ly ? null : true,
+          p1_q2_ly: this.state.p1_q2_ly ? false : true,
           p1_q2__c: textAreaCopy,
           p1_q2__d: textAreaCopy,
           p1_q2__e: textAreaCopy,
@@ -246,12 +240,12 @@ class Section3c extends Component {
                                 {
                                   label: "Yes",
                                   value: "yes",
-                                  checked: this.state.p1_q2__a_1,
+                                  checked: this.state.p1_q2__a === false,
                                 },
                                 {
                                   label: "No",
                                   value: "no",
-                                  checked: this.state.p1_q2__a_2,
+                                  checked: this.state.p1_q2__a,
                                 },
                               ]}
                               label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
@@ -264,12 +258,12 @@ class Section3c extends Component {
                                 {
                                   label: "Yes",
                                   value: "yes",
-                                  checked: this.state.p1_q2__b_1,
+                                  checked: this.state.p1_q2__b,
                                 },
                                 {
                                   label: "No",
                                   value: "no",
-                                  checked: this.state.p1_q2__b_2,
+                                  checked: this.state.p1_q2__b === false,
                                 },
                               ]}
                               label="b. Do you send renewal reminder notices to all families?"
