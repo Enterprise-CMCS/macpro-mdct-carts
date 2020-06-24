@@ -90,11 +90,11 @@ class BasicInfo extends Component {
                     </h3>
                     <TextField label="4. Contact Name: " name="contactName" />
                     <TextField label="5. Job Title: " name="contactTitle" />
-                    <TextField 
+                    <TextField
                       type="email"
-                      label="6. Email: " 
-                      name="contactEmail" 
-                      />
+                      label="6. Email: "
+                      name="contactEmail"
+                    />
                     <TextField
                       label="7. Address: "
                       hint="Include city, state and zip code"
@@ -120,7 +120,7 @@ class BasicInfo extends Component {
                       destination="/preamble"
                     />
 
-                    <NavigationButton direction="Next" destination="/2a" />
+                    <NavigationButton direction="Next" destination="/1" />
                   </div>
                 </form>
               </div>
