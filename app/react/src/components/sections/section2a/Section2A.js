@@ -452,6 +452,8 @@ class Section2a extends Component {
 
 const mapStateToProps = (state) => ({
     name: state.name,
+    formName: state.formName,
+    formYear: state.formYear
   });
   
 export default connect(mapStateToProps)(Section2a);
