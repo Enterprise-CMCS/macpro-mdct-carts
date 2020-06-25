@@ -114,7 +114,7 @@ resource "aws_alb_target_group" "ui" {
   port                 = 80
   target_type          = "ip"
   protocol             = "HTTP"
-  deregistration_delay = "0"
+  deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
 
   depends_on = [aws_alb.ui]
