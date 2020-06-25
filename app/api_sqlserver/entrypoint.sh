@@ -1,14 +1,14 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]
+if [ "$DATABASE" = "sqlserver" ]
 then
-    echo "Waiting for postgres..."
-
-    while ! nc -z $POSTGRES_HOST 5432; do
+    echo "Waiting for sqlserver..."
+    
+    while ! nc -z $SQLSERVER_HOST 1433; do
       sleep 0.1
     done
 
-    echo "PostgreSQL started"
+    echo "sqlserver started"
 fi
 
 exec "$@"
