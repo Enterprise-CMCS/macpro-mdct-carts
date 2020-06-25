@@ -124,10 +124,6 @@ resource "aws_alb_target_group" "api_sqlserver" {
   deregistration_delay = "0"
   vpc_id               = data.aws_vpc.app.id
 
-  lifecycle {
-    create_before_destroy = true
-  }
-
   depends_on = [aws_alb.api_sqlserver]
 }
 
