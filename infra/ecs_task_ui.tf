@@ -11,8 +11,8 @@ resource "aws_ecs_task_definition" "ui" {
   task_role_arn            = aws_iam_role.ecs_task.arn
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
-    image   = "${var.ecr_repository_url_ui}:${var.application_version}",
-    api_postgres_url = local.endpoint_api_postgres
+    image             = "${var.ecr_repository_url_ui}:${var.application_version}",
+    api_postgres_url  = local.endpoint_api_postgres
     api_sqlserver_url = local.endpoint_api_sqlserver
   })
 }
