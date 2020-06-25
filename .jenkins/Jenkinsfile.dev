@@ -197,7 +197,7 @@ pipeline {
     }
     fixed{
       script {
-        if (env.SLACK_CREDENTIAL_NAME != null env.BRANCH_NAME == 'master'){
+        if (env.SLACK_CREDENTIAL_NAME != null && env.BRANCH_NAME == 'master'){
           slackSend channel: 'proj-ngw', teamDomain: 'collabralink', tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'good', message: ":white_check_mark: Fixed.       <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> succeeded.  The build is fixed."
         }
       }
