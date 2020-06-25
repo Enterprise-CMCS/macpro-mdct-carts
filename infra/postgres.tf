@@ -35,6 +35,6 @@ resource "aws_security_group_rule" "db_ingress" {
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.api.id
+  source_security_group_id = aws_security_group.api_postgres.id
   security_group_id        = aws_security_group.db.id
 }

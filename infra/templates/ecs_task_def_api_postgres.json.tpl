@@ -1,6 +1,6 @@
 [
   {
-    "name": "api",
+    "name": "api_postgres",
     "image": "${image}",
     "essential": true,
     "command": ["gunicorn", "hello_django.wsgi:application", "--bind", "0.0.0.0:8000"],
