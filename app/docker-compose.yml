@@ -36,14 +36,6 @@ services:
     command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     ports:
       - 8001:8000
-    environment:
-      # - SQLSERVER_DB=sqlserver
-      # - SQLSERVER_USER=sqlserver
-      # - SQLSERVER_PASSWORD=sqlserver
-      # - SQLSERVER_HOST=db # The api can address the db by its service name over the docker bridge network
-      # - DATABASE=sqlserver
-    # depends_on:
-    #   - db
   db:
     image: postgres
     ports:
