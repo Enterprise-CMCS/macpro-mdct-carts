@@ -32,7 +32,7 @@ services:
       - POSTGRES_HOST=db # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
     volumes:
-      - ./django/:/usr/src/app/
+      - ./api_postgres/:/usr/src/app/
     depends_on:
       - db
   api_sqlserver:
@@ -40,9 +40,11 @@ services:
     build:
       context: ./api_sqlserver
       dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8001
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
-      - 8001:8001
+      - 8001:8000
+    volumes:
+      - ./api_sqlserver/:/usr/src/app/
   db:
     image: postgres
     ports:
