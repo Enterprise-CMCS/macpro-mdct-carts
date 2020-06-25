@@ -4,14 +4,11 @@ import NumberFormat from "react-number-format";
 import {
   Button as button,
   ChoiceList,
-  Tabs,
-  TabPanel,
   TextField,
   Table,
 } from "@cmsgov/design-system-core";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
-import FillForm from "../../layout/FillForm";
 import NavigationButton from "../../layout/NavigationButtons";
 
 class Section2a extends Component {
@@ -19,6 +16,7 @@ class Section2a extends Component {
     super(props);
 
     this.setConditional = this.setConditional.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       t1_m1: "284143",
@@ -60,7 +58,17 @@ class Section2a extends Component {
       p2_q3__h: "",
       p2_q4: "",
       fillFormTitle: "Same as last year",
+      year1: this.props.formYear-1,
+      year2: this.props.formYear-2,
+      year3: this.props.formYear-3,
+      year4: this.props.formYear-4,
     };
+  }
+
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
   }
 
   /**
@@ -110,8 +118,8 @@ class Section2a extends Component {
                       <thead>
                         <tr>
                           <th scope="col">Program</th>
-                          <th scope="col">Number of children enrolled (FFY 2018)</th>
-                          <th scope="col">Number of children enrolled (FFY 2019)</th>
+                          <th scope="col">Number of children enrolled (FFY {this.state.year1})</th>
+                          <th scope="col">Number of children enrolled (FFY {this.props.formYear})</th>
                           <th scope="col">Percent change</th>
                         </tr>
                       </thead>
@@ -148,6 +156,7 @@ class Section2a extends Component {
                               rows="6"
                               name="p1_q1"
                               value={this.state.p1_q1}
+                              onChange={this.handleChange}
                             />
                           </div>
                         </div>
@@ -188,35 +197,35 @@ class Section2a extends Component {
                       </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">2016</th>
+                          <th scope="row">{this.state.year4}</th>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y1_n1}/></td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y1_m1}/></td>
                           <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y1_p1}/>%</td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y1_m2}/></td>
                         </tr>
                         <tr>
-                          <th scope="row">2017</th>
+                          <th scope="row">{this.state.year3}</th>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y2_n1}/></td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y2_m1}/></td>
                           <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y2_p1}/>%</td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y2_m2}/></td>
                         </tr>
                         <tr>
-                          <th scope="row">2018</th>
+                          <th scope="row">{this.state.year2}</th>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y3_n1}/></td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y3_m1}/></td>
                           <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y3_p1}/>%</td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y3_m2}/></td>
                         </tr>
                         <tr>
-                          <th scope="row">2019</th>
+                          <th scope="row">{this.state.year1}</th>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y4_n1}/></td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y4_m1}/></td>
                           <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y4_p1}/>%</td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y4_m2}/></td>
                         </tr>
                         <tr>
-                          <th scope="row">2020</th>
+                          <th scope="row">{this.props.formYear}</th>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y5_n1}/></td>
                           <td><NumberFormat displayType="text" thousandSeparator={true} value={this.state.t2_y5_m1}/></td>
                           <td><NumberFormat displayType="text" decimalScale="2" value={this.state.t2_y5_p1}/>%</td>
@@ -228,7 +237,7 @@ class Section2a extends Component {
                     <table className="t3-percent-change-table" class="ds-c-table">
                       <tbody>
                         <tr>
-                          <th scope="row">Percent change between 2019 and 2020</th>
+                          <th scope="row">Percent change between {this.state.year1} and {this.props.formYear}</th>
                           <td><NumberFormat displayType="text" decimalScale="1" value={this.calcPercentChange(this.state.t2_y4_n1,this.state.t2_y5_n1)}/>%</td>
                         </tr>
                       </tbody>
@@ -249,6 +258,7 @@ class Section2a extends Component {
                               rows="6"
                               name="p2_q1"
                               value={this.state.p2_q1}
+                              onChange={this.handleChange}
                             />
                           </div>
                         </div>
@@ -290,6 +300,7 @@ class Section2a extends Component {
                                   name="p2_q2__a"
                                   rows="6"
                                   value={this.state.p2_q2__a}
+                                  onChange={this.handleChange}
                                 />
                               </div>
                             ) : (
@@ -327,6 +338,7 @@ class Section2a extends Component {
                                   name="p2_q3__a"
                                   rows="6"
                                   value={this.state.p2_q3__a}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   hint="(from mm/yyyy to mm/yyyy)"
@@ -335,6 +347,7 @@ class Section2a extends Component {
                                   name="p2_q3__b"
                                   rows="1"
                                   value={this.state.p2_q3__b}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   label="c) Define the population you’re measuring, including ages and federal poverty levels. "
@@ -342,6 +355,7 @@ class Section2a extends Component {
                                   name="p2_q3__c"
                                   rows="6"
                                   value={this.state.p2_q3__c}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   label="d) Give numbers and/or the percent of uninsured children for at least two points in time."
@@ -349,6 +363,7 @@ class Section2a extends Component {
                                   name="p2_q3__d"
                                   rows="6"
                                   value={this.state.p2_q3__d}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   label="e) Why did your state choose to adopt this alternate data source?"
@@ -356,6 +371,7 @@ class Section2a extends Component {
                                   name="p2_q3__e"
                                   rows="6"
                                   value={this.state.p2_q3__e}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   label="f) How reliable are these estimates? Provide standard errors, confidence intervals, and/or p-values if available."
@@ -363,6 +379,7 @@ class Section2a extends Component {
                                   name="p2_q3__f"
                                   rows="6"
                                   value={this.state.p2_q3__f}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   label="g) What are the limitations of this alternate data source or methodology?"
@@ -370,6 +387,7 @@ class Section2a extends Component {
                                   name="p2_q3__g"
                                   rows="6"
                                   value={this.state.p2_q3__g}
+                                  onChange={this.handleChange}
                                 />
                                 <TextField
                                   label="h) How do you use this alternate data source in CHIP program planning?"
@@ -377,6 +395,7 @@ class Section2a extends Component {
                                   name="p2_q3__h"
                                   rows="6"
                                   value={this.state.p2_q3__h}
+                                  onChange={this.handleChange}
                                 />
                               </div>
                             ) : (
@@ -396,6 +415,7 @@ class Section2a extends Component {
                         rows="6"
                         name="p2_q4"
                         value={this.state.p2_q4}
+                        onChange={this.handleChange}
                       />
                     </div>
                   </div>
@@ -416,7 +436,7 @@ class Section2a extends Component {
               </div>
 
               <div className="nav-buttons">
-                <NavigationButton direction="Previous" destination="/basic-info" />
+                <NavigationButton direction="Previous" destination="/1" />
 
                 <NavigationButton direction="Next" destination="/2b" />
               </div>
@@ -432,6 +452,8 @@ class Section2a extends Component {
 
 const mapStateToProps = (state) => ({
     name: state.name,
+    formName: state.formName,
+    formYear: state.formYear
   });
   
 export default connect(mapStateToProps)(Section2a);
