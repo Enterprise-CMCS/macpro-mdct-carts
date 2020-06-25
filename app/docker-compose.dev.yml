@@ -11,8 +11,7 @@ services:
     networks:
       - backend_app
     environment:
-      - API_POSTGRES_URL=http://localhost:8000 # This is how a browser would call the api
-      - API_SQLSERVER_URL=http://localhost:8001 # This is how a browser would call the api
+      - API_URL=http://localhost:8000 # This is how a browser would call the api
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     volumes:
@@ -33,7 +32,7 @@ services:
       - POSTGRES_HOST=db # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
     volumes:
-      - ./api_postgres/:/usr/src/app/
+      - ./django/:/usr/src/app/
     depends_on:
       - db
   api_sqlserver:
@@ -44,16 +43,6 @@ services:
     command: python manage.py runserver 0.0.0.0:8001
     ports:
       - 8001:8001
-    environment:
-      - SQLSERVER_DB=sqlserver
-      - SQLSERVER_USER=sqlserver
-      - SQLSERVER_PASSWORD=sqlserver
-      - SQLSERVER_HOST=db # The api can address the db by its service name over the docker bridge network
-      - DATABASE=sqlserver
-    volumes:
-      - ./api_sqlserver/:/usr/src/app/
-    #depends_on:
-      #- db
   db:
     image: postgres
     ports:
