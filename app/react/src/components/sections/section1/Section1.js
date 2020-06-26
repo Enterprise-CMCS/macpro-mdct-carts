@@ -1265,6 +1265,7 @@ class Section1 extends Component {
                               Display list of questions answered yes
                             </div>
                           </div>
+                        </div>
 
                           <h3 className="part-header">
                             Part 4: M-CHIP Changes in Programs and Policies
@@ -1894,7 +1895,6 @@ class Section1 extends Component {
                                 Display list of questions answered yes
                               </div>
                             </div>
-                          </div>
                         </div>
                       </div>
                     </form>

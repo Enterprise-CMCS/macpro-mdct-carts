@@ -15,7 +15,7 @@ export const stateDetails = (name, programType, imageURI, formName, formYear) =>
 
 const initialState = {
   name: "New York",
-  programType: "S-CHIP",
+  programType: "Combo",
   imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
   formName: "CARTS FY",
   formYear: "2020",
