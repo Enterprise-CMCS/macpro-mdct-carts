@@ -56,9 +56,8 @@ class Section1 extends Component {
     this.setState({
       [el.target.name]: el.target.value,
     });
-    console.log("response: " + this.state.p1_q2);
     // el.target.defaultChecked = true;
-    this.setQuestionDisable(el.target.value);
+    this.setQuestionDisable(el.target.name, el.target.value);
   }
 
   //set the flags for the custom div property disabled (_layout.scss) based on the selected programType
@@ -72,9 +71,12 @@ class Section1 extends Component {
   //set the flags for the custom div property disabled (_layout.scss) based on the selected programType
   //true means the section will be disabled
   //false means the section will be enabled
-  setQuestionDisable(e) {
-    {e === "yes" ? (this.setState({ p1q2Disable: false })) : (this.setState({ p1q2Disable: true })) };
-    console.log("response: " + this.state.p1_q2)
+  setQuestionDisable(ename, evalue) {
+    //Each question must have its own disable variable in state
+    //The disable variable should only be changed IF we are working with the appropriate question
+    if (ename === "p1_q2") {
+      evalue === "yes" ? (this.setState({ p1q2Disable: false })) : (this.setState({ p1q2Disable: true }));
+    };
   }
 
   render() {
