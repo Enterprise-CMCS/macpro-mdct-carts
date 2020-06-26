@@ -29,30 +29,20 @@ class Section2b extends Component {
 
   componentDidMount() {
     const initialObjective = {
-      id: "2020_1",
-      component: <Objective2b objectiveCount={"2020_1"} />,
+      id: `${this.props.year}_1`,
+      component: <Objective2b objectiveCount={`${this.props.year}_1`} />,
     };
 
-    let dummyDataArray = [
-      {
-        id: "2019_1",
+    let dummyDataArray = [];
+
+    for (let i = 1; i < 3; i++) {
+      dummyDataArray.push({
+        id: `2019_${i}`,
         component: (
-          <Objective2b objectiveCount={"2019_1"} previousEntry="true" />
+          <Objective2b objectiveCount={`2019_${i}`} previousEntry="true" />
         ),
-      },
-      {
-        id: "2019_2",
-        component: (
-          <Objective2b objectiveCount={"2019_2"} previousEntry="true" />
-        ),
-      },
-      {
-        id: "2019_3",
-        component: (
-          <Objective2b objectiveCount={"2019_3"} previousEntry="true" />
-        ),
-      },
-    ];
+      });
+    }
 
     this.setState({
       objectiveArray: [initialObjective],
@@ -63,8 +53,10 @@ class Section2b extends Component {
   newObjective() {
     let newObjectiveId = this.state.objectiveCount + 1;
     let newObjective = {
-      id: `2020_${newObjectiveId}`,
-      component: <Objective2b objectiveCount={`2020_${newObjectiveId}`} />,
+      id: `${this.props.year}_${newObjectiveId}`,
+      component: (
+        <Objective2b objectiveCount={`${this.props.year}_${newObjectiveId}`} />
+      ),
     };
 
     this.setState({
@@ -74,7 +66,6 @@ class Section2b extends Component {
   }
 
   render() {
-    console.log("JUST THE NUMBER?", sliceId(2019_2));
     return (
       <div className="section-2b">
         <div className="ds-l-container">
@@ -179,6 +170,7 @@ class Section2b extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.name,
+  year: state.formYear,
 });
 
 export default connect(mapStateToProps)(Section2b);

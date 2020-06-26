@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import Goal from "./goals/Goal2b";
 import { TextField } from "@cmsgov/design-system-core";
 import {
@@ -10,6 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
+import { sliceId } from "../../../Utils/helperFunctions";
 
 class Objective2b extends Component {
   constructor(props) {
@@ -27,30 +29,27 @@ class Objective2b extends Component {
   componentDidMount() {
     const initialGoal = [
       {
-        id: 1,
-        component: <Goal goalCount={1} />,
-      },
-
-      {
-        id: 111,
-        component: <Goal goalCount={111} />,
-      },
-    ];
-
-    let dummyDataArray = [
-      {
-        id: 22,
-        component: <Goal goalCount={22} previousEntry="true" />,
-      },
-      {
-        id: 33,
-        component: <Goal goalCount={33} previousEntry="true" />,
-      },
-      {
-        id: 44,
-        component: <Goal goalCount={44} previousEntry="true" />,
+        id: `${this.props.year}_1`,
+        component: (
+          <Goal
+            goalCount={`${this.props.year}_1_${this.props.objectiveCount}`}
+          />
+        ),
       },
     ];
+
+    let dummyDataArray = [];
+    for (let i = 1; i < 3; i++) {
+      dummyDataArray.push({
+        id: `2019_${i}`,
+        component: (
+          <Goal
+            goalCount={`2019_${i}_${this.props.objectiveCount}`}
+            previousEntry="true"
+          />
+        ),
+      });
+    }
 
     this.setState({
       goalArray: initialGoal,
@@ -63,8 +62,12 @@ class Objective2b extends Component {
   newGoal() {
     let newGoalId = this.state.goalCount + 1;
     let newGoal = {
-      id: newGoalId,
-      component: <Goal goalCount={newGoalId} />,
+      id: `${this.props.year}_${newGoalId}`,
+      component: (
+        <Goal
+          goalCount={`${this.props.year}_${newGoalId}_${this.props.objectiveCount}`}
+        />
+      ),
     };
 
     this.setState({
@@ -94,7 +97,9 @@ class Objective2b extends Component {
                 {this.state.previousGoalsArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
-                      <AccordionButton>Goal {element.id}:</AccordionButton>
+                      <AccordionButton>
+                        Goal {sliceId(element.id)}:
+                      </AccordionButton>
                     </h3>
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
@@ -105,7 +110,9 @@ class Objective2b extends Component {
                 {this.state.goalArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
-                      <AccordionButton>Goal {element.id}:</AccordionButton>
+                      <AccordionButton>
+                        Goal {sliceId(element.id)}:
+                      </AccordionButton>
                     </h3>
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
@@ -132,4 +139,8 @@ class Objective2b extends Component {
   }
 }
 
-export default Objective2b;
+const mapStateToProps = (state) => ({
+  year: state.formYear,
+});
+
+export default connect(mapStateToProps)(Objective2b);

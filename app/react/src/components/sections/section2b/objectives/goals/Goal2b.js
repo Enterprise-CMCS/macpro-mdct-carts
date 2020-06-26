@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
+
 class Goal extends Component {
   constructor(props) {
     super(props);
@@ -100,26 +101,26 @@ class Goal extends Component {
               {
                 label: "New goal",
                 value: "new",
-                // disabled: renderPreviousEntry ? true : false,
-                disabled: true,
+                disabled: renderPreviousEntry ? true : false,
+                // disabled: true,
               },
               {
                 label: "Continuing goal",
                 value: "continuing",
-                disabled: true,
-                defaultChecked: true,
-                // disabled: renderPreviousEntry ? true : false,
-                // defaultChecked: renderPreviousEntry ? true : false,
+                // disabled: true,
+                // defaultChecked: true,
+                disabled: renderPreviousEntry ? true : false,
+                defaultChecked: renderPreviousEntry ? true : false,
               },
               {
                 label: "Discontinued goal",
                 value: "discontinued",
-                disabled: true,
-                // disabled: renderPreviousEntry ? true : false,
+                // disabled: true,
+                disabled: renderPreviousEntry ? true : false,
               },
             ]}
             label="What type of goal is it?"
-            name={`goal_type${this.props.goalCount}`}
+            name={`goal_type${this.props.goalCount}`} // each question in tabs needs to have their own names or the defaultChecked property WILL be overwritten by the last one rendered
             type="radio"
           />
         </div>
@@ -311,7 +312,7 @@ class Goal extends Component {
           ]}
           className="ds-u-margin-top--5"
           label="Which data source did you use?"
-          name="data_source"
+          name={`data_source${this.props.goalCount}`}
         />
 
         <div className="question-container">
