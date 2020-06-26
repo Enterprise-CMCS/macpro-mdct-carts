@@ -72,8 +72,8 @@ class Section2b extends Component {
               <PageInfo />
               <Tabs>
                 <TabPanel id="section2b" tab="Section 2B: Performance Goals">
-                  <form>
-                    <div className="section-content">
+                  <div className="section-content">
+                    <form>
                       <p>
                         Your performance goals should match those reflected in
                         your CHIP State Plan, Section 9. If your goals are
@@ -117,14 +117,14 @@ class Section2b extends Component {
                           <FontAwesomeIcon icon={faPlus} />
                         </button>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </TabPanel>
 
                 <TabPanel className="section2b-previous" tab="FY2019 answers">
-                  <form>
-                    <div className="section-content">
-                      <div className="objective-accordiion">
+                  <div className="section-content">
+                    <div className="objective-accordiion">
+                      <form>
                         <Accordion>
                           {this.state.previousObjectivesArray.map((element) => (
                             <AccordionItem key={element.id}>
@@ -144,9 +144,9 @@ class Section2b extends Component {
                             </AccordionItem>
                           ))}
                         </Accordion>
-                      </div>
+                      </form>
                     </div>
-                  </form>
+                  </div>
                 </TabPanel>
               </Tabs>
               <div className="nav-buttons">

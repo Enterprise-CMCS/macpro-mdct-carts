@@ -77,7 +77,7 @@ class Goal extends Component {
   render() {
     let renderPreviousEntry =
       this.props.previousEntry === "true" ? true : false;
-    console.log("value??", renderPreviousEntry);
+
     return (
       <Fragment>
         <div className="question-container">
@@ -95,39 +95,41 @@ class Goal extends Component {
         </div>
 
         <div className="question-container">
-          <ChoiceList
-            choices={[
-              {
-                label: "New goal",
-                value: "new",
-                // disabled: renderPreviousEntry ? true : false,
-                disabled: true,
-              },
-              {
-                label: "Continuing goal",
-                value: "continuing",
-                // disabled: renderPreviousEntry ? true : false,
-                // defaultChecked: renderPreviousEntry ? true : false,
-                defaultChecked: true,
-                // renderPreviousEntry
-                //   ? true
-                //   : // ? this.state.goal_type_value === "continuing"
-                //     //   ? true
-                //     //   : false
-                //     false,
-                disabled: true,
-              },
-              {
-                label: "Discontinued goal",
-                value: "discontinued",
-                // disabled: renderPreviousEntry ? true : false,
-                disabled: true,
-              },
-            ]}
-            label="What type of goal is it?"
-            name="goal_type"
-            type="radio"
-          />
+          <form>
+            <ChoiceList
+              choices={[
+                {
+                  label: "New goal",
+                  value: "new",
+                  disabled: renderPreviousEntry ? true : false,
+                  // disabled: true,
+                },
+                {
+                  label: "Continuing goal",
+                  value: "continuing",
+                  disabled: renderPreviousEntry ? true : false,
+                  defaultChecked: renderPreviousEntry ? true : false,
+                  // defaultChecked: true,
+                  // renderPreviousEntry
+                  //   ? true
+                  //   : // ? this.state.goal_type_value === "continuing"
+                  //     //   ? true
+                  //     //   : false
+                  //     false,
+                  // disabled: true,
+                },
+                {
+                  label: "Discontinued goal",
+                  value: "discontinued",
+                  disabled: renderPreviousEntry ? true : false,
+                  // disabled: true,
+                },
+              ]}
+              label="What type of goal is it?"
+              name="goal_type"
+              type="radio"
+            />
+          </form>
         </div>
 
         <div className="question-container">
@@ -201,56 +203,54 @@ class Goal extends Component {
         </div>
 
         <div className="ds-u-border--2">
-          <form>
-            <div className="ds-1-row percentages-info">
-              <div className="ds-l--auto">
-                <h3>Percentage</h3>
-                <h4>Auto-calculated</h4>
-              </div>
+          <div className="ds-1-row percentages-info">
+            <div className="ds-l--auto">
+              <h3>Percentage</h3>
+              <h4>Auto-calculated</h4>
             </div>
-            <div className="ds-1-row percentages">
-              <div>
-                <TextField
-                  label="Numerator"
-                  name="goal_numerator_digit"
-                  size="small"
-                  className="ds-l--auto"
-                  value={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : this.state.goal_numerator_digit
-                  }
-                />
-              </div>
-              <div>
-                <div className="divide">&divide;</div>
-                <TextField
-                  label="Denominator"
-                  name="goal_denominator_digit"
-                  size="small"
-                  className="ds-l--auto"
-                  value={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : this.state.goal_denominator_digit
-                  }
-                />
-              </div>
-              <div>
-                <div className="divide"> &#61; </div>
-                <TextField
-                  label="Percentage"
-                  name="goal_percentage"
-                  size="small"
-                  value={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : `${this.state.percentage}%`
-                  }
-                />
-              </div>
+          </div>
+          <div className="ds-1-row percentages">
+            <div>
+              <TextField
+                label="Numerator"
+                name="goal_numerator_digit"
+                size="small"
+                className="ds-l--auto"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyDigit
+                    : this.state.goal_numerator_digit
+                }
+              />
             </div>
-          </form>
+            <div>
+              <div className="divide">&divide;</div>
+              <TextField
+                label="Denominator"
+                name="goal_denominator_digit"
+                size="small"
+                className="ds-l--auto"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyDigit
+                    : this.state.goal_denominator_digit
+                }
+              />
+            </div>
+            <div>
+              <div className="divide"> &#61; </div>
+              <TextField
+                label="Percentage"
+                name="goal_percentage"
+                size="small"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyDigit
+                    : `${this.state.percentage}%`
+                }
+              />
+            </div>
+          </div>
         </div>
 
         <div className="question-container">
@@ -297,30 +297,31 @@ class Goal extends Component {
             />
           </div>
         </div>
-
-        <ChoiceList
-          choices={[
-            {
-              label: "Eligibility or enrollment data",
-              value: "enrollment_data",
-              disabled: renderPreviousEntry ? true : false,
-              defaultChecked: true,
-            },
-            {
-              label: "Survey data",
-              value: "survey_data",
-              disabled: renderPreviousEntry ? true : false,
-            },
-            {
-              label: "Another data source",
-              value: "other_data",
-              disabled: renderPreviousEntry ? true : false,
-            },
-          ]}
-          className="ds-u-margin-top--5"
-          label="Which data source did you use?"
-          name="data_source"
-        />
+        <form>
+          <ChoiceList
+            choices={[
+              {
+                label: "Eligibility or enrollment data",
+                value: "enrollment_data",
+                disabled: renderPreviousEntry ? true : false,
+                defaultChecked: renderPreviousEntry ? true : false,
+              },
+              {
+                label: "Survey data",
+                value: "survey_data",
+                disabled: renderPreviousEntry ? true : false,
+              },
+              {
+                label: "Another data source",
+                value: "other_data",
+                disabled: renderPreviousEntry ? true : false,
+              },
+            ]}
+            className="ds-u-margin-top--5"
+            label="Which data source did you use?"
+            name="data_source"
+          />
+        </form>
         <div className="question-container">
           <TextField
             label="How did your progress last year compare to your previous year's progress towards your goal?"
@@ -369,6 +370,8 @@ class Goal extends Component {
             hint="Optional"
             name="supporting_documentation"
             className="ds-u-margin-top--0"
+            disabled={renderPreviousEntry ? true : false}
+            value={renderPreviousEntry ? "SomeFile2019.docx" : ""}
           />
           <button className="ds-c-button">Browse</button>
         </div>
