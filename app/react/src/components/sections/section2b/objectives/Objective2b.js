@@ -25,19 +25,36 @@ class Objective2b extends Component {
   }
 
   componentDidMount() {
-    const initialGoal = {
-      id: 1,
-      component: <Goal goalCount={1} />,
-    };
+    const initialGoal = [
+      {
+        id: 1,
+        component: <Goal goalCount={1} />,
+      },
 
-    let dummyDataArray = {
-      id: 2,
-      component: <Goal goalCount={2} previousEntry="true" />,
-    };
+      {
+        id: 111,
+        component: <Goal goalCount={111} />,
+      },
+    ];
+
+    let dummyDataArray = [
+      {
+        id: 22,
+        component: <Goal goalCount={22} previousEntry="true" />,
+      },
+      {
+        id: 33,
+        component: <Goal goalCount={33} previousEntry="true" />,
+      },
+      {
+        id: 44,
+        component: <Goal goalCount={44} previousEntry="true" />,
+      },
+    ];
 
     this.setState({
-      goalArray: [initialGoal],
-      previousGoalsArray: [dummyDataArray],
+      goalArray: initialGoal,
+      previousGoalsArray: dummyDataArray,
       objective2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim.",
     });

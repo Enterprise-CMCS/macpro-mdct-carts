@@ -14,6 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
+import { sliceId } from "../../Utils/helperFunctions";
 
 class Section2b extends Component {
   constructor(props) {
@@ -28,26 +29,42 @@ class Section2b extends Component {
 
   componentDidMount() {
     const initialObjective = {
-      id: 1,
-      component: <Objective2b objectiveCount={1} />,
+      id: "2020_1",
+      component: <Objective2b objectiveCount={"2020_1"} />,
     };
 
-    let dummyDataArray = {
-      id: 2,
-      component: <Objective2b objectiveCount={2} previousEntry="true" />,
-    };
+    let dummyDataArray = [
+      {
+        id: "2019_1",
+        component: (
+          <Objective2b objectiveCount={"2019_1"} previousEntry="true" />
+        ),
+      },
+      {
+        id: "2019_2",
+        component: (
+          <Objective2b objectiveCount={"2019_2"} previousEntry="true" />
+        ),
+      },
+      {
+        id: "2019_3",
+        component: (
+          <Objective2b objectiveCount={"2019_3"} previousEntry="true" />
+        ),
+      },
+    ];
 
     this.setState({
       objectiveArray: [initialObjective],
-      previousObjectivesArray: [dummyDataArray],
+      previousObjectivesArray: dummyDataArray,
     });
   }
 
   newObjective() {
     let newObjectiveId = this.state.objectiveCount + 1;
     let newObjective = {
-      id: newObjectiveId,
-      component: <Objective2b objectiveCount={newObjectiveId} />,
+      id: `2020_${newObjectiveId}`,
+      component: <Objective2b objectiveCount={`2020_${newObjectiveId}`} />,
     };
 
     this.setState({
@@ -57,6 +74,7 @@ class Section2b extends Component {
   }
 
   render() {
+    console.log("JUST THE NUMBER?", sliceId(2019_2));
     return (
       <div className="section-2b">
         <div className="ds-l-container">
@@ -88,7 +106,7 @@ class Section2b extends Component {
                                 <h3>
                                   <AccordionButton>
                                     <div className="title">
-                                      Objective {element.id}:
+                                      Objective {sliceId(element.id)}:
                                     </div>
                                     <div className="arrow"></div>
                                   </AccordionButton>
@@ -129,7 +147,7 @@ class Section2b extends Component {
                                 <h3>
                                   <AccordionButton>
                                     <div className="title">
-                                      Objective {element.id}:
+                                      Objective {sliceId(element.id)}:
                                     </div>
                                     <div className="arrow"></div>
                                   </AccordionButton>

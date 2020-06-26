@@ -119,7 +119,7 @@ class Goal extends Component {
               },
             ]}
             label="What type of goal is it?"
-            name="goal_type"
+            name={`goal_type${this.props.goalCount}`}
             type="radio"
           />
         </div>
