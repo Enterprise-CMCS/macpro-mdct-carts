@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import NumberFormat from "react-number-format";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import NavigationButton from "../../layout/NavigationButtons";
@@ -30,17 +31,20 @@ class Section1 extends Component {
       p1_q2__e: "",
       p1_q3: "",
       p1_q4: "",
+      p1_q4__a: "",
       p1_q5: "",
       p2_q1: "",
       p2_q2: "",
       p2_q3: "",
       p2_q4: "",
+      p2_q4__a: "",
       p2_q5: "",
       p2_q6: "",
       fillFormTitle: "Same as last year",
       mchipDisable: false,
       schipDisable: false,
       p1q2Disable: true,
+      p2q2Disable: true,
     };
 
     this.setConditional = this.setConditional.bind(this);
@@ -76,6 +80,9 @@ class Section1 extends Component {
     //The disable variable should only be changed IF we are working with the appropriate question
     if (ename === "p1_q2") {
       evalue === "yes" ? (this.setState({ p1q2Disable: false })) : (this.setState({ p1q2Disable: true }));
+    };
+    if (ename === "p2_q2") {
+      evalue === "yes" ? (this.setState({ p2q2Disable: false })) : (this.setState({ p2q2Disable: true }));
     };
   }
 
@@ -140,9 +147,8 @@ class Section1 extends Component {
                                 <div className="conditional">
                                   <TextField
                                     label="a) How much is your enrollment fee?"
-                                    multiline
                                     name="p1_q1__a"
-                                    rows="6"
+                                    mask="currency"
                                   />
                                 </div>
                               ) : (
@@ -234,13 +240,11 @@ class Section1 extends Component {
                                 <div className="conditional">
                                   <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                     <legend className="ds-c-label">
-                                      Premium fees tiered basy FPL
                                     </legend>
                                     <TextField
                                       label="c) How much is your premium fee?"
-                                      multiline
                                       name="p1_q1__a__1"
-                                      rows="6"
+                                      mask="currency"
                                     />
                                   </fieldset>
                                 </div>
@@ -285,11 +289,9 @@ class Section1 extends Component {
                               {this.state.p1_q3 === "no" ? (
                                 <div className="conditional">
                                   <TextField
-                                    label="b) What’s the maximum premium fee a family would be charged each year?
-                                    "
-                                    multiline
+                                    label="b) What’s the maximum premium fee a family would be charged each year?"
                                     name="p1_q3__a"
-                                    rows="6"
+                                    mask="currency"
                                   />
                                 </div>
                               ) : (
@@ -301,7 +303,7 @@ class Section1 extends Component {
                             <div id="p1_q4" disabled={this.state.p1q2Disable}>
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
-                                  4. Does your program charge an enrollment fee?
+                                  4. Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? 
                                 </legend>
                                 <ChoiceList
                                   choices={[
@@ -317,8 +319,21 @@ class Section1 extends Component {
                                   className="p1_q4"
                                   label=""
                                   name="p1_q4"
+                                  onChange={this.setConditional}
                                 />
                               </fieldset>
+                              {this.state.p1_q4 === "yes" ? (
+                                <div className="conditional">
+                                  <TextField
+                                    label="a) Please briefly explain the fee structure breakdown."
+                                    multiline
+                                    name="p1_q4__a"
+                                    rows="6"
+                                  />
+                                </div>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                           <div className="question-container">
@@ -413,9 +428,8 @@ class Section1 extends Component {
                                 <div className="conditional">
                                   <TextField
                                     label="a) How much is your enrollment fee?"
-                                    multiline
                                     name="p2_q1__a"
-                                    rows="6"
+                                    mask="currency"
                                   />
                                 </div>
                               ) : (
@@ -507,13 +521,11 @@ class Section1 extends Component {
                                 <div className="conditional">
                                   <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                     <legend className="ds-c-label">
-                                      Premium fees tiered basy FPL
                                     </legend>
                                     <TextField
                                       label="c) How much is your premium fee?"
-                                      multiline
                                       name="p2_q2__a__1"
-                                      rows="6"
+                                      mask="currency"
                                     />
                                   </fieldset>
                                 </div>
@@ -523,7 +535,7 @@ class Section1 extends Component {
                             </div>
                           </div>
                           <div className="question-container">
-                            <div id="p2_q3">
+                            <div id="p2_q3" disabled={this.state.p2q2Disable}>
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
                                   3. Is the maximum premium fee a family would be
@@ -554,14 +566,12 @@ class Section1 extends Component {
                               ) : (
                                 ""
                               )}
-                              {this.state.p1_q3 === "no" ? (
+                              {this.state.p2_q3 === "no" ? (
                                 <div className="conditional">
                                   <TextField
-                                    label="b) What’s the maximum premium fee a family would be charged each year?
-                                    "
-                                    multiline
-                                    name="p1_q3__a"
-                                    rows="6"
+                                    label="b) What’s the maximum premium fee a family would be charged each year?"
+                                    name="p2_q3__a"
+                                    mask="currency"
                                   />
                                 </div>
                               ) : (
@@ -570,21 +580,40 @@ class Section1 extends Component {
                             </div>
                           </div>
                           <div className="question-container">
-                            <div id="p2_q4">
+                            <div id="p2_q4"  disabled={this.state.p2q2Disable}>
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
-                                  4. Do your premium fees differ for different
-                                  CHIP populations beyond FPL (for example, by
-                                  age)? If so, briefly explain the fee structure
-                                  breakdown.
+                                  4. Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? 
                                 </legend>
-                                <TextField
+                                <ChoiceList
+                                  choices={[
+                                    {
+                                      label: "Yes",
+                                      value: "yes",
+                                    },
+                                    {
+                                      label: "No",
+                                      value: "no",
+                                    },
+                                  ]}
+                                  className="p2_q4"
                                   label=""
-                                  multiline
-                                  name="p2_q6"
-                                  rows="6"
+                                  name="p2_q4"
+                                  onChange={this.setConditional}
                                 />
                               </fieldset>
+                              {this.state.p2_q4 === "yes" ? (
+                                <div className="conditional">
+                                  <TextField
+                                    label="a) Please briefly explain the fee structure breakdown."
+                                    multiline
+                                    name="p2_q4__a"
+                                    rows="6"
+                                  />
+                                </div>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                           <div className="question-container">
