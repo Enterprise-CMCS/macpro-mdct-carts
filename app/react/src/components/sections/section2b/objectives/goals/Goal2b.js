@@ -102,20 +102,18 @@ class Goal extends Component {
                 label: "New goal",
                 value: "new",
                 disabled: renderPreviousEntry ? true : false,
-                // disabled: true,
               },
               {
                 label: "Continuing goal",
                 value: "continuing",
-                // disabled: true,
-                // defaultChecked: true,
+
                 disabled: renderPreviousEntry ? true : false,
                 defaultChecked: renderPreviousEntry ? true : false,
               },
               {
                 label: "Discontinued goal",
                 value: "discontinued",
-                // disabled: true,
+
                 disabled: renderPreviousEntry ? true : false,
               },
             ]}
