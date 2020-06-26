@@ -378,7 +378,7 @@ class Section1 extends Component {
                           Part 2: M-CHIP Enrollment and Premium Fees
                         </h3>
                         {this.state.schipDisable === true ? (
-                          <p>This part only applies to states with a M-CHIP program. Please skip to Section 2: Eligibility and Enrollment.</p>
+                          <p>This part only applies to states with a M-CHIP program. Please skip to Part 3.</p>
                         ) : (
                           ""
                         )}
@@ -643,633 +643,26 @@ class Section1 extends Component {
                         <h3 className="part-header">
                           Part 3: S-CHIP Changes in Programs and Policies
                         </h3>
-                        <p>
-                          Indicate any changes you’ve made to your S-CHIP
-                          programs and policies in the past federal fiscal year.
-                          All changes require a State Plan Amendment (SPA).{" "}
-                        </p>
-                        <div className="question-container">
-                          <div id="p3_q1">
-                            <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                              <legend className="ds-c-label">
-                                1. Have you made any changes to the eligibility
-                                determination process?
-                              </legend>
-                              <ChoiceList
-                                choices={[
-                                  {
-                                    label: "Yes",
-                                    value: "yes",
-                                  },
-                                  {
-                                    label: "No",
-                                    value: "no",
-                                  },
-                                  {
-                                    label: "N/A",
-                                    value: "na",
-                                  },
-                                ]}
-                                className="p3_q1"
-                                label=""
-                                name="Q1: Eligibility determination process"
-                                onChange={this.setKeyword}
-                              />
-                            </fieldset>
-                          </div>
-                        </div>
-                        <div className="question-container">
-                          <div id="p3_q2">
-                            <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                              <legend className="ds-c-label">
-                                2. Have you made any changes to the eligibility
-                                redetermination process?
-                              </legend>
-                              <ChoiceList
-                                choices={[
-                                  {
-                                    label: "Yes",
-                                    value: "yes",
-                                  },
-                                  {
-                                    label: "No",
-                                    value: "no",
-                                  },
-                                  {
-                                    label: "N/A",
-                                    value: "na",
-                                  },
-                                ]}
-                                className="p3_q2"
-                                label=""
-                                name="Q2: Eligibility redetermination process"
-                                onChange={this.setKeyword}
-                              />
-                            </fieldset>
-                          </div>
-                        </div>
-                        <div className="question-container">
-                          <div id="p3_q3">
-                            <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                              <legend className="ds-c-label">
-                                3. Have you made any changes to the eligibility
-                                levels or target populations?
-                              </legend>
-                              <ChoiceList
-                                choices={[
-                                  {
-                                    label: "Yes",
-                                    value: "yes",
-                                  },
-                                  {
-                                    label: "No",
-                                    value: "no",
-                                  },
-                                  {
-                                    label: "N/A",
-                                    value: "na",
-                                  },
-                                ]}
-                                className="p3_q3"
-                                hint="For example: increasing the FPL or income levels, or other eligibility criteria."
-                                label=""
-                                name="Q3: Eligibility levels or target population"
-                                onChange={this.setKeyword}
-                              />
-                            </fieldset>
-                          </div>
-                        </div>
-                        <div className="question-container">
-                          <div id="p3_q4">
-                            <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                              <legend className="ds-c-label">
-                                4. Have you made any changes to the benefits
-                                available to enrollees?
-                              </legend>
-                              <ChoiceList
-                                choices={[
-                                  {
-                                    label: "Yes",
-                                    value: "yes",
-                                  },
-                                  {
-                                    label: "No",
-                                    value: "no",
-                                  },
-                                  {
-                                    label: "N/A",
-                                    value: "na",
-                                  },
-                                ]}
-                                className="p3_q4"
-                                hint="For example: adding or removing different types of coverage.
-                                "
-                                label=""
-                                name="Q4: Benefits available to enrollees"
-                                onChange={this.setKeyword}
-                              />
-                            </fieldset>
-                          </div>
-                        </div>
-                        <div className="question-container">
-                          <div id="p3_q5">
-                            <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                              <legend className="ds-c-label">
-                                5. Have you made any changes to the single
-                                streamlined application?
-                              </legend>
-                              <ChoiceList
-                                choices={[
-                                  {
-                                    label: "Yes",
-                                    value: "yes",
-                                  },
-                                  {
-                                    label: "No",
-                                    value: "no",
-                                  },
-                                  {
-                                    label: "N/A",
-                                    value: "na",
-                                  },
-                                ]}
-                                className="p3_q5"
-                                label=""
-                                name="Q5: Single streamlined application"
-                                onChange={this.setKeyword}
-                              />
-                            </fieldset>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q6">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  6. Have you made any changes to your outreach
-                                  efforts?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q6"
-                                  hint="For example: allotting more or less funding for outreach, or changing your target population."
-                                  label=""
-                                  name="Q6: Outreach efforts"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q7">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  7. Have you made any changes to the delivery
-                                  system(s)?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q7"
-                                  hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
-                                  label=""
-                                  name="Q7: Delivery system(s)"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q8">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  8. Have you made any changes to cost-sharing
-                                  requirements?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q8"
-                                  hint="For example: changing amounts, populations, or the collection process."
-                                  label=""
-                                  name="Q8: Cost-sharing requirements"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q9">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  9. Have you made any changes to the crowd-out
-                                  policies?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q9"
-                                  hint="For example: changing substitutions or the waiting periods."
-                                  label=""
-                                  name="Q9: Crowd-out policies"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q10">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  10. Have you made any changes to an enrollment
-                                  freeze and/or enrollment cap?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q10"
-                                  label=""
-                                  name="Q10: Enrollment freeze and/or enrollment cap"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q11">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  11. Have you made any changes to the
-                                  enrollment process for health plan selection?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q11"
-                                  label=""
-                                  name="Q11: Enrollment process for health plan selection"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q12">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  12. Have you made any changes to the
-                                  protections for applicants and enrollees?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q12"
-                                  hint="For example: changing from the Medicaid Fair Hearing Process to state law."
-                                  label=""
-                                  name="Q12: Enrollment process for health plan selection"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q13">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  13. Have you made any changes to premium
-                                  assistance?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q13"
-                                  hint="For example: adding premium assistance or changing the population that receives premium assistance."
-                                  label=""
-                                  name="Q13: Premium assistance"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q14">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  14. Have you made any changes to the methods
-                                  and procedures for preventing, investigating,
-                                  or referring fraud or abuse cases?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q14"
-                                  label=""
-                                  name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q15">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  15. Have you made any changes to your prenatal
-                                  care eligibility?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q15"
-                                  hint="For example: expanding eligibility to pregnant enrollees."
-                                  label=""
-                                  name="Q15: Prenatal care eligibility"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q16">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  16. Have you made any changes to your Pregnant
-                                  Woman State Plan expansion?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q16"
-                                  hint="For example: extending coverage to pregnant enrollees."
-                                  label=""
-                                  name="Q16: Pregnant Woman State Plan expansion"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q17">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  17. Have you made any changes to eligibility
-                                  for “lawfully residing pregnant women”?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q17"
-                                  hint="For example: extending coverage to pregnant enrollees."
-                                  label=""
-                                  name='Q17: Eligibility for "lawfully residing pregnant women"'
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q18">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  18. Have you made any changes to eligibility
-                                  for “lawfully residing children”?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q18"
-                                  hint="For example: extending coverage to pregnant enrollees."
-                                  label=""
-                                  name="Q18: Eligibility for “lawfully residing children”"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q19">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  19. Have you made any changes to any other
-                                  program areas?
-                                </legend>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                    {
-                                      label: "N/A",
-                                      value: "na",
-                                    },
-                                  ]}
-                                  className="p3_q18"
-                                  label=""
-                                  name="Q19: Other program areas"
-                                  onChange={this.setKeyword}
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="question-container">
-                            <div id="p3_q20">
-                              <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                                <legend className="ds-c-label">
-                                  20. Anything else you’d like to add that
-                                  wasn’t already covered?
-                                </legend>
-                                <TextField
-                                  label=""
-                                  multiline
-                                  name="p3_q20"
-                                  rows="6"
-                                />
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div className="part3-yes">
-                            <h3>
-                              Do you plan to submit a SPA (State Plan Amendment)
-                              to reflect these changes if you haven’t done so
-                              already?{" "}
-                            </h3>
-                            Display list of questions answered yes
-                          </div>
-                          <h3 className="part-header">
-                            Part 4: M-CHIP Changes in Programs and Policies
-                          </h3>
+                        {this.state.mchipDisable === true ? (
+                          <p>This part only applies to states with a S-CHIP program. Please skip to Part 4.</p>
+                        ) : (
+                          ""
+                        )}
+                        <div 
+                          className="part3-all-questions-container" 
+                          disabled={this.state.mchipDisable}
+                        >
                           <p>
-                            Indicate any changes you’ve made to your M-CHIP
-                            programs and policies in the past federal fiscal
-                            year. All changes require a State Plan Amendment
-                            (SPA).{" "}
+                            Indicate any changes you’ve made to your S-CHIP
+                            programs and policies in the past federal fiscal year.
+                            All changes require a State Plan Amendment (SPA).{" "}
                           </p>
                           <div className="question-container">
-                            <div id="p4_q1">
+                            <div id="p3_q1">
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
-                                  1. Have you made any changes to the
-                                  eligibility determination process?
+                                  1. Have you made any changes to the eligibility
+                                  determination process?
                                 </legend>
                                 <ChoiceList
                                   choices={[
@@ -1286,7 +679,7 @@ class Section1 extends Component {
                                       value: "na",
                                     },
                                   ]}
-                                  className="p4_q1"
+                                  className="p3_q1"
                                   label=""
                                   name="Q1: Eligibility determination process"
                                   onChange={this.setKeyword}
@@ -1295,11 +688,11 @@ class Section1 extends Component {
                             </div>
                           </div>
                           <div className="question-container">
-                            <div id="p4_q2">
+                            <div id="p3_q2">
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
-                                  2. Have you made any changes to the
-                                  eligibility redetermination process?
+                                  2. Have you made any changes to the eligibility
+                                  redetermination process?
                                 </legend>
                                 <ChoiceList
                                   choices={[
@@ -1316,7 +709,7 @@ class Section1 extends Component {
                                       value: "na",
                                     },
                                   ]}
-                                  className="p4_q2"
+                                  className="p3_q2"
                                   label=""
                                   name="Q2: Eligibility redetermination process"
                                   onChange={this.setKeyword}
@@ -1325,11 +718,11 @@ class Section1 extends Component {
                             </div>
                           </div>
                           <div className="question-container">
-                            <div id="p4_q3">
+                            <div id="p3_q3">
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
-                                  3. Have you made any changes to the
-                                  eligibility levels or target populations?
+                                  3. Have you made any changes to the eligibility
+                                  levels or target populations?
                                 </legend>
                                 <ChoiceList
                                   choices={[
@@ -1346,7 +739,7 @@ class Section1 extends Component {
                                       value: "na",
                                     },
                                   ]}
-                                  className="p4_q3"
+                                  className="p3_q3"
                                   hint="For example: increasing the FPL or income levels, or other eligibility criteria."
                                   label=""
                                   name="Q3: Eligibility levels or target population"
@@ -1356,7 +749,7 @@ class Section1 extends Component {
                             </div>
                           </div>
                           <div className="question-container">
-                            <div id="p4_q4">
+                            <div id="p3_q4">
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
                                   4. Have you made any changes to the benefits
@@ -1377,9 +770,9 @@ class Section1 extends Component {
                                       value: "na",
                                     },
                                   ]}
-                                  className="p4_q4"
+                                  className="p3_q4"
                                   hint="For example: adding or removing different types of coverage.
-                                "
+                                  "
                                   label=""
                                   name="Q4: Benefits available to enrollees"
                                   onChange={this.setKeyword}
@@ -1388,7 +781,7 @@ class Section1 extends Component {
                             </div>
                           </div>
                           <div className="question-container">
-                            <div id="p4_q5">
+                            <div id="p3_q5">
                               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                 <legend className="ds-c-label">
                                   5. Have you made any changes to the single
@@ -1409,7 +802,7 @@ class Section1 extends Component {
                                       value: "na",
                                     },
                                   ]}
-                                  className="p4_q5"
+                                  className="p3_q5"
                                   label=""
                                   name="Q5: Single streamlined application"
                                   onChange={this.setKeyword}
@@ -1417,11 +810,11 @@ class Section1 extends Component {
                               </fieldset>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q6">
+                              <div id="p3_q6">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
-                                    6. Have you made any changes to your
-                                    outreach efforts?
+                                    6. Have you made any changes to your outreach
+                                    efforts?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1438,7 +831,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q6"
+                                    className="p3_q6"
                                     hint="For example: allotting more or less funding for outreach, or changing your target population."
                                     label=""
                                     name="Q6: Outreach efforts"
@@ -1448,7 +841,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q7">
+                              <div id="p3_q7">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     7. Have you made any changes to the delivery
@@ -1469,7 +862,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q7"
+                                    className="p3_q7"
                                     hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
                                     label=""
                                     name="Q7: Delivery system(s)"
@@ -1479,7 +872,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q8">
+                              <div id="p3_q8">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     8. Have you made any changes to cost-sharing
@@ -1500,7 +893,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q8"
+                                    className="p3_q8"
                                     hint="For example: changing amounts, populations, or the collection process."
                                     label=""
                                     name="Q8: Cost-sharing requirements"
@@ -1510,11 +903,11 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q9">
+                              <div id="p3_q9">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
-                                    9. Have you made any changes to the
-                                    crowd-out policies?
+                                    9. Have you made any changes to the crowd-out
+                                    policies?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1531,7 +924,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q9"
+                                    className="p3_q9"
                                     hint="For example: changing substitutions or the waiting periods."
                                     label=""
                                     name="Q9: Crowd-out policies"
@@ -1541,11 +934,11 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q10">
+                              <div id="p3_q10">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
-                                    10. Have you made any changes to an
-                                    enrollment freeze and/or enrollment cap?
+                                    10. Have you made any changes to an enrollment
+                                    freeze and/or enrollment cap?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1562,7 +955,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q10"
+                                    className="p3_q10"
                                     label=""
                                     name="Q10: Enrollment freeze and/or enrollment cap"
                                     onChange={this.setKeyword}
@@ -1571,12 +964,11 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q11">
+                              <div id="p3_q11">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     11. Have you made any changes to the
-                                    enrollment process for health plan
-                                    selection?
+                                    enrollment process for health plan selection?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1593,7 +985,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q11"
+                                    className="p3_q11"
                                     label=""
                                     name="Q11: Enrollment process for health plan selection"
                                     onChange={this.setKeyword}
@@ -1602,7 +994,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q12">
+                              <div id="p3_q12">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     12. Have you made any changes to the
@@ -1623,7 +1015,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q12"
+                                    className="p3_q12"
                                     hint="For example: changing from the Medicaid Fair Hearing Process to state law."
                                     label=""
                                     name="Q12: Enrollment process for health plan selection"
@@ -1633,7 +1025,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q13">
+                              <div id="p3_q13">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     13. Have you made any changes to premium
@@ -1654,7 +1046,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q13"
+                                    className="p3_q13"
                                     hint="For example: adding premium assistance or changing the population that receives premium assistance."
                                     label=""
                                     name="Q13: Premium assistance"
@@ -1664,13 +1056,12 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q14">
+                              <div id="p3_q14">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     14. Have you made any changes to the methods
-                                    and procedures for preventing,
-                                    investigating, or referring fraud or abuse
-                                    cases?
+                                    and procedures for preventing, investigating,
+                                    or referring fraud or abuse cases?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1687,7 +1078,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q14"
+                                    className="p3_q14"
                                     label=""
                                     name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
                                     onChange={this.setKeyword}
@@ -1696,11 +1087,11 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q15">
+                              <div id="p3_q15">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
-                                    15. Have you made any changes to your
-                                    prenatal care eligibility?
+                                    15. Have you made any changes to your prenatal
+                                    care eligibility?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1717,7 +1108,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q15"
+                                    className="p3_q15"
                                     hint="For example: expanding eligibility to pregnant enrollees."
                                     label=""
                                     name="Q15: Prenatal care eligibility"
@@ -1727,11 +1118,11 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q16">
+                              <div id="p3_q16">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
-                                    16. Have you made any changes to your
-                                    Pregnant Woman State Plan expansion?
+                                    16. Have you made any changes to your Pregnant
+                                    Woman State Plan expansion?
                                   </legend>
                                   <ChoiceList
                                     choices={[
@@ -1748,7 +1139,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q16"
+                                    className="p3_q16"
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name="Q16: Pregnant Woman State Plan expansion"
@@ -1758,7 +1149,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q17">
+                              <div id="p3_q17">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     17. Have you made any changes to eligibility
@@ -1779,7 +1170,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q17"
+                                    className="p3_q17"
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name='Q17: Eligibility for "lawfully residing pregnant women"'
@@ -1789,7 +1180,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q18">
+                              <div id="p3_q18">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     18. Have you made any changes to eligibility
@@ -1810,7 +1201,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q18"
+                                    className="p3_q18"
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name="Q18: Eligibility for “lawfully residing children”"
@@ -1820,7 +1211,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q19">
+                              <div id="p3_q19">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     19. Have you made any changes to any other
@@ -1841,7 +1232,7 @@ class Section1 extends Component {
                                         value: "na",
                                       },
                                     ]}
-                                    className="p4_q18"
+                                    className="p3_q18"
                                     label=""
                                     name="Q19: Other program areas"
                                     onChange={this.setKeyword}
@@ -1850,7 +1241,7 @@ class Section1 extends Component {
                               </div>
                             </div>
                             <div className="question-container">
-                              <div id="p4_q20">
+                              <div id="p3_q20">
                                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                                   <legend className="ds-c-label">
                                     20. Anything else you’d like to add that
@@ -1859,19 +1250,649 @@ class Section1 extends Component {
                                   <TextField
                                     label=""
                                     multiline
-                                    name="p4_q20"
+                                    name="p3_q20"
                                     rows="6"
                                   />
                                 </fieldset>
                               </div>
                             </div>
-                            <div className="part4-yes">
+                            <div className="part3-yes">
                               <h3>
-                                Do you plan to submit a SPA (State Plan
-                                Amendment) to reflect these changes if you
-                                haven’t done so already?{" "}
+                                Do you plan to submit a SPA (State Plan Amendment)
+                                to reflect these changes if you haven’t done so
+                                already?{" "}
                               </h3>
                               Display list of questions answered yes
+                            </div>
+                          </div>
+
+                          <h3 className="part-header">
+                            Part 4: M-CHIP Changes in Programs and Policies
+                          </h3>
+                          {this.state.schipDisable === true ? (
+                            <p>This part only applies to states with a M-CHIP program. Please skip to Section 2.</p>
+                          ) : (
+                            ""
+                          )}
+                          <div 
+                            className="part4-all-questions-container" 
+                            disabled={this.state.schipDisable}
+                          >
+                            <p>
+                              Indicate any changes you’ve made to your M-CHIP
+                              programs and policies in the past federal fiscal
+                              year. All changes require a State Plan Amendment
+                              (SPA).{" "}
+                            </p>
+                            <div className="question-container">
+                              <div id="p4_q1">
+                                <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                  <legend className="ds-c-label">
+                                    1. Have you made any changes to the
+                                    eligibility determination process?
+                                  </legend>
+                                  <ChoiceList
+                                    choices={[
+                                      {
+                                        label: "Yes",
+                                        value: "yes",
+                                      },
+                                      {
+                                        label: "No",
+                                        value: "no",
+                                      },
+                                      {
+                                        label: "N/A",
+                                        value: "na",
+                                      },
+                                    ]}
+                                    className="p4_q1"
+                                    label=""
+                                    name="Q1: Eligibility determination process"
+                                    onChange={this.setKeyword}
+                                  />
+                                </fieldset>
+                              </div>
+                            </div>
+                            <div className="question-container">
+                              <div id="p4_q2">
+                                <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                  <legend className="ds-c-label">
+                                    2. Have you made any changes to the
+                                    eligibility redetermination process?
+                                  </legend>
+                                  <ChoiceList
+                                    choices={[
+                                      {
+                                        label: "Yes",
+                                        value: "yes",
+                                      },
+                                      {
+                                        label: "No",
+                                        value: "no",
+                                      },
+                                      {
+                                        label: "N/A",
+                                        value: "na",
+                                      },
+                                    ]}
+                                    className="p4_q2"
+                                    label=""
+                                    name="Q2: Eligibility redetermination process"
+                                    onChange={this.setKeyword}
+                                  />
+                                </fieldset>
+                              </div>
+                            </div>
+                            <div className="question-container">
+                              <div id="p4_q3">
+                                <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                  <legend className="ds-c-label">
+                                    3. Have you made any changes to the
+                                    eligibility levels or target populations?
+                                  </legend>
+                                  <ChoiceList
+                                    choices={[
+                                      {
+                                        label: "Yes",
+                                        value: "yes",
+                                      },
+                                      {
+                                        label: "No",
+                                        value: "no",
+                                      },
+                                      {
+                                        label: "N/A",
+                                        value: "na",
+                                      },
+                                    ]}
+                                    className="p4_q3"
+                                    hint="For example: increasing the FPL or income levels, or other eligibility criteria."
+                                    label=""
+                                    name="Q3: Eligibility levels or target population"
+                                    onChange={this.setKeyword}
+                                  />
+                                </fieldset>
+                              </div>
+                            </div>
+                            <div className="question-container">
+                              <div id="p4_q4">
+                                <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                  <legend className="ds-c-label">
+                                    4. Have you made any changes to the benefits
+                                    available to enrollees?
+                                  </legend>
+                                  <ChoiceList
+                                    choices={[
+                                      {
+                                        label: "Yes",
+                                        value: "yes",
+                                      },
+                                      {
+                                        label: "No",
+                                        value: "no",
+                                      },
+                                      {
+                                        label: "N/A",
+                                        value: "na",
+                                      },
+                                    ]}
+                                    className="p4_q4"
+                                    hint="For example: adding or removing different types of coverage.
+                                  "
+                                    label=""
+                                    name="Q4: Benefits available to enrollees"
+                                    onChange={this.setKeyword}
+                                  />
+                                </fieldset>
+                              </div>
+                            </div>
+                            <div className="question-container">
+                              <div id="p4_q5">
+                                <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                  <legend className="ds-c-label">
+                                    5. Have you made any changes to the single
+                                    streamlined application?
+                                  </legend>
+                                  <ChoiceList
+                                    choices={[
+                                      {
+                                        label: "Yes",
+                                        value: "yes",
+                                      },
+                                      {
+                                        label: "No",
+                                        value: "no",
+                                      },
+                                      {
+                                        label: "N/A",
+                                        value: "na",
+                                      },
+                                    ]}
+                                    className="p4_q5"
+                                    label=""
+                                    name="Q5: Single streamlined application"
+                                    onChange={this.setKeyword}
+                                  />
+                                </fieldset>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q6">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      6. Have you made any changes to your
+                                      outreach efforts?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q6"
+                                      hint="For example: allotting more or less funding for outreach, or changing your target population."
+                                      label=""
+                                      name="Q6: Outreach efforts"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q7">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      7. Have you made any changes to the delivery
+                                      system(s)?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q7"
+                                      hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
+                                      label=""
+                                      name="Q7: Delivery system(s)"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q8">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      8. Have you made any changes to cost-sharing
+                                      requirements?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q8"
+                                      hint="For example: changing amounts, populations, or the collection process."
+                                      label=""
+                                      name="Q8: Cost-sharing requirements"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q9">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      9. Have you made any changes to the
+                                      crowd-out policies?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q9"
+                                      hint="For example: changing substitutions or the waiting periods."
+                                      label=""
+                                      name="Q9: Crowd-out policies"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q10">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      10. Have you made any changes to an
+                                      enrollment freeze and/or enrollment cap?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q10"
+                                      label=""
+                                      name="Q10: Enrollment freeze and/or enrollment cap"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q11">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      11. Have you made any changes to the
+                                      enrollment process for health plan
+                                      selection?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q11"
+                                      label=""
+                                      name="Q11: Enrollment process for health plan selection"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q12">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      12. Have you made any changes to the
+                                      protections for applicants and enrollees?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q12"
+                                      hint="For example: changing from the Medicaid Fair Hearing Process to state law."
+                                      label=""
+                                      name="Q12: Enrollment process for health plan selection"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q13">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      13. Have you made any changes to premium
+                                      assistance?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q13"
+                                      hint="For example: adding premium assistance or changing the population that receives premium assistance."
+                                      label=""
+                                      name="Q13: Premium assistance"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q14">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      14. Have you made any changes to the methods
+                                      and procedures for preventing,
+                                      investigating, or referring fraud or abuse
+                                      cases?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q14"
+                                      label=""
+                                      name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q15">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      15. Have you made any changes to your
+                                      prenatal care eligibility?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q15"
+                                      hint="For example: expanding eligibility to pregnant enrollees."
+                                      label=""
+                                      name="Q15: Prenatal care eligibility"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q16">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      16. Have you made any changes to your
+                                      Pregnant Woman State Plan expansion?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q16"
+                                      hint="For example: extending coverage to pregnant enrollees."
+                                      label=""
+                                      name="Q16: Pregnant Woman State Plan expansion"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q17">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      17. Have you made any changes to eligibility
+                                      for “lawfully residing pregnant women”?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q17"
+                                      hint="For example: extending coverage to pregnant enrollees."
+                                      label=""
+                                      name='Q17: Eligibility for "lawfully residing pregnant women"'
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q18">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      18. Have you made any changes to eligibility
+                                      for “lawfully residing children”?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q18"
+                                      hint="For example: extending coverage to pregnant enrollees."
+                                      label=""
+                                      name="Q18: Eligibility for “lawfully residing children”"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q19">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      19. Have you made any changes to any other
+                                      program areas?
+                                    </legend>
+                                    <ChoiceList
+                                      choices={[
+                                        {
+                                          label: "Yes",
+                                          value: "yes",
+                                        },
+                                        {
+                                          label: "No",
+                                          value: "no",
+                                        },
+                                        {
+                                          label: "N/A",
+                                          value: "na",
+                                        },
+                                      ]}
+                                      className="p4_q18"
+                                      label=""
+                                      name="Q19: Other program areas"
+                                      onChange={this.setKeyword}
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="question-container">
+                                <div id="p4_q20">
+                                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                                    <legend className="ds-c-label">
+                                      20. Anything else you’d like to add that
+                                      wasn’t already covered?
+                                    </legend>
+                                    <TextField
+                                      label=""
+                                      multiline
+                                      name="p4_q20"
+                                      rows="6"
+                                    />
+                                  </fieldset>
+                                </div>
+                              </div>
+                              <div className="part4-yes">
+                                <h3>
+                                  Do you plan to submit a SPA (State Plan
+                                  Amendment) to reflect these changes if you
+                                  haven’t done so already?{" "}
+                                </h3>
+                                Display list of questions answered yes
+                              </div>
                             </div>
                           </div>
                         </div>
