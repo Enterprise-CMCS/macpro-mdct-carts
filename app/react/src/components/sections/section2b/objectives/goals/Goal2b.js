@@ -95,41 +95,33 @@ class Goal extends Component {
         </div>
 
         <div className="question-container">
-          <form>
-            <ChoiceList
-              choices={[
-                {
-                  label: "New goal",
-                  value: "new",
-                  disabled: renderPreviousEntry ? true : false,
-                  // disabled: true,
-                },
-                {
-                  label: "Continuing goal",
-                  value: "continuing",
-                  disabled: renderPreviousEntry ? true : false,
-                  defaultChecked: renderPreviousEntry ? true : false,
-                  // defaultChecked: true,
-                  // renderPreviousEntry
-                  //   ? true
-                  //   : // ? this.state.goal_type_value === "continuing"
-                  //     //   ? true
-                  //     //   : false
-                  //     false,
-                  // disabled: true,
-                },
-                {
-                  label: "Discontinued goal",
-                  value: "discontinued",
-                  disabled: renderPreviousEntry ? true : false,
-                  // disabled: true,
-                },
-              ]}
-              label="What type of goal is it?"
-              name="goal_type"
-              type="radio"
-            />
-          </form>
+          <ChoiceList
+            choices={[
+              {
+                label: "New goal",
+                value: "new",
+                // disabled: renderPreviousEntry ? true : false,
+                disabled: true,
+              },
+              {
+                label: "Continuing goal",
+                value: "continuing",
+                disabled: true,
+                defaultChecked: true,
+                // disabled: renderPreviousEntry ? true : false,
+                // defaultChecked: renderPreviousEntry ? true : false,
+              },
+              {
+                label: "Discontinued goal",
+                value: "discontinued",
+                disabled: true,
+                // disabled: renderPreviousEntry ? true : false,
+              },
+            ]}
+            label="What type of goal is it?"
+            name="goal_type"
+            type="radio"
+          />
         </div>
 
         <div className="question-container">
@@ -297,31 +289,31 @@ class Goal extends Component {
             />
           </div>
         </div>
-        <form>
-          <ChoiceList
-            choices={[
-              {
-                label: "Eligibility or enrollment data",
-                value: "enrollment_data",
-                disabled: renderPreviousEntry ? true : false,
-                defaultChecked: renderPreviousEntry ? true : false,
-              },
-              {
-                label: "Survey data",
-                value: "survey_data",
-                disabled: renderPreviousEntry ? true : false,
-              },
-              {
-                label: "Another data source",
-                value: "other_data",
-                disabled: renderPreviousEntry ? true : false,
-              },
-            ]}
-            className="ds-u-margin-top--5"
-            label="Which data source did you use?"
-            name="data_source"
-          />
-        </form>
+
+        <ChoiceList
+          choices={[
+            {
+              label: "Eligibility or enrollment data",
+              value: "enrollment_data",
+              disabled: renderPreviousEntry ? true : false,
+              defaultChecked: renderPreviousEntry ? true : false,
+            },
+            {
+              label: "Survey data",
+              value: "survey_data",
+              disabled: renderPreviousEntry ? true : false,
+            },
+            {
+              label: "Another data source",
+              value: "other_data",
+              disabled: renderPreviousEntry ? true : false,
+            },
+          ]}
+          className="ds-u-margin-top--5"
+          label="Which data source did you use?"
+          name="data_source"
+        />
+
         <div className="question-container">
           <TextField
             label="How did your progress last year compare to your previous year's progress towards your goal?"

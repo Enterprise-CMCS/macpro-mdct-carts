@@ -30,16 +30,14 @@ class Objective2b extends Component {
       component: <Goal goalCount={1} />,
     };
 
-    let dummyDataArray = [];
-    for (let i = 1; i < 4; i++) {
-      dummyDataArray.push({
-        id: i,
-        component: <Goal goalCount={i} previousEntry="true" />,
-      });
-    }
+    let dummyDataArray = {
+      id: 2,
+      component: <Goal goalCount={2} previousEntry="true" />,
+    };
+
     this.setState({
       goalArray: [initialGoal],
-      previousGoalsArray: dummyDataArray,
+      previousGoalsArray: [dummyDataArray],
       objective2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim.",
     });

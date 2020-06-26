@@ -32,17 +32,14 @@ class Section2b extends Component {
       component: <Objective2b objectiveCount={1} />,
     };
 
-    let dummyDataArray = [];
-    for (let i = 1; i < 4; i++) {
-      dummyDataArray.push({
-        id: i,
-        component: <Objective2b objectiveCount={i} previousEntry="true" />,
-      });
-    }
+    let dummyDataArray = {
+      id: 2,
+      component: <Objective2b objectiveCount={2} previousEntry="true" />,
+    };
 
     this.setState({
       objectiveArray: [initialObjective],
-      previousObjectivesArray: dummyDataArray,
+      previousObjectivesArray: [dummyDataArray],
     });
   }
 
