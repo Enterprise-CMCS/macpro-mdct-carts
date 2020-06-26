@@ -8,12 +8,20 @@ class Goal extends Component {
       goal_denominator_digit: 0,
       percentage: 0,
       shouldCalculate: true,
+      goal2bDummyBoolean: true,
       goal2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       goal2bDummyDigit: 10,
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      goal_type_value: "continuing",
+      goal_source_value: "enrollment_data",
+    });
   }
 
   // Validate the input before returning calculated percentage
@@ -67,6 +75,9 @@ class Goal extends Component {
   }
 
   render() {
+    let renderPreviousEntry =
+      this.props.previousEntry === "true" ? true : false;
+    console.log("value??", renderPreviousEntry);
     return (
       <Fragment>
         <div className="question-container">
@@ -86,12 +97,36 @@ class Goal extends Component {
         <div className="question-container">
           <ChoiceList
             choices={[
-              { label: "New goal", value: "new" },
-              { label: "Continuing goal", value: "continuing" },
-              { label: "Discontinued goal", value: "discontinued" },
+              {
+                label: "New goal",
+                value: "new",
+                // disabled: renderPreviousEntry ? true : false,
+                disabled: true,
+              },
+              {
+                label: "Continuing goal",
+                value: "continuing",
+                // disabled: renderPreviousEntry ? true : false,
+                // defaultChecked: renderPreviousEntry ? true : false,
+                defaultChecked: true,
+                // renderPreviousEntry
+                //   ? true
+                //   : // ? this.state.goal_type_value === "continuing"
+                //     //   ? true
+                //     //   : false
+                //     false,
+                disabled: true,
+              },
+              {
+                label: "Discontinued goal",
+                value: "discontinued",
+                // disabled: renderPreviousEntry ? true : false,
+                disabled: true,
+              },
             ]}
             label="What type of goal is it?"
             name="goal_type"
+            type="radio"
           />
         </div>
 
@@ -268,9 +303,19 @@ class Goal extends Component {
             {
               label: "Eligibility or enrollment data",
               value: "enrollment_data",
+              disabled: renderPreviousEntry ? true : false,
+              defaultChecked: true,
             },
-            { label: "Survey data", value: "survey_data" },
-            { label: "Another data source", value: "other_data" },
+            {
+              label: "Survey data",
+              value: "survey_data",
+              disabled: renderPreviousEntry ? true : false,
+            },
+            {
+              label: "Another data source",
+              value: "other_data",
+              disabled: renderPreviousEntry ? true : false,
+            },
           ]}
           className="ds-u-margin-top--5"
           label="Which data source did you use?"

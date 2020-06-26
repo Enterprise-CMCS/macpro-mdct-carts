@@ -72,77 +72,85 @@ class Section2b extends Component {
               <PageInfo />
               <Tabs>
                 <TabPanel id="section2b" tab="Section 2B: Performance Goals">
-                  <div className="section-content">
-                    <p>
-                      Your performance goals should match those reflected in
-                      your CHIP State Plan, Section 9. If your goals are
-                      different, submit a State Plan Amendment (SPA) to
-                      reconcile any differences
-                    </p>
-                    <div className="objective-accordiion">
-                      <Accordion multiple defaultIndex={[...Array(100).keys()]}>
-                        {this.state.objectiveArray.map((element) => (
-                          <AccordionItem key={element.id}>
-                            <div className="accordion-header">
-                              <h3>
-                                <AccordionButton>
-                                  <div className="title">
-                                    Objective {element.id}:
-                                  </div>
-                                  <div className="arrow"></div>
-                                </AccordionButton>
-                              </h3>
-                            </div>
-                            <AccordionPanel>{element.component}</AccordionPanel>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </div>
+                  <form>
+                    <div className="section-content">
+                      <p>
+                        Your performance goals should match those reflected in
+                        your CHIP State Plan, Section 9. If your goals are
+                        different, submit a State Plan Amendment (SPA) to
+                        reconcile any differences
+                      </p>
+                      <div className="objective-accordiion">
+                        <Accordion
+                          multiple
+                          defaultIndex={[...Array(100).keys()]}
+                        >
+                          {this.state.objectiveArray.map((element) => (
+                            <AccordionItem key={element.id}>
+                              <div className="accordion-header">
+                                <h3>
+                                  <AccordionButton>
+                                    <div className="title">
+                                      Objective {element.id}:
+                                    </div>
+                                    <div className="arrow"></div>
+                                  </AccordionButton>
+                                </h3>
+                              </div>
+                              <AccordionPanel>
+                                {element.component}
+                              </AccordionPanel>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      </div>
 
-                    <div>
-                      <h3> Add another objective</h3>
-                      <p className="ds-base color-gray-light">Optional</p>
-                      <button
-                        onClick={this.newObjective}
-                        type="button"
-                        className="ds-c-button ds-c-button--primary"
-                      >
-                        Add another objective
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
+                      <div>
+                        <h3> Add another objective</h3>
+                        <p className="ds-base color-gray-light">Optional</p>
+                        <button
+                          onClick={this.newObjective}
+                          type="button"
+                          className="ds-c-button ds-c-button--primary"
+                        >
+                          Add another objective
+                          <FontAwesomeIcon icon={faPlus} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </TabPanel>
 
                 <TabPanel className="section2b-previous" tab="FY2019 answers">
-                  <div className="section-content">
-                    <div className="objective-accordiion">
-                      <Accordion>
-                        {this.state.previousObjectivesArray.map((element) => (
-                          <AccordionItem key={element.id}>
-                            <div className="accordion-header">
-                              <h3>
-                                <AccordionButton>
-                                  <div className="title">
-                                    Objective {element.id}:
-                                  </div>
-                                  <div className="arrow"></div>
-                                </AccordionButton>
-                              </h3>
-                            </div>
-                            <AccordionPanel>{element.component}</AccordionPanel>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
+                  <form>
+                    <div className="section-content">
+                      <div className="objective-accordiion">
+                        <Accordion>
+                          {this.state.previousObjectivesArray.map((element) => (
+                            <AccordionItem key={element.id}>
+                              <div className="accordion-header">
+                                <h3>
+                                  <AccordionButton>
+                                    <div className="title">
+                                      Objective {element.id}:
+                                    </div>
+                                    <div className="arrow"></div>
+                                  </AccordionButton>
+                                </h3>
+                              </div>
+                              <AccordionPanel>
+                                {element.component}
+                              </AccordionPanel>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </TabPanel>
               </Tabs>
               <div className="nav-buttons">
-                <NavigationButton
-                  direction="Previous"
-                  destination="/2a"
-                />
+                <NavigationButton direction="Previous" destination="/2a" />
 
                 <NavigationButton direction="Next" destination="/3c" />
               </div>
