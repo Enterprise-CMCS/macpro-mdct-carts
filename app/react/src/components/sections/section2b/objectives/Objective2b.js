@@ -30,7 +30,7 @@ class Objective2b extends Component {
     const initialGoal = [
       {
         id: `${this.props.year}_1`,
-        // Each goal has an ID with the format: year_objectiveId_goalId
+        // Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
         // The sliceId() helper function extracts just the year from the parent objective
         component: (
           <Goal
@@ -43,12 +43,14 @@ class Objective2b extends Component {
     let dummyDataArray = [];
     for (let i = 1; i < 3; i++) {
       dummyDataArray.push({
-        id: `2019_${i}`,
-        // Each goal has an ID with the format <year>_<the objective it belongs to>_ <the goal's own ID>
+        id: `${this.props.year - 1}_${i}`,
+        // Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
         // The sliceId() helper function extracts just the year from the parent objective
         component: (
           <Goal
-            goalId={`2019_${sliceId(this.props.objectiveId)}_${i}`}
+            goalId={`${this.props.year - 1}_${sliceId(
+              this.props.objectiveId
+            )}_${i}`}
             previousEntry="true"
           />
         ),
@@ -100,36 +102,40 @@ class Objective2b extends Component {
             }
           />
           <div className="goals">
-            {/* This builds an accordion that maps through the array of Goals in state */}
-            {/* If the props include previousEntry==="true", it will render the previous year's data, located in state */}
+            {/**
+             * Maps through array of Previous Goals in state
+             * If the props include previousEntry==="true", render previous year's data
+             */}
             {this.props.previousEntry === "true" ? (
               <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.previousGoalsArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
                       <AccordionButton>
-                        {/* The sliceId helper function slices off just the number from the goal's ID */}
+                        {/**
+                         * Returns ID from longer string
+                         */}
                         Goal {sliceId(element.id)}:
                       </AccordionButton>
                     </h3>
-                    {/* This is where the component is being rendered*/}
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
                 ))}
               </Accordion>
             ) : (
-              //  This builds an accordion that maps through the array of Goals in state.
-              // The newGoal method adds to that array so the new goal is also mapped through
+              //  Alternatively,  This maps through the current goals in state
+
               <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.goalArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
                       <AccordionButton>
-                        {/* The sliceId helper function slices off just the number from the goal's ID */}
+                        {/**
+                         * Returns ID from longer string
+                         */}
                         Goal {sliceId(element.id)}:
                       </AccordionButton>
                     </h3>
-                    {/* This is where the component is being rendered*/}
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
                 ))}

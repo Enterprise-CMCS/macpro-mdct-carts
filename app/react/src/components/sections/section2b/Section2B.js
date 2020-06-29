@@ -38,10 +38,13 @@ class Section2b extends Component {
 
     for (let i = 1; i < 3; i++) {
       dummyDataArray.push({
-        id: `2019_${i}`,
+        id: `${this.props.year - 1}_${i}`,
         // this creates dummy data for the previous year tab, each tagged as a previous entry using props
         component: (
-          <Objective2b objectiveId={`2019_${i}`} previousEntry="true" />
+          <Objective2b
+            objectiveId={`${this.props.year - 1}_${i}`}
+            previousEntry="true"
+          />
         ),
       });
     }
@@ -133,7 +136,10 @@ class Section2b extends Component {
                   </div>
                 </TabPanel>
 
-                <TabPanel className="section2b-previous" tab="FY2019 answers">
+                <TabPanel
+                  className="section2b-previous"
+                  tab={`FY${this.props.year - 1} answers`}
+                >
                   <div className="section-content">
                     <div className="objective-accordiion">
                       {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
