@@ -75,7 +75,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2020"
                   lastEditedTime="1:32pm"
                   lastEditedDate="9/21/20"
-                  link1URL="/preamble"
+                  link1URL="/basic-info"
                   link1Text="Edit"
                   link2URL="#"
                   link2Text="Download"

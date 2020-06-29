@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./components/sections/homepage/Homepage";
-import Preamble from "./components/sections/Preamble";
 import BasicInfo from "./components/sections/BasicInfo";
 import Section1 from "./components/sections/section1/Section1";
 import Section2a from "./components/sections/section2a/Section2A";
@@ -12,7 +11,6 @@ const Routes = () => (
   <Router>
     <Switch>
       <Route exact path="/" component={Homepage} />
-      <Route exact path="/preamble" component={Preamble} />
       <Route exact path="/basic-info" component={BasicInfo} />
       <Route exact path="/1" component={Section1} />
       <Route exact path="/2a" component={Section2a} />
