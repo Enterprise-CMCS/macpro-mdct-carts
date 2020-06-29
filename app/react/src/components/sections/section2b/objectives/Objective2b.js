@@ -90,17 +90,21 @@ class Objective2b extends Component {
     return (
       <Fragment>
         <div className="objective-body">
-          <TextField
-            hint="For example: Our objective is to increase enrollment in our CHIP program."
-            label="What is your first objective as listed in your CHIP State Plan?"
-            multiline
-            name={"objective_" + this.props.objectiveId + "_text"}
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.objective2bDummyData
-                : null
-            }
-          />
+          {this.props.objectiveHeader ? (
+            ""
+          ) : (
+            <TextField
+              hint="For example: Our objective is to increase enrollment in our CHIP program."
+              label="What is your first objective as listed in your CHIP State Plan?"
+              multiline
+              name={"objective_" + this.props.objectiveId + "_text"}
+              value={
+                this.props.previousEntry === "true"
+                  ? this.state.objective2bDummyData
+                  : null
+              }
+            />
+          )}
           <div className="goals">
             {/**
              * Maps through array of Previous Goals in state

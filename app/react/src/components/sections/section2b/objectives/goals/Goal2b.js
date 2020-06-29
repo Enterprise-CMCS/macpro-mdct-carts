@@ -83,8 +83,8 @@ class Goal extends Component {
       <Fragment>
         <div className="question-container">
           <TextField
-            label="Briefly describe your goal"
-            hint="For example: Our goal is to enroll 75% of CHIP-eligible children with family income below 247% of the federal poverty level"
+            label="1. Briefly describe your goal"
+            hint="For example: Enroll 75% of eligible children in the CHIP program."
             multiline
             name="goal_description"
             value={
@@ -116,7 +116,7 @@ class Goal extends Component {
                 disabled: renderPreviousEntry ? true : false,
               },
             ]}
-            label="What type of goal is it?"
+            label="2. What type of goal is it?"
             name={`goal_type${this.props.goalId}`}
             //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
             type="radio"
@@ -124,25 +124,11 @@ class Goal extends Component {
         </div>
 
         <div className="question-container">
-          <TextField
-            label="What measurement will you use to track this goal?"
-            hint="For example: We'll measure the percent of eligible children who enrolled in CHIP"
-            multiline
-            name="goal_measurement"
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyData
-                : null
-            }
-          />
-        </div>
-
-        <div className="question-container">
           <h3 className="question"> Define the numerator you're measuring</h3>
 
           <TextField
-            label="How do you define this population?"
-            hint="For example: The number of children below 247% of the FPL who enrolled in CHIP in the last federal fiscal year."
+            label="3. Which population are you measuring in the numerator?"
+            hint="For example: The number of children enrolled in CHIP in the last federal fiscal year."
             multiline
             name="goal_numerator_definition"
             value={
@@ -153,7 +139,7 @@ class Goal extends Component {
           />
 
           <TextField
-            label="Numerator"
+            label="4. Numerator (total number): "
             hint="Total number"
             name="goal_numerator_digit"
             size="medium"
@@ -167,8 +153,8 @@ class Goal extends Component {
           />
           <h4> Define the denominator you're measuring</h4>
           <TextField
-            label="How do you define this population?"
-            hint="For example: The total number of children below 247% of the FPL in the last federal fiscal year."
+            label="5. Which population are you measuring in the denominator? "
+            hint="For example: The total number of eligible children in the last federal fiscal year."
             multiline
             name="goal_denominator_definition"
             value={
@@ -179,7 +165,7 @@ class Goal extends Component {
           />
 
           <TextField
-            label="Denominator"
+            label="6. Denominator (total number):"
             hint="Total number"
             name="goal_denominator_digit"
             size="medium"
@@ -245,7 +231,7 @@ class Goal extends Component {
         </div>
 
         <div className="question-container">
-          <h4> What is the date range for your data?</h4>
+          <h4> 7. What is the date range for your data?</h4>
           <div className="date-range">
             <DateField
               label="Start"
@@ -309,14 +295,14 @@ class Goal extends Component {
             },
           ]}
           className="ds-u-margin-top--5"
-          label="Which data source did you use?"
+          label="8. Which data source did you use?"
           name={`data_source${this.props.goalId}`}
           //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
         />
 
         <div className="question-container">
           <TextField
-            label="How did your progress last year compare to your previous year's progress towards your goal?"
+            label="9. How did your progress towards your goal last year compare to your previous year’s progress?"
             multiline
             name="progress_comparison"
             className="ds-u-margin-top--0"
@@ -330,7 +316,7 @@ class Goal extends Component {
 
         <div className="question-container">
           <TextField
-            label="What are you doing to continually make progress towards your goal?"
+            label="10. What are you doing to continually make progress towards your goal?"
             multiline
             name="progress_action"
             className="ds-u-margin-top--0"
@@ -344,7 +330,7 @@ class Goal extends Component {
 
         <div className="question-container">
           <TextField
-            label="Anything else you'd like to tell us about this goal?"
+            label="11. Anything else you’d like to add about this goal?"
             multiline
             name="additional_information"
             className="ds-u-margin-top--0"
