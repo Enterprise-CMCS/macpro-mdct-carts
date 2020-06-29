@@ -57,7 +57,8 @@ pipeline {
               set -e
 
               export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
-              export TF_VAR_ecr_repository_url_api=${ECR_REPOSITORY_URL_POSTGRES_API}
+              export TF_VAR_ecr_repository_url_api_postgres=${ECR_REPOSITORY_URL_API_POSTGRES}
+              export TF_VAR_ecr_repository_url_api_sqlserver=${ECR_REPOSITORY_URL_API_SQLSERVER}
               export TF_VAR_application_version=${VERSION}
               export TF_VAR_vpc_name=${VPC_NAME}
               PATH=~/.local/bin:$PATH
