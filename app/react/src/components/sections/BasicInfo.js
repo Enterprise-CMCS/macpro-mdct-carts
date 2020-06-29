@@ -115,11 +115,6 @@ class BasicInfo extends Component {
                   </div>
 
                   <div className="nav-buttons">
-                    <NavigationButton
-                      direction="Previous"
-                      destination="/preamble"
-                    />
-
                     <NavigationButton direction="Next" destination="/1" />
                   </div>
                 </form>
