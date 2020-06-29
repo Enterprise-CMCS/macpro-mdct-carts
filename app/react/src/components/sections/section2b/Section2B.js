@@ -28,9 +28,10 @@ class Section2b extends Component {
   }
 
   componentDidMount() {
+    // This sets up an inital, blank objective
     const initialObjective = {
       id: `${this.props.year}_1`,
-      component: <Objective2b objectiveCount={`${this.props.year}_1`} />,
+      component: <Objective2b objectiveId={`${this.props.year}_1`} />,
     };
 
     let dummyDataArray = [];
@@ -38,8 +39,9 @@ class Section2b extends Component {
     for (let i = 1; i < 3; i++) {
       dummyDataArray.push({
         id: `2019_${i}`,
+        // this creates dummy data for the previous year tab, each tagged as a previous entry using props
         component: (
-          <Objective2b objectiveCount={`2019_${i}`} previousEntry="true" />
+          <Objective2b objectiveId={`2019_${i}`} previousEntry="true" />
         ),
       });
     }
@@ -54,8 +56,9 @@ class Section2b extends Component {
     let newObjectiveId = this.state.objectiveCount + 1;
     let newObjective = {
       id: `${this.props.year}_${newObjectiveId}`,
+      // This builds a new component with an ID taken from the current year and the next available ID
       component: (
-        <Objective2b objectiveCount={`${this.props.year}_${newObjectiveId}`} />
+        <Objective2b objectiveId={`${this.props.year}_${newObjectiveId}`} />
       ),
     };
 
@@ -87,6 +90,7 @@ class Section2b extends Component {
                         reconcile any differences
                       </p>
                       <div className="objective-accordiion">
+                        {/* This builds an accordion that maps through the array of Objectives in state */}
                         <Accordion
                           multiple
                           defaultIndex={[...Array(100).keys()]}
@@ -97,6 +101,7 @@ class Section2b extends Component {
                                 <h3>
                                   <AccordionButton>
                                     <div className="title">
+                                      {/* The sliceId utility function gets just the number of each objective, removes the year */}
                                       Objective {sliceId(element.id)}:
                                     </div>
                                     <div className="arrow"></div>
@@ -104,6 +109,7 @@ class Section2b extends Component {
                                 </h3>
                               </div>
                               <AccordionPanel>
+                                {/* This is where the component is being rendered*/}
                                 {element.component}
                               </AccordionPanel>
                             </AccordionItem>
@@ -130,6 +136,7 @@ class Section2b extends Component {
                 <TabPanel className="section2b-previous" tab="FY2019 answers">
                   <div className="section-content">
                     <div className="objective-accordiion">
+                      {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
                       <form>
                         <Accordion>
                           {this.state.previousObjectivesArray.map((element) => (
@@ -138,6 +145,7 @@ class Section2b extends Component {
                                 <h3>
                                   <AccordionButton>
                                     <div className="title">
+                                      {/* The sliceId utility function gets just the number of each objective, removes the year */}
                                       Objective {sliceId(element.id)}:
                                     </div>
                                     <div className="arrow"></div>
@@ -145,6 +153,7 @@ class Section2b extends Component {
                                 </h3>
                               </div>
                               <AccordionPanel>
+                                {/* This is where the component is being rendered*/}
                                 {element.component}
                               </AccordionPanel>
                             </AccordionItem>

@@ -30,9 +30,11 @@ class Objective2b extends Component {
     const initialGoal = [
       {
         id: `${this.props.year}_1`,
+        // Each goal has an ID with the format: year_objectiveId_goalId
+        // The sliceId() helper function extracts just the year from the parent objective
         component: (
           <Goal
-            goalCount={`${this.props.year}_1_${this.props.objectiveCount}`}
+            goalId={`${this.props.year}_${sliceId(this.props.objectiveId)}_1`}
           />
         ),
       },
@@ -42,9 +44,11 @@ class Objective2b extends Component {
     for (let i = 1; i < 3; i++) {
       dummyDataArray.push({
         id: `2019_${i}`,
+        // Each goal has an ID with the format <year>_<the objective it belongs to>_ <the goal's own ID>
+        // The sliceId() helper function extracts just the year from the parent objective
         component: (
           <Goal
-            goalCount={`2019_${i}_${this.props.objectiveCount}`}
+            goalId={`2019_${sliceId(this.props.objectiveId)}_${i}`}
             previousEntry="true"
           />
         ),
@@ -63,9 +67,13 @@ class Objective2b extends Component {
     let newGoalId = this.state.goalCount + 1;
     let newGoal = {
       id: `${this.props.year}_${newGoalId}`,
+      // Each goal has an ID with the format <year>_<the objective it belongs to>_ <the goal's own ID>
+      // The sliceId() helper function extracts just the year from the parent objective
       component: (
         <Goal
-          goalCount={`${this.props.year}_${newGoalId}_${this.props.objectiveCount}`}
+          goalId={`${this.props.year}_${sliceId(
+            this.props.objectiveId
+          )}_${newGoalId}`}
         />
       ),
     };
@@ -84,7 +92,7 @@ class Objective2b extends Component {
             hint="For example: Our objective is to increase enrollment in our CHIP program."
             label="What is your first objective as listed in your CHIP State Plan?"
             multiline
-            name={"objective_" + this.props.objectiveCount + "_text"}
+            name={"objective_" + this.props.objectiveId + "_text"}
             value={
               this.props.previousEntry === "true"
                 ? this.state.objective2bDummyData
@@ -92,28 +100,36 @@ class Objective2b extends Component {
             }
           />
           <div className="goals">
+            {/* This builds an accordion that maps through the array of Goals in state */}
+            {/* If the props include previousEntry==="true", it will render the previous year's data, located in state */}
             {this.props.previousEntry === "true" ? (
               <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.previousGoalsArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
                       <AccordionButton>
+                        {/* The sliceId helper function slices off just the number from the goal's ID */}
                         Goal {sliceId(element.id)}:
                       </AccordionButton>
                     </h3>
+                    {/* This is where the component is being rendered*/}
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
                 ))}
               </Accordion>
             ) : (
+              //  This builds an accordion that maps through the array of Goals in state.
+              // The newGoal method adds to that array so the new goal is also mapped through
               <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.goalArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
                       <AccordionButton>
+                        {/* The sliceId helper function slices off just the number from the goal's ID */}
                         Goal {sliceId(element.id)}:
                       </AccordionButton>
                     </h3>
+                    {/* This is where the component is being rendered*/}
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
                 ))}

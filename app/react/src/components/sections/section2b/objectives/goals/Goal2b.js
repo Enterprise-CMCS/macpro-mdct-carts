@@ -76,6 +76,8 @@ class Goal extends Component {
   }
 
   render() {
+    // This boolean establishes if the component should be rendering a previous entry or not
+    // Its use here is jus to shorten some ternary statements
     let renderPreviousEntry =
       this.props.previousEntry === "true" ? true : false;
 
@@ -113,12 +115,11 @@ class Goal extends Component {
               {
                 label: "Discontinued goal",
                 value: "discontinued",
-
                 disabled: renderPreviousEntry ? true : false,
               },
             ]}
             label="What type of goal is it?"
-            name={`goal_type${this.props.goalCount}`} // each question in tabs needs to have their own names or the defaultChecked property WILL be overwritten by the last one rendered
+            name={`goal_type${this.props.goalId}`} //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
             type="radio"
           />
         </div>
@@ -310,7 +311,7 @@ class Goal extends Component {
           ]}
           className="ds-u-margin-top--5"
           label="Which data source did you use?"
-          name={`data_source${this.props.goalCount}`}
+          name={`data_source${this.props.goalId}`} //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
         />
 
         <div className="question-container">
