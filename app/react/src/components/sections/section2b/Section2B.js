@@ -88,7 +88,10 @@ class Section2b extends Component {
             <div className="main ds-l-col--9">
               <PageInfo />
               <Tabs>
-                <TabPanel id="section2b" tab="Section 2B: Performance Goals">
+                <TabPanel
+                  id="section2b"
+                  tab="Section 2B: State Plan Goals and Objectives"
+                >
                   <div className="section-content">
                     <form>
                       <p>
@@ -130,7 +133,10 @@ class Section2b extends Component {
                       </div>
 
                       <div>
-                        <h3> Add another objective</h3>
+                        <h3>
+                          {" "}
+                          Do you have another objective in your State Plan?{" "}
+                        </h3>
                         <p className="ds-base color-gray-light">Optional</p>
                         <button
                           onClick={this.newObjective}

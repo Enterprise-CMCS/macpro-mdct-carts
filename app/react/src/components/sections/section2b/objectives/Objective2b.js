@@ -149,7 +149,10 @@ class Objective2b extends Component {
         </div>
 
         <div className="objective-footer">
-          <h3> Do you have another goal for this objective?</h3>
+          <h3>
+            {" "}
+            Do you have another goal in your State Plan for this objective?{" "}
+          </h3>
           <p className="ds-base color-gray-light">Optional</p>
           <button
             onClick={this.newGoal}

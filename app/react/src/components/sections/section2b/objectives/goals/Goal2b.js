@@ -13,9 +13,11 @@ class Goal extends Component {
       goal2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       goal2bDummyDigit: 10,
+      discontinued: false,
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
+    this.discontinuedGoal = this.discontinuedGoal.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +77,14 @@ class Goal extends Component {
     }
   }
 
+  discontinuedGoal(evt) {
+    if (evt.target.value === "discontinued") {
+      this.setState({ discontinued: true });
+    } else {
+      this.setState({ discontinued: false });
+    }
+  }
+
   render() {
     let renderPreviousEntry =
       this.props.previousEntry === "true" ? true : false;
@@ -120,239 +130,251 @@ class Goal extends Component {
             name={`goal_type${this.props.goalId}`}
             //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
             type="radio"
+            onChange={this.discontinuedGoal}
           />
         </div>
+        {/**
+         * If the answer to question 2 is "discontinued" all following questions disapear
+         */}
+        {this.state.discontinued ? (
+          ""
+        ) : (
+          <div className="dependant-on-discontinued">
+            <div className="question-container">
+              <h3 className="question">
+                {" "}
+                Define the numerator you're measuring
+              </h3>
 
-        <div className="question-container">
-          <h3 className="question"> Define the numerator you're measuring</h3>
-
-          <TextField
-            label="3. Which population are you measuring in the numerator?"
-            hint="For example: The number of children enrolled in CHIP in the last federal fiscal year."
-            multiline
-            name="goal_numerator_definition"
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyData
-                : null
-            }
-          />
-
-          <TextField
-            label="4. Numerator (total number): "
-            hint="Total number"
-            name="goal_numerator_digit"
-            size="medium"
-            errorMessage={this.state.goal_numerator_digitErr}
-            onChange={this.addDivisors}
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyDigit
-                : null
-            }
-          />
-          <h4> Define the denominator you're measuring</h4>
-          <TextField
-            label="5. Which population are you measuring in the denominator? "
-            hint="For example: The total number of eligible children in the last federal fiscal year."
-            multiline
-            name="goal_denominator_definition"
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyData
-                : null
-            }
-          />
-
-          <TextField
-            label="6. Denominator (total number):"
-            hint="Total number"
-            name="goal_denominator_digit"
-            size="medium"
-            errorMessage={this.state.goal_denominator_digitErr}
-            onChange={this.addDivisors}
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyDigit
-                : null
-            }
-          />
-        </div>
-
-        <div className="ds-u-border--2">
-          <div className="ds-1-row percentages-info">
-            <div className="ds-l--auto">
-              <h3>Percentage</h3>
-              <h4>Auto-calculated</h4>
-            </div>
-          </div>
-          <div className="ds-1-row percentages">
-            <div>
               <TextField
-                label="Numerator"
+                label="3. Which population are you measuring in the numerator?"
+                hint="For example: The number of children enrolled in CHIP in the last federal fiscal year."
+                multiline
+                name="goal_numerator_definition"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyData
+                    : null
+                }
+              />
+
+              <TextField
+                label="4. Numerator (total number): "
+                hint="Total number"
                 name="goal_numerator_digit"
-                size="small"
-                className="ds-l--auto"
+                size="medium"
+                errorMessage={this.state.goal_numerator_digitErr}
+                onChange={this.addDivisors}
                 value={
                   this.props.previousEntry === "true"
                     ? this.state.goal2bDummyDigit
-                    : this.state.goal_numerator_digit
+                    : null
                 }
               />
-            </div>
-            <div>
-              <div className="divide">&divide;</div>
+              <h3> Define the denominator you're measuring</h3>
               <TextField
-                label="Denominator"
+                label="5. Which population are you measuring in the denominator? "
+                hint="For example: The total number of eligible children in the last federal fiscal year."
+                multiline
+                name="goal_denominator_definition"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyData
+                    : null
+                }
+              />
+
+              <TextField
+                label="6. Denominator (total number):"
+                hint="Total number"
                 name="goal_denominator_digit"
-                size="small"
-                className="ds-l--auto"
+                size="medium"
+                errorMessage={this.state.goal_denominator_digitErr}
+                onChange={this.addDivisors}
                 value={
                   this.props.previousEntry === "true"
                     ? this.state.goal2bDummyDigit
-                    : this.state.goal_denominator_digit
+                    : null
                 }
               />
             </div>
-            <div>
-              <div className="divide"> &#61; </div>
+
+            <div className="ds-u-border--2">
+              <div className="ds-1-row percentages-info">
+                <div className="ds-l--auto">
+                  <h3>Percentage</h3>
+                  <h4>Auto-calculated</h4>
+                </div>
+              </div>
+              <div className="ds-1-row percentages">
+                <div>
+                  <TextField
+                    label="Numerator"
+                    name="goal_numerator_digit"
+                    size="small"
+                    className="ds-l--auto"
+                    value={
+                      this.props.previousEntry === "true"
+                        ? this.state.goal2bDummyDigit
+                        : this.state.goal_numerator_digit
+                    }
+                  />
+                </div>
+                <div>
+                  <div className="divide">&divide;</div>
+                  <TextField
+                    label="Denominator"
+                    name="goal_denominator_digit"
+                    size="small"
+                    className="ds-l--auto"
+                    value={
+                      this.props.previousEntry === "true"
+                        ? this.state.goal2bDummyDigit
+                        : this.state.goal_denominator_digit
+                    }
+                  />
+                </div>
+                <div>
+                  <div className="divide"> &#61; </div>
+                  <TextField
+                    label="Percentage"
+                    name="goal_percentage"
+                    size="small"
+                    value={
+                      this.props.previousEntry === "true"
+                        ? this.state.goal2bDummyDigit
+                        : `${this.state.percentage}%`
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="question-container">
+              <h4> 7. What is the date range for your data?</h4>
+              <div className="date-range">
+                <DateField
+                  label="Start"
+                  hint={"From mm/yyyy to mm/yyyy"}
+                  monthValue={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit - 5
+                      : null
+                  }
+                  dayValue={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit
+                      : null
+                  }
+                  yearValue={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit * 202
+                      : null
+                  }
+                />
+
+                <DateField
+                  label="End"
+                  hint={"From mm/yyyy to mm/yyyy"}
+                  monthValue={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit
+                      : null
+                  }
+                  dayValue={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit
+                      : null
+                  }
+                  yearValue={
+                    this.props.previousEntry === "true"
+                      ? this.state.goal2bDummyDigit * 202
+                      : null
+                  }
+                />
+              </div>
+            </div>
+
+            <ChoiceList
+              choices={[
+                {
+                  label: "Eligibility or enrollment data",
+                  value: "enrollment_data",
+                  disabled: renderPreviousEntry ? true : false,
+                  defaultChecked: renderPreviousEntry ? true : false,
+                },
+                {
+                  label: "Survey data",
+                  value: "survey_data",
+                  disabled: renderPreviousEntry ? true : false,
+                },
+                {
+                  label: "Another data source",
+                  value: "other_data",
+                  disabled: renderPreviousEntry ? true : false,
+                },
+              ]}
+              className="ds-u-margin-top--5"
+              label="8. Which data source did you use?"
+              name={`data_source${this.props.goalId}`}
+              //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
+            />
+
+            <div className="question-container">
               <TextField
-                label="Percentage"
-                name="goal_percentage"
-                size="small"
+                label="9. How did your progress towards your goal last year compare to your previous year’s progress?"
+                multiline
+                name="progress_comparison"
+                className="ds-u-margin-top--0"
                 value={
                   this.props.previousEntry === "true"
-                    ? this.state.goal2bDummyDigit
-                    : `${this.state.percentage}%`
+                    ? this.state.goal2bDummyData
+                    : null
                 }
               />
             </div>
+
+            <div className="question-container">
+              <TextField
+                label="10. What are you doing to continually make progress towards your goal?"
+                multiline
+                name="progress_action"
+                className="ds-u-margin-top--0"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyData
+                    : null
+                }
+              />
+            </div>
+
+            <div className="question-container">
+              <TextField
+                label="11. Anything else you’d like to add about this goal?"
+                multiline
+                name="additional_information"
+                className="ds-u-margin-top--0"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyData
+                    : null
+                }
+              />
+            </div>
+
+            <div className="question-container">
+              <TextField
+                label="12. Do you have any supporting documentation?"
+                hint="Optional"
+                name="supporting_documentation"
+                className="ds-u-margin-top--0"
+                disabled={renderPreviousEntry ? true : false}
+                value={renderPreviousEntry ? "SomeFile2019.docx" : ""}
+              />
+              <button className="ds-c-button">Browse</button>
+            </div>
           </div>
-        </div>
-
-        <div className="question-container">
-          <h4> 7. What is the date range for your data?</h4>
-          <div className="date-range">
-            <DateField
-              label="Start"
-              hint={"From mm/yyyy to mm/yyyy"}
-              monthValue={
-                this.props.previousEntry === "true"
-                  ? this.state.goal2bDummyDigit - 5
-                  : null
-              }
-              dayValue={
-                this.props.previousEntry === "true"
-                  ? this.state.goal2bDummyDigit
-                  : null
-              }
-              yearValue={
-                this.props.previousEntry === "true"
-                  ? this.state.goal2bDummyDigit * 202
-                  : null
-              }
-            />
-
-            <DateField
-              label="End"
-              hint={"From mm/yyyy to mm/yyyy"}
-              monthValue={
-                this.props.previousEntry === "true"
-                  ? this.state.goal2bDummyDigit
-                  : null
-              }
-              dayValue={
-                this.props.previousEntry === "true"
-                  ? this.state.goal2bDummyDigit
-                  : null
-              }
-              yearValue={
-                this.props.previousEntry === "true"
-                  ? this.state.goal2bDummyDigit * 202
-                  : null
-              }
-            />
-          </div>
-        </div>
-
-        <ChoiceList
-          choices={[
-            {
-              label: "Eligibility or enrollment data",
-              value: "enrollment_data",
-              disabled: renderPreviousEntry ? true : false,
-              defaultChecked: renderPreviousEntry ? true : false,
-            },
-            {
-              label: "Survey data",
-              value: "survey_data",
-              disabled: renderPreviousEntry ? true : false,
-            },
-            {
-              label: "Another data source",
-              value: "other_data",
-              disabled: renderPreviousEntry ? true : false,
-            },
-          ]}
-          className="ds-u-margin-top--5"
-          label="8. Which data source did you use?"
-          name={`data_source${this.props.goalId}`}
-          //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
-        />
-
-        <div className="question-container">
-          <TextField
-            label="9. How did your progress towards your goal last year compare to your previous year’s progress?"
-            multiline
-            name="progress_comparison"
-            className="ds-u-margin-top--0"
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyData
-                : null
-            }
-          />
-        </div>
-
-        <div className="question-container">
-          <TextField
-            label="10. What are you doing to continually make progress towards your goal?"
-            multiline
-            name="progress_action"
-            className="ds-u-margin-top--0"
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyData
-                : null
-            }
-          />
-        </div>
-
-        <div className="question-container">
-          <TextField
-            label="11. Anything else you’d like to add about this goal?"
-            multiline
-            name="additional_information"
-            className="ds-u-margin-top--0"
-            value={
-              this.props.previousEntry === "true"
-                ? this.state.goal2bDummyData
-                : null
-            }
-          />
-        </div>
-
-        <div className="question-container">
-          <TextField
-            label="Do you have any supporting documentation?"
-            hint="Optional"
-            name="supporting_documentation"
-            className="ds-u-margin-top--0"
-            disabled={renderPreviousEntry ? true : false}
-            value={renderPreviousEntry ? "SomeFile2019.docx" : ""}
-          />
-          <button className="ds-c-button">Browse</button>
-        </div>
+        )}
       </Fragment>
     );
   }
