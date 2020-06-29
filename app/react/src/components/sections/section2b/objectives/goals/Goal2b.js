@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
+
 class Goal extends Component {
   constructor(props) {
     super(props);
@@ -8,12 +9,20 @@ class Goal extends Component {
       goal_denominator_digit: 0,
       percentage: 0,
       shouldCalculate: true,
+      goal2bDummyBoolean: true,
       goal2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       goal2bDummyDigit: 10,
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      goal_type_value: "continuing",
+      goal_source_value: "enrollment_data",
+    });
   }
 
   // Validate the input before returning calculated percentage
@@ -67,6 +76,9 @@ class Goal extends Component {
   }
 
   render() {
+    let renderPreviousEntry =
+      this.props.previousEntry === "true" ? true : false;
+
     return (
       <Fragment>
         <div className="question-container">
@@ -86,12 +98,28 @@ class Goal extends Component {
         <div className="question-container">
           <ChoiceList
             choices={[
-              { label: "New goal", value: "new" },
-              { label: "Continuing goal", value: "continuing" },
-              { label: "Discontinued goal", value: "discontinued" },
+              {
+                label: "New goal",
+                value: "new",
+                disabled: renderPreviousEntry ? true : false,
+              },
+              {
+                label: "Continuing goal",
+                value: "continuing",
+
+                disabled: renderPreviousEntry ? true : false,
+                defaultChecked: renderPreviousEntry ? true : false,
+              },
+              {
+                label: "Discontinued goal",
+                value: "discontinued",
+                disabled: renderPreviousEntry ? true : false,
+              },
             ]}
             label="What type of goal is it?"
-            name="goal_type"
+            name={`goal_type${this.props.goalId}`}
+            //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
+            type="radio"
           />
         </div>
 
@@ -166,56 +194,54 @@ class Goal extends Component {
         </div>
 
         <div className="ds-u-border--2">
-          <form>
-            <div className="ds-1-row percentages-info">
-              <div className="ds-l--auto">
-                <h3>Percentage</h3>
-                <h4>Auto-calculated</h4>
-              </div>
+          <div className="ds-1-row percentages-info">
+            <div className="ds-l--auto">
+              <h3>Percentage</h3>
+              <h4>Auto-calculated</h4>
             </div>
-            <div className="ds-1-row percentages">
-              <div>
-                <TextField
-                  label="Numerator"
-                  name="goal_numerator_digit"
-                  size="small"
-                  className="ds-l--auto"
-                  value={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : this.state.goal_numerator_digit
-                  }
-                />
-              </div>
-              <div>
-                <div className="divide">&divide;</div>
-                <TextField
-                  label="Denominator"
-                  name="goal_denominator_digit"
-                  size="small"
-                  className="ds-l--auto"
-                  value={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : this.state.goal_denominator_digit
-                  }
-                />
-              </div>
-              <div>
-                <div className="divide"> &#61; </div>
-                <TextField
-                  label="Percentage"
-                  name="goal_percentage"
-                  size="small"
-                  value={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : `${this.state.percentage}%`
-                  }
-                />
-              </div>
+          </div>
+          <div className="ds-1-row percentages">
+            <div>
+              <TextField
+                label="Numerator"
+                name="goal_numerator_digit"
+                size="small"
+                className="ds-l--auto"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyDigit
+                    : this.state.goal_numerator_digit
+                }
+              />
             </div>
-          </form>
+            <div>
+              <div className="divide">&divide;</div>
+              <TextField
+                label="Denominator"
+                name="goal_denominator_digit"
+                size="small"
+                className="ds-l--auto"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyDigit
+                    : this.state.goal_denominator_digit
+                }
+              />
+            </div>
+            <div>
+              <div className="divide"> &#61; </div>
+              <TextField
+                label="Percentage"
+                name="goal_percentage"
+                size="small"
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.goal2bDummyDigit
+                    : `${this.state.percentage}%`
+                }
+              />
+            </div>
+          </div>
         </div>
 
         <div className="question-container">
@@ -268,14 +294,26 @@ class Goal extends Component {
             {
               label: "Eligibility or enrollment data",
               value: "enrollment_data",
+              disabled: renderPreviousEntry ? true : false,
+              defaultChecked: renderPreviousEntry ? true : false,
             },
-            { label: "Survey data", value: "survey_data" },
-            { label: "Another data source", value: "other_data" },
+            {
+              label: "Survey data",
+              value: "survey_data",
+              disabled: renderPreviousEntry ? true : false,
+            },
+            {
+              label: "Another data source",
+              value: "other_data",
+              disabled: renderPreviousEntry ? true : false,
+            },
           ]}
           className="ds-u-margin-top--5"
           label="Which data source did you use?"
-          name="data_source"
+          name={`data_source${this.props.goalId}`}
+          //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
         />
+
         <div className="question-container">
           <TextField
             label="How did your progress last year compare to your previous year's progress towards your goal?"
@@ -324,6 +362,8 @@ class Goal extends Component {
             hint="Optional"
             name="supporting_documentation"
             className="ds-u-margin-top--0"
+            disabled={renderPreviousEntry ? true : false}
+            value={renderPreviousEntry ? "SomeFile2019.docx" : ""}
           />
           <button className="ds-c-button">Browse</button>
         </div>

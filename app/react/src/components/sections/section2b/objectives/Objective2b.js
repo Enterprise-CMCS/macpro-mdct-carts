@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import Goal from "./goals/Goal2b";
 import { TextField } from "@cmsgov/design-system-core";
 import {
@@ -10,6 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
+import { sliceId } from "../../../Utils/helperFunctions";
 
 class Objective2b extends Component {
   constructor(props) {
@@ -25,20 +27,38 @@ class Objective2b extends Component {
   }
 
   componentDidMount() {
-    const initialGoal = {
-      id: 1,
-      component: <Goal goalCount={1} />,
-    };
+    const initialGoal = [
+      {
+        id: `${this.props.year}_1`,
+        // Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
+        // The sliceId() helper function extracts just the year from the parent objective
+        component: (
+          <Goal
+            goalId={`${this.props.year}_${sliceId(this.props.objectiveId)}_1`}
+          />
+        ),
+      },
+    ];
 
     let dummyDataArray = [];
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 3; i++) {
       dummyDataArray.push({
-        id: i,
-        component: <Goal goalCount={i} previousEntry="true" />,
+        id: `${this.props.year - 1}_${i}`,
+        // Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
+        // The sliceId() helper function extracts just the year from the parent objective
+        component: (
+          <Goal
+            goalId={`${this.props.year - 1}_${sliceId(
+              this.props.objectiveId
+            )}_${i}`}
+            previousEntry="true"
+          />
+        ),
       });
     }
+
     this.setState({
-      goalArray: [initialGoal],
+      goalArray: initialGoal,
       previousGoalsArray: dummyDataArray,
       objective2bDummyData:
         "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim.",
@@ -48,8 +68,16 @@ class Objective2b extends Component {
   newGoal() {
     let newGoalId = this.state.goalCount + 1;
     let newGoal = {
-      id: newGoalId,
-      component: <Goal goalCount={newGoalId} />,
+      id: `${this.props.year}_${newGoalId}`,
+      // Each goal has an ID with the format <year>_<the objective it belongs to>_ <the goal's own ID>
+      // The sliceId() helper function extracts just the year from the parent objective
+      component: (
+        <Goal
+          goalId={`${this.props.year}_${sliceId(
+            this.props.objectiveId
+          )}_${newGoalId}`}
+        />
+      ),
     };
 
     this.setState({
@@ -66,7 +94,7 @@ class Objective2b extends Component {
             hint="For example: Our objective is to increase enrollment in our CHIP program."
             label="What is your first objective as listed in your CHIP State Plan?"
             multiline
-            name={"objective_" + this.props.objectiveCount + "_text"}
+            name={"objective_" + this.props.objectiveId + "_text"}
             value={
               this.props.previousEntry === "true"
                 ? this.state.objective2bDummyData
@@ -74,23 +102,39 @@ class Objective2b extends Component {
             }
           />
           <div className="goals">
+            {/**
+             * Maps through array of Previous Goals in state
+             * If the props include previousEntry==="true", render previous year's data
+             */}
             {this.props.previousEntry === "true" ? (
               <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.previousGoalsArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
-                      <AccordionButton>Goal {element.id}:</AccordionButton>
+                      <AccordionButton>
+                        {/**
+                         * Returns ID from longer string
+                         */}
+                        Goal {sliceId(element.id)}:
+                      </AccordionButton>
                     </h3>
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
                 ))}
               </Accordion>
             ) : (
+              //  Alternatively,  This maps through the current goals in state
+
               <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                 {this.state.goalArray.map((element) => (
                   <AccordionItem key={element.id}>
                     <h3>
-                      <AccordionButton>Goal {element.id}:</AccordionButton>
+                      <AccordionButton>
+                        {/**
+                         * Returns ID from longer string
+                         */}
+                        Goal {sliceId(element.id)}:
+                      </AccordionButton>
                     </h3>
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
@@ -117,4 +161,8 @@ class Objective2b extends Component {
   }
 }
 
-export default Objective2b;
+const mapStateToProps = (state) => ({
+  year: state.formYear,
+});
+
+export default connect(mapStateToProps)(Objective2b);
