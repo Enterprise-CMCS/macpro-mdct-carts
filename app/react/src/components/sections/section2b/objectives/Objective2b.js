@@ -106,15 +106,28 @@ class Objective2b extends Component {
     //   goalArray: goalArr,
     // });
 
-    this.setState((state) => {
-      const goalArray = state.goalArray.filter(
-        (item) => item.id !== element.target.name
-      );
-
-      return {
-        goalArray,
-      };
+    const removedGoalArr = goalArr.filter(
+      // (item) => item.id !== element.target.name
+      (item) => item.id !== element.target.name
+    );
+    const newGoalCount = this.state.goalCount - 1;
+    console.log("is it gone??", removedGoalArr);
+    this.setState({
+      goalArray: removedGoalArr,
+      goalCount: newGoalCount,
     });
+    // this.setState((state) => {
+
+    //   const goalArray = state.goalArray.filter(
+    //     // (item) => item.id !== element.target.name
+    //     (item) => item.id !== element.target.name
+
+    //   );
+
+    //   return {
+    //     goalArray,
+    //   };
+    // });
   }
 
   render() {
