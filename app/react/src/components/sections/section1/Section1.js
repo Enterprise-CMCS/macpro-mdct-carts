@@ -55,11 +55,18 @@ class Section1 extends Component {
     this.setKeyword = this.setKeyword.bind(this);
   }
 
+  /**
+   * Add/remove keyword from display array
+   *
+   * @param {String} part
+   * @param {Element} el
+   */
   setKeyword(part, el) {
     let name = el.target.name;
     let p3Yes = this.state.p3_yes;
     let p4Yes = this.state.p4_yes;
 
+    // If answer is yes, add name
     if (el.target.value === "yes") {
       if (part === "p3") {
         this.setState({
@@ -70,6 +77,7 @@ class Section1 extends Component {
           p4_yes: this.state.p4_yes.concat(name),
         });
       }
+      // If answer is NOT yes, remove name from array
     } else {
       if (part === "p3") {
         // Find array index based on value
@@ -142,14 +150,6 @@ class Section1 extends Component {
   }
 
   render() {
-    // Sort list alphabetically
-
-    // let currentYes = this.state.p3_yes;
-    let p3Yes = this.state.p3_yes.sort();
-    let p4Yes = this.state.p4_yes.sort();
-    let p3Length = p3Yes.length;
-    let p4Length = p4Yes.length;
-
     return (
       <div className="section-1">
         {this.setProgramDisable}
@@ -1362,7 +1362,7 @@ class Section1 extends Component {
                                 </fieldset>
                               </div>
                             </div>
-                            {p3Length > 0 ? (
+                            {this.state.p3_yes.length > 0 ? (
                               <div className="part3-yes">
                                 <h3>
                                   Do you plan to submit a SPA (State Plan
@@ -1386,9 +1386,11 @@ class Section1 extends Component {
                                   type="radio"
                                 />
                                 <ul>
-                                  {p3Yes.map((current, index) => (
-                                    <li key={index}>{current}</li>
-                                  ))}
+                                  {this.state.p3_yes
+                                    .sort()
+                                    .map((current, index) => (
+                                      <li key={index}>{current}</li>
+                                    ))}
                                 </ul>
                               </div>
                             ) : (
@@ -2019,7 +2021,7 @@ class Section1 extends Component {
                                 </fieldset>
                               </div>
                             </div>
-                            {p4Length > 0 ? (
+                            {this.state.p4_yes.sort().length > 0 ? (
                               <div className="part4-yes">
                                 <h3>
                                   Do you plan to submit a SPA (State Plan
@@ -2043,9 +2045,11 @@ class Section1 extends Component {
                                   type="radio"
                                 />
                                 <ul>
-                                  {p4Yes.map((current, index) => (
-                                    <li key={index}>{current}</li>
-                                  ))}
+                                  {this.state.p4_yes
+                                    .sort()
+                                    .map((current, index) => (
+                                      <li key={index}>{current}</li>
+                                    ))}
                                 </ul>
                               </div>
                             ) : (
