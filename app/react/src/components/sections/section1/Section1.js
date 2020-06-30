@@ -68,8 +68,8 @@ class Section1 extends Component {
   //true means the section will be disabled
   //false means the section will be enabled
   setProgramDisable () {
-    {this.props.programType === "M-CHIP" ? (this.state.mchipDisable = true) : (this.statemchipDisable = false) };
-    {this.props.programType === "S-CHIP" ? (this.state.schipDisable = true) : (this.stateschipDisable = false) };
+    {this.props.programType === "mCHIP" ? (this.state.mchipDisable = true) : (this.statemchipDisable = false) };
+    {this.props.programType === "sCHIP" ? (this.state.schipDisable = true) : (this.stateschipDisable = false) };
   }
 
   //set the flags for the custom div property disabled (_layout.scss) based on the selected programType
