@@ -24,7 +24,6 @@ class Objective2b extends Component {
       previousGoalsArray: [],
     };
     this.newGoal = this.newGoal.bind(this);
-    this.removeGoal = this.removeGoal.bind(this);
   }
 
   componentDidMount() {
@@ -87,49 +86,6 @@ class Objective2b extends Component {
     });
   }
 
-  removeGoal(element) {
-    console.log("CAN I?/", element.target.name);
-    let goalArr = this.state.goalArray;
-    // let goalToRemove = sliceId(element.target.name);
-
-    // console.log("TO REMOVE??", goalToRemove);
-    // let foundIndex;
-    // for (let i = 0; i < goalArr.length; i++) {
-    //   if (goalArr[i].id === element.target.name) {
-    //     foundIndex = i;
-    //     // goalArr.splice(foundIndex, 1);
-    //     return;
-    //   }
-    // }
-
-    // this.setState({
-    //   goalArray: goalArr,
-    // });
-
-    const removedGoalArr = goalArr.filter(
-      // (item) => item.id !== element.target.name
-      (item) => item.id !== element.target.name
-    );
-    const newGoalCount = this.state.goalCount - 1;
-    console.log("is it gone??", removedGoalArr);
-    this.setState({
-      goalArray: removedGoalArr,
-      goalCount: newGoalCount,
-    });
-    // this.setState((state) => {
-
-    //   const goalArray = state.goalArray.filter(
-    //     // (item) => item.id !== element.target.name
-    //     (item) => item.id !== element.target.name
-
-    //   );
-
-    //   return {
-    //     goalArray,
-    //   };
-    // });
-  }
-
   render() {
     return (
       <Fragment>
@@ -184,14 +140,7 @@ class Objective2b extends Component {
                         Goal {sliceId(element.id)}:
                       </AccordionButton>
                     </h3>
-                    <Button
-                      className="ds-c-button ds-c-button--small"
-                      onClick={this.removeGoal}
-                      name={element.id}
-                      disabled={sliceId(element.id) === "1" ? true : false}
-                    >
-                      Remove Goal
-                    </Button>
+
                     <AccordionPanel>{element.component}</AccordionPanel>
                   </AccordionItem>
                 ))}
