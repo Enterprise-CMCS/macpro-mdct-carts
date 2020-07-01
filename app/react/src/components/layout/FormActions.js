@@ -18,13 +18,16 @@ class FormActions extends Component {
     return (
       <section className="action-buttons">
         <div className="print-button">
-          <Button className="ds-c-button--primary" onClick={this.printWindow}>
+          <Button
+            className="ds-c-button--primary ds-c-button--small"
+            onClick={this.printWindow}
+          >
             <FontAwesomeIcon icon={faPrint} /> Print
           </Button>
         </div>
 
         <div className="share-button">
-          <Button className="ds-c-button--primary">
+          <Button className="ds-c-button--primary ds-c-button--small">
             <FontAwesomeIcon icon={faShareSquare} /> Share
           </Button>
         </div>
