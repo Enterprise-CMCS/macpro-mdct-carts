@@ -4,6 +4,7 @@ import NumberFormat from "react-number-format";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import NavigationButton from "../../layout/NavigationButtons";
+import FPL from "../../layout/FPL";
 import {
   Button as button,
   Choice,
@@ -192,6 +193,7 @@ class Section1 extends Component {
                                 <legend className="ds-c-label">
                                   1. Does your program charge an enrollment fee?
                                 </legend>
+
                                 <ChoiceList
                                   choices={[
                                     {
@@ -280,23 +282,7 @@ class Section1 extends Component {
                                       b) Indicate the premium fee ranges and
                                       corresponding FPL ranges.
                                     </legend>
-                                    Premium fees tiered by FPL
-                                    <ChoiceList
-                                      choices={[
-                                        {
-                                          label: "Yes",
-                                          value: "yes",
-                                        },
-                                        {
-                                          label: "No",
-                                          value: "no",
-                                        },
-                                      ]}
-                                      className="p1_q2__a_1"
-                                      label=""
-                                      name="p1_q2__a_1"
-                                      onChange={this.setConditional}
-                                    />
+                                    <FPL />
                                   </fieldset>
                                 </div>
                               ) : (
@@ -347,6 +333,7 @@ class Section1 extends Component {
                                   a) Indicate the premium fee ranges and
                                   corresponding FPL ranges Max family premium
                                   fees tiered by FPL
+                                  <FPL />
                                 </div>
                               ) : (
                                 ""
@@ -1369,22 +1356,6 @@ class Section1 extends Component {
                                   Amendment) to reflect these changes if you
                                   haven’t done so already?
                                 </h3>
-                                <ChoiceList
-                                  choices={[
-                                    {
-                                      label: "Yes",
-                                      value: "yes",
-                                    },
-                                    {
-                                      label: "No",
-                                      value: "no",
-                                    },
-                                  ]}
-                                  className="p3_q21"
-                                  label=""
-                                  name="p3_q21"
-                                  type="radio"
-                                />
                                 <ul>
                                   {this.state.p3_yes
                                     .sort()
