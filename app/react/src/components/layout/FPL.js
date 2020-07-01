@@ -25,7 +25,7 @@ class FPL extends Component {
               </div>
             </div>
             <div className="fpl-arrow">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              <i clasName="fa fa-arrow-right" aria-hidden="true"></i>
             </div>
             <div className="fpl-container fpl-end">
               <TextField
@@ -57,7 +57,7 @@ class FPL extends Component {
               />
             </div>
             <div className="fpl-arrow">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              <i className="fa fa-arrow-right" aria-hidden="true"></i>
             </div>
             <div className="fpl-container fpl-end">
               <TextField
