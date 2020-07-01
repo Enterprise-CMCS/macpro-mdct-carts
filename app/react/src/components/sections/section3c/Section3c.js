@@ -11,7 +11,7 @@ import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FillForm from "../../layout/FillForm";
 import FormNavigation from "../../layout/FormNavigation";
-
+import FormActions from "../../layout/FormActions";
 class Section3c extends Component {
   constructor() {
     super();
@@ -653,6 +653,7 @@ class Section3c extends Component {
                     <FormNavigation previousUrl="/2b" />
                   </TabPanel>
                 </Tabs>
+                <FormActions />
               </div>
             </div>
           </div>

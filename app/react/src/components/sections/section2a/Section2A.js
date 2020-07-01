@@ -11,7 +11,7 @@ import {
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
-
+import FormActions from "../../layout/FormActions";
 class Section2a extends Component {
   constructor(props) {
     super(props);
@@ -677,6 +677,7 @@ class Section2a extends Component {
                   <FormNavigation nextUrl="/2b" previousUrl="/1" />
                 </TabPanel>
               </Tabs>
+              <FormActions />
             </div>
           </div>
         </div>

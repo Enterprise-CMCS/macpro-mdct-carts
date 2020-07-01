@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import { sliceId } from "../../Utils/helperFunctions";
+import FormActions from "../../layout/FormActions";
 
 class Section2b extends Component {
   constructor(props) {
@@ -192,6 +193,7 @@ class Section2b extends Component {
                   </div>
                 </TabPanel>
               </Tabs>
+              <FormActions />
             </div>
           </div>
         </div>
