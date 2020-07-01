@@ -31,7 +31,12 @@ class Section2b extends Component {
     // This sets up an inital, blank objective
     const initialObjective = {
       id: `${this.props.year}_1`,
-      component: <Objective2b objectiveId={`${this.props.year}_1`} />,
+      component: (
+        <Objective2b
+          objectiveHeader={"Reduce the number of uninsured children"}
+          objectiveId={`${this.props.year}_1`}
+        />
+      ),
     };
 
     let dummyDataArray = [];
@@ -64,6 +69,7 @@ class Section2b extends Component {
         <Objective2b objectiveId={`${this.props.year}_${newObjectiveId}`} />
       ),
     };
+    console.log("Show me the new objective", newObjective);
 
     this.setState({
       objectiveCount: newObjectiveId,
@@ -83,14 +89,17 @@ class Section2b extends Component {
             <div className="main ds-l-col--9">
               <PageInfo />
               <Tabs>
-                <TabPanel id="section2b" tab="Section 2B: Performance Goals">
+                <TabPanel
+                  id="section2b"
+                  tab="Section 2B: State Plan Goals and Objectives"
+                >
                   <div className="section-content">
                     <form>
                       <p>
                         Your performance goals should match those reflected in
-                        your CHIP State Plan, Section 9. If your goals are
-                        different, submit a State Plan Amendment (SPA) to
-                        reconcile any differences
+                        your CHIP State Plan, Section 9. If your objectives or
+                        goals are different, submit a State Plan Amendment (SPA)
+                        to reconcile these differences.
                       </p>
                       <div className="objective-accordiion">
                         {/* This builds an accordion that maps through the array of Objectives in state */}
@@ -105,7 +114,11 @@ class Section2b extends Component {
                                   <AccordionButton>
                                     <div className="title">
                                       {/* The sliceId utility function gets just the number of each objective, removes the year */}
-                                      Objective {sliceId(element.id)}:
+                                      {/* The first objective will have a predetermined header*/}
+
+                                      {element.component.props.objectiveHeader
+                                        ? `Objective: ${element.component.props.objectiveHeader}`
+                                        : `Objective ${sliceId(element.id)}:`}
                                     </div>
                                     <div className="arrow"></div>
                                   </AccordionButton>
@@ -121,7 +134,10 @@ class Section2b extends Component {
                       </div>
 
                       <div>
-                        <h3> Add another objective</h3>
+                        <h3>
+                          {" "}
+                          Do you have another objective in your State Plan?{" "}
+                        </h3>
                         <p className="ds-base color-gray-light">Optional</p>
                         <button
                           onClick={this.newObjective}
@@ -152,7 +168,11 @@ class Section2b extends Component {
                                   <AccordionButton>
                                     <div className="title">
                                       {/* The sliceId utility function gets just the number of each objective, removes the year */}
-                                      Objective {sliceId(element.id)}:
+                                      {/* The first objective will have a predetermined header*/}
+
+                                      {element.component.props.objectiveHeader
+                                        ? `Objective: ${element.component.props.objectiveHeader}`
+                                        : `Objective ${sliceId(element.id)}:`}
                                     </div>
                                     <div className="arrow"></div>
                                   </AccordionButton>
