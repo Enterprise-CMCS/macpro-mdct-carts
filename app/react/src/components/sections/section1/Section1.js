@@ -46,11 +46,62 @@ class Section1 extends Component {
       schipDisable: false,
       p1q2Disable: true,
       p2q2Disable: true,
+      p3_yes: [],
+      p4_yes: [],
     };
 
     this.setConditional = this.setConditional.bind(this);
     this.setProgramDisable = this.setProgramDisable(this);
     this.setQuestionDisable = this.setQuestionDisable.bind(this);
+    this.setKeyword = this.setKeyword.bind(this);
+  }
+
+  /**
+   * Add/remove keyword from display array
+   *
+   * @param {String} part
+   * @param {Element} el
+   */
+  setKeyword(part, el) {
+    let name = el.target.name;
+    let p3Yes = this.state.p3_yes;
+    let p4Yes = this.state.p4_yes;
+
+    // If answer is yes, add name
+    if (el.target.value === "yes") {
+      if (part === "p3") {
+        this.setState({
+          p3_yes: this.state.p3_yes.concat(name),
+        });
+      } else {
+        this.setState({
+          p4_yes: this.state.p4_yes.concat(name),
+        });
+      }
+      // If answer is NOT yes, remove name from array
+    } else {
+      if (part === "p3") {
+        // Find array index based on value
+        let index = p3Yes.indexOf(name);
+
+        // Remove array item by index id
+        if (index !== -1) {
+          p3Yes.splice(index, 1);
+        }
+
+        // Reset state with new array
+        this.setState({ p3_yes: p3Yes });
+      } else {
+        // Find array index based on value
+        let index = p4Yes.indexOf(name);
+
+        // Remove array item by index id
+        if (index !== -1) p4Yes.splice(index, 1);
+
+        // Reset state with new array
+        this.setState({ p4_yes: p4Yes });
+      }
+    }
   }
 
   /**
@@ -721,8 +772,8 @@ class Section1 extends Component {
                                   ]}
                                   className="p3_q1"
                                   label=""
-                                  name="Q1: Eligibility determination process"
-                                  onChange={this.setKeyword}
+                                  name="Q01: Eligibility determination process"
+                                  onChange={(e) => this.setKeyword("p3", e)}
                                 />
                               </fieldset>
                             </div>
@@ -751,8 +802,8 @@ class Section1 extends Component {
                                   ]}
                                   className="p3_q2"
                                   label=""
-                                  name="Q2: Eligibility redetermination process"
-                                  onChange={this.setKeyword}
+                                  name="Q02: Eligibility redetermination process"
+                                  onChange={(e) => this.setKeyword("p3", e)}
                                 />
                               </fieldset>
                             </div>
@@ -782,8 +833,8 @@ class Section1 extends Component {
                                   className="p3_q3"
                                   hint="For example: increasing the FPL or income levels, or other eligibility criteria."
                                   label=""
-                                  name="Q3: Eligibility levels or target population"
-                                  onChange={this.setKeyword}
+                                  name="Q03: Eligibility levels or target population"
+                                  onChange={(e) => this.setKeyword("p3", e)}
                                 />
                               </fieldset>
                             </div>
@@ -814,8 +865,8 @@ class Section1 extends Component {
                                   hint="For example: adding or removing different types of coverage.
                                   "
                                   label=""
-                                  name="Q4: Benefits available to enrollees"
-                                  onChange={this.setKeyword}
+                                  name="Q04: Benefits available to enrollees"
+                                  onChange={(e) => this.setKeyword("p3", e)}
                                 />
                               </fieldset>
                             </div>
@@ -844,8 +895,8 @@ class Section1 extends Component {
                                   ]}
                                   className="p3_q5"
                                   label=""
-                                  name="Q5: Single streamlined application"
-                                  onChange={this.setKeyword}
+                                  name="Q05: Single streamlined application"
+                                  onChange={(e) => this.setKeyword("p3", e)}
                                 />
                               </fieldset>
                             </div>
@@ -874,8 +925,8 @@ class Section1 extends Component {
                                     className="p3_q6"
                                     hint="For example: allotting more or less funding for outreach, or changing your target population."
                                     label=""
-                                    name="Q6: Outreach efforts"
-                                    onChange={this.setKeyword}
+                                    name="Q06: Outreach efforts"
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -905,8 +956,8 @@ class Section1 extends Component {
                                     className="p3_q7"
                                     hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
                                     label=""
-                                    name="Q7: Delivery system(s)"
-                                    onChange={this.setKeyword}
+                                    name="Q07: Delivery system(s)"
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -936,8 +987,8 @@ class Section1 extends Component {
                                     className="p3_q8"
                                     hint="For example: changing amounts, populations, or the collection process."
                                     label=""
-                                    name="Q8: Cost-sharing requirements"
-                                    onChange={this.setKeyword}
+                                    name="Q08: Cost-sharing requirements"
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -967,8 +1018,8 @@ class Section1 extends Component {
                                     className="p3_q9"
                                     hint="For example: changing substitutions or the waiting periods."
                                     label=""
-                                    name="Q9: Crowd-out policies"
-                                    onChange={this.setKeyword}
+                                    name="Q09: Crowd-out policies"
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -998,7 +1049,7 @@ class Section1 extends Component {
                                     className="p3_q10"
                                     label=""
                                     name="Q10: Enrollment freeze and/or enrollment cap"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1029,7 +1080,7 @@ class Section1 extends Component {
                                     className="p3_q11"
                                     label=""
                                     name="Q11: Enrollment process for health plan selection"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1060,7 +1111,7 @@ class Section1 extends Component {
                                     hint="For example: changing from the Medicaid Fair Hearing Process to state law."
                                     label=""
                                     name="Q12: Enrollment process for health plan selection"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1091,7 +1142,7 @@ class Section1 extends Component {
                                     hint="For example: adding premium assistance or changing the population that receives premium assistance."
                                     label=""
                                     name="Q13: Premium assistance"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1123,7 +1174,7 @@ class Section1 extends Component {
                                     className="p3_q14"
                                     label=""
                                     name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1154,7 +1205,7 @@ class Section1 extends Component {
                                     hint="For example: expanding eligibility to pregnant enrollees."
                                     label=""
                                     name="Q15: Prenatal care eligibility"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1185,7 +1236,7 @@ class Section1 extends Component {
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name="Q16: Pregnant Woman State Plan expansion"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1216,7 +1267,7 @@ class Section1 extends Component {
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name='Q17: Eligibility for "lawfully residing pregnant women"'
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1247,7 +1298,7 @@ class Section1 extends Component {
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name="Q18: Eligibility for “lawfully residing children”"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1277,7 +1328,7 @@ class Section1 extends Component {
                                     className="p3_q18"
                                     label=""
                                     name="Q19: Other program areas"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p3", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1298,14 +1349,24 @@ class Section1 extends Component {
                                 </fieldset>
                               </div>
                             </div>
-                            <div className="part3-yes">
-                              <h3>
-                                Do you plan to submit a SPA (State Plan
-                                Amendment) to reflect these changes if you
-                                haven’t done so already?{" "}
-                              </h3>
-                              Display list of questions answered yes
-                            </div>
+                            {this.state.p3_yes.length > 0 ? (
+                              <div className="part3-yes">
+                                <h3>
+                                  Do you plan to submit a SPA (State Plan
+                                  Amendment) to reflect these changes if you
+                                  haven’t done so already?
+                                </h3>
+                                <ul>
+                                  {this.state.p3_yes
+                                    .sort()
+                                    .map((current, index) => (
+                                      <li key={index}>{current}</li>
+                                    ))}
+                                </ul>
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
 
@@ -1354,8 +1415,8 @@ class Section1 extends Component {
                                   ]}
                                   className="p4_q1"
                                   label=""
-                                  name="Q1: Eligibility determination process"
-                                  onChange={this.setKeyword}
+                                  name="Q01: Eligibility determination process"
+                                  onChange={(e) => this.setKeyword("p4", e)}
                                 />
                               </fieldset>
                             </div>
@@ -1384,8 +1445,8 @@ class Section1 extends Component {
                                   ]}
                                   className="p4_q2"
                                   label=""
-                                  name="Q2: Eligibility redetermination process"
-                                  onChange={this.setKeyword}
+                                  name="Q02: Eligibility redetermination process"
+                                  onChange={(e) => this.setKeyword("p4", e)}
                                 />
                               </fieldset>
                             </div>
@@ -1415,8 +1476,8 @@ class Section1 extends Component {
                                   className="p4_q3"
                                   hint="For example: increasing the FPL or income levels, or other eligibility criteria."
                                   label=""
-                                  name="Q3: Eligibility levels or target population"
-                                  onChange={this.setKeyword}
+                                  name="Q03: Eligibility levels or target population"
+                                  onChange={(e) => this.setKeyword("p4", e)}
                                 />
                               </fieldset>
                             </div>
@@ -1447,8 +1508,8 @@ class Section1 extends Component {
                                   hint="For example: adding or removing different types of coverage.
                                   "
                                   label=""
-                                  name="Q4: Benefits available to enrollees"
-                                  onChange={this.setKeyword}
+                                  name="Q04: Benefits available to enrollees"
+                                  onChange={(e) => this.setKeyword("p4", e)}
                                 />
                               </fieldset>
                             </div>
@@ -1477,8 +1538,8 @@ class Section1 extends Component {
                                   ]}
                                   className="p4_q5"
                                   label=""
-                                  name="Q5: Single streamlined application"
-                                  onChange={this.setKeyword}
+                                  name="Q05: Single streamlined application"
+                                  onChange={(e) => this.setKeyword("p4", e)}
                                 />
                               </fieldset>
                             </div>
@@ -1507,8 +1568,8 @@ class Section1 extends Component {
                                     className="p4_q6"
                                     hint="For example: allotting more or less funding for outreach, or changing your target population."
                                     label=""
-                                    name="Q6: Outreach efforts"
-                                    onChange={this.setKeyword}
+                                    name="Q06: Outreach efforts"
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1538,8 +1599,8 @@ class Section1 extends Component {
                                     className="p4_q7"
                                     hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
                                     label=""
-                                    name="Q7: Delivery system(s)"
-                                    onChange={this.setKeyword}
+                                    name="Q07: Delivery system(s)"
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1569,8 +1630,8 @@ class Section1 extends Component {
                                     className="p4_q8"
                                     hint="For example: changing amounts, populations, or the collection process."
                                     label=""
-                                    name="Q8: Cost-sharing requirements"
-                                    onChange={this.setKeyword}
+                                    name="Q08: Cost-sharing requirements"
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1600,8 +1661,8 @@ class Section1 extends Component {
                                     className="p4_q9"
                                     hint="For example: changing substitutions or the waiting periods."
                                     label=""
-                                    name="Q9: Crowd-out policies"
-                                    onChange={this.setKeyword}
+                                    name="Q09: Crowd-out policies"
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1631,7 +1692,7 @@ class Section1 extends Component {
                                     className="p4_q10"
                                     label=""
                                     name="Q10: Enrollment freeze and/or enrollment cap"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1662,7 +1723,7 @@ class Section1 extends Component {
                                     className="p4_q11"
                                     label=""
                                     name="Q11: Enrollment process for health plan selection"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1693,7 +1754,7 @@ class Section1 extends Component {
                                     hint="For example: changing from the Medicaid Fair Hearing Process to state law."
                                     label=""
                                     name="Q12: Enrollment process for health plan selection"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1724,7 +1785,7 @@ class Section1 extends Component {
                                     hint="For example: adding premium assistance or changing the population that receives premium assistance."
                                     label=""
                                     name="Q13: Premium assistance"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1756,7 +1817,7 @@ class Section1 extends Component {
                                     className="p4_q14"
                                     label=""
                                     name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1787,7 +1848,7 @@ class Section1 extends Component {
                                     hint="For example: expanding eligibility to pregnant enrollees."
                                     label=""
                                     name="Q15: Prenatal care eligibility"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1818,7 +1879,7 @@ class Section1 extends Component {
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name="Q16: Pregnant Woman State Plan expansion"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1849,7 +1910,7 @@ class Section1 extends Component {
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name='Q17: Eligibility for "lawfully residing pregnant women"'
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1880,7 +1941,7 @@ class Section1 extends Component {
                                     hint="For example: extending coverage to pregnant enrollees."
                                     label=""
                                     name="Q18: Eligibility for “lawfully residing children”"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1910,7 +1971,7 @@ class Section1 extends Component {
                                     className="p4_q18"
                                     label=""
                                     name="Q19: Other program areas"
-                                    onChange={this.setKeyword}
+                                    onChange={(e) => this.setKeyword("p4", e)}
                                   />
                                 </fieldset>
                               </div>
@@ -1931,14 +1992,40 @@ class Section1 extends Component {
                                 </fieldset>
                               </div>
                             </div>
-                            <div className="part4-yes">
-                              <h3>
-                                Do you plan to submit a SPA (State Plan
-                                Amendment) to reflect these changes if you
-                                haven’t done so already?{" "}
-                              </h3>
-                              Display list of questions answered yes
-                            </div>
+                            {this.state.p4_yes.sort().length > 0 ? (
+                              <div className="part4-yes">
+                                <h3>
+                                  Do you plan to submit a SPA (State Plan
+                                  Amendment) to reflect these changes if you
+                                  haven’t done so already?
+                                </h3>
+                                <ChoiceList
+                                  choices={[
+                                    {
+                                      label: "Yes",
+                                      value: "yes",
+                                    },
+                                    {
+                                      label: "No",
+                                      value: "no",
+                                    },
+                                  ]}
+                                  className="p4_q21"
+                                  label=""
+                                  name="p4_q21"
+                                  type="radio"
+                                />
+                                <ul>
+                                  {this.state.p4_yes
+                                    .sort()
+                                    .map((current, index) => (
+                                      <li key={index}>{current}</li>
+                                    ))}
+                                </ul>
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       </div>
