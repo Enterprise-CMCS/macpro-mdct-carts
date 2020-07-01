@@ -4,6 +4,7 @@ import NumberFormat from "react-number-format";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
+import FormActions from "../../layout/FormActions";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
@@ -2033,6 +2034,7 @@ class Section1 extends Component {
                     <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
                   </TabPanel>
                 </Tabs>
+                <FormActions />
               </div>
             </div>
           </div>
