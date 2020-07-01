@@ -100,3 +100,53 @@
   margin-left: ($margin * 2);
   padding-left: ($padding * 2);
 }
+
+.fpl-container {
+  align-items: baseline;
+  display: flex;
+  max-width: 140px;
+  position: relative;
+  width: auto;
+
+  .fpl-input {
+    width: auto;
+  }
+
+  .fpl-percentage {
+    position: absolute;
+    right: 8px;
+    top: 58px;
+  }
+}
+
+.fpl-arrow {
+  align-self: flex-end;
+  font-size: 1.8rem;
+  vertical-align: bottom;
+  line-height: 2.2rem;
+  padding: 0 2.2rem 0.6rem;
+}
+
+.nav-buttons {
+  margin: ($margin * 8) 0 ($margin * 2);
+  text-align: center;
+
+  @media only screen and (min-width: 767px) {
+    .auto-save {
+      text-align: left;
+    }
+  }
+  .form-buttons {
+    @media only screen and (min-width: 767px) {
+      text-align: right;
+    }
+    .form-button {
+      margin: $margin 0;
+
+      @media only screen and (min-width: 767px) {
+        display: inline-block;
+        margin: $margin;
+      }
+    }
+  }
+}

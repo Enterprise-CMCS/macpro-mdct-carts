@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
-import NavigationButton from "../../layout/NavigationButtons";
+import FormNavigation from "../../layout/FormNavigation";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
@@ -2030,16 +2030,9 @@ class Section1 extends Component {
                         </div>
                       </div>
                     </form>
+                    <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
                   </TabPanel>
                 </Tabs>
-                <div className="nav-buttons">
-                  <NavigationButton
-                    direction="Previous"
-                    destination="/basic-info"
-                  />
-
-                  <NavigationButton direction="Next" destination="/2a" />
-                </div>
               </div>
             </div>
           </div>
