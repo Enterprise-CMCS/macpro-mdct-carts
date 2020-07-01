@@ -114,7 +114,7 @@ class BasicInfo extends Component {
                           hint="Include city, state and zip code"
                           name="contactAddress"
                           multiline
-                          rows="6"
+                          rows="4"
                         />
                         <TextField label="8. Phone number: " name="contactPhone" />
                         <div className="form-options">
@@ -129,13 +129,100 @@ class BasicInfo extends Component {
                           </a>
                         </div>
                       </div>
-
-                      
                     </form>
                   </TabPanel>
 
                   <TabPanel id="tab-lastyear" tab="FY2019 answers">
+                  <form>
+                      <Dropdown
+                        label="1. State or territory name: "
+                        size="medium"
+                        name="selectedState"
+                        options={statesArray}
+                        value={this.state.selectedState}
+                        onChange={this.handleChange}
+                        disabled
+                      />
 
+                      <ChoiceList
+                        choices={[
+                          {
+                            label: "Combination state (M-CHIP and S-CHIP)",
+                            value: "comboCHIP",
+                            checked: this.state.programType == "comboCHIP" ? true : false,
+                          },
+                          {
+                            label: "CHIP Medicaid Expansion only (M-CHIP)",
+                            value: "mCHIP",
+                            checked: this.state.programType == "mCHIP" ? true : false,
+                          },
+                          {
+                            label: "CHIP Separate Program only (S-CHIP) ",
+                            value: "sCHIP",
+                            checked: this.state.programType == "sCHIP" ? true : false,
+                          },
+                        ]}
+                        label="2. Program type: "
+                        name="programType"
+                        onChange={this.handleChange}
+                        disabled
+                      />
+
+                      <TextField
+                        label="3. CHIP program name(s): "
+                        name="programName"
+                        value={this.state.programName}
+                        onChange={this.handleChange}
+                        disabled
+                      />
+
+                      <div>
+                        <a href="mailto:cartshelp@cms.hhs.gov">This is incorrect</a>{" "}
+                      </div>
+
+                      <div>
+                        <h3>
+                          Who should we contact if we have any questions about your
+                          report?
+                        </h3>
+                        <TextField 
+                          label="4. Contact name: " 
+                          name="contactName" 
+                          value="John Smith"
+                          disabled
+                        />
+                        <TextField 
+                          label="5. Job title: " 
+                          name="contactTitle" 
+                          value="State CHIP Program Manager"
+                          disabled
+                        />
+                        <TextField
+                          type="email"
+                          label="6. Email: "
+                          name="contactEmail"
+                          value="jsmith@ny.gov"
+                          disabled
+                        />
+                        <TextField
+                          label="7. Full mailing address: "
+                          hint="Include city, state and zip code"
+                          name="contactAddress"
+                          multiline
+                          rows="4"
+                          value="123 Main Street
+                          Suite 456
+                          New York, NY 78945"
+                          disabled
+                        />
+                        <TextField 
+                          label="8. Phone number: " 
+                          name="contactPhone"
+                          value="123-456-7890"
+                          disabled
+                        />
+                      </div>
+                    </form>
                   </TabPanel>
                 </Tabs>
 
