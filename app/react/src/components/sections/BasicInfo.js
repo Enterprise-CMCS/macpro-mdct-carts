@@ -11,11 +11,16 @@ import {
   TabPanel,
   Button as button,
 } from "@cmsgov/design-system-core";
+import FillForm from "../layout/FillForm";
 import statesArray from "../Utils/statesArray";
 
 class BasicInfo extends Component {
   constructor(props) {
     super(props);
+
+    this.loadAnswers = this.loadAnswers.bind(this);
+    this.selectInput = this.selectInput.bind(this);
+
     this.state = {
       selectedState: this.props.abbr,
       programName: this.props.programName,
@@ -25,6 +30,7 @@ class BasicInfo extends Component {
       contactEmail: "",
       contactAddress: "",
       contactPhone: 0,
+      fillFormTitle: "Same as last year",
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -33,6 +39,69 @@ class BasicInfo extends Component {
     this.setState({
       [evt.target.name]: evt.target.value,
     });
+  }
+
+  selectInput(id, option, active) {
+    let selection = document.getElementById(id).getElementsByTagName("input");
+
+    //clear any selections made by the user
+    for (let input of selection) {
+      input.checked = false;
+    }
+
+    if (active) {
+      selection[option].checked = true;
+    } else {
+      for (let input of selection) {
+        input.checked = false;
+      }
+    }
+  }
+
+  /**
+   * If conditional value is triggered, set state to value
+   * @param {Event} el
+   */
+
+  loadAnswers(el) {
+    el.preventDefault();
+
+    // button title: Undo or Same as Last year
+    el.target.title = this.state.fillFormTitle;
+
+    el.target.classList.toggle("active");
+    let textFieldCopy = "";
+    let textAreaCopy = "";
+
+    // Boolean, Set values on active
+    let isActive = el.target.classList.contains("active");
+
+    if (isActive) {
+      textFieldCopy = "This is what you wrote last year.";
+      textAreaCopy =
+        "This is what you wrote last year.";
+      el.target.title = "Undo";
+    }
+
+    switch (el.target.name) {
+      case "contactName":
+        this.setState({ contactName: textFieldCopy });
+        break;
+      case "contactTitle":
+        this.setState({ contactTitle: textFieldCopy });
+        break;
+      case "contactEmail":
+        this.setState({ contactEmail: textFieldCopy });
+        break;
+      case "contactAddress":
+        this.setState({ contactAddress: textFieldCopy });
+        break;
+      case "contactPhone":
+        this.setState({ contactPhone: textFieldCopy });
+        break;
+      default:
+        break;
+    }
   }
 
   render() {
@@ -102,21 +171,71 @@ class BasicInfo extends Component {
                           Who should we contact if we have any questions about your
                           report?
                         </h3>
-                        <TextField label="4. Contact name: " name="contactName" />
-                        <TextField label="5. Job title: " name="contactTitle" />
-                        <TextField
-                          type="email"
-                          label="6. Email: "
-                          name="contactEmail"
-                        />
-                        <TextField
-                          label="7. Full mailing address: "
-                          hint="Include city, state and zip code"
-                          name="contactAddress"
-                          multiline
-                          rows="4"
-                        />
-                        <TextField label="8. Phone number: " name="contactPhone" />
+                        <div className="question-container">
+                          <FillForm
+                            name="contactName"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                          />
+                          <TextField 
+                            label="4. Contact name: " 
+                            name="contactName" 
+                            value={this.state.contactName}
+                          />
+                        </div>
+                        <div className="question-container">
+                          <FillForm
+                            name="contactTitle"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                          />
+                          <TextField 
+                            label="5. Job title: " 
+                            name="contactTitle" 
+                            value={this.state.contactTitle}
+                          />
+                        </div>
+                        <div className="question-container">
+                          <FillForm
+                            name="contactEmail"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                          />
+                          <TextField
+                            type="email"
+                            label="6. Email: "
+                            name="contactEmail"
+                            value={this.state.contactEmail}
+                          />
+                        </div>
+                        <div className="question-container">
+                          <FillForm
+                            name="contactAddress"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                          />
+                          <TextField
+                            label="7. Full mailing address: "
+                            hint="Include city, state and zip code"
+                            name="contactAddress"
+                            multiline
+                            rows="4"
+                            value={this.state.contactAddress}
+                          />
+                        </div>
+                        <div className="question-container">
+                          <FillForm
+                            name="contactPhone"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                          />
+                          <TextField 
+                            label="8. Phone number: " 
+                            name="contactPhone" 
+                            mask="phone"
+                            value={this.state.contactPhone}
+                          />
+                        </div>
                         <div className="form-options">
                           <button
                             type="submit"
@@ -177,10 +296,6 @@ class BasicInfo extends Component {
                       />
 
                       <div>
-                        <a href="mailto:cartshelp@cms.hhs.gov">This is incorrect</a>{" "}
-                      </div>
-
-                      <div>
                         <h3>
                           Who should we contact if we have any questions about your
                           report?
@@ -188,20 +303,20 @@ class BasicInfo extends Component {
                         <TextField 
                           label="4. Contact name: " 
                           name="contactName" 
-                          value="John Smith"
+                          value="This is what you wrote last year."
                           disabled
                         />
                         <TextField 
                           label="5. Job title: " 
                           name="contactTitle" 
-                          value="State CHIP Program Manager"
+                          value="This is what you wrote last year."
                           disabled
                         />
                         <TextField
                           type="email"
                           label="6. Email: "
                           name="contactEmail"
-                          value="jsmith@ny.gov"
+                          value="This is what you wrote last year."
                           disabled
                         />
                         <TextField
@@ -210,15 +325,13 @@ class BasicInfo extends Component {
                           name="contactAddress"
                           multiline
                           rows="4"
-                          value="123 Main Street
-                          Suite 456
-                          New York, NY 78945"
+                          value="This is what you wrote last year."
                           disabled
                         />
                         <TextField 
                           label="8. Phone number: " 
                           name="contactPhone"
-                          value="123-456-7890"
+                          value="This is what you wrote last year."
                           disabled
                         />
                       </div>
