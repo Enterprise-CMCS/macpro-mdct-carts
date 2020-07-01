@@ -4,6 +4,8 @@ import NumberFormat from "react-number-format";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import NavigationButton from "../../layout/NavigationButtons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
@@ -44,18 +46,67 @@ class Section1 extends Component {
       fillFormTitle: "Same as last year",
       mchipDisable: false,
       schipDisable: false,
+
       p1q2Disable: true,
       p2q2Disable: true,
       p3_yes: [],
       p4_yes: [],
+
+      // Initialize FPL ranges
+      p1_q2_fpl: [],
+      p1_q2_fpl_count: 1,
+
+      p1_q3_fpl: [],
+      p1_q3_fpl_count: 1,
+
+      p2_q2_fpl: [],
+      p2_q2_fpl_count: 1,
+
+      p2_q3_fpl: [],
+      p2_q3_fpl_count: 1,
     };
 
     this.setConditional = this.setConditional.bind(this);
     this.setProgramDisable = this.setProgramDisable(this);
     this.setQuestionDisable = this.setQuestionDisable.bind(this);
     this.setKeyword = this.setKeyword.bind(this);
+    this.newFPL = this.newFPL.bind(this);
   }
 
+  componentDidMount() {
+    // Set initial component for FPL ranges
+    const initialFPL = [
+      {
+        id: 1,
+        component: <FPL />,
+      },
+    ];
+
+    this.setState({
+      p1_q2_fpl: initialFPL,
+      p1_q3_fpl: initialFPL,
+      p2_q2_fpl: initialFPL,
+      p2_q3_fpl: initialFPL,
+    });
+  }
+
+  /**
+   * Add new FPL component to list (state) and update state
+   *
+   * @param {String} list
+   */
+  newFPL(list) {
+    let newID = this.state[list + "_count"] + 1;
+    console.log("newID: ", newID);
+    let newFPL = {
+      id: newID,
+      component: <FPL />,
+    };
+    this.setState({
+      [`${list}_count`]: newID,
+      [`${list}`]: this.state[list].concat(newFPL),
+    });
+  }
   /**
    * Add/remove keyword from display array
    *
@@ -219,9 +270,7 @@ class Section1 extends Component {
                                     mask="currency"
                                   />
                                 </div>
-                              ) : (
-                                ""
-                              )}
+                              ) : null}
                             </div>
                           </div>
                           <div className="question-container">
@@ -282,7 +331,17 @@ class Section1 extends Component {
                                       b) Indicate the premium fee ranges and
                                       corresponding FPL ranges.
                                     </legend>
-                                    <FPL />
+                                    {this.state.p1_q2_fpl.map((element) => (
+                                      <div>{element.component}</div>
+                                    ))}
+                                    <button
+                                      onClick={(e) => this.newFPL("p1_q2_fpl")}
+                                      type="button"
+                                      className="ds-c-button ds-c-button--primary"
+                                    >
+                                      Add another fee?
+                                      <FontAwesomeIcon icon={faPlus} />
+                                    </button>
                                   </fieldset>
                                 </div>
                               ) : (
@@ -333,7 +392,17 @@ class Section1 extends Component {
                                   a) Indicate the premium fee ranges and
                                   corresponding FPL ranges Max family premium
                                   fees tiered by FPL
-                                  <FPL />
+                                  {this.state.p1_q3_fpl.map((element) => (
+                                    <div>{element.component}</div>
+                                  ))}
+                                  <button
+                                    onClick={(e) => this.newFPL("p1_q3_fpl")}
+                                    type="button"
+                                    className="ds-c-button ds-c-button--primary"
+                                  >
+                                    Add another fee?
+                                    <FontAwesomeIcon icon={faPlus} />
+                                  </button>
                                 </div>
                               ) : (
                                 ""
@@ -552,23 +621,19 @@ class Section1 extends Component {
                                       b) Indicate the premium fee ranges and
                                       corresponding FPL ranges.
                                     </legend>
-                                    Premium fees tiered by FPL
-                                    <ChoiceList
-                                      choices={[
-                                        {
-                                          label: "Yes",
-                                          value: "yes",
-                                        },
-                                        {
-                                          label: "No",
-                                          value: "no",
-                                        },
-                                      ]}
-                                      className="p2_q2__a_1"
-                                      label=""
-                                      name="p2_q2__a_1"
-                                      onChange={this.setConditional}
-                                    />
+                                    {this.state.p2_q2_fpl.map((element) => (
+                                      <div key={element.id}>
+                                        {element.component}
+                                      </div>
+                                    ))}
+                                    <button
+                                      onClick={(e) => this.newFPL("p2_q2_fpl")}
+                                      type="button"
+                                      className="ds-c-button ds-c-button--primary"
+                                    >
+                                      Add another fee?
+                                      <FontAwesomeIcon icon={faPlus} />
+                                    </button>
                                   </fieldset>
                                 </div>
                               ) : (
@@ -618,6 +683,19 @@ class Section1 extends Component {
                                 <div className="conditional">
                                   a) Indicate the premium fee ranges and
                                   corresponding FPL ranges.
+                                  {this.state.p2_q3_fpl.map((element) => (
+                                    <div key={element.id}>
+                                      {element.component}
+                                    </div>
+                                  ))}
+                                  <button
+                                    onClick={(e) => this.newFPL("p2_q3_fpl")}
+                                    type="button"
+                                    className="ds-c-button ds-c-button--primary"
+                                  >
+                                    Add another fee?
+                                    <FontAwesomeIcon icon={faPlus} />
+                                  </button>
                                 </div>
                               ) : (
                                 ""

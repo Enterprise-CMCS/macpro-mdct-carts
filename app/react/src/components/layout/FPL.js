@@ -6,6 +6,7 @@ class FPL extends Component {
     return (
       <div className="fpl">
         <h3>Premium fee</h3>
+        <div className="ds-c-field__hint">Hint Text!</div>
         <div className="fpl-outer ds-l-container">
           <div className="ds-l-row">
             <div className="fpl-container fpl-start">
@@ -24,7 +25,7 @@ class FPL extends Component {
               </div>
             </div>
             <div className="fpl-arrow">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              <i clasName="fa fa-arrow-right" aria-hidden="true"></i>
             </div>
             <div className="fpl-container fpl-end">
               <TextField
@@ -56,7 +57,7 @@ class FPL extends Component {
               />
             </div>
             <div className="fpl-arrow">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              <i className="fa fa-arrow-right" aria-hidden="true"></i>
             </div>
             <div className="fpl-container fpl-end">
               <TextField
