@@ -4,6 +4,8 @@ import NumberFormat from "react-number-format";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import NavigationButton from "../../layout/NavigationButtons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
@@ -44,18 +46,47 @@ class Section1 extends Component {
       fillFormTitle: "Same as last year",
       mchipDisable: false,
       schipDisable: false,
+
       p1q2Disable: true,
       p2q2Disable: true,
       p3_yes: [],
       p4_yes: [],
+      FPLArray: [],
+      FPLCount: 1,
     };
 
     this.setConditional = this.setConditional.bind(this);
     this.setProgramDisable = this.setProgramDisable(this);
     this.setQuestionDisable = this.setQuestionDisable.bind(this);
     this.setKeyword = this.setKeyword.bind(this);
+    this.newFPL = this.newFPL.bind(this);
   }
 
+  componentDidMount() {
+    const initialFPL = [
+      {
+        id: this.state.FPLCount,
+        component: <FPL />,
+      },
+    ];
+
+    this.setState({
+      FPLArray: initialFPL,
+    });
+  }
+
+  newFPL(el) {
+    let newID = this.state.FPLCount++;
+    let newFPL = {
+      id: newID,
+      component: <FPL />,
+    };
+
+    this.setState({
+      FPLCount: newID,
+      FPLArray: this.state.FPLArray.concat(newFPL),
+    });
+  }
   /**
    * Add/remove keyword from display array
    *
@@ -219,9 +250,7 @@ class Section1 extends Component {
                                     mask="currency"
                                   />
                                 </div>
-                              ) : (
-                                ""
-                              )}
+                              ) : null}
                             </div>
                           </div>
                           <div className="question-container">
@@ -282,7 +311,17 @@ class Section1 extends Component {
                                       b) Indicate the premium fee ranges and
                                       corresponding FPL ranges.
                                     </legend>
-                                    <FPL />
+                                    {this.state.FPLArray.map((element) => (
+                                      <div>{element.component}</div>
+                                    ))}
+                                    <button
+                                      onClick={this.newFPL}
+                                      type="button"
+                                      className="ds-c-button ds-c-button--primary"
+                                    >
+                                      Add another fee?
+                                      <FontAwesomeIcon icon={faPlus} />
+                                    </button>
                                   </fieldset>
                                 </div>
                               ) : (
