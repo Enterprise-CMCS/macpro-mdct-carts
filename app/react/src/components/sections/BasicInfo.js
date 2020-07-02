@@ -18,12 +18,14 @@ import statesArray from "../Utils/statesArray";
 const validEmailRegex = 
   RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
+const validTelephoneRegex =
+  RegExp(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
+
 class BasicInfo extends Component {
   constructor(props) {
     super(props);
 
     this.loadAnswers = this.loadAnswers.bind(this);
-    this.selectInput = this.selectInput.bind(this);
 
     this.state = {
       selectedState: this.props.abbr,
@@ -55,32 +57,16 @@ class BasicInfo extends Component {
       [evt.target.name]: evt.target.value,
     });
 
+    //Inline validation/error messaging for email and phone
     switch (evt.target.name) {
       case 'contactEmail':
         errors.email = validEmailRegex.test(evt.target.value) ? "" : "Please enter a valid email";
         break;
       case 'contactPhone':
-        errors.phone = "" ? "" : "Please enter a valid 10 digit phone number";
+        errors.phone = validTelephoneRegex.test(evt.target.value) ? "" : "Please enter a valid 10 digit phone number";
         break;
       default:
         break;
-    }
-  }
-
-  selectInput(id, option, active) {
-    let selection = document.getElementById(id).getElementsByTagName("input");
-
-    //clear any selections made by the user
-    for (let input of selection) {
-      input.checked = false;
-    }
-
-    if (active) {
-      selection[option].checked = true;
-    } else {
-      for (let input of selection) {
-        input.checked = false;
-      }
     }
   }
 
@@ -109,24 +95,29 @@ class BasicInfo extends Component {
       el.target.title = "Undo";
     }
 
-    switch (el.target.name) {
-      case "contactName":
-        this.setState({ contactName: this.state.ly_contactName });
-        break;
-      case "contactTitle":
-        this.setState({ contactTitle: this.state.ly_contactTitle });
-        break;
-      case "contactEmail":
-        this.setState({ contactEmail: this.state.ly_contactEmail });
-        break;
-      case "contactAddress":
-        this.setState({ contactAddress: this.state.ly_contactAddress });
-        break;
-      case "contactPhone":
-        this.setState({ contactPhone: this.state.ly_contactPhone });
-        break;
-      default:
-        break;
+    if (isActive) {
+      switch (el.target.name) {
+        case "contactName":
+          this.setState({ contactName: this.state.ly_contactName });
+          break;
+        case "contactTitle":
+          this.setState({ contactTitle: this.state.ly_contactTitle });
+          break;
+        case "contactEmail":
+          this.setState({ contactEmail: this.state.ly_contactEmail });
+          break;
+        case "contactAddress":
+          this.setState({ contactAddress: this.state.ly_contactAddress });
+          break;
+        case "contactPhone":
+          this.setState({ contactPhone: this.state.ly_contactPhone });
+          break;
+        default:
+          break;
+      }
+    }
+    else {
+      this.setState({ [el.target.name]: "" });
     }
   }
 
@@ -269,6 +260,7 @@ class BasicInfo extends Component {
                             value={this.state.contactPhone}
                             onChange={this.handleChange}
                           />
+                          {this.state.errors.phone.length > 0 && <span className='error'>{this.state.errors.phone}</span>}
                         </div>
                       </div>
                     </form>
