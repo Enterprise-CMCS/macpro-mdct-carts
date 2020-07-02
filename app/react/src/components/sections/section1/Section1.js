@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
-import Sidebar from "../../layout/Sidebar";
-import PageInfo from "../../layout/PageInfo";
-import NavigationButton from "../../layout/NavigationButtons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Sidebar from "../../layout/Sidebar";
+import PageInfo from "../../layout/PageInfo";
+import FormNavigation from "../../layout/FormNavigation";
+import FormActions from "../../layout/FormActions";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
@@ -2108,16 +2109,10 @@ class Section1 extends Component {
                         </div>
                       </div>
                     </form>
+                    <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
                   </TabPanel>
                 </Tabs>
-                <div className="nav-buttons">
-                  <NavigationButton
-                    direction="Previous"
-                    destination="/basic-info"
-                  />
-
-                  <NavigationButton direction="Next" destination="/2a" />
-                </div>
+                <FormActions />
               </div>
             </div>
           </div>

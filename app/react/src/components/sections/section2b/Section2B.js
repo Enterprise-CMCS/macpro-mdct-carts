@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "../../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import PageInfo from "../../layout/PageInfo";
-import NavigationButton from "../../layout/NavigationButtons";
+import FormNavigation from "../../layout/FormNavigation";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import {
@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import { sliceId } from "../../Utils/helperFunctions";
+import FormActions from "../../layout/FormActions";
 
 class Section2b extends Component {
   constructor(props) {
@@ -149,6 +150,7 @@ class Section2b extends Component {
                         </button>
                       </div>
                     </form>
+                    <FormNavigation nextUrl="/3c" previousUrl="/2a" />
                   </div>
                 </TabPanel>
 
@@ -186,15 +188,12 @@ class Section2b extends Component {
                           ))}
                         </Accordion>
                       </form>
+                      <FormNavigation nextUrl="/3c" previousUrl="/2a" />
                     </div>
                   </div>
                 </TabPanel>
               </Tabs>
-              <div className="nav-buttons">
-                <NavigationButton direction="Previous" destination="/2a" />
-
-                <NavigationButton direction="Next" destination="/3c" />
-              </div>
+              <FormActions />
             </div>
           </div>
         </div>

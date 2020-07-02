@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
-import NavigationButton from "../layout/NavigationButtons";
+import FormNavigation from "../layout/FormNavigation";
+import FormActions from "../layout/FormActions";
 import {
   TextField,
   Dropdown,
@@ -360,11 +361,10 @@ class BasicInfo extends Component {
                       </div>
                     </form>
                   </TabPanel>
+                  <FormNavigation nextUrl="/1" />
                 </Tabs>
-
-                <div className="nav-buttons">
-                  <NavigationButton direction="Next" destination="/1" />
-                </div>
+                
+                <FormActions />
 
               </div>
             </div>
