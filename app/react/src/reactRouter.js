@@ -12,7 +12,6 @@ let VisibleSidebar = window.location.pathname === "/" ? null : <Sidebar />;
 
 const Routes = () => (
   <Router>
-<<<<<<< HEAD
     <div className="ds-l-container">
       <div className="ds-l-row">
         {VisibleSidebar}
@@ -25,18 +24,6 @@ const Routes = () => (
           <Route exact path="/3c" component={Section3c} />
         </Switch>
       </div>
-=======
-    <div className="ds-l-row">
-      {VisibleSidebar}
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/basic-info" component={BasicInfo} />
-        <Route exact path="/1" component={Section1} />
-        <Route exact path="/2a" component={Section2a} />
-        <Route exact path="/2b" component={Section2b} />
-        <Route exact path="/3c" component={Section3c} />
-      </Switch>
->>>>>>> 2ef44af86f2f7785182f3176da203f2714ef3ed1
     </div>
   </Router>
 );

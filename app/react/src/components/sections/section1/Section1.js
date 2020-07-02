@@ -2148,21 +2148,12 @@ class Section1 extends Component {
                         )}
                       </div>
                     </div>
-<<<<<<< HEAD
                   </div>
                 </form>
                 <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
               </TabPanel>
             </Tabs>
             <FormActions />
-=======
-                  </form>
-                  <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
-                </TabPanel>
-              </Tabs>
-              <FormActions />
-            </div>
->>>>>>> 2ef44af86f2f7785182f3176da203f2714ef3ed1
           </div>
         </div>
       </div>
