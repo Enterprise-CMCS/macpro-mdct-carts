@@ -7,6 +7,10 @@ class FPL extends Component {
     this.state = {
       fpl_error_fee: false,
       fpl_error_percent: false,
+      fpl_fee_start: null,
+      fpl_fee_end: null,
+      fpl_percent_start: null,
+      fpl_percent_end: null,
     };
     this.calculateFPL = this.calculateFPL.bind(this);
   }
@@ -14,24 +18,24 @@ class FPL extends Component {
   calculateFPL(evt) {
     // percentStart < percentEnd
 
-    console.log("start???", this.percentStart);
-    let percent = false;
-    if (this.percentStart && this.percentEnd) {
-      if (this.percentEnd < this.percentStart) {
-        percent = true;
+    console.log("FEE start???", this.feeStart.value);
+    let percentBoolean = false;
+    if (this.percentStart.value && this.percentEnd.value) {
+      if (parseInt(this.percentEnd.value) < parseInt(this.percentStart.value)) {
+        percentBoolean = true;
       }
     }
 
     //feeStart < feeEnd
-    let fee = false;
-    if (this.feeStart && this.feeEnd) {
-      if (this.feeEnd < this.feeStart) {
-        fee = true;
+    let feeBoolean = false;
+    if (this.feeStart.value && this.feeEnd.value) {
+      if (parseInt(this.feeEnd.value) < parseInt(this.feeStart.value)) {
+        feeBoolean = true;
       }
     }
     this.setState({
-      fpl_error_fee: fee,
-      fpl_error_percent: percent,
+      fpl_error_fee: feeBoolean,
+      fpl_error_percent: percentBoolean,
     });
   }
 
@@ -50,7 +54,7 @@ class FPL extends Component {
                 pattern="[0-9]*"
                 type="text"
                 name="fpl-starts-at"
-                ref={(percentStart) => (this.percentStart = percentStart)}
+                inputRef={(percentStart) => (this.percentStart = percentStart)}
                 onBlur={this.calculateFPL}
               />
               <div
@@ -70,7 +74,7 @@ class FPL extends Component {
                 pattern="[0-9]*"
                 type="text"
                 name="fpl-starts-at"
-                ref={(percentEnd) => (this.percentEnd = percentEnd)}
+                inputRef={(percentEnd) => (this.percentEnd = percentEnd)}
                 onBlur={this.calculateFPL}
               />
               <div
@@ -79,10 +83,12 @@ class FPL extends Component {
                 %
               </div>
             </div>
-            {this.state.fpl_error_percent ? (
-              <div> Your percents are wrong</div>
-            ) : null}
           </div>
+          {this.state.fpl_error_percent ? (
+            <div className="ds-l-row fpl-error error">
+              End percent cannot be lower than start percent
+            </div>
+          ) : null}
 
           <div className="ds-l-row fpl-fee">
             <div className="fpl-container fpl-start">
@@ -94,7 +100,7 @@ class FPL extends Component {
                 pattern="[0-9]*"
                 type="text"
                 name="fpl-starts-at"
-                ref={(feeStart) => (this.feeStart = feeStart)}
+                inputRef={(feeStart) => (this.feeStart = feeStart)}
                 onBlur={this.calculateFPL}
               />
             </div>
@@ -110,12 +116,17 @@ class FPL extends Component {
                 pattern="[0-9]*"
                 type="text"
                 name="fpl-starts-at"
-                ref={(feeEnd) => (this.feeEnd = feeEnd)}
+                inputRef={(feeEnd) => (this.feeEnd = feeEnd)}
                 onBlur={this.calculateFPL}
               />
             </div>
-            {this.state.fpl_error_fee ? <div> Your fees are wrong</div> : null}
           </div>
+
+          {this.state.fpl_error_fee ? (
+            <div className="ds-l-row fpl-error error">
+              End fee cannot be lower than start fee
+            </div>
+          ) : null}
         </div>
       </div>
     );
