@@ -15,11 +15,13 @@ import {
 import FillForm from "../layout/FillForm";
 import statesArray from "../Utils/statesArray";
 
-const validEmailRegex = 
-  RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
 
-const validTelephoneRegex =
-  RegExp(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
+const validTelephoneRegex = RegExp(
+  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
 
 class BasicInfo extends Component {
   constructor(props) {
@@ -59,11 +61,15 @@ class BasicInfo extends Component {
 
     //Inline validation/error messaging for email and phone
     switch (evt.target.name) {
-      case 'contactEmail':
-        errors.email = validEmailRegex.test(evt.target.value) ? "" : "Please enter a valid email";
+      case "contactEmail":
+        errors.email = validEmailRegex.test(evt.target.value)
+          ? ""
+          : "Please enter a valid email";
         break;
-      case 'contactPhone':
-        errors.phone = validTelephoneRegex.test(evt.target.value) ? "" : "Please enter a valid 10 digit phone number";
+      case "contactPhone":
+        errors.phone = validTelephoneRegex.test(evt.target.value)
+          ? ""
+          : "Please enter a valid 10 digit phone number";
         break;
       default:
         break;
@@ -90,8 +96,7 @@ class BasicInfo extends Component {
 
     if (isActive) {
       textFieldCopy = "This is what you wrote last year.";
-      textAreaCopy =
-        "This is what you wrote last year.";
+      textAreaCopy = "This is what you wrote last year.";
       el.target.title = "Undo";
     }
 
@@ -115,248 +120,248 @@ class BasicInfo extends Component {
         default:
           break;
       }
-    }
-    else {
+    } else {
       this.setState({ [el.target.name]: "" });
     }
   }
 
   render() {
     return (
-      <div className="section-basic-info">
-        <div className="ds-l-container">
-          <div className="ds-l-row">
-            <div className="sidebar ds-l-col--3">
-              <Sidebar />
-            </div>
+      <div className="section-basic-info ds-l-col--9">
+        <div className="main">
+          <PageInfo />
+          <div className="section-content">
+            <Tabs>
+              <TabPanel id="tab-form" tab="Basic Information">
+                <form>
+                  <Dropdown
+                    label="1. State or territory name: "
+                    size="medium"
+                    name="selectedState"
+                    options={statesArray}
+                    value={this.state.selectedState}
+                    onChange={this.handleChange}
+                    disabled
+                  />
 
-            <div className="main ds-l-col--9">
-              <PageInfo />
-              <div className="ds-base">
+                  <ChoiceList
+                    choices={[
+                      {
+                        label: "Combination state (M-CHIP and S-CHIP)",
+                        value: "comboCHIP",
+                        checked:
+                          this.state.programType == "comboCHIP" ? true : false,
+                      },
+                      {
+                        label: "CHIP Medicaid Expansion only (M-CHIP)",
+                        value: "mCHIP",
+                        checked:
+                          this.state.programType == "mCHIP" ? true : false,
+                      },
+                      {
+                        label: "CHIP Separate Program only (S-CHIP) ",
+                        value: "sCHIP",
+                        checked:
+                          this.state.programType == "sCHIP" ? true : false,
+                      },
+                    ]}
+                    label="2. Program type: "
+                    name="programType"
+                    onChange={this.handleChange}
+                    disabled
+                  />
 
-                <Tabs>
-                  <TabPanel id="tab-form" tab="Basic Information">
-                    <form>
-                      <Dropdown
-                        label="1. State or territory name: "
-                        size="medium"
-                        name="selectedState"
-                        options={statesArray}
-                        value={this.state.selectedState}
-                        onChange={this.handleChange}
-                        disabled
+                  <TextField
+                    label="3. CHIP program name(s): "
+                    name="programName"
+                    value={this.state.programName}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+
+                  <div>
+                    <a href="mailto:cartshelp@cms.hhs.gov">This is incorrect</a>{" "}
+                  </div>
+
+                  <div>
+                    <h3>
+                      Who should we contact if we have any questions about your
+                      report?
+                    </h3>
+                    <div className="question-container">
+                      <FillForm
+                        name="contactName"
+                        title={this.state.fillFormTitle}
+                        onClick={this.loadAnswers}
                       />
-
-                      <ChoiceList
-                        choices={[
-                          {
-                            label: "Combination state (M-CHIP and S-CHIP)",
-                            value: "comboCHIP",
-                            checked: this.state.programType == "comboCHIP" ? true : false,
-                          },
-                          {
-                            label: "CHIP Medicaid Expansion only (M-CHIP)",
-                            value: "mCHIP",
-                            checked: this.state.programType == "mCHIP" ? true : false,
-                          },
-                          {
-                            label: "CHIP Separate Program only (S-CHIP) ",
-                            value: "sCHIP",
-                            checked: this.state.programType == "sCHIP" ? true : false,
-                          },
-                        ]}
-                        label="2. Program type: "
-                        name="programType"
-                        onChange={this.handleChange}
-                        disabled
-                      />
-
                       <TextField
-                        label="3. CHIP program name(s): "
-                        name="programName"
-                        value={this.state.programName}
+                        label="4. Contact name: "
+                        name="contactName"
+                        value={this.state.contactName}
                         onChange={this.handleChange}
-                        disabled
                       />
-
-                      <div>
-                        <a href="mailto:cartshelp@cms.hhs.gov">This is incorrect</a>{" "}
-                      </div>
-
-                      <div>
-                        <h3>
-                          Who should we contact if we have any questions about your
-                          report?
-                        </h3>
-                        <div className="question-container">
-                          <FillForm
-                            name="contactName"
-                            title={this.state.fillFormTitle}
-                            onClick={this.loadAnswers}
-                          />
-                          <TextField 
-                            label="4. Contact name: " 
-                            name="contactName" 
-                            value={this.state.contactName}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="question-container">
-                          <FillForm
-                            name="contactTitle"
-                            title={this.state.fillFormTitle}
-                            onClick={this.loadAnswers}
-                          />
-                          <TextField 
-                            label="5. Job title: " 
-                            name="contactTitle" 
-                            value={this.state.contactTitle}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="question-container">
-                          <FillForm
-                            name="contactEmail"
-                            title={this.state.fillFormTitle}
-                            onClick={this.loadAnswers}
-                          />
-                          <TextField
-                            type="email"
-                            label="6. Email: "
-                            name="contactEmail"
-                            value={this.state.contactEmail}
-                            onChange={this.handleChange}
-                          />
-                          {this.state.errors.email.length > 0 && <span className='error'>{this.state.errors.email}</span>}
-                        </div>
-                        <div className="question-container">
-                          <FillForm
-                            name="contactAddress"
-                            title={this.state.fillFormTitle}
-                            onClick={this.loadAnswers}
-                          />
-                          <TextField
-                            label="7. Full mailing address: "
-                            hint="Include city, state and zip code"
-                            name="contactAddress"
-                            multiline
-                            rows="4"
-                            value={this.state.contactAddress}
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <div className="question-container">
-                          <FillForm
-                            name="contactPhone"
-                            title={this.state.fillFormTitle}
-                            onClick={this.loadAnswers}
-                          />
-                          <TextField 
-                            type="tel"
-                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            label="8. Phone number: " 
-                            name="contactPhone" 
-                            mask="phone"
-                            value={this.state.contactPhone}
-                            onChange={this.handleChange}
-                          />
-                          {this.state.errors.phone.length > 0 && <span className='error'>{this.state.errors.phone}</span>}
-                        </div>
-                      </div>
-                    </form>
-                    <FormNavigation nextUrl="/1" />
-                  </TabPanel>
-
-                  <TabPanel id="tab-lastyear" tab="FY2019 answers">
-                  <form>
-                      <Dropdown
-                        label="1. State or territory name: "
-                        size="medium"
-                        name="selectedState"
-                        options={statesArray}
-                        value={this.state.selectedState}
-                        onChange={this.handleChange}
-                        disabled
+                    </div>
+                    <div className="question-container">
+                      <FillForm
+                        name="contactTitle"
+                        title={this.state.fillFormTitle}
+                        onClick={this.loadAnswers}
                       />
-
-                      <ChoiceList
-                        choices={[
-                          {
-                            label: "Combination state (M-CHIP and S-CHIP)",
-                            value: "comboCHIP",
-                            checked: this.state.programType == "comboCHIP" ? true : false,
-                          },
-                          {
-                            label: "CHIP Medicaid Expansion only (M-CHIP)",
-                            value: "mCHIP",
-                            checked: this.state.programType == "mCHIP" ? true : false,
-                          },
-                          {
-                            label: "CHIP Separate Program only (S-CHIP) ",
-                            value: "sCHIP",
-                            checked: this.state.programType == "sCHIP" ? true : false,
-                          },
-                        ]}
-                        label="2. Program type: "
-                        name="programType"
-                        onChange={this.handleChange}
-                        disabled
-                      />
-
                       <TextField
-                        label="3. CHIP program name(s): "
-                        name="programName"
-                        value={this.state.programName}
+                        label="5. Job title: "
+                        name="contactTitle"
+                        value={this.state.contactTitle}
                         onChange={this.handleChange}
-                        disabled
                       />
+                    </div>
+                    <div className="question-container">
+                      <FillForm
+                        name="contactEmail"
+                        title={this.state.fillFormTitle}
+                        onClick={this.loadAnswers}
+                      />
+                      <TextField
+                        type="email"
+                        label="6. Email: "
+                        name="contactEmail"
+                        value={this.state.contactEmail}
+                        onChange={this.handleChange}
+                      />
+                      {this.state.errors.email.length > 0 && (
+                        <span className="error">{this.state.errors.email}</span>
+                      )}
+                    </div>
+                    <div className="question-container">
+                      <FillForm
+                        name="contactAddress"
+                        title={this.state.fillFormTitle}
+                        onClick={this.loadAnswers}
+                      />
+                      <TextField
+                        label="7. Full mailing address: "
+                        hint="Include city, state and zip code"
+                        name="contactAddress"
+                        multiline
+                        rows="4"
+                        value={this.state.contactAddress}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div className="question-container">
+                      <FillForm
+                        name="contactPhone"
+                        title={this.state.fillFormTitle}
+                        onClick={this.loadAnswers}
+                      />
+                      <TextField
+                        type="tel"
+                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                        label="8. Phone number: "
+                        name="contactPhone"
+                        mask="phone"
+                        value={this.state.contactPhone}
+                        onChange={this.handleChange}
+                      />
+                      {this.state.errors.phone.length > 0 && (
+                        <span className="error">{this.state.errors.phone}</span>
+                      )}
+                    </div>
+                  </div>
+                </form>
+                <FormNavigation nextUrl="/1" />
+              </TabPanel>
 
-                      <div>
-                        <h3>
-                          Who should we contact if we have any questions about your
-                          report?
-                        </h3>
-                        <TextField 
-                          label="4. Contact name: " 
-                          name="ly_contactName" 
-                          value={this.state.ly_contactName}
-                          disabled
-                        />
-                        <TextField 
-                          label="5. Job title: " 
-                          name="contactTitle" 
-                          value={this.state.ly_contactTitle}
-                          disabled
-                        />
-                        <TextField
-                          type="email"
-                          label="6. Email: "
-                          name="contactEmail"
-                          value={this.state.ly_contactEmail}
-                          disabled
-                        />
-                        <TextField
-                          label="7. Full mailing address: "
-                          hint="Include city, state and zip code"
-                          name="contactAddress"
-                          multiline
-                          rows="4"
-                          value={this.state.ly_contactAddress}
-                          disabled
-                        />
-                        <TextField 
-                          label="8. Phone number: " 
-                          name="contactPhone"
-                          value={this.state.ly_contactPhone}
-                          disabled
-                        />
-                      </div>
-                    </form>
-                  </TabPanel>
-                </Tabs>
-                <FormActions />
-              </div>
-            </div>
+              <TabPanel id="tab-lastyear" tab="FY2019 answers">
+                <form>
+                  <Dropdown
+                    label="1. State or territory name: "
+                    size="medium"
+                    name="selectedState"
+                    options={statesArray}
+                    value={this.state.selectedState}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+
+                  <ChoiceList
+                    choices={[
+                      {
+                        label: "Combination state (M-CHIP and S-CHIP)",
+                        value: "comboCHIP",
+                        checked:
+                          this.state.programType == "comboCHIP" ? true : false,
+                      },
+                      {
+                        label: "CHIP Medicaid Expansion only (M-CHIP)",
+                        value: "mCHIP",
+                        checked:
+                          this.state.programType == "mCHIP" ? true : false,
+                      },
+                      {
+                        label: "CHIP Separate Program only (S-CHIP) ",
+                        value: "sCHIP",
+                        checked:
+                          this.state.programType == "sCHIP" ? true : false,
+                      },
+                    ]}
+                    label="2. Program type: "
+                    name="programType"
+                    onChange={this.handleChange}
+                    disabled
+                  />
+
+                  <TextField
+                    label="3. CHIP program name(s): "
+                    name="programName"
+                    value={this.state.programName}
+                    onChange={this.handleChange}
+                    disabled
+                  />
+
+                  <div>
+                    <h3>
+                      Who should we contact if we have any questions about your
+                      report?
+                    </h3>
+                    <TextField
+                      label="4. Contact name: "
+                      name="ly_contactName"
+                      value={this.state.ly_contactName}
+                      disabled
+                    />
+                    <TextField
+                      label="5. Job title: "
+                      name="contactTitle"
+                      value={this.state.ly_contactTitle}
+                      disabled
+                    />
+                    <TextField
+                      type="email"
+                      label="6. Email: "
+                      name="contactEmail"
+                      value={this.state.ly_contactEmail}
+                      disabled
+                    />
+                    <TextField
+                      label="7. Full mailing address: "
+                      hint="Include city, state and zip code"
+                      name="contactAddress"
+                      multiline
+                      rows="4"
+                      value={this.state.ly_contactAddress}
+                      disabled
+                    />
+                    <TextField
+                      label="8. Phone number: "
+                      name="contactPhone"
+                      value={this.state.ly_contactPhone}
+                      disabled
+                    />
+                  </div>
+                </form>
+              </TabPanel>
+            </Tabs>
+            <FormActions />
           </div>
         </div>
       </div>
