@@ -34,6 +34,11 @@ class BasicInfo extends Component {
       contactEmail: "",
       contactAddress: "",
       contactPhone: 0,
+      ly_contactName: "John Smith",
+      ly_contactTitle: "NY CHIP Program Manager",
+      ly_contactEmail: "jsmith@ny.gov",
+      ly_contactAddress: "123 Main Street, Suite 456, New York, NY 78945",
+      ly_contactPhone: "123-456-7890",
       errors: {
         email: "",
         phone: "",
@@ -106,19 +111,19 @@ class BasicInfo extends Component {
 
     switch (el.target.name) {
       case "contactName":
-        this.setState({ contactName: textFieldCopy });
+        this.setState({ contactName: this.state.ly_contactName });
         break;
       case "contactTitle":
-        this.setState({ contactTitle: textFieldCopy });
+        this.setState({ contactTitle: this.state.ly_contactTitle });
         break;
       case "contactEmail":
-        this.setState({ contactEmail: textFieldCopy });
+        this.setState({ contactEmail: this.state.ly_contactEmail });
         break;
       case "contactAddress":
-        this.setState({ contactAddress: textFieldCopy });
+        this.setState({ contactAddress: this.state.ly_contactAddress });
         break;
       case "contactPhone":
-        this.setState({ contactPhone: textFieldCopy });
+        this.setState({ contactPhone: this.state.ly_contactPhone });
         break;
       default:
         break;
@@ -201,6 +206,7 @@ class BasicInfo extends Component {
                           <TextField 
                             label="4. Contact name: " 
                             name="contactName" 
+                            value={this.state.contactName}
                             onChange={this.handleChange}
                           />
                         </div>
@@ -213,6 +219,7 @@ class BasicInfo extends Component {
                           <TextField 
                             label="5. Job title: " 
                             name="contactTitle" 
+                            value={this.state.contactTitle}
                             onChange={this.handleChange}
                           />
                         </div>
@@ -226,9 +233,10 @@ class BasicInfo extends Component {
                             type="email"
                             label="6. Email: "
                             name="contactEmail"
+                            value={this.state.contactEmail}
                             onChange={this.handleChange}
                           />
-                        {this.state.errors.email.length > 0 && <span className='error'>{this.state.errors.email}</span>}
+                          {this.state.errors.email.length > 0 && <span className='error'>{this.state.errors.email}</span>}
                         </div>
                         <div className="question-container">
                           <FillForm
@@ -242,6 +250,7 @@ class BasicInfo extends Component {
                             name="contactAddress"
                             multiline
                             rows="4"
+                            value={this.state.contactAddress}
                             onChange={this.handleChange}
                           />
                         </div>
@@ -257,22 +266,13 @@ class BasicInfo extends Component {
                             label="8. Phone number: " 
                             name="contactPhone" 
                             mask="phone"
+                            value={this.state.contactPhone}
                             onChange={this.handleChange}
                           />
                         </div>
-                        <div className="form-options">
-                          <button
-                            type="submit"
-                            className="ds-c-button ds-c-button--disabled"
-                          >
-                            Saved
-                          </button>
-                          <a href="#export" id="export">
-                            Export
-                          </a>
-                        </div>
                       </div>
                     </form>
+                    <FormNavigation nextUrl="/1" />
                   </TabPanel>
 
                   <TabPanel id="tab-lastyear" tab="FY2019 answers">
@@ -326,21 +326,21 @@ class BasicInfo extends Component {
                         </h3>
                         <TextField 
                           label="4. Contact name: " 
-                          name="contactName" 
-                          value="This is what you wrote last year."
+                          name="ly_contactName" 
+                          value={this.state.ly_contactName}
                           disabled
                         />
                         <TextField 
                           label="5. Job title: " 
                           name="contactTitle" 
-                          value="This is what you wrote last year."
+                          value={this.state.ly_contactTitle}
                           disabled
                         />
                         <TextField
                           type="email"
                           label="6. Email: "
                           name="contactEmail"
-                          value="This is what you wrote last year."
+                          value={this.state.ly_contactEmail}
                           disabled
                         />
                         <TextField
@@ -349,23 +349,20 @@ class BasicInfo extends Component {
                           name="contactAddress"
                           multiline
                           rows="4"
-                          value="This is what you wrote last year."
+                          value={this.state.ly_contactAddress}
                           disabled
                         />
                         <TextField 
                           label="8. Phone number: " 
                           name="contactPhone"
-                          value="This is what you wrote last year."
+                          value={this.state.ly_contactPhone}
                           disabled
                         />
                       </div>
                     </form>
                   </TabPanel>
-                  <FormNavigation nextUrl="/1" />
                 </Tabs>
-                
                 <FormActions />
-
               </div>
             </div>
           </div>
