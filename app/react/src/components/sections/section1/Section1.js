@@ -173,12 +173,12 @@ class Section1 extends Component {
   //false means the section will be enabled
   setProgramDisable() {
     {
-      this.props.programType === "M-CHIP"
+      this.props.programType === "mCHIP"
         ? (this.state.mchipDisable = true)
         : (this.statemchipDisable = false);
     }
     {
-      this.props.programType === "S-CHIP"
+      this.props.programType === "sCHIP"
         ? (this.state.schipDisable = true)
         : (this.stateschipDisable = false);
     }
