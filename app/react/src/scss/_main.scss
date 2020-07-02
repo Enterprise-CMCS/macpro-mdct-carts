@@ -282,6 +282,7 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 
 .action-buttons {
+  position: relative;
   text-align: center;
   @media only screen and (min-width: 768px) {
     text-align: right;
@@ -289,5 +290,47 @@ div[data-state="open"] .accordion-header .arrow:before {
   & > div {
     display: inline-block;
     margin: ($margin * 2) $margin;
+  }
+  .share-container {
+    background: $white;
+    box-shadow: 0px 0px 8px $color-gray;
+    display: none;
+    padding: $padding * 2;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    top: 60px;
+    width: 260px;
+
+    &.active {
+      display: block;
+    }
+
+    h4 {
+      margin: 0;
+    }
+
+    .close {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      svg {
+        color: $color-gray-light;
+        &:hover {
+          color: $color-gray;
+        }
+      }
+    }
+
+    .form,
+    .copy {
+      display: inline-block;
+    }
+
+    .copy {
+      svg {
+        color: $color-gray-light;
+      }
+    }
   }
 }
