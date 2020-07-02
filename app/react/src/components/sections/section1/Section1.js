@@ -307,6 +307,10 @@ class Section1 extends Component {
                                       label: "No",
                                       value: "no",
                                     },
+                                    {
+                                      label: "N/A",
+                                      value: "na",
+                                    },
                                   ]}
                                   className="p1_q2__a"
                                   label=""
@@ -603,6 +607,10 @@ class Section1 extends Component {
                                     {
                                       label: "No",
                                       value: "no",
+                                    },
+                                    {
+                                      label: "N/A",
+                                      value: "na",
                                     },
                                   ]}
                                   className="p2_q2__a"
@@ -1899,6 +1907,40 @@ class Section1 extends Component {
                               />
                             </fieldset>
                           </div>
+                          {this.state.p4_yes.sort().length > 0 ? (
+                            <div className="part4-yes">
+                              <h3>
+                                Do you plan to submit a SPA (State Plan
+                                Amendment) to reflect these changes if you
+                                haven’t done so already?
+                              </h3>
+                              <ChoiceList
+                                choices={[
+                                  {
+                                    label: "Yes",
+                                    value: "yes",
+                                  },
+                                  {
+                                    label: "No",
+                                    value: "no",
+                                  },
+                                ]}
+                                className="p4_q21"
+                                label=""
+                                name="p4_q21"
+                                type="radio"
+                              />
+                              <ul>
+                                {this.state.p4_yes
+                                  .sort()
+                                  .map((current, index) => (
+                                    <li key={index}>{current}</li>
+                                  ))}
+                              </ul>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         <div className="question-container">
                           <div id="p4_q15">
@@ -2106,12 +2148,21 @@ class Section1 extends Component {
                         )}
                       </div>
                     </div>
+<<<<<<< HEAD
                   </div>
                 </form>
                 <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
               </TabPanel>
             </Tabs>
             <FormActions />
+=======
+                  </form>
+                  <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
+                </TabPanel>
+              </Tabs>
+              <FormActions />
+            </div>
+>>>>>>> 2ef44af86f2f7785182f3176da203f2714ef3ed1
           </div>
         </div>
       </div>

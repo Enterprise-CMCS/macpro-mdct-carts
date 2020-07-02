@@ -310,13 +310,27 @@ class BasicInfo extends Component {
                     disabled
                   />
 
-                  <TextField
-                    label="3. CHIP program name(s): "
-                    name="programName"
-                    value={this.state.programName}
-                    onChange={this.handleChange}
-                    disabled
-                  />
+                  <div>
+                    <h3>
+                      Who should we contact if we have any questions about your
+                      report?
+                    </h3>
+                    <TextField label="4. Contact Name: " name="contactName" />
+                    <TextField label="5. Job Title: " name="contactTitle" />
+                    <TextField
+                      label="3. CHIP program name(s): "
+                      name="programName"
+                      value={this.state.programName}
+                      onChange={this.handleChange}
+                      disabled
+                    />
+                    <TextField
+                      label="7. Address: "
+                      hint="Include city, state and zip code"
+                      name="contactAddress"
+                    />
+                    <TextField label="8. Phone Number: " name="contactPhone" />
+                  </div>
 
                   <div>
                     <h3>

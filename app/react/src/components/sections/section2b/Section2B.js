@@ -185,6 +185,10 @@ class Section2b extends Component {
                 </div>
               </TabPanel>
             </Tabs>
+<<<<<<< HEAD
+=======
+            <FormActions />
+>>>>>>> 2ef44af86f2f7785182f3176da203f2714ef3ed1
           </div>
           <FormActions />
         </div>
