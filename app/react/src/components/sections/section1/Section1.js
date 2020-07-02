@@ -207,7 +207,6 @@ class Section1 extends Component {
       <div className="section-1 ds-l-col--9">
         {this.setProgramDisable}
         {this.setQuestionDisable}
-
         <div className="main">
           <PageInfo />
           <div className="section-content">
@@ -224,14 +223,14 @@ class Section1 extends Component {
                     {this.state.mchipDisable === true ? (
                       <p>
                         This part only applies to states with a S-CHIP program.
-                        Please skip to Part 2.
+                        Please go to Part 2.
                       </p>
                     ) : (
                       ""
                     )}
                     <div
                       className="part1-all-questions-container"
-                      disabled={this.state.mchipDisable}
+                      hidden={this.state.mchipDisable}
                     >
                       <div className="question-container">
                         <div id="p1_q1">
@@ -380,6 +379,11 @@ class Section1 extends Component {
                               label=""
                               name="p1_q3"
                               onChange={this.setConditional}
+                              hint={
+                                this.state.p1q2Disable == true
+                                  ? "This question is not required if the answer to Part 1 Question 2 is No."
+                                  : ""
+                              }
                             />
                           </fieldset>
                           {this.state.p1_q3 === "yes" ? (
@@ -437,6 +441,11 @@ class Section1 extends Component {
                               label=""
                               name="p1_q4"
                               onChange={this.setConditional}
+                              hint={
+                                this.state.p1q2Disable == true
+                                  ? "This question is not required if the answer to Part 1 Question 2 is No."
+                                  : ""
+                              }
                             />
                           </fieldset>
                           {this.state.p1_q4 === "yes" ? (
@@ -510,14 +519,14 @@ class Section1 extends Component {
                     {this.state.schipDisable === true ? (
                       <p>
                         This part only applies to states with a M-CHIP program.
-                        Please skip to Part 3.
+                        Please go to Part 3.
                       </p>
                     ) : (
                       ""
                     )}
                     <div
                       className="part2-all-questions-container"
-                      disabled={this.state.schipDisable}
+                      hidden={this.state.schipDisable}
                     >
                       <div className="question-container">
                         <div id="p2_q1">
@@ -669,6 +678,11 @@ class Section1 extends Component {
                               label=""
                               name="p2_q3"
                               onChange={this.setConditional}
+                              hint={
+                                this.state.p2q2Disable == true
+                                  ? "This question is not required if the answer to Part 2 Question 2 is No."
+                                  : ""
+                              }
                             />
                           </fieldset>
                           {this.state.p2_q3 === "yes" ? (
@@ -725,6 +739,11 @@ class Section1 extends Component {
                               label=""
                               name="p2_q4"
                               onChange={this.setConditional}
+                              hint={
+                                this.state.p2q2Disable == true
+                                  ? "This question is not required if the answer to Part 2 Question 2 is No."
+                                  : ""
+                              }
                             />
                           </fieldset>
                           {this.state.p2_q4 === "yes" ? (
@@ -798,14 +817,14 @@ class Section1 extends Component {
                     {this.state.mchipDisable === true ? (
                       <p>
                         This part only applies to states with a S-CHIP program.
-                        Please skip to Part 4.
+                        Please go to Part 4.
                       </p>
                     ) : (
                       ""
                     )}
                     <div
                       className="part3-all-questions-container"
-                      disabled={this.state.mchipDisable}
+                      hidden={this.state.mchipDisable}
                     >
                       <p>
                         Indicate any changes you’ve made to your S-CHIP programs
@@ -1438,14 +1457,14 @@ class Section1 extends Component {
                     {this.state.schipDisable === true ? (
                       <p>
                         This part only applies to states with a M-CHIP program.
-                        Please skip to Section 2.
+                        Please go to Section 2.
                       </p>
                     ) : (
                       ""
                     )}
                     <div
                       className="part4-all-questions-container"
-                      disabled={this.state.schipDisable}
+                      hidden={this.state.schipDisable}
                     >
                       <p>
                         Indicate any changes you’ve made to your M-CHIP programs
