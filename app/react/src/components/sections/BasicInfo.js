@@ -14,6 +14,9 @@ import {
 import FillForm from "../layout/FillForm";
 import statesArray from "../Utils/statesArray";
 
+const validEmailRegex = 
+  RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
 class BasicInfo extends Component {
   constructor(props) {
     super(props);
@@ -30,15 +33,32 @@ class BasicInfo extends Component {
       contactEmail: "",
       contactAddress: "",
       contactPhone: 0,
+      errors: {
+        email: "",
+        phone: "",
+      },
       fillFormTitle: "Same as last year",
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(evt) {
+    let errors = this.state.errors;
+
     this.setState({
       [evt.target.name]: evt.target.value,
     });
+
+    switch (evt.target.name) {
+      case 'contactEmail':
+        errors.email = validEmailRegex.test(evt.target.value) ? "" : "Please enter a valid email";
+        break;
+      case 'contactPhone':
+        errors.phone = "" ? "" : "Please enter a valid 10 digit phone number";
+        break;
+      default:
+        break;
+    }
   }
 
   selectInput(id, option, active) {
@@ -180,7 +200,7 @@ class BasicInfo extends Component {
                           <TextField 
                             label="4. Contact name: " 
                             name="contactName" 
-                            value={this.state.contactName}
+                            onChange={this.handleChange}
                           />
                         </div>
                         <div className="question-container">
@@ -192,7 +212,7 @@ class BasicInfo extends Component {
                           <TextField 
                             label="5. Job title: " 
                             name="contactTitle" 
-                            value={this.state.contactTitle}
+                            onChange={this.handleChange}
                           />
                         </div>
                         <div className="question-container">
@@ -205,8 +225,9 @@ class BasicInfo extends Component {
                             type="email"
                             label="6. Email: "
                             name="contactEmail"
-                            value={this.state.contactEmail}
+                            onChange={this.handleChange}
                           />
+                        {this.state.errors.email.length > 0 && <span className='error'>{this.state.errors.email}</span>}
                         </div>
                         <div className="question-container">
                           <FillForm
@@ -220,7 +241,7 @@ class BasicInfo extends Component {
                             name="contactAddress"
                             multiline
                             rows="4"
-                            value={this.state.contactAddress}
+                            onChange={this.handleChange}
                           />
                         </div>
                         <div className="question-container">
@@ -230,10 +251,12 @@ class BasicInfo extends Component {
                             onClick={this.loadAnswers}
                           />
                           <TextField 
+                            type="tel"
+                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                             label="8. Phone number: " 
                             name="contactPhone" 
                             mask="phone"
-                            value={this.state.contactPhone}
+                            onChange={this.handleChange}
                           />
                         </div>
                         <div className="form-options">
