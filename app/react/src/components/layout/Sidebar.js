@@ -5,7 +5,7 @@ import TOC from "./TOC";
 class Sidebar extends Component {
   render() {
     return (
-      <div className="sidebar">
+      <div className="sidebar ds-l-col--3">
         <StateHeader />
         <TOC />
       </div>
