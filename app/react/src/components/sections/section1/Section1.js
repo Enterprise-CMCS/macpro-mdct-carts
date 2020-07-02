@@ -386,6 +386,7 @@ class Section1 extends Component {
                                   label=""
                                   name="p1_q3"
                                   onChange={this.setConditional}
+                                  hint={this.state.p1q2Disable == true ? "This question is not required if the answer to Part 1 Question 2 is No." : ""}
                                 />
                               </fieldset>
                               {this.state.p1_q3 === "yes" ? (
@@ -444,6 +445,7 @@ class Section1 extends Component {
                                   label=""
                                   name="p1_q4"
                                   onChange={this.setConditional}
+                                  hint={this.state.p1q2Disable == true ? "This question is not required if the answer to Part 1 Question 2 is No." : ""}
                                 />
                               </fieldset>
                               {this.state.p1_q4 === "yes" ? (
@@ -678,6 +680,7 @@ class Section1 extends Component {
                                   label=""
                                   name="p2_q3"
                                   onChange={this.setConditional}
+                                  hint={this.state.p2q2Disable == true ? "This question is not required if the answer to Part 2 Question 2 is No." : ""}
                                 />
                               </fieldset>
                               {this.state.p2_q3 === "yes" ? (
@@ -737,6 +740,7 @@ class Section1 extends Component {
                                   label=""
                                   name="p2_q4"
                                   onChange={this.setConditional}
+                                  hint={this.state.p2q2Disable == true ? "This question is not required if the answer to Part 2 Question 2 is No." : ""}
                                 />
                               </fieldset>
                               {this.state.p2_q4 === "yes" ? (
