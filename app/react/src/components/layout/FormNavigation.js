@@ -12,6 +12,7 @@ class FormNavigation extends Component {
             <Button
               className="ds-c-button--transparent"
               title="Last edited 3 minutes ago"
+              disabled
             >
               All changes auto-saved
             </Button>
