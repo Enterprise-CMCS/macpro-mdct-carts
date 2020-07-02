@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
-import NavigationButton from "../layout/NavigationButtons";
+import FormNavigation from "../layout/FormNavigation";
 import {
   TextField,
   Dropdown,
@@ -101,22 +101,9 @@ class BasicInfo extends Component {
                       name="contactAddress"
                     />
                     <TextField label="8. Phone Number: " name="contactPhone" />
-                    <div className="form-options">
-                      <button
-                        type="submit"
-                        className="ds-c-button ds-c-button--disabled"
-                      >
-                        Saved
-                      </button>
-                      <a href="#export" id="export">
-                        Export
-                      </a>
-                    </div>
                   </div>
 
-                  <div className="nav-buttons">
-                    <NavigationButton direction="Next" destination="/1" />
-                  </div>
+                  <FormNavigation nextUrl="/1" />
                 </form>
               </div>
             </div>

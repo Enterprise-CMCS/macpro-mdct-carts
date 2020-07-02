@@ -10,8 +10,8 @@ import {
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FillForm from "../../layout/FillForm";
-import NavigationButton from "../../layout/NavigationButtons";
-
+import FormNavigation from "../../layout/FormNavigation";
+import FormActions from "../../layout/FormActions";
 class Section3c extends Component {
   constructor() {
     super();
@@ -445,18 +445,8 @@ class Section3c extends Component {
                           value={this.state.p2_q6}
                         />
                       </div>
-                      <div className="form-options">
-                        <button
-                          type="submit"
-                          className="ds-c-button ds-c-button--disabled"
-                        >
-                          Saved
-                        </button>
-                        <a href="#export" id="export">
-                          Export
-                        </a>
-                      </div>
                     </form>
+                    <FormNavigation previousUrl="/2b" />
                   </TabPanel>
                   <TabPanel id="tab-lastyear" tab="FY2019 answers">
                     <form>
@@ -659,26 +649,11 @@ class Section3c extends Component {
                           value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
                         />
                       </div>
-                      <div className="form-options">
-                        <button
-                          type="submit"
-                          className="ds-c-button ds-c-button--disabled"
-                        >
-                          Saved
-                        </button>
-                        <a href="#export" id="export">
-                          Export
-                        </a>
-                      </div>
                     </form>
+                    <FormNavigation previousUrl="/2b" />
                   </TabPanel>
                 </Tabs>
-              </div>
-
-              <div className="nav-buttons">
-                <NavigationButton direction="Previous" destination="/2b" />
-
-                <NavigationButton direction="Next" destination="#" />
+                <FormActions />
               </div>
             </div>
           </div>

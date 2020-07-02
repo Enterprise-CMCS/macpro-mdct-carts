@@ -280,3 +280,14 @@ div[data-state="open"] .accordion-header .arrow:before {
     margin: ($margin * 2);
   }
 }
+
+.action-buttons {
+  text-align: center;
+  @media only screen and (min-width: 768px) {
+    text-align: right;
+  }
+  & > div {
+    display: inline-block;
+    margin: ($margin * 2) $margin;
+  }
+}
