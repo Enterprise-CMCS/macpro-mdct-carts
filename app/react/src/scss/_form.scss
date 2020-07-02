@@ -86,6 +86,16 @@
   .date-range fieldset > div span:first-of-type {
     display: none;
   }
+
+  .question {
+    font-weight: $font-weight-bold;
+    margin-top: ($margin * 2);
+  }
+
+  .date-range {
+    border-left: 4px solid $brand-primary;
+    padding-left: ($padding * 2);
+  }
 }
 
 .sub-questions {
