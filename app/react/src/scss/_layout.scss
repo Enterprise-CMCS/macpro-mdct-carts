@@ -20,39 +20,3 @@ div[disabled] {
     width: 100%;
   }
 }
-
-.fpl {
-  border: 2px solid $color-gray-lightest;
-  margin: ($margin * 2) 0;
-  padding: ($padding * 2);
-
-  h3 {
-    margin: 0;
-  }
-
-  .fpl-container {
-    align-items: baseline;
-    display: flex;
-    max-width: 140px;
-    position: relative;
-    width: auto;
-
-    .fpl-input {
-      width: auto;
-    }
-
-    .fpl-percentage {
-      position: absolute;
-      right: 8px;
-      top: 58px;
-    }
-  }
-
-  .fpl-arrow {
-    align-self: flex-end;
-    font-size: 1.8rem;
-    vertical-align: bottom;
-    line-height: 2.2rem;
-    padding: 0 2.2rem 0.6rem;
-  }
-}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "../../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import PageInfo from "../../layout/PageInfo";
-import NavigationButton from "../../layout/NavigationButtons";
+import FormNavigation from "../../layout/FormNavigation";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import {
@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import { sliceId } from "../../Utils/helperFunctions";
+import FormActions from "../../layout/FormActions";
 
 class Section2b extends Component {
   constructor(props) {
@@ -79,123 +80,112 @@ class Section2b extends Component {
 
   render() {
     return (
-      <div className="section-2b">
+      <div className="section-2b ds-l-col--9">
         <div className="ds-l-container">
-          <div className="ds-l-row">
-            <div className="sidebar ds-l-col--3">
-              <Sidebar />
-            </div>
-
-            <div className="main ds-l-col--9">
-              <PageInfo />
-              <Tabs>
-                <TabPanel
-                  id="section2b"
-                  tab="Section 2B: State Plan Goals and Objectives"
-                >
-                  <div className="section-content">
-                    <form>
-                      <p>
-                        Your performance goals should match those reflected in
-                        your CHIP State Plan, Section 9. If your objectives or
-                        goals are different, submit a State Plan Amendment (SPA)
-                        to reconcile these differences.
-                      </p>
-                      <div className="objective-accordiion">
-                        {/* This builds an accordion that maps through the array of Objectives in state */}
-                        <Accordion
-                          multiple
-                          defaultIndex={[...Array(100).keys()]}
-                        >
-                          {this.state.objectiveArray.map((element) => (
-                            <AccordionItem key={element.id}>
-                              <div className="accordion-header">
-                                <h3>
-                                  <AccordionButton>
-                                    <div className="title">
-                                      {/* The sliceId utility function gets just the number of each objective, removes the year */}
-                                      {/* The first objective will have a predetermined header*/}
-
-                                      {element.component.props.objectiveHeader
-                                        ? `Objective: ${element.component.props.objectiveHeader}`
-                                        : `Objective ${sliceId(element.id)}:`}
-                                    </div>
-                                    <div className="arrow"></div>
-                                  </AccordionButton>
-                                </h3>
-                              </div>
-                              <AccordionPanel>
-                                {/* This is where the component is being rendered*/}
-                                {element.component}
-                              </AccordionPanel>
-                            </AccordionItem>
-                          ))}
-                        </Accordion>
-                      </div>
-
-                      <div>
-                        <h3>
-                          {" "}
-                          Do you have another objective in your State Plan?{" "}
-                        </h3>
-                        <p className="ds-base color-gray-light">Optional</p>
-                        <button
-                          onClick={this.newObjective}
-                          type="button"
-                          className="ds-c-button ds-c-button--primary"
-                        >
-                          Add another objective
-                          <FontAwesomeIcon icon={faPlus} />
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </TabPanel>
-
-                <TabPanel
-                  className="section2b-previous"
-                  tab={`FY${this.props.year - 1} answers`}
-                >
-                  <div className="section-content">
+          <div className="main">
+            <PageInfo />
+            <Tabs>
+              <TabPanel
+                id="section2b"
+                tab="Section 2B: State Plan Goals and Objectives"
+              >
+                <div className="section-content">
+                  <form>
+                    <p>
+                      Your performance goals should match those reflected in
+                      your CHIP State Plan, Section 9. If your objectives or
+                      goals are different, submit a State Plan Amendment (SPA)
+                      to reconcile these differences.
+                    </p>
                     <div className="objective-accordiion">
-                      {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
-                      <form>
-                        <Accordion>
-                          {this.state.previousObjectivesArray.map((element) => (
-                            <AccordionItem key={element.id}>
-                              <div className="accordion-header">
-                                <h3>
-                                  <AccordionButton>
-                                    <div className="title">
-                                      {/* The sliceId utility function gets just the number of each objective, removes the year */}
-                                      {/* The first objective will have a predetermined header*/}
+                      {/* This builds an accordion that maps through the array of Objectives in state */}
+                      <Accordion multiple defaultIndex={[...Array(100).keys()]}>
+                        {this.state.objectiveArray.map((element) => (
+                          <AccordionItem key={element.id}>
+                            <div className="accordion-header">
+                              <h3>
+                                <AccordionButton>
+                                  <div className="title">
+                                    {/* The sliceId utility function gets just the number of each objective, removes the year */}
+                                    {/* The first objective will have a predetermined header*/}
 
-                                      {element.component.props.objectiveHeader
-                                        ? `Objective: ${element.component.props.objectiveHeader}`
-                                        : `Objective ${sliceId(element.id)}:`}
-                                    </div>
-                                    <div className="arrow"></div>
-                                  </AccordionButton>
-                                </h3>
-                              </div>
-                              <AccordionPanel>
-                                {/* This is where the component is being rendered*/}
-                                {element.component}
-                              </AccordionPanel>
-                            </AccordionItem>
-                          ))}
-                        </Accordion>
-                      </form>
+                                    {element.component.props.objectiveHeader
+                                      ? `Objective: ${element.component.props.objectiveHeader}`
+                                      : `Objective ${sliceId(element.id)}:`}
+                                  </div>
+                                  <div className="arrow"></div>
+                                </AccordionButton>
+                              </h3>
+                            </div>
+                            <AccordionPanel>
+                              {/* This is where the component is being rendered*/}
+                              {element.component}
+                            </AccordionPanel>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
                     </div>
-                  </div>
-                </TabPanel>
-              </Tabs>
-              <div className="nav-buttons">
-                <NavigationButton direction="Previous" destination="/2a" />
 
-                <NavigationButton direction="Next" destination="/3c" />
-              </div>
-            </div>
+                    <div>
+                      <h3>
+                        {" "}
+                        Do you have another objective in your State Plan?{" "}
+                      </h3>
+                      <p className="ds-base color-gray-light">Optional</p>
+                      <button
+                        onClick={this.newObjective}
+                        type="button"
+                        className="ds-c-button ds-c-button--primary"
+                      >
+                        Add another objective
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </div>
+                  </form>
+                  <FormNavigation nextUrl="/3c" previousUrl="/2a" />
+                </div>
+              </TabPanel>
+
+              <TabPanel
+                className="section2b-previous"
+                tab={`FY${this.props.year - 1} answers`}
+              >
+                <div className="section-content">
+                  <div className="objective-accordiion">
+                    {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
+                    <form>
+                      <Accordion>
+                        {this.state.previousObjectivesArray.map((element) => (
+                          <AccordionItem key={element.id}>
+                            <div className="accordion-header">
+                              <h3>
+                                <AccordionButton>
+                                  <div className="title">
+                                    {/* The sliceId utility function gets just the number of each objective, removes the year */}
+                                    {/* The first objective will have a predetermined header*/}
+
+                                    {element.component.props.objectiveHeader
+                                      ? `Objective: ${element.component.props.objectiveHeader}`
+                                      : `Objective ${sliceId(element.id)}:`}
+                                  </div>
+                                  <div className="arrow"></div>
+                                </AccordionButton>
+                              </h3>
+                            </div>
+                            <AccordionPanel>
+                              {/* This is where the component is being rendered*/}
+                              {element.component}
+                            </AccordionPanel>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </form>
+                    <FormNavigation nextUrl="/3c" previousUrl="/2a" />
+                  </div>
+                </div>
+              </TabPanel>
+            </Tabs>
+            <FormActions />
           </div>
         </div>
       </div>

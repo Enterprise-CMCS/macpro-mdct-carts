@@ -7,14 +7,13 @@ import Section2a from "./components/sections/section2a/Section2A";
 import Section2b from "./components/sections/section2b/Section2B";
 import Section3c from "./components/sections/section3c/Section3c";
 import Sidebar from "./components/layout/Sidebar";
-// import SidebarWrapper from "./components/layout/SidebarWrapper";
 
-let HideSidebar = window.location.pathname === "/" ? null : <Sidebar />;
+let VisibleSidebar = window.location.pathname === "/" ? null : <Sidebar />;
 
 const Routes = () => (
   <Router>
     <div className="ds-l-row">
-      {HideSidebar}
+      {VisibleSidebar}
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route exact path="/basic-info" component={BasicInfo} />
