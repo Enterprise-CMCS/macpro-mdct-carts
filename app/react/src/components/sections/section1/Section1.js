@@ -230,14 +230,14 @@ class Section1 extends Component {
                         {this.state.mchipDisable === true ? (
                           <p>
                             This part only applies to states with a S-CHIP
-                            program. Please skip to Part 2.
+                            program. Please go to Part 2.
                           </p>
                         ) : (
                           ""
                         )}
                         <div
                           className="part1-all-questions-container"
-                          disabled={this.state.mchipDisable}
+                          hidden={this.state.mchipDisable}
                         >
                           <div className="question-container">
                             <div id="p1_q1">
@@ -519,14 +519,14 @@ class Section1 extends Component {
                         {this.state.schipDisable === true ? (
                           <p>
                             This part only applies to states with a M-CHIP
-                            program. Please skip to Part 3.
+                            program. Please go to Part 3.
                           </p>
                         ) : (
                           ""
                         )}
                         <div
                           className="part2-all-questions-container"
-                          disabled={this.state.schipDisable}
+                          hidden={this.state.schipDisable}
                         >
                           <div className="question-container">
                             <div id="p2_q1">
@@ -812,14 +812,14 @@ class Section1 extends Component {
                         {this.state.mchipDisable === true ? (
                           <p>
                             This part only applies to states with a S-CHIP
-                            program. Please skip to Part 4.
+                            program. Please go to Part 4.
                           </p>
                         ) : (
                           ""
                         )}
                         <div
                           className="part3-all-questions-container"
-                          disabled={this.state.mchipDisable}
+                          hidden={this.state.mchipDisable}
                         >
                           <p>
                             Indicate any changes you’ve made to your S-CHIP
@@ -1455,14 +1455,14 @@ class Section1 extends Component {
                         {this.state.schipDisable === true ? (
                           <p>
                             This part only applies to states with a M-CHIP
-                            program. Please skip to Section 2.
+                            program. Please go to Section 2.
                           </p>
                         ) : (
                           ""
                         )}
                         <div
                           className="part4-all-questions-container"
-                          disabled={this.state.schipDisable}
+                          hidden={this.state.schipDisable}
                         >
                           <p>
                             Indicate any changes you’ve made to your M-CHIP
