@@ -18,10 +18,10 @@ const Routes = () => (
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/basic-info" component={BasicInfo} />
-          <Route exact path="/1" component={Section1} />
-          <Route exact path="/2a" component={Section2a} />
-          <Route exact path="/2b" component={Section2b} />
-          <Route exact path="/3c" component={Section3c} />
+          <Route exact path="/section1" component={Section1} />
+          <Route exact path="/section2/2a" component={Section2a} />
+          <Route exact path="/section2/2b" component={Section2b} />
+          <Route exact path="/section3/3c" component={Section3c} />
         </Switch>
       </div>
     </div>
