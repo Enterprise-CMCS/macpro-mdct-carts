@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
 
 class Goal extends Component {
@@ -96,6 +97,7 @@ class Goal extends Component {
             label="1. Briefly describe your goal"
             hint="For example: Enroll 75% of eligible children in the CHIP program."
             multiline
+            rows={this.props.tallTextField}
             name="goal_description"
             value={
               this.props.previousEntry === "true"
@@ -150,6 +152,7 @@ class Goal extends Component {
                 label="3. Which population are you measuring in the numerator?"
                 hint="For example: The number of children enrolled in CHIP in the last federal fiscal year."
                 multiline
+                rows={this.props.tallTextField}
                 name="goal_numerator_definition"
                 value={
                   this.props.previousEntry === "true"
@@ -176,6 +179,7 @@ class Goal extends Component {
                 label="5. Which population are you measuring in the denominator? "
                 hint="For example: The total number of eligible children in the last federal fiscal year."
                 multiline
+                rows={this.props.tallTextField}
                 name="goal_denominator_definition"
                 value={
                   this.props.previousEntry === "true"
@@ -257,7 +261,7 @@ class Goal extends Component {
               <div className="date-range">
                 <DateField
                   label="Start"
-                  hint={"From mm/yyyy to mm/yyyy"}
+                  hint={"mm/yyyy"}
                   monthValue={
                     this.props.previousEntry === "true"
                       ? this.state.goal2bDummyDigit - 5
@@ -277,7 +281,7 @@ class Goal extends Component {
 
                 <DateField
                   label="End"
-                  hint={"From mm/yyyy to mm/yyyy"}
+                  hint={"mm/yyyy"}
                   monthValue={
                     this.props.previousEntry === "true"
                       ? this.state.goal2bDummyDigit
@@ -326,6 +330,7 @@ class Goal extends Component {
               <TextField
                 label="9. How did your progress towards your goal last year compare to your previous year’s progress?"
                 multiline
+                rows={this.props.tallTextField}
                 name="progress_comparison"
                 className="ds-u-margin-top--0"
                 value={
@@ -340,6 +345,7 @@ class Goal extends Component {
               <TextField
                 label="10. What are you doing to continually make progress towards your goal?"
                 multiline
+                rows={this.props.tallTextField}
                 name="progress_action"
                 className="ds-u-margin-top--0"
                 value={
@@ -382,4 +388,9 @@ class Goal extends Component {
   }
 }
 
-export default Goal;
+const mapStateToProps = (state) => ({
+  year: state.formYear,
+  tallTextField: state.largeTextBoxHeight,
+});
+
+export default connect(mapStateToProps)(Goal);

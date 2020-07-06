@@ -2,7 +2,15 @@
 const STATE_INFO = "STATE_INFO";
 
 //ACTION CREATORS
-export const stateDetails = (name, abbr, programType, programName, imageURI, formName, formYear) => {
+export const stateDetails = (
+  name,
+  abbr,
+  programType,
+  programName,
+  imageURI,
+  formName,
+  formYear
+) => {
   return {
     type: STATE_INFO,
     name,
@@ -23,12 +31,23 @@ const initialState = {
   imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
   formName: "CARTS FY",
   formYear: "2020",
+  largeTextBoxHeight: 6,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case STATE_INFO:
-      return { ...state, ...action.abbr, ...action.programType, ...action.programName, ...action.name, ...action.imageURI, ...action.formName, ...action.formYear };
+      return {
+        ...state,
+        ...action.abbr,
+        ...action.programType,
+        ...action.programName,
+        ...action.name,
+        ...action.imageURI,
+        ...action.formName,
+        ...action.formYear,
+        ...action.textBoxHeight,
+      };
     default:
       return state;
   }
