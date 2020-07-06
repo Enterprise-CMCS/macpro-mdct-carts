@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import { VerticalNav } from "@cmsgov/design-system-core";
 
 class TOC extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     // Get array of current url path
     let paths = window.location.pathname.split("/");
