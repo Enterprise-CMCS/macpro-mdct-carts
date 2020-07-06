@@ -11,22 +11,31 @@ class Goal extends Component {
       percentage: 0,
       shouldCalculate: true,
       goal2bDummyBoolean: true,
-      goal2bDummyData:
-        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      goal2bDummyData: "",
       goal2bDummyDigit: 10,
       discontinued: false,
+      selectedFiles: [],
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
     this.discontinuedGoal = this.discontinuedGoal.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       goal_type_value: "continuing",
       goal_source_value: "enrollment_data",
+      goal2bDummyData:
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     });
   }
+
+  handleFileUpload = (event) => {
+    this.setState({
+      selectedFiles: event.target.files,
+    });
+  };
 
   // Validate the input before returning calculated percentage
   percentageCalculator(numerator, denominator) {
@@ -143,7 +152,7 @@ class Goal extends Component {
         ) : (
           <div className="dependant-on-discontinued">
             <div className="question-container">
-              <h3 className="question-section-text">
+              <h3 className="question-outer-header">
                 {" "}
                 Define the numerator you're measuring
               </h3>
@@ -174,7 +183,7 @@ class Goal extends Component {
                     : null
                 }
               />
-              <h3 className="question-section-text">
+              <h3 className="question-outer-header">
                 {" "}
                 Define the denominator you're measuring
               </h3>
@@ -206,13 +215,11 @@ class Goal extends Component {
               />
             </div>
 
-            <div className="ds-u-border--2">
+            <div className="question-container ds-u-border--2">
               <div className="ds-1-row percentages-info">
                 <div className="ds-l--auto">
-                  <h3 className="question-section-text">Percentage</h3>
-                  <div className="question-section-subtext hint">
-                    Auto-calculated
-                  </div>
+                  <h3 className="question-inner-header">Percentage</h3>
+                  <div className="ds-c-field__hint">Auto-calculated</div>
                 </div>
               </div>
               <div className="ds-1-row percentages">
@@ -306,30 +313,32 @@ class Goal extends Component {
               </div>
             </div>
 
-            <ChoiceList
-              choices={[
-                {
-                  label: "Eligibility or enrollment data",
-                  value: "enrollment_data",
-                  disabled: renderPreviousEntry ? true : false,
-                  defaultChecked: renderPreviousEntry ? true : false,
-                },
-                {
-                  label: "Survey data",
-                  value: "survey_data",
-                  disabled: renderPreviousEntry ? true : false,
-                },
-                {
-                  label: "Another data source",
-                  value: "other_data",
-                  disabled: renderPreviousEntry ? true : false,
-                },
-              ]}
-              className="ds-u-margin-top--5"
-              label="8. Which data source did you use?"
-              name={`data_source${this.props.goalId}`}
-              //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
-            />
+            <div className="question-container">
+              <ChoiceList
+                choices={[
+                  {
+                    label: "Eligibility or enrollment data",
+                    value: "enrollment_data",
+                    disabled: renderPreviousEntry ? true : false,
+                    defaultChecked: renderPreviousEntry ? true : false,
+                  },
+                  {
+                    label: "Survey data",
+                    value: "survey_data",
+                    disabled: renderPreviousEntry ? true : false,
+                  },
+                  {
+                    label: "Another data source",
+                    value: "other_data",
+                    disabled: renderPreviousEntry ? true : false,
+                  },
+                ]}
+                className="ds-u-margin-top--5"
+                label="8. Which data source did you use?"
+                name={`data_source${this.props.goalId}`}
+                //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
+              />
+            </div>
 
             <div className="question-container">
               <TextField
@@ -376,15 +385,31 @@ class Goal extends Component {
             </div>
 
             <div className="question-container">
-              <TextField
-                label="12. Do you have any supporting documentation?"
-                hint="Optional"
-                name="supporting_documentation"
-                className="ds-u-margin-top--0"
-                disabled={renderPreviousEntry ? true : false}
-                value={renderPreviousEntry ? "SomeFile2019.docx" : ""}
-              />
-              <button className="ds-c-button">Browse</button>
+              {renderPreviousEntry ? (
+                <Fragment>
+                  <TextField
+                    label="12. Do you have any supporting documentation?"
+                    hint="Optional"
+                    name="supporting_documentation"
+                    className="ds-u-margin-top--0"
+                    disabled={true}
+                    value={"SomeFile2019.docx"}
+                  />
+                  <button disabled className="ds-c-button">
+                    Browse
+                  </button>
+                </Fragment>
+              ) : (
+                <TextField
+                  label="12. Do you have any supporting documentation?"
+                  requirementLabel="Optional"
+                  className="ds-u-margin-top--0"
+                  onChange={this.handleFileUpload}
+                  name="fileUpload"
+                  type="file"
+                  multiple
+                />
+              )}
             </div>
           </div>
         )}
