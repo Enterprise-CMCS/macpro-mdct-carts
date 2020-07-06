@@ -1,0 +1,17 @@
+@media print {
+  .action-buttons,
+  .footer,
+  .header,
+  .nav-buttons,
+  .sidebar {
+    display: none;
+  }
+  .content {
+    min-width: 100%;
+  }
+
+  .ds-c-choice:checked + label:before {
+    background-color: $black;
+    -webkit-print-color-adjust: exact;
+  }
+}

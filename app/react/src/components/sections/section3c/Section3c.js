@@ -157,7 +157,7 @@ class Section3c extends Component {
 
   render() {
     return (
-      <div className="section-3c ds-l-col--9">
+      <div className="section-3c ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="section-content">

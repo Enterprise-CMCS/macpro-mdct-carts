@@ -204,7 +204,7 @@ class Section1 extends Component {
 
   render() {
     return (
-      <div className="section-1 ds-l-col--9">
+      <div className="section-1 ds-l-col--9 content">
         {this.setProgramDisable}
         {this.setQuestionDisable}
         <div className="main">
@@ -1445,6 +1445,22 @@ class Section1 extends Component {
                               to reflect these changes if you haven’t done so
                               already?
                             </h3>
+                            <ChoiceList
+                              choices={[
+                                {
+                                  label: "Yes",
+                                  value: "yes",
+                                },
+                                {
+                                  label: "No",
+                                  value: "no",
+                                },
+                              ]}
+                              className="p4_q21"
+                              label=""
+                              name="p4_q21"
+                              type="radio"
+                            />
                             <ul>
                               {this.state.p3_yes
                                 .sort()
