@@ -96,6 +96,15 @@
     border-left: 4px solid $brand-primary;
     padding-left: ($padding * 2);
   }
+
+  .question-section-text {
+    margin-bottom: 0;
+  }
+  .question-section-subtext {
+    margin-top: 0;
+    padding-top: 0;
+    // color: red;
+  }
 }
 
 .sub-questions {

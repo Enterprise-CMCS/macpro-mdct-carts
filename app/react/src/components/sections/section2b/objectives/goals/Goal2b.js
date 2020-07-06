@@ -143,7 +143,7 @@ class Goal extends Component {
         ) : (
           <div className="dependant-on-discontinued">
             <div className="question-container">
-              <h3 className="question">
+              <h3 className="question-section-text">
                 {" "}
                 Define the numerator you're measuring
               </h3>
@@ -174,7 +174,10 @@ class Goal extends Component {
                     : null
                 }
               />
-              <h3> Define the denominator you're measuring</h3>
+              <h3 className="question-section-text">
+                {" "}
+                Define the denominator you're measuring
+              </h3>
               <TextField
                 label="5. Which population are you measuring in the denominator? "
                 hint="For example: The total number of eligible children in the last federal fiscal year."
@@ -206,8 +209,10 @@ class Goal extends Component {
             <div className="ds-u-border--2">
               <div className="ds-1-row percentages-info">
                 <div className="ds-l--auto">
-                  <h3>Percentage</h3>
-                  <h4>Auto-calculated</h4>
+                  <h3 className="question-section-text">Percentage</h3>
+                  <div className="question-section-subtext hint">
+                    Auto-calculated
+                  </div>
                 </div>
               </div>
               <div className="ds-1-row percentages">
