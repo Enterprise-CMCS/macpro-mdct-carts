@@ -89,7 +89,7 @@ class Section2a extends Component {
 
   render() {
     return (
-      <div className="section-2a ds-l-col--9">
+      <div className="section-2a ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="section-content">

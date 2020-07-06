@@ -18,7 +18,7 @@ class Preamble extends Component {
               <Sidebar />
             </div>
 
-            <div className="main ds-l-col--9">
+            <div className="main ds-l-col--9 content">
               <PageInfo />
               <div className="ds-base">
                 <h4>Preamble</h4>
