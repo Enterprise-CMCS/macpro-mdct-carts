@@ -141,7 +141,10 @@ class Section2b extends Component {
                       </button>
                     </div>
                   </form>
-                  <FormNavigation nextUrl="/3c" previousUrl="/2a" />
+                  <FormNavigation
+                    nextUrl="/section3/3c"
+                    previousUrl="/section2/2a"
+                  />
                 </div>
               </TabPanel>
 
@@ -179,7 +182,10 @@ class Section2b extends Component {
                         ))}
                       </Accordion>
                     </form>
-                    <FormNavigation nextUrl="/3c" previousUrl="/2a" />
+                    <FormNavigation
+                      nextUrl="/section3/3c"
+                      previousUrl="/section2/2a"
+                    />
                   </div>
                 </div>
               </TabPanel>

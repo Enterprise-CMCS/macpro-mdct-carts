@@ -661,7 +661,10 @@ class Section2a extends Component {
                   </form>
                 </div>
 
-                <FormNavigation nextUrl="/2b" previousUrl="/1" />
+                <FormNavigation
+                  nextUrl="/section2/2b"
+                  previousUrl="/section1"
+                />
               </TabPanel>
             </Tabs>
           </div>

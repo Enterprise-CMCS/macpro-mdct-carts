@@ -268,7 +268,7 @@ class BasicInfo extends Component {
                     </div>
                   </div>
                 </form>
-                <FormNavigation nextUrl="/1" />
+                <FormNavigation nextUrl="/section1" />
               </TabPanel>
 
               <TabPanel id="tab-lastyear" tab="FY2019 answers">
@@ -373,6 +373,7 @@ class BasicInfo extends Component {
                     />
                   </div>
                 </form>
+                <FormNavigation nextUrl="/section1" />
               </TabPanel>
             </Tabs>
             <FormActions />
