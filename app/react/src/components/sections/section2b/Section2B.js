@@ -180,7 +180,7 @@ class Section2b extends Component {
                         ))}
                       </Accordion>
                     </form>
-                    <FormNavigation nextUrl="/3c" previousUrl="/2a" />
+                    <FormNavigation nextUrl="/3a" previousUrl="/2a" />
                   </div>
                 </div>
               </TabPanel>
