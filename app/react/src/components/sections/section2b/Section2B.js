@@ -16,6 +16,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import { sliceId } from "../../Utils/helperFunctions";
 import FormActions from "../../layout/FormActions";
+import DateRange from "../../layout/DateRange";
 
 class Section2b extends Component {
   constructor(props) {
@@ -83,6 +84,7 @@ class Section2b extends Component {
       <div className="section-2b ds-l-col--9 content">
         <div className="main">
           <PageInfo />
+          <DateRange />
           <div className="section-content">
             <Tabs>
               <TabPanel
