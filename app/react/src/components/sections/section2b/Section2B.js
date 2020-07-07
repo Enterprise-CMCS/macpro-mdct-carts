@@ -97,7 +97,7 @@ class Section2b extends Component {
                       goals are different, submit a State Plan Amendment (SPA)
                       to reconcile these differences.
                     </p>
-                    <div className="objective-accordiion">
+                    <div className="objective-accordion">
                       {/* This builds an accordion that maps through the array of Objectives in state */}
                       <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                         {this.state.objectiveArray.map((element) => (
@@ -105,7 +105,7 @@ class Section2b extends Component {
                             <div className="accordion-header">
                               <h3>
                                 <AccordionButton>
-                                  <div className="title">
+                                  <div className="accordion-title">
                                     {/* The sliceId utility function gets just the number of each objective, removes the year */}
                                     {/* The first objective will have a predetermined header*/}
 
@@ -153,7 +153,7 @@ class Section2b extends Component {
                 tab={`FY${this.props.year - 1} answers`}
               >
                 <div className="section-content">
-                  <div className="objective-accordiion">
+                  <div className="objective-accordion">
                     {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
                     <form>
                       <Accordion>
