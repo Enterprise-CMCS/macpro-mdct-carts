@@ -440,7 +440,7 @@ class Section3c extends Component {
                     />
                   </div>
                 </form>
-                <FormNavigation previousUrl="/2b" />
+                <FormNavigation previousUrl="/section2/2b" />
               </TabPanel>
               <TabPanel id="tab-lastyear" tab="FY2019 answers">
                 <form>
@@ -644,7 +644,7 @@ class Section3c extends Component {
                     />
                   </div>
                 </form>
-                <FormNavigation previousUrl="/2b" />
+                <FormNavigation previousUrl="/section2/2b" />
               </TabPanel>
             </Tabs>
             <FormActions />
