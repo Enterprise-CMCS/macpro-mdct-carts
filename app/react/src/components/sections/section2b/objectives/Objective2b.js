@@ -97,6 +97,7 @@ class Objective2b extends Component {
               hint="For example: Our objective is to increase enrollment in our CHIP program."
               label="What is your first objective as listed in your CHIP State Plan?"
               multiline
+              rows={5}
               name={"objective_" + this.props.objectiveId + "_text"}
               value={
                 this.props.previousEntry === "true"
@@ -150,15 +151,14 @@ class Objective2b extends Component {
         </div>
 
         <div className="objective-footer">
-          <h3>
-            {" "}
+          <h3 className="question-inner-header">
             Do you have another goal in your State Plan for this objective?{" "}
           </h3>
-          <p className="ds-base color-gray-light">Optional</p>
+          <div className="ds-c-field__hint">Optional</div>
           <button
             onClick={this.newGoal}
             type="button"
-            className="ds-c-button ds-c-button--primary"
+            className="add-goal ds-c-button ds-c-button--primary"
           >
             Add another goal
             <FontAwesomeIcon icon={faPlus} />

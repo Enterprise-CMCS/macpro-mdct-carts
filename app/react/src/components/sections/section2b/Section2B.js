@@ -126,16 +126,15 @@ class Section2b extends Component {
                       </Accordion>
                     </div>
 
-                    <div>
-                      <h3>
-                        {" "}
-                        Do you have another objective in your State Plan?{" "}
+                    <div className="section-footer">
+                      <h3 className="question-inner-header">
+                        Do you have another objective in your State Plan?
                       </h3>
-                      <p className="ds-base color-gray-light">Optional</p>
+                      <div className="ds-c-field__hint">Optional</div>
                       <button
                         onClick={this.newObjective}
                         type="button"
-                        className="ds-c-button ds-c-button--primary"
+                        className="add-objective ds-c-button ds-c-button--primary"
                       >
                         Add another objective
                         <FontAwesomeIcon icon={faPlus} />

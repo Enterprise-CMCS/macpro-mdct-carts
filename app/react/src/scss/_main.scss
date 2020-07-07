@@ -232,6 +232,16 @@ div[data-state="open"] .accordion-header .arrow:before {
 .objective-footer {
   background: $color-gray-lightest;
   padding: ($padding * 2);
+  // margin-left: ($margin * 10);
+
+  .add-goal {
+    margin-top: ($margin * 4);
+    margin-bottom: ($margin * 4);
+  }
+}
+
+.objective-footer {
+  padding-left: ($padding * 2);
 }
 
 .objective-body {
@@ -334,4 +344,8 @@ div[data-state="open"] .accordion-header .arrow:before {
       }
     }
   }
+}
+
+.add-objective {
+  margin-top: ($margin * 4);
 }
