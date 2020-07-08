@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  Button as button,
   ChoiceList,
   Tabs,
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
-import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FillForm from "../../layout/FillForm";
 import FormNavigation from "../../layout/FormNavigation";
