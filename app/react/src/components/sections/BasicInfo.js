@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
 import FormNavigation from "../layout/FormNavigation";
 import FormActions from "../layout/FormActions";
@@ -10,13 +9,12 @@ import {
   ChoiceList,
   Tabs,
   TabPanel,
-  Button as button,
 } from "@cmsgov/design-system-core";
 import FillForm from "../layout/FillForm";
 import statesArray from "../Utils/statesArray";
 
 const validEmailRegex = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
 );
 
 const validTelephoneRegex = RegExp(
