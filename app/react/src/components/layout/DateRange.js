@@ -29,11 +29,6 @@ class DateRange extends Component {
     }
   }
 
-  //   validateDateRange() {
-  //     console.log("ON BLUR??");
-  //     console.log("child component??", this.startRangeData.value);
-  //   }
-
   render() {
     //needs to take in some function via this.props that will set state on parent component
     return (

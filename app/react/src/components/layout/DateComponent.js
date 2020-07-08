@@ -18,7 +18,6 @@ class DateComponent extends Component {
   }
 
   validateYear(evt) {
-    console.log(this.yearStart.value);
     let failing;
     let failMessage;
     let yearValue;
@@ -30,11 +29,19 @@ class DateComponent extends Component {
       yearValue = this.yearStart.value;
     }
 
-    // Checks for non-numeric characters
-    if (isNaN(parseInt(yearValue)) || /^\d+$/.test(yearValue) === false) {
+    // Handles an empty input field
+    if (yearValue === "") {
+      failing = true;
+      failMessage = false;
+    } else if (
+      // Checks for non-numeric characters
+      isNaN(parseInt(yearValue)) ||
+      /^\d+$/.test(yearValue) === false
+    ) {
       failing = true;
       failMessage = "Please enter a number";
     } else if (
+      // Checks that the year is within an appropriate range
       parseInt(yearValue) < 1950 ||
       parseInt(yearValue) > parseInt(this.props.year)
     ) {
@@ -52,7 +59,6 @@ class DateComponent extends Component {
     let failing;
     let failMessage;
     let monthValue;
-    // console.log("type??", typeof this.monthStart.value);
 
     // Prevents users from putting in more than 2 characters
     if (this.monthStart.value.length > 2) {
@@ -61,11 +67,19 @@ class DateComponent extends Component {
       monthValue = this.monthStart.value;
     }
 
-    // Checks for non-numeric characters
-    if (isNaN(parseInt(monthValue)) || /^\d+$/.test(monthValue) === false) {
+    // Handles an empty input field
+    if (monthValue === "") {
+      failing = true;
+      failMessage = false;
+    } else if (
+      // Checks for non-numeric characters
+      isNaN(parseInt(monthValue)) ||
+      /^\d+$/.test(monthValue) === false
+    ) {
       failing = true;
       failMessage = "Please enter a number";
     } else if (parseInt(monthValue) < 1 || parseInt(monthValue) > 12) {
+      // Checks that the month value is within a normal range
       failing = true;
       failMessage = "Please enter a valid month number";
     }
@@ -109,7 +123,11 @@ class DateComponent extends Component {
               label="Year"
               name="year"
               onChange={this.validateYear}
-              //   onBlur={this.props.someMethod(this.state.startYearValue)}
+              onBlur={this.props.someMethod(
+                this.state.startYearValue,
+                this.state.startYearErr,
+                "startYearValue"
+              )}
               numeric
               value={this.state.startYearValue}
             />
