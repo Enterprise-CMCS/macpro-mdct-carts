@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, UnmaskValue } from "@cmsgov/design-system-core";
+import { TextField } from "@cmsgov/design-system-core";
 
 class FPL extends Component {
   constructor(props) {
@@ -33,8 +33,8 @@ class FPL extends Component {
 
     let percentBoolean = false;
     if (this.percentStart.value && this.percentEnd.value) {
-      let percentStart = this.percentStart.value.replace(/\,/g, "");
-      let percentEnd = this.percentEnd.value.replace(/\,/g, "");
+      let percentStart = this.percentStart.value.replace(/,/g, "");
+      let percentEnd = this.percentEnd.value.replace(/,/g, "");
       if (parseInt(percentEnd) < parseInt(percentStart)) {
         percentBoolean = true;
       }
@@ -43,8 +43,8 @@ class FPL extends Component {
     //feeStart < feeEnd
     let feeBoolean = false;
     if (this.feeStart.value && this.feeEnd.value) {
-      let feeStart = this.feeStart.value.replace(/\,/g, "");
-      let feeEnd = this.feeEnd.value.replace(/\,/g, "");
+      let feeStart = this.feeStart.value.replace(/,/g, "");
+      let feeEnd = this.feeEnd.value.replace(/,/g, "");
       if (parseInt(feeEnd) < parseInt(feeStart)) {
         feeBoolean = true;
       }
