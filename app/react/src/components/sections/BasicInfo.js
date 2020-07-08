@@ -86,15 +86,11 @@ class BasicInfo extends Component {
     el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
-    let textFieldCopy = "";
-    let textAreaCopy = "";
 
     // Boolean, Set values on active
     let isActive = el.target.classList.contains("active");
 
     if (isActive) {
-      textFieldCopy = "This is what you wrote last year.";
-      textAreaCopy = "This is what you wrote last year.";
       el.target.title = "Undo";
     }
 
@@ -148,19 +144,19 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.programType == "comboCHIP" ? true : false,
+                          this.state.programType === "comboCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
                         value: "mCHIP",
                         checked:
-                          this.state.programType == "mCHIP" ? true : false,
+                          this.state.programType === "mCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Separate Program only (S-CHIP) ",
                         value: "sCHIP",
                         checked:
-                          this.state.programType == "sCHIP" ? true : false,
+                          this.state.programType === "sCHIP" ? true : false,
                       },
                     ]}
                     label="2. Program type: "
@@ -287,19 +283,19 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.programType == "comboCHIP" ? true : false,
+                          this.state.programType === "comboCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
                         value: "mCHIP",
                         checked:
-                          this.state.programType == "mCHIP" ? true : false,
+                          this.state.programType === "mCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Separate Program only (S-CHIP) ",
                         value: "sCHIP",
                         checked:
-                          this.state.programType == "sCHIP" ? true : false,
+                          this.state.programType === "sCHIP" ? true : false,
                       },
                     ]}
                     label="2. Program type: "
