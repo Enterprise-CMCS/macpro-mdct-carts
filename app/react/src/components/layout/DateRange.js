@@ -7,7 +7,7 @@ class DateRange extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.method1 = this.method1.bind(this);
+    this.getRangeData = this.getRangeData.bind(this);
     // this.validateDateRange = this.validateDateRange.bind(this);
   }
 
@@ -17,13 +17,9 @@ class DateRange extends Component {
   // THIS STATE NEEDS TO KEEP TRACK OF THE START RANGES & END RANGES (after theyve been validated)
   // add start range and end range data to state
   // write a method that compares start range to end range
-  method1(value, error, name) {
-    console.log("value in parent", value);
-    console.log("is this a good value??", error);
-
+  getRangeData(value, error, name) {
     if (error === false) {
       this.setState({
-        fromMethod: "bubbled up",
         [name]: value,
       });
     }
@@ -33,8 +29,8 @@ class DateRange extends Component {
     //needs to take in some function via this.props that will set state on parent component
     return (
       <div className="date-range ds-u-display--flex ds-u-flex-direction--row">
-        <DateComponent startRange someMethod={this.method1} />
-        {/* <DateComponent endRange /> */}
+        <DateComponent range={true} getRangeData={this.getRangeData} />
+        {/* <DateComponent endRange someMethod={this.method1} /> */}
       </div>
     );
   }

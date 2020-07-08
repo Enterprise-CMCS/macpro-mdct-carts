@@ -8,10 +8,17 @@ class DateComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startYearErr: false,
-      startYearValue: "",
-      startMonthErr: false,
-      startMonthValue: "",
+      monthStartErr: false,
+      monthStart: "",
+
+      yearStartErr: false,
+      yearStart: "",
+
+      monthEndErr: false,
+      monthEnd: "",
+
+      yearEndErr: false,
+      yearEnd: "",
     };
     this.validateMonth = this.validateMonth.bind(this);
     this.validateYear = this.validateYear.bind(this);
@@ -23,10 +30,10 @@ class DateComponent extends Component {
     let yearValue;
 
     // Prevents users from putting in more than 4 characters
-    if (this.yearStart.value.length > 4) {
-      yearValue = this.yearStart.value.substring(4);
+    if (evt.target.value.length > 4) {
+      yearValue = evt.target.value.substring(4);
     } else {
-      yearValue = this.yearStart.value;
+      yearValue = evt.target.value;
     }
 
     // Handles an empty input field
@@ -42,7 +49,7 @@ class DateComponent extends Component {
       failMessage = "Please enter a number";
     } else if (
       // Checks that the year is within an appropriate range
-      parseInt(yearValue) < 1950 ||
+      parseInt(yearValue) < 1776 ||
       parseInt(yearValue) > parseInt(this.props.year)
     ) {
       failing = true;
@@ -50,8 +57,8 @@ class DateComponent extends Component {
     }
 
     this.setState({
-      startYearErr: failing == true ? failMessage : false,
-      startYearValue: yearValue,
+      [`${evt.target.name}Err`]: failing == true ? failMessage : false,
+      [evt.target.name]: yearValue,
     });
   }
 
@@ -61,10 +68,10 @@ class DateComponent extends Component {
     let monthValue;
 
     // Prevents users from putting in more than 2 characters
-    if (this.monthStart.value.length > 2) {
-      monthValue = this.monthStart.value.substring(2);
+    if (evt.target.value.length > 2) {
+      monthValue = evt.target.value.substring(2);
     } else {
-      monthValue = this.monthStart.value;
+      monthValue = evt.target.value;
     }
 
     // Handles an empty input field
@@ -85,8 +92,8 @@ class DateComponent extends Component {
     }
 
     this.setState({
-      startMonthErr: failing == true ? failMessage : false,
-      startMonthValue: monthValue,
+      [`${evt.target.name}Err`]: failing == true ? failMessage : false,
+      [evt.target.name]: monthValue,
     });
   }
 
@@ -97,41 +104,76 @@ class DateComponent extends Component {
 
     return (
       <Fragment>
-        {/* {this.props.someMethod("Blue")} */}
-        {this.props.startRange ? (
-          <Fragment>
-            <TextField
-              className="ds-u-padding--1 ds-u-margin--1"
-              errorMessage={this.state.startMonthErr}
-              inputRef={(monthStart) => (this.monthStart = monthStart)}
-              label="Month"
-              name="month"
-              numeric
-              onChange={this.validateMonth}
-              onBlur={this.props.someMethod(
-                this.state.startMonthValue,
-                this.state.startMonthErr,
-                "startMonthValue"
-              )}
-              value={this.state.startMonthValue}
-            />
-            <span className="ds-c-datefield__separator">/</span>
-            <TextField
-              className="ds-u-padding--1 ds-u-margin--1"
-              errorMessage={this.state.startYearErr}
-              inputRef={(yearStart) => (this.yearStart = yearStart)}
-              label="Year"
-              name="year"
-              onChange={this.validateYear}
-              onBlur={this.props.someMethod(
-                this.state.startYearValue,
-                this.state.startYearErr,
-                "startYearValue"
-              )}
-              numeric
-              value={this.state.startYearValue}
-            />
-          </Fragment>
+        {this.props.range ? (
+          <div className="date-range">
+            <div className="date-range-start">
+              <TextField
+                className="ds-u-padding--1 ds-u-margin--1"
+                errorMessage={this.state.monthStartErr}
+                inputRef={(monthStart) => (this.monthStart = monthStart)}
+                label="Month"
+                name="monthStart"
+                numeric
+                onChange={this.validateMonth}
+                onBlur={this.props.getRangeData(
+                  this.state.monthStart,
+                  this.state.monthStartErr,
+                  "monthStart"
+                )}
+                value={this.state.monthStart}
+              />
+              <span className="ds-c-datefield__separator">/</span>
+              <TextField
+                className="ds-u-padding--1 ds-u-margin--1"
+                errorMessage={this.state.yearStartErr}
+                inputRef={(yearStart) => (this.yearStart = yearStart)}
+                label="Year"
+                name="yearStart"
+                onChange={this.validateYear}
+                onBlur={this.props.getRangeData(
+                  this.state.yearStart,
+                  this.state.yearStartErr,
+                  "yearStart"
+                )}
+                numeric
+                value={this.state.yearStart}
+              />
+            </div>
+
+            <div className="date-range-end">
+              <TextField
+                className="ds-u-padding--1 ds-u-margin--1"
+                errorMessage={this.state.monthEndErr}
+                inputRef={(monthEnd) => (this.monthEnd = monthEnd)}
+                label="Month"
+                name="monthEnd"
+                numeric
+                onChange={this.validateMonth}
+                onBlur={this.props.getRangeData(
+                  this.state.monthEnd,
+                  this.state.monthEndErr,
+                  "monthEnd"
+                )}
+                value={this.state.monthEnd}
+              />
+              <span className="ds-c-datefield__separator">/</span>
+              <TextField
+                className="ds-u-padding--1 ds-u-margin--1"
+                errorMessage={this.state.yearEndErr}
+                inputRef={(yearEnd) => (this.yearEnd = yearEnd)}
+                label="Year"
+                name="yearEnd"
+                onChange={this.validateYear}
+                onBlur={this.props.getRangeData(
+                  this.state.yearEnd,
+                  this.state.yearEndErr,
+                  "yearEnd"
+                )}
+                numeric
+                value={this.state.yearEnd}
+              />
+            </div>
+          </div>
         ) : null}
       </Fragment>
     );
