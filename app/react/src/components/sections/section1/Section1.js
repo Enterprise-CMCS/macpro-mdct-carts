@@ -218,10 +218,14 @@ class Section1 extends Component {
                       Part 1: S-CHIP Enrollment and Premium Fees
                     </h3>
                     {this.state.mchipDisable === true ? (
-                      <p>
-                        This part only applies to states with a S-CHIP program.
-                        Skip to Part 2.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a S-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Part 2.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -358,8 +362,16 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
+                      {this.state.p1q2Disable === true ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">Questions 3-4 skipped due to prior answers.</h3>
+                          </div>
+                        </div>
+                      ) : ("")
+                      }
                       <div className="question-container">
-                        <div id="p1_q3" disabled={this.state.p1q2Disable}>
+                        <div id="p1_q3" hidden={this.state.p1q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               3. Is the maximum premium fee a family would be
@@ -421,7 +433,7 @@ class Section1 extends Component {
                         </div>
                       </div>
                       <div className="question-container">
-                        <div id="p1_q4" disabled={this.state.p1q2Disable}>
+                        <div id="p1_q4" hidden={this.state.p1q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               4. Do your premium fees differ for different CHIP
@@ -518,10 +530,14 @@ class Section1 extends Component {
                       Part 2: M-CHIP Enrollment and Premium Fees
                     </h3>
                     {this.state.schipDisable === true ? (
-                      <p>
-                        This part only applies to states with a M-CHIP program.
-                        Skip to Part 3.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a M-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Part 3.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -661,8 +677,16 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
+                      {this.state.p2q2Disable === true ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">Questions 3-4 skipped due to prior answers.</h3>
+                          </div>
+                        </div>
+                      ) : ("")
+                      }
                       <div className="question-container">
-                        <div id="p2_q3" disabled={this.state.p2q2Disable}>
+                        <div id="p2_q3" hidden={this.state.p2q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               3. Is the maximum premium fee a family would be
@@ -723,7 +747,7 @@ class Section1 extends Component {
                         </div>
                       </div>
                       <div className="question-container">
-                        <div id="p2_q4" disabled={this.state.p2q2Disable}>
+                        <div id="p2_q4" hidden={this.state.p2q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               4. Do your premium fees differ for different CHIP
@@ -820,10 +844,14 @@ class Section1 extends Component {
                       Part 3: S-CHIP Changes in Programs and Policies
                     </h3>
                     {this.state.mchipDisable === true ? (
-                      <p>
-                        This part only applies to states with a S-CHIP program.
-                        Skip to Part 4.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a S-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Part 4.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -1476,10 +1504,14 @@ class Section1 extends Component {
                       Part 4: M-CHIP Changes in Programs and Policies
                     </h3>
                     {this.state.schipDisable === true ? (
-                      <p>
-                        This part only applies to states with a M-CHIP program.
-                        Skip to Section 2.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a M-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Section 2.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
