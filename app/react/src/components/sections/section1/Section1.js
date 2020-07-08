@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import NumberFormat from "react-number-format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
-  Choice,
   ChoiceList,
   Tabs,
   TabPanel,
@@ -384,7 +381,7 @@ class Section1 extends Component {
                               name="p1_q3"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p1q2Disable == true
+                                this.state.p1q2Disable === true
                                   ? "This question is not required if the answer to Part 1 Question 2 is No."
                                   : ""
                               }
@@ -446,7 +443,7 @@ class Section1 extends Component {
                               name="p1_q4"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p1q2Disable == true
+                                this.state.p1q2Disable === true
                                   ? "This question is not required if the answer to Part 1 Question 2 is No."
                                   : ""
                               }
@@ -687,7 +684,7 @@ class Section1 extends Component {
                               name="p2_q3"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p2q2Disable == true
+                                this.state.p2q2Disable === true
                                   ? "This question is not required if the answer to Part 2 Question 2 is No."
                                   : ""
                               }
@@ -748,7 +745,7 @@ class Section1 extends Component {
                               name="p2_q4"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p2q2Disable == true
+                                this.state.p2q2Disable === true
                                   ? "This question is not required if the answer to Part 2 Question 2 is No."
                                   : ""
                               }
