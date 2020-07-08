@@ -36,6 +36,8 @@ class BasicInfo extends Component {
       contactEmail: "",
       contactAddress: "",
       contactPhone: 0,
+      ly_programName: this.props.programName,
+      ly_programType: this.props.programType,
       ly_contactName: "John Smith",
       ly_contactTitle: "NY CHIP Program Manager",
       ly_contactEmail: "jsmith@ny.gov",
@@ -265,7 +267,7 @@ class BasicInfo extends Component {
                 <FormNavigation nextUrl="/section1" />
               </TabPanel>
 
-              <TabPanel id="tab-lastyear" tab="FY2019 answers">
+              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
                 <form>
                   <Dropdown
                     label="1. State or territory name: "
@@ -283,19 +285,19 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.programType === "comboCHIP" ? true : false,
+                          this.state.ly_programType === "comboCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
                         value: "mCHIP",
                         checked:
-                          this.state.programType === "mCHIP" ? true : false,
+                          this.state.ly_programType === "mCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Separate Program only (S-CHIP) ",
                         value: "sCHIP",
                         checked:
-                          this.state.programType === "sCHIP" ? true : false,
+                          this.state.ly_programType === "sCHIP" ? true : false,
                       },
                     ]}
                     label="2. Program type: "
@@ -303,28 +305,13 @@ class BasicInfo extends Component {
                     onChange={this.handleChange}
                     disabled
                   />
-
-                  <div>
-                    <h3>
-                      Who should we contact if we have any questions about your
-                      report?
-                    </h3>
-                    <TextField label="4. Contact Name: " name="contactName" />
-                    <TextField label="5. Job Title: " name="contactTitle" />
-                    <TextField
-                      label="3. CHIP program name(s): "
-                      name="programName"
-                      value={this.state.programName}
-                      onChange={this.handleChange}
-                      disabled
-                    />
-                    <TextField
-                      label="7. Address: "
-                      hint="Include city, state and zip code"
-                      name="contactAddress"
-                    />
-                    <TextField label="8. Phone Number: " name="contactPhone" />
-                  </div>
+                  <TextField
+                    label="3. CHIP program name(s): "
+                    name="programName"
+                    value={this.state.ly_programName}
+                    onChange={this.handleChange}
+                    disabled
+                  />
 
                   <div>
                     <h3>
@@ -381,6 +368,7 @@ class BasicInfo extends Component {
 const mapStateToProps = (state) => ({
   name: state.name,
   abbr: state.abbr,
+  year: state.formYear,
   programType: state.programType,
   programName: state.programName,
 });
