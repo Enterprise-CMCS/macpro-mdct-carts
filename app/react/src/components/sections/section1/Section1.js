@@ -220,7 +220,7 @@ class Section1 extends Component {
                     {this.state.mchipDisable === true ? (
                       <p>
                         This part only applies to states with a S-CHIP program.
-                        Please go to Part 2.
+                        Skip to Part 2.
                       </p>
                     ) : (
                       ""
@@ -520,7 +520,7 @@ class Section1 extends Component {
                     {this.state.schipDisable === true ? (
                       <p>
                         This part only applies to states with a M-CHIP program.
-                        Please go to Part 3.
+                        Skip to Part 3.
                       </p>
                     ) : (
                       ""
@@ -822,7 +822,7 @@ class Section1 extends Component {
                     {this.state.mchipDisable === true ? (
                       <p>
                         This part only applies to states with a S-CHIP program.
-                        Please go to Part 4.
+                        Skip to Part 4.
                       </p>
                     ) : (
                       ""
@@ -1478,7 +1478,7 @@ class Section1 extends Component {
                     {this.state.schipDisable === true ? (
                       <p>
                         This part only applies to states with a M-CHIP program.
-                        Please go to Section 2.
+                        Skip to Section 2.
                       </p>
                     ) : (
                       ""
@@ -2168,6 +2168,10 @@ class Section1 extends Component {
                   previousUrl="/basic-info"
                 />
               </TabPanel>
+
+              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
+
+              </TabPanel>
             </Tabs>
             <FormActions />
           </div>
@@ -2180,6 +2184,7 @@ class Section1 extends Component {
 const mapStateToProps = (state) => ({
   name: state.name,
   programType: state.programType,
+  year: state.formYear,
 });
 
 export default connect(mapStateToProps)(Section1);
