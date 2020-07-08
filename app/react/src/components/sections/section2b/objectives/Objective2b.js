@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import Goal from "./goals/Goal2b";
-import { TextField, Button } from "@cmsgov/design-system-core";
+import { TextField } from "@cmsgov/design-system-core";
 import {
   Accordion,
   AccordionItem,

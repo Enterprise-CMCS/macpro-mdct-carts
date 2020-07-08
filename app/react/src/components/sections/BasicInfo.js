@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "../layout/Sidebar";
 import PageInfo from "../layout/PageInfo";
 import FormNavigation from "../layout/FormNavigation";
 import FormActions from "../layout/FormActions";
@@ -10,13 +9,12 @@ import {
   ChoiceList,
   Tabs,
   TabPanel,
-  Button as button,
 } from "@cmsgov/design-system-core";
 import FillForm from "../layout/FillForm";
 import statesArray from "../Utils/statesArray";
 
 const validEmailRegex = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
 );
 
 const validTelephoneRegex = RegExp(
@@ -88,15 +86,11 @@ class BasicInfo extends Component {
     el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
-    let textFieldCopy = "";
-    let textAreaCopy = "";
 
     // Boolean, Set values on active
     let isActive = el.target.classList.contains("active");
 
     if (isActive) {
-      textFieldCopy = "This is what you wrote last year.";
-      textAreaCopy = "This is what you wrote last year.";
       el.target.title = "Undo";
     }
 
@@ -150,19 +144,19 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.programType == "comboCHIP" ? true : false,
+                          this.state.programType === "comboCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
                         value: "mCHIP",
                         checked:
-                          this.state.programType == "mCHIP" ? true : false,
+                          this.state.programType === "mCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Separate Program only (S-CHIP) ",
                         value: "sCHIP",
                         checked:
-                          this.state.programType == "sCHIP" ? true : false,
+                          this.state.programType === "sCHIP" ? true : false,
                       },
                     ]}
                     label="2. Program type: "
@@ -289,19 +283,19 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.programType == "comboCHIP" ? true : false,
+                          this.state.programType === "comboCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
                         value: "mCHIP",
                         checked:
-                          this.state.programType == "mCHIP" ? true : false,
+                          this.state.programType === "mCHIP" ? true : false,
                       },
                       {
                         label: "CHIP Separate Program only (S-CHIP) ",
                         value: "sCHIP",
                         checked:
-                          this.state.programType == "sCHIP" ? true : false,
+                          this.state.programType === "sCHIP" ? true : false,
                       },
                     ]}
                     label="2. Program type: "
