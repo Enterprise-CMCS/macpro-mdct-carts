@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { $CombinedState } from "redux";
 
 class Header extends Component {
   constructor() {
