@@ -11,12 +11,25 @@ class FPL extends Component {
       fpl_fee_end: null,
       fpl_percent_start: null,
       fpl_percent_end: null,
+      fpl_per_starts_at: null,
+      fpl_per_ends_at: null,
+      fpl_fee_starts_at: null,
+      fpl_fee_ends_at: null,
     };
     this.calculateFPL = this.calculateFPL.bind(this);
+    this.changeText = this.changeText.bind(this);
+  }
+
+  // Allows updating text when value is set to state
+  changeText(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   calculateFPL(evt) {
     // percentStart < percentEnd
+
+    // Strip value of all non-numeric chars
+    let numericValue = evt.target.value.replace(/\D/g, "");
 
     let percentBoolean = false;
     if (this.percentStart.value && this.percentEnd.value) {
@@ -39,6 +52,7 @@ class FPL extends Component {
     this.setState({
       fpl_error_fee: feeBoolean,
       fpl_error_percent: percentBoolean,
+      [`${evt.target.name}`]: numericValue,
     });
   }
 
@@ -56,9 +70,11 @@ class FPL extends Component {
                 inputMode="percentage"
                 pattern="[0-9]*"
                 type="text"
-                name="fpl-starts-at"
+                name="fpl_per_starts_at"
                 inputRef={(percentStart) => (this.percentStart = percentStart)}
                 onBlur={this.calculateFPL}
+                onChange={this.changeText}
+                value={this.state.fpl_per_starts_at}
               />
               <div
                 className={`ds-c-field__after ds-c-field__after--percent fpl-percentage`}
@@ -76,9 +92,11 @@ class FPL extends Component {
                 inputMode="numeric"
                 pattern="[0-9]*"
                 type="text"
-                name="fpl-starts-at"
+                name="fpl_per_ends_at"
                 inputRef={(percentEnd) => (this.percentEnd = percentEnd)}
                 onBlur={this.calculateFPL}
+                onChange={this.changeText}
+                value={this.state.fpl_per_ends_at}
               />
               <div
                 className={`ds-c-field__after ds-c-field__after--percent fpl-percentage`}
@@ -102,9 +120,11 @@ class FPL extends Component {
                 mask="currency"
                 pattern="[0-9]*"
                 type="text"
-                name="fpl-starts-at"
+                name="fpl_fee_starts_at"
                 inputRef={(feeStart) => (this.feeStart = feeStart)}
                 onBlur={this.calculateFPL}
+                onChange={this.changeText}
+                value={this.state.fpl_fee_starts_at}
               />
             </div>
             <div className="fpl-arrow">
@@ -118,9 +138,11 @@ class FPL extends Component {
                 mask="currency"
                 pattern="[0-9]*"
                 type="text"
-                name="fpl-starts-at"
+                name="fpl_fee_ends_at"
                 inputRef={(feeEnd) => (this.feeEnd = feeEnd)}
                 onBlur={this.calculateFPL}
+                onChange={this.changeText}
+                value={this.state.fpl_fee_ends_at}
               />
             </div>
           </div>
