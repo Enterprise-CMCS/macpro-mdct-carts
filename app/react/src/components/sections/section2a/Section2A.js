@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
-import {
-  Button as button,
-  ChoiceList,
-  TextField,
-  Table,
-} from "@cmsgov/design-system-core";
-import Sidebar from "../../layout/Sidebar";
+import { ChoiceList, TextField } from "@cmsgov/design-system-core";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
