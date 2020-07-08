@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { $CombinedState } from "redux";
 
 class Header extends Component {
   constructor() {
@@ -46,10 +45,10 @@ class Header extends Component {
                   </ul>
                   <ul className="menu-block" id="menu-block">
                     <li className="manage-account">
-                      <a href="#">Manage account</a>
+                      <a href="javascript:void(0)">Manage account</a>
                     </li>
                     <li className="logout">
-                      <a href="#">Log out</a>
+                      <a href="javascript:void(0)">Log out</a>
                     </li>
                   </ul>
                 </div>
