@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
-import {
-  Button as button,
-  ChoiceList,
-  TextField,
-  Table,
-} from "@cmsgov/design-system-core";
-import Sidebar from "../../layout/Sidebar";
+import { ChoiceList, TextField } from "@cmsgov/design-system-core";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
@@ -661,7 +655,10 @@ class Section2a extends Component {
                   </form>
                 </div>
 
-                <FormNavigation nextUrl="/2b" previousUrl="/1" />
+                <FormNavigation
+                  nextUrl="/section2/2b"
+                  previousUrl="/section1"
+                />
               </TabPanel>
             </Tabs>
           </div>

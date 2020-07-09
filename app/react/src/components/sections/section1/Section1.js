@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import NumberFormat from "react-number-format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
 import FPL from "../../layout/FPL";
 import {
   Button as button,
-  Choice,
   ChoiceList,
   Tabs,
   TabPanel,
@@ -221,10 +218,14 @@ class Section1 extends Component {
                       Part 1: S-CHIP Enrollment and Premium Fees
                     </h3>
                     {this.state.mchipDisable === true ? (
-                      <p>
-                        This part only applies to states with a S-CHIP program.
-                        Please go to Part 2.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a S-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Part 2.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -361,8 +362,16 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
+                      {this.state.p1q2Disable === true ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">Questions 3-4 skipped due to prior answers.</h3>
+                          </div>
+                        </div>
+                      ) : ("")
+                      }
                       <div className="question-container">
-                        <div id="p1_q3" disabled={this.state.p1q2Disable}>
+                        <div id="p1_q3" hidden={this.state.p1q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               3. Is the maximum premium fee a family would be
@@ -384,7 +393,7 @@ class Section1 extends Component {
                               name="p1_q3"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p1q2Disable == true
+                                this.state.p1q2Disable === true
                                   ? "This question is not required if the answer to Part 1 Question 2 is No."
                                   : ""
                               }
@@ -424,7 +433,7 @@ class Section1 extends Component {
                         </div>
                       </div>
                       <div className="question-container">
-                        <div id="p1_q4" disabled={this.state.p1q2Disable}>
+                        <div id="p1_q4" hidden={this.state.p1q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               4. Do your premium fees differ for different CHIP
@@ -446,7 +455,7 @@ class Section1 extends Component {
                               name="p1_q4"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p1q2Disable == true
+                                this.state.p1q2Disable === true
                                   ? "This question is not required if the answer to Part 1 Question 2 is No."
                                   : ""
                               }
@@ -521,10 +530,14 @@ class Section1 extends Component {
                       Part 2: M-CHIP Enrollment and Premium Fees
                     </h3>
                     {this.state.schipDisable === true ? (
-                      <p>
-                        This part only applies to states with a M-CHIP program.
-                        Please go to Part 3.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a M-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Part 3.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -664,8 +677,16 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
+                      {this.state.p2q2Disable === true ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">Questions 3-4 skipped due to prior answers.</h3>
+                          </div>
+                        </div>
+                      ) : ("")
+                      }
                       <div className="question-container">
-                        <div id="p2_q3" disabled={this.state.p2q2Disable}>
+                        <div id="p2_q3" hidden={this.state.p2q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               3. Is the maximum premium fee a family would be
@@ -687,7 +708,7 @@ class Section1 extends Component {
                               name="p2_q3"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p2q2Disable == true
+                                this.state.p2q2Disable === true
                                   ? "This question is not required if the answer to Part 2 Question 2 is No."
                                   : ""
                               }
@@ -726,7 +747,7 @@ class Section1 extends Component {
                         </div>
                       </div>
                       <div className="question-container">
-                        <div id="p2_q4" disabled={this.state.p2q2Disable}>
+                        <div id="p2_q4" hidden={this.state.p2q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                             <legend className="ds-c-label">
                               4. Do your premium fees differ for different CHIP
@@ -748,7 +769,7 @@ class Section1 extends Component {
                               name="p2_q4"
                               onChange={this.setConditional}
                               hint={
-                                this.state.p2q2Disable == true
+                                this.state.p2q2Disable === true
                                   ? "This question is not required if the answer to Part 2 Question 2 is No."
                                   : ""
                               }
@@ -823,10 +844,14 @@ class Section1 extends Component {
                       Part 3: S-CHIP Changes in Programs and Policies
                     </h3>
                     {this.state.mchipDisable === true ? (
-                      <p>
-                        This part only applies to states with a S-CHIP program.
-                        Please go to Part 4.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a S-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Part 4.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -1479,10 +1504,14 @@ class Section1 extends Component {
                       Part 4: M-CHIP Changes in Programs and Policies
                     </h3>
                     {this.state.schipDisable === true ? (
-                      <p>
-                        This part only applies to states with a M-CHIP program.
-                        Please go to Section 2.
-                      </p>
+                      <div className="ds-c-alert ds-c-alert--hide-icon">
+                        <div className="ds-c-alert__body">
+                          <h3 className="ds-c-alert__heading">This part only applies to states with a M-CHIP program.</h3>
+                          <p className="ds-c-alert__text">
+                            Skip to Section 2.
+                          </p>
+                        </div>
+                      </div>
                     ) : (
                       ""
                     )}
@@ -2166,7 +2195,14 @@ class Section1 extends Component {
                     </div>
                   </div>
                 </form>
-                <FormNavigation nextUrl="/2a" previousUrl="/basic-info" />
+                <FormNavigation
+                  nextUrl="/section2/2a"
+                  previousUrl="/basic-info"
+                />
+              </TabPanel>
+
+              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
+
               </TabPanel>
             </Tabs>
             <FormActions />
@@ -2180,6 +2216,7 @@ class Section1 extends Component {
 const mapStateToProps = (state) => ({
   name: state.name,
   programType: state.programType,
+  year: state.formYear,
 });
 
 export default connect(mapStateToProps)(Section1);

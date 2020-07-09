@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  Button as button,
   ChoiceList,
   Tabs,
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
-import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FillForm from "../../layout/FillForm";
 import FormNavigation from "../../layout/FormNavigation";
@@ -20,6 +18,7 @@ class Section3c extends Component {
     this.setConditional = this.setConditional.bind(this);
     this.selectInput = this.selectInput.bind(this);
     this.setConditionalFromToggle = this.setConditionalFromToggle.bind(this);
+    this.changeText = this.changeText.bind(this);
 
     this.state = {
       p1_q1: "no",
@@ -43,6 +42,11 @@ class Section3c extends Component {
       p2_q6: "",
       fillFormTitle: "Same as last year",
     };
+  }
+
+  // Allows updating text when value is set to state
+  changeText(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
@@ -205,6 +209,7 @@ class Section3c extends Component {
                               name="p1_q1__b"
                               rows="6"
                               value={this.state.p1_q1__b}
+                              onChange={this.changeText}
                             />
                             <TextField
                               hint="Maximum 7,500 characters"
@@ -213,6 +218,7 @@ class Section3c extends Component {
                               name="p1_q1__c"
                               rows="6"
                               value={this.state.p1_q1__c}
+                              onChange={this.changeText}
                             />
                           </div>
                         ) : (
@@ -275,18 +281,21 @@ class Section3c extends Component {
                         labelClassName="p1_q1__c"
                         name="p1_q2__c"
                         value={this.state.p1_q2__c}
+                        onChange={this.changeText}
                       />
                       <TextField
                         label="d. How many notices do you send to families before disenrolling a child from the program?"
                         labelClassName="p1_q1__d"
                         name="p1_q2__d"
                         value={this.state.p1_q2__d}
+                        onChange={this.changeText}
                       />
                       <TextField
                         label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
                         labelClassName="p1_q1__e"
                         name="p1_q2__e"
                         value={this.state.p1_q2__e}
+                        onChange={this.changeText}
                       />
                     </div>
                   </div>
@@ -307,6 +316,7 @@ class Section3c extends Component {
                       rows="6"
                       name="p1_q3"
                       value={this.state.p1_q3}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -326,6 +336,7 @@ class Section3c extends Component {
                       rows="6"
                       name="p1_q4"
                       value={this.state.p1_q4}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -345,6 +356,7 @@ class Section3c extends Component {
                       rows="6"
                       name="p1_q5"
                       value={this.state.p1_q5}
+                      onChange={this.changeText}
                     />
                   </div>
                   <h3 className="part-header">Part 2: Eligibility Data</h3>
@@ -367,6 +379,7 @@ class Section3c extends Component {
                       labelClassName="p2_q1"
                       name="p2_q1"
                       value={this.state.p2_q1}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -381,6 +394,7 @@ class Section3c extends Component {
                       labelClassName="p2_q2"
                       name="p2_q2"
                       value={this.state.p2_q2}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -395,6 +409,7 @@ class Section3c extends Component {
                       labelClassName="p2_q3"
                       name="p2_q3"
                       value={this.state.p2_q3}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -408,6 +423,7 @@ class Section3c extends Component {
                       labelClassName="p2_q4"
                       name="p2_q4"
                       value={this.state.p2_q4}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -421,6 +437,7 @@ class Section3c extends Component {
                       labelClassName="p2_q5"
                       name="p2_q5"
                       value={this.state.p2_q5}
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -437,10 +454,11 @@ class Section3c extends Component {
                       name="p2_q6"
                       rows="6"
                       value={this.state.p2_q6}
+                      onChange={this.changeText}
                     />
                   </div>
                 </form>
-                <FormNavigation previousUrl="/2b" />
+                <FormNavigation previousUrl="/section2/2b" />
               </TabPanel>
               <TabPanel id="tab-lastyear" tab="FY2019 answers">
                 <form>
@@ -476,6 +494,7 @@ class Section3c extends Component {
                           name="p1_q1__a"
                           rows="6"
                           value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                          onChange={this.changeText}
                         />
                         <TextField
                           hint="Maximum 7,500 characters"
@@ -484,6 +503,7 @@ class Section3c extends Component {
                           name="p1_q1__b"
                           rows="6"
                           value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                          onChange={this.changeText}
                         />
                       </div>
                     </div>
@@ -525,18 +545,21 @@ class Section3c extends Component {
                       labelClassName="p1_q1__c"
                       name="p1_q1__c"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                     <TextField
                       label="d. How many notices do you send to families before disenrolling a child from the program?"
                       labelClassName="p1_q1__d"
                       name="p1_q1__d"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                     <TextField
                       label="e. What else do you do to simplify the eligibility renewal process for families in order to increase retention?"
                       labelClassName="p1_q1__e"
                       name="p1_q1__e"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -551,6 +574,7 @@ class Section3c extends Component {
                       rows="6"
                       name="p1_q3"
                       value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -565,6 +589,7 @@ class Section3c extends Component {
                       rows="6"
                       name="p1_q4"
                       value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -579,6 +604,7 @@ class Section3c extends Component {
                       rows="6"
                       name="p1_q5"
                       value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                      onChange={this.changeText}
                     />
                   </div>
                   <h3 className="part-header">Part 2: Eligibility Data</h3>
@@ -596,6 +622,7 @@ class Section3c extends Component {
                       labelClassName="p2_q1"
                       name="p2_q1"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -605,6 +632,7 @@ class Section3c extends Component {
                       labelClassName="p2_q2"
                       name="p2_q2"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -614,6 +642,7 @@ class Section3c extends Component {
                       labelClassName="p2_q3"
                       name="p2_q3"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -622,6 +651,7 @@ class Section3c extends Component {
                       labelClassName="p2_q4"
                       name="p2_q4"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -630,6 +660,7 @@ class Section3c extends Component {
                       labelClassName="p2_q5"
                       name="p2_q5"
                       value="This is what you wrote last year."
+                      onChange={this.changeText}
                     />
                   </div>
                   <div className="question-container">
@@ -641,10 +672,11 @@ class Section3c extends Component {
                       name="p2_q6"
                       rows="6"
                       value="This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis varius odio, vel maximus enim. Quisque dignissim, libero eget rhoncus laoreet, justo tellus volutpat felis, in feugiat sem risus sed tellus. Suspendisse tincidunt nisl quis quam convallis condimentum auctor in dui. Pellentesque aliquet pellentesque metus id ultricies."
+                      onChange={this.changeText}
                     />
                   </div>
                 </form>
-                <FormNavigation previousUrl="/2b" />
+                <FormNavigation previousUrl="/section2/2b" />
               </TabPanel>
             </Tabs>
             <FormActions />

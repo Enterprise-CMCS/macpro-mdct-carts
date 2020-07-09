@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Sidebar from "../../layout/Sidebar";
 import Objective2b from "./objectives/Objective2b.js";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
@@ -97,7 +96,7 @@ class Section2b extends Component {
                       goals are different, submit a State Plan Amendment (SPA)
                       to reconcile these differences.
                     </p>
-                    <div className="objective-accordiion">
+                    <div className="objective-accordion">
                       {/* This builds an accordion that maps through the array of Objectives in state */}
                       <Accordion multiple defaultIndex={[...Array(100).keys()]}>
                         {this.state.objectiveArray.map((element) => (
@@ -105,7 +104,7 @@ class Section2b extends Component {
                             <div className="accordion-header">
                               <h3>
                                 <AccordionButton>
-                                  <div className="title">
+                                  <div className="accordion-title">
                                     {/* The sliceId utility function gets just the number of each objective, removes the year */}
                                     {/* The first objective will have a predetermined header*/}
 
@@ -126,23 +125,25 @@ class Section2b extends Component {
                       </Accordion>
                     </div>
 
-                    <div>
-                      <h3>
-                        {" "}
-                        Do you have another objective in your State Plan?{" "}
+                    <div className="section-footer">
+                      <h3 className="question-inner-header">
+                        Do you have another objective in your State Plan?
                       </h3>
-                      <p className="ds-base color-gray-light">Optional</p>
+                      <div className="ds-c-field__hint">Optional</div>
                       <button
                         onClick={this.newObjective}
                         type="button"
-                        className="ds-c-button ds-c-button--primary"
+                        className="add-objective ds-c-button ds-c-button--primary"
                       >
                         Add another objective
                         <FontAwesomeIcon icon={faPlus} />
                       </button>
                     </div>
                   </form>
-                  <FormNavigation nextUrl="/3c" previousUrl="/2a" />
+                  <FormNavigation
+                    nextUrl="/section3/3c"
+                    previousUrl="/section2/2a"
+                  />
                 </div>
               </TabPanel>
 
@@ -151,7 +152,7 @@ class Section2b extends Component {
                 tab={`FY${this.props.year - 1} answers`}
               >
                 <div className="section-content">
-                  <div className="objective-accordiion">
+                  <div className="objective-accordion">
                     {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
                     <form>
                       <Accordion>
@@ -180,7 +181,10 @@ class Section2b extends Component {
                         ))}
                       </Accordion>
                     </form>
-                    <FormNavigation nextUrl="/3a" previousUrl="/2a" />
+                    <FormNavigation
+                      nextUrl="/section3/3a"
+                      previousUrl="/section2/2a"
+                    />
                   </div>
                 </div>
               </TabPanel>
