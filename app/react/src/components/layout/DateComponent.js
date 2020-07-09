@@ -130,11 +130,14 @@ class DateComponent extends Component {
                 label="Year"
                 name="yearStart"
                 onChange={this.validateYear}
-                onBlur={this.props.getRangeData(
-                  this.state.yearStart,
-                  this.state.yearStartErr,
-                  "yearStart"
-                )}
+                onBlur={
+                  (this.props.getRangeData(
+                    this.state.yearStart,
+                    this.state.yearStartErr,
+                    "yearStart"
+                  ),
+                  this.props.validateDateRange)
+                }
                 numeric
                 value={this.state.yearStart}
               />

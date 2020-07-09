@@ -8,28 +8,52 @@ class DateRange extends Component {
     super(props);
     this.state = {};
     this.getRangeData = this.getRangeData.bind(this);
-    // this.validateDateRange = this.validateDateRange.bind(this);
+    this.validateDateRange = this.validateDateRange.bind(this);
   }
 
   // start 05/2019
   // end 12/2019
 
-  // THIS STATE NEEDS TO KEEP TRACK OF THE START RANGES & END RANGES (after theyve been validated)
-  // add start range and end range data to state
-  // write a method that compares start range to end range
+  // THIS STATE NEEDS TO KEEP TRACK OF THE START RANGES & END RANGES
+
+  // check chronology
+  validateDateRange() {
+    // check that all 4 numbers are present
+    // if start date is after end date, send dateComponent an error
+
+    // how to ensure all four dates are there??
+    if (
+      this.state.monthStart &&
+      this.state.monthEnd &&
+      this.state.yearStart &&
+      this.state.yearEnd
+    ) {
+      console.log("HONK HONK");
+    }
+
+    // let startDate = new Date(1995, 3);
+    // console.log("date object??", startDate);
+  }
+
+  //This method is passed to children components to update parent state
   getRangeData(value, error, name) {
     if (error === false) {
       this.setState({
         [name]: value,
       });
     }
+    this.validateDateRange();
   }
 
   render() {
     //needs to take in some function via this.props that will set state on parent component
     return (
-      <div className="date-range ds-u-display--flex ds-u-flex-direction--row">
-        <DateComponent range={true} getRangeData={this.getRangeData} />
+      <div className="date-range">
+        <DateComponent
+          range={true}
+          getRangeData={this.getRangeData}
+          validateDateRange={this.validateDateRange}
+        />
         {/* <DateComponent endRange someMethod={this.method1} /> */}
       </div>
     );
