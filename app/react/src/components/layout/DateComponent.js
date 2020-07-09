@@ -115,11 +115,14 @@ class DateComponent extends Component {
                 name="monthStart"
                 numeric
                 onChange={this.validateMonth}
-                onBlur={this.props.getRangeData(
-                  this.state.monthStart,
-                  this.state.monthStartErr,
-                  "monthStart"
-                )}
+                onBlur={
+                  (this.props.getRangeData(
+                    this.state.monthStart,
+                    this.state.monthStartErr,
+                    "monthStart"
+                  ),
+                  this.props.validateDateRange)
+                }
                 value={this.state.monthStart}
               />
               <span className="ds-c-datefield__separator">/</span>
@@ -152,11 +155,14 @@ class DateComponent extends Component {
                 name="monthEnd"
                 numeric
                 onChange={this.validateMonth}
-                onBlur={this.props.getRangeData(
-                  this.state.monthEnd,
-                  this.state.monthEndErr,
-                  "monthEnd"
-                )}
+                onBlur={
+                  (this.props.getRangeData(
+                    this.state.monthEnd,
+                    this.state.monthEndErr,
+                    "monthEnd"
+                  ),
+                  this.props.validateDateRange)
+                }
                 value={this.state.monthEnd}
               />
               <span className="ds-c-datefield__separator">/</span>
@@ -167,11 +173,14 @@ class DateComponent extends Component {
                 label="Year"
                 name="yearEnd"
                 onChange={this.validateYear}
-                onBlur={this.props.getRangeData(
-                  this.state.yearEnd,
-                  this.state.yearEndErr,
-                  "yearEnd"
-                )}
+                onBlur={
+                  (this.props.getRangeData(
+                    this.state.yearEnd,
+                    this.state.yearEndErr,
+                    "yearEnd"
+                  ),
+                  this.props.validateDateRange)
+                }
                 numeric
                 value={this.state.yearEnd}
               />
