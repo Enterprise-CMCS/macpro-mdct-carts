@@ -141,7 +141,7 @@ class Section2b extends Component {
                     </div>
                   </form>
                   <FormNavigation
-                    nextUrl="/section3/3c"
+                    nextUrl="/section3/3a"
                     previousUrl="/section2/2a"
                   />
                 </div>
