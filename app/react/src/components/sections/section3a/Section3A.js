@@ -9,10 +9,7 @@ import {
   AccordionButton,
   AccordionPanel,
 } from "@reach/accordion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
-import { sliceId } from "../../Utils/helperFunctions";
 import FormActions from "../../layout/FormActions";
 import {
   Button as button,
@@ -36,8 +33,6 @@ class Section3a extends Component {
     this.setState({
       [el.target.name]: el.target.value,
     });
-    // el.target.defaultChecked = true;
-    //this.setQuestionDisable(el.target.name, el.target.value);
   }
 
   componentDidMount() {
@@ -94,7 +89,6 @@ class Section3a extends Component {
                               <TextField
                                 label="a) What are you doing differently?"
                                 name="p1_q1__a"
-                                //mask="currency"
                               />
                             </div>
                           ) : null}
@@ -130,7 +124,6 @@ class Section3a extends Component {
                               <TextField
                                 label="a) Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?"
                                 name="p1_q2__a"
-                                //mask="currency"
                               />
                             </div>
                           ) : (
