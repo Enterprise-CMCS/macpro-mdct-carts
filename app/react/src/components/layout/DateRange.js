@@ -60,6 +60,7 @@ class DateRange extends Component {
           getRangeData={this.getRangeData}
           validateDateRange={this.validateDateRange}
           endRangeErr={this.state.endRangeErr}
+          previousEntry={this.props.previousEntry === true ? true : false}
         />
       </Fragment>
     );

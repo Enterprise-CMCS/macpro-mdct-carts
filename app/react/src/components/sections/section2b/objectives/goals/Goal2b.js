@@ -272,7 +272,11 @@ class Goal extends Component {
                 7. What is the date range for your data?
               </div>
               <div className="date-range-wrapper">
-                <DateRange />
+                <DateRange
+                  previousEntry={
+                    this.props.previousEntry === "true" ? true : false
+                  }
+                />
               </div>
             </div>
 

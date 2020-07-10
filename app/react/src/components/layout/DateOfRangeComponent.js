@@ -19,6 +19,7 @@ class DateOfRangeComponent extends Component {
 
       yearEndErr: false,
       yearEnd: "",
+      dummyDigit: 10,
     };
     this.validateMonth = this.validateMonth.bind(this);
     this.validateYear = this.validateYear.bind(this);
@@ -120,7 +121,11 @@ class DateOfRangeComponent extends Component {
                     ),
                     this.props.validateDateRange)
                   }
-                  value={this.state.monthStart}
+                  value={
+                    this.props.previousEntry === true
+                      ? this.state.dummyDigit - 5
+                      : this.state.monthStart
+                  }
                 />
                 <div className="ds-c-datefield__separator">/</div>
                 <TextField
@@ -137,7 +142,11 @@ class DateOfRangeComponent extends Component {
                     this.props.validateDateRange)
                   }
                   numeric
-                  value={this.state.yearStart}
+                  value={
+                    this.props.previousEntry === true
+                      ? this.state.dummyDigit * 202 - 1
+                      : this.state.yearStart
+                  }
                 />
               </div>
             </div>
@@ -158,7 +167,11 @@ class DateOfRangeComponent extends Component {
                   ),
                   this.props.validateDateRange)
                 }
-                value={this.state.monthEnd}
+                value={
+                  this.props.previousEntry === true
+                    ? this.state.dummyDigit
+                    : this.state.monthEnd
+                }
               />
               <div className="ds-c-datefield__separator">/</div>
               <TextField
@@ -175,10 +188,14 @@ class DateOfRangeComponent extends Component {
                   this.props.validateDateRange)
                 }
                 numeric
-                value={this.state.yearEnd}
+                value={
+                  this.props.previousEntry === true
+                    ? this.state.dummyDigit * 202 - 1
+                    : this.state.yearEnd
+                }
               />
             </div>
-            {this.props.endRangeErr ? (
+            {this.props.endRangeErr === true ? (
               <div className="error">Start date must come before end date</div>
             ) : null}
           </div>
