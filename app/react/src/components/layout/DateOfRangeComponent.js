@@ -105,49 +105,47 @@ class DateOfRangeComponent extends Component {
             <div className="date-range-start">
               <h3 className="question-inner-header"> Start </h3>
               <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
-              <TextField
-                errorMessage={this.state.monthStartErr}
-                name="monthStart"
-                numeric
-                onChange={this.validateMonth}
-                onBlur={
-                  (this.props.getRangeData(
-                    this.state.monthStart,
-                    this.state.monthStartErr,
-                    "monthStart"
-                  ),
-                  this.props.validateDateRange)
-                }
-                value={this.state.monthStart}
-              />
-              <span className="ds-c-datefield__separator">/</span>
-              <TextField
-                errorMessage={this.state.yearStartErr}
-                name="yearStart"
-                onChange={this.validateYear}
-                onBlur={
-                  (this.props.getRangeData(
-                    this.state.yearStart,
-                    this.state.yearStartErr,
-                    "yearStart"
-                  ),
-                  this.props.validateDateRange)
-                }
-                numeric
-                value={this.state.yearStart}
-              />
+              <div className="date-range-start-wrapper">
+                <TextField
+                  className="ds-c-field--small"
+                  errorMessage={this.state.monthStartErr}
+                  name="monthStart"
+                  numeric
+                  onChange={this.validateMonth}
+                  onBlur={
+                    (this.props.getRangeData(
+                      this.state.monthStart,
+                      this.state.monthStartErr,
+                      "monthStart"
+                    ),
+                    this.props.validateDateRange)
+                  }
+                  value={this.state.monthStart}
+                />
+                <div className="ds-c-datefield__separator">/</div>
+                <TextField
+                  className="ds-c-field--small"
+                  errorMessage={this.state.yearStartErr}
+                  name="yearStart"
+                  onChange={this.validateYear}
+                  onBlur={
+                    (this.props.getRangeData(
+                      this.state.yearStart,
+                      this.state.yearStartErr,
+                      "yearStart"
+                    ),
+                    this.props.validateDateRange)
+                  }
+                  numeric
+                  value={this.state.yearStart}
+                />
+              </div>
             </div>
-
-            <div
-              className={
-                this.props.endRangeErr === false
-                  ? "date-range-end"
-                  : "date-range-end date-range-err"
-              }
-            >
-              <h3 className="question-inner-header"> End </h3>
-              <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
+            <h3 className="question-inner-header"> End </h3>
+            <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
+            <div className="date-range-end-wrapper">
               <TextField
+                className="ds-c-field--small"
                 errorMessage={this.state.monthEndErr}
                 name="monthEnd"
                 numeric
@@ -162,8 +160,9 @@ class DateOfRangeComponent extends Component {
                 }
                 value={this.state.monthEnd}
               />
-              <span className="ds-c-datefield__separator">/</span>
+              <div className="ds-c-datefield__separator">/</div>
               <TextField
+                className="ds-c-field--small"
                 errorMessage={this.state.yearEndErr}
                 name="yearEnd"
                 onChange={this.validateYear}
@@ -179,6 +178,9 @@ class DateOfRangeComponent extends Component {
                 value={this.state.yearEnd}
               />
             </div>
+            {this.props.endRangeErr ? (
+              <div className="error">Start date must come before end date</div>
+            ) : null}
           </div>
         ) : null}
       </Fragment>

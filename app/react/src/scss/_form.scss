@@ -179,3 +179,23 @@
     }
   }
 }
+
+.date-range {
+  .date-range-start-wrapper,
+  .date-range-end-wrapper {
+    & > div {
+      display: inline-block;
+      width: auto;
+    }
+
+    .ds-c-datefield__separator {
+      margin: 0 ($margin * 2);
+    }
+
+    .ds-c-label {
+      span:first-of-type {
+        display: none;
+      }
+    }
+  }
+}
