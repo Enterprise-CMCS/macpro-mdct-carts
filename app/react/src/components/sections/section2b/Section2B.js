@@ -83,7 +83,6 @@ class Section2b extends Component {
       <div className="section-2b ds-l-col--9 content">
         <div className="main">
           <PageInfo />
-          <DateRange />
           <div className="section-content">
             <Tabs>
               <TabPanel

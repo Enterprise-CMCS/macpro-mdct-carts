@@ -1,38 +1,46 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system-core";
-import DateComponent from "./DateComponent";
+import DateOfRangeComponent from "./DateOfRangeComponent";
 
 class DateRange extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      endRangeErr: false,
+    };
     this.getRangeData = this.getRangeData.bind(this);
     this.validateDateRange = this.validateDateRange.bind(this);
   }
 
-  // start 05/2019
-  // end 12/2019
-
-  // THIS STATE NEEDS TO KEEP TRACK OF THE START RANGES & END RANGES
-
-  // check chronology
+  // This method checks that the start range is before the end range
   validateDateRange() {
-    // check that all 4 numbers are present
-    // if start date is after end date, send dateComponent an error
+    let chronologyError;
 
-    // how to ensure all four dates are there??
+    // Ensure that all 4 fields are filled in
     if (
       this.state.monthStart &&
       this.state.monthEnd &&
       this.state.yearStart &&
       this.state.yearEnd
     ) {
-      console.log("HONK HONK");
-    }
+      const { monthStart, monthEnd, yearStart, yearEnd } = this.state;
 
-    // let startDate = new Date(1995, 3);
-    // console.log("date object??", startDate);
+      // Turn the input into date objects for easy comparison
+      let startDate = new Date(yearStart, monthStart - 1);
+      let endDate = new Date(yearEnd, monthEnd - 1);
+
+      if (startDate > endDate) {
+        chronologyError = true;
+        console.log("chronology is wrong");
+      } else {
+        chronologyError = false;
+        console.log("chronology is fine");
+      }
+      this.setState({
+        endRangeErr: chronologyError,
+      });
+    }
   }
 
   //This method is passed to children components to update parent state
@@ -48,14 +56,14 @@ class DateRange extends Component {
   render() {
     //needs to take in some function via this.props that will set state on parent component
     return (
-      <div className="date-range">
-        <DateComponent
+      <Fragment>
+        <DateOfRangeComponent
           range={true}
           getRangeData={this.getRangeData}
           validateDateRange={this.validateDateRange}
+          endRangeErr={this.state.endRangeErr}
         />
-        {/* <DateComponent endRange someMethod={this.method1} /> */}
-      </div>
+      </Fragment>
     );
   }
 }

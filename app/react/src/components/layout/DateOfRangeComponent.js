@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 // Custom date component similar to the CMS DateField component.
 // This custom component allows for the omission of the 'month' field
-class DateComponent extends Component {
+class DateOfRangeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,20 +98,15 @@ class DateComponent extends Component {
   }
 
   render() {
-    // console.log("start or end??", this.props.startRange);
-
-    // a method passed down via props will update the daterange state
-
     return (
       <Fragment>
         {this.props.range ? (
           <div className="date-range">
             <div className="date-range-start">
+              <h3 className="question-inner-header"> Start </h3>
+              <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
               <TextField
-                className="ds-u-padding--1 ds-u-margin--1"
                 errorMessage={this.state.monthStartErr}
-                inputRef={(monthStart) => (this.monthStart = monthStart)}
-                label="Month"
                 name="monthStart"
                 numeric
                 onChange={this.validateMonth}
@@ -127,10 +122,7 @@ class DateComponent extends Component {
               />
               <span className="ds-c-datefield__separator">/</span>
               <TextField
-                className="ds-u-padding--1 ds-u-margin--1"
                 errorMessage={this.state.yearStartErr}
-                inputRef={(yearStart) => (this.yearStart = yearStart)}
-                label="Year"
                 name="yearStart"
                 onChange={this.validateYear}
                 onBlur={
@@ -146,12 +138,17 @@ class DateComponent extends Component {
               />
             </div>
 
-            <div className="date-range-end">
+            <div
+              className={
+                this.props.endRangeErr === false
+                  ? "date-range-end"
+                  : "date-range-end date-range-err"
+              }
+            >
+              <h3 className="question-inner-header"> End </h3>
+              <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
               <TextField
-                className="ds-u-padding--1 ds-u-margin--1"
                 errorMessage={this.state.monthEndErr}
-                inputRef={(monthEnd) => (this.monthEnd = monthEnd)}
-                label="Month"
                 name="monthEnd"
                 numeric
                 onChange={this.validateMonth}
@@ -167,10 +164,7 @@ class DateComponent extends Component {
               />
               <span className="ds-c-datefield__separator">/</span>
               <TextField
-                className="ds-u-padding--1 ds-u-margin--1"
                 errorMessage={this.state.yearEndErr}
-                inputRef={(yearEnd) => (this.yearEnd = yearEnd)}
-                label="Year"
                 name="yearEnd"
                 onChange={this.validateYear}
                 onBlur={
@@ -196,4 +190,4 @@ const mapStateToProps = (state) => ({
   year: state.formYear,
 });
 
-export default connect(mapStateToProps)(DateComponent);
+export default connect(mapStateToProps)(DateOfRangeComponent);

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
+import DateRange from "../../../../layout/DateRange";
 
 class Goal extends Component {
   constructor(props) {
@@ -270,46 +271,8 @@ class Goal extends Component {
               <div className="question">
                 7. What is the date range for your data?
               </div>
-              <div className="date-range">
-                <DateField
-                  label="Start"
-                  hint={"mm/yyyy"}
-                  monthValue={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit - 5
-                      : null
-                  }
-                  dayValue={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : null
-                  }
-                  yearValue={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit * 202
-                      : null
-                  }
-                />
-
-                <DateField
-                  label="End"
-                  hint={"mm/yyyy"}
-                  monthValue={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : null
-                  }
-                  dayValue={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit
-                      : null
-                  }
-                  yearValue={
-                    this.props.previousEntry === "true"
-                      ? this.state.goal2bDummyDigit * 202
-                      : null
-                  }
-                />
+              <div className="date-range-wrapper">
+                <DateRange />
               </div>
             </div>
 
