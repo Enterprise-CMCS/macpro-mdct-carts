@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { TextField, ChoiceList, DateField } from "@cmsgov/design-system-core";
+import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 import DateRange from "../../../../layout/DateRange";
 
 class Goal extends Component {

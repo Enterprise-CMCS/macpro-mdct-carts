@@ -70,7 +70,6 @@ class Section2b extends Component {
         <Objective2b objectiveId={`${this.props.year}_${newObjectiveId}`} />
       ),
     };
-    console.log("Show me the new objective", newObjective);
 
     this.setState({
       objectiveCount: newObjectiveId,

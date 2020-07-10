@@ -32,10 +32,8 @@ class DateRange extends Component {
 
       if (startDate > endDate) {
         chronologyError = true;
-        console.log("chronology is wrong");
       } else {
         chronologyError = false;
-        console.log("chronology is fine");
       }
       this.setState({
         endRangeErr: chronologyError,
