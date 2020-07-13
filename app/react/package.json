@@ -2,6 +2,12 @@
   "name": "iridat",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>app/react/src/setupTests.js"
+    ]
+  },
   "dependencies": {
     "@cmsgov/design-system-core": "^3.7.0",
     "@cmsgov/design-system-layout": "^3.7.0",
@@ -48,6 +54,9 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^26.1.0"
   }
 }
