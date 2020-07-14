@@ -41,6 +41,10 @@
     .ds-c-tabs {
       display: none;
     }
+
+    div[hidden] {
+      display: block;
+    }
   }
 
   .fill-form {

@@ -24,6 +24,7 @@ class Section2b extends Component {
       objectiveCount: 1,
       objectiveArray: [],
       previousObjectivesArray: [],
+      pageTitle: "Section 2B: State Plan Goals and Objectives",
     };
     this.newObjective = this.newObjective.bind(this);
   }
@@ -82,12 +83,12 @@ class Section2b extends Component {
       <div className="section-2b ds-l-col--9 content">
         <div className="main">
           <PageInfo />
+          <div className="print-only">
+            <h3>{this.state.pageTitle}</h3>
+          </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel
-                id="section2b"
-                tab="Section 2B: State Plan Goals and Objectives"
-              >
+              <TabPanel id="section2b" tab={this.state.pageTitle}>
                 <div className="section-content">
                   <form>
                     <p>
@@ -151,6 +152,11 @@ class Section2b extends Component {
                 className="section2b-previous"
                 tab={`FY${this.props.year - 1} answers`}
               >
+                <div className="print-only ly_header">
+                  <PageInfo />
+
+                  <h3>{this.state.pageTitle}</h3>
+                </div>
                 <div className="section-content">
                   <div className="objective-accordion">
                     {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
