@@ -6,6 +6,15 @@
   .sidebar {
     display: none;
   }
+
+  .print-only {
+    display: block;
+  }
+
+  .screen-only {
+    display: none;
+  }
+
   .content {
     min-width: 100%;
   }
@@ -23,14 +32,30 @@
   .section-content {
     .ds-c-tabs__panel[aria-hidden="true"] {
       display: block !important;
-      border-top: 4px solid black;
+      border-top: 8px solid $alto;
     }
     .ds-c-tabs__item[aria-selected="false"] {
       display: none;
+    }
+
+    .ds-c-tabs {
+      display: none;
+    }
+
+    div[hidden] {
+      display: block;
     }
   }
 
   .fill-form {
     display: none;
+  }
+
+  .question-container {
+    display: block;
+  }
+
+  .ly_header {
+    margin-bottom: ($margin * 8);
   }
 }
