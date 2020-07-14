@@ -32,6 +32,11 @@ const initialState = {
   formName: "CARTS FY",
   formYear: "2020",
   largeTextBoxHeight: 6,
+  currentUser: {
+    role: "admin",
+    state: { id: "ny", name: "New York" },
+    username: "karen.dalton@state.gov",
+  },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -47,6 +52,7 @@ export const reducer = (state = initialState, action) => {
         ...action.formName,
         ...action.formYear,
         ...action.textBoxHeight,
+        ...action.user,
       };
     default:
       return state;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class Header extends Component {
   constructor() {
@@ -38,8 +39,12 @@ class Header extends Component {
                 <div className="nav-user ds-l-col--6" id="nav-user">
                   <ul className="user-email-button">
                     <li>
-                      <a href="#menu" onClick={this.toggleUserNav.bind(this)}>
-                        karen.dalton@state.gov
+                      <a
+                        href="#menu"
+                        className="nav--dropdown__trigger"
+                        onClick={this.toggleUserNav}
+                      >
+                        {this.props.currentUser.username}
                       </a>
                     </li>
                   </ul>
@@ -61,4 +66,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps)(Header);

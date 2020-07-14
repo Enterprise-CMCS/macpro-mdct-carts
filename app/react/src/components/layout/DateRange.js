@@ -48,7 +48,7 @@ class DateRange extends Component {
         [name]: value,
       });
     }
-    this.validateDateRange();
+    // this.validateDateRange(); // THIS IS DOING NOTHING (REMOVE)
   }
 
   render() {
