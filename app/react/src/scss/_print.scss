@@ -11,11 +11,12 @@
   }
 
   .ds-c-choice:checked + label:before {
-    background-color: $black;
+    background-color: $brand-primary;
     -webkit-print-color-adjust: exact;
   }
 
   .ds-c-tabs__panel {
+    border: none;
     display: block;
   }
 
@@ -24,9 +25,12 @@
       display: block !important;
       border-top: 4px solid black;
     }
-
     .ds-c-tabs__item[aria-selected="false"] {
       display: none;
     }
+  }
+
+  .fill-form {
+    display: none;
   }
 }
