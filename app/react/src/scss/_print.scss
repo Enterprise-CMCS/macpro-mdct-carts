@@ -11,7 +11,25 @@
   }
 
   .ds-c-choice:checked + label:before {
-    background-color: $black;
+    background-color: $brand-primary;
     -webkit-print-color-adjust: exact;
+  }
+
+  .section-content {
+    .ds-c-tabs__panel[aria-hidden="true"] {
+      display: block !important;
+      border-top: 4px solid black;
+    }
+    .ds-c-tabs__item[aria-selected="false"] {
+      display: none;
+    }
+  }
+
+  .fill-form {
+    display: none;
+  }
+
+  .ds-c-tabs__panel {
+    border: none;
   }
 }
