@@ -47,7 +47,7 @@ class TOC extends Component {
               items: [
                 {
                   label: "Section 3A: Outreach",
-                  url: "javascript:void(0);",
+                  url: "/section3/3a",
                   selected:
                     paths[1] === "section3" && paths[2] === "3a" ? true : false,
                 },

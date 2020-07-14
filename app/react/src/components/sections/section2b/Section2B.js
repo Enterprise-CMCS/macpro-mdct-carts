@@ -15,6 +15,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import { sliceId } from "../../Utils/helperFunctions";
 import FormActions from "../../layout/FormActions";
+import DateRange from "../../layout/DateRange";
 
 class Section2b extends Component {
   constructor(props) {
@@ -69,7 +70,6 @@ class Section2b extends Component {
         <Objective2b objectiveId={`${this.props.year}_${newObjectiveId}`} />
       ),
     };
-    console.log("Show me the new objective", newObjective);
 
     this.setState({
       objectiveCount: newObjectiveId,
@@ -141,7 +141,7 @@ class Section2b extends Component {
                     </div>
                   </form>
                   <FormNavigation
-                    nextUrl="/section3/3c"
+                    nextUrl="/section3/3a"
                     previousUrl="/section2/2a"
                   />
                 </div>
@@ -182,7 +182,7 @@ class Section2b extends Component {
                       </Accordion>
                     </form>
                     <FormNavigation
-                      nextUrl="/section3/3c"
+                      nextUrl="/section3/3a"
                       previousUrl="/section2/2a"
                     />
                   </div>
