@@ -14,4 +14,19 @@
     background-color: $black;
     -webkit-print-color-adjust: exact;
   }
+
+  .ds-c-tabs__panel {
+    display: block;
+  }
+
+  .section-content {
+    .ds-c-tabs__panel[aria-hidden="true"] {
+      display: block !important;
+      border-top: 4px solid black;
+    }
+
+    .ds-c-tabs__item[aria-selected="false"] {
+      display: none;
+    }
+  }
 }
