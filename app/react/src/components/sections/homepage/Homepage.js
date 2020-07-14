@@ -77,7 +77,7 @@ class Homepage extends Component {
                   lastEditedDate="9/21/20"
                   link1URL="/basic-info"
                   link1Text="Edit"
-                  link2URL="#"
+                  link2URL="/reports/ny/2020"
                   link2Text="Download"
                   statusText="Draft"
                 />
@@ -86,7 +86,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2019"
                   lastEditedTime="7:32am"
                   lastEditedDate="3/20/20"
-                  link1URL="#"
+                  link1URL="/reports/ny/2019"
                   link2URL="#"
                   statusText="Under review"
                 />
@@ -95,7 +95,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2018"
                   lastEditedTime="5:43pm"
                   lastEditedDate="1/26/19"
-                  link1URL="#"
+                  link1URL="/reports/ny/2018"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -104,7 +104,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2017"
                   lastEditedTime="5:00am"
                   lastEditedDate="2/13/18"
-                  link1URL="#"
+                  link1URL="/reports/ny/2017"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -113,7 +113,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2016"
                   lastEditedTime="9:13pm"
                   lastEditedDate="3/20/17"
-                  link1URL="#"
+                  link1URL="/reports/ny/2016"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -122,7 +122,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2015"
                   lastEditedTime="9:00am"
                   lastEditedDate="1/20/16"
-                  link1URL="#"
+                  link1URL="/reports/ny/2015"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -131,7 +131,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2014"
                   lastEditedTime="4:44pm"
                   lastEditedDate="3/20/15"
-                  link1URL="#"
+                  link1URL="/reports/ny/2014"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -140,7 +140,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2013"
                   lastEditedTime="5:05am"
                   lastEditedDate="3/24/14"
-                  link1URL="#"
+                  link1URL="/reports/ny/2013"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -149,7 +149,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2012"
                   lastEditedTime="9:00am"
                   lastEditedDate="2/02/13"
-                  link1URL="#"
+                  link1URL="/reports/ny/2012"
                   link2URL="#"
                   statusURL="#"
                 />
@@ -158,7 +158,7 @@ class Homepage extends Component {
                   name="NY-CARTS-FY2011"
                   lastEditedTime="11:30am"
                   lastEditedDate="3/20/12"
-                  link1URL="#"
+                  link1URL="/reports/ny/2011"
                   link2URL="#"
                   statusURL="#"
                 />
