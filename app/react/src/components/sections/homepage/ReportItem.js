@@ -6,7 +6,7 @@ class ReportItem extends Component {
     this.state = {};
   }
   render() {
-    let link1Text = this.props.link1Text ? this.props.link1Text : "Download";
+    let link1Text = this.props.link1Text ? this.props.link1Text : "View";
     let link1URL = this.props.link1URL ? this.props.link1URL : "#";
     let link2Text = this.props.link2Text ? this.props.link2Text : "Uncertify";
     let link2URL = this.props.link2URL ? this.props.link2URL : "#";
