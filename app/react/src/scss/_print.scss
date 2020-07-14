@@ -15,6 +15,11 @@
     -webkit-print-color-adjust: exact;
   }
 
+  .ds-c-tabs__panel {
+    border: none;
+    display: block;
+  }
+
   .section-content {
     .ds-c-tabs__panel[aria-hidden="true"] {
       display: block !important;
@@ -27,9 +32,5 @@
 
   .fill-form {
     display: none;
-  }
-
-  .ds-c-tabs__panel {
-    border: none;
   }
 }
