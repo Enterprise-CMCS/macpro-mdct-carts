@@ -23,14 +23,16 @@ class DateComponent extends Component {
       monthSingleErr: false,
       monthSingle: "",
 
-      yearSingleErr: false,
-      yearSingle: "",
+      errorMessage: "",
 
       dummyDigit: 10,
     };
     this.validateMonth = this.validateMonth.bind(this);
     this.validateYear = this.validateYear.bind(this);
     this.handleInput = this.handleInput.bind(this);
+
+    this.validateInput = this.validateInput.bind(this);
+    this.validateStartMonth = this.validateStartMonth.bind(this);
   }
 
   validateYear(evt) {
@@ -71,50 +73,109 @@ class DateComponent extends Component {
     });
   }
 
-  validateMonth(rangePosition) {
+  validateStartMonth() {
     let failing;
     let failMessage;
-    let monthValue;
 
-    let stateValue = `month${rangePosition}`;
+    console.log("when is onblur being triggered");
 
-    //onBlur,
-    //read this value from state
-    // set error message on state
+    // monthValue = `this.state.${evt.target.name}`;
+
+    // console.log("who is calling", `${monthValue}`);
+
+    const { monthStart } = this.state;
 
     // Prevents users from putting in more than 2 characters
-    if (evt.target.value.length > 2) {
-      monthValue = evt.target.value.substring(2);
-    } else {
-      monthValue = evt.target.value;
+    if (monthStart.length > 2) {
+      failing = true;
+      failMessage = "Month length must be less than 2";
     }
 
     // Handles an empty input field
-    if (monthValue === "") {
+    if (monthStart === "") {
       failing = true;
       failMessage = false;
     } else if (
       // Checks for non-numeric characters
-      isNaN(parseInt(monthValue)) ||
-      /^\d+$/.test(monthValue) === false
+      isNaN(parseInt(monthStart)) ||
+      /^\d+$/.test(monthStart) === false
     ) {
       failing = true;
-      failMessage = "Please enter a number";
-    } else if (parseInt(monthValue) < 1 || parseInt(monthValue) > 12) {
+      failMessage = "Input must be numbers only";
+    } else if (parseInt(monthStart) < 1 || parseInt(monthStart) > 12) {
       // Checks that the month value is within a normal range
       failing = true;
       failMessage = "Please enter a valid month number";
     }
 
     this.setState({
-      [`${evt.target.name}Err`]: failing == true ? failMessage : false,
-      // [evt.target.name]: monthValue,
+      monthStartErr: failing == true ? failMessage : false,
     });
+  }
+
+  validateMonth(input) {
+    let failing;
+    let failMessage;
+    let monthValue;
+
+    let stateValue;
+    // const { `month${rangePosition}` } = this.state;
+
+    // Handles an empty input field
+    if (input === "") {
+      return
+    }
+
+    //onBlur,
+    //read this value from state
+    // set error message on state
+
+    // refactor props coming from parent
+    // write component for if range is single
+    // load dummy data into JUST daterange if previousentry
+    // load dummy data into datecomponent if previous entry
+
+    // Prevents users from putting in more than 2 characters
+    if (input.length > 2) {
+      // failing = true;
+      return "Month length must be less than 2";
+    }
+
+    if (
+      // Checks for non-numeric characters
+      isNaN(parseInt(monthValue)) ||
+      /^\d+$/.test(monthValue) === false
+    ) {
+      // failing = true;
+      return "Please enter a number";
+    } else if (parseInt(monthValue) < 1 || parseInt(monthValue) > 12) {
+      // Checks that the month value is within a normal range
+      // failing = true;
+      return "Please enter a valid month number";
+    }
+
+    // this.setState({
+    //   [`${evt.target.name}Err`]: failing == true ? failMessage : false,
+    //   // [evt.target.name]: monthValue,
+    // });
   }
 
   handleInput(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
+    });
+  }
+
+  validateInput() {
+    let error
+    error = validateMonthInput(this.monthStart);
+    // error = validateMonthInput(this.monthEnd);
+    // error = validateMonthInput(this.yearStart);
+    // error = validateMonthInput(this.yearEnd);
+
+
+    this.setState({
+      errorMessage = error
     });
   }
 
@@ -128,19 +189,21 @@ class DateComponent extends Component {
             <div className="date-range-start-wrapper">
               <TextField
                 className="ds-c-field--small"
-                errorMessage={this.state.monthStartErr}
+                // errorMessage={this.state.monthStartErr}
                 name="monthStart"
                 numeric
+                inputRef={(monthStart) => (this.monthStart = monthStart)}
                 onChange={this.handleInput}
-                onBlur={
-                  (this.validateMonth("Start"),
-                  this.props.getRangeData(
-                    this.state.monthStart,
-                    this.state.monthStartErr,
-                    "monthStart"
-                  ),
-                  this.props.validateDateRange)
-                }
+                onBlur={this.validateInput}
+                // onBlur={
+                //   (this.validateStartMonth,
+                //   this.props.getRangeData(
+                //     this.state.monthStart,
+                //     this.state.monthStartErr,
+                //     "monthStart"
+                //   ),
+                //   this.props.validateDateRange)
+                // }
                 value={
                   this.props.previousEntry === true
                     ? this.state.dummyDigit - 5
@@ -218,9 +281,7 @@ class DateComponent extends Component {
               />
             </div>
           </Fragment>
-        ) : this.props.range === "single" ? (
-          <div> single </div>
-        ) : null}
+        ) }
       </Fragment>
     );
   }
