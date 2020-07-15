@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system-core";
-import DateOfRangeComponent from "./DateOfRangeComponent";
+import DateComponent from "./DateComponent";
 
 class DateRange extends Component {
   constructor(props) {
@@ -48,20 +48,47 @@ class DateRange extends Component {
         [name]: value,
       });
     }
-    this.validateDateRange();
   }
 
   render() {
     //needs to take in some function via this.props that will set state on parent component
+
+    // parent component needs to keep track of all input
+    // parent component knows whether its a range
+    //parent component compares all 4 fields for chronology
+
+    // date component handles input validations
+    // date component  1 has a start and end
+    // date component 2 has a start and end
+
     return (
       <Fragment>
-        <DateOfRangeComponent
-          range={true}
-          getRangeData={this.getRangeData}
-          validateDateRange={this.validateDateRange}
-          endRangeErr={this.state.endRangeErr}
-          previousEntry={this.props.previousEntry === true ? true : false}
-        />
+        {this.props.previousEntry !== "xoxo" ? (
+          <div className="date-range">
+            <DateComponent
+              startRange={"some method"}
+              range={"start"}
+              getRangeData={this.getRangeData}
+              validateDateRange={this.validateDateRange}
+              endRangeErr={this.state.endRangeErr}
+              previousEntry={this.props.previousEntry === true ? true : false}
+            />
+            <DateComponent
+              startRange={"some method"}
+              range={"end"}
+              getRangeData={this.getRangeData}
+              validateDateRange={this.validateDateRange}
+              endRangeErr={this.state.endRangeErr}
+              previousEntry={this.props.previousEntry === true ? true : false}
+            />
+          </div>
+        ) : (
+          <h2> fallback </h2>
+        )}
+
+        {/* <DateComponent/> */}
+        {/* <DateComponent/>
+        <DateComponent/> */}
       </Fragment>
     );
   }

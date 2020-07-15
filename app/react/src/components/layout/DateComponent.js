@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 // Custom date component similar to the CMS DateField component.
 // This custom component allows for the omission of the 'month' field
-class DateOfRangeComponent extends Component {
+class DateComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,10 +19,18 @@ class DateOfRangeComponent extends Component {
 
       yearEndErr: false,
       yearEnd: "",
+
+      monthSingleErr: false,
+      monthSingle: "",
+
+      yearSingleErr: false,
+      yearSingle: "",
+
       dummyDigit: 10,
     };
     this.validateMonth = this.validateMonth.bind(this);
     this.validateYear = this.validateYear.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   validateYear(evt) {
@@ -63,10 +71,16 @@ class DateOfRangeComponent extends Component {
     });
   }
 
-  validateMonth(evt) {
+  validateMonth(rangePosition) {
     let failing;
     let failMessage;
     let monthValue;
+
+    let stateValue = `month${rangePosition}`;
+
+    //onBlur,
+    //read this value from state
+    // set error message on state
 
     // Prevents users from putting in more than 2 characters
     if (evt.target.value.length > 2) {
@@ -94,62 +108,70 @@ class DateOfRangeComponent extends Component {
 
     this.setState({
       [`${evt.target.name}Err`]: failing == true ? failMessage : false,
-      [evt.target.name]: monthValue,
+      // [evt.target.name]: monthValue,
+    });
+  }
+
+  handleInput(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value,
     });
   }
 
   render() {
     return (
       <Fragment>
-        {this.props.range ? (
-          <div className="date-range">
-            <div className="date-range-start">
-              <h3 className="question-inner-header"> Start </h3>
-              <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
-              <div className="date-range-start-wrapper">
-                <TextField
-                  className="ds-c-field--small"
-                  errorMessage={this.state.monthStartErr}
-                  name="monthStart"
-                  numeric
-                  onChange={this.validateMonth}
-                  onBlur={
-                    (this.props.getRangeData(
-                      this.state.monthStart,
-                      this.state.monthStartErr,
-                      "monthStart"
-                    ),
-                    this.props.validateDateRange)
-                  }
-                  value={
-                    this.props.previousEntry === true
-                      ? this.state.dummyDigit - 5
-                      : this.state.monthStart
-                  }
-                />
-                <div className="ds-c-datefield__separator">/</div>
-                <TextField
-                  className="ds-c-field--small"
-                  errorMessage={this.state.yearStartErr}
-                  name="yearStart"
-                  onChange={this.validateYear}
-                  onBlur={
-                    (this.props.getRangeData(
-                      this.state.yearStart,
-                      this.state.yearStartErr,
-                      "yearStart"
-                    ),
-                    this.props.validateDateRange)
-                  }
-                  numeric
-                  value={
-                    this.props.previousEntry === true
-                      ? this.state.dummyDigit * 202 - 1
-                      : this.state.yearStart
-                  }
-                />
-              </div>
+        {this.props.range === "start" ? (
+          <div className="date-range-start">
+            <h3 className="question-inner-header"> Start </h3>
+            <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
+            <div className="date-range-start-wrapper">
+              <TextField
+                className="ds-c-field--small"
+                errorMessage={this.state.monthStartErr}
+                name="monthStart"
+                numeric
+                onChange={this.handleInput}
+                onBlur={
+                  (this.validateMonth("Start"),
+                  this.props.getRangeData(
+                    this.state.monthStart,
+                    this.state.monthStartErr,
+                    "monthStart"
+                  ),
+                  this.props.validateDateRange)
+                }
+                value={
+                  this.props.previousEntry === true
+                    ? this.state.dummyDigit - 5
+                    : this.state.monthStart
+                }
+              />
+              <div className="ds-c-datefield__separator">/</div>
+              <TextField
+                className="ds-c-field--small"
+                errorMessage={this.state.yearStartErr}
+                name="yearStart"
+                onChange={this.validateYear}
+                onBlur={
+                  (this.props.getRangeData(
+                    this.state.yearStart,
+                    this.state.yearStartErr,
+                    "yearStart"
+                  ),
+                  this.props.validateDateRange)
+                }
+                numeric
+                value={
+                  this.props.previousEntry === true
+                    ? this.state.dummyDigit * 202 - 1
+                    : this.state.yearStart
+                }
+              />
             </div>
+          </div>
+        ) : this.props.range === "end" ? (
+          <Fragment>
             <h3 className="question-inner-header"> End </h3>
             <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
             <div className="date-range-end-wrapper">
@@ -195,10 +217,9 @@ class DateOfRangeComponent extends Component {
                 }
               />
             </div>
-            {this.props.endRangeErr === true ? (
-              <div className="error">Start date must come before end date</div>
-            ) : null}
-          </div>
+          </Fragment>
+        ) : this.props.range === "single" ? (
+          <div> single </div>
         ) : null}
       </Fragment>
     );
@@ -209,4 +230,4 @@ const mapStateToProps = (state) => ({
   year: state.formYear,
 });
 
-export default connect(mapStateToProps)(DateOfRangeComponent);
+export default connect(mapStateToProps)(DateComponent);
