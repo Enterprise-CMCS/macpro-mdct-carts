@@ -18,13 +18,6 @@ import {
 class Section3a extends Component {
   constructor(props) {
     super(props);
-  }
-  componentDidMount() {
-  }
-  componentWillMount() {
-    //Defining previousYearQuestions3A & thisYearQuestions3A can be defined here, in constructor, or in render
-    //previousYear and thisYear questions will be populated from a backend function
-    //previousYear must be defined first
     const previousYearQuestions3A = <Questions3A 
     p1_q1 = "yes"
     p1_q1__a = "test 1 previous year"
@@ -49,12 +42,27 @@ class Section3a extends Component {
     previousp1_q4 = {previousYearQuestions3A.props.p1_q4}
     />;
     this.state = {
+      pageTitle: "Part 3a: Program Outreach",
       previousYearQuestions3AProp : previousYearQuestions3A,
       thisYearQuestions3AProp : thisYearQuestions3A 
-    };   
+    };
+    this.setConditional = this.setConditional.bind(this);
   }
 
-  
+  setConditional(el) {
+    this.setState({
+      [el.target.name]: el.target.value,
+    });
+  }
+  componentDidMount() {
+  }
+  componentWillMount() {
+    //Defining previousYearQuestions3A & thisYearQuestions3A can be defined here, in constructor, or in render
+    //previousYear and thisYear questions will be populated from a backend function
+    //previousYear must be defined first
+    
+  }
+
   render() {
 
     
@@ -65,6 +73,9 @@ class Section3a extends Component {
       <div className="section-3a ds-l-col--9 content">
         <div className="main">
           <PageInfo />
+          <div className="print-only">
+            <h3>{this.state.pageTitle}</h3>
+          </div>
           <div className="section-content">
             <Tabs>
               <TabPanel
