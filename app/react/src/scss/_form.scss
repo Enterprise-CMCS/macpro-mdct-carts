@@ -103,6 +103,10 @@
   .date-range {
     border-left: 4px solid $brand-primary;
     padding-left: ($padding * 2);
+
+    .errors {
+      color: red;
+    }
   }
 
   .question-outer-header {
