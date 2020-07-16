@@ -130,7 +130,7 @@ class BasicInfo extends Component {
             <Tabs>
               <TabPanel id="tab-form" tab="Basic Information">
                 <form>
-                  <h3>Welcome</h3>
+                  <h3>Welcome!</h3>
                   <Dropdown
                     label="1. State or territory name: "
                     size="medium"
