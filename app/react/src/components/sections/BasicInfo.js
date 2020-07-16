@@ -222,7 +222,7 @@ class BasicInfo extends Component {
                         label="6. Email: "
                         name="contactEmail"
                         value={this.state.contactEmail}
-                        onChange={this.handleChange}
+                        onBlur={this.handleChange}
                       />
                       {this.state.errors.email.length > 0 && (
                         <span className="error">{this.state.errors.email}</span>
@@ -257,7 +257,7 @@ class BasicInfo extends Component {
                         name="contactPhone"
                         mask="phone"
                         value={this.state.contactPhone}
-                        onChange={this.handleChange}
+                        onBlur={this.handleChange}
                       />
                       {this.state.errors.phone.length > 0 && (
                         <span className="error">{this.state.errors.phone}</span>
