@@ -130,6 +130,7 @@ class BasicInfo extends Component {
             <Tabs>
               <TabPanel id="tab-form" tab="Basic Information">
                 <form>
+                  <h3>Welcome</h3>
                   <Dropdown
                     label="1. State or territory name: "
                     size="medium"
@@ -176,7 +177,7 @@ class BasicInfo extends Component {
                   />
 
                   <div>
-                    <a href="mailto:cartshelp@cms.hhs.gov">This is incorrect</a>{" "}
+                    <a href="mailto:cartshelp@cms.hhs.gov">If any of the above information is incorrect, contact CARTS Help Desk.</a>{" "}
                   </div>
 
                   <div>
