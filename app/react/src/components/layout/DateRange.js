@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system-core";
-// import DateComponent from "./DateComponent";
 
 class DateRange extends Component {
   constructor(props) {
