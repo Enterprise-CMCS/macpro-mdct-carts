@@ -377,7 +377,7 @@ class BasicInfo extends Component {
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   abbr: state.stateUser.abbr,
-  year: state.stateUser.formYear,
+  year: state.global.formYear,
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
 });

@@ -2,9 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import stateUser from "./stateUser";
+import global from "./globalVariables";
 
 // Consolidate reducers
-const reducer = combineReducers({ stateUser });
+const reducer = combineReducers({ stateUser, global });
 
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware];
@@ -19,4 +20,5 @@ const middleware = composeWithDevTools(applyMiddleware(...middlewareArray));
 // Create store from reducers and middleware
 const store = createStore(reducer, middleware);
 
+// Export the store to be picked up by the root component in index.js
 export default store;

@@ -1,7 +1,44 @@
 //ACTION TYPES
 const STATE_INFO = "STATE_INFO";
+const USER_INFO = "USER_INFO";
+
+// THUNK CREATOR
+export const getUserThunk = (someID) => (dispatch) => {
+  try {
+    // const { data } = someCallToDatabase
+    const data = {
+      role: "admin",
+      state: { id: "ca", name: "California" },
+      username: "james.lufton@state.gov",
+    };
+    dispatch(getUserData(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const initialState = {
+  name: "New York",
+  abbr: "NY",
+  programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
+  programName: "NY Combo Program",
+  imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
+  formName: "CARTS FY",
+  formYear: "2020",
+  largeTextBoxHeight: 6,
+  currentUser: {
+    role: "admin",
+    state: { id: "ny", name: "New York" },
+    username: "karen.dalton@state.gov",
+  },
+};
 
 //ACTION CREATORS
+const getUserData = (userObject) => ({
+  type: STATE_INFO,
+  userObject: userObject,
+});
+
 export const stateDetails = (
   name,
   abbr,
@@ -23,21 +60,8 @@ export const stateDetails = (
   };
 };
 
-const initialState = {
-  name: "New York",
-  abbr: "NY",
-  programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
-  programName: "NY Combo Program",
-  imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
-  formName: "CARTS FY",
-  formYear: "2020",
-  largeTextBoxHeight: 6,
-  currentUser: {
-    role: "admin",
-    state: { id: "ny", name: "New York" },
-    username: "karen.dalton@state.gov",
-  },
-};
+// THUNK CREATORS
+//Where we will call the backend and dispatch info to reducer
 
 // REDUCER
 export default function (state = initialState, action) {
@@ -55,6 +79,12 @@ export default function (state = initialState, action) {
         ...action.largeTextBoxHeight,
         ...action.currentUser,
       };
+    case USER_INFO:
+      return {
+        ...state,
+        current: action.userObject,
+      };
+
     default:
       return state;
   }
