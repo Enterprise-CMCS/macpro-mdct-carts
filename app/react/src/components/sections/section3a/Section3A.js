@@ -23,6 +23,7 @@ class Section3a extends Component {
     p1_q1__a = "test 1 previous year"
     p1_q2 = "no"
     p1_q2__a = ""
+    //p1_q2_array = {''}
     p1_q3 = "test 3 previous year"
     p1_q4 = "final test for last year"
     previousYear = "true"/>
@@ -54,20 +55,9 @@ class Section3a extends Component {
       [el.target.name]: el.target.value,
     });
   }
-  componentDidMount() {
-  }
-  componentWillMount() {
-    //Defining previousYearQuestions3A & thisYearQuestions3A can be defined here, in constructor, or in render
-    //previousYear and thisYear questions will be populated from a backend function
-    //previousYear must be defined first
-    
-  }
+ 
 
   render() {
-
-    
-
-    
     return (
       
       <div className="section-3a ds-l-col--9 content">

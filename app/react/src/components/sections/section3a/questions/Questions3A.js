@@ -16,7 +16,8 @@ class Questions3A extends Component {
         p1_q1: props.p1_q1,
         p1_q1__a: props.p1_q1__a,
         p1_q2: props.p1_q2,
-        p1_q2__a: props.p1_q2__a,
+        p1_q2__a:props.p1_q2__a,
+        //p1_q2_array: props.p1_q2_array,
         p1_q3:props.p1_q3,
         p1_q4:props.p1_q4,
         previousYear:this.props.previousYear,
@@ -66,15 +67,13 @@ class Questions3A extends Component {
     //el.target.title = this.state.fillFormTitle;
 
     el.target.classList.toggle("active");
-    let textFieldCopy = "";
-    let textAreaCopy = "";
 
     // Boolean, Set values on active
     let isActive = el.target.classList.contains("active");
 
     const elementName = el.target.name;
     //This dynamically updates the element with last years response. Need to figure out a way to get all sub elements
-    if (el.target.type === "TextField")
+    if (el.target.type === "textField")
     {
         var newstate = {}; 
         newstate[el.target.id] = el.target.id; 
@@ -85,7 +84,6 @@ class Questions3A extends Component {
             el.target.title = "Active";
         }
         else{
-            let tempElement = document.getElementsByName(elementName)
             this.setState({ [el.target.name + 'temp']: this.state[el.target.name] })
             this.setState({ [el.target.name]: this.state['previous'+el.target.name] })
             el.target.title = "Undo";
@@ -93,9 +91,22 @@ class Questions3A extends Component {
         
         this.setState(newstate);
     }
-    if (el.target.type === "RadioButton")
+    /*if (el.target.type === "radioButton")
     {
-        this.selectInput(elementName, 0, isActive);
+        const childList = ['a','b','c','d','e','f'];
+        for(let i=0; i < childList.length; i++){
+            let tempElement = document.getElementsByName(el.target.name+'__'+childlist[i])
+            if(tempElement !== null)
+            {
+                const superTempElement = []
+                superTempElement.push([el.target.name+'__'+childlist[i]]+':'+ this.state['previous'+el.target.name+'__'+childlist[i]] )
+                this.setState(
+                    {[elementName+'_array']: superTempElement}
+                )
+                
+            }
+        }       
+      /*  this.selectInput(elementName, 0, isActive);
         // Show/hide conditionals
         this.setConditionalFromToggle(el.target.name, isActive);
         this.setState({
@@ -103,7 +114,7 @@ class Questions3A extends Component {
             p1_q1__b: textAreaCopy,
             p1_q1__c: textAreaCopy,
         });
-    }
+    }*/
     if (isActive) {
         
       }
@@ -119,11 +130,15 @@ class Questions3A extends Component {
                 hidden={this.state.mchipDisable}
               >
                 <div className="question-container">
-                <FillForm
-                    name="p1_q1"
-                    title={this.state.fillFormTitle}
-                    onClick={this.loadAnswers}
-                />
+                    {this.props.previousYear === "false" &&
+                        <FillForm
+                            name="p1_q1"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                            type="radioButton"
+                            childList="a"
+                        />
+                    } 
                   <div id="p1_q1">
                     <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                       <legend className="ds-c-label">
@@ -157,19 +172,24 @@ class Questions3A extends Component {
                       <div className="conditional">
                         <TextField
                           label="a) What are you doing differently?"
+                          multiline
                           name="p1_q1__a"
                           value={this.state.p1_q1__a}
+                          onChange={this.changeText}
                         />
                       </div>
                     ) : null}
                   </div>
                 </div>
                 <div className="question-container">
-                <FillForm
-                    name="p1_q2"
-                    title={this.state.fillFormTitle}
-                    onClick={this.loadAnswers}
-                />
+                    {this.props.previousYear === "false" &&
+                        <FillForm
+                            name="p1_q2"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                            type="radioButton"
+                        />
+                    }
                   <div id="p1_q2">
                     <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                       <legend className="ds-c-label"
@@ -203,8 +223,11 @@ class Questions3A extends Component {
                       <div className="conditional">
                         <TextField
                           label="a) Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?"
+                          multiline
                           name="p1_q2__a"
+                          //value={this.state.p1_q2_array[0]}
                           value={this.state.p1_q2__a}
+                          onChange={this.changeText}
                         />
                       </div>
                     ) : (
@@ -214,16 +237,19 @@ class Questions3A extends Component {
                   </div>
                 </div>
                 <div className="question-container">
-                <FillForm
-                    name="p1_q3"
-                    title={this.state.fillFormTitle}
-                    onClick={this.loadAnswers}
-                    type="TextField"
-                />
+                    {this.props.previousYear === "false" &&
+                    <FillForm
+                        name="p1_q3"
+                        title={this.state.fillFormTitle}
+                        onClick={this.loadAnswers}
+                        type="textField"
+                    />
+                    }
                   <div id="p1_q3">
                     <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                       <TextField
                           label="3. What methods have been most effective in reaching low-income, uninsured children? "
+                          multiline
                           name="p1_q3"
                           value={this.state.p1_q3}
                           hint={"For example: TV, school outreach, or word of mouth."}
@@ -233,20 +259,24 @@ class Questions3A extends Component {
                   </div>
                 </div>
                 <div className="question-container">
-                <FillForm
-                    name="p1_q4"
-                    title={this.state.fillFormTitle}
-                    onClick={this.loadAnswers}
-                    type="TextField"
-                />
+                    {this.props.previousYear === "false" &&
+                        <FillForm
+                            name="p1_q4"
+                            title={this.state.fillFormTitle}
+                            onClick={this.loadAnswers}
+                            type="textField"
+                        />
+                    }
                   <div id="p1_q4">
                     <fieldset className="ds-c-fieldset ds-u-margin-top--0">
                       <legend className="ds-c-label">
                       4.	Anything else you’d like to add about your outreach efforts?
                       </legend>
                       <TextField
+                          multiline
                           name="p1_q4"
                           value={this.state.p1_q4}
+                          onChange={this.changeText}
                         />
                     </fieldset>
                   </div>
@@ -259,6 +289,8 @@ class Questions3A extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    name: state.name,
+   year: state.formYear,
 });
 
 export default connect(mapStateToProps)(Questions3A);
