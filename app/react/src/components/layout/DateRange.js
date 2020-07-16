@@ -16,10 +16,9 @@ class DateRange extends Component {
       endErrorMessage: [],
       dummyDigit: 10,
     };
-    this.getRangeData = this.getRangeData.bind(this);
-    this.validateDateRange = this.validateDateRange.bind(this);
-
     this.handleInput = this.handleInput.bind(this);
+
+    this.checkChronology = this.checkChronology.bind(this);
 
     this.validateStartInput = this.validateStartInput.bind(this);
     this.validateEndInput = this.validateEndInput.bind(this);
@@ -28,8 +27,8 @@ class DateRange extends Component {
     this.validateYear = this.validateYear.bind(this);
   }
 
-  // This method checks that the start range is before the end range
-  validateDateRange() {
+  // This method checks all 4 fields to confirm that the start range is before the end range
+  checkChronology() {
     let chronologyError;
 
     // Ensure that all 4 fields are filled in
@@ -56,18 +55,9 @@ class DateRange extends Component {
     }
   }
 
-  //This method is passed to children components to update parent state
-  getRangeData(value, error, name) {
-    console.log("monthstart set on parent", name);
-    if (error === false) {
-      this.setState({
-        [name]: value,
-      });
-    }
-  }
-
+  // This method checks that month input is appropriate
+  // (not empty, max of 2 digits, no letters, between 1 & 12)
   validateMonth(input) {
-    console.log("whats the month input??", input);
     // Handles an empty input field
     if (input === "") {
       return "Month field cannot be empty";
@@ -89,6 +79,8 @@ class DateRange extends Component {
     }
   }
 
+  // This method checks that year input is appropriate
+  //(not empty, max of 4 digits, no letters, reasonable year)
   validateYear(input) {
     // Handles an empty input field
     if (input === "") {
@@ -117,33 +109,38 @@ class DateRange extends Component {
     }
   }
 
-  handleInput(evt) {
+  // This method checks the first month/year input range and sets any validation errors to state
+  validateStartInput() {
+    let startErrorArray = [];
+
+    startErrorArray.push(this.validateMonth(this.monthStart.value));
+    startErrorArray.push(this.validateYear(this.yearStart.value));
+
     this.setState({
-      [evt.target.name]: evt.target.value,
+      startErrorMessage: startErrorArray,
     });
+
+    this.checkChronology();
   }
 
+  // This method checks the second month/year input range and sets any validation errors to state
   validateEndInput() {
     let endErrorArray = [];
 
     endErrorArray.push(this.validateMonth(this.monthEnd.value));
-
     endErrorArray.push(this.validateYear(this.yearEnd.value));
 
     this.setState({
       endErrorMessage: endErrorArray,
     });
+
+    this.checkChronology();
   }
 
-  validateStartInput() {
-    let startErrorArray = [];
-
-    startErrorArray.push(this.validateMonth(this.monthStart.value));
-
-    startErrorArray.push(this.validateYear(this.yearStart.value));
-
+  // This method takes all user input and sets it to state
+  handleInput(evt) {
     this.setState({
-      startErrorMessage: startErrorArray,
+      [evt.target.name]: evt.target.value,
     });
   }
 
@@ -151,18 +148,10 @@ class DateRange extends Component {
     return (
       <Fragment>
         <div className="date-range">
-          {/* <DateComponent
-         
-              range={"start"}
-              getRangeData={this.getRangeData}
-              validateDateRange={this.validateDateRange}
-              endRangeErr={this.state.endRangeErr}
-              previousEntry={this.props.previousEntry === true ? true : false}
-            /> */}
-          <div>
+          <div className="errors">
             {" "}
             {this.state.endRangeErr === true ? (
-              <h2> Chronology is bad</h2>
+              <div> End date must come after start date</div>
             ) : null}{" "}
           </div>
           <div className="date-range-start">
@@ -182,7 +171,7 @@ class DateRange extends Component {
                 numeric
                 inputRef={(monthStart) => (this.monthStart = monthStart)}
                 onChange={this.handleInput}
-                onBlur={(this.validateStartInput, this.validateDateRange)}
+                onBlur={this.validateStartInput}
                 value={
                   this.props.previousEntry === true
                     ? this.state.dummyDigit - 5
@@ -195,7 +184,7 @@ class DateRange extends Component {
                 inputRef={(yearStart) => (this.yearStart = yearStart)}
                 name="yearStart"
                 onChange={this.handleInput}
-                onBlur={(this.validateStartInput, this.validateDateRange)}
+                onBlur={this.validateStartInput}
                 numeric
                 value={
                   this.props.previousEntry === true
@@ -224,7 +213,7 @@ class DateRange extends Component {
                 name="monthEnd"
                 numeric
                 onChange={this.handleInput}
-                onBlur={(this.validateEndInput, this.validateDateRange)}
+                onBlur={this.validateEndInput}
                 value={
                   this.props.previousEntry === true
                     ? this.state.dummyDigit
@@ -238,11 +227,11 @@ class DateRange extends Component {
                 inputRef={(yearEnd) => (this.yearEnd = yearEnd)}
                 name="yearEnd"
                 onChange={this.handleInput}
-                onBlur={(this.validateEndInput, this.validateDateRange)}
+                onBlur={this.validateEndInput}
                 numeric
                 value={
                   this.props.previousEntry === true
-                    ? this.state.dummyDigit * 202 - 1
+                    ? this.state.dummyDigit * 202
                     : this.state.yearEnd
                 }
               />
