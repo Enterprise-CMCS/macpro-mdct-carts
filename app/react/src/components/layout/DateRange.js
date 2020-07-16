@@ -243,7 +243,7 @@ class DateRange extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  year: state.formYear,
+  year: state.stateUser.formYear,
 });
 
 export default connect(mapStateToProps)(DateRange);

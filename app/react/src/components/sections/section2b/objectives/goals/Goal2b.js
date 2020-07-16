@@ -386,8 +386,8 @@ class Goal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  year: state.formYear,
-  tallTextField: state.largeTextBoxHeight,
+  year: state.stateUser.formYear,
+  tallTextField: state.stateUser.largeTextBoxHeight,
 });
 
 export default connect(mapStateToProps)(Goal);

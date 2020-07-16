@@ -697,7 +697,7 @@ class Section3c extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
+  name: state.stateUser.name,
 });
 
 export default connect(mapStateToProps)(Section3c);
