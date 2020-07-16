@@ -64,7 +64,7 @@ class DateRange extends Component {
 
     // Prevents users from putting in more than 2 characters
     if (input.length > 2) {
-      return "Month length must be less than 2";
+      return "Month length must not exceed 2";
     }
 
     // Checks for non-numeric characters
@@ -89,7 +89,7 @@ class DateRange extends Component {
     // Prevents users from putting in more than 2 characters
     if (input.length > 4) {
       // failing = true;
-      return "Year length must be less than 4";
+      return "Year length must not exceed 4";
     }
 
     if (
