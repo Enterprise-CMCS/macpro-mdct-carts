@@ -155,7 +155,7 @@ class DateRange extends Component {
           </div>
           <div className="date-range-start">
             <h3 className="question-inner-header"> Start </h3>
-            <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
+            <div className="ds-c-field__hint"> mm/yyyy</div>
             <div className="errors">
               {this.state.startErrorMessage.map((e, idx) => {
                 if (e !== undefined) {
@@ -196,7 +196,7 @@ class DateRange extends Component {
 
           <Fragment>
             <h3 className="question-inner-header"> End </h3>
-            <div className="ds-c-field__hint"> From mm/yyyy to mm/yyyy</div>
+            <div className="ds-c-field__hint"> mm/yyyy</div>
             <div className="errors">
               {this.state.endErrorMessage.map((e, idx) => {
                 if (e !== undefined) {
