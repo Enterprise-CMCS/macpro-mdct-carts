@@ -3,21 +3,6 @@ const STATE_INFO = "STATE_INFO";
 const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
 
-// THUNK CREATOR (EXAMPLE)
-export const getUserThunk = (someID) => (dispatch) => {
-  try {
-    // const { data } = someCallToDatabase
-    const data = {
-      role: "admin",
-      state: { id: "ca", name: "California" },
-      username: "james.lufton@state.gov",
-    };
-    dispatch(getUserData(data));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 //ACTION CREATORS
 export const getUserData = (userObject) => ({
   type: USER_INFO,
@@ -52,10 +37,7 @@ const initialState = {
   },
 };
 
-// THUNK CREATORS
-//Where we will call the backend and dispatch info to reducer
-
-// REDUCER
+// STATE USER REDUCER
 export default function (state = initialState, action) {
   switch (action.type) {
     case STATE_INFO:

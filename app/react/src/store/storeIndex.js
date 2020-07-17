@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === `development`) {
 }
 const middleware = composeWithDevTools(applyMiddleware(...middlewareArray));
 
-// Create store from reducers and middleware
+// Create store with reducers and middleware
 const store = createStore(reducer, middleware);
 
 // Export the store to be picked up by the root component in index.js
