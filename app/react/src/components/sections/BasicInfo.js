@@ -50,7 +50,6 @@ class BasicInfo extends Component {
       fillFormTitle: "Same as last year",
     };
     this.handleChange = this.handleChange.bind(this);
-    this.validate = this.validate.bind(this);
   }
 
   handleChange(evt) {
