@@ -78,26 +78,6 @@ class BasicInfo extends Component {
     }
   }
 
-  validate(evt) {
-    //Inline validation/error messaging for email and phone
-    let errors = this.state.errors;
-
-    switch (evt.target.name) {
-      case "contactEmail":
-        errors.email = validEmailRegex.test(evt.target.value)
-          ? ""
-          : "Please enter a valid email";
-        break;
-      case "contactPhone":
-        errors.phone = validTelephoneRegex.test(evt.target.value)
-          ? ""
-          : "Please enter a valid 10 digit phone number";
-        break;
-      default:
-        break;
-    }
-  }
-
   /**
    * If conditional value is triggered, set state to value
    * @param {Event} el
@@ -245,7 +225,6 @@ class BasicInfo extends Component {
                         name="contactEmail"
                         value={this.state.contactEmail}
                         onChange={this.handleChange}
-                        //onBlur={this.validate}
                       />
                       {this.state.errors.email.length > 0 && (
                         <span className="error">{this.state.errors.email}</span>
@@ -281,7 +260,6 @@ class BasicInfo extends Component {
                         mask="phone"
                         value={this.state.contactPhone}
                         onChange={this.handleChange}
-                        //onBlur={this.validate}
                       />
                       {this.state.errors.phone.length > 0 && (
                         <span className="error">{this.state.errors.phone}</span>
