@@ -28,12 +28,12 @@ class Section3a extends Component {
     p1_q4 = "final test for last year"
     previousYear = "true"/>
     const thisYearQuestions3A = <Questions3A 
-    p1_q1 = "no"
+    p1_q1 = ""
     p1_q1__a = ""
-    p1_q2 = "yes"
-    p1_q2__a = "test 2 current year"
-    p1_q3 = "test 3 current year"
-    p1_q4 = "final test for this year"
+    p1_q2 = ""
+    p1_q2__a = ""
+    p1_q3 = ""
+    p1_q4 = ""
     previousYear = "false"
     previousp1_q1 = {previousYearQuestions3A.props.p1_q1}
     previousp1_q1__a = {previousYearQuestions3A.props.p1_q1__a}
