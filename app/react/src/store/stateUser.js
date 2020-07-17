@@ -1,8 +1,9 @@
 //ACTION TYPES
 const STATE_INFO = "STATE_INFO";
 const USER_INFO = "USER_INFO";
+const PROGRAM_INFO = "PROGRAM_INFO";
 
-// THUNK CREATOR
+// THUNK CREATOR (EXAMPLE)
 export const getUserThunk = (someID) => (dispatch) => {
   try {
     // const { data } = someCallToDatabase
@@ -17,6 +18,26 @@ export const getUserThunk = (someID) => (dispatch) => {
   }
 };
 
+//ACTION CREATORS
+export const getUserData = (userObject) => ({
+  type: USER_INFO,
+  userObject: userObject,
+});
+
+export const getProgramData = (programObject) => ({
+  type: PROGRAM_INFO,
+  programType: programObject.programType,
+  programName: programObject.programName,
+  formName: programObject.formName,
+});
+
+export const getStateData = (stateObject) => ({
+  type: STATE_INFO,
+  name: stateObject.name,
+  abbr: stateObject.abbr,
+  imageURI: stateObject.imageURI,
+});
+
 const initialState = {
   name: "New York",
   abbr: "NY",
@@ -24,40 +45,11 @@ const initialState = {
   programName: "NY Combo Program",
   imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
   formName: "CARTS FY",
-  formYear: "2020",
-  largeTextBoxHeight: 6,
   currentUser: {
     role: "admin",
     state: { id: "ny", name: "New York" },
     username: "karen.dalton@state.gov",
   },
-};
-
-//ACTION CREATORS
-const getUserData = (userObject) => ({
-  type: STATE_INFO,
-  userObject: userObject,
-});
-
-export const stateDetails = (
-  name,
-  abbr,
-  programType,
-  programName,
-  imageURI,
-  formName,
-  formYear
-) => {
-  return {
-    type: STATE_INFO,
-    name,
-    abbr,
-    programType,
-    programName,
-    imageURI,
-    formName,
-    formYear,
-  };
 };
 
 // THUNK CREATORS
@@ -69,22 +61,22 @@ export default function (state = initialState, action) {
     case STATE_INFO:
       return {
         ...state,
-        ...action.abbr,
-        ...action.programType,
-        ...action.programName,
-        ...action.name,
-        ...action.imageURI,
-        ...action.formName,
-        ...action.formYear,
-        ...action.largeTextBoxHeight,
-        ...action.currentUser,
+        name: action.name,
+        abbr: action.abbr,
+        imageURI: action.imageURI,
       };
     case USER_INFO:
       return {
         ...state,
-        current: action.userObject,
+        currentUser: action.userObject,
       };
-
+    case PROGRAM_INFO:
+      return {
+        ...state,
+        programType: action.programObject,
+        programName: action.programName,
+        formName: action.formName,
+      };
     default:
       return state;
   }

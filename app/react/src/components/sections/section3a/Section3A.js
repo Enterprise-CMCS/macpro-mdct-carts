@@ -173,6 +173,10 @@ class Section3a extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  someThunk: ()
+})
+
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   year: state.global.formYear,
