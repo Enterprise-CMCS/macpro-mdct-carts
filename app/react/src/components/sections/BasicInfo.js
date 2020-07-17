@@ -53,13 +53,14 @@ class BasicInfo extends Component {
   }
 
   handleChange(evt) {
-    let errors = this.state.errors;
 
     this.setState({
       [evt.target.name]: evt.target.value,
     });
 
     //Inline validation/error messaging for email and phone
+    let errors = this.state.errors;
+
     switch (evt.target.name) {
       case "contactEmail":
         errors.email = validEmailRegex.test(evt.target.value)
@@ -225,7 +226,7 @@ class BasicInfo extends Component {
                         label="6. Email: "
                         name="contactEmail"
                         value={this.state.contactEmail}
-                        onBlur={this.handleChange}
+                        onChange={this.handleChange}
                       />
                       {this.state.errors.email.length > 0 && (
                         <span className="error">{this.state.errors.email}</span>
@@ -260,7 +261,7 @@ class BasicInfo extends Component {
                         name="contactPhone"
                         mask="phone"
                         value={this.state.contactPhone}
-                        onBlur={this.handleChange}
+                        onChange={this.handleChange}
                       />
                       {this.state.errors.phone.length > 0 && (
                         <span className="error">{this.state.errors.phone}</span>

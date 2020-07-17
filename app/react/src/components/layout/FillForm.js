@@ -9,6 +9,7 @@ class FillForm extends Component {
           onClick={this.props.onClick}
           name={this.props.name}
           title={this.props.title}
+          type={this.props.type}
         ></a>
       </div>
     );

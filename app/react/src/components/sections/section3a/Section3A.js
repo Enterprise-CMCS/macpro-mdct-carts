@@ -1,14 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import Sidebar from "../../layout/Sidebar";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import { connect } from "react-redux";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from "@reach/accordion";
+import Questions3A from "./questions/Questions3A";
 import "@reach/accordion/styles.css";
 import FormActions from "../../layout/FormActions";
 import {
@@ -23,9 +18,34 @@ import {
 class Section3a extends Component {
   constructor(props) {
     super(props);
+    const previousYearQuestions3A = <Questions3A 
+    p1_q1 = "yes"
+    p1_q1__a = "test 1 previous year"
+    p1_q2 = "no"
+    p1_q2__a = ""
+    //p1_q2_array = {''}
+    p1_q3 = "test 3 previous year"
+    p1_q4 = "final test for last year"
+    previousYear = "true"/>
+    const thisYearQuestions3A = <Questions3A 
+    p1_q1 = ""
+    p1_q1__a = ""
+    p1_q2 = ""
+    p1_q2__a = ""
+    p1_q3 = ""
+    p1_q4 = ""
+    previousYear = "false"
+    previousp1_q1 = {previousYearQuestions3A.props.p1_q1}
+    previousp1_q1__a = {previousYearQuestions3A.props.p1_q1__a}
+    previousp1_q2 = {previousYearQuestions3A.props.p1_q2}
+    previousp1_q2__a = {previousYearQuestions3A.props.p1_q2__a}
+    previousp1_q3 = {previousYearQuestions3A.props.p1_q3}
+    previousp1_q4 = {previousYearQuestions3A.props.p1_q4}
+    />;
     this.state = {
-      emptyAttribute: "",
       pageTitle: "Part 3a: Program Outreach",
+      previousYearQuestions3AProp : previousYearQuestions3A,
+      thisYearQuestions3AProp : thisYearQuestions3A 
     };
     this.setConditional = this.setConditional.bind(this);
   }
@@ -35,13 +55,11 @@ class Section3a extends Component {
       [el.target.name]: el.target.value,
     });
   }
-
-  componentDidMount() {
-    // Nothing needed in initialize
-  }
+ 
 
   render() {
     return (
+      
       <div className="section-3a ds-l-col--9 content">
         <div className="main">
           <PageInfo />
@@ -50,119 +68,18 @@ class Section3a extends Component {
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={this.state.pageTitle}>
-                <form>
-                  <div>
-                    <h3 className="part-header">Part 3a: Program Outreach</h3>
-                    <div
-                      className="part1-all-questions-container"
-                      hidden={this.state.mchipDisable}
-                    >
-                      <div className="question-container">
-                        <div id="p1_q1">
-                          <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                            <legend className="ds-c-label">
-                              1. Have you changed your outreach methods in the
-                              last federal fiscal year?
-                            </legend>
-
-                            <ChoiceList
-                              choices={[
-                                {
-                                  label: "Yes",
-                                  value: "yes",
-                                },
-                                {
-                                  label: "No",
-                                  value: "no",
-                                },
-                              ]}
-                              className="p1_q1"
-                              label=""
-                              name="p1_q1"
-                              onChange={this.setConditional}
-                            />
-                          </fieldset>
-                          {this.state.p1_q1 === "yes" ? (
-                            <div className="conditional">
-                              <TextField
-                                label="a) What are you doing differently?"
-                                name="p1_q1__a"
-                              />
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                      <div className="question-container">
-                        <div id="p1_q2">
-                          <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                            <legend className="ds-c-label">
-                              2. Are you targeting specific populations in your
-                              outreach efforts?
-                            </legend>
-                            <ChoiceList
-                              choices={[
-                                {
-                                  label: "Yes",
-                                  value: "yes",
-                                },
-                                {
-                                  label: "No",
-                                  value: "no",
-                                },
-                              ]}
-                              className="p1_q2"
-                              label=""
-                              name="p1_q2"
-                              onChange={this.setConditional}
-                              hint={
-                                "For example: minorities, immigrants, or children living in rural areas."
-                              }
-                            />
-                          </fieldset>
-                          {this.state.p1_q2 === "yes" ? (
-                            <div className="conditional">
-                              <TextField
-                                label="a) Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?"
-                                name="p1_q2__a"
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                      <div className="question-container">
-                        <div id="p1_q3" disabled={this.state.p1q2Disable}>
-                          <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                            <TextField
-                              label="3. What methods have been most effective in reaching low-income, uninsured children? "
-                              name="p1_q3"
-                              hint={
-                                "For example: TV, school outreach, or word of mouth."
-                              }
-                            />
-                          </fieldset>
-                        </div>
-                      </div>
-                      <div className="question-container">
-                        <div id="p1_q4" disabled={this.state.p1q2Disable}>
-                          <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                            <legend className="ds-c-label">
-                              4. Anything else you’d like to add about your
-                              outreach efforts?
-                            </legend>
-                            <TextField name="p1_q4" />
-                          </fieldset>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                <FormNavigation
-                  nextUrl="/section3/3c"
-                  previousUrl="/section2/2b"
-                />
+              <TabPanel
+                id="tab-form"
+                tab="Section 3A: Program Outreach"
+              >
+                {this.state.thisYearQuestions3AProp}
+                <FormNavigation nextUrl="/section3/3c" previousUrl="/section2/2b" />
+              </TabPanel>
+              <TabPanel
+              className="section3a-previous"
+              tab={`FY${this.props.year - 1} answers`}
+              >
+                {this.state.previousYearQuestions3AProp}
               </TabPanel>
             </Tabs>
             <FormActions />
