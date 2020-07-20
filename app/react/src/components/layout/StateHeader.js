@@ -15,8 +15,8 @@ class StateHeader extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  imageURI: state.imageURI,
+  name: state.stateUser.name,
+  imageURI: state.stateUser.imageURI,
 });
 
 export default connect(mapStateToProps)(StateHeader);

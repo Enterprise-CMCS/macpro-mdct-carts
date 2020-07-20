@@ -70,9 +70,9 @@ class Section1 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  programType: state.programType,
-  year: state.formYear,
+  name: state.stateUser.name,
+  programType: state.stateUser.programType,
+  year: state.global.formYear,
 });
 
 export default connect(mapStateToProps)(Section1);
