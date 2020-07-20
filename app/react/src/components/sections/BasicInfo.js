@@ -53,7 +53,6 @@ class BasicInfo extends Component {
   }
 
   handleChange(evt) {
-
     this.setState({
       [evt.target.name]: evt.target.value,
     });
@@ -178,7 +177,10 @@ class BasicInfo extends Component {
                   />
 
                   <div>
-                    <a href="mailto:cartshelp@cms.hhs.gov">If any of the above information is incorrect, contact CARTS Help Desk.</a>{" "}
+                    <a href="mailto:cartshelp@cms.hhs.gov">
+                      If any of the above information is incorrect, contact
+                      CARTS Help Desk.
+                    </a>{" "}
                   </div>
 
                   <div>
@@ -269,7 +271,10 @@ class BasicInfo extends Component {
                 <FormNavigation nextUrl="/section1" />
               </TabPanel>
 
-              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
+              <TabPanel
+                id="tab-lastyear"
+                tab={`FY${this.props.year - 1} answers`}
+              >
                 <form>
                   <Dropdown
                     label="1. State or territory name: "
@@ -287,7 +292,9 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.ly_programType === "comboCHIP" ? true : false,
+                          this.state.ly_programType === "comboCHIP"
+                            ? true
+                            : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
@@ -368,11 +375,10 @@ class BasicInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  abbr: state.abbr,
-  year: state.formYear,
-  programType: state.programType,
-  programName: state.programName,
+  abbr: state.stateUser.currentUser.state.id,
+  year: state.global.formYear,
+  programType: state.stateUser.programType,
+  programName: state.stateUser.programName,
 });
 
 export default connect(mapStateToProps)(BasicInfo);
