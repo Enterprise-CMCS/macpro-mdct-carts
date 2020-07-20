@@ -364,11 +364,22 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
-                      {this.state.p1q2Disable === true ? (
+                      {this.state.p1q2Disable === true && this.state.p1_q2 === "" ? (
                         <div className="ds-c-alert ds-c-alert--hide-icon">
                           <div className="ds-c-alert__body">
                             <h3 className="ds-c-alert__heading">
-                              Questions 3-4 skipped due to prior answers.
+                              Questions 3-4 may not apply to your state.
+                            </h3>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {this.state.p1q2Disable === true && this.state.p1_q2 != "" ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">
+                              Questions 3-4 skipped based on your answers to previous questions.
                             </h3>
                           </div>
                         </div>
@@ -683,11 +694,22 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
-                      {this.state.p2q2Disable === true ? (
+                      {this.state.p2q2Disable === true && this.state.p2_q2 === "" ? (
                         <div className="ds-c-alert ds-c-alert--hide-icon">
                           <div className="ds-c-alert__body">
                             <h3 className="ds-c-alert__heading">
-                              Questions 3-4 skipped due to prior answers.
+                              Questions 3-4 may not apply to your state.
+                            </h3>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {this.state.p2q2Disable === true && this.state.p2_q2 != "" ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">
+                              Questions 3-4 skipped based on your answers to previous questions.
                             </h3>
                           </div>
                         </div>
