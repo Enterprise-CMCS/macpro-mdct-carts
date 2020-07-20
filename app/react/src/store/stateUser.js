@@ -32,7 +32,7 @@ const initialState = {
   formName: "CARTS FY",
   currentUser: {
     role: "admin",
-    state: { id: "ny", name: "New York" },
+    state: { id: "NY", name: "New York" },
     username: "karen.dalton@state.gov",
   },
 };

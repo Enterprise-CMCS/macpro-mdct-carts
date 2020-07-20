@@ -53,7 +53,6 @@ class BasicInfo extends Component {
   }
 
   handleChange(evt) {
-
     this.setState({
       [evt.target.name]: evt.target.value,
     });
@@ -376,8 +375,7 @@ class BasicInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.stateUser.name,
-  abbr: state.stateUser.abbr,
+  abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
