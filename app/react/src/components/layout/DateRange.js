@@ -106,9 +106,6 @@ class DateRange extends Component {
       // Checks that the month value is within a normal range
       return "Please enter a valid Year";
     }
-<<<<<<< HEAD
-    // this.validateDateRange(); // THIS IS DOING NOTHING (REMOVE)
-=======
   }
 
   // This method checks the first month/year input range and sets any validation errors to state
@@ -144,7 +141,6 @@ class DateRange extends Component {
     this.setState({
       [evt.target.name]: evt.target.value,
     });
->>>>>>> c69515093e2e57cac8977b19e9b6e5876d7919ae
   }
 
   render() {
