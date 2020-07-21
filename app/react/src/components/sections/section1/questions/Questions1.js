@@ -16,49 +16,52 @@ class Questions1 extends Component {
     this.state = {
       p1_q1: "",
       p1_q1__a: "",
-      p1_q1__a_1: "",
-      p1_q1__a_2: "",
-      p1_q1__b: "",
       p1_q2: "",
       p1_q2__a: "",
-      p1_q2__b: "",
-      p1_q2__c: "",
-      p1_q2__d: "",
-      p1_q2__e: "",
+      p1_q2__a__1: "",
       p1_q3: "",
+      p1_q3__b: "",
       p1_q4: "",
       p1_q4__a: "",
       p1_q5: "",
+      p1_q6: "",
       p2_q1: "",
+      p2_q1__a: "",
       p2_q2: "",
+      p2_q2__a: "",
+      p2_q2__a__1: "",
       p2_q3: "",
       p2_q4: "",
       p2_q4__a: "",
       p2_q5: "",
       p2_q6: "",
+      p3_q1: "",
+      p3_q2: "",
+      p3_q3: "",
+      p3_q4: "",
+      p3_q5: "",
       ly_p1_q1: "yes",
       ly_p1_q1__a: "100",
-      ly_p1_q1__a_1: "",
-      ly_p1_q1__a_2: "",
-      ly_p1_q1__b: "",
       ly_p1_q2: "yes",
       ly_p1_q2__a: "no",
-      ly_p1_q2__b: "",
-      ly_p1_q2__c: "500",
-      ly_p1_q2__d: "",
-      ly_p1_q2__e: "",
+      ly_p1_q2__a__1: "",
       ly_p1_q3: "no",
+      l1_p1_q3__b: "",
       ly_p1_q4: "",
       ly_p1_q4__a: "",
-      ly_p1_q5: "",
+      ly_p1_q5: "Managed Care Organization (MCO)",
       ly_p1_q6: "This is what you wrote last year.",
       ly_p2_q1: "",
+      ly_p2_q1__a: "",
       ly_p2_q2: "",
+      ly_p2_q2__a: "",
+      ly_p2_q2__a__1: "",
       ly_p2_q3: "",
       ly_p2_q4: "",
       ly_p2_q4__a: "",
-      ly_p2_q5: "",
+      ly_p2_q5: "Managed Care Organization (MCO)",
       ly_p2_q6: "This is what you wrote last year.",
+
       fillFormTitle: "Same as last year",
 
       mchipDisable: false,
@@ -303,6 +306,7 @@ class Questions1 extends Component {
                   className="p1_q2"
                   label=""
                   name="p1_q2"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p1_q2 : this.state.p1_q2}
                   onChange={this.setConditional}
                 />
               </fieldset>
@@ -331,6 +335,7 @@ class Questions1 extends Component {
                       className="p1_q2__a"
                       label=""
                       name="p1_q2__a"
+                      value={this.props.previousEntry === "true" ? this.state.ly_p1_q2__a : this.state.p1_q2__a}
                       onChange={this.setConditional}
                     />
                   </fieldset>
@@ -367,8 +372,10 @@ class Questions1 extends Component {
                     <legend className="ds-c-label"></legend>
                     <TextField
                       label="c) How much is your premium fee?"
-                      name="p1_q1__a__1"
+                      name="p1_q2__a__1"
+                      value={this.props.previousEntry === "true" ? this.state.ly_p1_q2__a__1 : this.state.p1_q2__a__1}
                       mask="currency"
+                      onChange={this.setConditional}
                     />
                   </fieldset>
                 </div>
@@ -376,7 +383,9 @@ class Questions1 extends Component {
                 ""
               )}
             </div>
+
           </div>
+          {/* If the user has not responded to Q2, show the following alert message */}
           {this.state.p1q2Disable === true && this.state.p1_q2 === "" ? (
             <div className="ds-c-alert ds-c-alert--hide-icon">
               <div className="ds-c-alert__body">
@@ -388,6 +397,7 @@ class Questions1 extends Component {
           ) : (
             ""
           )}
+          {/* If the user responded No to Q2, show the following alert message */}
           {this.state.p1q2Disable === true && this.state.p1_q2 != "" ? (
             <div className="ds-c-alert ds-c-alert--hide-icon">
               <div className="ds-c-alert__body">
@@ -399,6 +409,7 @@ class Questions1 extends Component {
           ) : (
             ""
           )}
+          {/* If the user responded Yes to Q2, show Q3-4 */}
           <div className="question-container">
             <div id="p1_q3" hidden={this.state.p1q2Disable}>
               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -420,6 +431,7 @@ class Questions1 extends Component {
                   className="p1_q3"
                   label=""
                   name="p1_q3"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p1_q3 : this.state.p1_q3}
                   onChange={this.setConditional}
                   hint={
                     this.state.p1q2Disable === true
@@ -452,8 +464,10 @@ class Questions1 extends Component {
                 <div className="conditional">
                   <TextField
                     label="b) What’s the maximum premium fee a family would be charged each year?"
-                    name="p1_q3__a"
+                    name="p1_q3__b"
+                    value={this.props.previousEntry === "true" ? this.state.ly_p1_q3__b : this.state.p1_q3__b}
                     mask="currency"
+                    onChange={this.setConditional}
                   />
                 </div>
               ) : (
@@ -482,6 +496,7 @@ class Questions1 extends Component {
                   className="p1_q4"
                   label=""
                   name="p1_q4"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p1_q4 : this.state.p1_q4}
                   onChange={this.setConditional}
                   hint={
                     this.state.p1q2Disable === true
@@ -496,7 +511,9 @@ class Questions1 extends Component {
                     label="a) Please briefly explain the fee structure breakdown."
                     multiline
                     name="p1_q4__a"
+                    value={this.props.previousEntry === "true" ? this.state.ly_p1_q4__a : this.state.p1_q4__a}
                     rows="6"
+                    onChange={this.setConditional}
                   />
                 </div>
               ) : (
@@ -529,7 +546,9 @@ class Questions1 extends Component {
                   label=""
                   multiple
                   name="p1_q5"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p1_q5 : this.state.p1_q5}
                   hint="Select all that apply."
+                  onChange={this.setConditional}
                 />
               </fieldset>
             </div>
@@ -550,6 +569,7 @@ class Questions1 extends Component {
                   name="p1_q6"
                   value={this.props.previousEntry === "true" ? this.state.ly_p1_q6 : this.state.p1_q6}
                   rows="6"
+                  onChange={this.setConditional}
                 />
               </fieldset>
             </div>
@@ -559,6 +579,7 @@ class Questions1 extends Component {
         <h3 className="part-header">
           Part 2: M-CHIP Enrollment and Premium Fees
         </h3>
+        {/* If the State is S-CHIP only Program Type, show this alert */}
         {this.state.schipDisable === true ? (
           <div className="ds-c-alert ds-c-alert--hide-icon">
             <div className="ds-c-alert__body">
@@ -595,7 +616,7 @@ class Questions1 extends Component {
                   ]}
                   className="p2_q1"
                   label=""
-                  name="p2_q1"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q1 : this.state.p2_q1}
                   onChange={this.setConditional}
                 />
               </fieldset>
@@ -604,7 +625,9 @@ class Questions1 extends Component {
                   <TextField
                     label="a) How much is your enrollment fee?"
                     name="p2_q1__a"
+                    value={this.props.previousEntry === "true" ? this.state.ly_p2_q1__a : this.state.p2_q1__a}
                     mask="currency"
+                    onChange={this.setConditional}
                   />
                 </div>
               ) : (
@@ -632,6 +655,7 @@ class Questions1 extends Component {
                   className="p2_q2"
                   label=""
                   name="p2_q2"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q2 : this.state.p2_q2}
                   onChange={this.setConditional}
                 />
               </fieldset>
@@ -660,6 +684,7 @@ class Questions1 extends Component {
                       className="p2_q2__a"
                       label=""
                       name="p2_q2__a"
+                      value={this.props.previousEntry === "true" ? this.state.ly_p2_q2__a : this.state.p2_q2__a}
                       onChange={this.setConditional}
                     />
                   </fieldset>
@@ -699,7 +724,9 @@ class Questions1 extends Component {
                     <TextField
                       label="c) How much is your premium fee?"
                       name="p2_q2__a__1"
+                      value={this.props.previousEntry === "true" ? this.state.ly_p2_q2__a__1 : this.state.p2_q2__a__1}
                       mask="currency"
+                      onChange={this.setConditional}
                     />
                   </fieldset>
                 </div>
@@ -708,6 +735,8 @@ class Questions1 extends Component {
               )}
             </div>
           </div>
+
+          {/* If the user has not answered Q2 yet, show the alert below. */}
           {this.state.p2q2Disable === true && this.state.p2_q2 === "" ? (
             <div className="ds-c-alert ds-c-alert--hide-icon">
               <div className="ds-c-alert__body">
@@ -719,6 +748,7 @@ class Questions1 extends Component {
           ) : (
             ""
           )}
+          {/* If the user answered No to Q2, show the alert below. */}
           {this.state.p2q2Disable === true && this.state.p2_q2 != "" ? (
             <div className="ds-c-alert ds-c-alert--hide-icon">
               <div className="ds-c-alert__body">
@@ -730,6 +760,7 @@ class Questions1 extends Component {
           ) : (
             ""
           )}
+          {/* If the user answered Yes to Q2, show Q3-4. */}
           <div className="question-container">
             <div id="p2_q3" hidden={this.state.p2q2Disable}>
               <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -751,6 +782,7 @@ class Questions1 extends Component {
                   className="p2_q3"
                   label=""
                   name="p2_q3"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q3 : this.state.p2_q3}
                   onChange={this.setConditional}
                   hint={
                     this.state.p2q2Disable === true
@@ -782,8 +814,10 @@ class Questions1 extends Component {
                 <div className="conditional">
                   <TextField
                     label="b) What’s the maximum premium fee a family would be charged each year?"
-                    name="p2_q3__a"
+                    name="p2_q3__b"
+                    value={this.props.previousEntry === "true" ? this.state.ly_p2_q3__b : this.state.p2_q3__b}
                     mask="currency"
+                    onChange={this.setConditional}
                   />
                 </div>
               ) : (
@@ -812,6 +846,7 @@ class Questions1 extends Component {
                   className="p2_q4"
                   label=""
                   name="p2_q4"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q4 : this.state.p2_q4}
                   onChange={this.setConditional}
                   hint={
                     this.state.p2q2Disable === true
@@ -826,7 +861,9 @@ class Questions1 extends Component {
                     label="a) Please briefly explain the fee structure breakdown."
                     multiline
                     name="p2_q4__a"
+                    value={this.props.previousEntry === "true" ? this.state.ly_p2_q4__a : this.state.p2_q4__a}
                     rows="6"
+                    onChange={this.setConditional}
                   />
                 </div>
               ) : (
@@ -859,7 +896,9 @@ class Questions1 extends Component {
                   label=""
                   multiple
                   name="p2_q5"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q5 : this.state.p2_q5}
                   hint="Select all that apply."
+                  onChange={this.setConditional}
                 />
               </fieldset>
             </div>
@@ -878,7 +917,9 @@ class Questions1 extends Component {
                   label=""
                   multiline
                   name="p2_q6"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q6 : this.state.p2_q6}
                   rows="6"
+                  onChange={this.setConditional}
                 />
               </fieldset>
             </div>
@@ -935,6 +976,7 @@ class Questions1 extends Component {
                   className="p3_q1"
                   label=""
                   name="Q01: Eligibility determination process"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q1 : this.state.p3_q1}
                   onChange={(e) => this.setKeyword("p3", e)}
                 />
               </fieldset>
@@ -965,6 +1007,7 @@ class Questions1 extends Component {
                   className="p3_q2"
                   label=""
                   name="Q02: Eligibility redetermination process"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q2 : this.state.p3_q2}
                   onChange={(e) => this.setKeyword("p3", e)}
                 />
               </fieldset>
@@ -996,6 +1039,7 @@ class Questions1 extends Component {
                   hint="For example: increasing the FPL or income levels, or other eligibility criteria."
                   label=""
                   name="Q03: Eligibility levels or target population"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q3 : this.state.p3_q3}
                   onChange={(e) => this.setKeyword("p3", e)}
                 />
               </fieldset>
@@ -1028,6 +1072,7 @@ class Questions1 extends Component {
                       "
                   label=""
                   name="Q04: Benefits available to enrollees"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q4 : this.state.p3_q4}
                   onChange={(e) => this.setKeyword("p3", e)}
                 />
               </fieldset>
@@ -1058,6 +1103,7 @@ class Questions1 extends Component {
                   className="p3_q5"
                   label=""
                   name="Q05: Single streamlined application"
+                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q5 : this.state.p3_q5}
                   onChange={(e) => this.setKeyword("p3", e)}
                 />
               </fieldset>
@@ -1527,9 +1573,9 @@ class Questions1 extends Component {
                       value: "no",
                     },
                   ]}
-                  className="p4_q21"
+                  className="p3_q21"
                   label=""
-                  name="p4_q21"
+                  name="p3_q21"
                   type="radio"
                 />
                 <ul>

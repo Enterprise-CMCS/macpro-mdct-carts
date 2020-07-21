@@ -60,7 +60,7 @@ class FPL extends Component {
     return (
       <div className="fpl">
         <h3>Premium fee</h3>
-        <div className="ds-c-field__hint">Hint Text!</div>
+        {/* <div className="ds-c-field__hint">Hint Text!</div> */}
         <div className="fpl-outer ds-l-container">
           <div className="ds-l-row fpl-percent">
             <div className="fpl-container fpl-start">
