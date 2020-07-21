@@ -53,13 +53,13 @@ class BasicInfo extends Component {
   }
 
   handleChange(evt) {
-    let errors = this.state.errors;
-
     this.setState({
       [evt.target.name]: evt.target.value,
     });
 
     //Inline validation/error messaging for email and phone
+    let errors = this.state.errors;
+
     switch (evt.target.name) {
       case "contactEmail":
         errors.email = validEmailRegex.test(evt.target.value)
@@ -177,7 +177,10 @@ class BasicInfo extends Component {
                   />
 
                   <div>
-                    <a href="mailto:cartshelp@cms.hhs.gov">If any of the above information is incorrect, contact CARTS Help Desk.</a>{" "}
+                    <a href="mailto:cartshelp@cms.hhs.gov">
+                      If any of the above information is incorrect, contact
+                      CARTS Help Desk.
+                    </a>{" "}
                   </div>
 
                   <div>
@@ -222,7 +225,7 @@ class BasicInfo extends Component {
                         label="6. Email: "
                         name="contactEmail"
                         value={this.state.contactEmail}
-                        onBlur={this.handleChange}
+                        onChange={this.handleChange}
                       />
                       {this.state.errors.email.length > 0 && (
                         <span className="error">{this.state.errors.email}</span>
@@ -257,7 +260,7 @@ class BasicInfo extends Component {
                         name="contactPhone"
                         mask="phone"
                         value={this.state.contactPhone}
-                        onBlur={this.handleChange}
+                        onChange={this.handleChange}
                       />
                       {this.state.errors.phone.length > 0 && (
                         <span className="error">{this.state.errors.phone}</span>
@@ -268,7 +271,10 @@ class BasicInfo extends Component {
                 <FormNavigation nextUrl="/section1" />
               </TabPanel>
 
-              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
+              <TabPanel
+                id="tab-lastyear"
+                tab={`FY${this.props.year - 1} answers`}
+              >
                 <form>
                   <Dropdown
                     label="1. State or territory name: "
@@ -286,7 +292,9 @@ class BasicInfo extends Component {
                         label: "Combination state (M-CHIP and S-CHIP)",
                         value: "comboCHIP",
                         checked:
-                          this.state.ly_programType === "comboCHIP" ? true : false,
+                          this.state.ly_programType === "comboCHIP"
+                            ? true
+                            : false,
                       },
                       {
                         label: "CHIP Medicaid Expansion only (M-CHIP)",
@@ -367,11 +375,10 @@ class BasicInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  abbr: state.abbr,
-  year: state.formYear,
-  programType: state.programType,
-  programName: state.programName,
+  abbr: state.stateUser.currentUser.state.id,
+  year: state.global.formYear,
+  programType: state.stateUser.programType,
+  programName: state.stateUser.programName,
 });
 
 export default connect(mapStateToProps)(BasicInfo);

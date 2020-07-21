@@ -15,7 +15,7 @@ class PageInfo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
+  name: state.stateUser.name,
 });
 
 export default connect(mapStateToProps)(PageInfo);
