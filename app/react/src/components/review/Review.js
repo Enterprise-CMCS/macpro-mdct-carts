@@ -30,7 +30,7 @@ class Review extends Component {
   }
   render() {
     return (
-      <div className="review">
+      <div className="review-view">
         <h1>REVIEW</h1>
         {this.state.currentState}
         {this.state.currentYear}
@@ -38,9 +38,9 @@ class Review extends Component {
         {/* <Section1 /> */}
         {/* <Section2A /> */}
         {/* <Objective2b /> */}
-        <Section2B />
+        <Section2B review />
         {/* <Section3A /> */}
-        <Section3c />
+        <Section3c review />
       </div>
     );
   }

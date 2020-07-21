@@ -133,6 +133,32 @@
   padding-left: ($padding * 2);
 }
 
+.review-view {
+  input {
+    //display: none;
+  }
+
+  input[checked] {
+    display: block;
+  }
+  .no-answer {
+    display: block;
+  }
+
+  .conditional {
+    display: block;
+  }
+
+  .textfield {
+    .no-answer {
+      margin-bottom: 70px;
+      input {
+        // display: none;
+      }
+    }
+  }
+}
+
 .fpl {
   h3 {
     margin: ($margin * 4) 0 0 0;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
+  Choice,
   ChoiceList,
   Tabs,
   TabPanel,
@@ -10,6 +11,7 @@ import PageInfo from "../../layout/PageInfo";
 import FillForm from "../../layout/FillForm";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
+import { faThList } from "@fortawesome/free-solid-svg-icons";
 class Section3c extends Component {
   constructor() {
     super();
@@ -21,7 +23,7 @@ class Section3c extends Component {
     this.changeText = this.changeText.bind(this);
 
     this.state = {
-      p1_q1: "no",
+      p1_q1: "",
       p1_q1__a: "",
       p1_q1__a_1: "",
       p1_q1__a_2: "",
@@ -176,7 +178,12 @@ class Section3c extends Component {
                     <h3 className="part-header">
                       Part 1: Eligibility Renewal and Retention
                     </h3>
-                    <div className="question-container">
+                    <div
+                      className={
+                        "question-container " +
+                        (this.state.p1_q1 ? "" : "no-answer")
+                      }
+                    >
                       <FillForm
                         name="p1_q1"
                         title={this.state.fillFormTitle}
@@ -187,25 +194,37 @@ class Section3c extends Component {
                         provide for presumptive eligibility, and have you
                         implemented this?
                       </div>
+                      <div className="hint">
+                        Note: This question may not apply to Medicaid Expansion
+                        states.
+                      </div>
                       <div id="p1_q1">
-                        <ChoiceList
-                          choices={[
-                            {
-                              label: "Yes",
-                              value: "yes",
-                            },
-                            {
-                              label: "No",
-                              value: "no",
-                            },
-                          ]}
-                          className="p1_q1"
-                          label=""
+                        <Choice
                           name="p1_q1"
+                          value="yes"
+                          defaultChecked={
+                            this.state.p1_q1 === "yes" ? true : false
+                          }
+                          type="radio"
                           onChange={this.setConditional}
-                          hint="Note: This question may not apply to Medicaid Expansion states."
-                        />
-                        {this.state.p1_q1 === "yes" ? (
+                        >
+                          Yes
+                        </Choice>
+                        <Choice
+                          name="p1_q1"
+                          value="no"
+                          defaultChecked={
+                            this.state.p1_q1 === "no" ? true : false
+                          }
+                          type="radio"
+                          onChange={this.setConditional}
+                        >
+                          No
+                        </Choice>
+
+                        {this.state.p1_q1 === "yes" ||
+                        (this.props.review === true &&
+                          this.state.p1_q1 === "") ? (
                           <div className="conditional">
                             <TextField
                               label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
