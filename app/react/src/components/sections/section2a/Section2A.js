@@ -53,6 +53,7 @@ class Section2a extends Component {
       p2_q3__h: "",
       p2_q4: "",
       fillFormTitle: "Same as last year",
+      pageTitle: "Section 2A: Enrollment and Uninsured Data",
       year1: this.props.formYear - 1,
       year2: this.props.formYear - 2,
       year3: this.props.formYear - 3,
@@ -86,12 +87,12 @@ class Section2a extends Component {
       <div className="section-2a ds-l-col--9 content">
         <div className="main">
           <PageInfo />
+          <div className="print-only">
+            <h3>{this.state.pageTitle}</h3>
+          </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel
-                id="section2b"
-                tab="Section 2A: Enrollment and Uninsured Data"
-              >
+              <TabPanel id="section2b" tab={this.state.pageTitle}>
                 <div className="section-content">
                   <form>
                     <div>
@@ -670,9 +671,9 @@ class Section2a extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  formName: state.formName,
-  formYear: state.formYear,
+  name: state.stateUser.name,
+  formName: state.stateUser.formName,
+  formYear: state.global.formYear,
 });
 
 export default connect(mapStateToProps)(Section2a);

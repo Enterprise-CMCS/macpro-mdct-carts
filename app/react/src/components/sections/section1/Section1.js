@@ -42,6 +42,7 @@ class Section1 extends Component {
       p2_q5: "",
       p2_q6: "",
       fillFormTitle: "Same as last year",
+      pageTitle: "Section 1: Program Fees and Policy Changes",
       mchipDisable: false,
       schipDisable: false,
 
@@ -206,12 +207,12 @@ class Section1 extends Component {
         {this.setQuestionDisable}
         <div className="main">
           <PageInfo />
+          <div className="print-only">
+            <h3>{this.state.pageTitle}</h3>
+          </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel
-                id="tab-form"
-                tab="Section 1: Program Fees and Policy Changes"
-              >
+              <TabPanel id="tab-form" tab={this.state.pageTitle}>
                 <form>
                   <div>
                     <h3 className="part-header">
@@ -220,10 +221,11 @@ class Section1 extends Component {
                     {this.state.mchipDisable === true ? (
                       <div className="ds-c-alert ds-c-alert--hide-icon">
                         <div className="ds-c-alert__body">
-                          <h3 className="ds-c-alert__heading">This part only applies to states with a S-CHIP program.</h3>
-                          <p className="ds-c-alert__text">
-                            Skip to Part 2.
-                          </p>
+                          <h3 className="ds-c-alert__heading">
+                            This part only applies to states with a S-CHIP
+                            program.
+                          </h3>
+                          <p className="ds-c-alert__text">Skip to Part 2.</p>
                         </div>
                       </div>
                     ) : (
@@ -362,14 +364,28 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
-                      {this.state.p1q2Disable === true ? (
+                      {this.state.p1q2Disable === true && this.state.p1_q2 === "" ? (
                         <div className="ds-c-alert ds-c-alert--hide-icon">
                           <div className="ds-c-alert__body">
-                            <h3 className="ds-c-alert__heading">Questions 3-4 skipped due to prior answers.</h3>
+                            <h3 className="ds-c-alert__heading">
+                              Questions 3-4 may not apply to your state.
+                            </h3>
                           </div>
                         </div>
-                      ) : ("")
-                      }
+                      ) : (
+                        ""
+                      )}
+                      {this.state.p1q2Disable === true && this.state.p1_q2 != "" ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">
+                              Questions 3-4 skipped based on your answers to previous questions.
+                            </h3>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                       <div className="question-container">
                         <div id="p1_q3" hidden={this.state.p1q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -532,10 +548,11 @@ class Section1 extends Component {
                     {this.state.schipDisable === true ? (
                       <div className="ds-c-alert ds-c-alert--hide-icon">
                         <div className="ds-c-alert__body">
-                          <h3 className="ds-c-alert__heading">This part only applies to states with a M-CHIP program.</h3>
-                          <p className="ds-c-alert__text">
-                            Skip to Part 3.
-                          </p>
+                          <h3 className="ds-c-alert__heading">
+                            This part only applies to states with a M-CHIP
+                            program.
+                          </h3>
+                          <p className="ds-c-alert__text">Skip to Part 3.</p>
                         </div>
                       </div>
                     ) : (
@@ -677,14 +694,28 @@ class Section1 extends Component {
                           )}
                         </div>
                       </div>
-                      {this.state.p2q2Disable === true ? (
+                      {this.state.p2q2Disable === true && this.state.p2_q2 === "" ? (
                         <div className="ds-c-alert ds-c-alert--hide-icon">
                           <div className="ds-c-alert__body">
-                            <h3 className="ds-c-alert__heading">Questions 3-4 skipped due to prior answers.</h3>
+                            <h3 className="ds-c-alert__heading">
+                              Questions 3-4 may not apply to your state.
+                            </h3>
                           </div>
                         </div>
-                      ) : ("")
-                      }
+                      ) : (
+                        ""
+                      )}
+                      {this.state.p2q2Disable === true && this.state.p2_q2 != "" ? (
+                        <div className="ds-c-alert ds-c-alert--hide-icon">
+                          <div className="ds-c-alert__body">
+                            <h3 className="ds-c-alert__heading">
+                              Questions 3-4 skipped based on your answers to previous questions.
+                            </h3>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                       <div className="question-container">
                         <div id="p2_q3" hidden={this.state.p2q2Disable}>
                           <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -846,10 +877,11 @@ class Section1 extends Component {
                     {this.state.mchipDisable === true ? (
                       <div className="ds-c-alert ds-c-alert--hide-icon">
                         <div className="ds-c-alert__body">
-                          <h3 className="ds-c-alert__heading">This part only applies to states with a S-CHIP program.</h3>
-                          <p className="ds-c-alert__text">
-                            Skip to Part 4.
-                          </p>
+                          <h3 className="ds-c-alert__heading">
+                            This part only applies to states with a S-CHIP
+                            program.
+                          </h3>
+                          <p className="ds-c-alert__text">Skip to Part 4.</p>
                         </div>
                       </div>
                     ) : (
@@ -1506,10 +1538,11 @@ class Section1 extends Component {
                     {this.state.schipDisable === true ? (
                       <div className="ds-c-alert ds-c-alert--hide-icon">
                         <div className="ds-c-alert__body">
-                          <h3 className="ds-c-alert__heading">This part only applies to states with a M-CHIP program.</h3>
-                          <p className="ds-c-alert__text">
-                            Skip to Section 2.
-                          </p>
+                          <h3 className="ds-c-alert__heading">
+                            This part only applies to states with a M-CHIP
+                            program.
+                          </h3>
+                          <p className="ds-c-alert__text">Skip to Section 2.</p>
                         </div>
                       </div>
                     ) : (
@@ -2201,8 +2234,15 @@ class Section1 extends Component {
                 />
               </TabPanel>
 
-              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
+              <TabPanel
+                id="tab-lastyear"
+                tab={`FY${this.props.year - 1} answers`}
+              >
+                <div className="print-only ly_header">
+                  <PageInfo />
 
+                  <h3>{this.state.pageTitle}</h3>
+                </div>
               </TabPanel>
             </Tabs>
             <FormActions />
@@ -2214,9 +2254,9 @@ class Section1 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  programType: state.programType,
-  year: state.formYear,
+  name: state.stateUser.name,
+  programType: state.stateUser.programType,
+  year: state.global.formYear,
 });
 
 export default connect(mapStateToProps)(Section1);

@@ -67,7 +67,11 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
+<<<<<<< HEAD
   currentUser: state.currentUser,
+=======
+  currentUser: state.stateUser.currentUser,
+>>>>>>> c69515093e2e57cac8977b19e9b6e5876d7919ae
 });
 
 export default connect(mapStateToProps)(Header);

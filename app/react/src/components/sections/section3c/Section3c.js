@@ -41,6 +41,7 @@ class Section3c extends Component {
       p2_q5: "",
       p2_q6: "",
       fillFormTitle: "Same as last year",
+      pageTitle: "Section 3C: Eligibility",
     };
   }
 
@@ -164,9 +165,12 @@ class Section3c extends Component {
       <div className="section-3c ds-l-col--9 content">
         <div className="main">
           <PageInfo />
+          <div className="print-only">
+            <h3>{this.state.pageTitle}</h3>
+          </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab="Section 3C: Eligibility">
+              <TabPanel id="tab-form" tab={this.state.pageTitle}>
                 <form>
                   <div>
                     <h3 className="part-header">
@@ -461,6 +465,11 @@ class Section3c extends Component {
                 <FormNavigation previousUrl="/section3/3a" />
               </TabPanel>
               <TabPanel id="tab-lastyear" tab="FY2019 answers">
+                <div className="print-only ly_header">
+                  <PageInfo />
+
+                  <h3>{this.state.pageTitle}</h3>
+                </div>
                 <form>
                   <div>
                     <h3 className="part-header">
@@ -688,7 +697,7 @@ class Section3c extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
+  name: state.stateUser.name,
 });
 
 export default connect(mapStateToProps)(Section3c);
