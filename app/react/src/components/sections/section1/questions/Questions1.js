@@ -258,9 +258,10 @@ class Questions1 extends Component {
                   1. Does your program charge an enrollment fee?
                 </legend>
                 <Choice 
-                  name="radio_choice_children" 
+                  name="p1_q1" 
                   type="radio" 
                   value="yes"
+                  onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
                       <TextField
@@ -275,7 +276,12 @@ class Questions1 extends Component {
                 >
                   Yes
                 </Choice>
-                <Choice name="radio_choice_children" type="radio" value="no">
+                <Choice 
+                  name="p1_q1" 
+                  type="radio" 
+                  value="no"
+                  onChange={this.setConditional}
+                >
                   No
                 </Choice>
               </fieldset>
@@ -565,36 +571,34 @@ class Questions1 extends Component {
                 <legend className="ds-c-label">
                   1. Does your program charge an enrollment fee?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p2_q1"
-                  label=""
-                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q1 : this.state.p2_q1}
+                <Choice 
+                  name="p2_q1" 
+                  type="radio" 
+                  value="yes"
                   onChange={this.setConditional}
-                />
+                  checkedChildren={
+                    <div className="ds-c-choice__checkedChild">{
+                      <TextField
+                        label="a) How much is your enrollment fee?"
+                        name="p2_q1__a"
+                        value={this.props.previousEntry === "true" ? this.state.ly_p2_q1__a : this.state.p2_q1__a}
+                        mask="currency"
+                      />
+                      }
+                    </div>
+                  }
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                  name="p2_q1" 
+                  type="radio" 
+                  value="no"
+                  onChange={this.setConditional}
+                >
+                  No
+                </Choice>
               </fieldset>
-              {this.state.p2_q1 === "yes" ? (
-                <div className="conditional">
-                  <TextField
-                    label="a) How much is your enrollment fee?"
-                    name="p2_q1__a"
-                    value={this.props.previousEntry === "true" ? this.state.ly_p2_q1__a : this.state.p2_q1__a}
-                    mask="currency"
-                    onChange={this.setConditional}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </div>
           <div className="question-container">
@@ -603,98 +607,84 @@ class Questions1 extends Component {
                 <legend className="ds-c-label">
                   2. Does your program charge a premium fee?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p2_q2"
-                  label=""
-                  name="p2_q2"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q2 : this.state.p2_q2}
+                <Choice 
+                  name="p2_q2" 
+                  type="radio" 
+                  value="yes"
                   onChange={this.setConditional}
-                />
+                  checkedChildren={
+                    <div className="ds-c-choice__checkedChild">{
+                      <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                        <legend className="ds-c-label">
+                          a) Are your premium fees tiered by Federal
+                          Poverty Level (FPL)?
+                        </legend>
+                        <Choice
+                          name="p2_q2__a"
+                          type="radio"
+                          value="yes"
+                          onChange={this.setConditional}
+                          checkedChildren={
+                            <fieldset className="ds-c-fieldset ds-u-margin-top--1">
+                              <legend className="ds-c-label">
+                                b) Indicate the premium fee ranges and
+                                corresponding FPL ranges.
+                              </legend>
+                              {this.state.p2_q2_fpl.map((element) => (
+                                <div>{element.component}</div>
+                              ))}
+                              <button
+                                onClick={(e) => this.newFPL("p2_q2_fpl")}
+                                type="button"
+                                className="ds-c-button ds-c-button--primary"
+                              >
+                                Add another fee?
+                                <FontAwesomeIcon icon={faPlus} />
+                              </button>
+                            </fieldset>
+                          }
+                        >
+                          Yes
+                        </Choice>
+                        <Choice
+                          name="p2_q2__a"
+                          type="radio"
+                          value="no"
+                          onChange={this.setConditional}
+                          checkedChildren={
+                            <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                              <legend className="ds-c-label"></legend>
+                              <TextField
+                                label="c) How much is your premium fee?"
+                                name="p2_q2__a__1"
+                                value={this.props.previousEntry === "true" ? this.state.ly_p2_q2__a__1 : this.state.p2_q2__a__1}
+                                mask="currency"
+                                onChange={this.setConditional}
+                              />
+                            </fieldset>
+                          }
+                        >
+                          No
+                        </Choice>
+                        <Choice
+                          name="p2_q2__a"
+                          type="radio"
+                          value="na"
+                          onChange={this.setConditional}
+                        >
+                          N/A
+                        </Choice>
+                        </fieldset>
+                      }
+                    </div>
+                  }
+                >
+                  Yes
+                </Choice>
+                <Choice name="p2_q2" type="radio" value="no">
+                  No
+                </Choice>
               </fieldset>
-              {this.state.p2_q2 === "yes" ? (
-                <div className="conditional">
-                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                    <legend className="ds-c-label">
-                      a) Are your premium fees tiered by Federal
-                      Poverty Level (FPL)?
-                    </legend>
-                    <ChoiceList
-                      choices={[
-                        {
-                          label: "Yes",
-                          value: "yes",
-                        },
-                        {
-                          label: "No",
-                          value: "no",
-                        },
-                        {
-                          label: "N/A",
-                          value: "na",
-                        },
-                      ]}
-                      className="p2_q2__a"
-                      label=""
-                      name="p2_q2__a"
-                      value={this.props.previousEntry === "true" ? this.state.ly_p2_q2__a : this.state.p2_q2__a}
-                      onChange={this.setConditional}
-                    />
-                  </fieldset>
-                </div>
-              ) : (
-                ""
-              )}
-              {this.state.p2_q2__a === "yes" ? (
-                <div className="conditional">
-                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                    <legend className="ds-c-label">
-                      b) Indicate the premium fee ranges and
-                      corresponding FPL ranges.
-                    </legend>
-                    {this.state.p2_q2_fpl.map((element) => (
-                      <div key={element.id}>
-                        {element.component}
-                      </div>
-                    ))}
-                    <button
-                      onClick={(e) => this.newFPL("p2_q2_fpl")}
-                      type="button"
-                      className="ds-c-button ds-c-button--primary"
-                    >
-                      Add another fee?
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </fieldset>
-                </div>
-              ) : (
-                ""
-              )}
-              {this.state.p2_q2__a === "no" ? (
-                <div className="conditional">
-                  <fieldset className="ds-c-fieldset ds-u-margin-top--0">
-                    <legend className="ds-c-label"></legend>
-                    <TextField
-                      label="c) How much is your premium fee?"
-                      name="p2_q2__a__1"
-                      value={this.props.previousEntry === "true" ? this.state.ly_p2_q2__a__1 : this.state.p2_q2__a__1}
-                      mask="currency"
-                      onChange={this.setConditional}
-                    />
-                  </fieldset>
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </div>
 
@@ -730,61 +720,52 @@ class Questions1 extends Component {
                   3. Is the maximum premium fee a family would be
                   charged each year tiered by FPL?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p2_q3"
-                  label=""
+                <Choice
                   name="p2_q3"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q3 : this.state.p2_q3}
+                  type="radio"
+                  value="yes"
                   onChange={this.setConditional}
-                  hint={
-                    this.state.p2q2Disable === true
-                      ? "This question is not required if the answer to Part 2 Question 2 is No."
-                      : ""
+                  checkedChildren={
+                    <fieldset className="ds-c-fieldset ds-u-margin-top--0">
+                      <legend className="ds-c-label">
+                        a) Indicate the premium fee ranges and
+                        corresponding FPL ranges Max family premium fees
+                        tiered by FPL
+                      </legend>
+                      {this.state.p2_q3_fpl.map((element) => (
+                        <div>{element.component}</div>
+                      ))}
+                      <button
+                        onClick={(e) => this.newFPL("p2_q3_fpl")}
+                        type="button"
+                        className="ds-c-button ds-c-button--primary"
+                      >
+                        Add another fee?
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </fieldset>
                   }
-                />
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                  name="p2_q3" 
+                  type="radio" 
+                  value="no"
+                  onChange={this.setConditional}
+                  checkedChildren={
+                    <TextField
+                      label="b) What’s the maximum premium fee a family would be charged each year?"
+                      name="p2_q3__b"
+                      value={this.props.previousEntry === "true" ? this.state.ly_p2_q3__b : this.state.p2_q3__b}
+                      mask="currency"
+                      onChange={this.setConditional}
+                    />
+                  }
+                >
+                  No
+                </Choice>
               </fieldset>
-              {this.state.p2_q3 === "yes" ? (
-                <div className="conditional">
-                  a) Indicate the premium fee ranges and
-                  corresponding FPL ranges.
-                  {this.state.p2_q3_fpl.map((element) => (
-                    <div key={element.id}>{element.component}</div>
-                  ))}
-                  <button
-                    onClick={(e) => this.newFPL("p2_q3_fpl")}
-                    type="button"
-                    className="ds-c-button ds-c-button--primary"
-                  >
-                    Add another fee?
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                </div>
-              ) : (
-                ""
-              )}
-              {this.state.p2_q3 === "no" ? (
-                <div className="conditional">
-                  <TextField
-                    label="b) What’s the maximum premium fee a family would be charged each year?"
-                    name="p2_q3__b"
-                    value={this.props.previousEntry === "true" ? this.state.ly_p2_q3__b : this.state.p2_q3__b}
-                    mask="currency"
-                    onChange={this.setConditional}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </div>
           <div className="question-container">
@@ -794,43 +775,33 @@ class Questions1 extends Component {
                   4. Do your premium fees differ for different CHIP
                   populations beyond FPL (for example, by age)?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p2_q4"
-                  label=""
+                <Choice
                   name="p2_q4"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q4 : this.state.p2_q4}
+                  type="radio"
+                  value="yes"
                   onChange={this.setConditional}
-                  hint={
-                    this.state.p2q2Disable === true
-                      ? "This question is not required if the answer to Part 2 Question 2 is No."
-                      : ""
+                  checkedChildren={
+                    <TextField
+                      label="a) Please briefly explain the fee structure breakdown."
+                      multiline
+                      name="p2_q4__a"
+                      value={this.props.previousEntry === "true" ? this.state.ly_p2_q4__a : this.state.p2_q4__a}
+                      rows="6"
+                      onChange={this.setConditional}
+                    />
                   }
-                />
+                >
+                  Yes
+                </Choice>
+                <Choice
+                  name="p2_q4"
+                  type="radio"
+                  value="no"
+                  onChange={this.setConditional}
+                >
+                  No
+                </Choice>
               </fieldset>
-              {this.state.p2_q4 === "yes" ? (
-                <div className="conditional">
-                  <TextField
-                    label="a) Please briefly explain the fee structure breakdown."
-                    multiline
-                    name="p2_q4__a"
-                    value={this.props.previousEntry === "true" ? this.state.ly_p2_q4__a : this.state.p2_q4__a}
-                    rows="6"
-                    onChange={this.setConditional}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </div>
           <div className="question-container">
@@ -839,29 +810,28 @@ class Questions1 extends Component {
                 <legend className="ds-c-label">
                   5. Which delivery system(s) do you use?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Managed Care Organization (MCO)",
-                      value: "Managed Care Organization (MCO)",
-                    },
-                    {
-                      label: "Primary Care Case Management (PCCM)",
-                      value: "Primary Care Case Management (PCCM)",
-                    },
-                    {
-                      label: "Fee for Service (FFS)",
-                      value: "Fee for Service (FFS)",
-                    },
-                  ]}
-                  className="p2_q5"
-                  label=""
-                  multiple
+                <hint>Select all that apply.</hint>
+                <Choice
                   name="p2_q5"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p2_q5 : this.state.p2_q5}
-                  hint="Select all that apply."
+                  value="Managed Care Organization (MCO)"
                   onChange={this.setConditional}
-                />
+                >
+                  Managed Care Organization (MCO)
+                </Choice>
+                <Choice
+                  name="p2_q5"
+                  value="Primary Care Case Management (PCCM)"
+                  onChange={this.setConditional}
+                >
+                  Primary Care Case Management (PCCM)
+                </Choice>
+                <Choice
+                  name="p2_q5"
+                  value="Fee for Service (FFS)"
+                  onChange={this.setConditional}
+                >
+                  Fee for Service (FFS)
+                </Choice>
               </fieldset>
             </div>
           </div>
