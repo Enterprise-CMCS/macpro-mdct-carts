@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
-import Section1 from "../sections/section1/Section1";
-import Section2A from "../sections/section2a/Section2A";
+import Section1Review from "./Section1Review";
+import Section2AReview from "./Section2AReview";
 import Section2B from "../sections/section2b/Section2B";
 import Section3A from "../sections/section3a/Section3A";
 import Section3c from "../sections/section3c/Section3C";
@@ -31,16 +31,11 @@ class Review extends Component {
   render() {
     return (
       <div className="review-view">
-        <h1>REVIEW</h1>
-        {this.state.currentState}
-        {this.state.currentYear}
-
-        {/* <Section1 /> */}
-        {/* <Section2A /> */}
-        {/* <Objective2b /> */}
-        <Section2B review />
+        <Section1Review />
+        <Section2AReview />
+        {/* <Section2B review /> */}
         {/* <Section3A /> */}
-        <Section3c review />
+        {/* <Section3c review /> */}
       </div>
     );
   }

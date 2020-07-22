@@ -134,28 +134,31 @@
 }
 
 .review-view {
-  input {
-    //display: none;
+  .ds-c-choice:disabled + label:before {
+    background: $white;
+  }
+  .ds-c-choice:checked + label:before {
+    background-color: $white;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    border-color: $color-gray-light;
+  }
+  .ds-c-field:disabled {
+    background: $white;
+  }
+  .ds-c-alert {
+    background: $color-gray-lightest;
+    border-left: 8px solid $color-gray-light;
   }
 
-  input[checked] {
-    display: block;
+  .nav-buttons,
+  .action-buttons {
+    display: none;
   }
-  .no-answer {
-    display: block;
-  }
-
-  .conditional {
-    display: block;
-  }
-
-  .textfield {
-    .no-answer {
-      margin-bottom: 70px;
-      input {
-        // display: none;
-      }
-    }
+  .unanswered-text {
+    margin-bottom: 70px;
   }
 }
 

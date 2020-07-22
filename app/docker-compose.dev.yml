@@ -25,6 +25,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
+    networks:
+      - backend_app
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -43,12 +45,16 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8001:8000
+    networks:
+      - backend_app
     volumes:
       - ./api_sqlserver/:/usr/src/app/
   db:
     image: postgres
     ports:
       - "5432:5432"
+    networks:
+      - backend_app
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -59,6 +65,8 @@ services:
       context: ./postgres
       dockerfile: Dockerfile
       target: deployer
+    networks:
+      - backend_app
     command: sh run.sh
     environment:
       - POSTGRES_DB=postgres
