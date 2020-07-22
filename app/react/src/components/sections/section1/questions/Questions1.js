@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import FPL from "../../../layout/FPL";
 import {
-  Button as button,
   Choice,
   ChoiceList,
   TextField,
@@ -43,10 +41,10 @@ class Questions1 extends Component {
       p3_q4: "",
       p3_q5: "",
       ly_p1_q1: "yes",
-      ly_p1_q1__a: "100",
+      ly_p1_q1__a: "100.00",
       ly_p1_q2: "yes",
       ly_p1_q2__a: "no",
-      ly_p1_q2__a__1: "",
+      ly_p1_q2__a__1: "50.00",
       ly_p1_q3: "no",
       l1_p1_q3__b: "",
       ly_p1_q4: "",
@@ -195,7 +193,6 @@ class Questions1 extends Component {
   //true means the section will be disabled
   //false means the section will be enabled
   setProgramDisable() {
-    console.log(this.props.previousEntry);
     {
       this.props.programType === "mCHIP"
         ? (this.state.mchipDisable = true)
@@ -378,7 +375,7 @@ class Questions1 extends Component {
                   name="p1_q2" 
                   type="radio" 
                   value="no"
-                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2 === "yes" ? true : false) : false}
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2 === "no" ? true : false) : false}
                   onChange={this.setConditional}>
                   No
                 </Choice>
