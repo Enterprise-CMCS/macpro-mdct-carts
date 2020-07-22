@@ -2056,8 +2056,6 @@ class Section1Review extends Component {
                 </div>
               </div>
             </form>
-            <FormNavigation nextUrl="/section2/2a" previousUrl="/basic-info" />
-            <FormActions />
           </div>
         </div>
       </div>
