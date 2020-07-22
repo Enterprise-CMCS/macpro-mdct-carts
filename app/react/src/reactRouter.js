@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./components/sections/homepage/Homepage";
-import BasicInfo from "./components/sections/BasicInfo";
+import BasicInfo from "./components/sections/basicInfo/BasicInfo";
 import Section1 from "./components/sections/section1/Section1";
 import Section2a from "./components/sections/section2a/Section2A";
 import Section2b from "./components/sections/section2b/Section2B";
