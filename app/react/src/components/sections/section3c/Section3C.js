@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
+  Choice,
   ChoiceList,
   Tabs,
   TabPanel,
@@ -46,9 +47,6 @@ class Section3c extends Component {
     });
   }
 
-  
-
-
   render() {
     return (
       <div className="section-3c ds-l-col--9 content">
@@ -60,21 +58,20 @@ class Section3c extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={this.state.pageTitle}>
-                <Questions3C/>
-                <FormNavigation
-                  previousUrl="/section3/3a"
-                />
+                <Questions3C />
+                <FormNavigation previousUrl="/section3/3a" />
               </TabPanel>
-              <TabPanel id="tab-lastyear" tab={`FY${this.props.year - 1} answers`}>
+              <TabPanel
+                id="tab-lastyear"
+                tab={`FY${this.props.year - 1} answers`}
+              >
                 <div className="print-only ly_header">
                   <PageInfo />
 
                   <h3>{this.state.pageTitle}</h3>
                 </div>
-                <Questions3C/>
-                <FormNavigation
-                  previousUrl="/section3/3a"
-                />
+                <Questions3C />
+                <FormNavigation previousUrl="/section3/3a" />
               </TabPanel>
             </Tabs>
             <FormActions />

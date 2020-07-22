@@ -6,11 +6,16 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
 function App() {
+  let VisibleHeader =
+    window.location.pathname.split("/")[1] === "reports" ? null : <Header />;
+
+  let VisibleFooter =
+    window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
   return (
     <div className="App">
-      <Header />
+      {VisibleHeader}
       <Routes />
-      <Footer />
+      {VisibleFooter}
     </div>
   );
 }
