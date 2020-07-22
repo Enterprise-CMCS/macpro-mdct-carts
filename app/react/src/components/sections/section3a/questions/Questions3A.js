@@ -74,7 +74,7 @@ class Questions3A extends Component {
 
     const elementName = el.target.name;
     const elementId = el.target.id;
-    const elementType = el.target.name;
+    const elementType = el.target.type;
     //This dynamically updates the element with last years response. Need to figure out a way to get all sub elements
     if (elementType === "textField")
     {
