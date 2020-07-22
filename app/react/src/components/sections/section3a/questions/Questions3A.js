@@ -46,6 +46,7 @@ class Questions3A extends Component {
     //
   }
   selectInput(id, option, active) {
+    console.log(id+' '+option+' '+active)
     let selection = document.getElementById(id).getElementsByTagName("input");
 
     //clear any selections made by the user
@@ -72,40 +73,53 @@ class Questions3A extends Component {
     let isActive = el.target.classList.contains("active");
 
     const elementName = el.target.name;
+    const elementId = el.target.id;
+    const elementType = el.target.name;
     //This dynamically updates the element with last years response. Need to figure out a way to get all sub elements
-    if (el.target.type === "textField")
+    if (elementType === "textField")
     {
         var newstate = {}; 
-        newstate[el.target.id] = el.target.id; 
+        newstate[elementId] = elementId; 
         if(el.target.title === "Undo")
         {
             
-            this.setState({ [el.target.name]: this.state[el.target.name + 'temp']})
+            this.setState({ [elementName]: this.state[elementName + 'temp']})
             el.target.title = "Active";
         }
         else{
-            this.setState({ [el.target.name + 'temp']: this.state[el.target.name] })
-            this.setState({ [el.target.name]: this.state['previous'+el.target.name] })
+            this.setState({ [elementName + 'temp']: this.state[elementName] })
+            this.setState({ [elementName]: this.state['previous'+elementName] })
             el.target.title = "Undo";
         }
         
         this.setState(newstate);
     }
-    /*if (el.target.type === "radioButton")
+    /*if (elementType === "radioButton")
     {
-        const childList = ['a','b','c','d','e','f'];
+        let tempRadioButton = document.getElementById(el.target.name).getElementsByTagName("input");
+        if (tempRadioButton.selection === 'yes'){
+          this.selectInput(elementName, 0, isActive);
+        }else if (tempRadioButton.selection === 'no'){
+          this.selectInput(elementName, 1, isActive);
+        }
+        //can add more else ifs if the next options are standard. If not a "subtype" can be added to type
+        //type = radioButton***yes, radioButton***otherBasicRadioButtonOptions
+        else{
+
+        }
+        let childList = ['a','b','c','d','e','f'];
         for(let i=0; i < childList.length; i++){
-            let tempElement = document.getElementsByName(el.target.name+'__'+childlist[i])
+            let tempElement = document.getElementsByName(el.target.name+'__'+childList[i])
             if(tempElement !== null)
             {
                 const superTempElement = []
-                superTempElement.push([el.target.name+'__'+childlist[i]]+':'+ this.state['previous'+el.target.name+'__'+childlist[i]] )
+                superTempElement.push([elementName+'__'+childList[i]]+':'+ this.state['previous'+elementName+'__'+childList[i]] )
                 this.setState(
                     {[elementName+'_array']: superTempElement}
                 )
                 
             }
-        }       
+        }    */ 
       /*  this.selectInput(elementName, 0, isActive);
         // Show/hide conditionals
         this.setConditionalFromToggle(el.target.name, isActive);
@@ -114,11 +128,11 @@ class Questions3A extends Component {
             p1_q1__b: textAreaCopy,
             p1_q1__c: textAreaCopy,
         });
-    }*/
+    }
     if (isActive) {
         
-      }
-    }
+      }*/
+  }
 
   
   render() {
@@ -136,7 +150,6 @@ class Questions3A extends Component {
                             title={this.state.fillFormTitle}
                             onClick={this.loadAnswers}
                             type="radioButton"
-                            childList="a"
                         />
                     } 
                   <div id="p1_q1">
