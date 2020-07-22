@@ -134,6 +134,9 @@
 }
 
 .review-view {
+  h4 {
+    color: $black;
+  }
   .ds-c-choice:disabled + label:before {
     background: $white;
   }

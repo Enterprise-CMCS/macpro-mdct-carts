@@ -86,584 +86,585 @@ class Section2a extends Component {
     return (
       <div className="section-2a ds-l-col--9 content">
         <div className="main">
-          <PageInfo />
           <div className="print-only">
-            <h3>{this.state.pageTitle}</h3>
+            <h2>{this.state.pageTitle}</h2>
           </div>
           <div className="section-content">
-            <Tabs>
-              <TabPanel id="section2b" tab={this.state.pageTitle}>
-                <div className="section-content">
-                  <form>
-                    <div>
-                      <h2 className="section-header"></h2>
-                      <h3 className="part-header">
-                        Part 1: Number of Children Enrolled in CHIP
-                      </h3>
-                      <p>
-                        This table is pre-filled with your SEDS data for the two
-                        most recent federal fiscal years. If the information is
-                        inaccurate, adjust your data in SEDS (go to line 7:
-                        “Unduplicated Number Ever Enrolled” in your fourth
-                        quarter SEDS report) and refresh the page. There may be
-                        a slight delay when updating data.
-                      </p>
+            <h3>{this.state.pageTitle}</h3>
+            <div className="section-content">
+              <form>
+                <div>
+                  <h2 className="section-header"></h2>
+                  <h3 className="part-header">
+                    Part 1: Number of Children Enrolled in CHIP
+                  </h3>
+                  <p>
+                    This table is pre-filled with your SEDS data for the two
+                    most recent federal fiscal years. If the information is
+                    inaccurate, adjust your data in SEDS (go to line 7:
+                    “Unduplicated Number Ever Enrolled” in your fourth quarter
+                    SEDS report) and refresh the page. There may be a slight
+                    delay when updating data.
+                  </p>
 
-                      {/* SEDS Data Table */}
-                      <table className="t1-seds-data-table" class="ds-c-table">
-                        <thead>
-                          <tr>
-                            <th scope="col">Program</th>
-                            <th scope="col">
-                              Number of children enrolled (FFY{" "}
-                              {this.state.year1})
-                            </th>
-                            <th scope="col">
-                              Number of children enrolled (FFY{" "}
-                              {this.props.formYear})
-                            </th>
-                            <th scope="col">Percent change</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">
-                              M-CHIP (Medicaid Expansion Program)
-                            </th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t1_m1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t1_m2}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.calcPercentChange(
-                                  this.state.t1_m1,
-                                  this.state.t1_m2
-                                )}
-                              />
-                              %
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">S-CHIP (Separate CHIP Program)</th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t1_s1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t1_s2}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.calcPercentChange(
-                                  this.state.t1_s1,
-                                  this.state.t1_s2
-                                )}
-                              />
-                              %
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <p></p>
+                  {/* SEDS Data Table */}
+                  <table className="t1-seds-data-table" class="ds-c-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Program</th>
+                        <th scope="col">
+                          Number of children enrolled (FFY {this.state.year1})
+                        </th>
+                        <th scope="col">
+                          Number of children enrolled (FFY {this.props.formYear}
+                          )
+                        </th>
+                        <th scope="col">Percent change</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">M-CHIP (Medicaid Expansion Program)</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t1_m1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t1_m2}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.calcPercentChange(
+                              this.state.t1_m1,
+                              this.state.t1_m2
+                            )}
+                          />
+                          %
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">S-CHIP (Separate CHIP Program)</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t1_s1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t1_s2}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.calcPercentChange(
+                              this.state.t1_s1,
+                              this.state.t1_s2
+                            )}
+                          />
+                          %
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p></p>
 
-                      <div>
-                        {this.calcPercentChange(
-                          this.state.t1_s1,
-                          this.state.t1_s2
-                        ) >= 10 ||
-                        this.calcPercentChange(
-                          this.state.t1_s1,
-                          this.state.t1_s2
-                        ) <= -10 ||
-                        this.calcPercentChange(
-                          this.state.t1_m1,
-                          this.state.t1_m2
-                        ) >= 10 ||
-                        this.calcPercentChange(
-                          this.state.t1_m1,
-                          this.state.t1_m2
-                        ) <= -10 ? (
-                          <div className="conditional">
-                            {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
-                            <div className="question-container">
-                              <div className="question">
-                                1. What are some possible reasons why your state
-                                had more than a 10% change in enrollment?
-                              </div>
-                              <TextField
-                                hint="Maximum 7,500 characters"
-                                label=""
-                                multiline
-                                rows="6"
-                                name="p1_q1"
-                                value={this.state.p1_q1}
-                                onChange={this.handleChange}
-                              />
-                            </div>
+                  <div>
+                    {this.calcPercentChange(
+                      this.state.t1_s1,
+                      this.state.t1_s2
+                    ) >= 10 ||
+                    this.calcPercentChange(
+                      this.state.t1_s1,
+                      this.state.t1_s2
+                    ) <= -10 ||
+                    this.calcPercentChange(
+                      this.state.t1_m1,
+                      this.state.t1_m2
+                    ) >= 10 ||
+                    this.calcPercentChange(
+                      this.state.t1_m1,
+                      this.state.t1_m2
+                    ) <= -10 ? (
+                      <div className="conditional">
+                        {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
+                        <div className="question-container">
+                          <div className="question">
+                            1. What are some possible reasons why your state had
+                            more than a 10% change in enrollment?
                           </div>
-                        ) : (
-                          <div>
-                            {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
-                            <p>
-                              Since your percent change didn't exceed 10%, you
-                              can skip to the next question.
-                            </p>
-                          </div>
-                        )}
+                          <TextField
+                            hint="Maximum 7,500 characters"
+                            label=""
+                            multiline
+                            rows="6"
+                            name="p1_q1"
+                            value={this.state.p1_q1}
+                            onChange={this.handleChange}
+                          />
+                        </div>
                       </div>
+                    ) : (
+                      <div>
+                        {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
+                        <p>
+                          Since your percent change didn't exceed 10%, you can
+                          skip to the next question.
+                        </p>
+                      </div>
+                    )}
+                  </div>
 
-                      <h3 className="part-header">
-                        Part 2: Number of Uninsured Children
-                      </h3>
-                      <p>
-                        This table is pre-filled with data on uninsured children
-                        (age 19 and under) who are below 200% of the Federal
-                        Poverty Line (FPL) based on annual estimates from the
-                        American Community Survey.
-                      </p>
+                  <h3 className="part-header">
+                    Part 2: Number of Uninsured Children
+                  </h3>
+                  <p>
+                    This table is pre-filled with data on uninsured children
+                    (age 19 and under) who are below 200% of the Federal Poverty
+                    Line (FPL) based on annual estimates from the American
+                    Community Survey.
+                  </p>
 
-                      {/* American Community Survey Table
+                  {/* American Community Survey Table
                     Tables with Irregular Headers: https://www.w3.org/WAI/tutorials/tables/irregular/ */}
-                      <table
-                        className="t2-american-community-survey-table"
-                        class="ds-c-table"
-                      >
-                        <thead>
-                          <colgroup span="1"></colgroup>
-                          <colgroup span="2"></colgroup>
-                          <colgroup span="2"></colgroup>
-                          <tr>
-                            <th scope="col" rowspan="2">
-                              Year
-                            </th>
-                            <th scope="col" colspan="2" scope="colgroup">
-                              Estimated number of uninsured children
-                            </th>
-                            <th scope="col" colspan="2" scope="colgroup">
-                              Uninsured children as a percent of total children
-                            </th>
-                          </tr>
-                          <tr>
-                            <th scope="col">Number</th>
-                            <th scope="col">Margin of error</th>
-                            <th scope="col">Percent</th>
-                            <th scope="col">Margin of error</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">{this.state.year4}</th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y1_n1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y1_m1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.state.t2_y1_p1}
-                              />
-                              %
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y1_m2}
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">{this.state.year3}</th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y2_n1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y2_m1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.state.t2_y2_p1}
-                              />
-                              %
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y2_m2}
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">{this.state.year2}</th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y3_n1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y3_m1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.state.t2_y3_p1}
-                              />
-                              %
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y3_m2}
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">{this.state.year1}</th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y4_n1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y4_m1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.state.t2_y4_p1}
-                              />
-                              %
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y4_m2}
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">{this.props.formYear}</th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y5_n1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y5_m1}
-                              />
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="2"
-                                value={this.state.t2_y5_p1}
-                              />
-                              %
-                            </td>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                thousandSeparator={true}
-                                value={this.state.t2_y5_m2}
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <p></p>
-                      <table
-                        className="t3-percent-change-table"
-                        class="ds-c-table"
-                      >
-                        <tbody>
-                          <tr>
-                            <th scope="row">
-                              Percent change between {this.state.year1} and{" "}
-                              {this.props.formYear}
-                            </th>
-                            <td>
-                              <NumberFormat
-                                displayType="text"
-                                decimalScale="1"
-                                value={this.calcPercentChange(
-                                  this.state.t2_y4_n1,
-                                  this.state.t2_y5_n1
-                                )}
-                              />
-                              %
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                  <table
+                    className="t2-american-community-survey-table"
+                    class="ds-c-table"
+                  >
+                    <thead>
+                      <colgroup span="1"></colgroup>
+                      <colgroup span="2"></colgroup>
+                      <colgroup span="2"></colgroup>
+                      <tr>
+                        <th scope="col" rowspan="2">
+                          Year
+                        </th>
+                        <th scope="col" colspan="2" scope="colgroup">
+                          Estimated number of uninsured children
+                        </th>
+                        <th scope="col" colspan="2" scope="colgroup">
+                          Uninsured children as a percent of total children
+                        </th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Margin of error</th>
+                        <th scope="col">Percent</th>
+                        <th scope="col">Margin of error</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">{this.state.year4}</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y1_n1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y1_m1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.state.t2_y1_p1}
+                          />
+                          %
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y1_m2}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">{this.state.year3}</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y2_n1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y2_m1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.state.t2_y2_p1}
+                          />
+                          %
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y2_m2}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">{this.state.year2}</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y3_n1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y3_m1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.state.t2_y3_p1}
+                          />
+                          %
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y3_m2}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">{this.state.year1}</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y4_n1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y4_m1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.state.t2_y4_p1}
+                          />
+                          %
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y4_m2}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">{this.props.formYear}</th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y5_n1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y5_m1}
+                          />
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="2"
+                            value={this.state.t2_y5_p1}
+                          />
+                          %
+                        </td>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            thousandSeparator={true}
+                            value={this.state.t2_y5_m2}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p></p>
+                  <table className="t3-percent-change-table" class="ds-c-table">
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                          Percent change between {this.state.year1} and{" "}
+                          {this.props.formYear}
+                        </th>
+                        <td>
+                          <NumberFormat
+                            displayType="text"
+                            decimalScale="1"
+                            value={this.calcPercentChange(
+                              this.state.t2_y4_n1,
+                              this.state.t2_y5_n1
+                            )}
+                          />
+                          %
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
+                  <div>
+                    {this.calcPercentChange(
+                      this.state.t2_y4_n1,
+                      this.state.t2_y5_n1
+                    ) >= 10 ||
+                    this.calcPercentChange(
+                      this.state.t2_y4_n1,
+                      this.state.t2_y5_n1
+                    ) <= -10 ? (
+                      <div className="conditional">
+                        {/* Show if Number of Estimated number of uninsured children percent change is more than a 10% change (increase or decrease) */}
+                        <div className="question-container">
+                          <div className="question">
+                            1. What are some possible reasons why your state had
+                            more than a 10% change in enrollment?
+                          </div>
+                          <TextField
+                            hint="Maximum 7,500 characters"
+                            label=""
+                            multiline
+                            rows="6"
+                            name="p2_q1"
+                            value={this.state.p2_q1}
+                            onChange={this.handleChange}
+                          />
+                        </div>
+                      </div>
+                    ) : (
                       <div>
-                        {this.calcPercentChange(
-                          this.state.t2_y4_n1,
-                          this.state.t2_y5_n1
-                        ) >= 10 ||
-                        this.calcPercentChange(
-                          this.state.t2_y4_n1,
-                          this.state.t2_y5_n1
-                        ) <= -10 ? (
-                          <div className="conditional">
-                            {/* Show if Number of Estimated number of uninsured children percent change is more than a 10% change (increase or decrease) */}
-                            <div className="question-container">
-                              <div className="question">
-                                1. What are some possible reasons why your state
-                                had more than a 10% change in enrollment?
-                              </div>
-                              <TextField
-                                hint="Maximum 7,500 characters"
-                                label=""
-                                multiline
-                                rows="6"
-                                name="p2_q1"
-                                value={this.state.p2_q1}
-                                onChange={this.handleChange}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <div>
-                            {/* Show if Number of Estimated number of uninsured children percent change is less than a 10% change */}
-                            <p>
-                              Since your percent change didn't exceed 10%, you
-                              can skip to the next question.
-                            </p>
-                          </div>
-                        )}
+                        {/* Show if Number of Estimated number of uninsured children percent change is less than a 10% change */}
+                        <p>
+                          Since your percent change didn't exceed 10%, you can
+                          skip to the next question.
+                        </p>
                       </div>
+                    )}
+                  </div>
 
-                      <div className="question-container">
-                        <div className="question">
-                          2. Are there any reasons why the American Community
-                          Survey estimates wouldn't be an accurate
-                          representation of the number of uninsured children in
-                          your state?
-                        </div>
-                        <div id="p2_q2">
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                              },
-                              {
-                                label: "No",
-                                value: "no",
-                              },
-                            ]}
-                            className="p2_q2"
-                            label=""
-                            name="p2_q2"
-                            onChange={this.setConditional}
-                          />
-                          {this.state.p2_q2 === "yes" ? (
-                            <div className="conditional">
-                              <TextField
-                                label="a) What are some reasons why the American Community Survey estimates might not be accurate?"
-                                multiline
-                                name="p2_q2__a"
-                                rows="6"
-                                value={this.state.p2_q2__a}
-                                onChange={this.handleChange}
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+                  <div className="question-container">
+                    <div className="question">
+                      2. Are there any reasons why the American Community Survey
+                      estimates wouldn't be an accurate representation of the
+                      number of uninsured children in your state?
+                    </div>
+                    <div id="p2_q2">
+                      <ChoiceList
+                        choices={[
+                          {
+                            label: "Yes",
+                            value: "yes",
+                            disabled: true,
+                            defaultChecked: true,
+                          },
+                        ]}
+                        className="p2_q2"
+                        label=""
+                        name="p2_q2"
+                        type="radio"
+                        onChange={this.setConditional}
+                      />
 
-                      <div className="question-container">
-                        <div className="question">
-                          3. Do you have any alternate data source(s) or
-                          methodology for measuring the number and/or percent of
-                          uninsured children in your state?
+                      <div className="conditional">
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
-                        <div id="p2_q3">
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                              },
-                              {
-                                label: "No",
-                                value: "no",
-                              },
-                            ]}
-                            className="p2_q3"
-                            label=""
-                            name="p2_q3"
-                            onChange={this.setConditional}
-                          />
-                          {this.state.p2_q3 === "yes" ? (
-                            <div className="conditional">
-                              <TextField
-                                label="a) What is the alternate data source or methodology?"
-                                multiline
-                                name="p2_q3__a"
-                                rows="6"
-                                value={this.state.p2_q3__a}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                hint="(from mm/yyyy to mm/yyyy)"
-                                label="b) Give a date range for your data"
-                                multiline
-                                name="p2_q3__b"
-                                rows="1"
-                                value={this.state.p2_q3__b}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="c) Define the population you’re measuring, including ages and federal poverty levels. "
-                                multiline
-                                name="p2_q3__c"
-                                rows="6"
-                                value={this.state.p2_q3__c}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="d) Give numbers and/or the percent of uninsured children for at least two points in time."
-                                multiline
-                                name="p2_q3__d"
-                                rows="6"
-                                value={this.state.p2_q3__d}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="e) Why did your state choose to adopt this alternate data source?"
-                                multiline
-                                name="p2_q3__e"
-                                rows="6"
-                                value={this.state.p2_q3__e}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="f) How reliable are these estimates? Provide standard errors, confidence intervals, and/or p-values if available."
-                                multiline
-                                name="p2_q3__f"
-                                rows="6"
-                                value={this.state.p2_q3__f}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="g) What are the limitations of this alternate data source or methodology?"
-                                multiline
-                                name="p2_q3__g"
-                                rows="6"
-                                value={this.state.p2_q3__g}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="h) How do you use this alternate data source in CHIP program planning?"
-                                multiline
-                                name="p2_q3__h"
-                                rows="6"
-                                value={this.state.p2_q3__h}
-                                onChange={this.handleChange}
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="question-container">
-                        <div className="question">
-                          4. Anything else you’d like to add about your data on
-                          enrolled and uninsured children?
-                        </div>
-                        <TextField
-                          hint="Maximum 7,500 characters"
-                          label=""
-                          multiline
-                          rows="6"
-                          name="p2_q4"
-                          value={this.state.p2_q4}
-                          onChange={this.handleChange}
-                        />
                       </div>
                     </div>
-                  </form>
-                </div>
+                  </div>
 
-                <FormNavigation
-                  nextUrl="/section2/2b"
-                  previousUrl="/section1"
-                />
-              </TabPanel>
-            </Tabs>
+                  <div className="question-container">
+                    <div className="question">
+                      3. Do you have any alternate data source(s) or methodology
+                      for measuring the number and/or percent of uninsured
+                      children in your state?
+                    </div>
+                    <div id="p2_q3">
+                      <ChoiceList
+                        choices={[
+                          {
+                            label: "Yes",
+                            value: "yes",
+                            disable: true,
+                            defaultChecked: true,
+                          },
+                        ]}
+                        className="p2_q3"
+                        label=""
+                        name="p2_q3"
+                        onChange={this.setConditional}
+                      />
+
+                      <div className="conditional">
+                        <h4>
+                          a) What is the alternate data source or methodology?
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla.
+                        </div>
+                        <h4>b) Give a date range for your data</h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          c) Define the population you’re measuring, including
+                          ages and federal poverty levels.{" "}
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          d) Give numbers and/or the percent of uninsured
+                          children for at least two points in time.
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          e) Why did your state choose to adopt this alternate
+                          data source?
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          f) How reliable are these estimates? Provide standard
+                          errors, confidence intervals, and/or p-values if
+                          available.
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          g) What are the limitations of this alternate data
+                          source or methodology?
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          h) How do you use this alternate data source in CHIP
+                          program planning?
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="question-container">
+                    <div className="question">
+                      4. Anything else you’d like to add about your data on
+                      enrolled and uninsured children?
+                    </div>
+                    <div className="unanswered-text"></div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <FormNavigation nextUrl="/section2/2b" previousUrl="/section1" />
           </div>
-          <FormActions />
         </div>
       </div>
     );
