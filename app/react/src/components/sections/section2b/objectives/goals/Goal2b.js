@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { TextField, ChoiceList } from "@cmsgov/design-system-core";
+import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
 import DateRange from "../../../../layout/DateRange";
 
 class Goal extends Component {
@@ -16,6 +16,8 @@ class Goal extends Component {
       goal2bDummyDigit: 10,
       discontinued: false,
       selectedFiles: [],
+      p1_q1_answer: null,
+      p1_q2_answer: "new",
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
@@ -102,7 +104,12 @@ class Goal extends Component {
 
     return (
       <Fragment>
-        <div className="question-container">
+        <div
+          className={
+            "question-container textfield" +
+            (this.props.p1_q1 === "" ? "" : "no-answer")
+          }
+        >
           <TextField
             label="1. Briefly describe your goal"
             hint="For example: Enroll 75% of eligible children in the CHIP program."
@@ -117,33 +124,47 @@ class Goal extends Component {
           />
         </div>
 
-        <div className="question-container">
-          <ChoiceList
-            choices={[
-              {
-                label: "New goal",
-                value: "new",
-                disabled: renderPreviousEntry ? true : false,
-              },
-              {
-                label: "Continuing goal",
-                value: "continuing",
-
-                disabled: renderPreviousEntry ? true : false,
-                defaultChecked: renderPreviousEntry ? true : false,
-              },
-              {
-                label: "Discontinued goal",
-                value: "discontinued",
-                disabled: renderPreviousEntry ? true : false,
-              },
-            ]}
-            label="2. What type of goal is it?"
+        <div
+          className={
+            "question-container radio" +
+            (this.state.p1_q2_answer ? null : "no-answer")
+          }
+        >
+          <legend className="ds-c-label">2. What type of goal is it?</legend>
+          <Choice
             name={`goal_type${this.props.goalId}`}
-            //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
+            value="new"
+            defaultChecked={this.state.p1_q2_answer === "new" ? true : false}
+            disabled={renderPreviousEntry ? true : false}
             type="radio"
             onChange={this.discontinuedGoal}
-          />
+          >
+            New goal
+          </Choice>
+          <Choice
+            name={`goal_type${this.props.goalId}`}
+            value="continuing"
+            defaultChecked={
+              this.state.p1_q2_answer === "continuing" ? true : false
+            }
+            disabled={renderPreviousEntry ? true : false}
+            type="radio"
+            onChange={this.discontinuedGoal}
+          >
+            Continuing goal
+          </Choice>
+          <Choice
+            name={`goal_type${this.props.goalId}`}
+            value="discontinued"
+            defaultChecked={
+              this.state.p1_q2_answer === "discontinued" ? true : false
+            }
+            disabled={renderPreviousEntry ? true : false}
+            type="radio"
+            onChange={this.discontinuedGoal}
+          >
+            Discontinued goal
+          </Choice>
         </div>
         {/**
          * If the answer to question 2 is "discontinued" all following questions disapear

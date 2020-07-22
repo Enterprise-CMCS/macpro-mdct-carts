@@ -147,53 +147,54 @@ class Section2b extends Component {
                   />
                 </div>
               </TabPanel>
+              {this.props.review === false ? (
+                <TabPanel
+                  className="section2b-previous"
+                  tab={`FY${this.props.year - 1} answers`}
+                >
+                  <div className="print-only ly_header">
+                    <PageInfo />
 
-              <TabPanel
-                className="section2b-previous"
-                tab={`FY${this.props.year - 1} answers`}
-              >
-                <div className="print-only ly_header">
-                  <PageInfo />
-
-                  <h3>{this.state.pageTitle}</h3>
-                </div>
-                <div className="section-content">
-                  <div className="objective-accordion">
-                    {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
-                    <form>
-                      <Accordion>
-                        {this.state.previousObjectivesArray.map((element) => (
-                          <AccordionItem key={element.id}>
-                            <div className="accordion-header">
-                              <h3>
-                                <AccordionButton>
-                                  <div className="title">
-                                    {/* The sliceId utility function gets just the number of each objective, removes the year */}
-                                    {/* The first objective will have a predetermined header*/}
-
-                                    {element.component.props.objectiveHeader
-                                      ? `Objective: ${element.component.props.objectiveHeader}`
-                                      : `Objective ${sliceId(element.id)}:`}
-                                  </div>
-                                  <div className="arrow"></div>
-                                </AccordionButton>
-                              </h3>
-                            </div>
-                            <AccordionPanel>
-                              {/* This is where the component is being rendered*/}
-                              {element.component}
-                            </AccordionPanel>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </form>
-                    <FormNavigation
-                      nextUrl="/section3/3a"
-                      previousUrl="/section2/2a"
-                    />
+                    <h3>{this.state.pageTitle}</h3>
                   </div>
-                </div>
-              </TabPanel>
+                  <div className="section-content">
+                    <div className="objective-accordion">
+                      {/* This builds an accordion that maps through the array of prevoous Objectives in state */}
+                      <form>
+                        <Accordion>
+                          {this.state.previousObjectivesArray.map((element) => (
+                            <AccordionItem key={element.id}>
+                              <div className="accordion-header">
+                                <h3>
+                                  <AccordionButton>
+                                    <div className="title">
+                                      {/* The sliceId utility function gets just the number of each objective, removes the year */}
+                                      {/* The first objective will have a predetermined header*/}
+
+                                      {element.component.props.objectiveHeader
+                                        ? `Objective: ${element.component.props.objectiveHeader}`
+                                        : `Objective ${sliceId(element.id)}:`}
+                                    </div>
+                                    <div className="arrow"></div>
+                                  </AccordionButton>
+                                </h3>
+                              </div>
+                              <AccordionPanel>
+                                {/* This is where the component is being rendered*/}
+                                {element.component}
+                              </AccordionPanel>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      </form>
+                      <FormNavigation
+                        nextUrl="/section3/3a"
+                        previousUrl="/section2/2a"
+                      />
+                    </div>
+                  </div>
+                </TabPanel>
+              ) : null}
             </Tabs>
           </div>
           <FormActions />
