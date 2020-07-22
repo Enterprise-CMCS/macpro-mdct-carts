@@ -53,15 +53,15 @@ class Questions1 extends Component {
       ly_p1_q4__a: "",
       ly_p1_q5: "Managed Care Organization (MCO)",
       ly_p1_q6: "This is what you wrote last year.",
-      ly_p2_q1: "",
+      ly_p2_q1: "no",
       ly_p2_q1__a: "",
-      ly_p2_q2: "",
+      ly_p2_q2: "no",
       ly_p2_q2__a: "",
       ly_p2_q2__a__1: "",
       ly_p2_q3: "",
       ly_p2_q4: "",
       ly_p2_q4__a: "",
-      ly_p2_q5: "Managed Care Organization (MCO)",
+      ly_p2_q5: "Primary Care Case Management (PCCM)",
       ly_p2_q6: "This is what you wrote last year.",
 
       fillFormTitle: "Same as last year",
@@ -262,7 +262,7 @@ class Questions1 extends Component {
                   name="p1_q1" 
                   type="radio" 
                   value="yes"
-                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q1 === "yes" ? "true" : "false") : "false"}
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q1 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -282,6 +282,7 @@ class Questions1 extends Component {
                   name="p1_q1" 
                   type="radio" 
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q1 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   No
@@ -299,6 +300,7 @@ class Questions1 extends Component {
                   name="p1_q2" 
                   type="radio" 
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -311,6 +313,7 @@ class Questions1 extends Component {
                           name="p1_q2__a"
                           type="radio"
                           value="yes"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2__a === "yes" ? true : false) : false}
                           onChange={this.setConditional}
                           checkedChildren={
                             <fieldset className="ds-c-fieldset ds-u-margin-top--1">
@@ -338,6 +341,7 @@ class Questions1 extends Component {
                           name="p1_q2__a"
                           type="radio"
                           value="no"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2__a === "no" ? true : false) : false}
                           onChange={this.setConditional}
                           checkedChildren={
                             <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -358,6 +362,7 @@ class Questions1 extends Component {
                           name="p1_q2__a"
                           type="radio"
                           value="na"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2__a === "na" ? true : false) : false}
                           onChange={this.setConditional}
                         >
                           N/A
@@ -373,6 +378,7 @@ class Questions1 extends Component {
                   name="p1_q2" 
                   type="radio" 
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q2 === "yes" ? true : false) : false}
                   onChange={this.setConditional}>
                   No
                 </Choice>
@@ -416,6 +422,7 @@ class Questions1 extends Component {
                   name="p1_q3"
                   type="radio"
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q3 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -447,6 +454,7 @@ class Questions1 extends Component {
                   name="p1_q3" 
                   type="radio" 
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q3 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -477,6 +485,7 @@ class Questions1 extends Component {
                   name="p1_q4"
                   type="radio"
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q4 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -498,6 +507,7 @@ class Questions1 extends Component {
                   name="p1_q4"
                   type="radio"
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q4 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   No
@@ -515,6 +525,7 @@ class Questions1 extends Component {
                 <Choice
                   name="p1_q5"
                   value="Managed Care Organization (MCO)"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q5 === "Managed Care Organization (MCO)" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   Managed Care Organization (MCO)
@@ -522,6 +533,7 @@ class Questions1 extends Component {
                 <Choice
                   name="p1_q5"
                   value="Primary Care Case Management (PCCM)"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q1 === "Primary Care Case Management (PCCM)" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   Primary Care Case Management (PCCM)
@@ -529,6 +541,7 @@ class Questions1 extends Component {
                 <Choice
                   name="p1_q5"
                   value="Fee for Service (FFS)"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p1_q1 === "Fee for Service (FFS)" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   Fee for Service (FFS)
@@ -590,6 +603,7 @@ class Questions1 extends Component {
                   name="p2_q1" 
                   type="radio" 
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q1 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -609,6 +623,7 @@ class Questions1 extends Component {
                   name="p2_q1" 
                   type="radio" 
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q1 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   No
@@ -626,6 +641,7 @@ class Questions1 extends Component {
                   name="p2_q2" 
                   type="radio" 
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -638,6 +654,7 @@ class Questions1 extends Component {
                           name="p2_q2__a"
                           type="radio"
                           value="yes"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2__a === "yes" ? true : false) : false}
                           onChange={this.setConditional}
                           checkedChildren={
                             <fieldset className="ds-c-fieldset ds-u-margin-top--1">
@@ -665,6 +682,7 @@ class Questions1 extends Component {
                           name="p2_q2__a"
                           type="radio"
                           value="no"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2__a === "no" ? true : false) : false}
                           onChange={this.setConditional}
                           checkedChildren={
                             <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -685,6 +703,7 @@ class Questions1 extends Component {
                           name="p2_q2__a"
                           type="radio"
                           value="na"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2__a === "na" ? true : false) : false}
                           onChange={this.setConditional}
                         >
                           N/A
@@ -700,6 +719,7 @@ class Questions1 extends Component {
                   name="p2_q2" 
                   type="radio" 
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   No
@@ -744,6 +764,7 @@ class Questions1 extends Component {
                   name="p2_q3"
                   type="radio"
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q3 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -775,6 +796,7 @@ class Questions1 extends Component {
                   name="p2_q3" 
                   type="radio" 
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q3 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -805,6 +827,7 @@ class Questions1 extends Component {
                   name="p2_q4"
                   type="radio"
                   value="yes"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q4 === "yes" ? true : false) : false}
                   onChange={this.setConditional}
                   checkedChildren={
                     <div className="ds-c-choice__checkedChild">{
@@ -826,6 +849,7 @@ class Questions1 extends Component {
                   name="p2_q4"
                   type="radio"
                   value="no"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q4 === "no" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   No
@@ -843,6 +867,7 @@ class Questions1 extends Component {
                 <Choice
                   name="p2_q5"
                   value="Managed Care Organization (MCO)"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q5 === "Managed Care Organization (MCO)" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   Managed Care Organization (MCO)
@@ -850,6 +875,7 @@ class Questions1 extends Component {
                 <Choice
                   name="p2_q5"
                   value="Primary Care Case Management (PCCM)"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q5 === "Primary Care Case Management (PCCM)" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   Primary Care Case Management (PCCM)
@@ -857,6 +883,7 @@ class Questions1 extends Component {
                 <Choice
                   name="p2_q5"
                   value="Fee for Service (FFS)"
+                  defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q5 === "Fee for Service (FFS)" ? true : false) : false}
                   onChange={this.setConditional}
                 >
                   Fee for Service (FFS)
