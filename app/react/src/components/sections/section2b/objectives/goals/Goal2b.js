@@ -17,7 +17,7 @@ class Goal extends Component {
       discontinued: false,
       selectedFiles: [],
       p1_q1_answer: null,
-      p1_q2_answer: "new",
+      p1_q2_answer: "",
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
@@ -104,12 +104,7 @@ class Goal extends Component {
 
     return (
       <Fragment>
-        <div
-          className={
-            "question-container textfield" +
-            (this.props.p1_q1 === "" ? "" : "no-answer")
-          }
-        >
+        <div className="question-container textfield">
           <TextField
             label="1. Briefly describe your goal"
             hint="For example: Enroll 75% of eligible children in the CHIP program."
@@ -124,12 +119,7 @@ class Goal extends Component {
           />
         </div>
 
-        <div
-          className={
-            "question-container radio" +
-            (this.state.p1_q2_answer ? null : "no-answer")
-          }
-        >
+        <div className="question-container radio">
           <legend className="ds-c-label">2. What type of goal is it?</legend>
           <Choice
             name={`goal_type${this.props.goalId}`}
