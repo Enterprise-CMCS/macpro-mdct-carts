@@ -5,25 +5,29 @@ import { shallow, mount } from "enzyme";
 
 import configureMockStore from "redux-mock-store";
 
-import TOC from "../layout/TOC";
+import FPL from "../layout/FPL";
 
 const mockStore = configureMockStore();
 
-describe("TOC Component", () => {
-  const component = shallow(<TOC />);
-
-  window.location.pathname = "/section3/3a";
+describe("FPL Component", () => {
+  const component = shallow(<FPL />);
 
   it("renders", () => {
     expect(component.exists()).toBe(true);
   });
 
   it("has appropriate classnames", () => {
-    expect(component.exists(".toc")).toBe(true);
+    expect(component.exists(".fpl")).toBe(true);
+  });
+
+  it("updates local state on text input", () => {
+    component.setState({ fpl_per_starts_at: "17" });
+
+    const status = component.state().fpl_per_starts_at;
+
+    expect(status).toEqual("17");
   });
 });
 
 // (TO DELETE) What else should i test for??
-
-// Does the elements in the items array have urls??
-// Are all of the urls also present in the router??
+//Test that textfield updates the state
