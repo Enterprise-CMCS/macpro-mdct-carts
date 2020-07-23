@@ -750,17 +750,13 @@ class Section1Review extends Component {
                       ) : (
                         ""
                       )}
-                      {this.state.p2_q3 === "no" ? (
-                        <div className="conditional">
-                          <TextField
-                            label="b) What’s the maximum premium fee a family would be charged each year?"
-                            name="p2_q3__a"
-                            mask="currency"
-                          />
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                      <div className="conditional">
+                        <TextField
+                          label="b) What’s the maximum premium fee a family would be charged each year?"
+                          name="p2_q3__a"
+                          mask="currency"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="question-container">
@@ -850,7 +846,7 @@ class Section1Review extends Component {
                           income level, age range, or other criteria determine
                           which delivery system a population receives.
                         </legend>
-                        <div className="unanswered-text"></div>
+                        <div className="unanswered-text"> </div>
                       </fieldset>
                     </div>
                   </div>
@@ -859,18 +855,6 @@ class Section1Review extends Component {
                 <h3 className="part-header">
                   Part 3: S-CHIP Changes in Programs and Policies
                 </h3>
-                {this.state.mchipDisable === true ? (
-                  <div className="ds-c-alert ds-c-alert--hide-icon">
-                    <div className="ds-c-alert__body">
-                      <h3 className="ds-c-alert__heading">
-                        This part only applies to states with a S-CHIP program.
-                      </h3>
-                      <p className="ds-c-alert__text">Skip to Part 4.</p>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
                 <div
                   className="part3-all-questions-container"
                   hidden={this.state.mchipDisable}
@@ -890,25 +874,17 @@ class Section1Review extends Component {
                         <ChoiceList
                           choices={[
                             {
-                              label: "Yes",
-                              value: "yes",
-                              disabled: true,
-                            },
-                            {
                               label: "No",
                               value: "no",
-                              disabled: true,
-                            },
-                            {
-                              label: "N/A",
-                              value: "na",
+                              defaultChecked: true,
                               disabled: true,
                             },
                           ]}
                           className="p3_q1"
                           label=""
-                          name="Q01: Eligibility determination process"
-                          onChange={(e) => this.setKeyword("p3", e)}
+                          name="p2_q1"
+                          onChange={this.setConditional}
+                          type="radio"
                         />
                       </fieldset>
                     </div>
@@ -923,17 +899,17 @@ class Section1Review extends Component {
                         <ChoiceList
                           choices={[
                             {
-                              label: "No",
-                              value: "no",
+                              label: "Yes",
+                              value: "yes",
                               defaultChecked: true,
                               disabled: true,
                             },
                           ]}
-                          className="p3_q2"
+                          className="p2_q2"
                           label=""
+                          name="p3_q2"
+                          onChange={this.setConditional}
                           type="radio"
-                          name="Q02: Eligibility redetermination process"
-                          onChange={(e) => this.setKeyword("p3", e)}
                         />
                       </fieldset>
                     </div>
@@ -949,17 +925,16 @@ class Section1Review extends Component {
                           choices={[
                             {
                               label: "N/A",
-                              value: "na",
+                              value: "n/a",
                               defaultChecked: true,
                               disabled: true,
                             },
                           ]}
                           className="p3_q3"
-                          hint="For example: increasing the FPL or income levels, or other eligibility criteria."
                           label=""
-                          name="Q03: Eligibility levels or target population"
+                          name="p3_q3"
+                          onChange={this.setConditional}
                           type="radio"
-                          onChange={(e) => this.setKeyword("p3", e)}
                         />
                       </fieldset>
                     </div>
@@ -980,12 +955,11 @@ class Section1Review extends Component {
                               disabled: true,
                             },
                           ]}
-                          className="p3_q4"
-                          hint="For example: adding or removing different types of coverage."
+                          className="p2_q1"
                           label=""
-                          name="Q04: Benefits available to enrollees"
+                          name="p2_q1"
+                          onChange={this.setConditional}
                           type="radio"
-                          onChange={(e) => this.setKeyword("p3", e)}
                         />
                       </fieldset>
                     </div>
@@ -1001,16 +975,16 @@ class Section1Review extends Component {
                           choices={[
                             {
                               label: "Yes",
-                              value: "yes",
+                              value: "no",
                               defaultChecked: true,
                               disabled: true,
                             },
                           ]}
                           className="p3_q5"
                           label=""
-                          name="Q05: Single streamlined application"
+                          name="p3_q5"
+                          onChange={this.setConditional}
                           type="radio"
-                          onChange={(e) => this.setKeyword("p3", e)}
                         />
                       </fieldset>
                     </div>
@@ -1033,7 +1007,7 @@ class Section1Review extends Component {
                             className="p3_q6"
                             hint="For example: allotting more or less funding for outreach, or changing your target population."
                             label=""
-                            name="Q06: Outreach efforts"
+                            name="p3_q6"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1059,7 +1033,7 @@ class Section1Review extends Component {
                             className="p3_q7"
                             hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
                             label=""
-                            name="Q07: Delivery system(s)"
+                            name="p3_q7"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1085,7 +1059,7 @@ class Section1Review extends Component {
                             className="p3_q8"
                             hint="For example: changing amounts, populations, or the collection process."
                             label=""
-                            name="Q08: Cost-sharing requirements"
+                            name="p3_q8"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1144,7 +1118,7 @@ class Section1Review extends Component {
                             ]}
                             className="p3_q10"
                             label=""
-                            name="Q10: Enrollment freeze and/or enrollment cap"
+                            name="p3_q10"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1169,7 +1143,7 @@ class Section1Review extends Component {
                             ]}
                             className="p3_q11"
                             label=""
-                            name="Q11: Enrollment process for health plan selection"
+                            name="p3_q11"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1195,7 +1169,7 @@ class Section1Review extends Component {
                             className="p3_q12"
                             hint="For example: changing from the Medicaid Fair Hearing Process to state law."
                             label=""
-                            name="Q12: Enrollment process for health plan selection"
+                            name="p3_q12"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1220,7 +1194,7 @@ class Section1Review extends Component {
                             className="p3_q13"
                             hint="For example: adding premium assistance or changing the population that receives premium assistance."
                             label=""
-                            name="Q13: Premium assistance"
+                            name="p3_q13"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1246,7 +1220,7 @@ class Section1Review extends Component {
                             ]}
                             className="p3_q14"
                             label=""
-                            name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
+                            name="p3_q14"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1272,7 +1246,7 @@ class Section1Review extends Component {
                             className="p3_q15"
                             hint="For example: expanding eligibility to pregnant enrollees."
                             label=""
-                            name="Q15: Prenatal care eligibility"
+                            name="p3_q15"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1298,7 +1272,7 @@ class Section1Review extends Component {
                             className="p3_q16"
                             hint="For example: extending coverage to pregnant enrollees."
                             label=""
-                            name="Q16: Pregnant Woman State Plan expansion"
+                            name="p3_q16"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1324,7 +1298,7 @@ class Section1Review extends Component {
                             className="p3_q17"
                             hint="For example: extending coverage to pregnant enrollees."
                             label=""
-                            name='Q17: Eligibility for "lawfully residing pregnant women"'
+                            name="p3_q17"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />
@@ -1381,9 +1355,9 @@ class Section1Review extends Component {
                                 defaultChecked: true,
                               },
                             ]}
-                            className="p3_q18"
+                            className="p3_q19"
                             label=""
-                            name="Q19: Other program areas"
+                            name="p3_q19"
                             type="radio"
                             onChange={(e) => this.setKeyword("p3", e)}
                           />

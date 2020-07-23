@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import Section1Review from "./Section1Review";
 import Section2AReview from "./Section2AReview";
+import Section2BReview from "./Section2BReview";
+import Section3AReview from "./Section3AReview";
+import Section3CReview from "./Section3CReview";
 import Section2B from "../sections/section2b/Section2B";
 import Section3A from "../sections/section3a/Section3A";
 import Section3c from "../sections/section3c/Section3C";
@@ -33,9 +36,9 @@ class Review extends Component {
       <div className="review-view">
         <Section1Review />
         <Section2AReview />
-        {/* <Section2B review /> */}
-        {/* <Section3A /> */}
-        {/* <Section3c review /> */}
+        <Section2BReview />
+        <Section3AReview />
+        <Section3CReview />
       </div>
     );
   }
