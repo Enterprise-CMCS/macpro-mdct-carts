@@ -20,6 +20,9 @@ class ReportItem extends Component {
       statusText
     );
 
+    let anchorTarget = this.props.link1Text === "Edit" ? "_self" : "_blank";
+
+    let windowLocation;
     return (
       <div className="report-item ds-l-row">
         <div className="name ds-l-col">{this.props.name}</div>
@@ -28,7 +31,7 @@ class ReportItem extends Component {
           {this.props.lastEditedTime}|{this.props.lastEditedDate}{" "}
         </div>
         <div className="actions ds-l-col">
-          <a href={link1URL} target="_blank">
+          <a href={link1URL} target={anchorTarget}>
             {link1Text}
           </a>{" "}
           | <a href={link2URL}>{link2Text}</a>
