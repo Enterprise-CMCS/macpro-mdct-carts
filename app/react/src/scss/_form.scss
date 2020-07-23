@@ -133,38 +133,6 @@
   padding-left: ($padding * 2);
 }
 
-.review-view {
-  h4 {
-    color: $black;
-  }
-  .ds-c-choice:disabled + label:before {
-    background: $white;
-  }
-  .ds-c-choice:checked + label:before {
-    background-color: $white;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: 24px;
-    border-color: $color-gray-light;
-  }
-  .ds-c-field:disabled {
-    background: $white;
-  }
-  .ds-c-alert {
-    background: $color-gray-lightest;
-    border-left: 8px solid $color-gray-light;
-  }
-
-  .nav-buttons,
-  .action-buttons {
-    display: none;
-  }
-  .unanswered-text {
-    margin-bottom: 70px;
-  }
-}
-
 .fpl {
   h3 {
     margin: ($margin * 4) 0 0 0;
@@ -237,5 +205,82 @@
         display: none;
       }
     }
+  }
+}
+
+.review-view {
+  h4 {
+    color: $black;
+  }
+  .ds-c-choice:disabled + label:before {
+    background: $white;
+  }
+  .ds-c-choice:checked + label:before {
+    background-color: $white;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    border-color: $color-gray-light;
+  }
+  .ds-c-field:disabled {
+    background: $white;
+  }
+  .ds-c-alert {
+    background: $color-gray-lightest;
+    border-left: 8px solid $color-gray-light;
+  }
+
+  .nav-buttons,
+  .action-buttons {
+    display: none;
+  }
+  .unanswered-text {
+    margin-bottom: 70px;
+  }
+
+  .review-view {
+    h4 {
+      color: $black;
+    }
+    .ds-c-choice:disabled + label:before {
+      background: $white;
+    }
+    .ds-c-choice:checked + label:before {
+      background-color: $white;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: 24px;
+      border-color: $color-gray-light;
+    }
+    .ds-c-field:disabled {
+      background: $white;
+    }
+    .ds-c-alert {
+      background: $color-gray-lightest;
+      border-left: 8px solid $color-gray-light;
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      display: none;
+    }
+    .unanswered-text {
+      margin-bottom: 70px;
+    }
+  }
+  .accordion-header h3 button {
+    background: $white;
+    border-top: 6px solid $color-gray;
+  }
+
+  .objective-body,
+  .objective-footer {
+    background: $white;
+  }
+
+  .objective-accordion div[hidden] {
+    display: block;
   }
 }
