@@ -23,7 +23,7 @@
       },
       {
         "name": "DATABASE",
-        "value": "sqlserver"
+        "value": "placeholder"
       }
     ],
     "logConfiguration": {
