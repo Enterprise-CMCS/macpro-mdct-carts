@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "ui" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
     image                    = "${data.aws_ecr_repository.react.repository_url}:${var.application_version}",
-    api_url                  = local.endpoint_api
+    api_url                  = local.endpoint_api_postgres
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name
     cloudwatch_stream_prefix = "ui",
   })
