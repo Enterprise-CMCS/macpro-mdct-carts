@@ -1,0 +1,160 @@
+pipeline {
+  agent { label "ec2-jnlp-slave" }
+  options {
+    disableConcurrentBuilds()
+    quietPeriod(0)
+    ansiColor('xterm')
+  }
+  environment {
+    BUILD_TAG = resolveBuildTag()
+    VPC_NAME = "dev"
+  }
+  stages {
+    stage("Prep Agent") {
+      steps {
+        script {
+          currentBuild.displayName = env.BUILD_TAG
+
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+
+          jenkinsUtils.installAwsCli()
+          jenkinsUtils.installTerraform("0.12.24")
+
+          env.DEPLOY_DATA = jenkinsUtils.pathHasChanges("data") || jenkinsUtils.pathHasChanges(".jenkins")
+          env.DEPLOY_FRONTEND = jenkinsUtils.pathHasChanges("frontend") || env.DEPLOY_DATA
+        }
+      }
+    }
+    stage("Build/Push Images") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          lock('docker_socket') {
+            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/django", "django", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.JOB_NAME])
+          }
+        }
+      }
+    }
+    stage("Scan Images") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_*.json'
+          }
+        }
+      }
+    }
+    stage("Deploy Data Layer") {
+      when {
+        expression { env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true" }
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('data/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'data/aws/log*'
+          }
+        }
+      }
+    }
+    stage("Deploy Frontend Layer") {
+      when {
+        expression { env.DEPLOY_FRONTEND == "true" || env.FORCE_DEPLOY == "true" }
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'frontend/aws/log*'
+          }
+        }
+      }
+    }
+    stage("Test") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_NAME, "application_endpoint")
+          }
+          dir('tests/testcafe') {
+            sh '''
+              set -e
+              docker build . -t loaded_testcafe:${JOB_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
+              docker run --rm --name ${JOB_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${JOB_NAME} chromium /tests/**/*.js
+            '''
+          }
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      script {
+        withCredentials([usernameColonPassword(credentialsId: 'GIT_CREDENTIAL', variable: 'GIT_CREDENTIAL')]) {
+          sh '''
+            set -e
+            remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
+            git config user.name 'Jenkins'
+            git config user.email 'jenkins@mycompany.com'
+            git tag $BUILD_TAG
+            git push -f https://$GIT_CREDENTIAL@$remote_url refs/tags/$BUILD_TAG
+          '''
+          if (env.DOWNSTREAM_JOB != "") {
+            try {
+              build job: "${DOWNSTREAM_JOB}",
+                parameters: [
+                  string(name: 'VERSION', value: "${BUILD_TAG}")
+                ],
+                wait: false
+            } catch (err) {
+              echo err.getMessage()
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+def resolveBuildTag() {
+  tag_prefix = sh(script: 'cat versionPrefix', returnStdout: true).trim()
+  commit_count = sh(script: 'git rev-list --count $GIT_COMMIT', returnStdout: true).trim()
+  build_tag = "${tag_prefix}.${commit_count}"
+  return build_tag
+}
