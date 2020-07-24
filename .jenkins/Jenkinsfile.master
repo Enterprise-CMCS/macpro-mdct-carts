@@ -151,6 +151,20 @@ pipeline {
         }
       }
     }
+    failure {
+      script {
+        if (env.SLACK_CREDENTIAL_NAME != null && env.SLACK_CHANNEL_NAME != null && env.SLACK_TEAM_DOMAIN_NAME != null ){
+          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'danger', message: ":X: Failure.     <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> has failed.  The build is broken."
+        }
+      }
+    }
+    fixed {
+      script {
+        if (env.SLACK_CREDENTIAL_NAME != null && env.SLACK_CHANNEL_NAME != null && env.SLACK_TEAM_DOMAIN_NAME != null ){
+          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'good', message: ":white_check_mark: Fixed.       <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> succeeded.  The build is fixed."
+        }
+      }
+    }
   }
 }
 
