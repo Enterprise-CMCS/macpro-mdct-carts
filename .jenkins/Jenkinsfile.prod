@@ -6,11 +6,6 @@ pipeline {
     ansiColor('xterm')
   }
   parameters {
-    choice(
-      name: 'ACTION',
-      choices: ['apply', 'destroy'],
-      description: 'The terraform action to take; allows the destruction/cleanup of pipeline infrastructure, most commonly performed before branch deletion.'
-    )
     string(
       name: 'VERSION',
       defaultValue: '',
@@ -22,83 +17,85 @@ pipeline {
     stage("Prep Agent") {
       steps {
         script {
-          // Set the build name
           currentBuild.displayName = env.VERSION
-        }
-        script {
-          sh '''
-            set -e
 
-            # Update and configure the AWS CLI
-            pip install --user --upgrade awscli >/dev/null
-            if [ -z "${AWS_REGION}" ]; then
-              AWS_REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`
-            fi
-            aws configure set region $AWS_REGION
-            aws configure set output json
-          '''
-        }
-        script {
-          sh '''
-            set -e
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
 
-            # Install Terraform
-            curl -O https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-            unzip ./terraform_0.12.24_linux_amd64.zip -d ~/.local/bin/
-          '''
+          jenkinsUtils.installAwsCli()
+          jenkinsUtils.installTerraform("0.12.24")
+
+          env.DEPLOY_DATA = jenkinsUtils.pathHasChanges("data") || jenkinsUtils.pathHasChanges(".jenkins")
+          env.DEPLOY_FRONTEND = jenkinsUtils.pathHasChanges("frontend") || env.DEPLOY_DATA
         }
       }
     }
-    stage("Deploy Environment") {
+    stage("Deploy Data Layer") {
+      when {
+        expression { env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true" }
+      }
       steps {
         script {
-          withCredentials([usernamePassword(credentialsId: env.POSTGRES_CREDENTIAL_NAME, passwordVariable: 'TF_VAR_postgres_password', usernameVariable: 'TF_VAR_postgres_user')]) {
-            sh '''
-              set -e
-
-              export TF_VAR_ecr_repository_url_ui=${ECR_REPOSITORY_URL_UI}
-              export TF_VAR_ecr_repository_url_api_postgres=${ECR_REPOSITORY_URL_API_POSTGRES}
-              export TF_VAR_ecr_repository_url_api_sqlserver=${ECR_REPOSITORY_URL_API_SQLSERVER}
-              export TF_VAR_application_version=${VERSION}
-              export TF_VAR_vpc_name=${VPC_NAME}
-              PATH=~/.local/bin:$PATH
-
-              cd infra
-              terraform init -backend-config="bucket=${APPLICATION_BUCKET}" -input=false
-              if ! terraform workspace list | grep -q " $JOB_NAME$" ; then
-                terraform workspace new ${JOB_NAME}
-              fi
-              terraform workspace select ${JOB_NAME}
-              terraform plan > log_tfplan.txt
-              terraform ${ACTION:-apply} -input=false -auto-approve
-            '''
-            dir('infra') {
-              env.APPLICATION_ENDPOINT = sh(script: '~/.local/bin/terraform output application_endpoint', returnStdout: true).trim()
-            }
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('data/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
+              [
+                "application_version": env.VERSION,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
           }
         }
       }
       post {
         always {
           script {
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'infra/log*'
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'data/aws/log*'
+          }
+        }
+      }
+    }
+    stage("Deploy Frontend Layer") {
+      when {
+        expression { env.DEPLOY_FRONTEND == "true" || env.FORCE_DEPLOY == "true" }
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
+              [
+                "application_version": env.VERSION,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'frontend/aws/log*'
           }
         }
       }
     }
     stage("Test") {
       when {
-        expression { env.ACTION != 'destroy' }
+        expression { env.SKIP_TESTS != "true" }
       }
       steps {
         script {
-          sh '''
-            set -e
-            echo $APPLICATION_ENDPOINT
-            cd tests
-            docker build . -t loaded_testcafe:${VERSION} --build-arg application_endpoint=$APPLICATION_ENDPOINT
-            docker run --rm --name ${JOB_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${VERSION} chromium /tests/**/*.js
-          '''
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_NAME, "application_endpoint")
+          }
+          dir('tests/testcafe') {
+            sh '''
+              set -e
+              docker build . -t loaded_testcafe:${JOB_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
+              docker run --rm --name ${JOB_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${JOB_NAME} chromium /tests/**/*.js
+            '''
+          }
         }
       }
     }
@@ -107,41 +104,25 @@ pipeline {
     success {
       script {
         withCredentials([usernameColonPassword(credentialsId: 'GIT_CREDENTIAL', variable: 'GIT_CREDENTIAL')]) {
-          if (env.ACTION != "destroy") {
-            sh '''
-              set -e
-              remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
-              git config user.name 'Jenkins'
-              git config user.email 'jenkins@mycompany.com'
-              git tag $JOB_NAME -f
-              git push https://$GIT_CREDENTIAL@$remote_url refs/tags/$JOB_NAME -f
-            '''
-            if (env.DOWNSTREAM_JOB) {
-              try {
-                build job: "${DOWNSTREAM_JOB}",
-                  parameters: [
-                    string(name: 'VERSION', value: "${VERSION}")
-                  ],
-                  wait: false
-              } catch (err) {
-                  echo err.getMessage()
-              }
+          sh '''
+            set -e
+            remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
+            git config user.name 'Jenkins'
+            git config user.email 'jenkins@mycompany.com'
+            git tag $JOB_NAME -f
+            git push https://$GIT_CREDENTIAL@$remote_url refs/tags/$JOB_NAME -f
+          '''
+          if (env.DOWNSTREAM_JOB) {
+            try {
+              build job: "${DOWNSTREAM_JOB}",
+                parameters: [
+                  string(name: 'VERSION', value: "${VERSION}")
+                ],
+                wait: false
+            } catch (err) {
+                echo err.getMessage()
             }
           }
-        }
-      }
-    }
-    failure{
-      script {
-        if (env.SLACK_CREDENTIAL_NAME != null){
-          slackSend channel: 'proj-ngw', teamDomain: 'collabralink', tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'danger', message: ":X: Failure.     <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> has failed.  The build is broken."
-        }
-      }
-    }
-    fixed{
-      script {
-        if (env.SLACK_CREDENTIAL_NAME != null){
-          slackSend channel: 'proj-ngw', teamDomain: 'collabralink', tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'good', message: ":white_check_mark: Fixed.       <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> succeeded.  The build is fixed."
         }
       }
     }

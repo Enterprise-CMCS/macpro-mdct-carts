@@ -31,7 +31,8 @@ pipeline {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           lock('docker_socket') {
             jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/django", "django", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.JOB_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.JOB_NAME])
           }
         }
@@ -42,7 +43,8 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
         }
       }
