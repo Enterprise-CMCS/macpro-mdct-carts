@@ -1,5 +1,5 @@
 locals {
-  endpoint_ui = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
+  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
 }
 
 data "aws_ssm_parameter" "postgres_user" {

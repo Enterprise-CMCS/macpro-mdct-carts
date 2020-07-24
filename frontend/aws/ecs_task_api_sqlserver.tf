@@ -1,5 +1,5 @@
 locals {
-  endpoint_ui = var.acm_certificate_domain_api_sqlserver == "" ? "http://${aws_alb.api_sqlserver.dns_name}" : "https://${aws_alb.api_sqlserver.dns_name}"
+  endpoint_api_sqlserver = var.acm_certificate_domain_api_sqlserver == "" ? "http://${aws_alb.api_sqlserver.dns_name}" : "https://${aws_alb.api_sqlserver.dns_name}"
 }
 
 ##############################################################################
