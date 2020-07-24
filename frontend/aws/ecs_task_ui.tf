@@ -13,7 +13,7 @@ resource "aws_ecs_task_definition" "ui" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
     image                    = "${data.aws_ecr_repository.react.repository_url}:${var.application_version}",
-    api_url                  = "http://${aws_alb.api.dns_name}:${aws_alb_listener.http_forward_api.port}",
+    api_url                  = "http://${aws_alb.api_postgres.dns_name}:${aws_alb_listener.http_forward_api_postgres.port}",
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name
     cloudwatch_stream_prefix = "ui",
   })
