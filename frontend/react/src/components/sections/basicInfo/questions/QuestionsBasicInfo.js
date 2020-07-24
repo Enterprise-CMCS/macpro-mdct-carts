@@ -14,6 +14,14 @@ import {
   import statesArray from "../../../Utils/statesArray";
   import FillForm from "../../../layout/FillForm";
 
+const validEmailRegex = RegExp(
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
+  
+const validTelephoneRegex = RegExp(
+  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
+
 class QuestionsBasicInfo extends Component {
   constructor(props) {
     super(props);
@@ -21,11 +29,11 @@ class QuestionsBasicInfo extends Component {
       selectedState: this.props.abbr,
       programName: this.props.programName,
       programType: this.props.programType,
-      contactName: "full name",
-      contactTitle: " my title",
-      contactEmail: " myemail@gmail.om",
-      contactAddress: "123 crash and burn lane, New York, NY 20003",
-      contactPhone: "123-345-6789",
+      contactName: "",
+      contactTitle: "",
+      contactEmail: "",
+      contactAddress: "",
+      contactPhone: "",
       previous_programName: this.props.programName,
       previous_programType: this.props.programType,
       previous_contactName: "John Smith",
@@ -40,36 +48,35 @@ class QuestionsBasicInfo extends Component {
       previousYear: this.props.previousYear,
       fillFormTitle: "Same as last year"
     };
-    this.setConditional = this.setConditional.bind(this)
+
+    this.handleChange = this.handleChange.bind(this)
     this.loadAnswers = this.loadAnswers.bind(this)
-    this.selectInput = this.selectInput.bind(this)
-    this.changeText = this.changeText.bind(this)
   }
-  setConditional(el) {
+
+  handleChange(evt) {
     this.setState({
-      [el.target.name]: el.target.value,
+      [evt.target.name]: evt.target.value,
     });
-  }
-  changeText(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-  
-  selectInput(id, option, active) {
-    let selection = document.getElementById(id).getElementsByTagName("input");
 
-    //clear any selections made by the user
-    for (let input of selection) {
-      input.checked = false;
-    }
+    //Inline validation/error messaging for email and phone
+    let errors = this.state.errors;
 
-    if (active) {
-      selection[option].checked = true;
-    } else {
-      for (let input of selection) {
-        input.checked = false;
-      }
+    switch (evt.target.name) {
+      case "contactEmail":
+        errors.email = validEmailRegex.test(evt.target.value)
+          ? ""
+          : "Please enter a valid email";
+        break;
+      case "contactPhone":
+        errors.phone = validTelephoneRegex.test(evt.target.value)
+          ? ""
+          : "Please enter a valid 10 digit phone number";
+        break;
+      default:
+        break;
     }
   }
+
   loadAnswers(el) {
     el.preventDefault();
     // button title: Undo or Same as Last year
@@ -99,11 +106,9 @@ class QuestionsBasicInfo extends Component {
         }
         
         this.setState(newstate);
-    }
-    
-    }
+    }  
+  }
 
-  
   render() {
       return(
         <form>

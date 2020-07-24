@@ -115,12 +115,14 @@ class Questions3C extends Component {
               Part 1: Eligibility Renewal and Retention
             </h3>
             <div className="question-container">
-              <FillForm
-                name="p1_q1"
-                title={this.state.fillFormTitle}
-                onClick={this.loadAnswers}
-                type='radioButton'
-              />
+              {this.props.previousYear === "false" &&
+                <FillForm
+                  name="p1_q1"
+                  title={this.state.fillFormTitle}
+                  onClick={this.loadAnswers}
+                  type="textField"
+                />
+              }
               <div className="question">
                 1. Do you have authority in your CHIP state plan to
                 provide for presumptive eligibility, and have you
@@ -171,12 +173,14 @@ class Questions3C extends Component {
             </div>
           </div>
           <div className="question-container">
-            <FillForm
-              name="p1_q2"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='subQuestions'//If it is possible to get subquestion elements, then global answersFromLastYear will work
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p1_q2"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
 
             <div className="question">
               2. Tell us how your state simplifies the eligibility
@@ -248,12 +252,14 @@ class Questions3C extends Component {
             </div>
           </div>
           <div className="question-container">
-            <FillForm
-              name="p1_q3"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p1_q3"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <div className="question">
               3. Which retention strategies have been most effective in
               your state?
@@ -270,12 +276,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p1_q4"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p1_q4"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <div className="question">
               4. How have you evaluated the effectiveness of your
               strategies?
@@ -291,12 +299,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p1_q5"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p1_q5"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <div className="question">
               5. What data sources and methodology do you use for
               tracking effectiveness?
@@ -313,12 +323,14 @@ class Questions3C extends Component {
           </div>
           <h3 className="part-header">Part 2: Eligibility Data</h3>
           <div className="question-container">
-            <FillForm
-              name="p2_q1"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p2_1"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <div className="question">
               A. Denials of Title XXI Coverage in FFY 2019
               <div className="hint">
@@ -336,12 +348,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p2_q2"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p2_q2"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <TextField
               hint="For example: an incomplete application, missing documentation, missing enrollment fee, etc."
               label="2. How many applications were denied Title XXI coverage for procedural denials?"
@@ -352,12 +366,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p2_q3"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p2_q3"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <TextField
               hint="For example: income was too high, income was too low, they were determined Medicaid eligible instead, they had other coverage instead, etc."
               label="3. How many applicants were denied Title XXI coverage for eligibility denials?"
@@ -368,12 +384,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p2_q4"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p2_q4"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <TextField
               label="4. How many applicants were denied Title XXI coverage and determined eligible for Title XIX instead?"
               labelClassName="p2_q4"
@@ -383,12 +401,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p2_q5"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p2_q5"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <TextField
               label="5. How many applicants were denied Title XXI coverage for other reasons?"
               labelClassName="p2_q5"
@@ -398,12 +418,14 @@ class Questions3C extends Component {
             />
           </div>
           <div className="question-container">
-            <FillForm
-              name="p2_q6"
-              title={this.state.fillFormTitle}
-              onClick={this.loadAnswers}
-              type='textField'
-            />
+            {this.props.previousYear === "false" &&
+              <FillForm
+                name="p2_q6"
+                title={this.state.fillFormTitle}
+                onClick={this.loadAnswers}
+                type="textField"
+              />
+            }
             <TextField
               hint="(Maximum 7,500 characters)"
               label="6. Did you run into any limitations when collecting data? Anything else you'd like to add about this section that wasn't already covered?"

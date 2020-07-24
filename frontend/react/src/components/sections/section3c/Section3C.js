@@ -58,7 +58,7 @@ class Section3c extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={this.state.pageTitle}>
-                <Questions3C />
+                <Questions3C previousYear = "false"/>
                 <FormNavigation previousUrl="/section3/3a" />
               </TabPanel>
               <TabPanel
@@ -70,7 +70,9 @@ class Section3c extends Component {
 
                   <h3>{this.state.pageTitle}</h3>
                 </div>
-                <Questions3C />
+                <div disabled>
+                  <Questions3C previousYear="true"/>
+                </div>
                 <FormNavigation previousUrl="/section3/3a" />
               </TabPanel>
             </Tabs>
