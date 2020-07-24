@@ -67,9 +67,12 @@ resource "aws_ssm_parameter" "postgres_user" {
 
 
 resource "aws_ssm_parameter" "postgres_host" {
-  name  = "/${terraform.workspace}/postgres_host"
-  type  = "SecureString"
-  value = aws_route53_record.postgres.fqdn
+  name = "/${terraform.workspace}/postgres_host"
+  type = "SecureString"
+  # MACPRO VPCs won't be able to resolve these private hosted zones.
+  # These VPCs have custom dhcp option sets and I don't think we are allowed to edit.
+  # value = aws_route53_record.postgres.fqdn
+  value = module.db.this_db_instance_address
 }
 
 
