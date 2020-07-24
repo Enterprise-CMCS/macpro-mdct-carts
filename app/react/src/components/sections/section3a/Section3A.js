@@ -82,7 +82,9 @@ class Section3a extends Component {
                 className="section3a-previous"
                 tab={`FY${this.props.year - 1} answers`}
               >
-                {this.state.previousYearQuestions3AProp}
+                <div disabled>
+                  {this.state.previousYearQuestions3AProp}
+                </div>
               </TabPanel>
             </Tabs>
             <FormActions />
