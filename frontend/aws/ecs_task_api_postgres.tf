@@ -1,3 +1,6 @@
+locals {
+  endpoint_ui = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
+}
 
 data "aws_ssm_parameter" "postgres_user" {
   name = "/${terraform.workspace}/postgres_user"
@@ -116,45 +119,95 @@ resource "null_resource" "wait_for_ecs_stability_api_postgres" {
 
 resource "aws_security_group" "alb_api_postgres" {
   vpc_id = data.aws_vpc.app.id
-  ingress {
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port       = 8000
-    to_port         = 8000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.api_postgres.id]
-  }
+}
+
+resource "aws_security_group_rule" "alb_api_postgres_egress" {
+  type                     = "egress"
+  from_port                = 8000
+  to_port                  = 8000
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.api_postgres.id
+  security_group_id        = aws_security_group.alb_api_postgres.id
+}
+
+resource "aws_security_group_rule" "alb_api_postgres_ingress_8000" {
+  type              = "ingress"
+  from_port         = 8000
+  to_port           = 8000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_api_postgres.id
+}
+
+resource "aws_security_group_rule" "alb_api_postgres_ingress_443" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_api_postgres.id
 }
 
 resource "aws_alb" "api_postgres" {
-  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
+  name            = "api-postgres-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_postgres.id]
   subnets         = data.aws_subnet_ids.public.ids
 }
 
 resource "aws_alb_target_group" "api_postgres" {
-  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
+  name                 = "api-postgres-tg-${terraform.workspace}"
   port                 = 8000
   target_type          = "ip"
   protocol             = "HTTP"
-  deregistration_delay = "0"
+  deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
 
   depends_on = [aws_alb.api_postgres]
 }
 
+data "aws_acm_certificate" "api_postgres" {
+  count    = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  domain   = var.acm_certificate_domain_api_postgres
+  statuses = ["ISSUED"]
+}
+
+resource "aws_alb_listener" "https_forward_api_postgres" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  load_balancer_arn = aws_alb.api_postgres.id
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = data.aws_acm_certificate.api_postgres[0].arn
+  default_action {
+    target_group_arn = aws_alb_target_group.api_postgres.id
+    type             = "forward"
+  }
+}
 
 resource "aws_alb_listener" "http_forward_api_postgres" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 1 : 0
   load_balancer_arn = aws_alb.api_postgres.id
   port              = "8000"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api_postgres.id
     type             = "forward"
+  }
+}
+
+resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
+  count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
+  load_balancer_arn = aws_alb.api_postgres.id
+  port              = "8000"
+  protocol          = "HTTP"
+  default_action {
+    target_group_arn = aws_alb_target_group.api_postgres.id
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_302"
+    }
   }
 }

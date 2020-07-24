@@ -1,3 +1,7 @@
+locals {
+  endpoint_ui = var.acm_certificate_domain_api_sqlserver == "" ? "http://${aws_alb.api_sqlserver.dns_name}" : "https://${aws_alb.api_sqlserver.dns_name}"
+}
+
 ##############################################################################
 # These values don't exist, as we don't have a MSSQL to hook into yet
 ##############################################################################
@@ -75,10 +79,10 @@ resource "aws_security_group_rule" "api_sqlserver_ingress" {
 #   security_group_id        = aws_security_group.api_sqlserver.id
 # }
 #
-# resource "aws_security_group_rule" "sqlserver_ingress_from_api_postgres" {
+# resource "aws_security_group_rule" "sqlserver_ingress_from_api_sqlserver" {
 #   type                     = "ingress"
-#   from_port                = 5432
-#   to_port                  = 5432
+#   from_port                = 1433
+#   to_port                  = 1433
 #   protocol                 = "tcp"
 #   source_security_group_id = aws_security_group.api_sqlserver.id
 #   security_group_id        = data.aws_ssm_parameter.sqlserver_security_group.value
@@ -128,45 +132,95 @@ resource "null_resource" "wait_for_ecs_stability_api_sqlserver" {
 
 resource "aws_security_group" "alb_api_sqlserver" {
   vpc_id = data.aws_vpc.app.id
-  ingress {
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port       = 8000
-    to_port         = 8000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.api_sqlserver.id]
-  }
+}
+
+resource "aws_security_group_rule" "alb_api_sqlserver_egress" {
+  type                     = "egress"
+  from_port                = 8000
+  to_port                  = 8000
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.api_sqlserver.id
+  security_group_id        = aws_security_group.alb_api_sqlserver.id
+}
+
+resource "aws_security_group_rule" "alb_api_sqlserver_ingress_8000" {
+  type              = "ingress"
+  from_port         = 8000
+  to_port           = 8000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_api_sqlserver.id
+}
+
+resource "aws_security_group_rule" "alb_api_sqlserver_ingress_443" {
+  count             = var.acm_certificate_domain_api_sqlserver == "" ? 0 : 1
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_api_sqlserver.id
 }
 
 resource "aws_alb" "api_sqlserver" {
-  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
+  name            = "api-sqlserver-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_sqlserver.id]
   subnets         = data.aws_subnet_ids.public.ids
 }
 
 resource "aws_alb_target_group" "api_sqlserver" {
-  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
+  name                 = "api-sqlserver-tg-${terraform.workspace}"
   port                 = 8000
   target_type          = "ip"
   protocol             = "HTTP"
-  deregistration_delay = "0"
+  deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
 
   depends_on = [aws_alb.api_sqlserver]
 }
 
+data "aws_acm_certificate" "api_sqlserver" {
+  count    = var.acm_certificate_domain_api_sqlserver == "" ? 0 : 1
+  domain   = var.acm_certificate_domain_api_sqlserver
+  statuses = ["ISSUED"]
+}
+
+resource "aws_alb_listener" "https_forward_api_sqlserver" {
+  count             = var.acm_certificate_domain_api_sqlserver == "" ? 0 : 1
+  load_balancer_arn = aws_alb.api_sqlserver.id
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = data.aws_acm_certificate.api_sqlserver[0].arn
+  default_action {
+    target_group_arn = aws_alb_target_group.api_sqlserver.id
+    type             = "forward"
+  }
+}
 
 resource "aws_alb_listener" "http_forward_api_sqlserver" {
+  count             = var.acm_certificate_domain_api_sqlserver == "" ? 1 : 0
   load_balancer_arn = aws_alb.api_sqlserver.id
   port              = "8000"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api_sqlserver.id
     type             = "forward"
+  }
+}
+
+resource "aws_alb_listener" "http_to_https_redirect_api_sqlserver" {
+  count             = var.acm_certificate_domain_api_sqlserver == "" ? 0 : 1
+  load_balancer_arn = aws_alb.api_sqlserver.id
+  port              = "8000"
+  protocol          = "HTTP"
+  default_action {
+    target_group_arn = aws_alb_target_group.api_sqlserver.id
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_302"
+    }
   }
 }
