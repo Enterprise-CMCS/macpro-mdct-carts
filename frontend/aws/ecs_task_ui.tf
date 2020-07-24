@@ -1,3 +1,6 @@
+locals {
+  endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}" : "https://${aws_alb.ui.dns_name}"
+}
 
 data "aws_ecr_repository" "react" {
   name = "react"
@@ -13,7 +16,7 @@ resource "aws_ecs_task_definition" "ui" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
     image                    = "${data.aws_ecr_repository.react.repository_url}:${var.application_version}",
-    api_url                  = "http://${aws_alb.api_postgres.dns_name}:${aws_alb_listener.http_forward_api_postgres.port}",
+    api_url                  = local.endpoint_api
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name
     cloudwatch_stream_prefix = "ui",
   })
@@ -23,7 +26,7 @@ resource "aws_security_group" "ui" {
   vpc_id = data.aws_vpc.app.id
 }
 
-resource "aws_security_group_rule" "ui_ingress" {
+resource "aws_security_group_rule" "ui_ingress_80" {
   type                     = "ingress"
   from_port                = 80
   to_port                  = 80
@@ -75,45 +78,95 @@ resource "null_resource" "wait_for_ecs_stability_ui" {
 
 resource "aws_security_group" "alb_ui" {
   vpc_id = data.aws_vpc.app.id
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.ui.id]
-  }
+}
+
+resource "aws_security_group_rule" "alb_ui_egress" {
+  type                     = "egress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ui.id
+  security_group_id        = aws_security_group.alb_ui.id
+}
+
+resource "aws_security_group_rule" "alb_ui_ingress_80" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_ui.id
+}
+
+resource "aws_security_group_rule" "alb_ui_ingress_443" {
+  count             = var.acm_certificate_domain_ui == "" ? 0 : 1
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_ui.id
 }
 
 resource "aws_alb" "ui" {
-  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
+  name            = "ui-alb-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_ui.id]
   subnets         = data.aws_subnet_ids.public.ids
 }
 
 resource "aws_alb_target_group" "ui" {
-  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
+  name                 = "ui-target-group-${terraform.workspace}"
   port                 = 80
   target_type          = "ip"
   protocol             = "HTTP"
-  deregistration_delay = "0"
+  deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
 
   depends_on = [aws_alb.ui]
 }
 
+data "aws_acm_certificate" "ui" {
+  count    = var.acm_certificate_domain_ui == "" ? 0 : 1
+  domain   = var.acm_certificate_domain_ui
+  statuses = ["ISSUED"]
+}
+
+resource "aws_alb_listener" "https_forward_ui" {
+  count             = var.acm_certificate_domain_ui == "" ? 0 : 1
+  load_balancer_arn = aws_alb.ui.id
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = data.aws_acm_certificate.ui[0].arn
+  default_action {
+    target_group_arn = aws_alb_target_group.ui.id
+    type             = "forward"
+  }
+}
 
 resource "aws_alb_listener" "http_forward_ui" {
+  count             = var.acm_certificate_domain_ui == "" ? 1 : 0
   load_balancer_arn = aws_alb.ui.id
   port              = "80"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.ui.id
     type             = "forward"
+  }
+}
+
+resource "aws_alb_listener" "http_to_https_redirect_ui" {
+  count             = var.acm_certificate_domain_ui == "" ? 0 : 1
+  load_balancer_arn = aws_alb.ui.id
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
+    target_group_arn = aws_alb_target_group.ui.id
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_302"
+    }
   }
 }
