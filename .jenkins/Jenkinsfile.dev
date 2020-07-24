@@ -13,7 +13,7 @@ pipeline {
   }
   environment {
     BUILD_TAG = resolveBuildTag()
-    VPC_NAME = "dev"
+    VPC_NAME = "macpro-dev"
   }
   stages {
     stage("Prep Agent") {
