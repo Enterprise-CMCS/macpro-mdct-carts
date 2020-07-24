@@ -26,37 +26,6 @@ class BasicInfo extends Component {
     };
   }
 
-  handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
-
-    //Inline validation/error messaging for email and phone
-    let errors = this.state.errors;
-
-    switch (evt.target.name) {
-      case "contactEmail":
-        errors.email = validEmailRegex.test(evt.target.value)
-          ? ""
-          : "Please enter a valid email";
-        break;
-      case "contactPhone":
-        errors.phone = validTelephoneRegex.test(evt.target.value)
-          ? ""
-          : "Please enter a valid 10 digit phone number";
-        break;
-      default:
-        break;
-    }
-  }
-
-  /**
-   * If conditional value is triggered, set state to value
-   * @param {Event} el
-   */
-
-  
-
   render() {
     return (
       <div className="section-basic-info ds-l-col--9 content">
@@ -65,7 +34,7 @@ class BasicInfo extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab="Basic Information">
-                <QuestionsBasicInfo previousYear='false'/>
+                <QuestionsBasicInfo previousYear="false"/>
                 <FormNavigation nextUrl="/section1" />
               </TabPanel>
 
@@ -73,8 +42,9 @@ class BasicInfo extends Component {
                 id="tab-lastyear"
                 tab={`FY${this.props.year - 1} answers`}
               >
-                <QuestionsBasicInfo previousYear='true'/>
-                <FormNavigation nextUrl="/section1" />
+                <div disabled>
+                  <QuestionsBasicInfo previousYear="true"/>
+                </div>
               </TabPanel>
             </Tabs>
             <FormActions />
