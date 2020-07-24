@@ -27,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "execution" {
 # Create an ECS Cluster for the data layer, pretty much just containing the deployer container for now
 ####################################################################################################
 resource "aws_ecs_cluster" "database" {
-  name               = "datbase-${terraform.workspace}"
+  name               = "data-${terraform.workspace}"
   capacity_providers = ["FARGATE"]
 }
 
