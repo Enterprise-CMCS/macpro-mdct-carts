@@ -5,19 +5,15 @@ pipeline {
     quietPeriod(0)
     ansiColor('xterm')
   }
-  parameters {
-    string(
-      name: 'VERSION',
-      defaultValue: '',
-      description: 'The version to deploy.  Versions are published by development pipelines and indicate which artifacts to deploy and what git tag to pull.  This should be a tag of format (number).(number).(number)  ex. 0.1.20',
-      trim: false
-    )
+  environment {
+    BUILD_TAG = resolveBuildTag()
+    VPC_NAME = "dev"
   }
   stages {
     stage("Prep Agent") {
       steps {
         script {
-          currentBuild.displayName = env.VERSION
+          currentBuild.displayName = env.BUILD_TAG
 
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
 
@@ -26,6 +22,37 @@ pipeline {
 
           env.DEPLOY_DATA = jenkinsUtils.pathHasChanges("data") || jenkinsUtils.pathHasChanges(".jenkins")
           env.DEPLOY_FRONTEND = jenkinsUtils.pathHasChanges("frontend") || env.DEPLOY_DATA
+        }
+      }
+    }
+    stage("Build/Push Images") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          lock('docker_socket') {
+            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.JOB_NAME])
+          }
+        }
+      }
+    }
+    stage("Scan Images") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_*.json'
+          }
         }
       }
     }
@@ -39,7 +66,7 @@ pipeline {
           dir('data/aws') {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
               [
-                "application_version": env.VERSION,
+                "application_version": env.BUILD_TAG,
                 "vpc_name": env.VPC_NAME
               ]
             )
@@ -64,7 +91,7 @@ pipeline {
           dir('frontend/aws') {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
               [
-                "application_version": env.VERSION,
+                "application_version": env.BUILD_TAG,
                 "vpc_name": env.VPC_NAME
               ]
             )
@@ -80,9 +107,6 @@ pipeline {
       }
     }
     stage("Test") {
-      when {
-        expression { env.SKIP_TESTS != "true" }
-      }
       steps {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
@@ -100,6 +124,7 @@ pipeline {
       }
     }
   }
+
   post {
     success {
       script {
@@ -109,18 +134,18 @@ pipeline {
             remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
             git config user.name 'Jenkins'
             git config user.email 'jenkins@mycompany.com'
-            git tag $JOB_NAME -f
-            git push https://$GIT_CREDENTIAL@$remote_url refs/tags/$JOB_NAME -f
+            git tag $BUILD_TAG
+            git push -f https://$GIT_CREDENTIAL@$remote_url refs/tags/$BUILD_TAG
           '''
-          if (env.DOWNSTREAM_JOB) {
+          if (env.DOWNSTREAM_JOB != "") {
             try {
               build job: "${DOWNSTREAM_JOB}",
                 parameters: [
-                  string(name: 'VERSION', value: "${VERSION}")
+                  string(name: 'VERSION', value: "${BUILD_TAG}")
                 ],
                 wait: false
             } catch (err) {
-                echo err.getMessage()
+              echo err.getMessage()
             }
           }
         }
@@ -141,4 +166,11 @@ pipeline {
       }
     }
   }
+}
+
+def resolveBuildTag() {
+  tag_prefix = sh(script: 'cat versionPrefix', returnStdout: true).trim()
+  commit_count = sh(script: 'git rev-list --count $GIT_COMMIT', returnStdout: true).trim()
+  build_tag = "${tag_prefix}.${commit_count}"
+  return build_tag
 }

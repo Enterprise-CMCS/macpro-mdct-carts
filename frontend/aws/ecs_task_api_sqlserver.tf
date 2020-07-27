@@ -1,5 +1,33 @@
 locals {
-  endpoint_api_sqlserver = var.acm_certificate_domain_api_sqlserver == "" ? "http://${aws_alb.api_sqlserver.dns_name}:8000" : "https://${aws_alb.api_sqlserver.dns_name}"
+  endpoint_api_sqlserver = var.acm_certificate_domain_api_sqlserver == "" ? "http://${aws_alb.api_sqlserver.dns_name}" : "https://${aws_alb.api_sqlserver.dns_name}"
+}
+
+##############################################################################
+# These values don't exist, as we don't have a MSSQL to hook into yet
+##############################################################################
+# data "aws_ssm_parameter" "sqlserver_user" {
+#   name = "/${terraform.workspace}/sqlserver_user"
+# }
+#
+# data "aws_ssm_parameter" "sqlserver_password" {
+#   name = "/${terraform.workspace}/sqlserver_password"
+# }
+#
+# data "aws_ssm_parameter" "sqlserver_host" {
+#   name = "/${terraform.workspace}/sqlserver_host"
+# }
+#
+# data "aws_ssm_parameter" "sqlserver_db" {
+#   name = "/${terraform.workspace}/sqlserver_db"
+# }
+#
+# data "aws_ssm_parameter" "sqlserver_security_group" {
+#   name = "/${terraform.workspace}/sqlserver_security_group"
+# }
+##############################################################################
+
+data "aws_ecr_repository" "sqlserver_django" {
+  name = "sqlserver_django"
 }
 
 resource "aws_ecs_task_definition" "api_sqlserver" {
@@ -11,7 +39,18 @@ resource "aws_ecs_task_definition" "api_sqlserver" {
   task_role_arn            = aws_iam_role.ecs_task.arn
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_api_sqlserver.json.tpl", {
-    image = "${var.ecr_repository_url_api_sqlserver}:${var.application_version}"
+    image = "${data.aws_ecr_repository.sqlserver_django.repository_url}:${var.application_version}",
+    # Until there is a MSSQL to hook into, we will pass placeholder values
+    # sqlserver_host            = data.aws_ssm_parameter.sqlserver_host.value,
+    # sqlserver_db              = data.aws_ssm_parameter.sqlserver_db.value,
+    # sqlserver_user            = data.aws_ssm_parameter.sqlserver_user.value,
+    # sqlserver_password        = data.aws_ssm_parameter.sqlserver_password.value,
+    sqlserver_host           = "placeholder",
+    sqlserver_db             = "placeholder",
+    sqlserver_user           = "placeholder",
+    sqlserver_password       = "placeholder",
+    cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
+    cloudwatch_stream_prefix = "api_sqlserver"
   })
 }
 
@@ -28,14 +67,27 @@ resource "aws_security_group_rule" "api_sqlserver_ingress" {
   security_group_id        = aws_security_group.api_sqlserver.id
 }
 
-resource "aws_security_group_rule" "api_sqlserver_egress" {
-  type                     = "egress"
-  from_port                = 5432
-  to_port                  = 5432
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.db.id
-  security_group_id        = aws_security_group.api_sqlserver.id
-}
+##############################################################################
+# These values don't exist, as we don't have a MSSQL to hook into yet
+##############################################################################
+# resource "aws_security_group_rule" "api_sqlserver_egress" {
+#   type                     = "egress"
+#   from_port                = 1433
+#   to_port                  = 1433
+#   protocol                 = "tcp"
+#   source_security_group_id = data.aws_ssm_parameter.sqlserver_security_group.value
+#   security_group_id        = aws_security_group.api_sqlserver.id
+# }
+#
+# resource "aws_security_group_rule" "sqlserver_ingress_from_api_sqlserver" {
+#   type                     = "ingress"
+#   from_port                = 1433
+#   to_port                  = 1433
+#   protocol                 = "tcp"
+#   source_security_group_id = aws_security_group.api_sqlserver.id
+#   security_group_id        = data.aws_ssm_parameter.sqlserver_security_group.value
+# }
+##############################################################################
 
 resource "aws_security_group_rule" "api_sqlserver_egress_ecr_pull" {
   type              = "egress"
@@ -48,13 +100,13 @@ resource "aws_security_group_rule" "api_sqlserver_egress_ecr_pull" {
 
 resource "aws_ecs_service" "api_sqlserver" {
   name            = "api_sqlserver"
-  cluster         = aws_ecs_cluster.application.id
+  cluster         = aws_ecs_cluster.frontend.id
   task_definition = aws_ecs_task_definition.api_sqlserver.arn
   capacity_provider_strategy {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count = 6
+  desired_count = 3
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
     security_groups = [aws_security_group.api_sqlserver.id]
@@ -72,10 +124,11 @@ resource "null_resource" "wait_for_ecs_stability_api_sqlserver" {
     ecs_task_def_id = aws_ecs_task_definition.api_sqlserver.id
   }
   provisioner "local-exec" {
-    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.application.name} --services ${aws_ecs_service.api_sqlserver.name}"
+    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.frontend.name} --services ${aws_ecs_service.api_sqlserver.name}"
   }
   depends_on = [aws_ecs_service.api_sqlserver]
 }
+
 
 resource "aws_security_group" "alb_api_sqlserver" {
   vpc_id = data.aws_vpc.app.id

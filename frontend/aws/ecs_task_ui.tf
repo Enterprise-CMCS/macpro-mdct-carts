@@ -2,6 +2,10 @@ locals {
   endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}" : "https://${aws_alb.ui.dns_name}"
 }
 
+data "aws_ecr_repository" "react" {
+  name = "react"
+}
+
 resource "aws_ecs_task_definition" "ui" {
   family                   = "ui-${terraform.workspace}"
   network_mode             = "awsvpc"
@@ -11,9 +15,10 @@ resource "aws_ecs_task_definition" "ui" {
   task_role_arn            = aws_iam_role.ecs_task.arn
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions = templatefile("templates/ecs_task_def_ui.json.tpl", {
-    image             = "${var.ecr_repository_url_ui}:${var.application_version}",
-    api_postgres_url  = local.endpoint_api_postgres
-    api_sqlserver_url = local.endpoint_api_sqlserver
+    image                    = "${data.aws_ecr_repository.react.repository_url}:${var.application_version}",
+    api_url                  = local.endpoint_api_postgres
+    cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name
+    cloudwatch_stream_prefix = "ui",
   })
 }
 
@@ -41,13 +46,13 @@ resource "aws_security_group_rule" "ui_egress_ecr_pull" {
 
 resource "aws_ecs_service" "ui" {
   name            = "ui"
-  cluster         = aws_ecs_cluster.application.id
+  cluster         = aws_ecs_cluster.frontend.id
   task_definition = aws_ecs_task_definition.ui.arn
   capacity_provider_strategy {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count = 6
+  desired_count = 3
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
     security_groups = [aws_security_group.ui.id]
@@ -65,10 +70,11 @@ resource "null_resource" "wait_for_ecs_stability_ui" {
     ecs_task_def_id = aws_ecs_task_definition.ui.id
   }
   provisioner "local-exec" {
-    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.application.name} --services ${aws_ecs_service.ui.name}"
+    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.frontend.name} --services ${aws_ecs_service.ui.name}"
   }
   depends_on = [aws_ecs_service.ui]
 }
+
 
 resource "aws_security_group" "alb_ui" {
   vpc_id = data.aws_vpc.app.id
