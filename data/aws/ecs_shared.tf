@@ -3,17 +3,16 @@
 # Create some base IAM objects for ECS tasks and services, often shared
 ####################################################################################################
 resource "aws_iam_role" "ecs_task" {
-  name               = "ecs-task-role-${terraform.workspace}"
+  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
   assume_role_policy = file("files/assume-role-policy-ecs-tasks.json")
 }
 
 resource "aws_iam_role" "ecs_execution_role" {
-  name               = "ecs-execution-role-${terraform.workspace}"
+  # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
   assume_role_policy = file("files/assume-role-policy-ecs-tasks.json")
 }
 
 resource "aws_iam_policy" "execution_policy" {
-  name   = "ecs_execution_policy_${terraform.workspace}"
   policy = file("files/ecs_execution_policy.json")
 }
 

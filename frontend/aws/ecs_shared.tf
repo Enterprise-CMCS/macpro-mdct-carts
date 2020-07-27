@@ -16,7 +16,6 @@ resource "aws_iam_role" "ecs_execution_role" {
 }
 
 resource "aws_iam_policy" "execution_policy" {
-  name   = "ecs_execution_policy_frontend_${terraform.workspace}"
   policy = file("files/ecs_execution_policy.json")
 }
 
