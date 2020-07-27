@@ -943,27 +943,33 @@ class Questions1 extends Component {
                   1. Have you made any changes to the eligibility
                   determination process?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p3_q1"
-                  label=""
-                  name="Q01: Eligibility determination process"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q1 : this.state.p3_q1}
-                  onChange={(e) => this.setKeyword("p3", e)}
-                />
+                <Choice 
+                name="p3_q1" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q1 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q1" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q1 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q1" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q1 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -974,27 +980,33 @@ class Questions1 extends Component {
                   2. Have you made any changes to the eligibility
                   redetermination process?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p3_q2"
-                  label=""
-                  name="Q02: Eligibility redetermination process"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q2 : this.state.p3_q2}
-                  onChange={(e) => this.setKeyword("p3", e)}
-                />
+                <Choice 
+                name="p3_q2" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q2 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q2" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q2 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q2" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q2 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1005,28 +1017,35 @@ class Questions1 extends Component {
                   3. Have you made any changes to the eligibility
                   levels or target populations?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p3_q3"
-                  hint="For example: increasing the FPL or income levels, or other eligibility criteria."
-                  label=""
-                  name="Q03: Eligibility levels or target population"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q3 : this.state.p3_q3}
-                  onChange={(e) => this.setKeyword("p3", e)}
-                />
+                {//<ChoiceList hint="For example: increasing the FPL or income levels, or other eligibility criteria."/>
+                }
+                <Choice 
+                name="p3_q3" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q3 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q3" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q3 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q3" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q3 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1037,29 +1056,35 @@ class Questions1 extends Component {
                   4. Have you made any changes to the benefits
                   available to enrollees?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p3_q4"
-                  hint="For example: adding or removing different types of coverage.
-                      "
-                  label=""
-                  name="Q04: Benefits available to enrollees"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q4 : this.state.p3_q4}
-                  onChange={(e) => this.setKeyword("p3", e)}
-                />
+                {//<ChoiceList hint="For example: adding or removing different types of coverage."/>
+                }
+                <Choice 
+                name="p3_q4" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q4 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q4" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q4 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q4" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q4 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1070,27 +1095,33 @@ class Questions1 extends Component {
                   5. Have you made any changes to the single
                   streamlined application?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p3_q5"
-                  label=""
-                  name="Q05: Single streamlined application"
-                  value={this.props.previousEntry === "true" ? this.state.ly_p3_q5 : this.state.p3_q5}
-                  onChange={(e) => this.setKeyword("p3", e)}
-                />
+                <Choice 
+                name="p3_q5" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q5 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q5" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q5 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q5" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q5 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
               </fieldset>
             </div>
             <div className="question-container">
@@ -1100,27 +1131,35 @@ class Questions1 extends Component {
                     6. Have you made any changes to your outreach
                     efforts?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q6"
-                    hint="For example: allotting more or less funding for outreach, or changing your target population."
-                    label=""
-                    name="Q06: Outreach efforts"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: allotting more or less funding for outreach, or changing your target population."/>
+                  }
+                  <Choice 
+                name="p3_q6" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q6 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q6" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q6 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q6" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q6 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1131,27 +1170,35 @@ class Questions1 extends Component {
                     7. Have you made any changes to the delivery
                     system(s)?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q7"
-                    hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
-                    label=""
-                    name="Q07: Delivery system(s)"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."/>
+                  }
+                  <Choice 
+                name="p3_q7" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q7 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q7" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q7 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q7" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q7 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1162,27 +1209,35 @@ class Questions1 extends Component {
                     8. Have you made any changes to cost-sharing
                     requirements?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q8"
-                    hint="For example: changing amounts, populations, or the collection process."
-                    label=""
-                    name="Q08: Cost-sharing requirements"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: changing amounts, populations, or the collection process."/>
+                  }
+                  <Choice 
+                name="p3_q8" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q8 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q8" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q8 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q8" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q8 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1193,27 +1248,35 @@ class Questions1 extends Component {
                     9. Have you made any changes to the crowd-out
                     policies?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q9"
-                    hint="For example: changing substitutions or the waiting periods."
-                    label=""
-                    name="Q09: Crowd-out policies"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: changing substitutions or the waiting periods."/>
+                  }
+                  <Choice 
+                name="p3_q9" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q9 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q9" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q9 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q9" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q9 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1224,26 +1287,33 @@ class Questions1 extends Component {
                     10. Have you made any changes to an enrollment
                     freeze and/or enrollment cap?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q10"
-                    label=""
-                    name="Q10: Enrollment freeze and/or enrollment cap"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  <Choice 
+                name="p3_q10" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q10 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q10" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q10 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q10" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q10 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1254,26 +1324,33 @@ class Questions1 extends Component {
                     11. Have you made any changes to the enrollment
                     process for health plan selection?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q11"
-                    label=""
-                    name="Q11: Enrollment process for health plan selection"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  <Choice 
+                name="p3_q11" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q11 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q11" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q11 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q11" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q11 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1284,27 +1361,35 @@ class Questions1 extends Component {
                     12. Have you made any changes to the protections
                     for applicants and enrollees?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q12"
-                    hint="For example: changing from the Medicaid Fair Hearing Process to state law."
-                    label=""
-                    name="Q12: Enrollment process for health plan selection"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: changing from the Medicaid Fair Hearing Process to state law."/>
+                  }
+                  <Choice 
+                name="p3_q12" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q12 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q12" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q12 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q12" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q12 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1315,27 +1400,35 @@ class Questions1 extends Component {
                     13. Have you made any changes to premium
                     assistance?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q13"
-                    hint="For example: adding premium assistance or changing the population that receives premium assistance."
-                    label=""
-                    name="Q13: Premium assistance"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: adding premium assistance or changing the population that receives premium assistance."/>
+                  }
+                  <Choice 
+                name="p3_q13" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q13 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q13" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q13 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q13" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q13 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1347,26 +1440,33 @@ class Questions1 extends Component {
                     procedures for preventing, investigating, or
                     referring fraud or abuse cases?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q14"
-                    label=""
-                    name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  <Choice 
+                name="p3_q14" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q14 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q14" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q14 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q14" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q14 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1377,27 +1477,35 @@ class Questions1 extends Component {
                     15. Have you made any changes to your prenatal
                     care eligibility?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q15"
-                    hint="For example: expanding eligibility to pregnant enrollees."
-                    label=""
-                    name="Q15: Prenatal care eligibility"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: expanding eligibility to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p3_q!5" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q15 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    Yes
+                </Choice>
+                <Choice 
+                name="p3_q15" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q2 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    No
+                </Choice>
+                <Choice 
+                name="p3_q15" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q15 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                    N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1408,27 +1516,35 @@ class Questions1 extends Component {
                     16. Have you made any changes to your Pregnant
                     Woman State Plan expansion?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q16"
-                    hint="For example: extending coverage to pregnant enrollees."
-                    label=""
-                    name="Q16: Pregnant Woman State Plan expansion"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: extending coverage to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p3_q16" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q16 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q16" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q16 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q16" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q16 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1439,27 +1555,35 @@ class Questions1 extends Component {
                     17. Have you made any changes to eligibility for
                     “lawfully residing pregnant women”?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q17"
-                    hint="For example: extending coverage to pregnant enrollees."
-                    label=""
-                    name='Q17: Eligibility for "lawfully residing pregnant women"'
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: extending coverage to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p3_q17" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q17 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q17" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q17 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q17" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q17 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1470,27 +1594,35 @@ class Questions1 extends Component {
                     18. Have you made any changes to eligibility for
                     “lawfully residing children”?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q18"
-                    hint="For example: extending coverage to pregnant enrollees."
-                    label=""
-                    name="Q18: Eligibility for “lawfully residing children”"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  {//<ChoiceList hint="For example: extending coverage to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p3_q18" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q18 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q18" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q18 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q18" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q18 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1501,26 +1633,33 @@ class Questions1 extends Component {
                     19. Have you made any changes to any other
                     program areas?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p3_q18"
-                    label=""
-                    name="Q19: Other program areas"
-                    onChange={(e) => this.setKeyword("p3", e)}
-                  />
+                  <Choice 
+                name="p3_q19" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q19 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q19" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q19 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q19" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q19 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1537,6 +1676,33 @@ class Questions1 extends Component {
                     name="p3_q20"
                     rows="6"
                   />
+                  <Choice 
+                name="p3_q20" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q20 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q20" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q20 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q20" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q20 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1547,22 +1713,33 @@ class Questions1 extends Component {
                   to reflect these changes if you haven’t done so
                   already?
                 </h3>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p3_q21"
-                  label=""
-                  name="p3_q21"
-                  type="radio"
-                />
+                <Choice 
+                name="p3_q21" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q21 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p3_q21" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q21 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p3_q21" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q21 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 <ul>
                   {this.state.p3_yes
                     .sort()
@@ -1609,26 +1786,33 @@ class Questions1 extends Component {
                   1. Have you made any changes to the eligibility
                   determination process?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p4_q1"
-                  label=""
-                  name="Q01: Eligibility determination process"
-                  onChange={(e) => this.setKeyword("p4", e)}
-                />
+                <Choice 
+                name="p4_q1" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q1 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q1" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q1 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q1" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q1 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1639,26 +1823,33 @@ class Questions1 extends Component {
                   2. Have you made any changes to the eligibility
                   redetermination process?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p4_q2"
-                  label=""
-                  name="Q02: Eligibility redetermination process"
-                  onChange={(e) => this.setKeyword("p4", e)}
-                />
+                <Choice 
+                name="p4_q2" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q2 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q2" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q2 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q2" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q2 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1669,27 +1860,35 @@ class Questions1 extends Component {
                   3. Have you made any changes to the eligibility
                   levels or target populations?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p4_q3"
-                  hint="For example: increasing the FPL or income levels, or other eligibility criteria."
-                  label=""
-                  name="Q03: Eligibility levels or target population"
-                  onChange={(e) => this.setKeyword("p4", e)}
-                />
+                {//<ChoiceList hint="For example: increasing the FPL or income levels, or other eligibility criteria." />
+                }
+                <Choice 
+                name="p4_q3" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q3 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q3" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q3 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q3" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q3 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1700,28 +1899,35 @@ class Questions1 extends Component {
                   4. Have you made any changes to the benefits
                   available to enrollees?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p4_q4"
-                  hint="For example: adding or removing different types of coverage.
-                      "
-                  label=""
-                  name="Q04: Benefits available to enrollees"
-                  onChange={(e) => this.setKeyword("p4", e)}
-                />
+                {//<ChoiceList hint="For example: adding or removing different types of coverage." />
+                }
+                <Choice 
+                name="p4_q4" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q4 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q4" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q4 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q4" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q4 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
               </fieldset>
             </div>
           </div>
@@ -1732,26 +1938,33 @@ class Questions1 extends Component {
                   5. Have you made any changes to the single
                   streamlined application?
                 </legend>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                    {
-                      label: "N/A",
-                      value: "na",
-                    },
-                  ]}
-                  className="p4_q5"
-                  label=""
-                  name="Q05: Single streamlined application"
-                  onChange={(e) => this.setKeyword("p4", e)}
-                />
+                <Choice 
+                name="p4_q5" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q5 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q5" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q5 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q5" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q5 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
               </fieldset>
             </div>
             <div className="question-container">
@@ -1761,27 +1974,35 @@ class Questions1 extends Component {
                     6. Have you made any changes to your outreach
                     efforts?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q6"
-                    hint="For example: allotting more or less funding for outreach, or changing your target population."
-                    label=""
-                    name="Q06: Outreach efforts"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: allotting more or less funding for outreach, or changing your target population."/>
+                  }
+                  <Choice 
+                name="p4_q6" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q6 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q6" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q6 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q6" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q6 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1792,27 +2013,35 @@ class Questions1 extends Component {
                     7. Have you made any changes to the delivery
                     system(s)?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q7"
-                    hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."
-                    label=""
-                    name="Q07: Delivery system(s)"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: transitioning from Fee for Service to Managed Care for different CHIP populations."/>
+                  }
+                  <Choice 
+                name="p4_q7" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q7 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q7" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q7 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q7" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q7 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1823,27 +2052,35 @@ class Questions1 extends Component {
                     8. Have you made any changes to cost-sharing
                     requirements?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q8"
-                    hint="For example: changing amounts, populations, or the collection process."
-                    label=""
-                    name="Q08: Cost-sharing requirements"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: changing amounts, populations, or the collection process."/>
+                  }
+                  <Choice 
+                name="p4_q8" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q8 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q8" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q8 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q8" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q8 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1854,27 +2091,35 @@ class Questions1 extends Component {
                     9. Have you made any changes to the crowd-out
                     policies?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q9"
-                    hint="For example: changing substitutions or the waiting periods."
-                    label=""
-                    name="Q09: Crowd-out policies"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: changing substitutions or the waiting periods."/>
+                  }
+                  <Choice 
+                name="p4_q9" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q9 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q9" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q9 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q9" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q9 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1885,26 +2130,33 @@ class Questions1 extends Component {
                     10. Have you made any changes to an enrollment
                     freeze and/or enrollment cap?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q10"
-                    label=""
-                    name="Q10: Enrollment freeze and/or enrollment cap"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  <Choice 
+                name="p4_q10" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q10 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q10" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q10 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q10" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q10 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1915,26 +2167,33 @@ class Questions1 extends Component {
                     11. Have you made any changes to the enrollment
                     process for health plan selection?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q11"
-                    label=""
-                    name="Q11: Enrollment process for health plan selection"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  <Choice 
+                name="p4_q11" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q11 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q11" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q11 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q11" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q11 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1945,27 +2204,35 @@ class Questions1 extends Component {
                     12. Have you made any changes to the protections
                     for applicants and enrollees?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q12"
-                    hint="For example: changing from the Medicaid Fair Hearing Process to state law."
-                    label=""
-                    name="Q12: Enrollment process for health plan selection"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: changing from the Medicaid Fair Hearing Process to state law."/>
+                  }
+                  <Choice 
+                name="p4_q12" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q12 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q12" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q12 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q12" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q12 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -1976,27 +2243,35 @@ class Questions1 extends Component {
                     13. Have you made any changes to premium
                     assistance?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q13"
-                    hint="For example: adding premium assistance or changing the population that receives premium assistance."
-                    label=""
-                    name="Q13: Premium assistance"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: adding premium assistance or changing the population that receives premium assistance."/>
+                  }
+                  <Choice 
+                name="p4_q13" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q13 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q13" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q13 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q13" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q13 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -2008,29 +2283,74 @@ class Questions1 extends Component {
                     procedures for preventing, investigating, or
                     referring fraud or abuse cases?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q14"
-                    label=""
-                    name="Q14: Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  <Choice 
+                name="p4_q14" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q14 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                checkedChildren={
+                  <div className="ds-c-choice__checkedChild">{
+                    <div className="part4-yes">
+                    <h3>
+                      Do you plan to submit a SPA (State Plan
+                      Amendment) to reflect these changes if you
+                      haven’t done so already?
+                    </h3>
+                    <Choice 
+                name="p4_q21" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q21 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q21" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q21 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                    
+                    <ul>
+                      {this.state.p4_yes
+                        .sort()
+                        .map((current, index) => (
+                          <li key={index}>{current}</li>
+                        ))}
+                    </ul>
+                  </div>
+                      }
+                  </div>
+                  }
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q14" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q14 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q14" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q14 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
-              {this.state.p4_yes.sort().length > 0 ? (
+              {/*this.state.p4_yes.sort().length > 0 ? (
                 <div className="part4-yes">
                   <h3>
                     Do you plan to submit a SPA (State Plan
@@ -2063,7 +2383,7 @@ class Questions1 extends Component {
                 </div>
               ) : (
                 ""
-              )}
+              )*/}
             </div>
             <div className="question-container">
               <div id="p4_q15">
@@ -2072,27 +2392,35 @@ class Questions1 extends Component {
                     15. Have you made any changes to your prenatal
                     care eligibility?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q15"
-                    hint="For example: expanding eligibility to pregnant enrollees."
-                    label=""
-                    name="Q15: Prenatal care eligibility"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: expanding eligibility to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p4_q15" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q15 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q15" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q15 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q15" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q15 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -2103,27 +2431,35 @@ class Questions1 extends Component {
                     16. Have you made any changes to your Pregnant
                     Woman State Plan expansion?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q16"
-                    hint="For example: extending coverage to pregnant enrollees."
-                    label=""
-                    name="Q16: Pregnant Woman State Plan expansion"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: extending coverage to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p4_q16" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q16 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q16" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q16 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q16" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q16 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -2134,27 +2470,35 @@ class Questions1 extends Component {
                     17. Have you made any changes to eligibility for
                     “lawfully residing pregnant women”?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q17"
-                    hint="For example: extending coverage to pregnant enrollees."
-                    label=""
-                    name='Q17: Eligibility for "lawfully residing pregnant women"'
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: extending coverage to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p4_q17" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q17 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q17" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q17 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q17" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q17 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -2165,27 +2509,35 @@ class Questions1 extends Component {
                     18. Have you made any changes to eligibility for
                     “lawfully residing children”?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q18"
-                    hint="For example: extending coverage to pregnant enrollees."
-                    label=""
-                    name="Q18: Eligibility for “lawfully residing children”"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  {//<ChoiceList hint="For example: extending coverage to pregnant enrollees."/>
+                  }
+                  <Choice 
+                name="p4_q18" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q18 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q18" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q18 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q18" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q18 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -2196,26 +2548,33 @@ class Questions1 extends Component {
                     19. Have you made any changes to any other
                     program areas?
                   </legend>
-                  <ChoiceList
-                    choices={[
-                      {
-                        label: "Yes",
-                        value: "yes",
-                      },
-                      {
-                        label: "No",
-                        value: "no",
-                      },
-                      {
-                        label: "N/A",
-                        value: "na",
-                      },
-                    ]}
-                    className="p4_q18"
-                    label=""
-                    name="Q19: Other program areas"
-                    onChange={(e) => this.setKeyword("p4", e)}
-                  />
+                  <Choice 
+                name="p4_q19" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q19 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p4_q19" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q19 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
+                <Choice 
+                name="p4_q19" 
+                type="radio" 
+                value="na"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q19 === "na" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  N/A
+                </Choice>
                 </fieldset>
               </div>
             </div>
@@ -2235,29 +2594,14 @@ class Questions1 extends Component {
                 </fieldset>
               </div>
             </div>
-            {this.state.p4_yes.sort().length > 0 ? (
+            {//This is a duplicate question that is under yes of Q14
+            this.state.p4_yes.sort().length > 0 ? (
               <div className="part4-yes">
                 <h3>
                   Do you plan to submit a SPA (State Plan Amendment)
                   to reflect these changes if you haven’t done so
                   already?
                 </h3>
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p4_q21"
-                  label=""
-                  name="p4_q21"
-                  type="radio"
-                />
                 <ul>
                   {this.state.p4_yes
                     .sort()
