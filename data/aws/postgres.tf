@@ -2,7 +2,7 @@
 module "db" {
   source                  = "terraform-aws-modules/rds/aws"
   version                 = "~> 2.0"
-  identifier              = "postgres-${terraform.workspace}"
+  identifier              = "postgres-rf-${terraform.workspace}"
   engine                  = "postgres"
   engine_version          = "9.6.9"
   instance_class          = "db.t3.small"
