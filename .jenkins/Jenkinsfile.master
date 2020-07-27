@@ -7,7 +7,6 @@ pipeline {
   }
   environment {
     BUILD_TAG = resolveBuildTag()
-    VPC_NAME = "dev"
   }
   stages {
     stage("Prep Agent") {
