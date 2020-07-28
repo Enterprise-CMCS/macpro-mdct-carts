@@ -1,0 +1,200 @@
+{
+    "year": 2020,
+    "state": null,
+    "valid": null,
+    "ordinal": 2,
+    "type": "section",
+    "title": "Program Fees and Policy Changes",
+    "subsections": [
+        null,
+        {
+            "header": "Enrollment and Uninsured Data",
+            "type": "subsection",
+            "id": "2020-02-b",
+            "parts": [
+                {
+                    "id": "2020-02-b-01",
+                    "type": "part",
+                    "applies_to": [
+                        "Medicaid expansion CHIP",
+                        "Separate CHIP",
+                        "Combo"
+                    ],
+                    "header": "State Plan Goals and Objectives",
+                    "description": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
+                    "questions": [
+                        {
+                            "id": "2020-02-b-01-01",
+                            "type": "objectives",
+                            "questions": [
+                                {
+                                    "type": "objective",
+                                    "id": "2020-02-b-01-01-01",
+                                    "questions": [
+                                        {
+                                            "type": "text_long",
+                                            "text": "What is the objective as listed in your state plan?",
+                                            "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                                            "id": "2020-02-b-01-01-01-01",
+                                            "answer": {
+                                                "default_entry": "Reduce the number of uninsured children."
+                                            }
+                                        },
+                                        {
+                                            "id": "2020-02-b-01-01-01-02",
+                                            "type": "goals",
+                                            "questions": [
+                                                {
+                                                    "id": "2020-02-b-01-01-01",
+                                                    "type": "goal",
+                                                    "questions": [
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-01",
+                                                            "text": "Briefly describe your goal.",
+                                                            "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                                            "answer": {
+                                                                "type": "text_long",
+                                                                "entry": null
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-02",
+                                                            "text": "What type of goal is it?",
+                                                            "answer": {
+                                                                "type": "checkbox",
+                                                                "options": {
+                                                                    "New goal": "goal_new",
+                                                                    "Continuing goal": "goal_continuing",
+                                                                    "Discontinued goal": "goal_discontinued"
+                                                                },
+                                                                "default_entry": "goal_new"
+                                                            },
+                                                            "questions": [
+                                                                {
+                                                                    "id": "2020-02-b-01-01-01-02-a",
+                                                                    "interactive_conditional": "Show if 2020-02-b-01-01-01-02 is 'Discontinued goal', hide otherwise.",
+                                                                    "noninteractive_conditional": "Show if 2020-02-b-01-01-01-02 is unanswered or 'Discontinued goal', hide otherwise.",
+                                                                    "text": "Why was this goal discontinued?",
+                                                                    "type": "text_long",
+                                                                    "answer": {
+                                                                        "entry": null
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "fieldset",
+                                                            "text": "Describe the numerator you're measuring",
+                                                            "display_value_type": "percentage",
+                                                            "questions": [
+                                                                {
+                                                                    "id": "2020-02-b-01-01-01-03",
+                                                                    "text": "Which population are you measuring in the numerator?",
+                                                                    "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
+                                                                    "type": "integer",
+                                                                    "answer": {
+                                                                        "entry": null
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "2020-02-b-01-01-01-04",
+                                                                    "text": "Numerator (total number)",
+                                                                    "type": "integer",
+                                                                    "answer": {
+                                                                        "entry": null
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "fieldset",
+                                                            "text": "Describe the denominator you're measuring",
+                                                            "display_value_type": "percentage",
+                                                            "questions": [
+                                                                {
+                                                                    "id": "2020-02-b-01-01-01-05",
+                                                                    "text": "Which population are you measuring in the denominator?",
+                                                                    "hint": "For example: The total number of eligible children in the last federal fiscal year.",
+                                                                    "type": "integer",
+                                                                    "answer": {
+                                                                        "entry": null
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "2020-02-b-01-01-01-06",
+                                                                    "text": "Denominator (total number)",
+                                                                    "type": "integer",
+                                                                    "answer": {
+                                                                        "entry": null
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-07",
+                                                            "text": "What is the date range of your data?",
+                                                            "type": "daterange",
+                                                            "answer": {
+                                                                "labels": [
+                                                                    "Start",
+                                                                    "End"
+                                                                ],
+                                                                "entry": null
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-08",
+                                                            "text": "Which data source did you use?",
+                                                            "type": "checkbox",
+                                                            "answer": {
+                                                                "options": {
+                                                                    "Eligibility or enrollment data": "goal_enrollment_data",
+                                                                    "Survey data": "goal_survey_data",
+                                                                    "Another data source": "goal_other_data"
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-09",
+                                                            "text": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                                            "type": "text_long",
+                                                            "answer": {
+                                                                "entry": null
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-10",
+                                                            "text": "What are you doing to continually make progress towards your goal?",
+                                                            "type": "text_long",
+                                                            "answer": {
+                                                                "entry": null
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-11",
+                                                            "text": "Anything else you'd like to tell us about this goal?",
+                                                            "type": "text_long",
+                                                            "answer": {
+                                                                "entry": null
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "2020-02-b-01-01-01-12",
+                                                            "text": "Do you have any supporting documentation?",
+                                                            "hint": "Optional",
+                                                            "type": "file_upload"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

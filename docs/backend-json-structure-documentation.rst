@@ -1,0 +1,474 @@
+JSON Structure Documentation
+============================
+
+2020-07-28
+
+..  contents:: :local: 
+
+Overview
+--------
+In order to support both a reasonable structured storage approach to the CARTS questions and their answers, and a component-based frontend that will allow changes to be made in configuration rather that code (up to a point), we will use a JSON document approach. To do this, we need to have structures to represent the various elements of the CARTS form.
+
+Most of these are relatively simple and are primarily containers, such as ``section``, ``subsection``, and ``part``. We also need JSON constructs to represent the questions themselves. The ``question`` construct is used for these, and has different characteristics based on its type.
+
+The conditional logic of various parts of the CARTS form is complicated, and attempting to represent that in JSON via some sort of domain-specific language would be unwise. A system design goal is that changes to text, reordering the questions, deleting questions, or adding new questions (that don't alter the conditional logic, at least) should be all be possible via altering the data in the backend, and this approach should achieve that. Changes to the conditional logic, however, will continue to require software development changes.
+
+The conditional logic for questions is therefore described in plain language in the backend data, but these descriptions are not intended to be machine-readable.
+
+In addition, the logic for how `objectives`_ work in Section 2B work is described below, and no attempt is made to store that logic within the data for the system.
+
+Frontend–backend data exchange
+++++++++++++++++++++++++++++++
+The frontend will know what the parameters for the data request are, primarily: year, state, and section of the form. When given a request for ``/<year>/<state>/<section>``, the backend will respond with a JSON document, the structure of which is described in this documentation. That JSON will contain many nested elements with ``entry`` properties. If these are populated (representing data that a user has already entered), the fronted will display those as answers in the form.
+
+As new answers are added by the user, the frontend will send POST requests containing the JSON document to the backend. Essentially, the JSON sent by the frontend will be identical to the JSON it received, except that now various elements' ``entry`` properties will be populated.
+
+The role of the frontend in this context is to keep track of what part of the JSON document corresponds to data the user is entering, change the JSON accordingly, and send this JSON back to the server as changes are made.
+
+As an example, if the form had a Section 23 and that section was extremely simple, the backend JSON for it in 2020 for California might look like this:
+
+.. code:: json
+
+    {
+        "year": 2020,
+        "state": "CA",
+        "ordinal": 23,
+        "type": "section",
+        "title": "Simplicity",
+        "subsections": [{
+                "header": "Brevity",
+                "type": "subsection",
+                "id": "2020-23-a",
+                "parts": [{
+                        "id": "2020-23-a-01",
+                        "type": "part",
+                        "header": "Sagacity",
+                        "questions": [{
+                                "id": "2020-23-a-01-01",
+                                "type": "text_long",
+                                "text": "To be, or not to be?",
+                                "answer": {
+                                    "type": "text_long",
+                                    "entry": null
+                                }}]}]}]}
+
+If the user answered the long question with “Take up arms against a sea of troubles”, the frontend would send this to the backend:
+
+.. code:: json
+
+    {
+        "year": 2020,
+        "state": "CA",
+        "ordinal": 23,
+        "type": "section",
+        "title": "Simplicity",
+        "subsections": [{
+                "header": "Brevity",
+                "type": "subsection",
+                "id": "2020-23-a",
+                "parts": [{
+                        "id": "2020-23-a-01",
+                        "type": "part",
+                        "header": "Sagacity",
+                        "questions": [{
+                                "id": "2020-23-a-01-01",
+                                "type": "text_long",
+                                "text": "To be, or not to be?",
+                                "answer": {
+                                    "type": "text_long",
+                                    "entry": "Take up arms against a sea of troubles"
+                                }}]}]}]}
+
+JSON–component translation
+++++++++++++++++++++++++++
+The frontend components expect JSON-like data for their configuration, but while this is similar to the JSON provided by the backend, it isn't the same, and cannot be identical without overly intermingling form and presentation. Implementing this translation will probably result in some changes to the backend's JSON structure, although hopefullly these will be minimal.
+
+Notes on ``id`` 
+++++++++++++++++
+Every construct with an ``id`` has the ``id`` of the nearest parent with an ``id`` plus a hyphen and its own representation, which for most constructs is a two-digit number with a leading zero, starting at "01". Subsections and questions whose parent elements are questions use letter representations, starting with ``a``.
+
+If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as parts, not as questions, which explains the ``id`` values found in Section 2B.
+
+Not yet covered
++++++++++++++++
++   How questions should be flagged as providing the user the option of seeing the prior year's data. (This will probably be a boolean property of the question, but that's not yet final.)
++   File upload.
+
+Section
+-------
+The top-level construct is a section. Sections have the following properties:
+
+``year``
+    Four-digit integer.
+
+    Corresponds to the year that the report is covering. For example, the annual report that states can submit at the start of October 2020, covering fiscal year 2019–2020, would be ``2020``.
+``id``
+    String.
+
+    ``year``-``section``
+``state``
+    Two-digit string.
+
+    The state submitting the report.
+
+    Despite the name, this covers the District of Columbia, and would also cover any future non-state regions that might be added to the system.
+``valid``
+    Boolean.
+    
+    This status is determined by the backend. Note that incomplete submissions, while invalid, will still be accepted as input by the API. This status is primarily informational and doesn't indicate that the sytem will refuse to accept or certify the section.
+``ordinal``
+    Integer.
+    
+    Section 1 has ordinal ``1``, etc.
+``type``
+    String.
+
+    At this time it is assumed that this will always be ``section``, but this is currently being included as a hedge.
+``title``
+    String.
+    
+    The title for the section, for example “Program Fees and Policy Changes”.
+``subsections``
+    Array of ``subsection`` constructs.
+``description`` (optional)
+    String.
+
+    Additional text that should be presented at the beginning of the section.
+``comment`` (optional)
+    String.
+
+    Comment directed at developer or admin users.
+
+Subsection
+----------
+Some sections have subsections, some only have parts, but the structure expects an intervening subsection even if it is singular.
+
+Subsections are contained by sections.
+
+Subsections, like subquestions, are represented by letters rather than numbers.
+
+``type``
+    String
+
+    Presumably always ``subsection``.
+``ordinal``
+    Integer.
+``id``
+    String
+
+    ``year``-``section``-``subsection``
+
+    For example, Section 1 only has one subsection, and so the user shouldn't see references to any subsections for it, and its ``id`` would be ``2020-01-a``.
+
+    Section 2 has subsections, for example Section 2b would have an ``id`` of ``2020-02-b``
+``parts``
+    Array of ``part`` constructs.
+``description`` (optional)
+    String.
+
+    Additional text that should be presented at the beginning of the subsection.
+``comment`` (optional)
+    String.
+
+    Comment directed at developer or admin users.
+
+Part
+----
+Some sections/subsections are divided into parts. If there are no parts, the entire content is considered to be in one part.
+
+Parts are contained by subsections.
+
+``id``
+    String.
+
+    ``year``-``section``-``subsection``-``ordinal``.
+
+    Examples:
+        :Section 1 Part 1 for 2020: ``2020-01-a-01``
+        :Section 2b Part 1 for 2020: ``2020-02-b-01``
+``type``
+    String.
+
+    Presumably always ``part``.
+``questions``
+    Array of ``question`` constructs.
+``description`` (optional)
+    String.
+
+    Additional text that should be presented at the beginning of the part.
+``applies_to`` (optional)
+    Array of program categories.
+
+    The only valid values here are:
+    
+    +   Medicaid expansion CHIP
+    +   Separate CHIP
+    +   Combo
+
+    The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed.
+``skip_text`` (optional)
+    String.
+
+    The text to be displayed for a state if the state's program is not listed in ``applies_to``.
+``comment`` (optional)
+    String.
+
+    Comment directed at developer or admin users.
+
+Question
+-------------------------------------
+The construct that will contain user-submitted data, as well as presentation information.
+
+Questions can contain other questions, so questions have either questions or parts as containing constructs.
+
+
+``id``
+    String.
+
+    ``year``-``section``-``subsection``-``ordinal``-``question-and-descendants``.
+
+    For example, Section 1 Part 1 Subsection 1 Question 1 for 2020 has the id ``2020-01-a-01-01``, Section 1 Part 1 Question 1a for 2020 has the id ``2020-01-a-01-01-a``.
+``type``
+    String.
+
+    The kind of question construct. The various types are described in the `Question Types`_ section. 
+``text``
+    String.
+
+    The text of the question.
+``hint`` (optional)
+    String.
+
+    Hint text for the question.
+``bullet_text`` (optional)
+    String.
+
+    Summary text for an answer to be displayed in list form; only applied to Section 1.
+``interactive_conditional`` (optional)
+    String.
+
+    Plain-language description of how the logic for displaying the question in the entry form is supposed to work.
+``noninteractive_conditional`` (optional)
+    String.
+
+    Plain-language description of how the logic for displaying the question in the review output is supposed to work.
+``skip_text`` (optional)
+    String.
+
+    The text that should appear instead of the question if the conditional logic indicates the question itself should not be displayed.
+``comment`` (optional)
+    String.
+
+    Comment directed at developer or admin users.
+``answer`` (optional)
+    An ``answer`` construct. Most but not all question types have this property.
+``questions`` (optional)
+    Array of ``question`` constructs.
+
+    These are sub-questions.
+
+Answer
+------
+The construct that contains technical details about how the question should be answered, and the value of any data that users have entered.
+
+Answers are contained by questions, which in this case is a technical description and not a koan.
+
+``entry``
+    The user-entered data responding to the question.
+``comment`` (optional)
+    String.
+
+    Comment directed at developer or admin users.
+``default_entry`` (optional)
+    String.
+
+    In rare cases we want to prepopulate the value of the user's answer. This is not the same as a hint, as this value will be sent to the database as if it had been entered by the user. We think we want this field to allow us to distinguish between sections that have been accessed by the user and those that haven't, but it's possible that this property is unnecessary.
+
+Question Types
+--------------
+This section describes the characteristics and properties (in addition to those described in the Answer section) of answer constructs of a given question type that are specific to that type of question.
+
+``fieldset``
+++++++++++++
+Essentially a container for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions. Fieldsets do not have ``id`` properties, and the questions within them increment as if the fieldset container were not present.
+
+``display_value_type`` (optional)
+    Some fieldsets display synthetic values for the benefit of the user that are not sent to the backend and which are derived from the answers to the questions within the fieldset. One example might be ``sum``, and another is ``percentage`` (in the latter case, the percentage is the first value divided by the second value times 100).
+
+``text_long``
++++++++++++++
+A long string. As this will probably be represented by the ``TEXT`` type in Postgres, its max length should be longer than anything we will realistically encounter. Its ``entry`` value should be represented as a string. It has optional properties:
+
+``max_length``
+    Integer.
+
+    The maximum length of the string. Note that the backend may reject submissions with answers longer than this limit, rather than simply marking them as invalid and accepting the input.
+
+    If absent or set to 0, no limit will be enforced.
+``min_length``
+    Integer.
+
+    The minimum length of the string. The backend will accept submissions with answers shorter than this limit and may mark them as invalid.
+
+    If absent or set to 0, no minimum will be enforced.
+
+``radio``
++++++++++
+A set of choices, only one of which can be chosen. Its ``entry`` value should be represented as a string.
+
+``options``
+    Dictionary.
+
+    A set of key-value pairs where the key is the user-facing label and the value is the data representation.
+
+    For example, a yes/no radio question would have this as its ``options``: ``{"Yes": "yes", "No": "no"}``.
+
+``checkbox``
+++++++++++++
+A set of choices, multiples of which can be chosen. Its ``entry`` value should be represented as an array of strings, where those strings are values from the ``options`` property.
+
+``options``
+    Dictionary.
+
+    A set of key-value pairs where the key is the user-facing label and the value is the data representation.
+
+    For example, a checkbox asking which characteristics of ideas apply would have this ``options`` property::
+
+        {
+            "Colorless": "colorless",
+            "Green": "green",
+            "Sleeping": "sleeping"
+        }
+
+``money``
++++++++++
+A short string that can represent an integer or a float. Constrained to two decimal places.
+
+``integer``
++++++++++++
+An integer.
+
+``file_upload``
++++++++++++++++
+Not yet implemented.
+
+``daterange``
++++++++++++++
+``labels``
+    Array of two strings.
+
+    The labels for the start and end of the range.
+
+The ``entry`` value should be sent to the server as an array of two strings, with each of those strings being an ISO 8601 date. For example, no matter how the dates are represented or entered on the frontend, the range from the Fourth of July 2014 and September 23rd 2014 should be sent to the backend as ``["2014-07-04", "2014-09-23"]``.
+
+``ranges``
+++++++++++
+A number of ranges. Its ``entry`` value should be represented as a three-dimensional array of strings, broadly equivalent to tables, table rows, and table cells.
+
+Possibly the most complex construct in terms of implementation; objectives and goals are probably the most complex in terms of representation.
+
+``header`` (optional)
+    String.
+
+    Brief text about the range, supplemental to the question text and the range categories.
+``range_categories``
+    Array of arrays of strings. Each inner array of strings represents the start and end of a range.
+``range_types``
+    Array of strings, corresponding to the range categories. The strings are the kind of value that will be accepted as valid for that range.
+``entry_min``
+    Integer.
+
+    The minimum number of “rows” that will be regarded as a valid answer. If absent or set to 0, submitting no rows will be allowed as valid.
+``entry_max``
+    Integer.
+
+    The maximum number of “rows” that will be regarded as a valid answer. If absent or set to 0, there will be no row limit.
+
+For example, we want to ask about the state program's tier levels are if their fees are tiered by Federal Poverty Level; we want an answer similar to:
+
+    | “21%–40% FPL: $30–$50”
+    | “41%–60% FPL: $60–$80”
+
+At least one row is required, but there is no limit to the number of rows a user can enter.
+
+The ``answer`` construct would be:
+    
+    ..  code:: javascript
+
+        {
+            "range_categories": [["FPL starts at", "FPL ends at"], ["Premium fee starts at", "Premium fee ends at"]],
+            "range_types": ["percentage", "money"],
+            "entry_min": 1
+            "entry_max": 0
+        }
+
+If the user entered data stating that answer was the same as our example, i.e. equivalent to the two rows “21%–40% FPL: $30–$50” and “41%–60% FPL: $60–$80”, the ``answer`` construct with a populated ``entry`` property would be:
+    
+    ..  code:: javascript
+
+        {
+            "range_categories": [["FPL starts at", "FPL ends at"], ["Premium fee starts at", "Premium fee ends at"]],
+            "range_types": ["percentage", "money"],
+            "entry_min": 1
+            "entry_max": 0
+            "entry": [
+                [["21", "40"], ["30", "50"]],
+                [["41", "60"], ["60", "80"]],
+            ]
+        }
+
+``objectives``
+++++++++++++++
+A particular construct specific to Section 2B.
+
+A number of sets of questions. The ``objective`` and ``goal`` answer types are broadly equivalent to ``part`` constructs, except that the user enters an arbitrary number of them.
+
+Allowing users to enter an arbitary number of objectives and an arbitrary number of goals per objective does not lend itself to a simple schema, at least not one we've found so far; in our defense we can only say that we think the implementation of the following will not be as bad as its description.
+
+The first objective in an array of objectives has an answer—the description of the objective—set in the database, and that answer cannot be updated by the user. Subsequent objectives have user-editable descriptions.
+
+Questions of the type ``objectives`` have a ``questions`` property, and the immediate children in that array must be questions of type ``objective``.
+
+Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_long`` (for the description) and question of the type ``goals``.
+
+Questions of the type ``goals`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``goal``.
+
+Questions of the type ``goal`` have a ``questions`` property, and these questions aren't constrained in terms of their types.
+
+The frontend must allow users to create new objectives, and to create new goals in a given objective. A newly-created objective is created with one goal.
+
+The API JSON representation of the first goal in the first objective is the template for any further goals, and the API JSON representation of the first objective is the template for any further objectives.
+
+When creating new goals and/or objectives, the frontend must
+
++   Set all ``entry`` properties at all levels of the new construct to be empty.
++   For new objectives, delete all but the first goal in the new construct.
++   Set the ``id`` properties at all levels of the new construct to the appropriate values.
+
+    For example, the ``objectives`` question in Section 2B has an ``id`` of ``2020-02-b-01-01`` (year, section, subsection, part, question).
+    
+    The lone (initial) direct child in its ``questions`` property has a type of ``objective``, and an ``id`` of ``2020-02-b-01-01-01`` (year, section, subsection, part, question, objective).
+
+    The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_long``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).
+
+    The second direct child of the ``questions`` property of that ``objective`` question has a type of ``goals``, and an ``id`` of ``2020-02-b-01-01-01-02`` (year, section, subsection, part, question, objective, question).
+
+    The lone (initial) direct child of the ``questions`` property of that ``goals`` question has a type of ``goal``, and an ``id`` of ``2020-02-b-01-01-01-02-01`` (year, section, subsection, part, question, objective, question, goal).
+
+    The first direct child of the ``questions`` property of that ``goal`` question can have any type (other than ``objectives``, ``objective``, ``goals``, or ``goal``, you monster), and an ``id`` of ``2020-02-b-01-01-01-02-01-01`` (year, section, subsection, part, question, objective, question, goal, question).
+
+    While this sounds appalling, in practice for a new goal the frontend just has to copy the previous goal and increment the ``id`` properties accordingly. So with the above example, the first goal of the first objective has the ``id`` ``2020-02-b-01-01-01-02-01``, so the frontend would replace that string in every ``id`` field in the new goal (which would be the second goal) with ``2020-02-b-01-01-01-02-02``.
+
+    For a new objective, a similar approach applies: the first objective in the above example has the ``id`` ``2020-02-b-01-01-01``, so the frontend would copy it and its children, including its first goal, and then in all child ``id`` properties replace the string ``2020-02-b-01-01-01`` with the string ``2020-02-b-01-01-02`` (because this would be the second objective).
+
+``objective``
++++++++++++++
+A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_long`` for the description of the objective, and one of the type ``goals`` to contain the goals for the objective.
+
+``goals``
++++++++++
+A child construct of the ``objective`` construct. This should have at least one value in its ``questions`` property, and all of the values in its ``questions`` property should be of the type ``goal``.
+
+``goal``
+++++++++
+A child construct of the ``goals`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``goals``, or ``goal`` here we won't be happy and suspect you won't be either.
