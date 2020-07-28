@@ -1124,6 +1124,7 @@ class Questions1 extends Component {
                 </Choice>
               </fieldset>
             </div>
+            <br/>
             <div className="question-container">
               <div id="p3_q6">
                 <fieldset className="ds-c-fieldset ds-u-margin-top--0">
@@ -1676,33 +1677,6 @@ class Questions1 extends Component {
                     name="p3_q20"
                     rows="6"
                   />
-                  <Choice 
-                name="p3_q20" 
-                type="radio" 
-                value="yes"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q20 === "yes" ? true : false) : false}
-                onChange={this.setConditional}
-                >
-                  Yes
-                </Choice>
-                <Choice 
-                name="p3_q20" 
-                type="radio" 
-                value="no"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q20 === "no" ? true : false) : false}
-                onChange={this.setConditional}
-                >
-                  No
-                </Choice>
-                <Choice 
-                name="p3_q20" 
-                type="radio" 
-                value="na"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p3_q20 === "na" ? true : false) : false}
-                onChange={this.setConditional}
-                >
-                  N/A
-                </Choice>
                 </fieldset>
               </div>
             </div>
