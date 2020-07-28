@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { TextField, ChoiceList } from "@cmsgov/design-system-core";
+import { TextField, Choice } from "@cmsgov/design-system-core";
 import {
     Accordion,
     AccordionItem,
@@ -32,6 +32,7 @@ class Questions3C extends Component {
       p2_q4: "",
       p2_q5: "",
       p2_q6: "",
+      previousEntry: this.props.previousEntry,
       previousp1_q3: "last year's text Q3",
       previousp1_q4: "last year's text q4",
       previousp1_q5: "last year's text q5",
@@ -129,26 +130,17 @@ class Questions3C extends Component {
                 implemented this?
               </div>
               <div id="p1_q1">
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                    },
-                  ]}
-                  className="p1_q1"
-                  label=""
-                  name="p1_q1"
-                  onChange={this.setConditional}
-                  hint="Note: This question may not apply to Medicaid Expansion states."
-                />
-                {this.state.p1_q1 === "yes" ? (
-                  <div className="conditional">
-                    <TextField
+                <Choice 
+                      name="p1_q1" 
+                      type="radio" 
+                      value="yes"
+                      hint="Note: This question may not apply to Medicaid Expansion states."
+                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previousp1_q1 === "yes" ? true : false) : false}
+                      onChange={this.setConditional}
+                      checkedChildren={
+                        <div className="ds-c-choice__checkedChild">
+                          
+                          <TextField
                       label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
                       multiline
                       name="p1_q1__a"
@@ -165,10 +157,21 @@ class Questions3C extends Component {
                       value={this.state.p1_q1__b}
                       onChange={this.changeText}
                     />
-                  </div>
-                ) : (
-                  ""
-                )}
+                        
+                        </div>
+                    }
+                      >
+                        Yes
+                      </Choice>
+                      <Choice 
+                      name="p1_q1" 
+                      type="radio" 
+                      value="no"
+                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previousp1_q1 === "no" ? true : false) : false}
+                      onChange={this.setConditional}
+                      >
+                        No
+                      </Choice>
               </div>
             </div>
           </div>
@@ -189,44 +192,47 @@ class Questions3C extends Component {
             </div>
             <div className="sub-questions">
               <div id="p1_q2__1">
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                      disabled: this.state.previousYear === "true" ? true : false,
-                      defaultChecked:  this.state.p1_q2__1 ==="yes" ? true : false
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                      disabled: this.state.previousYear === "true" ? true : false,
-                      defaultChecked:  this.state.p1_q2__1 ==="no" ? true : false
-                    },
-                  ]}
-                  label="a. Do you conduct follow-up communication with families through caseworkers and outreach workers?"
-                  name="p1_q2__1__a"
-                />
+              <div className="question">a. Do you conduct follow-up communication with families through caseworkers and outreach workers?</div>
+                <Choice 
+                name="p1_q2__1" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__1 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p1_q2__1" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__1 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
               </div>
               <div id="p1_q2__2">
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Yes",
-                      value: "yes",
-                      disabled: this.state.previousYear === "true" ? true : false,
-                      defaultChecked:  this.state.p1_q2__2 ==="yes" ? true : false
-                    },
-                    {
-                      label: "No",
-                      value: "no",
-                      disabled: this.state.previousYear === "true" ? true : false,
-                      defaultChecked:  this.state.p1_q2__2 ==="no" ? true : false
-                    },
-                  ]}
-                  label="b. Do you send renewal reminder notices to all families?"
-                  name="p1_q2__2"
-                />
+                <div className="question">b. Do you send renewal reminder notices to all families?</div>
+                <Choice 
+                label=""
+                name="p1_q2__2" 
+                type="radio" 
+                value="yes"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__2 === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                name="p1_q2__2" 
+                type="radio" 
+                value="no"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__2 === "no" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  No
+                </Choice>
               </div>
               <TextField
                 label="c. How many notices do you send to families before disenrolling a child from the program?"

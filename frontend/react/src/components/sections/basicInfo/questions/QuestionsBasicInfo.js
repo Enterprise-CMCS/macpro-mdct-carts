@@ -9,7 +9,7 @@ import {
   import {
     TextField,
     Dropdown,
-    ChoiceList,
+    Choice,
   } from "@cmsgov/design-system-core";
   import statesArray from "../../../Utils/statesArray";
   import FillForm from "../../../layout/FillForm";
@@ -34,6 +34,7 @@ class QuestionsBasicInfo extends Component {
       contactEmail: "",
       contactAddress: "",
       contactPhone: "",
+      previousYear: this.props.previousYear,
       previous_programName: this.props.programName,
       previous_programType: this.props.programType,
       previous_contactName: "John Smith",
@@ -123,32 +124,33 @@ class QuestionsBasicInfo extends Component {
           disabled
         />
 
-        <ChoiceList
-          choices={[
-            {
-              label: "Combination state (M-CHIP and S-CHIP)",
-              value: "comboCHIP",
-              checked:
-                this.state.programType === "comboCHIP" ? true : false,
-            },
-            {
-              label: "CHIP Medicaid Expansion only (M-CHIP)",
-              value: "mCHIP",
-              checked:
-                this.state.programType === "mCHIP" ? true : false,
-            },
-            {
-              label: "CHIP Separate Program only (S-CHIP) ",
-              value: "sCHIP",
-              checked:
-                this.state.programType === "sCHIP" ? true : false,
-            },
-          ]}
-          label="2. Program type: "
-          name="programType"
-          onChange={this.handleChange}
-          disabled
-        />
+        <Choice 
+        name="programType" 
+        type="radio" 
+        value="yes"
+        defaultChecked={this.props.previousYear === "true" ? (this.state.previous_programType === "comboCHIP" ? true : false) : false}
+        onChange={this.setConditional}
+        >
+          Combination state (M-CHIP and S-CHIP)
+        </Choice>
+        <Choice 
+        name="programType" 
+        type="radio" 
+        value="no"
+        defaultChecked={this.props.previousYear === "true" ? (this.state.prevous_programType$ === "mCHIP" ? true : false) : false}
+        onChange={this.setConditional}
+        >
+          CHIP Medicaid Expansion only (M-CHIP)
+        </Choice>
+        <Choice 
+        name="programType" 
+        type="radio" 
+        value="no"
+        defaultChecked={this.props.previousYear === "true" ? (this.state.previous_programType === "sCHIP" ? true : false) : false}
+        onChange={this.setConditional}
+        >
+          CHIP Separate Program only (S-CHIP)
+        </Choice>
 
         <TextField
           label="3. CHIP program name(s): "

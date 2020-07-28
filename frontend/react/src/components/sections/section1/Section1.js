@@ -8,7 +8,6 @@ import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
 import {
   Button as button,
-  ChoiceList,
   Tabs,
   TabPanel,
   TextField,
