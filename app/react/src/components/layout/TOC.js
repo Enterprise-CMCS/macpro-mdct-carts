@@ -6,7 +6,6 @@ class TOC extends Component {
     // Get array of current url path
     let paths = window.location.pathname.split("/");
 
-    console.log("wheres the windowww", window.location.pathname);
     return (
       <div className="toc">
         <VerticalNav

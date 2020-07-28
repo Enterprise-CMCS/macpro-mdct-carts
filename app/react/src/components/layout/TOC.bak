@@ -9,19 +9,19 @@ import TOC from "../layout/TOC";
 
 const mockStore = configureMockStore();
 
-describe("TOC Component", () => {
-  const component = shallow(<TOC />);
+// describe("TOC Component", () => {
+//   const component = shallow(<TOC />);
 
-  window.location.pathname = "/section3/3a";
+//   //   window.location.pathname = "/section3/3a";
 
-  it("renders", () => {
-    expect(component.exists()).toBe(true);
-  });
+//   it("renders", () => {
+//     expect(component.exists()).toBe(true);
+//   });
 
-  it("has appropriate classnames", () => {
-    expect(component.exists(".toc")).toBe(true);
-  });
-});
+//   it("has appropriate classnames", () => {
+//     expect(component.exists(".toc")).toBe(true);
+//   });
+// });
 
 // (TO DELETE) What else should i test for??
 

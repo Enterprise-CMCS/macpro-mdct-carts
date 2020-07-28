@@ -12,7 +12,7 @@ function App() {
   let VisibleFooter =
     window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
   return (
-    <div className="App">
+    <div className="App" data-test="component-app">
       {VisibleHeader}
       <Routes />
       {VisibleFooter}

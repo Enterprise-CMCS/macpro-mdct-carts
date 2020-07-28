@@ -10,7 +10,7 @@ import FPL from "../layout/FPL";
 const mockStore = configureMockStore();
 
 describe("FPL Component", () => {
-  const component = shallow(<FPL />);
+  const component = mount(<FPL />);
 
   it("renders", () => {
     expect(component.exists()).toBe(true);
@@ -22,11 +22,14 @@ describe("FPL Component", () => {
 
   it("updates local state on text input", () => {
     component.setState({ fpl_per_starts_at: "17" });
-
     const status = component.state().fpl_per_starts_at;
-
     expect(status).toEqual("17");
   });
+
+  // it("correctly calculates FPL", ()=>{
+  //   let syntheticEvent
+  //   component.calculateFPL()
+  // })
 });
 
 // (TO DELETE) What else should i test for??
