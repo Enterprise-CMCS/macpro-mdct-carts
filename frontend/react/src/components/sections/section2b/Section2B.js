@@ -147,10 +147,6 @@ class Section2b extends Component {
                   />
                 </div>
               </TabPanel>
-<<<<<<< HEAD:app/react/src/components/sections/section2b/Section2B.js
-=======
-
->>>>>>> c61208033373ba4aa4e48c1f190829b38dacc422:frontend/react/src/components/sections/section2b/Section2B.js
               {this.props.review !== true ? (
                 <TabPanel
                   className="section2b-previous"
