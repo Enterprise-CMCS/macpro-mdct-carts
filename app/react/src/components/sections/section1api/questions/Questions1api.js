@@ -5,6 +5,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import FPL from "../../../layout/FPL";
 import Data from "./../section1data.json";
 import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
+import { CMSChoice } from "../../../fields/CMSChoice";
 
 class Questions1 extends Component {
   constructor(props) {
@@ -240,18 +241,38 @@ class Questions1 extends Component {
                 {question.answer_type === "multi"
                   ? question.answer_values.map((value) => (
                       <div>
-                        <Choice
+                        <CMSChoice
+                          name={question.id}
+                          value={value}
+                          type="radio"
+                          answer={question.answer}
+                          conditional={question.conditional}
+                          children={question.questions}
+                        />
+                        {/* <Choice
                           class="ds-c-choice"
                           name={question.id}
                           value={value}
                           type="radio"
-                          name={question.id}
-                          {...(question.conditional === "2020-01-01-01 is yes"
+                          // checked
+                          {...(question.answer === value
                             ? { checked: "checked" }
-                            : { checked: "checked" })}
+                            : "")}
+                          // checkedChildren= {<div>Here </div>}
+
+                          // if conditional == value
+                          // add checkedChildren prop
+                          // loop through children to create HTML of new inputs
+
+                          {...(question.conditional === value
+                            ? question.questions.map((childQuestion) => ({
+                                checkedChildren:
+                                  "checkedChildren= {<Choice>Here</Choice>}",
+                              }))
+                            : null)}
                         >
-                          {question.text}
-                        </Choice>
+                          {value}
+                        </Choice> */}
                       </div>
                     ))
                   : null}

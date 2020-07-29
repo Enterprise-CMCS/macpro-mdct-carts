@@ -16,11 +16,11 @@
           "text": "Does your program charge an enrollment fee?",
           "answer_type": "multi",
           "answer_values": ["yes", "no"],
-          "answer": null,
+          "answer": "yes",
+          "conditional": "yes",
           "questions": [
             {
               "id": "2020-01-01-01-a",
-              "conditional": "2020-01-01-01 is yes",
               "text": "How much is your enrollment fee?",
               "answer_type": "money",
               "answer": null
@@ -32,11 +32,12 @@
           "text": "Does your program charge a premium fee?",
           "answer_type": "multi",
           "answer_values": ["yes", "no"],
-          "answer": null,
+          "answer": "no",
+          "conditional": "no",
           "questions": [
             {
               "id": "2020-01-01-02-a",
-              "conditional": "2020-01-01-02 is yes",
+
               "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
               "text": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
               "answer_type": "multi",
@@ -153,7 +154,7 @@
           "text": "Does your program charge a premium fee?",
           "answer_type": "multi",
           "answer_values": ["yes", "no"],
-          "answer": null,
+          "answer": "null",
           "questions": [
             {
               "id": "2020-01-02-02-a",
