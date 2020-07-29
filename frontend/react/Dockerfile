@@ -33,13 +33,11 @@ COPY . .
 RUN npm run build
 
 #===============================================================================
-#copy static build to s3
+#copy static files to s3
 
 RUN aws configure list
 
-RUN aws s3 cp /app/build s3://carts-ui/static --recursive
-
-
+RUN aws s3 cp /app/build s3://carts-ui --recursive
 
 
 # ==============================================================================
@@ -53,17 +51,11 @@ RUN aws s3 cp /app/build s3://carts-ui/static --recursive
 # Copy static build from the builder container
 ##COPY --from=builder /app/build /usr/share/nginx/html/
 
-
-##RUN aws s3 cp /app/build s3://carts-ui/static --recursive
-
-
-
-
 # Expose port 80 for nginx
 ##EXPOSE 80
 
 # Copy .env file and shell script to container; this sets runtime variables
-WORKDIR /usr/share/nginx/html
+##WORKDIR /usr/share/nginx/html
 ##COPY ./env.sh .
 ##COPY .env .
 
