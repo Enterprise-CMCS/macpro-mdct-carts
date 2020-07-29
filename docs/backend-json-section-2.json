@@ -39,7 +39,8 @@
                                                 "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
                                                 "id": "2020-02-b-01-01-01-01",
                                                 "answer": {
-                                                    "default_entry": "Reduce the number of uninsured children."
+                                                    "default_entry": "Reduce the number of uninsured children.",
+                                                    "entry": null
                                                 }
                                             },
                                             {
@@ -69,7 +70,8 @@
                                                                         "Continuing goal": "goal_continuing",
                                                                         "Discontinued goal": "goal_discontinued"
                                                                     },
-                                                                    "default_entry": "goal_new"
+                                                                    "default_entry": "goal_new",
+                                                                    "entry": null
                                                                 },
                                                                 "questions": [
                                                                     {
@@ -153,7 +155,8 @@
                                                                         "Eligibility or enrollment data": "goal_enrollment_data",
                                                                         "Survey data": "goal_survey_data",
                                                                         "Another data source": "goal_other_data"
-                                                                    }
+                                                                    },
+                                                                    "entry": null
                                                                 }
                                                             },
                                                             {
@@ -184,7 +187,10 @@
                                                                 "id": "2020-02-b-01-01-01-12",
                                                                 "text": "Do you have any supporting documentation?",
                                                                 "hint": "Optional",
-                                                                "type": "file_upload"
+                                                                "type": "file_upload",
+                                                                "answer": {
+                                                                    "entry": null
+                                                                }
                                                             }
                                                         ]
                                                     }

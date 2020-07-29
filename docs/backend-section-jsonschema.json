@@ -55,13 +55,75 @@
                     "type": "array",
                     "items": {
                         "anyOf": [
+                            {"$ref": "#/definitions/fieldset"},
+                            {"$ref": "#/definitions/objectives"},
+                            {"$ref": "#/definitions/question"}
+                        ]
+                    }
+                }
+            },
+            "required": ["id"]
+        },
+        "objectives": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "type": {"const": "objectives"},
+                "comment": {"type": "string"},
+                "questions": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/objective"}
+                }
+            },
+            "required": ["id", "type"]
+        },
+        "objective": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "type": {"const": "objective"},
+                "comment": {"type": "string"},
+                "questions": {
+                    "type": "array",
+                    "items": [
+                            {"$ref": "#/definitions/question"},
+                            {"$ref": "#/definitions/goals"}
+                    ],
+                    "additionalItems": {"$ref": "#/definitions/goals"}
+                }
+            },
+            "required": ["id", "type"]
+        },
+        "goals": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "type": {"const": "goals"},
+                "comment": {"type": "string"},
+                "questions": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/goal"}
+                }
+            },
+            "required": ["id", "type"]
+        },
+        "goal": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "type": {"const": "goal"},
+                "comment": {"type": "string"},
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
                             {"$ref": "#/definitions/question"},
                             {"$ref": "#/definitions/fieldset"}
                         ]
                     }
                 }
             },
-            "required": ["id"]
+            "required": ["id", "type"]
         },
         "question": {
             "type": "object",
@@ -74,6 +136,9 @@
                 "type": {
                     "enum": [
                         "checkbox",
+                        "daterange",
+                        "file_upload",
+                        "integer",
                         "money",
                         "radio",
                         "ranges",
@@ -102,19 +167,11 @@
             "type": "object",
             "properties": {
                 "id": {"type": "string"},
-                "text": {"enum": ["fieldset"]},
+                "text": {"type": "string"},
                 "answer": {"$ref": "#/definitions/answer"},
                 "interactive_conditional": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
-                "type": {
-                    "enum": [
-                        "checkbox",
-                        "money",
-                        "radio",
-                        "ranges",
-                        "text_long"
-                    ]
-                },
+                "type": {"const": "fieldset"},
                 "hint": {"type": "string"},
                 "skip_text": {"type": "string"},
                 "questions": {
