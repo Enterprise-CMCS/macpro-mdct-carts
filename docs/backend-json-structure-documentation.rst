@@ -13,9 +13,15 @@ Most of these are relatively simple and are primarily containers, such as ``sect
 
 The conditional logic of various parts of the CARTS form is complicated, and attempting to represent that in JSON via some sort of domain-specific language would be unwise. A system design goal is that changes to text, reordering the questions, deleting questions, or adding new questions (that don't alter the conditional logic, at least) should be all be possible via altering the data in the backend, and this approach should achieve that. Changes to the conditional logic, however, will continue to require software development changes.
 
-The conditional logic for questions is therefore described in plain language in the backend data, but these descriptions are not intended to be machine-readable.
+The conditional logic for questions with difficult logic is therefore described in plain language in the backend data, but these descriptions are not intended to be machine-readable.
+
+The conditional logic for the simple logic is under development.
 
 In addition, the logic for how `objectives`_ work in Section 2B work is described below, and no attempt is made to store that logic within the data for the system.
+
+The structure of the JSON can be validated against `backend-section.schema.json`_ using JSON Schema.
+
+.. _backend-section.schema.json: ./backend-section.schema.json
 
 Frontend–backend data exchange
 ++++++++++++++++++++++++++++++
@@ -93,6 +99,7 @@ Not yet covered
 +++++++++++++++
 +   How questions should be flagged as providing the user the option of seeing the prior year's data. (This will probably be a boolean property of the question, but that's not yet final.)
 +   File upload.
++   How basic conditional logic should work.
 
 Section
 -------
@@ -472,3 +479,5 @@ A child construct of the ``objective`` construct. This should have at least one 
 ``goal``
 ++++++++
 A child construct of the ``goals`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``goals``, or ``goal`` here we won't be happy and suspect you won't be either.
+
+

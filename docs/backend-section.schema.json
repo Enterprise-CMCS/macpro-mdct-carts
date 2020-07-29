@@ -1,10 +1,11 @@
 {
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "section": {
             "type": "object",
             "properties": {
                 "id": {"type": "string"},
-                "type": {"type": "string"},
+                "type": {"const": "section"},
                 "title": {"type": ["string", "null"]},
                 "ordinal": {"type": "integer"},
                 "valid": {"type": ["boolean", "null"]},
@@ -23,7 +24,7 @@
             "type": "object",
             "properties": {
                 "id": {"type": "string"},
-                "type": {"type": "string"},
+                "type": {"const": "subsection"},
                 "title": {"type": "string"},
                 "parts": {
                     "type": "array",
@@ -37,6 +38,7 @@
             "type": "object",
             "properties": {
                 "id": {"type": "string"},
+                "type": {"const": "part"},
                 "description": {"type": "string"},
                 "skip_text": {"type": "string"},
                 "comment": {"type": "string"},
@@ -62,7 +64,7 @@
                     }
                 }
             },
-            "required": ["id"]
+            "required": ["id", "type"]
         },
         "objectives": {
             "type": "object",
