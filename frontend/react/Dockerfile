@@ -13,6 +13,13 @@ CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/
 # => Build container
 FROM dev as builder
 
+#install aws cli
+
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
+        unzip awscliv2.zip &&\
+        ./aws/install
+
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
@@ -25,31 +32,46 @@ COPY . .
 # Create static build
 RUN npm run build
 
+#===============================================================================
+#copy static build to s3
+
+RUN aws configure list
+
+RUN aws s3 cp /app/build s3://carts-ui/static --recursive
+
+
+
 
 # ==============================================================================
 # => Run container
-FROM nginx:1.19.0-alpine as runner
+##FROM nginx:1.19.0-alpine as runner
 
 # Copy nginx config
-RUN rm -rf /etc/nginx/conf.d
-COPY conf /etc/nginx
+##RUN rm -rf /etc/nginx/conf.d
+##COPY conf /etc/nginx
 
 # Copy static build from the builder container
-COPY --from=builder /app/build /usr/share/nginx/html/
+##COPY --from=builder /app/build /usr/share/nginx/html/
+
+
+##RUN aws s3 cp /app/build s3://carts-ui/static --recursive
+
+
+
 
 # Expose port 80 for nginx
-EXPOSE 80
+##EXPOSE 80
 
 # Copy .env file and shell script to container; this sets runtime variables
 WORKDIR /usr/share/nginx/html
-COPY ./env.sh .
-COPY .env .
+##COPY ./env.sh .
+##COPY .env .
 
 # Add bash to image, so env.sh can be run
-RUN apk add --no-cache bash
+##RUN apk add --no-cache bash
 
 # Make env.sh executable
-RUN chmod +x env.sh
+##RUN chmod +x env.sh
 
 # Start Nginx server; env.sh is run first, setting runtime variables on boot
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+#CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
