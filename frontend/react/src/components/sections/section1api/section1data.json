@@ -13,7 +13,7 @@
       "questions": [
         {
           "id": "2020-01-01-01",
-          "text": "Does your program charge an enrollment fee?",
+          "text": "1. Does your program charge an enrollment fee?",
           "answer_type": "multi",
           "answer_values": ["yes", "no"],
           "answer": "yes",
@@ -29,7 +29,7 @@
         },
         {
           "id": "2020-01-01-02",
-          "text": "Does your program charge a premium fee?",
+          "text": "2. Does your program charge a premium fee?",
           "answer_type": "multi",
           "answer_values": ["yes", "no"],
           "answer": "no",

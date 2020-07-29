@@ -249,30 +249,6 @@ class Questions1 extends Component {
                           conditional={question.conditional}
                           children={question.questions}
                         />
-                        {/* <Choice
-                          class="ds-c-choice"
-                          name={question.id}
-                          value={value}
-                          type="radio"
-                          // checked
-                          {...(question.answer === value
-                            ? { checked: "checked" }
-                            : "")}
-                          // checkedChildren= {<div>Here </div>}
-
-                          // if conditional == value
-                          // add checkedChildren prop
-                          // loop through children to create HTML of new inputs
-
-                          {...(question.conditional === value
-                            ? question.questions.map((childQuestion) => ({
-                                checkedChildren:
-                                  "checkedChildren= {<Choice>Here</Choice>}",
-                              }))
-                            : null)}
-                        >
-                          {value}
-                        </Choice> */}
                       </div>
                     ))
                   : null}
