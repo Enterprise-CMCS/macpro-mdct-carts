@@ -1,88 +1,91 @@
 {
-    "year": 2020,
-    "state": null,
-    "valid": null,
-    "ordinal": 3,
-    "id": "2020-03",
-    "type": "section",
-    "title": null,
-    "subsections": [
-        {
-            "type": "subsection",
-            "id": "2020-03-a",
-            "title": "Program Outreach",
-            "parts": [
-                {
-                    "id": "2020-03-a-01",
-                    "questions": [
-                        {
-                            "id": "2020-03-a-01-01",
-                            "text": "Have you changed your outreach methods in the last federal fiscal year?",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
+    "section": {
+        "year": 2020,
+        "state": null,
+        "valid": null,
+        "ordinal": 3,
+        "id": "2020-03",
+        "type": "section",
+        "title": null,
+        "subsections": [
+            {
+                "type": "subsection",
+                "id": "2020-03-a",
+                "title": "Program Outreach",
+                "parts": [
+                    {
+                        "id": "2020-03-a-01",
+                        "questions": [
+                            {
+                                "id": "2020-03-a-01-01",
+                                "text": "Have you changed your outreach methods in the last federal fiscal year?",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
                                 },
-                                "entry": null
-                            },
-                            "questions": [
-                                {
-                                    "id": "2020-03-a-01-01-a",
-                                    "noninteractive_conditional": "Show if 2020-03-a-01-01 is yes or unanswered. Hide if 2020-03-a-01-01 is no.",
-                                    "interactive_conditional": "Show if 2020-03-a-01-01 is yes. Hide if 2020-03-a-01-01 is no or unanswered.",
-                                    "text": "What are you doing differently?",
-                                    "type": "text_long",
-                                    "answer": {
-                                        "entry": null
+                                "questions": [
+                                    {
+                                        "id": "2020-03-a-01-01-a",
+                                        "noninteractive_conditional": "Show if 2020-03-a-01-01 is yes or unanswered. Hide if 2020-03-a-01-01 is no.",
+                                        "interactive_conditional": "Show if 2020-03-a-01-01 is yes. Hide if 2020-03-a-01-01 is no or unanswered.",
+                                        "text": "What are you doing differently?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        }
                                     }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2020-03-a-01-02",
-                            "text": "Are you targeting specific populations in your outreach efforts?",
-                            "hint": "For example: minorities, immigrants, or children living in rural areas.",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
+                                ]
+                            },
+                            {
+                                "id": "2020-03-a-01-02",
+                                "text": "Are you targeting specific populations in your outreach efforts?",
+                                "hint": "For example: minorities, immigrants, or children living in rural areas.",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-a-01-02-a",
+                                        "interactive_conditional": "Hide if 2020-03-a-01-02 unanswered or no, show otherwise.",
+                                        "noninteractive_conditional": "Show unless 2020-03-a-01-02 is no.",
+                                        "text": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-a-01-03",
+                                "text": "What methods have been most effective in reaching low-income, uninsured children?",
+                                "hint": "For example: TV, school outreach, or word of mouth.",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
                                 }
                             },
-                            "questions": [
-                                {
-                                    "id": "2020-03-a-01-02-a",
-                                    "interactive_conditional": "Hide if 2020-03-a-01-02 unanswered or no, show otherwise.",
-                                    "noninteractive_conditional": "Show unless 2020-03-a-01-02 is no.",
-                                    "text": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
-                                    "type": "text_long",
-                                    "answer": {
-                                        "entry": null
-                                    }
+                            {
+                                "id": "2020-03-a-01-04",
+                                "text": "Anything else you’d like to add about your outreach efforts?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
                                 }
-                            ]
-                        },
-                        {
-                            "id": "2020-03-a-01-03",
-                            "text": "What methods have been most effective in reaching low-income, uninsured children?",
-                            "hint": "For example: TV, school outreach, or word of mouth.",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
                             }
-                        },
-                        {
-                            "id": "2020-03-a-01-04",
-                            "text": "Anything else you’d like to add about your outreach efforts?",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 }

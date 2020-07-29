@@ -1,0 +1,153 @@
+{
+    "definitions": {
+        "section": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "type": {"type": "string"},
+                "title": {"type": ["string", "null"]},
+                "ordinal": {"type": "integer"},
+                "valid": {"type": ["boolean", "null"]},
+                "state": {"type": ["string", "null"]},
+                "year": {"type": ["integer"]},
+                "subsections": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/subsection"}
+                }
+
+            },
+            "required": ["id", "year", "subsections"]
+        },
+
+        "subsection": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "type": {"type": "string"},
+                "title": {"type": "string"},
+                "parts": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/part"}
+                }
+
+            },
+            "required": ["id", "parts"]
+        },
+        "part": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "description": {"type": "string"},
+                "skip_text": {"type": "string"},
+                "comment": {"type": "string"},
+                "applies_to": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Medicaid expansion CHIP",
+                            "Separate CHIP",
+                            "Combo"
+                        ]
+                    }
+                },
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {"$ref": "#/definitions/question"},
+                            {"$ref": "#/definitions/fieldset"}
+                        ]
+                    }
+                }
+            },
+            "required": ["id"]
+        },
+        "question": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "text": {"type": "string"},
+                "answer": {"$ref": "#/definitions/answer"},
+                "interactive_conditional": {"type": "string"},
+                "noninteractive_conditional": {"type": "string"},
+                "type": {
+                    "enum": [
+                        "checkbox",
+                        "money",
+                        "radio",
+                        "ranges",
+                        "text_long"
+                    ]
+                },
+                "hint": {"type": "string"},
+                "skip_text": {"type": "string"},
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {"$ref": "#/definitions/question"},
+                            {"$ref": "#/definitions/fieldset"}
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "type",
+                "answer"
+            ]
+        },
+        "fieldset": {
+            "type": "object",
+            "properties": {
+                "id": {"type": "string"},
+                "text": {"enum": ["fieldset"]},
+                "answer": {"$ref": "#/definitions/answer"},
+                "interactive_conditional": {"type": "string"},
+                "noninteractive_conditional": {"type": "string"},
+                "type": {
+                    "enum": [
+                        "checkbox",
+                        "money",
+                        "radio",
+                        "ranges",
+                        "text_long"
+                    ]
+                },
+                "hint": {"type": "string"},
+                "skip_text": {"type": "string"},
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {"$ref": "#/definitions/question"},
+                            {"$ref": "#/definitions/fieldset"}
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "questions"
+            ]
+        },
+        "answer": {
+            "type": "object",
+            "properties": {
+                "entry": {"type": ["null", "string", "number"]},
+                "options": {"$ref": "#/definitions/options"}
+            },
+            "required": ["entry"]
+        },
+        "options": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+        }
+    } ,
+
+  "type": "object",
+  "properties": {
+    "section": {"$ref": "#/definitions/section"}
+  }
+}

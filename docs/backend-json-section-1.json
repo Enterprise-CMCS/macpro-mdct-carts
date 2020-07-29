@@ -1,963 +1,972 @@
 {
-    "year": 2020,
-    "state": null,
-    "valid": null,
-    "ordinal": 1,
-    "id": "2020-01",
-    "type": "section",
-    "title": "Program Fees and Policy Changes",
-    "subsections": [
-        {
-            "type": "subsection",
-            "id": "2020-01-a",
-            "parts": [
-                {
-                    "id": "2020-01-a-01",
-                    "header": "Separate CHIP Enrollment and Premium Fees",
-                    "applies_to": [
-                        "Separate CHIP",
-                        "Combo"
-                    ],
-                    "skip_text": "Part 1 only applies to states with a separate CHIP program. Skip to Part 2.",
-                    "questions": [
-                        {
-                            "id": "2020-01-a-01-01",
-                            "text": "Does your program charge an enrollment fee?",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
+    "section": {
+        "year": 2020,
+        "state": null,
+        "valid": null,
+        "ordinal": 1,
+        "id": "2020-01",
+        "type": "section",
+        "title": "Program Fees and Policy Changes",
+        "subsections": [
+            {
+                "type": "subsection",
+                "id": "2020-01-a",
+                "parts": [
+                    {
+                        "id": "2020-01-a-01",
+                        "header": "Separate CHIP Enrollment and Premium Fees",
+                        "applies_to": [
+                            "Separate CHIP",
+                            "Combo"
+                        ],
+                        "skip_text": "Part 1 only applies to states with a separate CHIP program. Skip to Part 2.",
+                        "questions": [
+                            {
+                                "id": "2020-01-a-01-01",
+                                "text": "Does your program charge an enrollment fee?",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
                                 },
-                                "entry": null
-                            },
-                            "questions": [
-                                {
-                                    "id": "2020-01-a-01-01-a",
-                                    "noninteractive_conditional": "Show if 2020-01-a-01-01 is yes or unanswered. Hide if 2020-01-a-01-01 is no.",
-                                    "interactive_conditional": "Show if 2020-01-a-01-01 is yes. Hide if 2020-01-a-01-01 is no or unanswered.",
-                                    "text": "How much is your enrollment fee?",
-                                    "type": "money",
-                                    "answer": {
-                                        "entry": null
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2020-01-a-01-02",
-                            "text": "Does your program charge a premium fee?",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                }
-                            },
-                            "questions": [
-                                {
-                                    "id": "2020-01-a-01-02-a",
-                                    "interactive_conditional": "Hide if 2020-01-a-01-02 unanswered or no, show otherwise.",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-01-02 is no.",
-                                    "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-                                    "text": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
-                                    "type": "radio",
-                                    "answer": {
-                                        "options": {
-                                            "Yes": "yes",
-                                            "No": "no"
+                                "questions": [
+                                    {
+                                        "id": "2020-01-a-01-01-a",
+                                        "noninteractive_conditional": "Show if 2020-01-a-01-01 is yes or unanswered. Hide if 2020-01-a-01-01 is no.",
+                                        "interactive_conditional": "Show if 2020-01-a-01-01 is yes. Hide if 2020-01-a-01-01 is no or unanswered.",
+                                        "text": "How much is your enrollment fee?",
+                                        "type": "money",
+                                        "answer": {
+                                            "entry": null
                                         }
                                     }
+                                ]
+                            },
+                            {
+                                "id": "2020-01-a-01-02",
+                                "text": "Does your program charge a premium fee?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
                                 },
-                                {
-                                    "id": "2020-01-a-01-02-b",
-                                    "interactive_conditional": "Hide if 2020-01-a-01-02 unanswered or no, show if 2020-01-a-01-02 is yes",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-01-02 is no.",
-                                    "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-                                    "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
-                                    "type": "ranges",
-                                    "answer": {
-                                        "entry": null,
-                                        "header": "Premium fees",
-                                        "range_categories": [
-                                            [
-                                                "FPL starts at",
-                                                "FPL ends at"
+                                "questions": [
+                                    {
+                                        "id": "2020-01-a-01-02-a",
+                                        "interactive_conditional": "Hide if 2020-01-a-01-02 unanswered or no, show otherwise.",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-01-02 is no.",
+                                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
+                                        "text": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
+                                        "type": "radio",
+                                        "answer": {
+                                            "entry": null,
+                                            "options": {
+                                                "Yes": "yes",
+                                                "No": "no"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-01-a-01-02-b",
+                                        "interactive_conditional": "Hide if 2020-01-a-01-02 unanswered or no, show if 2020-01-a-01-02 is yes",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-01-02 is no.",
+                                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
+                                        "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Premium fees",
+                                            "range_categories": [
+                                                [
+                                                    "FPL starts at",
+                                                    "FPL ends at"
+                                                ],
+                                                [
+                                                    "Premium fee starts at",
+                                                    "Premium fee ends at"
+                                                ]
                                             ],
-                                            [
-                                                "Premium fee starts at",
-                                                "Premium fee ends at"
-                                            ]
-                                        ],
-                                        "range_type": [
-                                            "percentage",
-                                            "money"
-                                        ],
-                                        "entry_min": 1,
-                                        "entry_max": 0
-                                    }
-                                },
-                                {
-                                    "id": "2020-01-a-01-02-c",
-                                    "interactive_conditional": "Hide if 2020-01-a-01-02a unanswered or yes, show if 2020-01-a-01-02a is no.",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-01-02a is yes.",
-                                    "text": "How much is your premium fee?",
-                                    "type": "money",
-                                    "answer": {
-                                        "entry": null
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2020-01-a-01-03",
-                            "text": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
-                            "interactive_conditional": "Show questions 3–4 while 2020-01-a-01-02 is unanswered or yes. Show skip text if 2020-01-a-01-02 answer is no.",
-                            "noninteractive_conditional": "Show unless 2020-01-a-01-02 is yes.",
-                            "skip_text": "Questions 3-4 skipped based on your answers to previous questions.",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            },
-                            "questions": [
-                                {
-                                    "id": "2020-01-a-01-03-a",
-                                    "interactive_conditional": "Hide if 2020-01-a-01-03 is no or unanswered, show otherwise.",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-01-03 is no.",
-                                    "skip_text": "This question doesn’t apply to your state since you answered NO to Question 3.",
-                                    "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
-                                    "type": "ranges",
-                                    "answer": {
-                                        "entry": null,
-                                        "header": "Premium fees",
-                                        "range_categories": [
-                                            [
-                                                "FPL starts at",
-                                                "FPL ends at"
+                                            "range_type": [
+                                                "percentage",
+                                                "money"
                                             ],
-                                            [
-                                                "Premium fee starts at",
-                                                "Premium fee ends at"
-                                            ]
-                                        ],
-                                        "range_type": [
-                                            "percentage",
-                                            "money"
-                                        ],
-                                        "entry_min": 1,
-                                        "entry_max": 0
-                                    }
-                                },
-                                {
-                                    "id": "2020-01-a-01-03-b",
-                                    "interactive_conditional": "Hide if 22020-01-a-01-03 is unanswered or yes, show if 020-01-01-03 is no",
-                                    "noninteractive_conditional": "Hide if 2020-01-a-01-03 is no, show otherwise.",
-                                    "text": "What's the maximum premium fee a family would be charged each year?",
-                                    "type": "money",
-                                    "answer": {
-                                        "entry": null
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2020-01-a-01-04",
-                            "text": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
-                            "interactive_conditional": "Hide if 2020-01-a-01-02 is unanswered or no, otherwise show.",
-                            "noninteractive_conditional": "Hide if 2020-01-a-01-02 is no, otherwise show.",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-01-05",
-                            "text": "Which delivery system(s) do you use?",
-                            "hint": "Select all that apply.",
-                            "type": "checkbox",
-                            "answer": {
-                                "options": {
-                                    "Managed Care Organization (MCO)": "mco",
-                                    "Primary Care Case Management (PCCM)": "pccm",
-                                    "Fee for Service (FFS)": "ffs"
-                                }
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-01-06",
-                            "text": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "2020-01-a-02",
-                    "header": "Medicaid Expansion CHIP Enrollment and Premium Fees",
-                    "applies_to": [
-                        "Medicaid expansion CHIP",
-                        "Combo"
-                    ],
-                    "skip_text": "Part 2 only applies to states with a Medicaid expansion CHIP program. Skip to Part 3.",
-                    "questions": [
-                        {
-                            "id": "2020-01-a-02-01",
-                            "text": "Does your program charge an enrollment fee?",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            },
-                            "questions": [
-                                {
-                                    "id": "2020-01-a-02-01-a",
-                                    "noninteractive_conditional": "Show if 2020-01-a-02-01 is yes or unanswered. Hide if 2020-01-a-02-01 is no.",
-                                    "interactive_conditional": "Show if 2020-01-a-02-01 is yes. Hide if 2020-01-a-02-01 is no or unanswered.",
-                                    "text": "How much is your enrollment fee?",
-                                    "type": "money",
-                                    "answer": {
-                                        "entry": null
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2020-01-a-02-02",
-                            "text": "Does your program charge a premium fee?",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                }
-                            },
-                            "questions": [
-                                {
-                                    "id": "2020-01-a-02-02-a",
-                                    "interactive_conditional": "Hide if 2020-01-a-02-02 unanswered or no, show otherwise.",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-02-02 is no.",
-                                    "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-                                    "text": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
-                                    "type": "radio",
-                                    "answer": {
-                                        "options": {
-                                            "Yes": "yes",
-                                            "No": "no"
+                                            "entry_min": 1,
+                                            "entry_max": 0
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-01-a-01-02-c",
+                                        "interactive_conditional": "Hide if 2020-01-a-01-02a unanswered or yes, show if 2020-01-a-01-02a is no.",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-01-02a is yes.",
+                                        "text": "How much is your premium fee?",
+                                        "type": "money",
+                                        "answer": {
+                                            "entry": null
                                         }
                                     }
-                                },
-                                {
-                                    "id": "2020-01-a-02-02-b",
-                                    "interactive_conditional": "Hide if 2020-01-a-02-02 unanswered or no, show if 2020-01-a-02-02 is yes",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-02-02 is no.",
-                                    "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-                                    "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
-                                    "type": "ranges",
-                                    "answer": {
-                                        "entry": null,
-                                        "header": "Premium fees",
-                                        "range_categories": [
-                                            [
-                                                "FPL starts at",
-                                                "FPL ends at"
-                                            ],
-                                            [
-                                                "Premium fee starts at",
-                                                "Premium fee ends at"
-                                            ]
-                                        ],
-                                        "range_type": [
-                                            "percentage",
-                                            "money"
-                                        ],
-                                        "entry_min": 1,
-                                        "entry_max": 0
-                                    }
-                                },
-                                {
-                                    "id": "2020-01-a-02-02-c",
-                                    "interactive_conditional": "Hide if 2020-01-a-02-02a unanswered or yes, show if 2020-01-a-02-02a is no.",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-02-02a is yes.",
-                                    "text": "How much is your premium fee?",
-                                    "type": "money",
-                                    "answer": {
-                                        "entry": null
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2020-01-a-02-03",
-                            "text": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
-                            "interactive_conditional": "Show questions 3–4 while 2020-01-a-02-02 is unanswered or yes. Show skip text if 2020-01-a-02-02 answer is no.",
-                            "noninteractive_conditional": "Show unless 2020-01-a-02-02 is yes.",
-                            "skip_text": "Questions 3-4 skipped based on your answers to previous questions.",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
+                                ]
                             },
-                            "questions": [
-                                {
-                                    "id": "2020-01-a-02-03-a",
-                                    "interactive_conditional": "Hide if 2020-01-a-02-03 is no or unanswered, show otherwise.",
-                                    "noninteractive_conditional": "Show unless 2020-01-a-02-03 is no.",
-                                    "skip_text": "This question doesn’t apply to your state since you answered NO to Question 3.",
-                                    "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
-                                    "type": "ranges",
-                                    "answer": {
-                                        "entry": null,
-                                        "header": "Premium fees",
-                                        "range_categories": [
-                                            [
-                                                "FPL starts at",
-                                                "FPL ends at"
+                            {
+                                "id": "2020-01-a-01-03",
+                                "text": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
+                                "interactive_conditional": "Show questions 3–4 while 2020-01-a-01-02 is unanswered or yes. Show skip text if 2020-01-a-01-02 answer is no.",
+                                "noninteractive_conditional": "Show unless 2020-01-a-01-02 is yes.",
+                                "skip_text": "Questions 3-4 skipped based on your answers to previous questions.",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-01-a-01-03-a",
+                                        "interactive_conditional": "Hide if 2020-01-a-01-03 is no or unanswered, show otherwise.",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-01-03 is no.",
+                                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 3.",
+                                        "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Premium fees",
+                                            "range_categories": [
+                                                [
+                                                    "FPL starts at",
+                                                    "FPL ends at"
+                                                ],
+                                                [
+                                                    "Premium fee starts at",
+                                                    "Premium fee ends at"
+                                                ]
                                             ],
-                                            [
-                                                "Premium fee starts at",
-                                                "Premium fee ends at"
-                                            ]
-                                        ],
-                                        "range_type": [
-                                            "percentage",
-                                            "money"
-                                        ],
-                                        "entry_min": 1,
-                                        "entry_max": 0
+                                            "range_type": [
+                                                "percentage",
+                                                "money"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 0
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-01-a-01-03-b",
+                                        "interactive_conditional": "Hide if 22020-01-a-01-03 is unanswered or yes, show if 020-01-01-03 is no",
+                                        "noninteractive_conditional": "Hide if 2020-01-a-01-03 is no, show otherwise.",
+                                        "text": "What's the maximum premium fee a family would be charged each year?",
+                                        "type": "money",
+                                        "answer": {
+                                            "entry": null
+                                        }
                                     }
-                                },
-                                {
-                                    "id": "2020-01-a-02-03-b",
-                                    "interactive_conditional": "Hide if 22020-01-a-02-03 is unanswered or yes, show if 020-01-01-03 is no",
-                                    "noninteractive_conditional": "Hide if 2020-01-a-02-03 is no, show otherwise.",
-                                    "text": "What's the maximum premium fee a family would be charged each year?",
-                                    "type": "money",
-                                    "answer": {
-                                        "entry": null
+                                ]
+                            },
+                            {
+                                "id": "2020-01-a-01-04",
+                                "text": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
+                                "interactive_conditional": "Hide if 2020-01-a-01-02 is unanswered or no, otherwise show.",
+                                "noninteractive_conditional": "Hide if 2020-01-a-01-02 is no, otherwise show.",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-01-05",
+                                "text": "Which delivery system(s) do you use?",
+                                "hint": "Select all that apply.",
+                                "type": "checkbox",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Managed Care Organization (MCO)": "mco",
+                                        "Primary Care Case Management (PCCM)": "pccm",
+                                        "Fee for Service (FFS)": "ffs"
                                     }
                                 }
-                            ]
-                        },
-                        {
-                            "id": "2020-01-a-02-04",
-                            "text": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
-                            "interactive_conditional": "Hide if 2020-01-a-02-02 is unanswered or no, otherwise show.",
-                            "noninteractive_conditional": "Hide if 2020-01-a-02-02 is no, otherwise show.",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-02-05",
-                            "text": "Which delivery system(s) do you use?",
-                            "hint": "Select all that apply.",
-                            "type": "checkbox",
-                            "answer": {
-                                "options": {
-                                    "Managed Care Organization (MCO)": "mco",
-                                    "Primary Care Case Management (PCCM)": "pccm",
-                                    "Fee for Service (FFS)": "ffs"
+                            },
+                            {
+                                "id": "2020-01-a-01-06",
+                                "text": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
                                 }
                             }
-                        },
-                        {
-                            "id": "2020-01-a-02-06",
-                            "text": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "2020-01-a-03",
-                    "header": "Changes in Separate CHIP Programs and Policies",
-                    "applies_to": [
-                        "separate CHIP",
-                        "Combo"
-                    ],
-                    "skip_text": "Part 3 only applies to states with a separate CHIP program. Skip to Part 4.",
-                    "text": "Indicate any changes you’ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
-                    "questions": [
-                        {
-                            "id": "2020-01-a-03-01",
-                            "text": "Have you made any changes to the eligibility determination process?",
-                            "bullet_text": "Eligibility determination process",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
+                        ]
+                    },
+                    {
+                        "id": "2020-01-a-02",
+                        "header": "Medicaid Expansion CHIP Enrollment and Premium Fees",
+                        "applies_to": [
+                            "Medicaid expansion CHIP",
+                            "Combo"
+                        ],
+                        "skip_text": "Part 2 only applies to states with a Medicaid expansion CHIP program. Skip to Part 3.",
+                        "questions": [
+                            {
+                                "id": "2020-01-a-02-01",
+                                "text": "Does your program charge an enrollment fee?",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
                                 },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-02",
-                            "text": "Have you made any changes to the eligibility redetermination process?",
-                            "bullet_text": "Eligibility redetermination process",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
+                                "questions": [
+                                    {
+                                        "id": "2020-01-a-02-01-a",
+                                        "noninteractive_conditional": "Show if 2020-01-a-02-01 is yes or unanswered. Hide if 2020-01-a-02-01 is no.",
+                                        "interactive_conditional": "Show if 2020-01-a-02-01 is yes. Hide if 2020-01-a-02-01 is no or unanswered.",
+                                        "text": "How much is your enrollment fee?",
+                                        "type": "money",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-01-a-02-02",
+                                "text": "Does your program charge a premium fee?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
                                 },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-03",
-                            "text": "Have you made any changes to the eligibility levels or target populations?",
-                            "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
-                            "bullet_text": "Eligibility levels or target population",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
+                                "questions": [
+                                    {
+                                        "id": "2020-01-a-02-02-a",
+                                        "interactive_conditional": "Hide if 2020-01-a-02-02 unanswered or no, show otherwise.",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-02-02 is no.",
+                                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
+                                        "text": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
+                                        "type": "radio",
+                                        "answer": {
+                                            "entry": null,
+                                            "options": {
+                                                "Yes": "yes",
+                                                "No": "no"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-01-a-02-02-b",
+                                        "interactive_conditional": "Hide if 2020-01-a-02-02 unanswered or no, show if 2020-01-a-02-02 is yes",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-02-02 is no.",
+                                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
+                                        "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Premium fees",
+                                            "range_categories": [
+                                                [
+                                                    "FPL starts at",
+                                                    "FPL ends at"
+                                                ],
+                                                [
+                                                    "Premium fee starts at",
+                                                    "Premium fee ends at"
+                                                ]
+                                            ],
+                                            "range_type": [
+                                                "percentage",
+                                                "money"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 0
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-01-a-02-02-c",
+                                        "interactive_conditional": "Hide if 2020-01-a-02-02a unanswered or yes, show if 2020-01-a-02-02a is no.",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-02-02a is yes.",
+                                        "text": "How much is your premium fee?",
+                                        "type": "money",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-01-a-02-03",
+                                "text": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
+                                "interactive_conditional": "Show questions 3–4 while 2020-01-a-02-02 is unanswered or yes. Show skip text if 2020-01-a-02-02 answer is no.",
+                                "noninteractive_conditional": "Show unless 2020-01-a-02-02 is yes.",
+                                "skip_text": "Questions 3-4 skipped based on your answers to previous questions.",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
                                 },
-                                "entry": null
+                                "questions": [
+                                    {
+                                        "id": "2020-01-a-02-03-a",
+                                        "interactive_conditional": "Hide if 2020-01-a-02-03 is no or unanswered, show otherwise.",
+                                        "noninteractive_conditional": "Show unless 2020-01-a-02-03 is no.",
+                                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 3.",
+                                        "text": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Premium fees",
+                                            "range_categories": [
+                                                [
+                                                    "FPL starts at",
+                                                    "FPL ends at"
+                                                ],
+                                                [
+                                                    "Premium fee starts at",
+                                                    "Premium fee ends at"
+                                                ]
+                                            ],
+                                            "range_type": [
+                                                "percentage",
+                                                "money"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 0
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-01-a-02-03-b",
+                                        "interactive_conditional": "Hide if 22020-01-a-02-03 is unanswered or yes, show if 020-01-01-03 is no",
+                                        "noninteractive_conditional": "Hide if 2020-01-a-02-03 is no, show otherwise.",
+                                        "text": "What's the maximum premium fee a family would be charged each year?",
+                                        "type": "money",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-01-a-02-04",
+                                "text": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
+                                "interactive_conditional": "Hide if 2020-01-a-02-02 is unanswered or no, otherwise show.",
+                                "noninteractive_conditional": "Hide if 2020-01-a-02-02 is no, otherwise show.",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-02-05",
+                                "text": "Which delivery system(s) do you use?",
+                                "hint": "Select all that apply.",
+                                "type": "checkbox",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Managed Care Organization (MCO)": "mco",
+                                        "Primary Care Case Management (PCCM)": "pccm",
+                                        "Fee for Service (FFS)": "ffs"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-02-06",
+                                "text": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
                             }
-                        },
-                        {
-                            "id": "2020-01-a-03-04",
-                            "text": "Have you made any changes to the benefits available to enrolees?",
-                            "hint": "For example: adding or removing different types of coverage.",
-                            "bullet_text": "Benefits available to enrollees",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
+                        ]
+                    },
+                    {
+                        "id": "2020-01-a-03",
+                        "header": "Changes in Separate CHIP Programs and Policies",
+                        "applies_to": [
+                            "Separate CHIP",
+                            "Combo"
+                        ],
+                        "skip_text": "Part 3 only applies to states with a separate CHIP program. Skip to Part 4.",
+                        "text": "Indicate any changes you’ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+                        "questions": [
+                            {
+                                "id": "2020-01-a-03-01",
+                                "text": "Have you made any changes to the eligibility determination process?",
+                                "bullet_text": "Eligibility determination process",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "entry": "null",
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-02",
+                                "text": "Have you made any changes to the eligibility redetermination process?",
+                                "bullet_text": "Eligibility redetermination process",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-03",
+                                "text": "Have you made any changes to the eligibility levels or target populations?",
+                                "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
+                                "bullet_text": "Eligibility levels or target population",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-04",
+                                "text": "Have you made any changes to the benefits available to enrolees?",
+                                "hint": "For example: adding or removing different types of coverage.",
+                                "bullet_text": "Benefits available to enrollees",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-05",
+                                "text": "Have you made any changes to the single streamlined application?",
+                                "bullet_text": "Single streamlined application",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-06",
+                                "text": "Have you made any changes to your outreach efforts?",
+                                "bullet_text": "Outreach efforts",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-07",
+                                "text": "Have you made any changes to the delivery system(s)?",
+                                "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
+                                "bullet_text": "Delivery system(s)",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-08",
+                                "text": "Have you made any changes to your cost sharing requirements?",
+                                "hint": "For example: changing amounts, populations, or the collection process.",
+                                "bullet_text": "Cost sharing",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-09",
+                                "text": "Have you made any changes to the crowd-out policies?",
+                                "hint": "For example: changing substitutions or the waiting periods.",
+                                "bullet_text": "Crowd-out policies",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-10",
+                                "text": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
+                                "bullet_text": "Enrollment freeze and/or enrollment cap",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-11",
+                                "text": "Have you made any changes to the enrollment process for health plan selection?",
+                                "bullet_text": "Enrollment process for health plan selection",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-12",
+                                "text": "Have you made any changes to the protections for applicants and enrollees?",
+                                "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
+                                "bullet_text": "Protections for applicants and enrollees",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-13",
+                                "text": "Have you made any changes to premium assistance?",
+                                "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
+                                "bullet_text": "Premium assistance",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-14",
+                                "text": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
+                                "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-15",
+                                "text": "Have you made any changes to your prenatal care eligibility?",
+                                "hint": "For example: expanding eligibility to pregnant enrollees.",
+                                "bullet_text": "Prenatal care eligibility",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-16",
+                                "text": "Have you made any changes to your Pregnant Woman State Plan expansion?",
+                                "hint": "For example: extending coverage to pregnant enrollees.",
+                                "bullet_text": "Pregnant Woman State Plan expansion",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-17",
+                                "text": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
+                                "bullet_text": "Eligibility for “lawfully residing pregnant women”",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-18",
+                                "text": "Have you made any changes to eligibility for “lawfully residing children”?",
+                                "bullet_text": "Eligibility for “lawfully residing children”",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-19",
+                                "text": "Have you made any changes to any other program areas?",
+                                "bullet_text": "Other program areas",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-20",
+                                "text": "Anything else you'd like to add that wasn't already covered?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-03-21",
+                                "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                                "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                                "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
+                                "text": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
                             }
-                        },
-                        {
-                            "id": "2020-01-a-03-05",
-                            "text": "Have you made any changes to the single streamlined application?",
-                            "bullet_text": "Single streamlined application",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
+                        ]
+                    },
+                    {
+                        "id": "2020-01-a-04",
+                        "header": "Changes in Medicaid Expansion CHIP Programs and Policies",
+                        "applies_to": [
+                            "Medicaid expansion CHIP",
+                            "Combo"
+                        ],
+                        "skip_text": "Part 4 only applies to states with a Medicaid expansion CHIP program.",
+                        "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+                        "questions": [
+                            {
+                                "id": "2020-01-a-04-01",
+                                "text": "Have you made any changes to the eligibility determination process?",
+                                "bullet_text": "Eligibility determination process",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-02",
+                                "text": "Have you made any changes to the eligibility redetermination process?",
+                                "bullet_text": "Eligibility redetermination process",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-03",
+                                "text": "Have you made any changes to the eligibility levels or target populations?",
+                                "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
+                                "bullet_text": "Eligibility levels or target population",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-04",
+                                "text": "Have you made any changes to the benefits available to enrolees?",
+                                "hint": "For example: adding or removing different types of coverage.",
+                                "bullet_text": "Benefits available to enrollees",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-05",
+                                "text": "Have you made any changes to the single streamlined application?",
+                                "bullet_text": "Single streamlined application",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-06",
+                                "text": "Have you made any changes to your outreach efforts?",
+                                "bullet_text": "Outreach efforts",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-07",
+                                "text": "Have you made any changes to the delivery system(s)?",
+                                "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
+                                "bullet_text": "Delivery system(s)",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-08",
+                                "text": "Have you made any changes to your cost sharing requirements?",
+                                "hint": "For example: changing amounts, populations, or the collection process.",
+                                "bullet_text": "Cost sharing",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-09",
+                                "text": "Have you made any changes to the crowd-out policies?",
+                                "hint": "For example: changing substitutions or the waiting periods.",
+                                "bullet_text": "Crowd-out policies",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-10",
+                                "text": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
+                                "bullet_text": "Enrollment freeze and/or enrollment cap",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-11",
+                                "text": "Have you made any changes to the enrollment process for health plan selection?",
+                                "bullet_text": "Enrollment process for health plan selection",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-12",
+                                "text": "Have you made any changes to the protections for applicants and enrollees?",
+                                "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
+                                "bullet_text": "Protections for applicants and enrollees",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-13",
+                                "text": "Have you made any changes to premium assistance?",
+                                "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
+                                "bullet_text": "Premium assistance",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-14",
+                                "text": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
+                                "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-15",
+                                "text": "Have you made any changes to your prenatal care eligibility?",
+                                "hint": "For example: expanding eligibility to pregnant enrollees.",
+                                "bullet_text": "Prenatal care eligibility",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-16",
+                                "text": "Have you made any changes to your Pregnant Woman State Plan expansion?",
+                                "hint": "For example: extending coverage to pregnant enrollees.",
+                                "bullet_text": "Pregnant Woman State Plan expansion",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-17",
+                                "text": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
+                                "bullet_text": "Eligibility for “lawfully residing pregnant women”",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-18",
+                                "text": "Have you made any changes to eligibility for “lawfully residing children”?",
+                                "bullet_text": "Eligibility for “lawfully residing children”",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-19",
+                                "text": "Have you made any changes to any other program areas?",
+                                "bullet_text": "Other program areas",
+                                "type": "radio",
+                                "answer": {
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    },
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-20",
+                                "text": "Anything else you'd like to add that wasn't already covered?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-01-a-04-21",
+                                "interactive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
+                                "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
+                                "comment": "Display bulleted list of all 2020-01-a-04 questions 1–19 with yes answers",
+                                "text": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
                             }
-                        },
-                        {
-                            "id": "2020-01-a-03-06",
-                            "text": "Have you made any changes to your outreach efforts?",
-                            "bullet_text": "Outreach efforts",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-07",
-                            "text": "Have you made any changes to the delivery system(s)?",
-                            "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
-                            "bullet_text": "Delivery system(s)",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-08",
-                            "text": "Have you made any changes to your cost sharing requirements?",
-                            "hint": "For example: changing amounts, populations, or the collection process.",
-                            "bullet_text": "Cost sharing",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-09",
-                            "text": "Have you made any changes to the crowd-out policies?",
-                            "hint": "For example: changing substitutions or the waiting periods.",
-                            "bullet_text": "Crowd-out policies",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-10",
-                            "text": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
-                            "bullet_text": "Enrollment freeze and/or enrollment cap",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-11",
-                            "text": "Have you made any changes to the enrollment process for health plan selection?",
-                            "bullet_text": "Enrollment process for health plan selection",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-12",
-                            "text": "Have you made any changes to the protections for applicants and enrollees?",
-                            "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
-                            "bullet_text": "Protections for applicants and enrollees",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-13",
-                            "text": "Have you made any changes to premium assistance?",
-                            "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
-                            "bullet_text": "Premium assistance",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-14",
-                            "text": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
-                            "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-15",
-                            "text": "Have you made any changes to your prenatal care eligibility?",
-                            "hint": "For example: expanding eligibility to pregnant enrollees.",
-                            "bullet_text": "Prenatal care eligibility",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-16",
-                            "text": "Have you made any changes to your Pregnant Woman State Plan expansion?",
-                            "hint": "For example: extending coverage to pregnant enrollees.",
-                            "bullet_text": "Pregnant Woman State Plan expansion",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-17",
-                            "text": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
-                            "bullet_text": "Eligibility for “lawfully residing pregnant women”",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-18",
-                            "text": "Have you made any changes to eligibility for “lawfully residing children”?",
-                            "bullet_text": "Eligibility for “lawfully residing children”",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-19",
-                            "text": "Have you made any changes to any other program areas?",
-                            "bullet_text": "Other program areas",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-20",
-                            "text": "Anything else you'd like to add that wasn't already covered?",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-03-21",
-                            "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
-                            "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
-                            "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
-                            "text": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        }
-                    ]
-                },
-                {
-                    "id": "2020-01-a-04",
-                    "header": "Changes in Medicaid Expansion CHIP Programs and Policies",
-                    "applies_to": [
-                        "Medicaid expansion CHIP",
-                        "Combo"
-                    ],
-                    "skip_text": "Part 4 only applies to states with a Medicaid expansion CHIP program.",
-                    "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
-                    "questions": [
-                        {
-                            "id": "2020-01-a-04-01",
-                            "text": "Have you made any changes to the eligibility determination process?",
-                            "bullet_text": "Eligibility determination process",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-02",
-                            "text": "Have you made any changes to the eligibility redetermination process?",
-                            "bullet_text": "Eligibility redetermination process",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-03",
-                            "text": "Have you made any changes to the eligibility levels or target populations?",
-                            "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
-                            "bullet_text": "Eligibility levels or target population",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-04",
-                            "text": "Have you made any changes to the benefits available to enrolees?",
-                            "hint": "For example: adding or removing different types of coverage.",
-                            "bullet_text": "Benefits available to enrollees",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-05",
-                            "text": "Have you made any changes to the single streamlined application?",
-                            "bullet_text": "Single streamlined application",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-06",
-                            "text": "Have you made any changes to your outreach efforts?",
-                            "bullet_text": "Outreach efforts",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-07",
-                            "text": "Have you made any changes to the delivery system(s)?",
-                            "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
-                            "bullet_text": "Delivery system(s)",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-08",
-                            "text": "Have you made any changes to your cost sharing requirements?",
-                            "hint": "For example: changing amounts, populations, or the collection process.",
-                            "bullet_text": "Cost sharing",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-09",
-                            "text": "Have you made any changes to the crowd-out policies?",
-                            "hint": "For example: changing substitutions or the waiting periods.",
-                            "bullet_text": "Crowd-out policies",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-10",
-                            "text": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
-                            "bullet_text": "Enrollment freeze and/or enrollment cap",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-11",
-                            "text": "Have you made any changes to the enrollment process for health plan selection?",
-                            "bullet_text": "Enrollment process for health plan selection",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-12",
-                            "text": "Have you made any changes to the protections for applicants and enrollees?",
-                            "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
-                            "bullet_text": "Protections for applicants and enrollees",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-13",
-                            "text": "Have you made any changes to premium assistance?",
-                            "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
-                            "bullet_text": "Premium assistance",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-14",
-                            "text": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
-                            "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-15",
-                            "text": "Have you made any changes to your prenatal care eligibility?",
-                            "hint": "For example: expanding eligibility to pregnant enrollees.",
-                            "bullet_text": "Prenatal care eligibility",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-16",
-                            "text": "Have you made any changes to your Pregnant Woman State Plan expansion?",
-                            "hint": "For example: extending coverage to pregnant enrollees.",
-                            "bullet_text": "Pregnant Woman State Plan expansion",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-17",
-                            "text": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
-                            "bullet_text": "Eligibility for “lawfully residing pregnant women”",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-18",
-                            "text": "Have you made any changes to eligibility for “lawfully residing children”?",
-                            "bullet_text": "Eligibility for “lawfully residing children”",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-19",
-                            "text": "Have you made any changes to any other program areas?",
-                            "bullet_text": "Other program areas",
-                            "type": "radio",
-                            "answer": {
-                                "options": {
-                                    "Yes": "yes",
-                                    "No": "no"
-                                },
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-20",
-                            "text": "Anything else you'd like to add that wasn't already covered?",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        },
-                        {
-                            "id": "2020-01-a-04-21",
-                            "interactive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
-                            "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
-                            "comment": "Display bulleted list of all 2020-01-a-04 questions 1–19 with yes answers",
-                            "text": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
-                            "type": "text_long",
-                            "answer": {
-                                "entry": null
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 }
