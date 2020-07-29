@@ -1,0 +1,40 @@
+version: "3.4"
+services:
+  ui:
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+    ports:
+      - "81:80"
+    networks:
+      - data_net
+    environment:
+      - API_POSTGRES_URL=http://localhost:8000 # This is how a browser would call the api
+      - API_SQLSERVER_URL=http://localhost:8001 # This is how a browser would call the api
+  api_postgres:
+    build:
+      context: ./api_postgres
+      dockerfile: Dockerfile
+    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    networks:
+      - data_net
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
+      - DATABASE=postgres
+  api_sqlserver:
+    build:
+      context: ./api_sqlserver
+      dockerfile: Dockerfile
+    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - 8001:8000
+    networks:
+      - data_net
+networks:
+  data_net:
+    external: true
