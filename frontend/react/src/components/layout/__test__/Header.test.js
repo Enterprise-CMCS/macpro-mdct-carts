@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import {
   storeFactory,
   findByTestAttribute,
-  stateUserTestData,
+  mockInitialState,
 } from "../../../testUtils";
 
 import Header from "../Header";
@@ -23,7 +23,7 @@ const setup = (initialState = {}) => {
 };
 
 describe("Header Component, enzyme testing", () => {
-  const wrapper = setup(stateUserTestData);
+  const wrapper = setup(mockInitialState);
 
   it("renders with test attributes", () => {
     const headerComponent = findByTestAttribute(wrapper, "component-header");

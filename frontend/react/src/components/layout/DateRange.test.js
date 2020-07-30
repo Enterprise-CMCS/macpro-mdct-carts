@@ -5,13 +5,9 @@ import { shallow, mount, ShallowWrapper } from "enzyme";
 import {
   storeFactory,
   findByTestAttribute,
-  stateUserTestData,
+  mockInitialState,
+  checkProps,
 } from "../../testUtils";
-import checkPropTypes from "check-prop-types";
-
-import { reducer } from "../../store/storeIndex";
-
-import configureMockStore from "redux-mock-store";
 
 import DateRange from "./DateRange";
 
@@ -22,15 +18,18 @@ import DateRange from "./DateRange";
  * @returns {ShallowWrapper}
  */
 
-const setup = (initialState = {}) => {
+const defaultProps = { previousEntry: false };
+
+const setup = (initialState = {}, props = {}) => {
+  const setupProps = { ...defaultProps, ...props };
   const store = storeFactory(initialState);
-  return shallow(<DateRange store={store} />)
+  return shallow(<DateRange store={store} props={setupProps} />)
     .dive()
     .dive();
 };
 
 describe("DateRange Component (shallow)", () => {
-  const wrapper = setup(stateUserTestData);
+  const wrapper = setup(mockInitialState, { previousEntry: false });
   it("renders with test attributes", () => {
     const dateComponent = findByTestAttribute(wrapper, "component-date-range");
     expect(dateComponent.length).toBe(1);
@@ -40,8 +39,25 @@ describe("DateRange Component (shallow)", () => {
     expect(dateClassname.length).toBe(1);
   });
 
-  // it ("does not throw warning with expected props", ()=>{
-  //   const expectedProps = {success: false}
-  //   const propError =
-  // })
+  it("does not throw warning with expected props", () => {
+    const expectedProps = { previousEntry: false };
+    checkProps(DateRange, expectedProps);
+  });
+
+  it("throws a warning when given the wrong props", () => {
+    const expectedProps = { previousEntry: "incorrect props" };
+    checkProps(DateRange, expectedProps);
+  });
+});
+
+describe("DateRange Component rendered with previous entries", () => {
+  const wrapper = setup(mockInitialState, { previousEntry: true });
+  it("displays previous entries when loaded with previousEntry prop", () => {
+    const previousEntryDisplay = findByTestAttribute(
+      wrapper,
+      "component-daterange-monthstart"
+    );
+    console.log("value???", previousEntryDisplay.debug());
+    expect(previousEntryDisplay.dive().text()).toBe("");
+  });
 });

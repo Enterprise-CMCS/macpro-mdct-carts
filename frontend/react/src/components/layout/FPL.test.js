@@ -22,8 +22,6 @@ describe("FPL Component", () => {
   it("has the appropriate classnames", () => {
     const fplClassname = component.find(".fpl");
     expect(fplClassname.length).toBe(1);
-
-    // expect(component.exists(".fpl")).toBe(true);
   });
 
   it("updates local state on text input", () => {
@@ -37,6 +35,3 @@ describe("FPL Component", () => {
   //   component.calculateFPL()
   // })
 });
-
-// (TO DELETE) What else should i test for??
-//Test that textfield updates the state
