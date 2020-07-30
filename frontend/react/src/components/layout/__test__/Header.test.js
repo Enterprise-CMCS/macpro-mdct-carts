@@ -21,6 +21,10 @@ const setup = (props = {}, state = null) => {
   return shallow(<Header {...props} />);
 };
 
+const findByTestAttribute = (wrapper, val) => {
+  return wrapper.find(`[data-test="${val}"]`);
+};
+
 describe("Header Component, enzyme testing", () => {
   const store = mockStore({
     stateUser: {

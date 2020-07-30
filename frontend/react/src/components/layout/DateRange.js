@@ -146,7 +146,7 @@ class DateRange extends Component {
   render() {
     return (
       <Fragment>
-        <div className="date-range">
+        <div className="date-range" data-test="component-date-range">
           <div className="errors">
             {" "}
             {this.state.endRangeErr === true ? (
