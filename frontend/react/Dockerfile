@@ -15,13 +15,8 @@ FROM dev as builder
 
 #install aws cli and zip
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
-        unzip awscliv2.zip &&\
-        ./aws/install
 
-RUN apt-get update -y && \
-     apt-get upgrade -y && \
-     apt-get -y install zip
+
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -40,7 +35,7 @@ RUN npm run build
 
 
 
-RUN aws s3 cp /app/build s3://carts-ui --recursive
+
 
 
 
@@ -55,7 +50,18 @@ FROM nginx:1.19.0-alpine as runner
 
 # Copy static build from the builder container
 ##COPY --from=builder /app/build /usr/share/nginx/html/
+
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
+        unzip awscliv2.zip &&\
+        ./aws/install
+
+RUN apt-get update -y && \
+             apt-get upgrade -y && \
+             apt-get -y install zip
+
 COPY --from=builder /app/build /tmp/build
+RUN aws s3 cp /tmp/build s3://carts-ui --recursive
+
 RUN zip /tmp/build.zip /tmp/build &&\
  aws s3 cp /tmp/build.zip s3://carts-ui-archive --recursive
 
