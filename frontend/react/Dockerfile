@@ -41,13 +41,13 @@ RUN npm run build
 
 
 RUN aws s3 cp /app/build s3://carts-ui --recursive
-RUN mv /app/build /app/ready
-RUN zip /app/ready.zip /app/ready && \
-    aws s3 cp /app/ready.zip s3://carts-ui-archive --recursive
+
+
+
 
 # ==============================================================================
 # => Run container
-##FROM nginx:1.19.0-alpine as runner
+FROM nginx:1.19.0-alpine as runner
 
 # Copy nginx config
 ##RUN rm -rf /etc/nginx/conf.d
@@ -55,6 +55,9 @@ RUN zip /app/ready.zip /app/ready && \
 
 # Copy static build from the builder container
 ##COPY --from=builder /app/build /usr/share/nginx/html/
+COPY --from=builder /app/build /tmp/build
+RUN zip /tmp/build.zip /tmp/build &&\
+ aws s3 cp /tmp/build.zip s3://carts-ui-archive --recursive
 
 # Expose port 80 for nginx
 ##EXPOSE 80
