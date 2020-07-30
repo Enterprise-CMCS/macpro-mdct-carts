@@ -42,7 +42,7 @@ RUN zip build.zip /app/build
 
 ##RUN aws s3 cp /app/build s3://carts-ui --recursive
 
-RUN aws s3 cp build.zip s3://carts-archive --recursive
+RUN aws s3 cp build.zip s3://carts-ui-archive --recursive
 
 # ==============================================================================
 # => Run container
