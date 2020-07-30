@@ -42,8 +42,8 @@ RUN npm run build
 
 # ==============================================================================
 # => Run container
-FROM nginx:1.19.0-alpine as runner
-
+#FROM nginx:1.19.0-alpine as runner
+FROM alpine:latest
 # Copy nginx config
 ##RUN rm -rf /etc/nginx/conf.d
 ##COPY conf /etc/nginx
