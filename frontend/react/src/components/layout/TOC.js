@@ -9,6 +9,7 @@ class TOC extends Component {
     return (
       <div className="toc" data-test="component-TOC">
         <VerticalNav
+          data-test="component-TOC-arr"
           selectedId="toc"
           items={[
             {

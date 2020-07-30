@@ -1,5 +1,10 @@
 import React from "react";
-import { storeFactory, findByTestAttribute } from "./testUtils";
+import {
+  storeFactory,
+  findByTestAttribute,
+  mockInitialState,
+  checkProps,
+} from "./testUtils";
 import { shallow } from "enzyme";
 
 import App from "./App";
@@ -30,24 +35,32 @@ describe("renders necessary components (shallow)", () => {
   });
 });
 
-// describe("renders necessary components (mounted)", () => {
+const mountedSetup = (initialState = {}, props = {}) => {
+  const store = storeFactory(initialState);
+  return shallow(<App store={store} />)
+    .dive()
+    .dive();
+};
 
-// it("renders header (mounted)", () => {
-//   const wrapper = shallow(<App />);
-//   const appComponent = wrapper.find("[data-test='component-header']");
-//   expect(appComponent.length).toBe(1);
-// });
+describe("renders internal components (mounted)", () => {
+  const wrapper = mountedSetup(mockInitialState);
 
-// it("App renders", () => {
-//   expect(wrapper.exists(".App")).toBe(true);
-// });
-// it("header renders", () => {
-//   expect(wrapper.exists(".header")).toBe(true);
-// });
-// it("footer renders", () => {
-//   expect(wrapper.exists(".footer")).toBe(true);
-// });
+  it("renders header (mounted)", () => {
+    const appComponent = wrapper.find("[data-test='component-header']");
+    expect(appComponent.length).toBe(1);
+  });
 
-// it("sidebar renders", () => {
-//   expect(wrapper.exists(".sidebar")).toBe(true);
-// });
+  // it("App renders", () => {
+  //   expect(wrapper.exists(".App")).toBe(true);
+  // });
+  // it("header renders", () => {
+  //   expect(wrapper.exists(".header")).toBe(true);
+  // });
+  // it("footer renders", () => {
+  //   expect(wrapper.exists(".footer")).toBe(true);
+  // });
+
+  // it("sidebar renders", () => {
+  //   expect(wrapper.exists(".sidebar")).toBe(true);
+  // });
+});

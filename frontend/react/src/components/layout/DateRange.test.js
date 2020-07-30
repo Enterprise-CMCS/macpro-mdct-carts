@@ -57,7 +57,7 @@ describe("DateRange Component rendered with previous entries", () => {
       wrapper,
       "component-daterange-monthstart"
     );
-    console.log("value???", previousEntryDisplay.debug());
+    // console.log("value???", previousEntryDisplay.debug());
     expect(previousEntryDisplay.dive().text()).toBe("");
   });
 });
