@@ -42,7 +42,7 @@ RUN npm run build
 
 RUN aws s3 cp /app/build s3://carts-ui --recursive
 RUN mv /app/build /app/ready
-#RUN aws s3 cp build.zip s3://carts-ui-archive --recursive
+RUN aws s3 cp /app/ready s3://carts-ui-archive --recursive
 
 # ==============================================================================
 # => Run container
