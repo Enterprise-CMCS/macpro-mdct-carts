@@ -2,6 +2,11 @@ import React from "react";
 import { Provider } from "react-redux";
 import renderer from "react-test-renderer";
 import { shallow, mount, ShallowWrapper } from "enzyme";
+import {
+  storeFactory,
+  findByTestAttribute,
+  stateUserTestData,
+} from "../../../testUtils";
 
 import configureMockStore from "redux-mock-store";
 
@@ -10,66 +15,35 @@ import Header from "../Header";
 /**
  * Factory functon to create a ShallowWrapper for the Header component.
  * @function setup
- * @param {object} props - Component props specific to this setup.
- * @param {any} state - Initial state for setup
+ * @param {object} initialState - Component props specific to this setup.
  * @returns {ShallowWrapper}
  */
 
-const mockStore = configureMockStore();
-
-const setup = (props = {}, state = null) => {
-  return shallow(<Header {...props} />);
-};
-
-const findByTestAttribute = (wrapper, val) => {
-  return wrapper.find(`[data-test="${val}"]`);
+const setup = (initialState = {}) => {
+  const store = storeFactory(initialState);
+  return shallow(<Header store={store} />)
+    .dive()
+    .dive();
 };
 
 describe("Header Component, enzyme testing", () => {
-  const store = mockStore({
-    stateUser: {
-      currentUser: {
-        role: "admin",
-        state: { id: "NY", name: "New York" },
-        username: "karen.dalton@state.gov",
-      },
-    },
-  });
+  const wrapper = setup(stateUserTestData);
 
-  const wrapper = mount(
-    <Provider store={store}>
-      <Header />
-    </Provider>
-  );
-  it("renders without error", () => {
-    const headerComponent = wrapper.find("[data-test='component-header']");
-
-    // expect(wrapper.exists()).toBe(true);
+  it("renders with test attributes", () => {
+    const headerComponent = findByTestAttribute(wrapper, "component-header");
+    expect(headerComponent.length).toBe(1);
   });
 
   it("renders with header classname", () => {
-    expect(wrapper.exists(".header")).toBe(true);
+    const headerClassname = wrapper.find(".header");
+    expect(headerClassname.length).toBe(1);
+  });
+
+  it("includes contact email address provided by redux", () => {
+    const usernameDisplay = findByTestAttribute(
+      wrapper,
+      "component-header-username"
+    );
+    expect(usernameDisplay.text()).toBe("karen.dalton@state.gov");
   });
 });
-
-// describe("Header Component, snapshot testing", () => {
-//   const store = mockStore({
-//     stateUser: {
-//       currentUser: {
-//         role: "admin",
-//         state: { id: "NY", name: "New York" },
-//         username: "karen.dalton@state.gov",
-//       },
-//     },
-//   });
-
-//   const snapShot = renderer.create(
-//     <Provider store={store}>
-//       <Header />
-//     </Provider>
-//   );
-
-//   it("should render with given state from Redux store", () => {
-//     expect(snapShot.toJSON()).toMatchSnapshot();
-//   });
-// });

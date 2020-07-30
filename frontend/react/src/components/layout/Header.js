@@ -43,6 +43,7 @@ class Header extends Component {
                         href="#menu"
                         className="nav--dropdown__trigger"
                         onClick={this.toggleUserNav}
+                        data-test="component-header-username"
                       >
                         {this.props.currentUser.username}
                       </a>

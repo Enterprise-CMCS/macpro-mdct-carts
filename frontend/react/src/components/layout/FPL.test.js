@@ -1,23 +1,29 @@
 import React from "react";
 import { Provider } from "react-redux";
 import renderer from "react-test-renderer";
-import { shallow, mount } from "enzyme";
+import { shallow, mount, ShallowWrapper } from "enzyme";
+import { storeFactory, findByTestAttribute } from "../../testUtils";
 
 import configureMockStore from "redux-mock-store";
 
 import FPL from "../layout/FPL";
 
-const mockStore = configureMockStore();
+const setup = (props = {}, state = null) => {
+  return shallow(<FPL {...props} />);
+};
 
 describe("FPL Component", () => {
-  const component = mount(<FPL />);
+  const component = setup();
 
   it("renders", () => {
     expect(component.exists()).toBe(true);
   });
 
-  it("has appropriate classnames", () => {
-    expect(component.exists(".fpl")).toBe(true);
+  it("has the appropriate classnames", () => {
+    const fplClassname = component.find(".fpl");
+    expect(fplClassname.length).toBe(1);
+
+    // expect(component.exists(".fpl")).toBe(true);
   });
 
   it("updates local state on text input", () => {
