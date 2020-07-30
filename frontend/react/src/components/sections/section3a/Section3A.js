@@ -9,7 +9,6 @@ import FormActions from "../../layout/FormActions";
 import {
   Button as button,
   Choice,
-  ChoiceList,
   Tabs,
   TabPanel,
   TextField,
