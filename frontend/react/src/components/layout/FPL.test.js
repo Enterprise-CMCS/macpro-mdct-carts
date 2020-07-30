@@ -1,13 +1,16 @@
 import React from "react";
-import { Provider } from "react-redux";
-import renderer from "react-test-renderer";
-import { shallow, mount, ShallowWrapper } from "enzyme";
+import { shallow } from "enzyme";
 import { storeFactory, findByTestAttribute } from "../../testUtils";
-
-import configureMockStore from "redux-mock-store";
 
 import FPL from "../layout/FPL";
 
+/**
+ * Factory functon to create a ShallowWrapper for the Footer component.
+ * @function setup
+ * @param {object} props - Component props specific to this setup.
+ * @param {any} state - Initial state for setup
+ * @returns {ShallowWrapper}
+ */
 const setup = (props = {}, state = null) => {
   return shallow(<FPL {...props} />);
 };
@@ -30,8 +33,9 @@ describe("FPL Component", () => {
     expect(status).toEqual("17");
   });
 
-  // it("correctly calculates FPL", ()=>{
-  //   let syntheticEvent
-  //   component.calculateFPL()
-  // })
+  it("correctly calculates FPL", () => {
+    // let syntheticEvent
+    // component.calculateFPL()
+    // Incomplete test
+  });
 });
