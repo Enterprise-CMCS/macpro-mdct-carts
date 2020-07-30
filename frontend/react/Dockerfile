@@ -13,12 +13,12 @@ CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/
 # => Build container
 FROM dev as builder
 
-#install aws cli
+#install aws cli and zip
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
         unzip awscliv2.zip &&\
         ./aws/install
-
+RUN apt-install zip -y
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -35,9 +35,9 @@ RUN npm run build
 #===============================================================================
 #copy static files to s3
 
-RUN aws configure list
+RUN zip /app/build.zip /app/build
 
-RUN aws s3 cp /app/build s3://carts-ui --recursive
+#RUN aws s3 cp /app/build s3://carts-ui --recursive
 
 
 # ==============================================================================
