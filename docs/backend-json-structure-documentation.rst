@@ -19,7 +19,7 @@ The conditional logic for the simple logic is under development.
 
 In addition, the logic for how `objectives`_ work in Section 2B work is described below, and no attempt is made to store that logic within the data for the system.
 
-The structure of the JSON can be validated against `backend-section.schema.json`_ using JSON Schema.
+The structure of the JSON can be validated against `backend-section.schema.json`_ using JSON Schema. That schema is likely to be more up-to-date than this document, so if there's a contradiction, assume the schema file is correct.
 
 .. _backend-section.schema.json: ./backend-section.schema.json
 
@@ -99,7 +99,11 @@ Not yet covered
 +++++++++++++++
 +   How questions should be flagged as providing the user the option of seeing the prior year's data. (This will probably be a boolean property of the question, but that's not yet final.)
 +   File upload.
-+   How basic conditional logic should work.
+
+Special Requirements
+++++++++++++++++++++
+Section 1
+    This section's parts 3 and 4 contain an identical long list of questions, all with yes/no answers. The JSON for these is the only place where ``bullet_text`` is used. The last question in each of the parts is displayed if any of questions 1–19 in that part were answered with ``yes``, in which case the last question is displayed and the ``bullet_text`` value for each of the questions with a ``yes`` answer is displayed somewhere nearby (depends on the design).
 
 Section
 -------
@@ -251,18 +255,20 @@ Questions can contain other questions, so questions have either questions or par
     String.
 
     Summary text for an answer to be displayed in list form; only applied to Section 1.
+``conditional_dispplay`` (optional)
+    Extremely limited logic mini-schema to control display of questions. See `Conditional Display`_ below.
 ``interactive_conditional`` (optional)
     String.
 
     Plain-language description of how the logic for displaying the question in the entry form is supposed to work.
+
+    Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
 ``noninteractive_conditional`` (optional)
     String.
 
     Plain-language description of how the logic for displaying the question in the review output is supposed to work.
-``skip_text`` (optional)
-    String.
 
-    The text that should appear instead of the question if the conditional logic indicates the question itself should not be displayed.
+    Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
 ``comment`` (optional)
     String.
 
@@ -290,6 +296,70 @@ Answers are contained by questions, which in this case is a technical descriptio
     String.
 
     In rare cases we want to prepopulate the value of the user's answer. This is not the same as a hint, as this value will be sent to the database as if it had been entered by the user. We think we want this field to allow us to distinguish between sections that have been accessed by the user and those that haven't, but it's possible that this property is unnecessary.
+
+Conditional Display
+-------------------
+This is about per-question display, and not about the per-part display related to whether a state's program is separate CHIP, Medicaid expansion CHIP, or combo; see ``applies_to`` in `Part`_ for that functionality.
+
+The default for all questions, in both interactive and noninteractive views, is for them to be displayed unless a specific condition applies. The specific condition is the value of the ``entry`` property for a question, and this functionality supports only checking for whether that value matches any of the values in a supplied list.
+
+``type``
+    String.
+
+    Always ``conditional_display``.
+``comment``
+    Plain-language description of the logic. For example:
+        
+        Interactive: Hide if 2020-01-a-01-01 is no or unanswered; noninteractive: hide if that's no.
+``skip_text`` (optional)
+    String.
+
+    The text that should appear instead of the question if the conditional logic indicates the question itself should not be displayed. If blank or absent, indicates that no such text should appear.
+``hide_if``
+    This construct describes the conditions under which the question should be hidden from view. It has two properties, ``target`` and ``values``, and the frontend will evaluate the current value of the JSON element specified by ``target`` and hide it from view if that value is in the array of values specified for the current view type (``interactive`` or ``noninteractive``).
+
+    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.o
+
+    ``target``
+        String.
+
+        This is a `JSON Path`_ expression that points to the location in the JSON to find the value to be evaluated. Normally this will be the value of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
+    ``values``
+        This object has two properties, ``interactive`` and ``noninteractive``, both of which are an array of values. The values should be integers, strings, or ``null``, where ``null`` represents the absence of an answer.
+
+Section 1 has the question “Does your program charge an enrollment fee?”, with the sub-question “How much is your enrollment fee?”. In the interactive view, the sub-question should only be displayed if the user has answered ``yes`` to the parent question, and hidden in the other cases.
+
+The ``id`` for the first question is ``2020-01-a-01-01``, and it allows for answers only of ``yes``, ``no``, and ``null``:
+
+..  code:: json
+
+        "id": "2020-01-a-01-01",
+        "text": "Does your program charge an enrollment fee?",
+        "type": "radio",
+        "answer": {
+            "options": {
+                "Yes": "yes",
+                "No": "no"
+            },
+            "entry": null
+        }
+
+To express the logic described above, the sub-question has this ``conditional_display``:
+    
+..  code:: json
+
+    "conditional_display": {
+        "type": "conditional_display",
+        "comment": "Interactive: Hide if 2020-01-a-01-01 is no or unanswered; noninteractive: hide if that's no.",
+        "hide_if": {
+            "target": "$..*[?(@.id=='2020-01-a-01-01')].answer.entry",
+            "values": {
+                "interactive": [null, "no"],
+                "noninteractive": ["no"]
+            }
+        }
+    }
+
 
 Question Types
 --------------

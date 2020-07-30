@@ -135,40 +135,66 @@
         },
         "question": {
             "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "text": {"type": "string"},
-                "bullet_text": {"type": "string"},
-                "comment": {"type": "string"},
-                "answer": {"$ref": "#/definitions/answer"},
-                "interactive_conditional": {"type": "string"},
-                "noninteractive_conditional": {"type": "string"},
-                "conditional_display": {"$ref": "#/definitions/conditional_display"},
-                "type": {
-                    "enum": [
-                        "checkbox",
-                        "daterange",
-                        "file_upload",
-                        "integer",
-                        "money",
-                        "objectives",
-                        "radio",
-                        "ranges",
-                        "text_long"
-                    ]
-                },
-                "hint": {"type": "string"},
-                "questions": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {"$ref": "#/definitions/question"},
-                            {"$ref": "#/definitions/fieldset"}
-                        ]
+            "if": {"properties": {"type": {"const": "ranges"}}},
+            "then": {
+                "properties": {
+                    "id": {"type": "string"},
+                    "text": {"type": "string"},
+                    "comment": {"type": "string"},
+                    "answer": {"$ref": "#/definitions/answer_ranges"},
+                    "interactive_conditional": {"type": "string"},
+                    "noninteractive_conditional": {"type": "string"},
+                    "conditional_display": {"$ref": "#/definitions/conditional_display"},
+                    "type": {"anyOf": [{"const": "daterange"}, {"const": "ranges"}]},
+                    "hint": {"type": "string"},
+                    "questions": {
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {"$ref": "#/definitions/question"},
+                                {"$ref": "#/definitions/fieldset"}
+                            ]
+                        }
                     }
-                }
+                },
+                "additionalProperties": false
             },
-            "additionalProperties": false,
+            "else": {
+                "properties": {
+                    "id": {"type": "string"},
+                    "text": {"type": "string"},
+                    "bullet_text": {"type": "string"},
+                    "comment": {"type": "string"},
+                    "answer": {"$ref": "#/definitions/answer"},
+                    "interactive_conditional": {"type": "string"},
+                    "noninteractive_conditional": {"type": "string"},
+                    "conditional_display": {"$ref": "#/definitions/conditional_display"},
+                    "type": {
+                        "enum": [
+                            "checkbox",
+                            "daterange",
+                            "file_upload",
+                            "integer",
+                            "money",
+                            "objectives",
+                            "radio",
+                            "ranges",
+                            "text_long"
+                        ]
+                    },
+                    "hint": {"type": "string"},
+                    "questions": {
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {"$ref": "#/definitions/question"},
+                                {"$ref": "#/definitions/fieldset"}
+                            ]
+                        }
+                    }
+                },
+                "additionalProperties": false
+            },
             "required": [
                 "id",
                 "type",
@@ -178,11 +204,9 @@
         "fieldset": {
             "type": "object",
             "properties": {
-                "id": {"type": "string"},
                 "text": {"type": "string"},
-                "answer": {"$ref": "#/definitions/answer"},
+                "display_value_type": {"enum": ["percentage", "sum"]},
                 "interactive_conditional": {"type": "string"},
-                "display_value_type": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
                 "type": {"const": "fieldset"},
                 "hint": {"type": "string"},
@@ -245,6 +269,21 @@
                     "items": {"type": "string"}
                 },
                 "header": {"type": "string"},
+                "options": {"$ref": "#/definitions/options"}
+            },
+            "additionalProperties": false,
+            "required": ["entry"]
+        },
+        "answer_ranges": {
+            "type": "object",
+            "properties": {
+                "entry": {"type": ["null", "string", "number"]},
+                "default_entry": {"type": ["null", "string", "number"]},
+                "labels": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                },
+                "header": {"type": "string"},
                 "range_categories": {"type": "array"},
                 "range_type": {"type": "array"},
                 "entry_min": {"type": "integer"},
@@ -253,7 +292,6 @@
             },
             "additionalProperties": false,
             "required": ["entry"]
-
         },
         "options": {
             "type": "object",
