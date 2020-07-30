@@ -1,14 +1,10 @@
 import React from "react";
-import { Provider } from "react-redux";
-import renderer from "react-test-renderer";
-import { shallow, mount, ShallowWrapper } from "enzyme";
+import { shallow } from "enzyme";
 import {
   storeFactory,
   findByTestAttribute,
   stateUserTestData,
 } from "../../../testUtils";
-
-import configureMockStore from "redux-mock-store";
 
 import Header from "../Header";
 
