@@ -125,29 +125,32 @@ class QuestionsBasicInfo extends Component {
         />
 
         <Choice 
-        name="programType" 
-        type="radio" 
-        value="yes"
-        defaultChecked={this.props.previousYear === "true" ? (this.state.previous_programType === "comboCHIP" ? true : false) : false}
-        onChange={this.setConditional}
+          name="programType" 
+          type="radio" 
+          value="yes"
+          defaultChecked={this.props.previousYear === "true" && this.state.previous_programType === "comboCHIP" ? true : this.state.programType === "comboCHIP" ? true : false}
+          onChange={this.setConditional}
+          disabled
         >
           Combination state (M-CHIP and S-CHIP)
         </Choice>
         <Choice 
-        name="programType" 
-        type="radio" 
-        value="no"
-        defaultChecked={this.props.previousYear === "true" ? (this.state.prevous_programType$ === "mCHIP" ? true : false) : false}
-        onChange={this.setConditional}
+          name="programType" 
+          type="radio" 
+          value="no"
+          defaultChecked={this.props.previousYear === "true" && this.state.prevous_programType$ === "mCHIP" ? true : this.state.programType === "mCHIP" ? true : false}
+          onChange={this.setConditional}
+          disabled
         >
           CHIP Medicaid Expansion only (M-CHIP)
         </Choice>
         <Choice 
-        name="programType" 
-        type="radio" 
-        value="no"
-        defaultChecked={this.props.previousYear === "true" ? (this.state.previous_programType === "sCHIP" ? true : false) : false}
-        onChange={this.setConditional}
+          name="programType" 
+          type="radio" 
+          value="no"
+          defaultChecked={this.props.previousYear === "true" && this.state.previous_programType === "sCHIP" ? true : this.state.programType === "sCHIP" ? true : false}
+          onChange={this.setConditional}
+          disabled
         >
           CHIP Separate Program only (S-CHIP)
         </Choice>

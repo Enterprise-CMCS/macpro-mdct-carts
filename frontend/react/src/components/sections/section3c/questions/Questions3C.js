@@ -1,19 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField, Choice } from "@cmsgov/design-system-core";
-import {
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-  } from "@reach/accordion";
-  import FillForm from "../../../layout/FillForm";
+import FillForm from "../../../layout/FillForm";
 
 class Questions3C extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      p1_q1: "no",
+      p1_q1: "",
       p1_q1__a: "",
       p1_q1__a_1: "",
       p1_q1__a_2: "",
@@ -33,6 +27,7 @@ class Questions3C extends Component {
       p2_q5: "",
       p2_q6: "",
       previousEntry: this.props.previousEntry,
+      previousp1_q1: "yes",
       previousp1_q3: "last year's text Q3",
       previousp1_q4: "last year's text q4",
       previousp1_q5: "last year's text q5",
@@ -49,6 +44,7 @@ class Questions3C extends Component {
     this.selectInput = this.selectInput.bind(this)
     this.changeText = this.changeText.bind(this)
   }
+
   setConditional(el) {
     this.setState({
       [el.target.name]: el.target.value,
@@ -74,6 +70,7 @@ class Questions3C extends Component {
       }
     }
   }
+
   loadAnswers(el) {
     el.preventDefault();
     // button title: Undo or Same as Last year
@@ -131,47 +128,44 @@ class Questions3C extends Component {
               </div>
               <div id="p1_q1">
                 <Choice 
-                      name="p1_q1" 
-                      type="radio" 
-                      value="yes"
-                      hint="Note: This question may not apply to Medicaid Expansion states."
-                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previousp1_q1 === "yes" ? true : false) : false}
-                      onChange={this.setConditional}
-                      checkedChildren={
-                        <div className="ds-c-choice__checkedChild">
-                          
-                          <TextField
-                      label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
-                      multiline
-                      name="p1_q1__a"
-                      rows="6"
-                      value={this.state.p1_q1__a}
-                      onChange={this.changeText}
-                    />
-                    <TextField
-                      hint="Maximum 7,500 characters"
-                      label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
-                      multiline
-                      name="p1_q1__b"
-                      rows="6"
-                      value={this.state.p1_q1__b}
-                      onChange={this.changeText}
-                    />
-                        
-                        </div>
-                    }
-                      >
-                        Yes
-                      </Choice>
-                      <Choice 
-                      name="p1_q1" 
-                      type="radio" 
-                      value="no"
-                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previousp1_q1 === "no" ? true : false) : false}
-                      onChange={this.setConditional}
-                      >
-                        No
-                      </Choice>
+                  name="p1_q1" 
+                  type="radio" 
+                  value="yes"
+                  defaultChecked={this.props.previousEntry === "true" && this.state.previousp1_q1 === "yes" ? true : false}
+                  onChange={this.setConditional}
+                  checkedChildren={
+                    <div className="ds-c-choice__checkedChild">
+                      <TextField
+                        label="What percentage of children are presumptively enrolled in CHIP pending a full eligibility determination?"
+                        multiline
+                        name="p1_q1__a"
+                        rows="6"
+                        value={this.state.p1_q1__a}
+                        onChange={this.changeText}
+                      />
+                      <TextField
+                        hint="Maximum 7,500 characters"
+                        label="Of those children who are presumptively enrolled, what percentage are determined fully eligible and enrolled in the program?"
+                        multiline
+                        name="p1_q1__b"
+                        rows="6"
+                        value={this.state.p1_q1__b}
+                        onChange={this.changeText}
+                      />
+                    </div>
+                  }
+                >
+                  Yes
+                </Choice>
+                <Choice 
+                  name="p1_q1" 
+                  type="radio" 
+                  value="no"
+                  defaultChecked={this.props.previousEntry === "true" && this.state.previousp1_q1 === "no" ? true : false}
+                  onChange={this.setConditional}
+                >
+                  No
+                </Choice>
               </div>
             </div>
           </div>
@@ -197,7 +191,7 @@ class Questions3C extends Component {
                 name="p1_q2__1" 
                 type="radio" 
                 value="yes"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__1 === "yes" ? true : false) : false}
+                defaultChecked={this.props.previousEntry === "true" && this.state.previous_p1_q2__1 === "yes" ? true : false}
                 onChange={this.setConditional}
                 >
                   Yes
@@ -206,7 +200,7 @@ class Questions3C extends Component {
                 name="p1_q2__1" 
                 type="radio" 
                 value="no"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__1 === "no" ? true : false) : false}
+                defaultChecked={this.props.previousEntry === "true" && this.state.previous_p1_q2__1 === "no" ? true : false}
                 onChange={this.setConditional}
                 >
                   No
@@ -219,7 +213,7 @@ class Questions3C extends Component {
                 name="p1_q2__2" 
                 type="radio" 
                 value="yes"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__2 === "yes" ? true : false) : false}
+                defaultChecked={this.props.previousEntry === "true" && this.state.previous_p1_q2__2 === "yes" ? true : false}
                 onChange={this.setConditional}
                 >
                   Yes
@@ -228,7 +222,7 @@ class Questions3C extends Component {
                 name="p1_q2__2" 
                 type="radio" 
                 value="no"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2__2 === "no" ? true : false) : false}
+                defaultChecked={this.props.previousEntry === "true" && this.state.previous_p1_q2__2 === "no" ? true : false}
                 onChange={this.setConditional}
                 >
                   No

@@ -58,9 +58,6 @@ class Section2a extends Component {
       year2: this.props.formYear - 2,
       year3: this.props.formYear - 3,
       year4: this.props.formYear - 4,
-      ly_p2_q2: "",//From choiceList refactor
-      ly_p2_q3: "",
-      previousEntry: "",//^^^
     };
   }
 
