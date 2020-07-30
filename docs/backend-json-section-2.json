@@ -10,7 +10,7 @@
         "subsections": [
             null,
             {
-                "header": "Enrollment and Uninsured Data",
+                "title": "Enrollment and Uninsured Data",
                 "type": "subsection",
                 "id": "2020-02-b",
                 "parts": [
@@ -22,8 +22,8 @@
                             "Separate CHIP",
                             "Combo"
                         ],
-                        "header": "State Plan Goals and Objectives",
-                        "description": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
+                        "title": "State Plan Goals and Objectives",
+                        "text": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
                         "questions": [
                             {
                                 "id": "2020-02-b-01-01",
@@ -35,7 +35,7 @@
                                         "questions": [
                                             {
                                                 "type": "text_long",
-                                                "text": "What is the objective as listed in your state plan?",
+                                                "text": "What is your objective as listed in your state plan?",
                                                 "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
                                                 "id": "2020-02-b-01-01-01-01",
                                                 "answer": {
@@ -76,10 +76,19 @@
                                                                 "questions": [
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-02-a",
-                                                                        "interactive_conditional": "Show if 2020-02-b-01-01-01-02 is 'Discontinued goal', hide otherwise.",
-                                                                        "noninteractive_conditional": "Show if 2020-02-b-01-01-01-02 is unanswered or 'Discontinued goal', hide otherwise.",
                                                                         "text": "Why was this goal discontinued?",
                                                                         "type": "text_long",
+                                                                        "conditional_display": {
+                                                                            "type": "conditional_display",
+                                                                            "comment": "Interactive: Hide if 2020-02-b-01-01-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                                                            "hide_if": {
+                                                                                "target": "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
+                                                                                "values": {
+                                                                                    "interactive": [null, "goal_continuing", "goal_new"],
+                                                                                    "noninteractive": ["goal_continuing", "goal_new"]
+                                                                                }
+                                                                            }
+                                                                        },
                                                                         "answer": {
                                                                             "entry": null
                                                                         }

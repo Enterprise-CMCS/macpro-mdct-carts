@@ -1,5 +1,4 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "section": {
             "type": "object",
@@ -17,9 +16,9 @@
                 }
 
             },
+            "additionalProperties": false,
             "required": ["id", "year", "subsections"]
         },
-
         "subsection": {
             "type": "object",
             "properties": {
@@ -32,6 +31,7 @@
                 }
 
             },
+            "additionalProperties": false,
             "required": ["id", "parts"]
         },
         "part": {
@@ -39,7 +39,8 @@
             "properties": {
                 "id": {"type": "string"},
                 "type": {"const": "part"},
-                "description": {"type": "string"},
+                "title": {"type": "string"},
+                "text": {"type": "string"},
                 "skip_text": {"type": "string"},
                 "comment": {"type": "string"},
                 "applies_to": {
@@ -64,6 +65,7 @@
                     }
                 }
             },
+            "additionalProperties": false,
             "required": ["id", "type"]
         },
         "objectives": {
@@ -77,6 +79,7 @@
                     "items": {"$ref": "#/definitions/objective"}
                 }
             },
+            "additionalProperties": false,
             "required": ["id", "type"]
         },
         "objective": {
@@ -94,6 +97,7 @@
                     "additionalItems": {"$ref": "#/definitions/goals"}
                 }
             },
+            "additionalProperties": false,
             "required": ["id", "type"]
         },
         "goals": {
@@ -107,6 +111,7 @@
                     "items": { "$ref": "#/definitions/goal"}
                 }
             },
+            "additionalProperties": false,
             "required": ["id", "type"]
         },
         "goal": {
@@ -125,6 +130,7 @@
                     }
                 }
             },
+            "additionalProperties": false,
             "required": ["id", "type"]
         },
         "question": {
@@ -132,9 +138,12 @@
             "properties": {
                 "id": {"type": "string"},
                 "text": {"type": "string"},
+                "bullet_text": {"type": "string"},
+                "comment": {"type": "string"},
                 "answer": {"$ref": "#/definitions/answer"},
                 "interactive_conditional": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
+                "conditional_display": {"$ref": "#/definitions/conditional_display"},
                 "type": {
                     "enum": [
                         "checkbox",
@@ -142,13 +151,13 @@
                         "file_upload",
                         "integer",
                         "money",
+                        "objectives",
                         "radio",
                         "ranges",
                         "text_long"
                     ]
                 },
                 "hint": {"type": "string"},
-                "skip_text": {"type": "string"},
                 "questions": {
                     "type": "array",
                     "items": {
@@ -159,6 +168,7 @@
                     }
                 }
             },
+            "additionalProperties": false,
             "required": [
                 "id",
                 "type",
@@ -172,6 +182,7 @@
                 "text": {"type": "string"},
                 "answer": {"$ref": "#/definitions/answer"},
                 "interactive_conditional": {"type": "string"},
+                "display_value_type": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
                 "type": {"const": "fieldset"},
                 "hint": {"type": "string"},
@@ -189,21 +200,66 @@
             "required": [
                 "type",
                 "questions"
-            ]
+            ],
+            "additionalProperties": false
+        },
+        "conditional_display": {
+            "type": "object",
+            "properties": {
+                "type": {"const": "conditional_display"},
+                "comment": {"type": "string"},
+                "skip_text": {"type": "string"},
+                "hide_if": {
+                    "type": "object",
+                    "properties": {
+                        "target": {"type": "string"},
+                        "comment": {"type": "string"},
+                        "values": {
+                            "type": "object",
+                            "properties": {
+                                "interactive": {
+                                    "type": "array",
+                                    "items": {"anyOf":[{"type": "number"}, {"type": "null"}, {"type": "string"}]}
+                                },
+                                "noninteractive": {
+                                    "type": "array",
+                                    "items": {"anyOf":[{"type": "number"}, {"type": "null"}, {"type": "string"}]}
+                                }
+                            },
+                            "required": ["interactive", "noninteractive"]
+                        }
+                    },
+                    "required": ["target", "values"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["type", "hide_if"]
         },
         "answer": {
             "type": "object",
             "properties": {
                 "entry": {"type": ["null", "string", "number"]},
+                "default_entry": {"type": ["null", "string", "number"]},
+                "labels": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                },
+                "header": {"type": "string"},
+                "range_categories": {"type": "array"},
+                "range_type": {"type": "array"},
+                "entry_min": {"type": "integer"},
+                "entry_max": {"type": "integer"},
                 "options": {"$ref": "#/definitions/options"}
             },
+            "additionalProperties": false,
             "required": ["entry"]
+
         },
         "options": {
             "type": "object",
             "additionalProperties": { "type": "string" }
         }
-    } ,
+    },
 
   "type": "object",
   "properties": {
