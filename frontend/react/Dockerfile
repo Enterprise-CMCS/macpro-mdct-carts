@@ -51,13 +51,15 @@ FROM alpine:latest
 # Copy static build from the builder container
 ##COPY --from=builder /app/build /usr/share/nginx/html/
 
+
+RUN apt-get update -y && \
+             apt-get upgrade -y && \
+             apt-get -y install zip curl
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
         unzip awscliv2.zip &&\
         ./aws/install
 
-RUN apt-get update -y && \
-             apt-get upgrade -y && \
-             apt-get -y install zip
+
 
 COPY --from=builder /app/build /tmp/build
 RUN aws s3 cp /tmp/build s3://carts-ui --recursive
