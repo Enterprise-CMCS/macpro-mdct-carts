@@ -104,6 +104,8 @@ Special Requirements
 ++++++++++++++++++++
 Section 1
     This section's parts 3 and 4 contain an identical long list of questions, all with yes/no answers. The JSON for these is the only place where ``bullet_text`` is used. The last question in each of the parts is displayed if any of questions 1–19 in that part were answered with ``yes``, in which case the last question is displayed and the ``bullet_text`` value for each of the questions with a ``yes`` answer is displayed somewhere nearby (depends on the design).
+Section 2B
+    See `objectives`_ below.
 
 Section
 -------
@@ -360,6 +362,7 @@ To express the logic described above, the sub-question has this ``conditional_di
         }
     }
 
+.. _JSON Path: https://goessner.net/articles/JsonPath/
 
 Question Types
 --------------
@@ -549,5 +552,7 @@ A child construct of the ``objective`` construct. This should have at least one 
 ``goal``
 ++++++++
 A child construct of the ``goals`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``goals``, or ``goal`` here we won't be happy and suspect you won't be either.
+
+
 
 
