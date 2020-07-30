@@ -38,11 +38,11 @@ RUN npm run build
 #===============================================================================
 #copy static files to s3
 
-RUN zip /app/build.zip /app/build
+RUN zip build.zip /app/build
 
 ##RUN aws s3 cp /app/build s3://carts-ui --recursive
 
-RUN aws s3 cp /app/build.zip s3://carts-archive --recursive
+RUN aws s3 cp build.zip s3://carts-archive --recursive
 
 # ==============================================================================
 # => Run container
