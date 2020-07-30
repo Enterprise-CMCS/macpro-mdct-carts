@@ -18,7 +18,7 @@ FROM dev as builder
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
         unzip awscliv2.zip &&\
         ./aws/install
-RUN apt-install zip -y
+RUN apt install zip -y
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -39,6 +39,7 @@ RUN zip /app/build.zip /app/build
 
 #RUN aws s3 cp /app/build s3://carts-ui --recursive
 
+RUN aws s3 cp /app/build.zip s3://carts-archive --recursive
 
 # ==============================================================================
 # => Run container
