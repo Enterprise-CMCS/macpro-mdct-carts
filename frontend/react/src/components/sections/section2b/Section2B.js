@@ -147,7 +147,6 @@ class Section2b extends Component {
                   />
                 </div>
               </TabPanel>
-
               {this.props.review !== true ? (
                 <TabPanel
                   className="section2b-previous"

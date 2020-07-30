@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component, snapshot testing should render with given state from Redux store 1`] = `
+<div
+  className="header"
+>
+  <div
+    className="ds-l-container"
+  >
+    <div
+      className="ds-l-row header-row"
+    >
+      <div
+        className="site-title ds-l-col--6 ds-u-padding--2"
+      >
+        <a
+          href="/"
+        >
+          Carts
+        </a>
+      </div>
+      <div
+        className="user-details ds-l-col--6 ds-u-padding--2"
+      >
+        <div
+          className="ds-l-row"
+        >
+          <div
+            className="save-status ds-l-col--6"
+          >
+            Autosaved
+          </div>
+          <div
+            className="nav-user ds-l-col--6"
+            id="nav-user"
+          >
+            <ul
+              className="user-email-button"
+            >
+              <li>
+                <a
+                  className="nav--dropdown__trigger"
+                  href="#menu"
+                  onClick={[Function]}
+                >
+                  karen.dalton@state.gov
+                </a>
+              </li>
+            </ul>
+            <ul
+              className="menu-block"
+              id="menu-block"
+            >
+              <li
+                className="manage-account"
+              >
+                <a
+                  href="javascript:void(0)"
+                >
+                  Manage account
+                </a>
+              </li>
+              <li
+                className="logout"
+              >
+                <a
+                  href="javascript:void(0)"
+                >
+                  Log out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

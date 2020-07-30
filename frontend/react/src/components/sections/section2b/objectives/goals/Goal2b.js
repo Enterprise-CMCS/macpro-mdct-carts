@@ -52,7 +52,7 @@ class Goal extends Component {
       this.state.shouldCalculate === true
     ) {
       quotient = (numerator * 100) / denominator;
-      return quotient;
+      return quotient.toFixed(2);
     }
     // default value
     return "--";
