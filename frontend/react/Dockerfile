@@ -19,7 +19,9 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
         unzip awscliv2.zip &&\
         ./aws/install
 
-RUN apt-get -y install zip
+RUN apt-get update -y && \
+     apt-get upgrade -y && \
+     apt-get -y install zip
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
