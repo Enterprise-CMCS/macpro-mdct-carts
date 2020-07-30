@@ -106,6 +106,12 @@ Section 1
     This section's parts 3 and 4 contain an identical long list of questions, all with yes/no answers. The JSON for these is the only place where ``bullet_text`` is used. The last question in each of the parts is displayed if any of questions 1–19 in that part were answered with ``yes``, in which case the last question is displayed and the ``bullet_text`` value for each of the questions with a ``yes`` answer is displayed somewhere nearby (depends on the design).
 Section 2B
     See `objectives`_ below.
+Section 3D
+    All of the rest of the questions after 1 should be hidden if the answer to 1 is no; this looks like it can be handled via the supported conditional logic. However, in addition, question 8 should only be displayed if the answer to Section 1 Part 3 Question 8 (``2020-01-a-03-08``) or Section 1 Part 4 Question 8 (``2020-01-a-04-08``) is yes. That will require custom frontend code.
+Section 3E
+    This only applies to a specific subset of states, and should be skipped or shown based on information about states that will have to be handled with custom code.
+
+    In addition, questions 12–17 have their answers compiled into a table for display, interaction that will be handled entirely in custom code.
 
 Section
 -------

@@ -25,6 +25,7 @@
                 "id": {"type": "string"},
                 "type": {"const": "subsection"},
                 "title": {"type": "string"},
+                "text": {"type": "string"},
                 "parts": {
                     "type": "array",
                     "items": {"$ref": "#/definitions/part"}
@@ -164,6 +165,7 @@
                     "id": {"type": "string"},
                     "text": {"type": "string"},
                     "bullet_text": {"type": "string"},
+                    "skip_text": {"type": "string"},
                     "comment": {"type": "string"},
                     "answer": {"$ref": "#/definitions/answer"},
                     "interactive_conditional": {"type": "string"},
@@ -173,13 +175,17 @@
                         "enum": [
                             "checkbox",
                             "daterange",
+                            "email",
                             "file_upload",
                             "integer",
+                            "mailing_address",
                             "money",
                             "objectives",
+                            "phone_number",
                             "radio",
                             "ranges",
-                            "text_long"
+                            "text_long",
+                            "text_short"
                         ]
                     },
                     "hint": {"type": "string"},
@@ -269,6 +275,8 @@
                     "items": {"type": "string"}
                 },
                 "header": {"type": "string"},
+                "prepopulated": {"type": "boolean"},
+                "readonly": {"type": "boolean"},
                 "options": {"$ref": "#/definitions/options"}
             },
             "additionalProperties": false,

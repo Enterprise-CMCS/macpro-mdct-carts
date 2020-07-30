@@ -105,6 +105,270 @@
                         ]
                     }
                 ]
+            },
+            null,
+            null,
+            {
+                "type": "subsection",
+                "id": "2020-03-d",
+                "title": "Cost Sharing (Out-of-Pocket Costs)",
+                "type": "subsection",
+                "text": "Cost sharing is the share of costs that CHIP enrollees pay out of pocket. Cost sharing can include enrollment fees, premium fees, deductibles, coinsurance, copayments, and any other out-of-pocket costs. States can choose to require cost sharing or not.",
+                "parts": [
+                    {
+                        "id": "2020-03-d-01",
+                        "type": "part",
+                        "questions": [
+                            {
+                                "id": "2020-03-d-01-01",
+                                "text": "Does your state require cost sharing?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-d-01-02",
+                                "text": "Who tracks cost sharing to ensure families don’t pay more than the 5% aggregate household income in a year?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Families (“the shoebox method”)": "families",
+                                        "Health plans": "health_plans",
+                                        "States": "states",
+                                        "Third party administrator": "third_party_administrator",
+                                        "Other ": "other"
+                                    }
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "skip_text": "This section doesn’t apply to your state. Skip to the next section.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-d-01-02-a",
+                                        "text": "What information or tools do you provide families with so they can track cost sharing?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-d-01-02 is anything except families; noninteractive: same.",
+                                            "skip_text": "2a not shown due to your answer to 2.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-d-01-02')].answer.entry",
+                                                "values": {
+                                                    "interactive": ["health_plans", "states", "third_party_administrator", "other"],
+                                                    "noninteractive": ["health_plans", "states", "third_party_administrator", "other"]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-03-d-01-02-b",
+                                        "text": "Who tracks cost sharing?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-d-01-02 is anything except other; noninteractive: same.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-d-01-02')].answer.entry",
+                                                "values": {
+                                                    "interactive": ["health_plans", "states", "third_party_administrator", "families"],
+                                                    "noninteractive": ["health_plans", "states", "third_party_administrator", "families"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-d-01-03",
+                                "text": "How are healthcare providers notified that they shouldn’t charge families once families have reached the 5% cap?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-d-01-04",
+                                "text": "Approximately how many families exceeded the 5% cap in the last federal fiscal year?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-d-01-05",
+                                "text": "Have you assessed the effects of charging premiums and enrollment fees on whether eligible families enroll in CHIP?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-d-01-05-a",
+                                        "text": "What did you find in your assessment?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-d-01-05 is no or unanswered; noninteractive: hide if that's no.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-d-01-05')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no"],
+                                                    "noninteractive": ["no"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-d-01-06",
+                                "text": "Have you assessed the effects of charging co-payments and other out-of-pocket fees on whether enrolled families use CHIP services?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-d-01-06-a",
+                                        "text": "What did you find in your assessment?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-d-01-06 is no or unanswered; noninteractive: hide if that's no.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-d-01-06')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no"],
+                                                    "noninteractive": ["no"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-d-01-07",
+                                "text": "You indicated in Section 1 that you changed your cost sharing requirements in the past federal fiscal year. How are you monitoring the impact of these changes on whether families apply, enroll, disenroll, and use CHIP health services? What have you found when monitoring the impact?",
+                                "type": "text_long",
+                                "interactive_conditional": "In addition to hiding this question if 2020-03-d-01-01 is no, this should also be hidden unless the answer to 2020-01-a-03-08 OR 2020-01-a-04-08 is yes. Logic across sections has to be handled manually.",
+                                "noninteractive_conditional": "See interactive conditional.",
+                                "skip_text": "Hidden based on your answer to the cost sharing questions in Section 1 Parts 3 and 4.",
+                                "answer": {
+                                    "entry": null
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-d-01-08",
+                                "text": "Anything else you’d like to add that wasn’t already covered?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                },
+                                "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
+                                    "hide_if": {
+                                        "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
+                                        "values": {
+                                            "interactive": ["no"],
+                                            "noninteractive": ["no"]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

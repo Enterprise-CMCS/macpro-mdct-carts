@@ -1,0 +1,109 @@
+{
+    "section": {
+        "year": 2020,
+        "state": null,
+        "valid": null,
+        "ordinal": 0,
+        "id": "2020-00",
+        "type": "section",
+        "title": "Carts Basic Info",
+        "subsections": [
+            {
+                "type": "subsection",
+                "id": "2020-00-a",
+                "parts": [
+                    {
+                        "id": "2020-00-a-01",
+                        "type": "part",
+                        "title": "Welcome!",
+                        "questions": [
+                            {
+                                "id": "2020-00-a-01-01",
+                                "text": "State or territory name:",
+                                "type": "text_long",
+                                "answer": {
+                                    "prepopulated": true,
+                                    "readonly": true,
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-00-a-01-02",
+                                "text": "Program type:",
+                                "type": "checkbox",
+                                "answer": {
+                                    "prepopulated": true,
+                                    "readonly": true,
+                                    "entry": null,
+                                    "options": {
+                                        "Combination state (M-CHIP and S-CHIP)": "combo",
+                                        "CHIP Medicaid Expansion only (M-CHIP)": "mchip",
+                                        "CHIP Separate Program only (S-CHIP)": "schip"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-00-a-01-03",
+                                "text": "CHIP program name(s): ",
+                                "type": "text_long",
+                                "answer": {
+                                    "prepopulated": true,
+                                    "readonly": true,
+                                    "entry": null
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "2020-00-a-02",
+                        "type": "part",
+                        "title": "Contact information",
+                        "text": "Who should we contact if we have any questions about your report?",
+                        "questions": [
+                            {
+                                "id": "2020-00-a-02-01",
+                                "text": "Contact name:",
+                                "type": "text_short",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-00-a-02-02",
+                                "text": "Job title:",
+                                "type": "text_short",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-00-a-02-03",
+                                "text": "Email:",
+                                "type": "email",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-00-a-02-04",
+                                "text": "Full mailing address:",
+                                "type": "mailing_address",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-00-a-02-05",
+                                "text": "Phone number:",
+                                "type": "phone_number",
+                                "answer": {
+                                    "entry": null
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
