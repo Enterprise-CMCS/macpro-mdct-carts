@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
+import { TextField, Choice } from "@cmsgov/design-system-core";
 import DateRange from "../../../../layout/DateRange";
 
 class Goal extends Component {
@@ -18,6 +18,7 @@ class Goal extends Component {
       selectedFiles: [],
       p1_q1_answer: null,
       p1_q2_answer: "",
+      previousEntry:this.props.previousEntry,
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
@@ -292,30 +293,26 @@ class Goal extends Component {
             </div>
 
             <div className="question-container">
-              <ChoiceList
-                choices={[
-                  {
-                    label: "Eligibility or enrollment data",
-                    value: "enrollment_data",
-                    disabled: renderPreviousEntry ? true : false,
-                    defaultChecked: renderPreviousEntry ? true : false,
-                  },
-                  {
-                    label: "Survey data",
-                    value: "survey_data",
-                    disabled: renderPreviousEntry ? true : false,
-                  },
-                  {
-                    label: "Another data source",
-                    value: "other_data",
-                    disabled: renderPreviousEntry ? true : false,
-                  },
-                ]}
-                className="ds-u-margin-top--5"
-                label="8. Which data source did you use?"
+              <Choice 
                 name={`data_source${this.props.goalId}`}
-                //choiceLists in Tab components need unique names or their defaultChecked values will be overwritten
-              />
+                type="radio" 
+                label="8. Which data source did you use?"
+                value="enrollment_data"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q$ === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Eligibility or enrollment data
+                </Choice>
+                <Choice 
+                name={`data_source${this.props.goalId}`}
+                type="radio" 
+                value="survey_data"
+                defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p4_q$ === "yes" ? true : false) : false}
+                onChange={this.setConditional}
+                >
+                  Survey data
+                </Choice>
+                
             </div>
 
             <div className="question-container">
