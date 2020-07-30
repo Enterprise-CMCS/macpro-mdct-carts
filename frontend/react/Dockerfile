@@ -38,8 +38,8 @@ RUN npm run build
 #===============================================================================
 #copy static files to s3
 
-COPY --from=builder /app/build ./static/deploy
-RUN zip build.zip ./static/deploy
+
+RUN zip build.zip build
 
 ##RUN aws s3 cp /app/build s3://carts-ui --recursive
 
