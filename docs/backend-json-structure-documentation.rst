@@ -104,6 +104,8 @@ Special Requirements
 ++++++++++++++++++++
 Section 1
     This section's parts 3 and 4 contain an identical long list of questions, all with yes/no answers. The JSON for these is the only place where ``bullet_text`` is used. The last question in each of the parts is displayed if any of questions 1–19 in that part were answered with ``yes``, in which case the last question is displayed and the ``bullet_text`` value for each of the questions with a ``yes`` answer is displayed somewhere nearby (depends on the design).
+Section 2A
+    This section starts with two tables, both of which are filled with data from other sources. This data will be entered into the JSON, but will not be editable by states. Each of the tables is followed by a question whose display is conditional upon values in the table. This all requires custom code.
 Section 2B
     See `objectives`_ below.
 Section 3D
@@ -224,7 +226,7 @@ Parts are contained by subsections.
     +   Separate CHIP
     +   Combo
 
-    The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed.
+    The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
 ``skip_text`` (optional)
     String.
 
@@ -378,7 +380,7 @@ This section describes the characteristics and properties (in addition to those 
 ++++++++++++
 Essentially a container for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions. Fieldsets do not have ``id`` properties, and the questions within them increment as if the fieldset container were not present.
 
-``display_value_type`` (optional)
+``fieldset_type`` (optional)
     Some fieldsets display synthetic values for the benefit of the user that are not sent to the backend and which are derived from the answers to the questions within the fieldset. One example might be ``sum``, and another is ``percentage`` (in the latter case, the percentage is the first value divided by the second value times 100).
 
 ``text_long``

@@ -548,7 +548,7 @@
                             },
                             {
                                 "type": "fieldset",
-                                "display_value_type": "2d_table",
+                                "fieldset_type": "2d_table",
                                 "questions": [
                                     {
                                         "type": "fieldset",

@@ -8,7 +8,45 @@
         "type": "section",
         "title": "Program Fees and Policy Changes",
         "subsections": [
-            null,
+            {
+                "title": "Enrollment and Uninsured Data",
+                "type": "subsection",
+                "id": "2020-02-a",
+                "parts": [
+                    {
+                        "id": "2020-02-a-01",
+                        "type": "part",
+                        "title": "Part 1: Number of Children Enrolled in CHIP",
+                        "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and refresh the page. There may be a slight delay when updating data.",
+                        "questions": [
+                            {
+                                "type": "fieldset",
+                                "fieldset_type": "noninteractive_table",
+                                "fieldset_info": {
+                                    "headers": ["Program", "Number of children enrolled in FFY 2019", "Number of children enrolled in FFY 2020", "Percent change"],
+                                    "rows": [
+                                        ["Medicaid expansion CHIP", 284143, 300579, 5.78],
+                                        ["Separate CHIP", 478542, 511473, 6.88]
+                                    ]
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-02-a-01",
+                                        "text": "What are some possible reasons why your state had more than a 10% change in enrollment numbers?",
+                                        "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                                        "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                                        "skip_text": "Since your percent change didn’t exceed 10%, you can skip to Part 2.",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
             {
                 "title": "Enrollment and Uninsured Data",
                 "type": "subsection",
@@ -98,7 +136,7 @@
                                                             {
                                                                 "type": "fieldset",
                                                                 "text": "Define the numerator you're measuring",
-                                                                "display_value_type": "percentage",
+                                                                "fieldset_type": "percentage",
                                                                 "questions": [
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-03",
@@ -122,7 +160,7 @@
                                                             {
                                                                 "type": "fieldset",
                                                                 "text": "Define the denominator you're measuring",
-                                                                "display_value_type": "percentage",
+                                                                "fieldset_type": "percentage",
                                                                 "questions": [
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-05",

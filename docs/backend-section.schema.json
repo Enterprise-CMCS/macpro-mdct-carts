@@ -211,7 +211,8 @@
             "type": "object",
             "properties": {
                 "text": {"type": "string"},
-                "display_value_type": {"enum": ["percentage", "sum", "2d_table"]},
+                "fieldset_type": {"enum": ["percentage", "sum", "2d_table", "noninteractive_table"]},
+                "fieldset_info": { "type": "object" },
                 "interactive_conditional": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
                 "type": {"const": "fieldset"},
