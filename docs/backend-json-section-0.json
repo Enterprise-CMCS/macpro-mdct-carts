@@ -36,9 +36,9 @@
                                     "readonly": true,
                                     "entry": null,
                                     "options": {
-                                        "Combination state (M-CHIP and S-CHIP)": "combo",
-                                        "CHIP Medicaid Expansion only (M-CHIP)": "mchip",
-                                        "CHIP Separate Program only (S-CHIP)": "schip"
+                                        "Combination (Medicaid Expansion CHIP and Separate CHIP)": "combo",
+                                        "Medicaid Expansion CHIP only": "medicaid_exp_chip",
+                                        "Separate CHIP only": "separate_chip"
                                     }
                                 }
                             },

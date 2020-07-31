@@ -63,7 +63,7 @@
                                                             {
                                                                 "id": "2020-02-b-01-01-01-02",
                                                                 "text": "What type of goal is it?",
-                                                                "type": "checkbox",
+                                                                "type": "radio",
                                                                 "answer": {
                                                                     "options": {
                                                                         "New goal": "goal_new",
@@ -97,7 +97,7 @@
                                                             },
                                                             {
                                                                 "type": "fieldset",
-                                                                "text": "Describe the numerator you're measuring",
+                                                                "text": "Define the numerator you're measuring",
                                                                 "display_value_type": "percentage",
                                                                 "questions": [
                                                                     {
@@ -121,7 +121,7 @@
                                                             },
                                                             {
                                                                 "type": "fieldset",
-                                                                "text": "Describe the denominator you're measuring",
+                                                                "text": "Define the denominator you're measuring",
                                                                 "display_value_type": "percentage",
                                                                 "questions": [
                                                                     {
@@ -158,7 +158,7 @@
                                                             {
                                                                 "id": "2020-02-b-01-01-01-08",
                                                                 "text": "Which data source did you use?",
-                                                                "type": "checkbox",
+                                                                "type": "radio",
                                                                 "answer": {
                                                                     "options": {
                                                                         "Eligibility or enrollment data": "goal_enrollment_data",

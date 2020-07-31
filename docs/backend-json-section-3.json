@@ -9,7 +9,6 @@
         "title": null,
         "subsections": [
             {
-                "type": "subsection",
                 "id": "2020-03-a",
                 "title": "Program Outreach",
                 "type": "subsection",
@@ -109,7 +108,6 @@
             null,
             null,
             {
-                "type": "subsection",
                 "id": "2020-03-d",
                 "title": "Cost Sharing (Out-of-Pocket Costs)",
                 "type": "subsection",
@@ -364,6 +362,383 @@
                                             "noninteractive": ["no"]
                                         }
                                     }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "subsection",
+                "id": "2020-03-e",
+                "title": "Employer Sponsored Insurance and Premium Assistance",
+                "parts": [
+                    {
+                        "id": "2020-03-e-01",
+                        "type": "part",
+                        "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this means six states: MA, NJ, OK, RI, VA, WI.",
+                        "skip_text": "This section only applies to states with a premium assistance program. Skip to the next section.",
+                        "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents. ",
+                        "questions": [
+                            {
+                                "id": "2020-03-e-01-01",
+                                "text": "Under which authority and statutes does your state offer premium assistance?",
+                                "hint": "Check all that apply.",
+                                "type": "checkbox",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]": "2105(c)(3)",
+                                        "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]": "2105(c)(10)",
+                                        "Section 1115 Demonstration (Title XXI)": "title_xxi"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-02",
+                                "text": "Does your premium assistance program include coverage for adults",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-e-01-02-a",
+                                        "text": "Who do you cover?",
+                                        "type": "checkbox",
+                                        "answer": {
+                                            "entry": null,
+                                            "options": {
+                                                "Parents": "parents",
+                                                "Caretaker relatives": "caretaker_relatives",
+                                                "Pregnant women": "pregnant_women"
+                                            }
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-e-01-02 is unanswered or no; noninteractive: hide if that's no.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-e-01-02')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no"],
+                                                    "noninteractive": ["no"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-e-01-03",
+                                "text": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)? ",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-04",
+                                "text": "Which benefit package is offered as part of your premium assistance program? ",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-05",
+                                "text": "Are there any minimum coverage requirements as part of the benefit package?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-06",
+                                "text": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-07",
+                                "text": "Are there limits on cost sharing for children in your premium assistance program? ",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-08",
+                                "text": "Are there limits on cost sharing for adults in your premium assistance program?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no",
+                                        "N/A": "na"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-09",
+                                "text": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-e-01-09-a",
+                                        "text": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-e-01-09 is unanswered or no; noninteractive: hide if that's no.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-e-01-09')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no"],
+                                                    "noninteractive": ["no"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-e-01-10",
+                                "text": "How many children were enrolled monthly in the premium assistance program on average each month in the last FFY?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-11",
+                                "text": "What’s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "type": "fieldset",
+                                "display_value_type": "2d_table",
+                                "questions": [
+                                    {
+                                        "type": "fieldset",
+                                        "text": "Coverage breakdown for children",
+                                        "hint": "Your answers will auto-populate the table below.",
+                                        "questions": [
+                                            {
+                                                "id": "2020-03-e-01-12",
+                                                "text": "What’s the average monthly contribution the state pays towards coverage of a child?",
+                                                "type": "money",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            },
+                                            {
+                                                "id": "2020-03-e-01-13",
+                                                "text": "What’s the average monthly contribution the employer pays towards coverage of a child?",
+                                                "type": "money",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            },
+                                            {
+                                                "id": "2020-03-e-01-14",
+                                                "text": "What’s the average monthly contribution the employee pays towards coverage of a child?",
+                                                "type": "money",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "fieldset",
+                                        "text": "Coverage breakdown for parents",
+                                        "questions": [
+                                            {
+                                                "id": "2020-03-e-01-15",
+                                                "text": "What’s the average monthly contribution the state pays towards coverage of the eligible parent?",
+                                                "type": "money",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            },
+                                            {
+                                                "id": "2020-03-e-01-16",
+                                                "text": "What’s the average monthly contribution the employer pays towards coverage of the eligible parent?",
+                                                "type": "money",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            },
+                                            {
+                                                "id": "2020-03-e-01-17",
+                                                "text": "What’s the average monthly contribution the employee pays towards coverage of the eligible parent?",
+                                                "type": "money",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "fieldset",
+                                "text": "Range in monthly contributions paid by state",
+                                "questions": [
+                                    {
+                                        "id": "2020-03-e-01-18",
+                                        "text": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Average Monthly Contribution",
+                                            "range_categories": [
+                                                [
+                                                    "Starts at",
+                                                    "Ends at"
+                                                ]                                            ],
+                                            "range_type": [
+                                                "money"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 1
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-03-e-01-19",
+                                        "text": "What’s the range in the average monthly contribution paid by the state on behalf of a parent?",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Average Monthly Contribution",
+                                            "range_categories": [
+                                                [
+                                                    "Starts at",
+                                                    "Ends at"
+                                                ]                                            ],
+                                            "range_type": [
+                                                "money"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "fieldset",
+                                "text": "Range in family income levels",
+                                "questions": [
+                                    {
+                                        "id": "2020-03-e-01-20",
+                                        "text": "What’s the range in income levels for children who receive premium assistance?",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Federal Poverty Levels",
+                                            "range_categories": [
+                                                [
+                                                    "Starts at",
+                                                    "Ends at"
+                                                ]                                            ],
+                                            "range_type": [
+                                                "percentage"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 1
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-03-e-01-21",
+                                        "text": "What’s the range in income levels for children who receive premium assistance?",
+                                        "type": "ranges",
+                                        "answer": {
+                                            "entry": null,
+                                            "header": "Federal Poverty Levels",
+                                            "range_categories": [
+                                                [
+                                                    "Starts at",
+                                                    "Ends at"
+                                                ]                                            ],
+                                            "range_type": [
+                                                "percentage"
+                                            ],
+                                            "entry_min": 1,
+                                            "entry_max": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-e-01-22",
+                                "text": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-23",
+                                "text": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you’ve measured this impact, how have you done so?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-24",
+                                "text": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-25",
+                                "text": "What accomplishments did you experience with your premium assistance program in the last FFY?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-e-01-26",
+                                "text": "Anything else you’d like to add that wasn’t already covered?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
                                 }
                             }
                         ]
