@@ -13,9 +13,11 @@ CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/
 # => Build container
 FROM dev as builder
 
-#install aws cli and zip
+#install aws cli
 
-
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
+        unzip awscliv2.zip &&\
+        ./aws/install
 
 
 # Copy package.json and package-lock.json
@@ -33,7 +35,7 @@ RUN npm run build
 #===============================================================================
 #copy static files to s3
 
-
+RUN aws s3 cp /app/build s3://carts-ui-cloudfrontorigin --recursive
 
 
 
@@ -43,7 +45,6 @@ RUN npm run build
 # ==============================================================================
 # => Run container
 #FROM nginx:1.19.0-alpine as runner
-FROM ubuntu:latest
 # Copy nginx config
 ##RUN rm -rf /etc/nginx/conf.d
 ##COPY conf /etc/nginx
@@ -52,20 +53,15 @@ FROM ubuntu:latest
 ##COPY --from=builder /app/build /usr/share/nginx/html/
 
 
-RUN apt-get update -y && \
-             apt-get upgrade -y && \
-             apt-get -y install zip curl
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
-        unzip awscliv2.zip &&\
-        ./aws/install
+#RUN apt-get update -y && \
+#             apt-get upgrade -y && \
+#             apt-get -y install zip curl
 
 
 
-COPY --from=builder /app/build /tmp/build
-RUN aws s3 cp /tmp/build s3://carts-ui --recursive
 
-RUN zip /tmp/build.zip /tmp/build &&\
- aws s3 cp /tmp/build.zip s3://carts-ui-archive --recursive
+
+
 
 # Expose port 80 for nginx
 ##EXPOSE 80
