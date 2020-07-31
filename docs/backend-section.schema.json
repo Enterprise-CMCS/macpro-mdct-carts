@@ -140,7 +140,7 @@
             "then": {
                 "properties": {
                     "id": {"type": "string"},
-                    "text": {"type": "string"},
+                    "label": {"type": "string"},
                     "comment": {"type": "string"},
                     "answer": {"$ref": "#/definitions/answer_ranges"},
                     "interactive_conditional": {"type": "string"},
@@ -163,7 +163,7 @@
             "else": {
                 "properties": {
                     "id": {"type": "string"},
-                    "text": {"type": "string"},
+                    "label": {"type": "string"},
                     "bullet_text": {"type": "string"},
                     "skip_text": {"type": "string"},
                     "comment": {"type": "string"},
@@ -210,7 +210,7 @@
         "fieldset": {
             "type": "object",
             "properties": {
-                "text": {"type": "string"},
+                "label": {"type": "string"},
                 "fieldset_type": {"enum": ["percentage", "sum", "2d_table", "noninteractive_table"]},
                 "fieldset_info": { "type": "object" },
                 "interactive_conditional": {"type": "string"},

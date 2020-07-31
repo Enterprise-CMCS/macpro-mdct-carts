@@ -19,7 +19,7 @@
                         "questions": [
                             {
                                 "id": "2020-03-a-01-01",
-                                "text": "Have you changed your outreach methods in the last federal fiscal year?",
+                                "label": "Have you changed your outreach methods in the last federal fiscal year?",
                                 "type": "radio",
                                 "answer": {
                                     "options": {
@@ -31,7 +31,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-a-01-01-a",
-                                        "text": "What are you doing differently?",
+                                        "label": "What are you doing differently?",
                                         "type": "text_long",
                                         "conditional_display": {
                                             "type": "conditional_display",
@@ -52,7 +52,7 @@
                             },
                             {
                                 "id": "2020-03-a-01-02",
-                                "text": "Are you targeting specific populations in your outreach efforts?",
+                                "label": "Are you targeting specific populations in your outreach efforts?",
                                 "hint": "For example: minorities, immigrants, or children living in rural areas.",
                                 "type": "radio",
                                 "answer": {
@@ -65,7 +65,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-a-01-02-a",
-                                        "text": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
+                                        "label": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
                                         "type": "text_long",
                                         "conditional_display": {
                                             "type": "conditional_display",
@@ -86,7 +86,7 @@
                             },
                             {
                                 "id": "2020-03-a-01-03",
-                                "text": "What methods have been most effective in reaching low-income, uninsured children?",
+                                "label": "What methods have been most effective in reaching low-income, uninsured children?",
                                 "hint": "For example: TV, school outreach, or word of mouth.",
                                 "type": "text_long",
                                 "answer": {
@@ -95,7 +95,7 @@
                             },
                             {
                                 "id": "2020-03-a-01-04",
-                                "text": "Anything else you’d like to add about your outreach efforts?",
+                                "label": "Anything else you’d like to add about your outreach efforts?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -119,7 +119,7 @@
                         "questions": [
                             {
                                 "id": "2020-03-d-01-01",
-                                "text": "Does your state require cost sharing?",
+                                "label": "Does your state require cost sharing?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -131,7 +131,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-02",
-                                "text": "Who tracks cost sharing to ensure families don’t pay more than the 5% aggregate household income in a year?",
+                                "label": "Who tracks cost sharing to ensure families don’t pay more than the 5% aggregate household income in a year?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -158,7 +158,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-d-01-02-a",
-                                        "text": "What information or tools do you provide families with so they can track cost sharing?",
+                                        "label": "What information or tools do you provide families with so they can track cost sharing?",
                                         "type": "text_long",
                                         "answer": {
                                             "entry": null
@@ -178,7 +178,7 @@
                                     },
                                     {
                                         "id": "2020-03-d-01-02-b",
-                                        "text": "Who tracks cost sharing?",
+                                        "label": "Who tracks cost sharing?",
                                         "type": "text_long",
                                         "answer": {
                                             "entry": null
@@ -199,7 +199,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-03",
-                                "text": "How are healthcare providers notified that they shouldn’t charge families once families have reached the 5% cap?",
+                                "label": "How are healthcare providers notified that they shouldn’t charge families once families have reached the 5% cap?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -218,7 +218,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-04",
-                                "text": "Approximately how many families exceeded the 5% cap in the last federal fiscal year?",
+                                "label": "Approximately how many families exceeded the 5% cap in the last federal fiscal year?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -237,7 +237,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-05",
-                                "text": "Have you assessed the effects of charging premiums and enrollment fees on whether eligible families enroll in CHIP?",
+                                "label": "Have you assessed the effects of charging premiums and enrollment fees on whether eligible families enroll in CHIP?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -260,7 +260,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-d-01-05-a",
-                                        "text": "What did you find in your assessment?",
+                                        "label": "What did you find in your assessment?",
                                         "type": "text_long",
                                         "answer": {
                                             "entry": null
@@ -281,7 +281,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-06",
-                                "text": "Have you assessed the effects of charging co-payments and other out-of-pocket fees on whether enrolled families use CHIP services?",
+                                "label": "Have you assessed the effects of charging co-payments and other out-of-pocket fees on whether enrolled families use CHIP services?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -304,7 +304,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-d-01-06-a",
-                                        "text": "What did you find in your assessment?",
+                                        "label": "What did you find in your assessment?",
                                         "type": "text_long",
                                         "answer": {
                                             "entry": null
@@ -325,7 +325,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-07",
-                                "text": "You indicated in Section 1 that you changed your cost sharing requirements in the past federal fiscal year. How are you monitoring the impact of these changes on whether families apply, enroll, disenroll, and use CHIP health services? What have you found when monitoring the impact?",
+                                "label": "You indicated in Section 1 that you changed your cost sharing requirements in the past federal fiscal year. How are you monitoring the impact of these changes on whether families apply, enroll, disenroll, and use CHIP health services? What have you found when monitoring the impact?",
                                 "type": "text_long",
                                 "interactive_conditional": "In addition to hiding this question if 2020-03-d-01-01 is no, this should also be hidden unless the answer to 2020-01-a-03-08 OR 2020-01-a-04-08 is yes. Logic across sections has to be handled manually.",
                                 "noninteractive_conditional": "See interactive conditional.",
@@ -347,7 +347,7 @@
                             },
                             {
                                 "id": "2020-03-d-01-08",
-                                "text": "Anything else you’d like to add that wasn’t already covered?",
+                                "label": "Anything else you’d like to add that wasn’t already covered?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -382,7 +382,7 @@
                         "questions": [
                             {
                                 "id": "2020-03-e-01-01",
-                                "text": "Under which authority and statutes does your state offer premium assistance?",
+                                "label": "Under which authority and statutes does your state offer premium assistance?",
                                 "hint": "Check all that apply.",
                                 "type": "checkbox",
                                 "answer": {
@@ -396,7 +396,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-02",
-                                "text": "Does your premium assistance program include coverage for adults",
+                                "label": "Does your premium assistance program include coverage for adults",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -408,7 +408,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-e-01-02-a",
-                                        "text": "Who do you cover?",
+                                        "label": "Who do you cover?",
                                         "type": "checkbox",
                                         "answer": {
                                             "entry": null,
@@ -434,7 +434,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-03",
-                                "text": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)? ",
+                                "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)? ",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -442,7 +442,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-04",
-                                "text": "Which benefit package is offered as part of your premium assistance program? ",
+                                "label": "Which benefit package is offered as part of your premium assistance program? ",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -450,7 +450,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-05",
-                                "text": "Are there any minimum coverage requirements as part of the benefit package?",
+                                "label": "Are there any minimum coverage requirements as part of the benefit package?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -462,7 +462,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-06",
-                                "text": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
+                                "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -474,7 +474,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-07",
-                                "text": "Are there limits on cost sharing for children in your premium assistance program? ",
+                                "label": "Are there limits on cost sharing for children in your premium assistance program? ",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -486,7 +486,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-08",
-                                "text": "Are there limits on cost sharing for adults in your premium assistance program?",
+                                "label": "Are there limits on cost sharing for adults in your premium assistance program?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -499,7 +499,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-09",
-                                "text": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
+                                "label": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
@@ -511,7 +511,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-03-e-01-09-a",
-                                        "text": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
+                                        "label": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
                                         "type": "text_long",
                                         "answer": {
                                             "entry": null
@@ -532,7 +532,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-10",
-                                "text": "How many children were enrolled monthly in the premium assistance program on average each month in the last FFY?",
+                                "label": "How many children were enrolled monthly in the premium assistance program on average each month in the last FFY?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -540,7 +540,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-11",
-                                "text": "What’s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
+                                "label": "What’s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -552,12 +552,12 @@
                                 "questions": [
                                     {
                                         "type": "fieldset",
-                                        "text": "Coverage breakdown for children",
+                                        "label": "Coverage breakdown for children",
                                         "hint": "Your answers will auto-populate the table below.",
                                         "questions": [
                                             {
                                                 "id": "2020-03-e-01-12",
-                                                "text": "What’s the average monthly contribution the state pays towards coverage of a child?",
+                                                "label": "What’s the average monthly contribution the state pays towards coverage of a child?",
                                                 "type": "money",
                                                 "answer": {
                                                     "entry": null
@@ -565,7 +565,7 @@
                                             },
                                             {
                                                 "id": "2020-03-e-01-13",
-                                                "text": "What’s the average monthly contribution the employer pays towards coverage of a child?",
+                                                "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                                                 "type": "money",
                                                 "answer": {
                                                     "entry": null
@@ -573,7 +573,7 @@
                                             },
                                             {
                                                 "id": "2020-03-e-01-14",
-                                                "text": "What’s the average monthly contribution the employee pays towards coverage of a child?",
+                                                "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                                                 "type": "money",
                                                 "answer": {
                                                     "entry": null
@@ -583,11 +583,11 @@
                                     },
                                     {
                                         "type": "fieldset",
-                                        "text": "Coverage breakdown for parents",
+                                        "label": "Coverage breakdown for parents",
                                         "questions": [
                                             {
                                                 "id": "2020-03-e-01-15",
-                                                "text": "What’s the average monthly contribution the state pays towards coverage of the eligible parent?",
+                                                "label": "What’s the average monthly contribution the state pays towards coverage of the eligible parent?",
                                                 "type": "money",
                                                 "answer": {
                                                     "entry": null
@@ -595,7 +595,7 @@
                                             },
                                             {
                                                 "id": "2020-03-e-01-16",
-                                                "text": "What’s the average monthly contribution the employer pays towards coverage of the eligible parent?",
+                                                "label": "What’s the average monthly contribution the employer pays towards coverage of the eligible parent?",
                                                 "type": "money",
                                                 "answer": {
                                                     "entry": null
@@ -603,7 +603,7 @@
                                             },
                                             {
                                                 "id": "2020-03-e-01-17",
-                                                "text": "What’s the average monthly contribution the employee pays towards coverage of the eligible parent?",
+                                                "label": "What’s the average monthly contribution the employee pays towards coverage of the eligible parent?",
                                                 "type": "money",
                                                 "answer": {
                                                     "entry": null
@@ -615,11 +615,11 @@
                             },
                             {
                                 "type": "fieldset",
-                                "text": "Range in monthly contributions paid by state",
+                                "label": "Range in monthly contributions paid by state",
                                 "questions": [
                                     {
                                         "id": "2020-03-e-01-18",
-                                        "text": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
+                                        "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
                                         "type": "ranges",
                                         "answer": {
                                             "entry": null,
@@ -638,7 +638,7 @@
                                     },
                                     {
                                         "id": "2020-03-e-01-19",
-                                        "text": "What’s the range in the average monthly contribution paid by the state on behalf of a parent?",
+                                        "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent?",
                                         "type": "ranges",
                                         "answer": {
                                             "entry": null,
@@ -659,11 +659,11 @@
                             },
                             {
                                 "type": "fieldset",
-                                "text": "Range in family income levels",
+                                "label": "Range in family income levels",
                                 "questions": [
                                     {
                                         "id": "2020-03-e-01-20",
-                                        "text": "What’s the range in income levels for children who receive premium assistance?",
+                                        "label": "What’s the range in income levels for children who receive premium assistance?",
                                         "type": "ranges",
                                         "answer": {
                                             "entry": null,
@@ -682,7 +682,7 @@
                                     },
                                     {
                                         "id": "2020-03-e-01-21",
-                                        "text": "What’s the range in income levels for children who receive premium assistance?",
+                                        "label": "What’s the range in income levels for children who receive premium assistance?",
                                         "type": "ranges",
                                         "answer": {
                                             "entry": null,
@@ -703,7 +703,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-22",
-                                "text": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
+                                "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -711,7 +711,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-23",
-                                "text": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you’ve measured this impact, how have you done so?",
+                                "label": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you’ve measured this impact, how have you done so?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -719,7 +719,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-24",
-                                "text": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
+                                "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -727,7 +727,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-25",
-                                "text": "What accomplishments did you experience with your premium assistance program in the last FFY?",
+                                "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -735,7 +735,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-26",
-                                "text": "Anything else you’d like to add that wasn’t already covered?",
+                                "label": "Anything else you’d like to add that wasn’t already covered?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null

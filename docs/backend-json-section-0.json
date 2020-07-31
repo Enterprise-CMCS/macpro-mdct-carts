@@ -19,7 +19,7 @@
                         "questions": [
                             {
                                 "id": "2020-00-a-01-01",
-                                "text": "State or territory name:",
+                                "label": "State or territory name:",
                                 "type": "text_long",
                                 "answer": {
                                     "prepopulated": true,
@@ -29,7 +29,7 @@
                             },
                             {
                                 "id": "2020-00-a-01-02",
-                                "text": "Program type:",
+                                "label": "Program type:",
                                 "type": "checkbox",
                                 "answer": {
                                     "prepopulated": true,
@@ -44,7 +44,7 @@
                             },
                             {
                                 "id": "2020-00-a-01-03",
-                                "text": "CHIP program name(s): ",
+                                "label": "CHIP program name(s): ",
                                 "type": "text_long",
                                 "answer": {
                                     "prepopulated": true,
@@ -62,7 +62,7 @@
                         "questions": [
                             {
                                 "id": "2020-00-a-02-01",
-                                "text": "Contact name:",
+                                "label": "Contact name:",
                                 "type": "text_short",
                                 "answer": {
                                     "entry": null
@@ -70,7 +70,7 @@
                             },
                             {
                                 "id": "2020-00-a-02-02",
-                                "text": "Job title:",
+                                "label": "Job title:",
                                 "type": "text_short",
                                 "answer": {
                                     "entry": null
@@ -78,7 +78,7 @@
                             },
                             {
                                 "id": "2020-00-a-02-03",
-                                "text": "Email:",
+                                "label": "Email:",
                                 "type": "email",
                                 "answer": {
                                     "entry": null
@@ -86,7 +86,7 @@
                             },
                             {
                                 "id": "2020-00-a-02-04",
-                                "text": "Full mailing address:",
+                                "label": "Full mailing address:",
                                 "type": "mailing_address",
                                 "answer": {
                                     "entry": null
@@ -94,7 +94,7 @@
                             },
                             {
                                 "id": "2020-00-a-02-05",
-                                "text": "Phone number:",
+                                "label": "Phone number:",
                                 "type": "phone_number",
                                 "answer": {
                                     "entry": null

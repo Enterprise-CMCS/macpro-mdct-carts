@@ -6,7 +6,7 @@
         "valid": null,
         "ordinal": 2,
         "type": "section",
-        "title": "Program Fees and Policy Changes",
+        "title": "Eligibility and Enrollment",
         "subsections": [
             {
                 "title": "Enrollment and Uninsured Data",
@@ -16,7 +16,7 @@
                     {
                         "id": "2020-02-a-01",
                         "type": "part",
-                        "title": "Part 1: Number of Children Enrolled in CHIP",
+                        "title": "Number of Children Enrolled in CHIP",
                         "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and refresh the page. There may be a slight delay when updating data.",
                         "questions": [
                             {
@@ -32,7 +32,7 @@
                                 "questions": [
                                     {
                                         "id": "2020-02-a-01",
-                                        "text": "What are some possible reasons why your state had more than a 10% change in enrollment numbers?",
+                                        "label": "What are some possible reasons why your state had more than a 10% change in enrollment numbers?",
                                         "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
                                         "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
                                         "skip_text": "Since your percent change didn’t exceed 10%, you can skip to Part 2.",
@@ -42,6 +42,65 @@
                                         }
                                     }
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "2020-02-a-02",
+                        "type": "part",
+                        "title": "Number of Uninsured Children in Your State",
+                        "text": "This table is pre-filled with data on uninsured children (age 19 and under) who are below 200% of the Federal Poverty Line (FPL) based on annual estimates from the American Community Survey.",
+                        "questions": [
+                            {
+                                "type": "fieldset",
+                                "fieldset_type": "noninteractive_table",
+                                "fieldset_info": {
+                                    "headers": ["Year", "Estimated number of uninsured children", "Margin of error for estimated number", "Uninsured children as a percentage of total children", "Margin of error for percentage"],
+                                    "rows": [
+                                        ["2014", "103", "7.0", "2.3", ".2"],
+                                        ["2015", "86", "7.0", "2.0", ".2"],
+                                        ["2016", "61", "6.0", "1.4", ".1"],
+                                        ["2017", "58", "7.0", "1.3", ".2"],
+                                        ["2018", "57", "7.0", "1.3", ".2"]
+                                    ]
+                                },
+                                "questions": [
+                                    {
+                                        "type": "fieldset",
+                                        "fieldset_type": "noninteractive_table",
+                                        "fieldset_info": {
+                                            "headers": ["Percent Change between 2019 and 2020"],
+                                            "rows": [
+                                                [-1.7]
+                                            ]
+                                        },
+                                        "questions": [
+                                            {
+                                                "id": "2020-02-a-01",
+                                                "label": "What are some possible reasons why your state had more than a 10% change in enrollment?",
+                                                "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                                                "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                                                "skip_text": "Since your percent change didn’t exceed 10%, you can skip to the next question.",
+                                                "type": "text_long",
+                                                "answer": {
+                                                    "entry": null
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-02-a-02",
+                                "label": "Are there any reasons why the American Community Survey estimates wouldn’t be an accurate representation of the number of uninsured children in your state?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
                             }
                         ]
                     }
@@ -73,7 +132,7 @@
                                         "questions": [
                                             {
                                                 "type": "text_long",
-                                                "text": "What is your objective as listed in your state plan?",
+                                                "label": "What is your objective as listed in your state plan?",
                                                 "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
                                                 "id": "2020-02-b-01-01-01-01",
                                                 "answer": {
@@ -91,7 +150,7 @@
                                                         "questions": [
                                                             {
                                                                 "id": "2020-02-b-01-01-01-01",
-                                                                "text": "Briefly describe your goal.",
+                                                                "label": "Briefly describe your goal.",
                                                                 "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
                                                                 "type": "text_long",
                                                                 "answer": {
@@ -100,7 +159,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-02",
-                                                                "text": "What type of goal is it?",
+                                                                "label": "What type of goal is it?",
                                                                 "type": "radio",
                                                                 "answer": {
                                                                     "options": {
@@ -114,7 +173,7 @@
                                                                 "questions": [
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-02-a",
-                                                                        "text": "Why was this goal discontinued?",
+                                                                        "label": "Why was this goal discontinued?",
                                                                         "type": "text_long",
                                                                         "conditional_display": {
                                                                             "type": "conditional_display",
@@ -135,12 +194,12 @@
                                                             },
                                                             {
                                                                 "type": "fieldset",
-                                                                "text": "Define the numerator you're measuring",
+                                                                "label": "Define the numerator you're measuring",
                                                                 "fieldset_type": "percentage",
                                                                 "questions": [
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-03",
-                                                                        "text": "Which population are you measuring in the numerator?",
+                                                                        "label": "Which population are you measuring in the numerator?",
                                                                         "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
                                                                         "type": "integer",
                                                                         "answer": {
@@ -149,7 +208,7 @@
                                                                     },
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-04",
-                                                                        "text": "Numerator (total number)",
+                                                                        "label": "Numerator (total number)",
                                                                         "type": "integer",
                                                                         "answer": {
                                                                             "entry": null
@@ -159,12 +218,12 @@
                                                             },
                                                             {
                                                                 "type": "fieldset",
-                                                                "text": "Define the denominator you're measuring",
+                                                                "label": "Define the denominator you're measuring",
                                                                 "fieldset_type": "percentage",
                                                                 "questions": [
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-05",
-                                                                        "text": "Which population are you measuring in the denominator?",
+                                                                        "label": "Which population are you measuring in the denominator?",
                                                                         "hint": "For example: The total number of eligible children in the last federal fiscal year.",
                                                                         "type": "integer",
                                                                         "answer": {
@@ -173,7 +232,7 @@
                                                                     },
                                                                     {
                                                                         "id": "2020-02-b-01-01-01-06",
-                                                                        "text": "Denominator (total number)",
+                                                                        "label": "Denominator (total number)",
                                                                         "type": "integer",
                                                                         "answer": {
                                                                             "entry": null
@@ -183,7 +242,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-07",
-                                                                "text": "What is the date range of your data?",
+                                                                "label": "What is the date range of your data?",
                                                                 "type": "daterange",
                                                                 "answer": {
                                                                     "labels": [
@@ -195,7 +254,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-08",
-                                                                "text": "Which data source did you use?",
+                                                                "label": "Which data source did you use?",
                                                                 "type": "radio",
                                                                 "answer": {
                                                                     "options": {
@@ -208,7 +267,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-09",
-                                                                "text": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
                                                                 "type": "text_long",
                                                                 "answer": {
                                                                     "entry": null
@@ -216,7 +275,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-10",
-                                                                "text": "What are you doing to continually make progress towards your goal?",
+                                                                "label": "What are you doing to continually make progress towards your goal?",
                                                                 "type": "text_long",
                                                                 "answer": {
                                                                     "entry": null
@@ -224,7 +283,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-11",
-                                                                "text": "Anything else you'd like to tell us about this goal?",
+                                                                "label": "Anything else you'd like to tell us about this goal?",
                                                                 "type": "text_long",
                                                                 "answer": {
                                                                     "entry": null
@@ -232,7 +291,7 @@
                                                             },
                                                             {
                                                                 "id": "2020-02-b-01-01-01-12",
-                                                                "text": "Do you have any supporting documentation?",
+                                                                "label": "Do you have any supporting documentation?",
                                                                 "hint": "Optional",
                                                                 "type": "file_upload",
                                                                 "answer": {
