@@ -253,7 +253,7 @@ Questions can contain other questions, so questions have either questions or par
     String.
 
     The kind of question construct. The various types are described in the `Question Types`_ section. 
-``text``
+``label``
     String.
 
     The text of the question.
