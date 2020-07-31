@@ -17,6 +17,7 @@ const setup = (props = {}, state = null) => {
 
 describe("FPL Component", () => {
   const component = setup();
+  const instance = component.instance();
 
   it("renders", () => {
     expect(component.exists()).toBe(true);
@@ -28,14 +29,35 @@ describe("FPL Component", () => {
   });
 
   it("updates local state on text input", () => {
-    component.setState({ fpl_per_starts_at: "17" });
+    component.setState({ fpl_per_starts_at: 17 });
     const status = component.state().fpl_per_starts_at;
-    expect(status).toEqual("17");
+    expect(status).toEqual(17);
   });
 
-  it("correctly calculates FPL", () => {
-    // let syntheticEvent
-    // component.calculateFPL()
-    // Incomplete test
+  it("correctly calculates FPL percentage", () => {
+    let event1 = {
+      target: {
+        value: "12",
+        name: "fpl_per_starts_at",
+      },
+    };
+
+    let event2 = {
+      target: {
+        value: 41,
+        name: "fpl_per_ends_at",
+      },
+    };
+
+    let trigger1 = instance.calculateFPL(event1);
+    let trigger2 = instance.calculateFPL(event2);
+
+    const status = component.state().fpl_per_starts_at;
+    expect(status).toEqual(12);
   });
+  // it("correctly calculates FPL fee", () => {
+  //   component.setState({ fpl_per_starts_at: 17, fpl_per_ends_at: 20 });
+  //   const status = component.state().fpl_per_starts_at;
+  //   expect(status).toEqual("17");
+  // });
 });

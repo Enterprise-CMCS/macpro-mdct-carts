@@ -41,7 +41,10 @@ describe("DateRange Component (shallow)", () => {
 
   it("does not throw warning with expected props", () => {
     const expectedProps = { previousEntry: false };
-    checkProps(DateRange, expectedProps);
+    console.log(
+      "what is actually happening??",
+      checkProps(DateRange, expectedProps)
+    );
   });
 
   it("throws a warning when given the wrong props", () => {
