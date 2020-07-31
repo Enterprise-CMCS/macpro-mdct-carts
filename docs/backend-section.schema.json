@@ -213,6 +213,7 @@
                 "label": {"type": "string"},
                 "fieldset_type": {"enum": ["percentage", "sum", "2d_table", "noninteractive_table"]},
                 "fieldset_info": { "type": "object" },
+                "conditional_display": {"$ref": "#/definitions/conditional_display"},
                 "interactive_conditional": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
                 "type": {"const": "fieldset"},
