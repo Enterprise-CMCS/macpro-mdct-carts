@@ -11,7 +11,6 @@ import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import test from "./components/test";
 
-console.log("Pathname");
 let VisibleSidebar =
   window.location.pathname === "/" ||
   window.location.pathname.split("/")[1] === "reports" ? null : (
