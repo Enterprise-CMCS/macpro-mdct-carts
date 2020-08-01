@@ -16,11 +16,13 @@
                         "id": "2020-01-a-01",
                         "type": "part",
                         "title": "Medicaid Expansion CHIP Enrollment and Premium Fees",
-                        "show_if_state_program_type_in": [
-                            "Medicaid expansion CHIP",
-                            "Combo"
-                        ],
-                        "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program. Skip to Part 2.",
+                        "context_data": {
+                            "show_if_state_program_type_in": [
+                                "Medicaid expansion CHIP",
+                                "Combo"
+                            ],
+                            "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program. Skip to Part 2."
+                        },
                         "questions": [
                             {
                                 "id": "2020-01-a-01-01",
@@ -255,11 +257,13 @@
                         "id": "2020-01-a-02",
                         "type": "part",
                         "title": "Separate CHIP Enrollment and Premium Fees",
-                        "show_if_state_program_type_in": [
-                            "Separate CHIP",
-                            "Combo"
-                        ],
-                        "skip_text": "Part 2 only applies to states with a separate CHIP program. Skip to Part 3.",
+                        "context_data": {
+                            "skip_text": "Part 2 only applies to states with a separate CHIP program. Skip to Part 3.",
+                            "show_if_state_program_type_in": [
+                                "Separate CHIP",
+                                "Combo"
+                            ]
+                        },
                         "questions": [
                             {
                                 "id": "2020-02-a-02-01",
@@ -494,11 +498,13 @@
                         "id": "2020-01-a-03",
                         "type": "part",
                         "title": "Changes in Medicaid Expansion CHIP Programs and Policies",
-                        "show_if_state_program_type_in": [
-                            "Medicaid expansion CHIP",
-                            "Combo"
-                        ],
-                        "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program. Skip to Part 4.",
+                        "context_data": {
+                            "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program. Skip to Part 4.",
+                            "show_if_state_program_type_in": [
+                                "Medicaid expansion CHIP",
+                                "Combo"
+                            ]
+                        },
                         "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
                         "questions": [
                             {
@@ -783,11 +789,13 @@
                         "id": "2020-01-a-04",
                         "type": "part",
                         "title": "Changes in Separate CHIP Programs and Policies",
-                        "show_if_state_program_type_in": [
-                            "Separate CHIP",
-                            "Combo"
-                        ],
-                        "skip_text": "Part 4 only applies to states with a separate CHIP program.",
+                        "context_data": {
+                            "skip_text": "Part 4 only applies to states with a separate CHIP program.",
+                            "show_if_state_program_type_in": [
+                                "Separate CHIP",
+                                "Combo"
+                            ]
+                        },
                         "text": "Indicate any changes you’ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
                         "questions": [
                             {

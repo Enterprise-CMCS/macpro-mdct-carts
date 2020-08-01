@@ -42,9 +42,8 @@
                 "type": {"const": "part"},
                 "title": {"type": "string"},
                 "text": {"type": "string"},
-                "skip_text": {"type": "string"},
                 "comment": {"type": "string"},
-                "show_if_state_program_type_in": {"$ref": "#/definitions/show_if_state_program_type_in"},
+                "context_data": {"$ref": "#/definitions/context_data"},
                 "questions": {
                     "type": "array",
                     "items": {
@@ -58,6 +57,18 @@
             },
             "additionalProperties": false,
             "required": ["id", "type"]
+        },
+        "context_data": {
+            "type": "object",
+            "properties": {
+                "comment": {"type": "string"},
+                "interactive_conditional": {"type": "string"},
+                "noninteractive_conditional": {"type": "string"},
+                "skip_text": {"type": "string"},
+                "conditional_display": {"$ref": "#/definitions/conditional_display"},
+                "show_if_state_program_type_in": {"$ref": "#/definitions/show_if_state_program_type_in"}
+            },
+            "additionalProperties": false
         },
         "show_if_state_program_type_in": {
             "type": "array",

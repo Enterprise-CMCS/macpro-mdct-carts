@@ -243,11 +243,13 @@
                     {
                         "id": "2020-02-b-01",
                         "type": "part",
-                        "show_if_state_program_type_in": [
-                            "Medicaid expansion CHIP",
-                            "Separate CHIP",
-                            "Combo"
-                        ],
+                        "context_data": {
+                            "show_if_state_program_type_in": [
+                                "Medicaid expansion CHIP",
+                                "Separate CHIP",
+                                "Combo"
+                            ]
+                        },
                         "title": "State Plan Goals and Objectives",
                         "text": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
                         "questions": [

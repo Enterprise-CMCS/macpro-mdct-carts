@@ -535,8 +535,10 @@
                     {
                         "id": "2020-03-e-01",
                         "type": "part",
-                        "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this means six states: MA, NJ, OK, RI, VA, WI.",
-                        "skip_text": "This section only applies to states with a premium assistance program. Skip to the next section.",
+                        "context_data": {
+                            "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this means six states: MA, NJ, OK, RI, VA, WI.",
+                            "skip_text": "This section only applies to states with a premium assistance program. Skip to the next section."
+                        },
                         "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
                         "questions": [
                             {
@@ -912,11 +914,13 @@
                     {
                         "id": "2020-03-f-01",
                         "type": "part",
-                        "show_if_state_program_type_in": [
-                            "Separate CHIP",
-                            "Combo"
-                        ],
-                        "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+                        "context_data": {
+                            "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+                            "show_if_state_program_type_in": [
+                                "Separate CHIP",
+                                "Combo"
+                            ]
+                        },
                         "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
                         "questions": [
                             {
