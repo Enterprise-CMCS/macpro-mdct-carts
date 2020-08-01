@@ -61,6 +61,7 @@
         "context_data": {
             "type": "object",
             "properties": {
+                "bullet_text": {"type": "string"},
                 "comment": {"type": "string"},
                 "interactive_conditional": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
@@ -155,9 +156,7 @@
                     "label": {"type": "string"},
                     "comment": {"type": "string"},
                     "answer": {"$ref": "#/definitions/answer_ranges"},
-                    "interactive_conditional": {"type": "string"},
-                    "noninteractive_conditional": {"type": "string"},
-                    "conditional_display": {"$ref": "#/definitions/conditional_display"},
+                    "context_data": {"$ref": "#/definitions/context_data"},
                     "type": {"anyOf": [{"const": "daterange"}, {"const": "ranges"}]},
                     "hint": {"type": "string"},
                     "questions": {
@@ -176,13 +175,9 @@
                 "properties": {
                     "id": {"type": "string"},
                     "label": {"type": "string"},
-                    "bullet_text": {"type": "string"},
-                    "skip_text": {"type": "string"},
                     "comment": {"type": "string"},
                     "answer": {"$ref": "#/definitions/answer"},
-                    "interactive_conditional": {"type": "string"},
-                    "noninteractive_conditional": {"type": "string"},
-                    "conditional_display": {"$ref": "#/definitions/conditional_display"},
+                    "context_data": {"$ref": "#/definitions/context_data"},
                     "type": {
                         "enum": [
                             "checkbox",
@@ -228,11 +223,7 @@
                 "hint": {"type": "string"},
                 "fieldset_type": {"enum": ["percentage", "sum", "2d_table", "noninteractive_table"]},
                 "fieldset_info": { "type": "object" },
-                "conditional_display": {"$ref": "#/definitions/conditional_display"},
-                "interactive_conditional": {"type": "string"},
-                "noninteractive_conditional": {"type": "string"},
-                "show_if_state_program_type_in": {"$ref": "#/definitions/show_if_state_program_type_in"},
-                "skip_text": {"type": "string"},
+                "context_data": {"$ref": "#/definitions/context_data"},
                 "questions": {
                     "type": "array",
                     "items": {
