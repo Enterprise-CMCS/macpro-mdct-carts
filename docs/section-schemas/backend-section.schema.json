@@ -1,321 +1,614 @@
 {
-    "definitions": {
-        "section": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "section"},
-                "title": {"type": ["string", "null"]},
-                "ordinal": {"type": "integer"},
-                "valid": {"type": ["boolean", "null"]},
-                "state": {"type": ["string", "null"]},
-                "year": {"type": ["integer"]},
-                "subsections": {
-                    "type": "array",
-                    "items": {"$ref": "#/definitions/subsection"}
-                }
-
-            },
-            "additionalProperties": false,
-            "required": ["id", "year", "subsections"]
+  "definitions": {
+    "section": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         },
-        "subsection": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "subsection"},
-                "title": {"type": "string"},
-                "text": {"type": "string"},
-                "parts": {
-                    "type": "array",
-                    "items": {"$ref": "#/definitions/part"}
-                }
-
-            },
-            "additionalProperties": false,
-            "required": ["id", "parts"]
+        "type": {
+          "const": "section"
         },
-        "part": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "part"},
-                "title": {"type": "string"},
-                "text": {"type": "string"},
-                "comment": {"type": "string"},
-                "context_data": {"$ref": "#/definitions/context_data"},
-                "questions": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {"$ref": "#/definitions/fieldset"},
-                            {"$ref": "#/definitions/objectives"},
-                            {"$ref": "#/definitions/question"}
-                        ]
-                    }
-                }
-            },
-            "additionalProperties": false,
-            "required": ["id", "type"]
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ordinal": {
+          "type": "integer"
+        },
+        "valid": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "year": {
+          "type": [
+            "integer"
+          ]
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/subsection"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "year",
+        "subsections"
+      ]
+    },
+    "subsection": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "subsection"
+        },
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/part"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "parts"
+      ]
+    },
+    "part": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "part"
+        },
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
         },
         "context_data": {
-            "type": "object",
-            "properties": {
-                "bullet_text": {"type": "string"},
-                "comment": {"type": "string"},
-                "interactive_conditional": {"type": "string"},
-                "noninteractive_conditional": {"type": "string"},
-                "skip_text": {"type": "string"},
-                "conditional_display": {"$ref": "#/definitions/conditional_display"},
-                "show_if_state_program_type_in": {"$ref": "#/definitions/show_if_state_program_type_in"}
-            },
-            "additionalProperties": false
+          "$ref": "#/definitions/context_data"
         },
-        "show_if_state_program_type_in": {
-            "type": "array",
-            "items": {
-                "type": "string",
-                "enum": [
-                    "Medicaid expansion CHIP",
-                    "Separate CHIP",
-                    "Combo"
-                ]
-            }
-        },
-        "objectives": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "objectives"},
-                "comment": {"type": "string"},
-                "questions": {
-                    "type": "array",
-                    "items": {"$ref": "#/definitions/objective"}
-                }
-            },
-            "additionalProperties": false,
-            "required": ["id", "type"]
-        },
-        "objective": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "objective"},
-                "comment": {"type": "string"},
-                "questions": {
-                    "type": "array",
-                    "items": [
-                            {"$ref": "#/definitions/question"},
-                            {"$ref": "#/definitions/goals"}
-                    ],
-                    "additionalItems": {"$ref": "#/definitions/goals"}
-                }
-            },
-            "additionalProperties": false,
-            "required": ["id", "type"]
-        },
-        "goals": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "goals"},
-                "comment": {"type": "string"},
-                "questions": {
-                    "type": "array",
-                    "items": { "$ref": "#/definitions/goal"}
-                }
-            },
-            "additionalProperties": false,
-            "required": ["id", "type"]
-        },
-        "goal": {
-            "type": "object",
-            "properties": {
-                "id": {"type": "string"},
-                "type": {"const": "goal"},
-                "comment": {"type": "string"},
-                "questions": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {"$ref": "#/definitions/question"},
-                            {"$ref": "#/definitions/fieldset"}
-                        ]
-                    }
-                }
-            },
-            "additionalProperties": false,
-            "required": ["id", "type"]
-        },
-        "question": {
-            "type": "object",
-            "if": {"properties": {"type": {"const": "ranges"}}},
-            "then": {
-                "properties": {
-                    "id": {"type": "string"},
-                    "label": {"type": "string"},
-                    "comment": {"type": "string"},
-                    "answer": {"$ref": "#/definitions/answer_ranges"},
-                    "context_data": {"$ref": "#/definitions/context_data"},
-                    "type": {"anyOf": [{"const": "daterange"}, {"const": "ranges"}]},
-                    "hint": {"type": "string"},
-                    "questions": {
-                        "type": "array",
-                        "items": {
-                            "anyOf": [
-                                {"$ref": "#/definitions/question"},
-                                {"$ref": "#/definitions/fieldset"}
-                            ]
-                        }
-                    }
-                },
-                "additionalProperties": false
-            },
-            "else": {
-                "properties": {
-                    "id": {"type": "string"},
-                    "label": {"type": "string"},
-                    "comment": {"type": "string"},
-                    "answer": {"$ref": "#/definitions/answer"},
-                    "context_data": {"$ref": "#/definitions/context_data"},
-                    "type": {
-                        "enum": [
-                            "checkbox",
-                            "daterange",
-                            "email",
-                            "file_upload",
-                            "integer",
-                            "mailing_address",
-                            "money",
-                            "objectives",
-                            "percentage",
-                            "phone_number",
-                            "radio",
-                            "ranges",
-                            "text_long",
-                            "text_short"
-                        ]
-                    },
-                    "hint": {"type": "string"},
-                    "questions": {
-                        "type": "array",
-                        "items": {
-                            "anyOf": [
-                                {"$ref": "#/definitions/question"},
-                                {"$ref": "#/definitions/fieldset"}
-                            ]
-                        }
-                    }
-                },
-                "additionalProperties": false
-            },
-            "required": [
-                "id",
-                "type",
-                "answer"
+        "questions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/fieldset"
+              },
+              {
+                "$ref": "#/definitions/objectives"
+              },
+              {
+                "$ref": "#/definitions/question"
+              }
             ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "context_data": {
+      "type": "object",
+      "properties": {
+        "bullet_text": {
+          "type": "string"
         },
-        "fieldset": {
-            "type": "object",
-            "properties": {
-                "type": {"const": "fieldset"},
-                "label": {"type": "string"},
-                "hint": {"type": "string"},
-                "fieldset_type": {"enum": ["percentage", "sum", "2d_table", "noninteractive_table"]},
-                "fieldset_info": { "type": "object" },
-                "context_data": {"$ref": "#/definitions/context_data"},
-                "questions": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {"$ref": "#/definitions/question"},
-                            {"$ref": "#/definitions/fieldset"}
-                        ]
-                    }
-                }
-            },
-            "required": [
-                "type",
-                "questions"
-            ],
-            "additionalProperties": false
+        "comment": {
+          "type": "string"
+        },
+        "interactive_conditional": {
+          "type": "string"
+        },
+        "noninteractive_conditional": {
+          "type": "string"
+        },
+        "skip_text": {
+          "type": "string"
         },
         "conditional_display": {
-            "type": "object",
-            "properties": {
-                "type": {"const": "conditional_display"},
-                "comment": {"type": "string"},
-                "skip_text": {"type": "string"},
-                "hide_if": {
-                    "type": "object",
-                    "properties": {
-                        "target": {"type": "string"},
-                        "comment": {"type": "string"},
-                        "values": {
-                            "type": "object",
-                            "properties": {
-                                "interactive": {
-                                    "type": "array",
-                                    "items": {"anyOf":[{"type": "number"}, {"type": "null"}, {"type": "string"}]}
-                                },
-                                "noninteractive": {
-                                    "type": "array",
-                                    "items": {"anyOf":[{"type": "number"}, {"type": "null"}, {"type": "string"}]}
-                                }
-                            },
-                            "required": ["interactive", "noninteractive"]
-                        }
-                    },
-                    "required": ["target", "values"]
+          "$ref": "#/definitions/conditional_display"
+        },
+        "show_if_state_program_type_in": {
+          "$ref": "#/definitions/show_if_state_program_type_in"
+        }
+      },
+      "additionalProperties": false
+    },
+    "show_if_state_program_type_in": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Medicaid expansion CHIP",
+          "Separate CHIP",
+          "Combo"
+        ]
+      }
+    },
+    "objectives": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "objectives"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/objective"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "objective": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "objective"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "questions": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#/definitions/question"
+            },
+            {
+              "$ref": "#/definitions/goals"
+            }
+          ],
+          "additionalItems": {
+            "$ref": "#/definitions/goals"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "goals": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "goals"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/goal"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "goal": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "const": "goal"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/question"
+              },
+              {
+                "$ref": "#/definitions/fieldset"
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "question": {
+      "type": "object",
+      "if": {
+        "properties": {
+          "type": {
+            "const": "ranges"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "answer": {
+            "$ref": "#/definitions/answer_ranges"
+          },
+          "context_data": {
+            "$ref": "#/definitions/context_data"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "const": "daterange"
+              },
+              {
+                "const": "ranges"
+              }
+            ]
+          },
+          "hint": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/question"
+                },
+                {
+                  "$ref": "#/definitions/fieldset"
                 }
-            },
-            "additionalProperties": false,
-            "required": ["type", "hide_if"]
+              ]
+            }
+          }
         },
-        "answer": {
-            "type": "object",
-            "properties": {
-                "entry": {"type": ["null", "string", "number"]},
-                "default_entry": {"type": ["null", "string", "number"]},
-                "labels": {
-                    "type": "array",
-                    "items": {"type": "string"}
+        "additionalProperties": false
+      },
+      "else": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "answer": {
+            "$ref": "#/definitions/answer"
+          },
+          "context_data": {
+            "$ref": "#/definitions/context_data"
+          },
+          "type": {
+            "enum": [
+              "checkbox",
+              "daterange",
+              "email",
+              "file_upload",
+              "integer",
+              "mailing_address",
+              "money",
+              "objectives",
+              "percentage",
+              "phone_number",
+              "radio",
+              "ranges",
+              "text_long",
+              "text_short"
+            ]
+          },
+          "hint": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/question"
                 },
-                "header": {"type": "string"},
-                "prepopulated": {"type": "boolean"},
-                "readonly": {"type": "boolean"},
-                "options": {"$ref": "#/definitions/options"}
-            },
-            "additionalProperties": false,
-            "required": ["entry"]
+                {
+                  "$ref": "#/definitions/fieldset"
+                }
+              ]
+            }
+          }
         },
-        "answer_ranges": {
-            "type": "object",
-            "properties": {
-                "entry": {"type": ["null", "string", "number"]},
-                "default_entry": {"type": ["null", "string", "number"]},
-                "labels": {
-                    "type": "array",
-                    "items": {"type": "string"}
-                },
-                "header": {"type": "string"},
-                "range_categories": {"type": "array"},
-                "range_type": {"type": "array"},
-                "entry_min": {"type": "integer"},
-                "entry_max": {"type": "integer"},
-                "options": {"$ref": "#/definitions/options"}
+        "additionalProperties": false
+      },
+      "required": [
+        "id",
+        "type",
+        "answer"
+      ]
+    },
+    "fieldset": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "fieldset"
+        },
+        "label": {
+          "type": "string"
+        },
+        "hint": {
+          "type": "string"
+        },
+        "fieldset_type": {
+          "enum": [
+            "percentage",
+            "sum",
+            "2d_table",
+            "noninteractive_table"
+          ]
+        },
+        "fieldset_info": {
+          "type": "object"
+        },
+        "context_data": {
+          "$ref": "#/definitions/context_data"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/question"
+              },
+              {
+                "$ref": "#/definitions/fieldset"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "questions"
+      ],
+      "additionalProperties": false
+    },
+    "conditional_display": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "conditional_display"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "skip_text": {
+          "type": "string"
+        },
+        "hide_if": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string"
             },
-            "additionalProperties": false,
-            "required": ["entry"]
+            "comment": {
+              "type": "string"
+            },
+            "values": {
+              "type": "object",
+              "properties": {
+                "interactive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                },
+                "noninteractive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "interactive",
+                "noninteractive"
+              ]
+            }
+          },
+          "required": [
+            "target",
+            "values"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "hide_if"
+      ]
+    },
+    "answer": {
+      "type": "object",
+      "properties": {
+        "entry": {
+          "type": [
+            "null",
+            "string",
+            "number"
+          ]
+        },
+        "default_entry": {
+          "type": [
+            "null",
+            "string",
+            "number"
+          ]
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "header": {
+          "type": "string"
+        },
+        "prepopulated": {
+          "type": "boolean"
+        },
+        "readonly": {
+          "type": "boolean"
         },
         "options": {
-            "type": "object",
-            "additionalProperties": { "type": "string" }
+          "$ref": "#/definitions/options"
         }
+      },
+      "additionalProperties": false,
+      "required": [
+        "entry"
+      ]
     },
-
+    "answer_ranges": {
+      "type": "object",
+      "properties": {
+        "entry": {
+          "type": [
+            "null",
+            "string",
+            "number"
+          ]
+        },
+        "default_entry": {
+          "type": [
+            "null",
+            "string",
+            "number"
+          ]
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "header": {
+          "type": "string"
+        },
+        "range_categories": {
+          "type": "array"
+        },
+        "range_type": {
+          "type": "array"
+        },
+        "entry_min": {
+          "type": "integer"
+        },
+        "entry_max": {
+          "type": "integer"
+        },
+        "options": {
+          "$ref": "#/definitions/options"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "entry"
+      ]
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
   "type": "object",
   "properties": {
-    "section": {"$ref": "#/definitions/section"}
+    "section": {
+      "$ref": "#/definitions/section"
+    }
   }
 }
