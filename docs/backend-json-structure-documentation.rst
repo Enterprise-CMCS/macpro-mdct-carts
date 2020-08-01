@@ -217,7 +217,7 @@ Parts are contained by subsections.
     String.
 
     Additional text that should be presented at the beginning of the part.
-``applies_to`` (optional)
+``show_if_state_program_type_in`` (optional)
     Array of program categories.
 
     The only valid values here are:
@@ -230,7 +230,7 @@ Parts are contained by subsections.
 ``skip_text`` (optional)
     String.
 
-    The text to be displayed for a state if the state's program is not listed in ``applies_to``.
+    The text to be displayed for a state if the state's program is not listed in ``show_if_state_program_type_in``.
 ``comment`` (optional)
     String.
 
@@ -309,7 +309,7 @@ Answers are contained by questions, which in this case is a technical descriptio
 
 Conditional Display
 -------------------
-This is about per-question display, and not about the per-part display related to whether a state's program is separate CHIP, Medicaid expansion CHIP, or combo; see ``applies_to`` in `Part`_ for that functionality.
+This is about per-question display, and not about the per-part display related to whether a state's program is separate CHIP, Medicaid expansion CHIP, or combo; see ``show_if_state_program_type_in`` in `Part`_ for that functionality.
 
 The default for all questions, in both interactive and noninteractive views, is for them to be displayed unless a specific condition applies. The specific condition is the value of the ``entry`` property for a question, and this functionality supports only checking for whether that value matches any of the values in a supplied list.
 
@@ -380,8 +380,43 @@ This section describes the characteristics and properties (in addition to those 
 ++++++++++++
 Essentially a container for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions. Fieldsets do not have ``id`` properties, and the questions within them increment as if the fieldset container were not present.
 
+The purpose of a fieldset, more or less, is to be a container around questions that doesn't itself necessarily imply a deeper nesting level for the questions, and in some cases there's no display effect of a fieldset. Fieldsets also do not imply subquestions or a restart to question numbering.
+
+This is an example structure:
+
+    Question 1
+        (Question details here.)
+    Question 2
+        (Question details here.)
+    Fieldset
+        Question 3
+            (Question details here.)
+        Question 4
+            (Question details here.)
+
+The questions are presented to the user as if they're all on the same level and the same list.
+
+This doesn't necessarily apply to all types of fieldsets, some of which do alter the display of questions within them.
+
 ``fieldset_type`` (optional)
+    String.
+
     Some fieldsets display synthetic values for the benefit of the user that are not sent to the backend and which are derived from the answers to the questions within the fieldset. One example might be ``sum``, and another is ``percentage`` (in the latter case, the percentage is the first value divided by the second value times 100).
+``fieldset_info`` (options)
+    Object.
+
+    Some fieldset types require additional info, which is stored here.
+``show_if_state_program_type_in`` (optional)
+    Array of program categories.
+
+    The only valid values here are:
+    
+    +   Medicaid expansion CHIP
+    +   Separate CHIP
+    +   Combo
+
+    The fieldset is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
+    
 
 ``text_long``
 +++++++++++++

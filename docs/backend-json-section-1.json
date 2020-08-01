@@ -16,7 +16,7 @@
                         "id": "2020-01-a-01",
                         "type": "part",
                         "title": "Medicaid Expansion CHIP Enrollment and Premium Fees",
-                        "applies_to": [
+                        "show_if_state_program_type_in": [
                             "Medicaid expansion CHIP",
                             "Combo"
                         ],
@@ -255,7 +255,7 @@
                         "id": "2020-01-a-02",
                         "type": "part",
                         "title": "Separate CHIP Enrollment and Premium Fees",
-                        "applies_to": [
+                        "show_if_state_program_type_in": [
                             "Separate CHIP",
                             "Combo"
                         ],
@@ -494,7 +494,7 @@
                         "id": "2020-01-a-03",
                         "type": "part",
                         "title": "Changes in Medicaid Expansion CHIP Programs and Policies",
-                        "applies_to": [
+                        "show_if_state_program_type_in": [
                             "Medicaid expansion CHIP",
                             "Combo"
                         ],
@@ -783,7 +783,7 @@
                         "id": "2020-01-a-04",
                         "type": "part",
                         "title": "Changes in Separate CHIP Programs and Policies",
-                        "applies_to": [
+                        "show_if_state_program_type_in": [
                             "Separate CHIP",
                             "Combo"
                         ],

@@ -44,17 +44,7 @@
                 "text": {"type": "string"},
                 "skip_text": {"type": "string"},
                 "comment": {"type": "string"},
-                "applies_to": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": [
-                            "Medicaid expansion CHIP",
-                            "Separate CHIP",
-                            "Combo"
-                        ]
-                    }
-                },
+                "show_if_state_program_type_in": {"$ref": "#/definitions/show_if_state_program_type_in"},
                 "questions": {
                     "type": "array",
                     "items": {
@@ -68,6 +58,17 @@
             },
             "additionalProperties": false,
             "required": ["id", "type"]
+        },
+        "show_if_state_program_type_in": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "Medicaid expansion CHIP",
+                    "Separate CHIP",
+                    "Combo"
+                ]
+            }
         },
         "objectives": {
             "type": "object",
@@ -181,6 +182,7 @@
                             "mailing_address",
                             "money",
                             "objectives",
+                            "percentage",
                             "phone_number",
                             "radio",
                             "ranges",
@@ -210,14 +212,15 @@
         "fieldset": {
             "type": "object",
             "properties": {
+                "type": {"const": "fieldset"},
                 "label": {"type": "string"},
+                "hint": {"type": "string"},
                 "fieldset_type": {"enum": ["percentage", "sum", "2d_table", "noninteractive_table"]},
                 "fieldset_info": { "type": "object" },
                 "conditional_display": {"$ref": "#/definitions/conditional_display"},
                 "interactive_conditional": {"type": "string"},
                 "noninteractive_conditional": {"type": "string"},
-                "type": {"const": "fieldset"},
-                "hint": {"type": "string"},
+                "show_if_state_program_type_in": {"$ref": "#/definitions/show_if_state_program_type_in"},
                 "skip_text": {"type": "string"},
                 "questions": {
                     "type": "array",

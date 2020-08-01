@@ -105,7 +105,166 @@
                     }
                 ]
             },
-            null,
+            {
+                "id": "2020-03-b",
+                "title": "Substitution of Coverage (Crowd-out)",
+                "type": "subsection",
+                "text": "Substitution of coverage (also known as crowd-out) occurs when someone with private insurance drops their private coverage and substitutes it with publicly funded insurance such as CHIP.",
+                "parts": [
+                    {
+                        "id": "2020-03-b-01",
+                        "type": "part",
+                        "questions": [
+                            {
+                                "id": "2020-03-b-01-01",
+                                "label": "Do you track the number of children who have access to private insurance?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no",
+                                        "N/A": "na"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-b-01-01-a",
+                                        "label": "What percent of children who enrolled in CHIP had access to private health insurance at the time of application?",
+                                        "type": "text_long",
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-b-01-01 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-b-01-01')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no", "na"],
+                                                    "noninteractive": ["no", "na"]
+                                                }
+                                            }
+                                        },
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-b-01-02",
+                                "label": "Do you use a database to match children to their private insurance status? ",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no",
+                                        "N/A": "na"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-b-01-02-a",
+                                        "label": "Which database do you use?",
+                                        "type": "text_long",
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-b-01-02 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
+                                            "hide_if": {
+                                                "target": "$..*[?(@.id=='2020-03-b-01-02')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no", "na"],
+                                                    "noninteractive": ["no", "na"]
+                                                }
+                                            }
+                                        },
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "fieldset",
+                                "show_if_state_program_type_in": [
+                                    "Separate CHIP",
+                                    "Combo"
+                                ],
+                                "skip_text": "Some questions omitted because they do not apply to your program.",
+                                "questions": [
+                                    {
+                                        "id": "2020-03-b-01-03",
+                                        "label": "Does your S-CHIP program require a child to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
+                                        "type": "radio",
+                                        "answer": {
+                                            "entry": null,
+                                            "options": {
+                                                "Yes": "yes",
+                                                "No": "no",
+                                                "N/A": "na"
+                                            }
+                                        },
+                                        "questions": [
+                                            {
+                                                "type": "fieldset",
+                                                "questions": [
+                                                    {
+                                                        "id": "2020-03-b-01-03-a",
+                                                        "label": "How long is the waiting period?",
+                                                        "type": "text_long",
+                                                        "answer": {
+                                                            "entry": null
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "2020-03-b-01-03-b",
+                                                        "label": "Which populations does the waiting period apply to?  (Include FPLs for each group.)",
+                                                        "type": "text_long",
+                                                        "answer": {
+                                                            "entry": null
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "2020-03-b-01-03-c",
+                                                        "label": "What exemptions apply to the waiting period?",
+                                                        "type": "text_long",
+                                                        "answer": {
+                                                            "entry": null
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "2020-03-b-01-03-c",
+                                                        "label": "What percent of children subject to the waiting period meet an exemption?",
+                                                        "type": "text_long",
+                                                        "answer": {
+                                                            "entry": null
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "2020-03-b-01-04",
+                                        "label": "What percent of children screened for S-CHIP eligibility cannot be enrolled because they have group health plan coverage?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-b-01-05",
+                                "label": "Anything else you’d like to add about crowd-out that wasn’t already covered? Did you run into any limitations when collecting data?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
             null,
             {
                 "id": "2020-03-d",
@@ -378,7 +537,7 @@
                         "type": "part",
                         "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this means six states: MA, NJ, OK, RI, VA, WI.",
                         "skip_text": "This section only applies to states with a premium assistance program. Skip to the next section.",
-                        "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents. ",
+                        "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
                         "questions": [
                             {
                                 "id": "2020-03-e-01-01",
@@ -434,7 +593,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-03",
-                                "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)? ",
+                                "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -442,7 +601,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-04",
-                                "label": "Which benefit package is offered as part of your premium assistance program? ",
+                                "label": "Which benefit package is offered as part of your premium assistance program?",
                                 "type": "text_long",
                                 "answer": {
                                     "entry": null
@@ -474,7 +633,7 @@
                             },
                             {
                                 "id": "2020-03-e-01-07",
-                                "label": "Are there limits on cost sharing for children in your premium assistance program? ",
+                                "label": "Are there limits on cost sharing for children in your premium assistance program?",
                                 "type": "radio",
                                 "answer": {
                                     "entry": null,
