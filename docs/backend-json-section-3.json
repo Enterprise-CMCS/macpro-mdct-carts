@@ -903,6 +903,277 @@
                         ]
                     }
                 ]
+            },
+            {
+                "type": "subsection",
+                "id": "2020-03-f",
+                "title": "Program Integrity",
+                "parts": [
+                    {
+                        "id": "2020-03-f-01",
+                        "type": "part",
+                        "show_if_state_program_type_in": [
+                            "Separate CHIP",
+                            "Combo"
+                        ],
+                        "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+                        "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
+                        "questions": [
+                            {
+                                "id": "2020-03-f-01-01",
+                                "label": "Do you have a written plan with safeguards and procedures in place for the prevention of fraud and abuse cases?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-f-01-02",
+                                "label": "Do you have a written plan with safeguards and procedures in place for the investigation of fraud and abuse cases? ",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-f-01-03",
+                                "label": "Do you have a written plan with safeguards and procedures in place for the referral of fraud and abuse cases?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-f-01-04",
+                                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
+                                "type": "file_upload",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-f-01-05",
+                                "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no",
+                                        "N/A": "na"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-f-01-05-a",
+                                        "label": "What safeguards and procedures do the Managed Care plans have in place? Attach any relevant documents.",
+                                        "type": "file_upload",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "hide_if": {
+                                                "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                                                "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no", "na"],
+                                                    "noninteractive": ["no", "na"]
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-f-01-06",
+                                "label": "How many eligibility denials have been appealed in a fair hearing in the last federal fiscal year (FFY)?",
+                                "type": "integer",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "id": "2020-03-f-01-07",
+                                "label": "How many cases have been found in favor of the beneficiary in the last FFY?",
+                                "type": "integer",
+                                "answer": {
+                                    "entry": null
+                                }
+                            },
+                            {
+                                "type": "fieldset",
+                                "label": "Provider Credentialing",
+                                "questions": [
+                                    {
+                                        "id": "2020-03-f-01-08",
+                                        "label": "How many cases related to provider credentialing were investigated in the last FFY?",
+                                        "type": "integer",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-03-f-01-09",
+                                        "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in the last FFY?",
+                                        "type": "integer",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "fieldset",
+                                "label": "Provider Billing",
+                                "questions": [
+                                    {
+                                        "id": "2020-03-f-01-10",
+                                        "label": "How many cases related to provider billing were investigated in the last FFY?",
+                                        "type": "integer",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-03-f-01-11",
+                                        "label": "How many cases were referred to appropriate law enforcement officials in the last FFY?",
+                                        "type": "integer",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "fieldset",
+                                "label": "Beneficiary Eligibility",
+                                "questions": [
+                                    {
+                                        "id": "2020-03-f-01-12",
+                                        "label": "How many cases related to beneficiary eligibility were investigated in the last FFY?",
+                                        "type": "integer",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    },
+                                    {
+                                        "id": "2020-03-f-01-13",
+                                        "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in the last FFY?",
+                                        "type": "integer",
+                                        "answer": {
+                                            "entry": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-f-01-14",
+                                "label": "Does your data for Questions 8–13 include cases for separate CHIP only or for Medicaid and CHIP combined? ",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Separate CHIP only": "separate_chip_only",
+                                        "Medicaid and separate CHIP combined": "medicaid_separate_chip_combined"
+                                    }
+                                }
+                            },
+                            {
+                                "id": "2020-03-f-01-15",
+                                "label": "Do you rely on contractors for the prevention, investigation, and  referral of fraud and abuse cases? ",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-f-01-15-a",
+                                        "label": "How do you provide oversight of the contractors? ",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "hide_if": {
+                                                "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                                                "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no"],
+                                                    "noninteractive": ["no"]
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-f-01-16",
+                                "label": "Do you contract with Managed Care health plans and/or a third party contractor to provide this oversight? ",
+                                "type": "radio",
+                                "answer": {
+                                    "entry": null,
+                                    "options": {
+                                        "Yes": "yes",
+                                        "No": "no"
+                                    }
+                                },
+                                "questions": [
+                                    {
+                                        "id": "2020-03-f-01-16-a",
+                                        "label": "What specifically are they responsible for in terms of oversight?",
+                                        "type": "text_long",
+                                        "answer": {
+                                            "entry": null
+                                        },
+                                        "conditional_display": {
+                                            "type": "conditional_display",
+                                            "hide_if": {
+                                                "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                                                "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
+                                                "values": {
+                                                    "interactive": [null, "no"],
+                                                    "noninteractive": ["no"]
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "2020-03-f-01-17",
+                                "label": "Anything else you’d like to add that wasn’t already covered?",
+                                "type": "text_long",
+                                "answer": {
+                                    "entry": null
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }
