@@ -130,6 +130,9 @@
         "comment": {
           "type": "string"
         },
+        "display_prior_year_data": {
+          "type": "boolean"
+        },
         "interactive_conditional": {
           "type": "string"
         },

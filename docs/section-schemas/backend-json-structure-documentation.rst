@@ -230,24 +230,14 @@ Parts are contained by subsections.
 
 A property that contains data about whether and/or how the segment should be displayed.
 
-``show_if_state_program_type_in`` (optional)
-    Array of program categories.
-
-    The only valid values here are:
-    
-    +   Medicaid expansion CHIP
-    +   Separate CHIP
-    +   Combo
-
-    The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
-``skip_text`` (optional)
-    String.
-
-    The text to be displayed for a state if the state's program is not listed in ``show_if_state_program_type_in``.
 ``bullet_text`` (optional)
     String.
 
     Summary text for an answer to be displayed in list form; only applied to Section 1.
+``display_prior_year_data`` (optional)
+    Boolean.
+
+    Present and ``true`` if the UI is supposed to display data from the prior year as an aid to data entry.
 ``conditional_display`` (optional)
     Extremely limited logic mini-schema to control display of questions. See `Conditional Display`_ below.
 ``interactive_conditional`` (optional)
@@ -262,6 +252,20 @@ A property that contains data about whether and/or how the segment should be dis
     Plain-language description of how the logic for displaying the question in the review output is supposed to work.
 
     Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
+``show_if_state_program_type_in`` (optional)
+    Array of program categories.
+
+    The only valid values here are:
+    
+    +   Medicaid expansion CHIP
+    +   Separate CHIP
+    +   Combo
+
+    The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
+``skip_text`` (optional)
+    String.
+
+    The text to be displayed for a state if the state's program is not listed in ``show_if_state_program_type_in``.
 
 Question
 -------------------------------------
