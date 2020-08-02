@@ -217,6 +217,19 @@ Parts are contained by subsections.
     String.
 
     Additional text that should be presented at the beginning of the part.
+``context_data``
+    Object.
+
+    Contains information about whether or not to show the construct, and under what circumstances, as well as some other display hinting. See below.
+``comment`` (optional)
+    String.
+
+    Comment directed at developer or admin users.
+
+``context_data``
+
+A property that contains data about whether and/or how the segment should be displayed.
+
 ``show_if_state_program_type_in`` (optional)
     Array of program categories.
 
@@ -231,10 +244,24 @@ Parts are contained by subsections.
     String.
 
     The text to be displayed for a state if the state's program is not listed in ``show_if_state_program_type_in``.
-``comment`` (optional)
+``bullet_text`` (optional)
     String.
 
-    Comment directed at developer or admin users.
+    Summary text for an answer to be displayed in list form; only applied to Section 1.
+``conditional_display`` (optional)
+    Extremely limited logic mini-schema to control display of questions. See `Conditional Display`_ below.
+``interactive_conditional`` (optional)
+    String.
+
+    Plain-language description of how the logic for displaying the question in the entry form is supposed to work.
+
+    Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
+``noninteractive_conditional`` (optional)
+    String.
+
+    Plain-language description of how the logic for displaying the question in the review output is supposed to work.
+
+    Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
 
 Question
 -------------------------------------
@@ -261,24 +288,6 @@ Questions can contain other questions, so questions have either questions or par
     String.
 
     Hint text for the question.
-``bullet_text`` (optional)
-    String.
-
-    Summary text for an answer to be displayed in list form; only applied to Section 1.
-``conditional_dispplay`` (optional)
-    Extremely limited logic mini-schema to control display of questions. See `Conditional Display`_ below.
-``interactive_conditional`` (optional)
-    String.
-
-    Plain-language description of how the logic for displaying the question in the entry form is supposed to work.
-
-    Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
-``noninteractive_conditional`` (optional)
-    String.
-
-    Plain-language description of how the logic for displaying the question in the review output is supposed to work.
-
-    Should only be used if the logic is too convoluted for ``conditional_display`` to handle.
 ``comment`` (optional)
     String.
 
