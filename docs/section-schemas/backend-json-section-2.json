@@ -48,12 +48,14 @@
                   {
                     "id": "2020-02-a-01",
                     "label": "What are some possible reasons why your state had more than a 10% change in enrollment numbers?",
-                    "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
-                    "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
-                    "skip_text": "Since your percent change didn\u2019t exceed 10%, you can skip to Part 2.",
                     "type": "text_long",
                     "answer": {
                       "entry": null
+                    },
+                    "context_data": {
+                      "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                      "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                      "skip_text": "Since your percent change didn\u2019t exceed 10%, you can skip to Part 2."
                     }
                   }
                 ]
@@ -133,12 +135,14 @@
                       {
                         "id": "2020-02-a-01",
                         "label": "What are some possible reasons why your state had more than a 10% change in enrollment?",
-                        "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
-                        "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
-                        "skip_text": "Since your percent change didn\u2019t exceed 10%, you can skip to the next question.",
                         "type": "text_long",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                          "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
+                          "skip_text": "Since your percent change didn\u2019t exceed 10%, you can skip to the next question."
                         }
                       }
                     ]
@@ -161,24 +165,26 @@
                     "id": "2020-02-a-02-a",
                     "label": "What are some reasons why the American Community Survey estimates might not be accurate? ",
                     "type": "text_long",
-                    "conditional_display": {
-                      "type": "conditional_display",
-                      "comment": "Interactive: Hide if 2020-02-a-02 is unanswered or no; noninteractive: hide if no.",
-                      "hide_if": {
-                        "target": "$..*[?(@.id=='2020-02-a-02')].answer.entry",
-                        "values": {
-                          "interactive": [
-                            null,
-                            "no"
-                          ],
-                          "noninteractive": [
-                            "no"
-                          ]
-                        }
-                      }
-                    },
                     "answer": {
                       "entry": null
+                    },
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-02-a-02 is unanswered or no; noninteractive: hide if no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-02-a-02')].answer.entry",
+                          "values": {
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
+                          }
+                        }
+                      }
                     }
                   }
                 ]
@@ -197,22 +203,6 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "conditional_display": {
-                      "type": "conditional_display",
-                      "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
-                      "hide_if": {
-                        "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
-                        "values": {
-                          "interactive": [
-                            null,
-                            "no"
-                          ],
-                          "noninteractive": [
-                            "no"
-                          ]
-                        }
-                      }
-                    },
                     "questions": [
                       {
                         "id": "2020-02-a-03-a",
@@ -282,7 +272,25 @@
                           "entry": null
                         }
                       }
-                    ]
+                    ],
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                          "values": {
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
+                          }
+                        }
+                      }
+                    }
                   }
                 ]
               },
@@ -369,26 +377,28 @@
                                     "id": "2020-02-b-01-01-01-02-a",
                                     "label": "Why was this goal discontinued?",
                                     "type": "text_long",
-                                    "conditional_display": {
-                                      "type": "conditional_display",
-                                      "comment": "Interactive: Hide if 2020-02-b-01-01-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
-                                      "hide_if": {
-                                        "target": "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
-                                        "values": {
-                                          "interactive": [
-                                            null,
-                                            "goal_continuing",
-                                            "goal_new"
-                                          ],
-                                          "noninteractive": [
-                                            "goal_continuing",
-                                            "goal_new"
-                                          ]
-                                        }
-                                      }
-                                    },
                                     "answer": {
                                       "entry": null
+                                    },
+                                    "context_data": {
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-02-b-01-01-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
+                                          "values": {
+                                            "interactive": [
+                                              null,
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ],
+                                            "noninteractive": [
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ]
+                                          }
+                                        }
+                                      }
                                     }
                                   }
                                 ]
