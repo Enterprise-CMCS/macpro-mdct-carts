@@ -518,9 +518,12 @@
       "properties": {
         "entry": {
           "type": [
+            "array",
+            "integer",
             "null",
+            "number",
             "string",
-            "number"
+            "object"
           ]
         },
         "default_entry": {
@@ -559,9 +562,12 @@
       "properties": {
         "entry": {
           "type": [
+            "array",
+            "integer",
             "null",
+            "number",
             "string",
-            "number"
+            "object"
           ]
         },
         "default_entry": {

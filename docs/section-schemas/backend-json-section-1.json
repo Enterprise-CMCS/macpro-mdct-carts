@@ -308,7 +308,7 @@
             },
             "questions": [
               {
-                "id": "2020-02-a-02-01",
+                "id": "2020-01-a-02-01",
                 "label": "Does your program charge an enrollment fee?",
                 "type": "radio",
                 "answer": {
@@ -320,7 +320,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-02-a-02-01-a",
+                    "id": "2020-01-a-02-01-a",
                     "label": "How much is your enrollment fee?",
                     "type": "money",
                     "answer": {
@@ -329,9 +329,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-02-a-02-01 is no or unanswered; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-01-a-02-01 is no or unanswered; noninteractive: hide if that's no.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-02-a-02-01')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-01-a-02-01')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
@@ -348,7 +348,7 @@
                 ]
               },
               {
-                "id": "2020-02-a-02-02",
+                "id": "2020-01-a-02-02",
                 "label": "Does your program charge a premium fee?",
                 "type": "radio",
                 "answer": {
@@ -360,7 +360,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-02-a-02-02-a",
+                    "id": "2020-01-a-02-02-a",
                     "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
                     "type": "radio",
                     "answer": {
@@ -373,10 +373,10 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-02-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-01-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
                         "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 2.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-02-a-02-02')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
@@ -391,7 +391,7 @@
                     }
                   },
                   {
-                    "id": "2020-02-a-02-02-b",
+                    "id": "2020-01-a-02-02-b",
                     "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
                     "type": "ranges",
                     "answer": {
@@ -417,10 +417,10 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-02-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-01-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
                         "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 2.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-02-a-02-02')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
@@ -435,7 +435,7 @@
                     }
                   },
                   {
-                    "id": "2020-02-a-02-02-c",
+                    "id": "2020-01-a-02-02-c",
                     "label": "How much is your premium fee?",
                     "type": "money",
                     "answer": {
@@ -444,9 +444,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-02-a-02-02-a is yes or unanswered; noninteractive: hide if that's yes.",
+                        "comment": "Interactive: Hide if 2020-01-a-02-02-a is yes or unanswered; noninteractive: hide if that's yes.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-02-a-02-02-a')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-01-a-02-02-a')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
@@ -463,7 +463,7 @@
                 ]
               },
               {
-                "id": "2020-02-a-02-03",
+                "id": "2020-01-a-02-03",
                 "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
                 "type": "radio",
                 "answer": {
@@ -475,7 +475,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-02-a-02-03-a",
+                    "id": "2020-01-a-02-03-a",
                     "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
                     "type": "ranges",
                     "answer": {
@@ -501,10 +501,10 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-02-a-02-03 is no or unanswered; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-01-a-02-03 is no or unanswered; noninteractive: hide if that's no.",
                         "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 3.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-02-a-02-03')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
@@ -519,7 +519,7 @@
                     }
                   },
                   {
-                    "id": "2020-02-a-02-03-b",
+                    "id": "2020-01-a-02-03-b",
                     "label": "What's the maximum premium fee a family would be charged each year?",
                     "type": "money",
                     "answer": {
@@ -528,9 +528,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-02-a-02-03 is yes or unanswered; noninteractive: hide if that's yes.",
+                        "comment": "Interactive: Hide if 2020-01-a-02-03 is yes or unanswered; noninteractive: hide if that's yes.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-02-a-02-03')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
@@ -547,7 +547,7 @@
                 ]
               },
               {
-                "id": "2020-02-a-02-04",
+                "id": "2020-01-a-02-04",
                 "label": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
                 "type": "text_long",
                 "answer": {
@@ -555,7 +555,7 @@
                 }
               },
               {
-                "id": "2020-02-a-02-05",
+                "id": "2020-01-a-02-05",
                 "label": "Which delivery system(s) do you use?",
                 "hint": "Select all that apply.",
                 "type": "checkbox",
@@ -569,7 +569,7 @@
                 }
               },
               {
-                "id": "2020-02-a-02-06",
+                "id": "2020-01-a-02-06",
                 "label": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
                 "type": "text_long",
                 "answer": {
@@ -597,7 +597,6 @@
                 "type": "radio",
                 "answer": {
                   "options": {
-                    "entry": "null",
                     "Yes": "yes",
                     "No": "no"
                   },
