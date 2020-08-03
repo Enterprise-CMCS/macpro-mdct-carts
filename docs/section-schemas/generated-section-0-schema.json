@@ -1,0 +1,417 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "section": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer"
+        },
+        "state": {
+          "type": "null"
+        },
+        "valid": {
+          "type": "null"
+        },
+        "ordinal": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subsections": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "parts": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "questions": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "prepopulated": {
+                                      "type": "boolean"
+                                    },
+                                    "readonly": {
+                                      "type": "boolean"
+                                    },
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "prepopulated",
+                                    "readonly",
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "prepopulated": {
+                                      "type": "boolean"
+                                    },
+                                    "readonly": {
+                                      "type": "boolean"
+                                    },
+                                    "entry": {
+                                      "type": "null"
+                                    },
+                                    "options": {
+                                      "type": "object",
+                                      "properties": {
+                                        "Combination (Medicaid Expansion CHIP and Separate CHIP)": {
+                                          "type": "string"
+                                        },
+                                        "Medicaid Expansion CHIP only": {
+                                          "type": "string"
+                                        },
+                                        "Separate CHIP only": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "Combination (Medicaid Expansion CHIP and Separate CHIP)",
+                                        "Medicaid Expansion CHIP only",
+                                        "Separate CHIP only"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "prepopulated",
+                                    "readonly",
+                                    "entry",
+                                    "options"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "prepopulated": {
+                                      "type": "boolean"
+                                    },
+                                    "readonly": {
+                                      "type": "boolean"
+                                    },
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "prepopulated",
+                                    "readonly",
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "title",
+                        "questions"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "questions": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "answer": {
+                                  "type": "object",
+                                  "properties": {
+                                    "entry": {
+                                      "type": "null"
+                                    }
+                                  },
+                                  "required": [
+                                    "entry"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "type",
+                                "answer"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "title",
+                        "text",
+                        "questions"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "parts"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "year",
+        "state",
+        "valid",
+        "ordinal",
+        "id",
+        "type",
+        "title",
+        "subsections"
+      ]
+    }
+  },
+  "required": [
+    "section"
+  ]
+}
