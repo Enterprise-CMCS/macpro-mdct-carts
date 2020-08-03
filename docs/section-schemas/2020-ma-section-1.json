@@ -1,7 +1,7 @@
 {
   "section": {
     "year": 2020,
-    "state": null,
+    "state": "MA",
     "valid": null,
     "ordinal": 1,
     "id": "2020-01",
@@ -33,7 +33,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "questions": [
                   {
@@ -69,11 +69,11 @@
                 "label": "Does your program charge a premium fee?",
                 "type": "radio",
                 "answer": {
-                  "entry": null,
                   "options": {
                     "Yes": "yes",
                     "No": "no"
-                  }
+                  },
+                  "entry": "no"
                 },
                 "questions": [
                   {
@@ -277,12 +277,12 @@
                 "hint": "Select all that apply.",
                 "type": "checkbox",
                 "answer": {
-                  "entry": null,
                   "options": {
                     "Managed Care Organization (MCO)": "mco",
                     "Primary Care Case Management (PCCM)": "pccm",
                     "Fee for Service (FFS)": "ffs"
-                  }
+                  },
+                  "entry": ["mco", "pccm", "ffs"]
                 }
               },
               {
@@ -316,7 +316,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "questions": [
                   {
@@ -352,11 +352,11 @@
                 "label": "Does your program charge a premium fee?",
                 "type": "radio",
                 "answer": {
-                  "entry": null,
                   "options": {
                     "Yes": "yes",
                     "No": "no"
-                  }
+                  },
+                  "entry": "yes"
                 },
                 "questions": [
                   {
@@ -364,11 +364,11 @@
                     "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
                     "type": "radio",
                     "answer": {
-                      "entry": null,
                       "options": {
                         "Yes": "yes",
                         "No": "no"
-                      }
+                      },
+                      "entry": "yes"
                     },
                     "context_data": {
                       "conditional_display": {
@@ -395,7 +395,6 @@
                     "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
                     "type": "ranges",
                     "answer": {
-                      "entry": null,
                       "header": "Premium fees",
                       "range_categories": [
                         [
@@ -412,7 +411,12 @@
                         "money"
                       ],
                       "entry_min": 1,
-                      "entry_max": 0
+                      "entry_max": 0,
+                      "entry": [
+                          [[150, 200], [12, 36]],
+                          [[200, 250], [20, 60]],
+                          [[250, 300], [28, 84]]
+                      ]
                     },
                     "context_data": {
                       "conditional_display": {
@@ -471,7 +475,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "questions": [
                   {
@@ -479,7 +483,6 @@
                     "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
                     "type": "ranges",
                     "answer": {
-                      "entry": null,
                       "header": "Premium fees",
                       "range_categories": [
                         [
@@ -496,7 +499,12 @@
                         "money"
                       ],
                       "entry_min": 1,
-                      "entry_max": 0
+                      "entry_max": 0,
+                      "entry": [
+                          [[150, 200], [0, 432]],
+                          [[200, 250], [0, 720]],
+                          [[250, 300], [0, 1008]]
+                      ]
                     },
                     "context_data": {
                       "conditional_display": {
@@ -560,12 +568,12 @@
                 "hint": "Select all that apply.",
                 "type": "checkbox",
                 "answer": {
-                  "entry": null,
                   "options": {
                     "Managed Care Organization (MCO)": "mco",
                     "Primary Care Case Management (PCCM)": "pccm",
                     "Fee for Service (FFS)": "ffs"
-                  }
+                  },
+                  "entry": ["mco", "pccm", "ffs"]
                 }
               },
               {
@@ -600,7 +608,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility determination process"
@@ -615,7 +623,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility redetermination process"
@@ -631,7 +639,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility levels or target population"
@@ -647,7 +655,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Benefits available to enrollees"
@@ -662,7 +670,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "context_data": {
                   "bullet_text": "Single streamlined application"
@@ -677,7 +685,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Outreach efforts"
@@ -693,7 +701,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "context_data": {
                   "bullet_text": "Delivery system(s)"
@@ -709,7 +717,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Cost sharing"
@@ -725,7 +733,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Crowd-out policies"
@@ -740,7 +748,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Enrollment freeze and/or enrollment cap"
@@ -755,7 +763,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Enrollment process for health plan selection"
@@ -771,7 +779,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Protections for applicants and enrollees"
@@ -787,7 +795,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Premium assistance"
@@ -802,7 +810,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
@@ -818,7 +826,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Prenatal care eligibility"
@@ -834,7 +842,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Pregnant Woman State Plan expansion"
@@ -849,7 +857,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility for \u201clawfully residing pregnant women\u201d"
@@ -864,7 +872,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility for \u201clawfully residing children\u201d"
@@ -879,7 +887,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Other program areas"
@@ -899,7 +907,7 @@
                 "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven\u2019t done so already?",
                 "type": "text_long",
                 "answer": {
-                  "entry": null
+                  "entry": "[Application]In 2018, the paper application (ACA-3) and the HIX online application were revised to clarify instructions and help text for questions regarding tax filing. In addition, the “sheltered workshop” question was removed as sheltered workshops have been phased out in MA.\n[Delivery system]Managed Care options expanded on 3/1/18 to include Accountable Care Organizations.\n[Eligibility determination process]MassHealth implemented changes to Reasonable Compatibility rules for verification of income to consider income verified if both self-attested income and income returned from electronic data sources are both under applicable income threshold. This change was implemented to align with changes to provisional eligibility rules and to align to federal requirements."
                 },
                 "context_data": {
                   "interactive_conditional": "Show if any 2020-01-a-03 questions 1\u201319 has a yes answer, hide otherwise.",
@@ -930,7 +938,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility determination process"
@@ -945,7 +953,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility redetermination process"
@@ -961,7 +969,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility levels or target population"
@@ -977,7 +985,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Benefits available to enrollees"
@@ -992,7 +1000,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "context_data": {
                   "bullet_text": "Single streamlined application"
@@ -1007,7 +1015,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Outreach efforts"
@@ -1023,7 +1031,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "yes"
                 },
                 "context_data": {
                   "bullet_text": "Delivery system(s)"
@@ -1039,7 +1047,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Cost sharing"
@@ -1055,7 +1063,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Crowd-out policies"
@@ -1070,7 +1078,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Enrollment freeze and/or enrollment cap"
@@ -1085,7 +1093,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Enrollment process for health plan selection"
@@ -1101,7 +1109,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Protections for applicants and enrollees"
@@ -1117,7 +1125,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Premium assistance"
@@ -1132,7 +1140,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
@@ -1148,7 +1156,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Prenatal care eligibility"
@@ -1164,7 +1172,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Pregnant Woman State Plan expansion"
@@ -1179,7 +1187,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility for \u201clawfully residing pregnant women\u201d"
@@ -1194,7 +1202,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility for \u201clawfully residing children\u201d"
@@ -1209,7 +1217,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Other program areas"
@@ -1229,7 +1237,7 @@
                 "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven\u2019t done so already?",
                 "type": "text_long",
                 "answer": {
-                  "entry": null
+                  "entry": "[Application]In 2018, the paper application (ACA-3) and the HIX online application were revised to clarify instructions and help text for questions regarding tax filing. In addition, the “sheltered workshop” question was removed as sheltered workshops have been phased out in MA.\n[Delivery system]Managed Care options expanded on 3/1/18 to include Accountable Care Organizations.\n[Eligibility determination process]MassHealth implemented changes to Reasonable Compatibility rules for verification of income to consider income verified if both self-attested income and income returned from electronic data sources are both under applicable income threshold. This change was implemented to align with changes to provisional eligibility rules and to align to federal requirements."
                 },
                 "context_data": {
                   "interactive_conditional": "Show if any 2020-01-a-04 questions 1\u201319 has a yes answer, hide otherwise.",
@@ -1243,3 +1251,6 @@
     ]
   }
 }
+
+
+

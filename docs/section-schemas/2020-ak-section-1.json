@@ -1,7 +1,7 @@
 {
   "section": {
     "year": 2020,
-    "state": null,
+    "state": "AK",
     "valid": null,
     "ordinal": 1,
     "id": "2020-01",
@@ -33,7 +33,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "questions": [
                   {
@@ -69,11 +69,11 @@
                 "label": "Does your program charge a premium fee?",
                 "type": "radio",
                 "answer": {
-                  "entry": null,
                   "options": {
                     "Yes": "yes",
                     "No": "no"
-                  }
+                  },
+                  "entry": "no"
                 },
                 "questions": [
                   {
@@ -277,12 +277,12 @@
                 "hint": "Select all that apply.",
                 "type": "checkbox",
                 "answer": {
-                  "entry": null,
                   "options": {
                     "Managed Care Organization (MCO)": "mco",
                     "Primary Care Case Management (PCCM)": "pccm",
                     "Fee for Service (FFS)": "ffs"
-                  }
+                  },
+                  "entry": "ffs"
                 }
               },
               {
@@ -600,7 +600,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility determination process"
@@ -615,7 +615,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility redetermination process"
@@ -631,7 +631,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility levels or target population"
@@ -647,7 +647,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Benefits available to enrollees"
@@ -662,7 +662,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Single streamlined application"
@@ -677,7 +677,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Outreach efforts"
@@ -693,7 +693,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Delivery system(s)"
@@ -709,7 +709,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Cost sharing"
@@ -725,7 +725,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Crowd-out policies"
@@ -740,7 +740,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Enrollment freeze and/or enrollment cap"
@@ -755,7 +755,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Enrollment process for health plan selection"
@@ -771,7 +771,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Protections for applicants and enrollees"
@@ -787,7 +787,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Premium assistance"
@@ -802,7 +802,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
@@ -818,7 +818,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Prenatal care eligibility"
@@ -834,7 +834,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Pregnant Woman State Plan expansion"
@@ -849,7 +849,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility for \u201clawfully residing pregnant women\u201d"
@@ -864,7 +864,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Eligibility for \u201clawfully residing children\u201d"
@@ -879,7 +879,7 @@
                     "Yes": "yes",
                     "No": "no"
                   },
-                  "entry": null
+                  "entry": "no"
                 },
                 "context_data": {
                   "bullet_text": "Other program areas"
@@ -1243,3 +1243,4 @@
     ]
   }
 }
+
