@@ -1,6 +1,6 @@
 
 resource "aws_s3_bucket" "ui" {
-  bucket = "carts-${terraform.workspace}"
+  bucket = "carts-ui-${terraform.workspace}"
   acl = "private"
   versioning {
     enabled = true
@@ -9,5 +9,4 @@ resource "aws_s3_bucket" "ui" {
   tags {
     Name = "my-test-s3-terraform-bucket"
   }
-
 }
