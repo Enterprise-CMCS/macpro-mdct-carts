@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system-core";
+import PropTypes from "prop-types";
 
 class DateRange extends Component {
   constructor(props) {
@@ -146,7 +147,7 @@ class DateRange extends Component {
   render() {
     return (
       <Fragment>
-        <div className="date-range">
+        <div className="date-range" data-test="component-date-range">
           <div className="errors">
             {" "}
             {this.state.endRangeErr === true ? (
@@ -166,6 +167,7 @@ class DateRange extends Component {
             <div className="date-range-start-wrapper">
               <TextField
                 className="ds-c-field--small"
+                data-test="component-daterange-monthstart"
                 name="monthStart"
                 numeric
                 inputRef={(monthStart) => (this.monthStart = monthStart)}
@@ -245,5 +247,9 @@ class DateRange extends Component {
 const mapStateToProps = (state) => ({
   year: state.stateUser.formYear,
 });
+
+DateRange.propTypes = {
+  previousEntry: PropTypes.bool,
+};
 
 export default connect(mapStateToProps)(DateRange);
