@@ -1,41 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 
-let childFields = [];
+// this.state{
+//   fields: null
+// }
+// childFields = this.state.fields;
+
 export const CMSChoice = (props) => {
+  const [childFields, setChildFields] = useState({ field: [] });
+
   // Determine if choice is checked
   const isChecked = props.answer === props.value ? "checked" : null;
 
   // Create children
+  let field;
   if (props.conditional === props.value && props.children) {
     props.children.map((item) => {
       switch (item.answer_type) {
         case "money":
-          childFields.push(
-            <TextField
-              className="fpl-input"
-              label={item.text}
-              inputMode="currency"
-              mask="currency"
-              pattern="[0-9]*"
-            />
+          field = (
+            <>
+              {item.id}
+              <TextField
+                className="fpl-input"
+                label={item.text}
+                inputMode="currency"
+                mask="currency"
+                pattern="[0-9]*"
+              />
+            </>
           );
+          // console.log("Field: ", field);
+          console.log("Type of: ", childFields.field);
+          let test = childFields.field;
+          test.push(field);
+          // setChildFields(test);
           break;
         case "multi":
-          // "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-          // "text": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
-          // "answer_type": "multi",
-          // "answer_values": ["yes", "no"],
-          // "answer": null
-          //   childFields += item.answer_values.length;
-          childFields = item.answer_values.map((answer) => (
+          field = item.answer_values.map((answer, index) => (
             // <fieldset className="ds-c-fieldset">
             //   <legend className="ds-c-label">{item.text}</legend>
             <Choice className="fpl-input" name={item.id} value={answer}>
-              {answer}
+              {answer} {item.id}
             </Choice>
             // </fieldset>
           ));
+          break;
       }
     });
   }
@@ -48,7 +58,7 @@ export const CMSChoice = (props) => {
         value={props.value}
         type="radio"
         checked={isChecked}
-        checkedChildren={childFields}
+        checkedChildren={<div>{childFields.fields}</div>}
       >
         {props.value}
       </Choice>
