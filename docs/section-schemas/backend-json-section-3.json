@@ -282,8 +282,8 @@
                 "context_data": {
                   "skip_text": "Some questions omitted because they do not apply to your program.",
                   "show_if_state_program_type_in": [
-                    "Separate CHIP",
-                    "Combo"
+                    "separate_chip",
+                    "combo"
                   ]
                 }
               },
@@ -1055,8 +1055,8 @@
             "context_data": {
               "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
               "show_if_state_program_type_in": [
-                "Separate CHIP",
-                "Combo"
+                "separate_chip",
+                "combo"
               ]
             },
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
