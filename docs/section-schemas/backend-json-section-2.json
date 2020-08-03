@@ -316,9 +316,9 @@
             "type": "part",
             "context_data": {
               "show_if_state_program_type_in": [
-                "Medicaid expansion CHIP",
-                "Separate CHIP",
-                "Combo"
+                "medicaid_exp_chip",
+                "separate_chip",
+                "combo"
               ]
             },
             "title": "State Plan Goals and Objectives",

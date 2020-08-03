@@ -1,0 +1,20 @@
+{% for part in parts %}
+    <part id="{{part.id}}">
+        {{ state.program_type }}
+        {{ part.context_data.show_if_state_program_type_in }}
+        {% if not part.context_data.show_if_state_program_in or state.program_type in part.context_data.show_if_state_program_type_in %}
+        
+            <h2>{{part.title}}</h2>
+            {% if part.context_data %}
+                <pre>{{part.context_data}}</pre>
+            {% endif %}
+            <p class="part_text">{{part.text}}</p>
+            {% include "reports/questions.html" with questions=part.questions state=state %}
+        {% else %}
+            <p style="color:red">{{part.context_data.skip_text}}</p>
+        {% endif %}
+
+    </part>
+
+{% endfor %}
+

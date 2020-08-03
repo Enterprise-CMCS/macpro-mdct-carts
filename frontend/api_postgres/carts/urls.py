@@ -26,6 +26,7 @@ router.register(r'sections', views.SectionViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path("report/<int:year>/<str:state>", views.report),
     # path('api-auth/', include('rest_framework.urls',
     #  namespace='rest_framework'))
 ]

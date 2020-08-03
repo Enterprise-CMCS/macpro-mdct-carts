@@ -156,9 +156,9 @@
       "items": {
         "type": "string",
         "enum": [
-          "Medicaid expansion CHIP",
-          "Separate CHIP",
-          "Combo"
+          "medicaid_exp_chip",
+          "separate_chip",
+          "combo"
         ]
       }
     },

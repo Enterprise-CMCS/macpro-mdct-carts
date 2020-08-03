@@ -18,8 +18,8 @@
             "title": "Medicaid Expansion CHIP Enrollment and Premium Fees",
             "context_data": {
               "show_if_state_program_type_in": [
-                "Medicaid expansion CHIP",
-                "Combo"
+                "medicaid_exp_chip",
+                "combo"
               ],
               "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program. Skip to Part 2."
             },
@@ -302,8 +302,8 @@
             "context_data": {
               "skip_text": "Part 2 only applies to states with a separate CHIP program. Skip to Part 3.",
               "show_if_state_program_type_in": [
-                "Separate CHIP",
-                "Combo"
+                "separate_chip",
+                "combo"
               ]
             },
             "questions": [
@@ -589,8 +589,8 @@
             "context_data": {
               "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program. Skip to Part 4.",
               "show_if_state_program_type_in": [
-                "Medicaid expansion CHIP",
-                "Combo"
+                "medicaid_exp_chip",
+                "combo"
               ]
             },
             "text": "Indicate any changes you\u2019ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
@@ -919,8 +919,8 @@
             "context_data": {
               "skip_text": "Part 4 only applies to states with a separate CHIP program.",
               "show_if_state_program_type_in": [
-                "Separate CHIP",
-                "Combo"
+                "separate_chip",
+                "combo"
               ]
             },
             "text": "Indicate any changes you\u2019ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
@@ -1247,5 +1247,3 @@
     ]
   }
 }
-
-

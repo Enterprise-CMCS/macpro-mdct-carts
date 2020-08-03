@@ -1,0 +1,9 @@
+{% for subsection in subsections %}
+    <subsection id="{{subsection.id}}">
+        <h2>{{subsection.title}}</h2>
+        <p class="subsection_text">{{subsection.text}}</p>
+        {% include "reports/part.html" with parts=subsection.parts state=state %}
+
+    </subsection>
+
+{% endfor %}

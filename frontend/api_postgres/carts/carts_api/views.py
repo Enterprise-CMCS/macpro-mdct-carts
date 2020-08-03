@@ -1,4 +1,7 @@
+import json
 from django.contrib.auth.models import User, Group
+from django.http import HttpResponse
+from django.template.loader import get_template
 from rest_framework import viewsets
 from rest_framework.permissions import (
     IsAuthenticated,
@@ -11,6 +14,20 @@ from carts.carts_api.serializers import (
 )
 from carts.carts_api.models import Section
 
+
+# TODO: This should be absolutely stored elswhere.
+STATE_INFO = {
+    "AK": {
+        "program_type": "medicaid_exp_chip"
+    },
+    "AZ": {
+        "program_type": "separate_chip"
+    },
+    "MA": {
+        "program_type": "combo"
+    },
+
+}
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -37,3 +54,17 @@ class SectionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
+
+
+def report(request, year=None, state=None):
+    assert year
+    assert state
+    sections = Section.objects.filter(contents__section__year=year,
+                                      contents__section__state=state.upper())
+    context = {
+        "sections": sorted([_.contents["section"] for _ in sections],
+                           key=lambda s: s["ordinal"]),
+        "state": STATE_INFO[state.upper()]
+    }
+    report_template = get_template("report.html")
+    return HttpResponse(report_template.render(context=context))

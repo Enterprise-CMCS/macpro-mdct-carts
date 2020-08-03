@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <report>
+
+            {% for section in sections %}
+                <section id="{{section.id}}">
+                    <h1>{{section.title}}</h1>
+                    <p>{{section.year}}</p>
+                    <p>{{section.state}}</p>
+                    <p>{{section.ordinal}}</p>
+                    {% include "reports/subsection.html" with subsections=section.subsections state=state %}
+                </section>
+            {% endfor %}
+        </report>
+    </body>
+</html>
+
