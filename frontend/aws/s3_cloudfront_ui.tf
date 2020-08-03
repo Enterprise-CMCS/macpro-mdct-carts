@@ -5,8 +5,4 @@ resource "aws_s3_bucket" "ui" {
   versioning {
     enabled = true
   }
-
-  tags {
-    Name = "carts-cloudfront-bucket"
-  }
 }
