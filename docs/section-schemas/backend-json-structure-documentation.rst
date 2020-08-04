@@ -7,15 +7,27 @@ JSON Structure Documentation
 
 Overview
 --------
-In order to support both a reasonable structured storage approach to the CARTS questions and their answers, and a component-based frontend that will allow changes to be made in configuration rather that code (up to a point), we will use a JSON document approach. To do this, we need to have structures to represent the various elements of the CARTS form.
+In order to support both a reasonable structured storage approach to the CARTS questions and their answers, and a component-based frontend that will allow changes to be made in configuration rather than code (up to a point), we use a JSON document approach. To do this, we need to have structures to represent the various elements of the CARTS form.
 
-Most of these are relatively simple and are primarily containers, such as ``section``, ``subsection``, and ``part``. We also need JSON constructs to represent the questions themselves. The ``question`` construct is used for these, and has different characteristics based on its type.
+The purpose of this structure is not to mimic the structure of the online form, but to contain the information needed to create and populate that form and also to create and populate a report document.
+
+The form is hierarchical::
+
+    Section
+        Subsection
+            Part
+                Question
+                    Subquestion
+
+However, a variety of special cases make the hierarchy less straightforward (in particular, ``goals`` and ``objectives``).
+
+The ``fieldset`` construct is not quite analogous to the HTML element with the same name; in most cases they go together, but not always. See `Fieldsets`_ for more information.
 
 The conditional logic of various parts of the CARTS form is complicated, and attempting to represent that in JSON via some sort of domain-specific language would be unwise. A system design goal is that changes to text, reordering the questions, deleting questions, or adding new questions (that don't alter the conditional logic, at least) should be all be possible via altering the data in the backend, and this approach should achieve that. Changes to the conditional logic, however, will continue to require software development changes.
 
 The conditional logic for questions with difficult logic is therefore described in plain language in the backend data, but these descriptions are not intended to be machine-readable.
 
-The conditional logic for the simple logic is under development.
+The conditional logic for the simple logic is described in `Conditional display`_.
 
 In addition, the logic for how `objectives`_ work in Section 2B work is described below, and no attempt is made to store that logic within the data for the system.
 
@@ -97,7 +109,6 @@ If a part's ``id`` is 2020-05-e-01, the first child question of that part would 
 
 Not yet covered
 +++++++++++++++
-+   How questions should be flagged as providing the user the option of seeing the prior year's data. (This will probably be a boolean property of the question, but that's not yet final.)
 +   File upload.
 
 Special Requirements
@@ -108,6 +119,8 @@ Section 2A
     This section starts with two tables, both of which are filled with data from other sources. This data will be entered into the JSON, but will not be editable by states. Each of the tables is followed by a question whose display is conditional upon values in the table. This all requires custom code.
 Section 2B
     See `objectives`_ below.
+Section 3C
+    A tablehouse of horrors whose structure and content is still under review.
 Section 3D
     All of the rest of the questions after 1 should be hidden if the answer to 1 is no; this looks like it can be handled via the supported conditional logic. However, in addition, question 8 should only be displayed if the answer to Section 1 Part 3 Question 8 (``2020-01-a-03-08``) or Section 1 Part 4 Question 8 (``2020-01-a-04-08``) is yes. That will require custom frontend code.
 Section 3E
@@ -239,7 +252,7 @@ A property that contains data about whether and/or how the segment should be dis
 
     Present and ``true`` if the UI is supposed to display data from the prior year as an aid to data entry.
 ``conditional_display`` (optional)
-    Extremely limited logic mini-schema to control display of questions. See `Conditional Display`_ below.
+    Extremely limited logic mini-schema to control display of questions. See `Conditional display`_ below.
 ``interactive_conditional`` (optional)
     String.
 
@@ -257,9 +270,9 @@ A property that contains data about whether and/or how the segment should be dis
 
     The only valid values here are:
     
-    +   Medicaid expansion CHIP
-    +   Separate CHIP
-    +   Combo
+    +   ``medicaid_exp_chip``
+    +   ``separate_chip``
+    +   ``combo``
 
     The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
 ``skip_text`` (optional)
@@ -320,7 +333,7 @@ Answers are contained by questions, which in this case is a technical descriptio
 
     In rare cases we want to prepopulate the value of the user's answer. This is not the same as a hint, as this value will be sent to the database as if it had been entered by the user. We think we want this field to allow us to distinguish between sections that have been accessed by the user and those that haven't, but it's possible that this property is unnecessary.
 
-Conditional Display
+Conditional display
 -------------------
 This is about per-question display, and not about the per-part display related to whether a state's program is separate CHIP, Medicaid expansion CHIP, or combo; see ``show_if_state_program_type_in`` in `Part`_ for that functionality.
 
@@ -389,27 +402,29 @@ Question Types
 --------------
 This section describes the characteristics and properties (in addition to those described in the Answer section) of answer constructs of a given question type that are specific to that type of question.
 
-``fieldset``
-++++++++++++
-Essentially a container for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions. Fieldsets do not have ``id`` properties, and the questions within them increment as if the fieldset container were not present.
+Fieldsets
++++++++++
+Fieldsets serve two basic functions as constructs in the JSON:
+    +   As containers for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions.
+    +   As ways of handling special cases, normally one that involve grouping questions together or presenting data in ways other than the typical question-answer approach.
 
-The purpose of a fieldset, more or less, is to be a container around questions that doesn't itself necessarily imply a deeper nesting level for the questions, and in some cases there's no display effect of a fieldset. Fieldsets also do not imply subquestions or a restart to question numbering.
 
-This is an example structure:
+Fieldsets are not meant to alter the hierarchy of the document. For example, the following questions are all at the same level::
 
     Question 1
-        (Question details here.)
     Question 2
-        (Question details here.)
+    Question 3
+    Question 4
+
+If the middle two questions were inside a fieldset, they are still at the same level, and do not switch to using letters::
+
+    Question 1
     Fieldset
+        Question 2
         Question 3
-            (Question details here.)
-        Question 4
-            (Question details here.)
+    Question 4
 
-The questions are presented to the user as if they're all on the same level and the same list.
-
-This doesn't necessarily apply to all types of fieldsets, some of which do alter the display of questions within them.
+Fieldsets do not have ``id`` properties, and the questions within them increment their ``id`` properties as if the fieldset container were not present.
 
 ``fieldset_type`` (optional)
     String.
@@ -418,18 +433,141 @@ This doesn't necessarily apply to all types of fieldsets, some of which do alter
 ``fieldset_info`` (options)
     Object.
 
-    Some fieldset types require additional info, which is stored here.
+    Some fieldset types require additional info, which is stored here. Other than having to be in an object, the structure of this value is not constrained.
 ``show_if_state_program_type_in`` (optional)
     Array of program categories.
 
     The only valid values here are:
     
-    +   Medicaid expansion CHIP
-    +   Separate CHIP
-    +   Combo
+    +   ``medicaid_exp_chip``
+    +   ``separate_chip``
+    +   ``combo``
 
     The fieldset is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
-    
+
+Special ``fieldset`` types
+**************************
+``percentage``
+##############
+This displays a percentage field as an aid to the user, calculating it from two fields other fields. Those other fields are specified in the ``fieldset_info`` object.
+
+The percentage value would be displayed at the end of wherever the fieldset is in the hierarchy, and isn't necessarily dependent on the locations of the target questions in the hierarchy.
+
+The ``fieldset_info`` object for ``percentage`` has two properties, ``numerator`` and ``denominator``, each of which contains a string that is a JSON Path expression of the target. For example:
+
+..  code:: json
+
+
+      {
+        "type": "fieldset",
+        "label": "Define the numerator you're measuring",
+        "questions": [
+          {
+            "id": "2020-02-b-01-01-01-03",
+            "label": "Which population are you measuring in the numerator?",
+            "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
+            "type": "integer",
+            "answer": { "entry": null }
+          },
+          {
+            "id": "2020-02-b-01-01-01-04",
+            "label": "Numerator (total number)",
+            "type": "integer",
+            "answer": { "entry": null }
+          }
+        ]
+      },
+      {
+        "type": "fieldset",
+        "label": "Define the denominator you're measuring",
+        "questions": [
+          {
+            "id": "2020-02-b-01-01-01-05",
+            "label": "Which population are you measuring in the denominator?",
+            "hint": "For example: The total number of eligible children in the last federal fiscal year.",
+            "type": "integer",
+            "answer": { "entry": null }
+          },
+          {
+            "id": "2020-02-b-01-01-01-06",
+            "label": "Denominator (total number)",
+            "type": "integer",
+            "answer": { "entry": null }
+          }
+        ]
+      },
+      {
+        "type": "fieldset",
+        "fieldset_type": "percentage",
+        "fieldset_info": {
+            "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-04')].answer.entry",
+            "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-06')].answer.entry"
+        },
+        "questions": []
+      }
+
+Here the ``fieldset`` at the end would contain no questions and would indicate where in the document the percentage calculated from the targeted fields would be displayed. It still has a ``questions`` field because this is an outlier and it makes more sense to require the field for the vast majority of uses that do contain questions.
+
+..  note:: Tentative
+
+   This approach to handling ``percentage`` isn't final.
+
+``noninteractive_table``
+########################
+This displays a non-interactive table out of values provided.
+
+The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
+
+``headers`` is an array containing the values for the header row of the table. 
+
+``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
+
+Values for those arrays can be strings, integers, or floats.
+
+An example:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "noninteractive_table",
+      "fieldset_info": {
+        "headers": ["Ones", "Twos", "Threes", "Fours"],
+        "rows": [
+          [1, 2, 3, 4],
+          [11, 22, 33, 44],
+          ["1 1 1", "2 2 2", "3 3 3", "4 4 4"],
+          [1111, 2222, 3333, 5555]
+        ]
+      },
+      "questions": [
+        {
+          "id": "2020-02-a-01",
+          "label": "How does this table make you feel?",
+          "type": "text_long",
+          "answer": {"entry": null}
+        }
+      ]
+    }
+
+This would produce something like:
+
+    =====  =====  ======  =====
+    Ones   Twos   Threes  Fours
+    =====  =====  ======  =====
+    1      2      3       4
+    11     22     33      44
+    1 1 1  2 2 2  3 3 3   4 4 4
+    1111   2222   3333    5555
+    =====  =====  ======  =====
+
+    How does this table make you feel?
+
+``2d_table``
+
+..  warning:: Under review
+
+    Still talking this one over, so it may change entirely.
 
 ``text_long``
 +++++++++++++

@@ -134,7 +134,7 @@
                     "questions": [
                       {
                         "id": "2020-02-a-01",
-                        "label": "What are some possible reasons why your state had more than a 10% change in enrollment?",
+                        "label": "What are some possible reasons why your state had more than a 10% change in the number of uninsured children?",
                         "type": "text_long",
                         "answer": {
                           "entry": null
@@ -406,7 +406,6 @@
                               {
                                 "type": "fieldset",
                                 "label": "Define the numerator you're measuring",
-                                "fieldset_type": "percentage",
                                 "questions": [
                                   {
                                     "id": "2020-02-b-01-01-01-03",
@@ -430,7 +429,6 @@
                               {
                                 "type": "fieldset",
                                 "label": "Define the denominator you're measuring",
-                                "fieldset_type": "percentage",
                                 "questions": [
                                   {
                                     "id": "2020-02-b-01-01-01-05",
@@ -450,6 +448,15 @@
                                     }
                                   }
                                 ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "fieldset_type": "percentage",
+                                "fieldset_info": {
+                                    "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-04')].answer.entry",
+                                    "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-06')].answer.entry"
+                                },
+                                "questions": []
                               },
                               {
                                 "id": "2020-02-b-01-01-01-07",
