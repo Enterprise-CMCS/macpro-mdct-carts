@@ -1,25 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 
-// this.state{
-//   fields: null
-// }
-// childFields = this.state.fields;
-
 export const CMSChoice = (props) => {
-  const [childFields, setChildFields] = useState({ field: [] });
-
   // Determine if choice is checked
   const isChecked = props.answer === props.value ? "checked" : null;
 
   // Create children
-  let field = [];
+  let fields = [];
   if (props.conditional === props.value && props.children) {
     props.children.map((item) => {
       switch (item.type) {
         case "text_long":
-          field.push(
+          fields.push(
             <>
               <textarea
                 class="ds-c-field"
@@ -31,17 +24,12 @@ export const CMSChoice = (props) => {
               />
             </>
           );
-          // console.log("Field: ", field);
-          console.log("Type of: ", childFields.field);
-          let test = childFields.field;
-          test.push(field);
-          // setChildFields(test);
           break;
         case "radio":
           Object.entries(item.answer.options).map(function (key, index) {
             const isCheckedChild =
               key[1] === item.answer.entry ? "checked" : null;
-            return field.push(
+            return fields.push(
               <>
                 {index === 0 ? (
                   <legend className="ds-c-label">{item.label}</legend>
@@ -60,10 +48,10 @@ export const CMSChoice = (props) => {
           });
           break;
         case "ranges":
-          return field.push(<FPL label={item.label} />);
+          return fields.push(<FPL label={item.label} />);
           break;
         case "money":
-          field.push(
+          fields.push(
             <>
               <TextField
                 className="fpl-input"
@@ -89,7 +77,7 @@ export const CMSChoice = (props) => {
         type={props.type}
         checked={isChecked}
         checkedChildren={
-          <div className="ds-c-choice__checkedChild">{field}</div>
+          <div className="ds-c-choice__checkedChild">{fields}</div>
         }
       >
         {props.label}
