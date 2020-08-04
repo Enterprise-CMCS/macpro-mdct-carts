@@ -550,7 +550,7 @@ An example:
       "type": "fieldset",
       "fieldset_type": "synthesized_table",
       "fieldset_info": {
-        "headers": ["Contents", "Targets"],
+        "headers": [{"contents": "Contents"}, {"contents": "Targets"}],
         "rows": [
           [{"contents": "From the server"}, {"target": "$..*[?(@.id=='2020-01-a-01')].answer.entry"}],
           [{"contents": "Also from the server"}, {"target": "$..*[?(@.id=='2020-01-a-02')].answer.entry"}],
