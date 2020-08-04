@@ -13,7 +13,7 @@ class Homepage extends Component {
   }
   render() {
     return (
-      <div class="homepage">
+      <div className="homepage">
         <div className="ds-l-container">
           <div className="ds-l-row">
             <div className="page-title ds-l-col--12">
@@ -171,13 +171,13 @@ class Homepage extends Component {
                 <strong>24 documents</strong>
               </div>
               <div className="pager ds-l-col--6">
-                Page <span class="number-primary">1</span> ...{" "}
-                <span class="number-outline">2</span>
+                Page <span className="number-primary">1</span> ...{" "}
+                <span className="number-outline">2</span>
               </div>
             </div>
           </div>
           <div className="ds-l-row">
-            <div class="omb-info ds-l-col--12">
+            <div className="omb-info ds-l-col--12">
               <p>
                 The OMB control number for this information is OMB 0938-1148.
                 The time required to complete this information collection is
