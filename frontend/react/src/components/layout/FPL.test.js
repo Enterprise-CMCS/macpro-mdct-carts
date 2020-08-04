@@ -24,8 +24,6 @@ describe("FPL Component, static render checks ", () => {
   });
   it("renders with test attributes", () => {
     const fplComponent = findByTestAttribute(component, "component-FPL");
-    // console.log("FOUND COMPONENT", fplComponent);
-    // console.log("DEBUGGED COMPONNENT", fplComponent.debug());
     expect(fplComponent.length).toBe(1);
   });
 

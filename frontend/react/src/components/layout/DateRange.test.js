@@ -28,7 +28,7 @@ const setup = (initialState = {}, props = {}) => {
     .dive();
 };
 
-const setup2 = (initialState = {}, props = {}) => {
+const setupTopmostComponent = (initialState = {}, props = {}) => {
   const setupProps = { ...defaultProps, ...props };
   const store = storeFactory(initialState);
   return shallow(<DateRange store={store} {...setupProps} />);
@@ -69,7 +69,9 @@ describe("DateRange Component (shallow)", () => {
 
 describe("DateRange Component (shallow)", () => {
   it("starts with the initial props", () => {
-    const wrapper = setup2(mockInitialState, { previousEntry: true });
+    const wrapper = setupTopmostComponent(mockInitialState, {
+      previousEntry: true,
+    });
     let props = wrapper.props().children.props;
     expect(props.previousEntry).toBe(true);
   });
