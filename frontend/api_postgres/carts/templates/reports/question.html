@@ -1,6 +1,4 @@
 {% if question.type == "checkbox" %}
-
-{% elif question.type == "checkbox" %}
     {% include "reports/checkbox.html" with question=question state=state %}
 {% elif question.type == "daterange" %}
     {% include "reports/daterange.html" with question=question state=state %}
@@ -32,4 +30,3 @@
     <h2>UNKNOWN TYPE</h2>
     <pre>{{ question }}</pre>
 {% endif %}
-

@@ -26,6 +26,22 @@
                 border: 2px dotted blue;
                 padding: 2px;
             }
+            dl.text_answer.radio>div {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            dl.text_answer.radio dt {
+                display: flex;
+                width: 33%;
+            }
+            dl.text_answer.radio dd {
+                display: flex;
+                margin-left: auto;
+                width: 66%;
+            }
+
+
+
 
         </style>
 </head>
@@ -35,10 +51,8 @@
             length: {{l}}
             {% for section in sections %}
                 <section id="{{section.id}}">
-                    <h1>{{section.title}}</h1>
-                    <p>{{section.year}}</p>
-                    <p>{{section.state}}</p>
-                    <p>{{section.ordinal}}</p>
+                    <h1>Section {{forloop.counter}}: {{section.title}}</h1>
+                    <p>{{section.id}}, {{section.year}}, {{section.state}}, {{section.ordinal}}</p>
                     {% include "reports/subsection.html" with subsections=section.subsections state=state %}
                 </section>
             {% endfor %}
