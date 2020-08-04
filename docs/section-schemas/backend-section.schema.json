@@ -408,7 +408,7 @@
           "enum": [
             "percentage",
             "sum",
-            "2d_table",
+            "synthesized_table",
             "noninteractive_table"
           ]
         },
