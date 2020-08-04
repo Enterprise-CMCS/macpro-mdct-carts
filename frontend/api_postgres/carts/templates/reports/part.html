@@ -1,19 +1,23 @@
 {% for part in parts %}
+    part.html, {{part.id}}, |{{state.program_type}}|
     <part id="{{part.id}}">
-        {{ state.program_type }}
-        {{ part.context_data.show_if_state_program_type_in }}
-        {% if not part.context_data.show_if_state_program_in or state.program_type in part.context_data.show_if_state_program_type_in %}
-        
-            <h2>{{part.title}}</h2>
-            {% if part.context_data %}
-                <pre>{{part.context_data}}</pre>
-            {% endif %}
+    {{part.title}}
+    {% if not part.context_data %}
+        <strong>No context_data</strong>
+    {% endif %}
+    {% if not part.context_data.show_if_state_program_type_in %}
+        <strong>No context_data.state_program_type_in</strong>
+    {% endif %}
+    {% if not state.program_type in part.context_data.show_if_state_program_type_in %}
+        <strong>{{state.program_type}} not in context_data.state_program_type_in</strong>
+    {% endif %}
+        {% if not part.context_data or not part.context_data.show_if_state_program_type_in or state.program_type not in part.context_data.show_if_state_program_type_in %}
+        <p style="border: 1px solid red">{{part.title}}/{{state.program_type}}/{{part.context_data.show_if_state_program_type_in}}/{{part.context_data.skip_text}}</p>
+        {% else %}
+            <h2>Part {{forloop.counter}}: {{part.title}}</h2>
             <p class="part_text">{{part.text}}</p>
             {% include "reports/questions.html" with questions=part.questions state=state %}
-        {% else %}
-            <p style="color:red">{{part.context_data.skip_text}}</p>
         {% endif %}
-
     </part>
 
 {% endfor %}

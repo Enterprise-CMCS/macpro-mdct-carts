@@ -134,7 +134,7 @@
                     "questions": [
                       {
                         "id": "2020-02-a-01",
-                        "label": "What are some possible reasons why your state had more than a 10% change in enrollment?",
+                        "label": "What are some possible reasons why your state had more than a 10% change in the number of uninsured children?",
                         "type": "text_long",
                         "answer": {
                           "entry": null
