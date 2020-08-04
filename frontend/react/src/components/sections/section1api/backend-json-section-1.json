@@ -39,7 +39,7 @@
                     "label": "How much is your enrollment fee?",
                     "type": "money",
                     "answer": {
-                      "entry": null
+                      "entry": "100.12"
                     },
                     "context_data": {
                       "conditional_display": {
@@ -75,7 +75,7 @@
                     "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
                     "type": "radio",
                     "answer": {
-                      "entry": null,
+                      "entry": "yes",
                       "options": {
                         "Yes": "yes",
                         "No": "no"

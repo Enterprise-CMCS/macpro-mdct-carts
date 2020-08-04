@@ -39,6 +39,8 @@ export const CMSChoice = (props) => {
           break;
         case "radio":
           Object.entries(item.answer.options).map(function (key, index) {
+            const isCheckedChild =
+              key[1] === item.answer.entry ? "checked" : null;
             return field.push(
               <>
                 {index === 0 ? (
@@ -49,6 +51,7 @@ export const CMSChoice = (props) => {
                   name={item.id}
                   value={key[1]}
                   type="radio"
+                  checked={isCheckedChild}
                 >
                   {key[0]}
                 </Choice>
@@ -68,6 +71,7 @@ export const CMSChoice = (props) => {
                 inputMode="currency"
                 mask="currency"
                 pattern="[0-9]*"
+                value={item.answer.entry}
               />
             </>
           );
