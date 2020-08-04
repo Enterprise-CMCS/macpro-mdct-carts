@@ -111,7 +111,7 @@ Not yet covered
 +++++++++++++++
 +   File upload.
 
-Special Requirements
+Special requirements
 ++++++++++++++++++++
 Section 1
     This section's parts 3 and 4 contain an identical long list of questions, all with yes/no answers. The JSON for these is the only place where ``bullet_text`` is used. The last question in each of the parts is displayed if any of questions 1–19 in that part were answered with ``yes``, in which case the last question is displayed and the ``bullet_text`` value for each of the questions with a ``yes`` answer is displayed somewhere nearby (depends on the design).
@@ -398,7 +398,7 @@ To express the logic described above, the sub-question has this ``conditional_di
 
 .. _JSON Path: https://goessner.net/articles/JsonPath/
 
-Question Types
+Question types
 --------------
 This section describes the characteristics and properties (in addition to those described in the Answer section) of answer constructs of a given question type that are specific to that type of question.
 
@@ -512,9 +512,68 @@ Here the ``fieldset`` at the end would contain no questions and would indicate w
 
    This approach to handling ``percentage`` isn't final.
 
+``synthesized_table``
+########################
+This displays a table constructed out of values either provided by or indicated in the ``fieldset_info`` property.
+
+The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
+
+``headers`` is an array containing the values for the header row of the table. 
+
+``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
+
+Values for those arrays are objects with either a ``contents`` property or a ``target`` property.
+
+The value of the ``contents`` property can be a string, integer, or float.
+
+The value of the ``target`` property is a string representing the JSON Path of the location of the target value.
+
+An example:
+
+..  code:: json
+
+    {
+      "type": "text_long",
+      "id": "2020-01-a-01"
+      "answer": {
+        "entry": "I'm over here"
+      }
+    },
+    {
+      "type": "text_long",
+      "id": "2020-01-a-02"
+      "answer": {
+        "entry": "And I'm over here"
+      }
+    },
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_table",
+      "fieldset_info": {
+        "headers": [{"contents": "Contents"}, {"contents": "Targets"}],
+        "rows": [
+          [{"contents": "From the server"}, {"target": "$..*[?(@.id=='2020-01-a-01')].answer.entry"}],
+          [{"contents": "Also from the server"}, {"target": "$..*[?(@.id=='2020-01-a-02')].answer.entry"}],
+        ]
+      },
+      "questions": []
+    }
+
+This would produce something like:
+
+    ====================  =================
+    Contents              Targets
+    ====================  =================
+    From the server       I'm over here
+    Also from the server  And I'm over here
+    ====================  =================
+
+
 ``noninteractive_table``
 ########################
 This displays a non-interactive table out of values provided.
+
+This is essentially a simplification of ``synthesized_table`` where there are no values dependent on form elements and so the contents can be passed to the array as primitives rather than being in the ``contents`` property of an object.
 
 The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
 
@@ -562,12 +621,6 @@ This would produce something like:
     =====  =====  ======  =====
 
     How does this table make you feel?
-
-``2d_table``
-
-..  warning:: Under review
-
-    Still talking this one over, so it may change entirely.
 
 ``text_long``
 +++++++++++++
