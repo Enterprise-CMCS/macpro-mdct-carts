@@ -48,7 +48,7 @@ class Homepage extends Component {
                     conubia nostra, per inceptos himenaeos.
                   </p>
                   <div className="download">
-                    <button class="ds-c-button ds-c-button--primary">
+                    <button className="ds-c-button ds-c-button--primary">
                       <span>Download template</span>
                       <FontAwesomeIcon icon={faPlus} />
                     </button>

@@ -24,6 +24,8 @@ describe("FPL Component, static render checks ", () => {
   });
   it("renders with test attributes", () => {
     const fplComponent = findByTestAttribute(component, "component-FPL");
+    // console.log("FOUND COMPONENT", fplComponent);
+    // console.log("DEBUGGED COMPONNENT", fplComponent.debug());
     expect(fplComponent.length).toBe(1);
   });
 
@@ -41,43 +43,30 @@ describe("FPL Component, static render checks ", () => {
 
 describe("FPL Component, state changes and component updates", () => {
   const component = setup();
-  beforeEach(() => {
-    const instance = component.instance();
+
+  let startInput = component.find("[name='fpl_per_starts_at']");
+
+  startInput.simulate("change", {
+    target: {
+      value: 16,
+      name: "fpl_per_starts_at",
+    },
   });
 
-  it("correctly calculates FPL percentage", () => {
-    let event1 = {
-      target: {
-        value: "12",
-        name: "fpl_per_starts_at",
-      },
-    };
-
-    let event2 = {
-      target: {
-        value: 41,
-        name: "fpl_per_ends_at",
-      },
-    };
-
-    let startInput = component.find("[name='fpl_per_starts_at']");
-
-    startInput.simulate("change", {
-      target: { value: "16" },
-    });
-
-    // console.log(startInput.debug());
-    // console.log("fpl start???", foundInput.debug());
-    // let trigger1 = instance.calculateFPL(event1);
-    // let trigger2 = instance.calculateFPL(event2);
-    console.log("NEW STATE??", component.state().fpl_per_starts_at);
-
-    // const status = component.state().fpl_per_starts_at;
+  startInput.simulate("change", {
+    target: {
+      value: 41,
+      name: "fpl_per_ends_at",
+    },
+  });
+  it("updates FPL percentage start on user input", () => {
     expect(component.state().fpl_per_starts_at).toEqual(16);
   });
-  // it("correctly calculates FPL fee", () => {
-  //   component.setState({ fpl_per_starts_at: 17, fpl_per_ends_at: 20 });
-  //   const status = component.state().fpl_per_starts_at;
-  //   expect(status).toEqual("17");
-  // });
+  it("updates FPL percentage end on user input", () => {
+    expect(component.state().fpl_per_ends_at).toEqual(41);
+  });
+
+  it("has no error when the FPL error start smaller than the FPL error end", () => {
+    expect(component.state().fpl_error_percent).toEqual(false);
+  });
 });
