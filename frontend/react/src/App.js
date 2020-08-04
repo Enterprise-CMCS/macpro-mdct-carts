@@ -1,23 +1,29 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import Routes from "./reactRouter";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import Home from "./Home";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 
-function App() {
-  let VisibleHeader =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Header />;
+const CALLBACK_PATH = '/implicit/callback';
 
-  let VisibleFooter =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
+const config = {
+  clientId: '0oaokz2apFWZl91724x6',
+  issuer: 'https://astrolabe.okta.com/oauth2/default',
+  redirectUri: 'http://localhost:81/implicit/callback',
+  scopes: ['openid', 'profile', 'email'],
+  pkce: true
+};
+
+const App = () => { 
   return (
-    <div className="App" data-test="component-app">
-      {VisibleHeader}
-      <Routes />
-      {VisibleFooter}
-    </div>
+    <Router>
+      <Security {...config}>
+        <Route path="/" exact component={Home} />
+        <Route path="/implicit/callback" component={LoginCallback} />
+      </Security>
+    </Router>
   );
-}
+};
 
 export default App;
