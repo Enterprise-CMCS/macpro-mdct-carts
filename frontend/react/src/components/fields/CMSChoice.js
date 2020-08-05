@@ -6,9 +6,11 @@ class CMSChoice extends Component {
   constructor(props) {
     super(props);
 
+    // Bind functions for use throughout controller
     this.sendData = this.sendData.bind(this);
   }
 
+  // Send event information back to parent component
   sendData = (evt) => {
     this.props.onChange([evt.target.name, evt.target.value]);
   };
@@ -34,13 +36,14 @@ class CMSChoice extends Component {
             ? this.props.valueFromParent
             : this.props.answer;
 
+          // Add fields to render array based on type (from api)
           switch (item.type) {
             case "text_long":
-              // Add to field to render array
-
+              // Check if question (toMatch) matches the currently selected option (parent)
               if (
                 parentValue === item.context_data.conditional_display.toMatch
               ) {
+                // Add to field to render array
                 fields.push(
                   <>
                     <textarea
@@ -64,10 +67,11 @@ class CMSChoice extends Component {
                 const isCheckedChild =
                   key[1] === item.answer.entry ? "checked" : null;
 
-                // Add field to render array
+                // Check if question (toMatch) matches the currently selected option (parent)
                 if (
                   parentValue === item.context_data.conditional_display.toMatch
                 ) {
+                  // Add field to render array
                   return fields.push(
                     <>
                       {index === 0 ? (
@@ -90,17 +94,21 @@ class CMSChoice extends Component {
               });
               break;
             case "ranges":
-              // Add field to render array
+              // Check if question (toMatch) matches the currently selected option (parent)
+
               if (
                 parentValue === item.context_data.conditional_display.toMatch
               ) {
+                // Add field to render array
                 return fields.push(<FPL label={item.label} />);
               }
               break;
             case "money":
+              // Check if question (toMatch) matches the currently selected option (parent)
               if (
                 parentValue === item.context_data.conditional_display.toMatch
               ) {
+                // Add field to render array
                 fields.push(
                   <>
                     <TextField
