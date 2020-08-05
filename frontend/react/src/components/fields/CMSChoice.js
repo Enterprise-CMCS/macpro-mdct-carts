@@ -57,6 +57,7 @@ class CMSChoice extends Component {
 
               break;
             case "radio":
+            case "checkbox":
               // Loop through available answers object
               Object.entries(item.answer.options).map((key, index) => {
                 // If entry matches current answer, mark as checked
@@ -78,7 +79,7 @@ class CMSChoice extends Component {
                         className="fpl-input"
                         name={item.id}
                         value={key[1]}
-                        type="radio"
+                        type={this.props.type}
                         checked={isCheckedChild}
                       >
                         {key[0]}
