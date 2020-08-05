@@ -5,7 +5,7 @@ import stateUser from "./stateUser";
 import global from "./globalVariables";
 
 // Consolidate reducers
-const reducer = combineReducers({ stateUser, global });
+export const reducer = combineReducers({ stateUser, global });
 
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware];

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Footer extends Component {
   render() {
     return (
-      <div className="footer">
+      <div className="footer" data-test="component-footer">
         <div className="adverts">
           <div className="ds-l-container">
             <div className="ds-l-row">
@@ -36,7 +36,12 @@ class Footer extends Component {
             <div className="ds-l-row">
               <div className="help ds-l-col--6">
                 Email{" "}
-                <a href="mailto:cartshelp@cms.hhs.gov">CARTSHELP@cms.hhs.gov</a>{" "}
+                <a
+                  data-test="attribute-email"
+                  href="mailto:cartshelp@cms.hhs.gov"
+                >
+                  CARTSHELP@cms.hhs.gov
+                </a>{" "}
                 for help or feedback.
               </div>
               <div className="address ds-l-col--6">

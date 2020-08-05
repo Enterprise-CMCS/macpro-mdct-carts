@@ -7,8 +7,9 @@ class TOC extends Component {
     let paths = window.location.pathname.split("/");
 
     return (
-      <div className="toc">
+      <div className="toc" data-test="component-TOC">
         <VerticalNav
+          data-test="component-TOC-arr"
           selectedId="toc"
           items={[
             {

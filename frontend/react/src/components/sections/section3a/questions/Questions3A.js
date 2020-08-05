@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { TextField, ChoiceList } from "@cmsgov/design-system-core";
+import { TextField, Choice } from "@cmsgov/design-system-core";
 import {
     Accordion,
     AccordionItem,
@@ -157,41 +157,38 @@ class Questions3A extends Component {
                       <legend className="ds-c-label">
                           1.	Have you changed your outreach methods in the last federal fiscal year?
                       </legend>
-
-                      <ChoiceList
-                        choices={[
-                          {
-                            label: "Yes",
-                            value: "yes",
-                            disabled: this.state.previousYear === "true" ? true : false,
-                            defaultChecked:  this.state.p1_q1 ==="yes" ? true : false
-                          },
-                          {
-                            label: "No",
-                            value: "no",
-                            disabled: this.state.previousYear === "true" ? true : false,
-                            defaultChecked:  this.state.p1_q1 === "no" ? true : false
-                          },
-                        ]}
-                        className="p1_q1"
-                        label=""
-                        name="p1_q1"
-                        value={this.state.p1_q1}
-                        onChange={this.setConditional}
+                      <Choice 
+                      name="p1_q1" 
+                      type="radio" 
+                      value="yes"
+                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q1 === "yes" ? true : false) : false}
+                      onChange={this.setConditional}
+                      checkedChildren={
+                        <div className="ds-c-choice__checkedChild">{
                         
-                      />
+                          <TextField
+                            label="a) What are you doing differently?"
+                            multiline
+                            name="p1_q1__a"
+                            value={this.state.p1_q1__a}
+                            onChange={this.changeText}
+                          />
+                            }
+                        </div>
+                        }
+                      >
+                        Yes
+                      </Choice>
+                      <Choice 
+                      name="p1_q1" 
+                      type="radio" 
+                      value="yes"
+                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q1 === "no" ? true : false) : false}
+                      onChange={this.setConditional}
+                      >
+                        No
+                      </Choice>
                     </fieldset>
-                    {this.state.p1_q1 === "yes" ? (
-                      <div className="conditional">
-                        <TextField
-                          label="a) What are you doing differently?"
-                          multiline
-                          name="p1_q1__a"
-                          value={this.state.p1_q1__a}
-                          onChange={this.changeText}
-                        />
-                      </div>
-                    ) : null}
                   </div>
                 </div>
                 <div className="question-container">
@@ -209,32 +206,17 @@ class Questions3A extends Component {
                       >
                           2. Are you targeting specific populations in your outreach efforts?
                       </legend>
-                      <ChoiceList
-                        choices={[
-                          {
-                            label: "Yes",
-                            value: "yes",
-                            disabled: this.state.previousYear === "true" ? true : false,
-                            defaultChecked:  this.state.p1_q2 ==="yes" ? true : false
-                          },
-                          {
-                            label: "No",
-                            value: "no",
-                            disabled: this.state.previousYear === "true" ? true : false,
-                            defaultChecked:  this.state.p1_q2 ==="no" ? true : false
-                          },
-                        ]}
-                        className="p1_q2"
-                        label=""
-                        name="p1_q2"
-                        value={this.state.p1_q2}
-                        onChange={this.setConditional}
-                        hint={"For example: minorities, immigrants, or children living in rural areas."}
-                      />
-                    </fieldset>
-                    {this.state.p1_q2 === "yes" ? (
-                      <div className="conditional">
-                        <TextField
+                      <Choice 
+                      name="p1_q2" 
+                      type="radio" 
+                      value="yes"
+                      hint={"For example: minorities, immigrants, or children living in rural areas."}
+                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2 === "yes" ? true : false) : false}
+                      onChange={this.setConditional}
+                      checkedChildren={
+                        <div className="ds-c-choice__checkedChild">{
+                        
+                          <TextField
                           label="a) Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?"
                           multiline
                           name="p1_q2__a"
@@ -242,11 +224,22 @@ class Questions3A extends Component {
                           value={this.state.p1_q2__a}
                           onChange={this.changeText}
                         />
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                   
+                            }
+                        </div>
+                        }
+                      >
+                        Yes
+                      </Choice>
+                      <Choice 
+                      name="p1_q2" 
+                      type="radio" 
+                      value="yes"
+                      defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q2 === "no" ? true : false) : false}
+                      onChange={this.setConditional}
+                      >
+                        No
+                      </Choice>
+                    </fieldset>                   
                   </div>
                 </div>
                 <div className="question-container">

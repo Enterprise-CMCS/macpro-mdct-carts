@@ -27,7 +27,7 @@ class Header extends Component {
 
   render() {
     return (
-      <div className="header">
+      <div className="header" data-test="component-header">
         <div className="ds-l-container">
           <div className="ds-l-row header-row">
             <div className="site-title ds-l-col--6 ds-u-padding--2">
@@ -43,6 +43,7 @@ class Header extends Component {
                         href="#menu"
                         className="nav--dropdown__trigger"
                         onClick={this.toggleUserNav}
+                        data-test="component-header-username"
                       >
                         {this.props.currentUser.username}
                       </a>

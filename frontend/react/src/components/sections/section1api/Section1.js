@@ -1,38 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Questions from "./questions/Questions1";
+import Questions from "./questions/Questions1api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
+import Data from "./backend-json-section-1.json";
+
 import {
   Button as button,
+  ChoiceList,
   Tabs,
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
 
 class Section1 extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pageTitle: "Section 1: Program Fees and Policy Changes",
-    };
-  }
-
   render() {
     return (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="print-only">
-            <h3>{this.state.pageTitle}</h3>
+            <h3>{Data.section.title}</h3>
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={this.state.pageTitle}>
+              <TabPanel id="tab-form" tab={Data.section.title}>
                 <Questions previousEntry="false" />
                 <FormNavigation
                   nextUrl="/section2/2a"
@@ -46,7 +41,7 @@ class Section1 extends Component {
               >
                 <div className="print-only ly_header">
                   <PageInfo />
-                  <h3>{this.state.pageTitle}</h3>
+                  <h3>{Data.section.title}</h3>
                 </div>
                 <div disabled>
                   <Questions previousEntry="true" />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import { Tabs, TabPanel } from "@cmsgov/design-system-core";
-import { ChoiceList, TextField } from "@cmsgov/design-system-core";
+import { Choice, TextField } from "@cmsgov/design-system-core";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
@@ -507,36 +507,37 @@ class Section2a extends Component {
                           your state?
                         </div>
                         <div id="p2_q2">
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                              },
-                              {
-                                label: "No",
-                                value: "no",
-                              },
-                            ]}
-                            className="p2_q2"
-                            label=""
-                            name="p2_q2"
-                            onChange={this.setConditional}
-                          />
-                          {this.state.p2_q2 === "yes" ? (
-                            <div className="conditional">
+                          <Choice 
+                          name="p2_q2" 
+                          type="radio" 
+                          value="yes"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2 === "yes" ? true : false) : false}
+                          onChange={this.setConditional}
+                          checkedChildren={
+                            <div className="ds-c-choice__checkedChild">{
                               <TextField
-                                label="a) What are some reasons why the American Community Survey estimates might not be accurate?"
-                                multiline
-                                name="p2_q2__a"
-                                rows="6"
-                                value={this.state.p2_q2__a}
-                                onChange={this.handleChange}
+                              label="a) What are some reasons why the American Community Survey estimates might not be accurate?"
+                              multiline
+                              name="p2_q2__a"
+                              rows="6"
+                              value={this.state.p2_q2__a}
+                              onChange={this.handleChange}
                               />
+                            }
                             </div>
-                          ) : (
-                            ""
-                          )}
+                            }
+                          >
+                            Yes
+                          </Choice>
+                          <Choice 
+                          name="p2_q2" 
+                          type="radio" 
+                          value="no"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q2 === "no" ? true : false) : false}
+                          onChange={this.setConditional}
+                          >
+                            No
+                          </Choice>
                         </div>
                       </div>
 
@@ -547,93 +548,93 @@ class Section2a extends Component {
                           uninsured children in your state?
                         </div>
                         <div id="p2_q3">
-                          <ChoiceList
-                            choices={[
-                              {
-                                label: "Yes",
-                                value: "yes",
-                              },
-                              {
-                                label: "No",
-                                value: "no",
-                              },
-                            ]}
-                            className="p2_q3"
-                            label=""
-                            name="p2_q3"
-                            onChange={this.setConditional}
-                          />
-                          {this.state.p2_q3 === "yes" ? (
-                            <div className="conditional">
-                              <TextField
-                                label="a) What is the alternate data source or methodology?"
-                                multiline
-                                name="p2_q3__a"
-                                rows="6"
-                                value={this.state.p2_q3__a}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                hint="(from mm/yyyy to mm/yyyy)"
-                                label="b) Give a date range for your data"
-                                multiline
-                                name="p2_q3__b"
-                                rows="1"
-                                value={this.state.p2_q3__b}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="c) Define the population you’re measuring, including ages and federal poverty levels. "
-                                multiline
-                                name="p2_q3__c"
-                                rows="6"
-                                value={this.state.p2_q3__c}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="d) Give numbers and/or the percent of uninsured children for at least two points in time."
-                                multiline
-                                name="p2_q3__d"
-                                rows="6"
-                                value={this.state.p2_q3__d}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="e) Why did your state choose to adopt this alternate data source?"
-                                multiline
-                                name="p2_q3__e"
-                                rows="6"
-                                value={this.state.p2_q3__e}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="f) How reliable are these estimates? Provide standard errors, confidence intervals, and/or p-values if available."
-                                multiline
-                                name="p2_q3__f"
-                                rows="6"
-                                value={this.state.p2_q3__f}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="g) What are the limitations of this alternate data source or methodology?"
-                                multiline
-                                name="p2_q3__g"
-                                rows="6"
-                                value={this.state.p2_q3__g}
-                                onChange={this.handleChange}
-                              />
-                              <TextField
-                                label="h) How do you use this alternate data source in CHIP program planning?"
-                                multiline
-                                name="p2_q3__h"
-                                rows="6"
-                                value={this.state.p2_q3__h}
-                                onChange={this.handleChange}
-                              />
+                        <Choice 
+                          name="p2_q3" 
+                          type="radio" 
+                          value="yes"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q3 === "yes" ? true : false) : false}
+                          onChange={this.setConditional}
+                          checkedChildren={
+                            <div className="ds-c-choice__checkedChild">
+                                <TextField
+                                  label="a) What is the alternate data source or methodology?"
+                                  multiline
+                                  name="p2_q3__a"
+                                  rows="6"
+                                  value={this.state.p2_q3__a}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  hint="(from mm/yyyy to mm/yyyy)"
+                                  label="b) Give a date range for your data"
+                                  multiline
+                                  name="p2_q3__b"
+                                  rows="1"
+                                  value={this.state.p2_q3__b}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  label="c) Define the population you’re measuring, including ages and federal poverty levels. "
+                                  multiline
+                                  name="p2_q3__c"
+                                  rows="6"
+                                  value={this.state.p2_q3__c}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  label="d) Give numbers and/or the percent of uninsured children for at least two points in time."
+                                  multiline
+                                  name="p2_q3__d"
+                                  rows="6"
+                                  value={this.state.p2_q3__d}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  label="e) Why did your state choose to adopt this alternate data source?"
+                                  multiline
+                                  name="p2_q3__e"
+                                  rows="6"
+                                  value={this.state.p2_q3__e}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  label="f) How reliable are these estimates? Provide standard errors, confidence intervals, and/or p-values if available."
+                                  multiline
+                                  name="p2_q3__f"
+                                  rows="6"
+                                  value={this.state.p2_q3__f}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  label="g) What are the limitations of this alternate data source or methodology?"
+                                  multiline
+                                  name="p2_q3__g"
+                                  rows="6"
+                                  value={this.state.p2_q3__g}
+                                  onChange={this.handleChange}
+                                />
+                                <TextField
+                                  label="h) How do you use this alternate data source in CHIP program planning?"
+                                  multiline
+                                  name="p2_q3__h"
+                                  rows="6"
+                                  value={this.state.p2_q3__h}
+                                  onChange={this.handleChange}
+                                />
                             </div>
-                          ) : (
-                            ""
-                          )}
+                          }
+                          >
+                            Yes
+                          </Choice>
+                          <Choice 
+                          name="p2_q3" 
+                          type="radio" 
+                          value="no"
+                          defaultChecked={this.props.previousEntry === "true" ? (this.state.ly_p2_q3 === "no" ? true : false) : false}
+                          onChange={this.setConditional}
+                          >
+                            No
+                          </Choice>
                         </div>
                       </div>
 

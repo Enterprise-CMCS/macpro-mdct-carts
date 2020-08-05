@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system-core";
+import PropTypes from "prop-types";
 
 class DateRange extends Component {
   constructor(props) {
@@ -146,7 +147,7 @@ class DateRange extends Component {
   render() {
     return (
       <Fragment>
-        <div className="date-range">
+        <div className="date-range" data-test="component-date-range">
           <div className="errors">
             {" "}
             {this.state.endRangeErr === true ? (
@@ -166,8 +167,10 @@ class DateRange extends Component {
             <div className="date-range-start-wrapper">
               <TextField
                 className="ds-c-field--small"
+                data-test="component-daterange-monthstart"
                 name="monthStart"
                 numeric
+                label={""}
                 inputRef={(monthStart) => (this.monthStart = monthStart)}
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
@@ -182,6 +185,7 @@ class DateRange extends Component {
                 className="ds-c-field--small"
                 inputRef={(yearStart) => (this.yearStart = yearStart)}
                 name="yearStart"
+                label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
                 numeric
@@ -211,6 +215,7 @@ class DateRange extends Component {
                 inputRef={(monthEnd) => (this.monthEnd = monthEnd)}
                 name="monthEnd"
                 numeric
+                label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 value={
@@ -225,6 +230,7 @@ class DateRange extends Component {
                 className="ds-c-field--small"
                 inputRef={(yearEnd) => (this.yearEnd = yearEnd)}
                 name="yearEnd"
+                label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 numeric
@@ -241,6 +247,10 @@ class DateRange extends Component {
     );
   }
 }
+
+DateRange.propTypes = {
+  previousEntry: PropTypes.bool,
+};
 
 const mapStateToProps = (state) => ({
   year: state.stateUser.formYear,
