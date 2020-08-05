@@ -98,7 +98,7 @@ pipeline {
     }
     stage("Deploy Data Layer") {
       when {
-        expression { env.DEPLOY == "false"}
+        expression { env.DEPLOY == "true"}
       }
       steps {
         script {
