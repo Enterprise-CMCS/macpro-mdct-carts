@@ -17,7 +17,7 @@
             "id": "2020-02-a-01",
             "type": "part",
             "title": "Number of Children Enrolled in CHIP",
-            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  \u201cUnduplicated Number Ever Enrolled\u201d in your fourth quarter SEDS report) and refresh the page. There may be a slight delay when updating data.",
+            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  \u201cUnduplicated Number Ever Enrolled\u201d in your fourth quarter SEDS report) and refresh the page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
             "questions": [
               {
                 "type": "fieldset",
