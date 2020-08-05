@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
+import CMSLegend from "../fields/CMSLegend";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class CMSChoice extends Component {
                 // Add to field to render array
                 fields.push(
                   <>
+                    <CMSLegend label={item.label} id={item.id} />
                     <textarea
                       class="ds-c-field"
                       name={item.id}
@@ -75,7 +77,7 @@ class CMSChoice extends Component {
                   return fields.push(
                     <>
                       {index === 0 ? (
-                        <legend className="ds-c-label">{item.label}</legend>
+                        <CMSLegend label={item.label} id={item.id} />
                       ) : null}
                       {/* Output only matching answers */}
 
@@ -100,7 +102,12 @@ class CMSChoice extends Component {
                 parentValue === item.context_data.conditional_display.toMatch
               ) {
                 // Add field to render array
-                return fields.push(<FPL label={item.label} />);
+                return fields.push(
+                  <>
+                    <CMSLegend label={item.label} id={item.id} />
+                    <FPL />
+                  </>
+                );
               }
               break;
             case "money":
@@ -111,9 +118,10 @@ class CMSChoice extends Component {
                 // Add field to render array
                 fields.push(
                   <>
+                    <CMSLegend label={item.label} id={item.id} />
                     <TextField
                       className="fpl-input"
-                      label={item.label}
+                      // label={item.label}
                       inputMode="currency"
                       mask="currency"
                       pattern="[0-9]*"
