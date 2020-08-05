@@ -77,7 +77,7 @@ pipeline {
     }
     stage("Scan Images") {
       when {
-        expression { env.DEPLOY == "false"}
+        expression { env.DEPLOY == "true"}
       }
       steps {
         script {
