@@ -4,6 +4,7 @@ import FPL from "../../../layout/FPL";
 import Data from "./../backend-json-section-1.json";
 import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
 import CMSChoice from "../../../fields/CMSChoice";
+import CMSLegend from "../../../fields/CMSLegend";
 
 class Questions1 extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class Questions1 extends Component {
                   part.questions.map((question) => (
                     <div className="question">
                       <fieldset className="ds-c-fieldset">
-                        {question.label}
+                        <CMSLegend label={question.label} id={question.id} />
 
                         {question.type === "radio" ||
                         question.type === "checkbox"
