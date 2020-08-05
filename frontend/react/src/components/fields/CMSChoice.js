@@ -130,7 +130,9 @@ class CMSChoice extends Component {
           type={this.props.type}
           checked={isChecked}
           checkedChildren={
-            <div className="ds-c-choice__checkedChild">{fields}</div>
+            fields.length > 0 ? (
+              <div className="ds-c-choice__checkedChild">{fields}</div>
+            ) : null
           }
           onChange={this.sendData}
         >
