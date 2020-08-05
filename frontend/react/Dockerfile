@@ -40,7 +40,7 @@ RUN aws s3 cp /app/build s3://carts-ui-cloudfrontorigin --recursive
 #RUN aws s3 cp /app/build s3://cartsUi-cloudfront-origin --recursive
 
 
-CMD ["s3", "sync", "./", "s3://cartsUi-cloudfront-origin"]
+CMD ["s3", "sync", "./", "s3://cartsui-cloudfront-origin"]
 
 # ==============================================================================
 # => Run container
