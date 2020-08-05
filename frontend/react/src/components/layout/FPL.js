@@ -58,7 +58,7 @@ class FPL extends Component {
 
   render() {
     return (
-      <div className="fpl">
+      <div className="fpl" data-test="component-FPL">
         <h3>Premium fee</h3>
         {/* <div className="ds-c-field__hint">Hint Text!</div> */}
         <div className="fpl-outer ds-l-container">
