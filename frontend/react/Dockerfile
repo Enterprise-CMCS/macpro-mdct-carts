@@ -37,7 +37,7 @@ RUN npm run build
 
 RUN aws s3 cp /app/build s3://carts-ui-cloudfrontorigin --recursive
 
-
+RUN aws s3 cp /app/build s3://cartsUi-cloudfront-origin --recursive
 
 
 
@@ -51,14 +51,6 @@ RUN aws s3 cp /app/build s3://carts-ui-cloudfrontorigin --recursive
 
 # Copy static build from the builder container
 ##COPY --from=builder /app/build /usr/share/nginx/html/
-
-
-#RUN apt-get update -y && \
-#             apt-get upgrade -y && \
-#             apt-get -y install zip curl
-
-
-
 
 
 
