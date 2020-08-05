@@ -21,7 +21,7 @@ export const checkProps = (component, conformingProps) => {
     "prop",
     component.name
   );
-  expect(propError).toBeUndefined();
+  return expect(propError).toBeUndefined();
 };
 
 export const mockInitialState = {

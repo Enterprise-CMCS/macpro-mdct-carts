@@ -19,7 +19,7 @@ class Section1 extends Component {
 
     this.state = {
       pageTitle: "Section 1: Program Fees and Policy Changes",
-    }
+    };
   }
 
   render() {
@@ -32,13 +32,8 @@ class Section1 extends Component {
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel 
-                id="tab-form" 
-                tab={this.state.pageTitle}
-              >
-                <Questions
-                  previousEntry="false"
-                />
+              <TabPanel id="tab-form" tab={this.state.pageTitle}>
+                <Questions previousEntry="false" />
                 <FormNavigation
                   nextUrl="/section2/2a"
                   previousUrl="/basic-info"
@@ -54,9 +49,7 @@ class Section1 extends Component {
                   <h3>{this.state.pageTitle}</h3>
                 </div>
                 <div disabled>
-                  <Questions
-                    previousEntry="true"
-                  />
+                  <Questions previousEntry="true" />
                 </div>
               </TabPanel>
             </Tabs>

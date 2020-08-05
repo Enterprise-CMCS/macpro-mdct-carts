@@ -7,15 +7,27 @@ JSON Structure Documentation
 
 Overview
 --------
-In order to support both a reasonable structured storage approach to the CARTS questions and their answers, and a component-based frontend that will allow changes to be made in configuration rather that code (up to a point), we will use a JSON document approach. To do this, we need to have structures to represent the various elements of the CARTS form.
+In order to support both a reasonable structured storage approach to the CARTS questions and their answers, and a component-based frontend that will allow changes to be made in configuration rather than code (up to a point), we use a JSON document approach. To do this, we need to have structures to represent the various elements of the CARTS form.
 
-Most of these are relatively simple and are primarily containers, such as ``section``, ``subsection``, and ``part``. We also need JSON constructs to represent the questions themselves. The ``question`` construct is used for these, and has different characteristics based on its type.
+The purpose of this structure is not to mimic the structure of the online form, but to contain the information needed to create and populate that form and also to create and populate a report document.
+
+The form is hierarchical::
+
+    Section
+        Subsection
+            Part
+                Question
+                    Subquestion
+
+However, a variety of special cases make the hierarchy less straightforward (in particular, ``goals`` and ``objectives``).
+
+The ``fieldset`` construct is not quite analogous to the HTML element with the same name; in most cases they go together, but not always. See `Fieldsets`_ for more information.
 
 The conditional logic of various parts of the CARTS form is complicated, and attempting to represent that in JSON via some sort of domain-specific language would be unwise. A system design goal is that changes to text, reordering the questions, deleting questions, or adding new questions (that don't alter the conditional logic, at least) should be all be possible via altering the data in the backend, and this approach should achieve that. Changes to the conditional logic, however, will continue to require software development changes.
 
 The conditional logic for questions with difficult logic is therefore described in plain language in the backend data, but these descriptions are not intended to be machine-readable.
 
-The conditional logic for the simple logic is under development.
+The conditional logic for the simple logic is described in `Conditional display`_.
 
 In addition, the logic for how `objectives`_ work in Section 2B work is described below, and no attempt is made to store that logic within the data for the system.
 
@@ -97,10 +109,9 @@ If a part's ``id`` is 2020-05-e-01, the first child question of that part would 
 
 Not yet covered
 +++++++++++++++
-+   How questions should be flagged as providing the user the option of seeing the prior year's data. (This will probably be a boolean property of the question, but that's not yet final.)
 +   File upload.
 
-Special Requirements
+Special requirements
 ++++++++++++++++++++
 Section 1
     This section's parts 3 and 4 contain an identical long list of questions, all with yes/no answers. The JSON for these is the only place where ``bullet_text`` is used. The last question in each of the parts is displayed if any of questions 1–19 in that part were answered with ``yes``, in which case the last question is displayed and the ``bullet_text`` value for each of the questions with a ``yes`` answer is displayed somewhere nearby (depends on the design).
@@ -108,6 +119,8 @@ Section 2A
     This section starts with two tables, both of which are filled with data from other sources. This data will be entered into the JSON, but will not be editable by states. Each of the tables is followed by a question whose display is conditional upon values in the table. This all requires custom code.
 Section 2B
     See `objectives`_ below.
+Section 3C
+    A tablehouse of horrors whose structure and content is still under review.
 Section 3D
     All of the rest of the questions after 1 should be hidden if the answer to 1 is no; this looks like it can be handled via the supported conditional logic. However, in addition, question 8 should only be displayed if the answer to Section 1 Part 3 Question 8 (``2020-01-a-03-08``) or Section 1 Part 4 Question 8 (``2020-01-a-04-08``) is yes. That will require custom frontend code.
 Section 3E
@@ -239,7 +252,7 @@ A property that contains data about whether and/or how the segment should be dis
 
     Present and ``true`` if the UI is supposed to display data from the prior year as an aid to data entry.
 ``conditional_display`` (optional)
-    Extremely limited logic mini-schema to control display of questions. See `Conditional Display`_ below.
+    Extremely limited logic mini-schema to control display of questions. See `Conditional display`_ below.
 ``interactive_conditional`` (optional)
     String.
 
@@ -257,9 +270,9 @@ A property that contains data about whether and/or how the segment should be dis
 
     The only valid values here are:
     
-    +   Medicaid expansion CHIP
-    +   Separate CHIP
-    +   Combo
+    +   ``medicaid_exp_chip``
+    +   ``separate_chip``
+    +   ``combo``
 
     The part is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
 ``skip_text`` (optional)
@@ -277,9 +290,9 @@ Questions can contain other questions, so questions have either questions or par
 ``id``
     String.
 
-    ``year``-``section``-``subsection``-``ordinal``-``question-and-descendants``.
+    ``year``-``section``-``subsection``-``part``-``question-and-descendants``.
 
-    For example, Section 1 Part 1 Subsection 1 Question 1 for 2020 has the id ``2020-01-a-01-01``, Section 1 Part 1 Question 1a for 2020 has the id ``2020-01-a-01-01-a``.
+    For example, Section 1 Subsection 1 Part 1 Question 1 for 2020 has the id ``2020-01-a-01-01``, Section 1 Subsection 1 Part 1 Question 1a for 2020 has the id ``2020-01-a-01-01-a``.
 ``type``
     String.
 
@@ -320,7 +333,7 @@ Answers are contained by questions, which in this case is a technical descriptio
 
     In rare cases we want to prepopulate the value of the user's answer. This is not the same as a hint, as this value will be sent to the database as if it had been entered by the user. We think we want this field to allow us to distinguish between sections that have been accessed by the user and those that haven't, but it's possible that this property is unnecessary.
 
-Conditional Display
+Conditional display
 -------------------
 This is about per-question display, and not about the per-part display related to whether a state's program is separate CHIP, Medicaid expansion CHIP, or combo; see ``show_if_state_program_type_in`` in `Part`_ for that functionality.
 
@@ -385,31 +398,33 @@ To express the logic described above, the sub-question has this ``conditional_di
 
 .. _JSON Path: https://goessner.net/articles/JsonPath/
 
-Question Types
+Question types
 --------------
 This section describes the characteristics and properties (in addition to those described in the Answer section) of answer constructs of a given question type that are specific to that type of question.
 
-``fieldset``
-++++++++++++
-Essentially a container for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions. Fieldsets do not have ``id`` properties, and the questions within them increment as if the fieldset container were not present.
+Fieldsets
++++++++++
+Fieldsets serve two basic functions as constructs in the JSON:
+    +   As containers for multiple questions, with text that applies to all the questions in the fieldset rather than to particular questions.
+    +   As ways of handling special cases, normally one that involve grouping questions together or presenting data in ways other than the typical question-answer approach.
 
-The purpose of a fieldset, more or less, is to be a container around questions that doesn't itself necessarily imply a deeper nesting level for the questions, and in some cases there's no display effect of a fieldset. Fieldsets also do not imply subquestions or a restart to question numbering.
 
-This is an example structure:
+Fieldsets are not meant to alter the hierarchy of the document. For example, the following questions are all at the same level::
 
     Question 1
-        (Question details here.)
     Question 2
-        (Question details here.)
+    Question 3
+    Question 4
+
+If the middle two questions were inside a fieldset, they are still at the same level, and do not switch to using letters::
+
+    Question 1
     Fieldset
+        Question 2
         Question 3
-            (Question details here.)
-        Question 4
-            (Question details here.)
+    Question 4
 
-The questions are presented to the user as if they're all on the same level and the same list.
-
-This doesn't necessarily apply to all types of fieldsets, some of which do alter the display of questions within them.
+Fieldsets do not have ``id`` properties, and the questions within them increment their ``id`` properties as if the fieldset container were not present.
 
 ``fieldset_type`` (optional)
     String.
@@ -418,18 +433,194 @@ This doesn't necessarily apply to all types of fieldsets, some of which do alter
 ``fieldset_info`` (options)
     Object.
 
-    Some fieldset types require additional info, which is stored here.
+    Some fieldset types require additional info, which is stored here. Other than having to be in an object, the structure of this value is not constrained.
 ``show_if_state_program_type_in`` (optional)
     Array of program categories.
 
     The only valid values here are:
     
-    +   Medicaid expansion CHIP
-    +   Separate CHIP
-    +   Combo
+    +   ``medicaid_exp_chip``
+    +   ``separate_chip``
+    +   ``combo``
 
     The fieldset is only displayed if the state program is one of the listed categories. Otherwise, the content of ``skip_text`` is displayed. Listing all three values in the array is equivalent to omitting the property (that is, the part will be shown in all cases).
-    
+
+Special ``fieldset`` types
+**************************
+``percentage``
+##############
+This displays a percentage field as an aid to the user, calculating it from two fields other fields. Those other fields are specified in the ``fieldset_info`` object.
+
+The percentage value would be displayed at the end of wherever the fieldset is in the hierarchy, and isn't necessarily dependent on the locations of the target questions in the hierarchy.
+
+The ``fieldset_info`` object for ``percentage`` has two properties, ``numerator`` and ``denominator``, each of which contains a string that is a JSON Path expression of the target. For example:
+
+..  code:: json
+
+
+      {
+        "type": "fieldset",
+        "label": "Define the numerator you're measuring",
+        "questions": [
+          {
+            "id": "2020-02-b-01-01-01-03",
+            "label": "Which population are you measuring in the numerator?",
+            "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
+            "type": "integer",
+            "answer": { "entry": null }
+          },
+          {
+            "id": "2020-02-b-01-01-01-04",
+            "label": "Numerator (total number)",
+            "type": "integer",
+            "answer": { "entry": null }
+          }
+        ]
+      },
+      {
+        "type": "fieldset",
+        "label": "Define the denominator you're measuring",
+        "questions": [
+          {
+            "id": "2020-02-b-01-01-01-05",
+            "label": "Which population are you measuring in the denominator?",
+            "hint": "For example: The total number of eligible children in the last federal fiscal year.",
+            "type": "integer",
+            "answer": { "entry": null }
+          },
+          {
+            "id": "2020-02-b-01-01-01-06",
+            "label": "Denominator (total number)",
+            "type": "integer",
+            "answer": { "entry": null }
+          }
+        ]
+      },
+      {
+        "type": "fieldset",
+        "fieldset_type": "percentage",
+        "fieldset_info": {
+            "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-04')].answer.entry",
+            "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-06')].answer.entry"
+        },
+        "questions": []
+      }
+
+Here the ``fieldset`` at the end would contain no questions and would indicate where in the document the percentage calculated from the targeted fields would be displayed. It still has a ``questions`` field because this is an outlier and it makes more sense to require the field for the vast majority of uses that do contain questions.
+
+..  note:: Tentative
+
+   This approach to handling ``percentage`` isn't final.
+
+``synthesized_table``
+########################
+This displays a table constructed out of values either provided by or indicated in the ``fieldset_info`` property.
+
+The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
+
+``headers`` is an array containing the values for the header row of the table. 
+
+``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
+
+Values for those arrays are objects with either a ``contents`` property or a ``target`` property.
+
+The value of the ``contents`` property can be a string, integer, or float.
+
+The value of the ``target`` property is a string representing the JSON Path of the location of the target value.
+
+An example:
+
+..  code:: json
+
+    {
+      "type": "text_long",
+      "id": "2020-01-a-01",
+      "answer": {
+        "entry": "I'm over here"
+      }
+    },
+    {
+      "type": "text_long",
+      "id": "2020-01-a-02",
+      "answer": {
+        "entry": "And I'm over here"
+      }
+    },
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_table",
+      "fieldset_info": {
+        "headers": [{"contents": "Contents"}, {"contents": "Targets"}],
+        "rows": [
+          [{"contents": "From the server"}, {"target": "$..*[?(@.id=='2020-01-a-01')].answer.entry"}],
+          [{"contents": "Also from the server"}, {"target": "$..*[?(@.id=='2020-01-a-02')].answer.entry"}],
+        ]
+      },
+      "questions": []
+    }
+
+This would produce something like:
+
+    ====================  =================
+    Contents              Targets
+    ====================  =================
+    From the server       I'm over here
+    Also from the server  And I'm over here
+    ====================  =================
+
+
+``noninteractive_table``
+########################
+This displays a non-interactive table out of values provided.
+
+This is essentially a simplification of ``synthesized_table`` where there are no values dependent on form elements and so the contents can be passed to the array as primitives rather than being in the ``contents`` property of an object.
+
+The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
+
+``headers`` is an array containing the values for the header row of the table. 
+
+``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
+
+Values for those arrays can be strings, integers, or floats.
+
+An example:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "noninteractive_table",
+      "fieldset_info": {
+        "headers": ["Ones", "Twos", "Threes", "Fours"],
+        "rows": [
+          [1, 2, 3, 4],
+          [11, 22, 33, 44],
+          ["1 1 1", "2 2 2", "3 3 3", "4 4 4"],
+          [1111, 2222, 3333, 5555]
+        ]
+      },
+      "questions": [
+        {
+          "id": "2020-02-a-01",
+          "label": "How does this table make you feel?",
+          "type": "text_long",
+          "answer": {"entry": null}
+        }
+      ]
+    }
+
+This would produce something like:
+
+    =====  =====  ======  =====
+    Ones   Twos   Threes  Fours
+    =====  =====  ======  =====
+    1      2      3       4
+    11     22     33      44
+    1 1 1  2 2 2  3 3 3   4 4 4
+    1111   2222   3333    5555
+    =====  =====  ======  =====
+
+    How does this table make you feel?
 
 ``text_long``
 +++++++++++++
@@ -577,11 +768,15 @@ The API JSON representation of the first goal in the first objective is the temp
 
 When creating new goals and/or objectives, the frontend must
 
++   Copy the last item in the corresponding array of objectives or goals.
 +   Set all ``entry`` properties at all levels of the new construct to be empty.
-+   For new objectives, delete all but the first goal in the new construct.
++   For new objectives:
+    +   Delete all but the first goal in the new construct.
+    +   For the first question, in addition to setting ``answer.entry`` to ``null``, delete the ``answer.readonly`` and ``default_entry`` properties.
+
 +   Set the ``id`` properties at all levels of the new construct to the appropriate values.
 
-    For example, the ``objectives`` question in Section 2B has an ``id`` of ``2020-02-b-01-01`` (year, section, subsection, part, question).
+    For example, the first ``objectives`` question in Section 2B has an ``id`` of ``2020-02-b-01-01`` (year, section, subsection, part, question).
     
     The lone (initial) direct child in its ``questions`` property has a type of ``objective``, and an ``id`` of ``2020-02-b-01-01-01`` (year, section, subsection, part, question, objective).
 
@@ -596,6 +791,42 @@ When creating new goals and/or objectives, the frontend must
     While this sounds appalling, in practice for a new goal the frontend just has to copy the previous goal and increment the ``id`` properties accordingly. So with the above example, the first goal of the first objective has the ``id`` ``2020-02-b-01-01-01-02-01``, so the frontend would replace that string in every ``id`` field in the new goal (which would be the second goal) with ``2020-02-b-01-01-01-02-02``.
 
     For a new objective, a similar approach applies: the first objective in the above example has the ``id`` ``2020-02-b-01-01-01``, so the frontend would copy it and its children, including its first goal, and then in all child ``id`` properties replace the string ``2020-02-b-01-01-01`` with the string ``2020-02-b-01-01-02`` (because this would be the second objective).
+
++   Append the new construct to the end of the appropriate array.
+
+This is one approach to the above process for adding a new objective (it assumes that the structure for Section 2 has already been parsed from JSON and is avaliable as ``sectionTwo``):
+
+..  code:: json
+
+    const jp = require('jsonpath');
+    const lastObjective = jp.query(sectionTwo, "$..*[?(@.id=='2020-02-b-01-01')].questions[-1:]"); // Get objective by referring to id of objectives item and then getting the last thing in that item's questions array.
+
+    const priorId = lastObjective[0].id; // "2020-02-b-01-01-01"
+    let deconstructedId = priorId.split("-");
+    const last = (1 + parseInt(deconstructedId.pop(), 10)).toString().padStart(2, '0');
+    deconstructedId.push(last);
+    const newId = deconstructedId.join("-"); // "2020-02-b-01-01-02"
+
+    // Convert it to string for two reasons. First reason: tn ensure we're doing a deep copy, not a shallow copy.
+    const stringifiedFirstObjective = JSON.stringify(lastObjective);
+    // Second reason: replace all references to the prior ID with the new ID
+    const stringifiedNewObjective = stringifiedFirstObjective.split(priorId).join(newId);
+
+    let newObjective = JSON.parse(stringifiedNewObjective);
+
+    // Remove the default_entry and readonly keys:
+    delete newObjective[0].questions[0].answer.readonly;
+    delete newObjective[0].questions[0].answer.default_entry;
+
+    // Set all answer.entry values to null:
+    jp.apply(newObjective, "$..*[?(@.answer.entry)].answer.entry", function (value) {
+        return null;
+    });
+
+    // Add the new objective to the questions property array for the objectives item:
+    jp.apply(sectionTwo, "$..*[?(@.id=='2020-02-b-01-01')].questions", function (value) {
+        return value.concat(newObjective);
+    });
 
 ``objective``
 +++++++++++++

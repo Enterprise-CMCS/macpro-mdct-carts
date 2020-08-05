@@ -843,68 +843,92 @@
               },
               {
                 "type": "fieldset",
-                "fieldset_type": "2d_table",
+                "label": "Coverage breakdown for children",
+                "hint": "Your answers will auto-populate the table below.",
+                "questions": [
+                  {
+                    "id": "2020-03-e-01-12",
+                    "label": "What\u2019s the average monthly contribution the state pays towards coverage of a child?",
+                    "type": "money",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-13",
+                    "label": "What\u2019s the average monthly contribution the employer pays towards coverage of a child?",
+                    "type": "money",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-14",
+                    "label": "What\u2019s the average monthly contribution the employee pays towards coverage of a child?",
+                    "type": "money",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "label": "Coverage breakdown for parents",
+                "questions": [
+                  {
+                    "id": "2020-03-e-01-15",
+                    "label": "What\u2019s the average monthly contribution the state pays towards coverage of the eligible parent?",
+                    "type": "money",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-16",
+                    "label": "What\u2019s the average monthly contribution the employer pays towards coverage of the eligible parent?",
+                    "type": "money",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-17",
+                    "label": "What\u2019s the average monthly contribution the employee pays towards coverage of the eligible parent?",
+                    "type": "money",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "label": "Table: Coverage breakdown",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "Coverage breakdown for children",
-                    "hint": "Your answers will auto-populate the table below.",
-                    "questions": [
-                      {
-                        "id": "2020-03-e-01-12",
-                        "label": "What\u2019s the average monthly contribution the state pays towards coverage of a child?",
-                        "type": "money",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2020-03-e-01-13",
-                        "label": "What\u2019s the average monthly contribution the employer pays towards coverage of a child?",
-                        "type": "money",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2020-03-e-01-14",
-                        "label": "What\u2019s the average monthly contribution the employee pays towards coverage of a child?",
-                        "type": "money",
-                        "answer": {
-                          "entry": null
-                        }
-                      }
-                    ]
+                    "fieldset_type": "synthesized_table",
+                    "label": "Child",
+                    "fieldset_info": {
+                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "rows": [
+                          [{"target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"}]
+                      ]
+                    },
+                    "questions": []
                   },
                   {
                     "type": "fieldset",
-                    "label": "Coverage breakdown for parents",
-                    "questions": [
-                      {
-                        "id": "2020-03-e-01-15",
-                        "label": "What\u2019s the average monthly contribution the state pays towards coverage of the eligible parent?",
-                        "type": "money",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2020-03-e-01-16",
-                        "label": "What\u2019s the average monthly contribution the employer pays towards coverage of the eligible parent?",
-                        "type": "money",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2020-03-e-01-17",
-                        "label": "What\u2019s the average monthly contribution the employee pays towards coverage of the eligible parent?",
-                        "type": "money",
-                        "answer": {
-                          "entry": null
-                        }
-                      }
-                    ]
+                    "fieldset_type": "synthesized_table",
+                    "label": "Parent",
+                    "fieldset_info": {
+                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "rows": [
+                          [{"target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"}]
+                      ]
+                    },
+                    "questions": []
                   }
                 ]
               },
