@@ -40,7 +40,14 @@ RUN npm run build
 # RUN aws s3 cp /app/build s3://cartsui-cloudfront-origin --recursive
 
 
-CMD ["s3", "sync", "/app/build", "s3://cartsui-cloudfront-origin"]
+COPY ../s3sync.sh /usr/local/bin/s3sync.sh
+RUN chmod +x /usr/local/bin/s3sync.sh
+CMD ["s3sync.sh"]
+
+
+
+
+#CMD ["s3", "sync", "/app/build", "s3://cartsui-cloudfront-origin"]
 
 # ==============================================================================
 # => Run container
