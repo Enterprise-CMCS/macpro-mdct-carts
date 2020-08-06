@@ -24,7 +24,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 COPY package*.json ./
 
 
-COPY ../s3sync.sh /usr/local/bin/s3sync.sh
+COPY s3sync.sh /usr/local/bin/s3sync.sh
 RUN chmod +x /usr/local/bin/s3sync.sh
 
 
