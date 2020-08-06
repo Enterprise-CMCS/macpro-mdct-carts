@@ -35,12 +35,12 @@ RUN npm run build
 #===============================================================================
 #copy static files to s3
 
-RUN aws s3 cp /app/build s3://carts-ui-cloudfrontorigin --recursive
+# RUN aws s3 cp /app/build s3://carts-ui-cloudfrontorigin --recursive
 
 # RUN aws s3 cp /app/build s3://cartsui-cloudfront-origin --recursive
 
 
-CMD ["s3", "cp", "./build", "s3://cartsui-cloudfront-origin"]
+CMD ["s3", "sync", "/app/build", "s3://cartsui-cloudfront-origin"]
 
 # ==============================================================================
 # => Run container
