@@ -19,7 +19,7 @@ The form is hierarchical::
                 Question
                     Subquestion
 
-However, a variety of special cases make the hierarchy less straightforward (in particular, ``goals`` and ``objectives``).
+However, a variety of special cases make the hierarchy less straightforward (in particular, ``repeatables`` and ``objectives``).
 
 The ``fieldset`` construct is not quite analogous to the HTML element with the same name; in most cases they go together, but not always. See `Fieldsets`_ for more information.
 
@@ -127,6 +127,8 @@ Section 3E
     This only applies to a specific subset of states, and should be skipped or shown based on information about states that will have to be handled with custom code.
 
     In addition, questions 12–17 have their answers compiled into a table for display, interaction that will be handled entirely in custom code.
+Section 3I
+    The HSI Programs here are repeatables, similar to goals in Section 2B.
 
 Section
 -------
@@ -746,9 +748,13 @@ If the user entered data stating that answer was the same as our example, i.e. e
 
 ``objectives``
 ++++++++++++++
-A particular construct specific to Section 2B.
+A particular construct specific to Section 2B. They contain repeatables, a construct specific to Section 2B and Section 3I.
 
-A number of sets of questions. The ``objective`` and ``goal`` answer types are broadly equivalent to ``part`` constructs, except that the user enters an arbitrary number of them.
+Essentially, repeatables are a set of questions that can be repeated a number of times. Each objective may have any number of goals, and goals are addressed by a specific set of questions, so whenever a new goal is created, a new copy of that set of questions is added to the form. HSI programs, from Section 3I, are similar in that any number of them can be entered by the user, and the questions for each one are identical (HSI programs don't have a container construct similar to ``objective``.)
+
+Objectives are handled as different types because they, unlike the others, can themselves contain other repeatables.
+
+The ``objective`` and ``repeatable`` answer types are broadly equivalent to ``part`` constructs, except that the user enters an arbitrary number of them.
 
 Allowing users to enter an arbitary number of objectives and an arbitrary number of goals per objective does not lend itself to a simple schema, at least not one we've found so far; in our defense we can only say that we think the implementation of the following will not be as bad as its description.
 
@@ -756,11 +762,13 @@ The first objective in an array of objectives has an answer—the description of
 
 Questions of the type ``objectives`` have a ``questions`` property, and the immediate children in that array must be questions of type ``objective``.
 
-Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_long`` (for the description) and question of the type ``goals``.
+Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_long`` (for the description) and question of the type ``repeatables``.
 
-Questions of the type ``goals`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``goal``.
+Questions of the type ``repeatables`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``repeatable``.
 
-Questions of the type ``goal`` have a ``questions`` property, and these questions aren't constrained in terms of their types.
+Questions of the type ``repeatable`` have a ``questions`` property, and these questions aren't constrained in terms of their types.
+
+The term “goal” below means a ``repeatable`` construct that's being used to represent a goal that is part of an objective's set of goals. HSI programs in Section 2B are handled similarly, except that there's only one level of repeatable there so it's simpler.
 
 The frontend must allow users to create new objectives, and to create new goals in a given objective. A newly-created objective is created with one goal.
 
@@ -782,11 +790,11 @@ When creating new goals and/or objectives, the frontend must
 
     The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_long``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).
 
-    The second direct child of the ``questions`` property of that ``objective`` question has a type of ``goals``, and an ``id`` of ``2020-02-b-01-01-01-02`` (year, section, subsection, part, question, objective, question).
+    The second direct child of the ``questions`` property of that ``objective`` question has a type of ``repeatables``, and an ``id`` of ``2020-02-b-01-01-01-02`` (year, section, subsection, part, question, objective, question).
 
-    The lone (initial) direct child of the ``questions`` property of that ``goals`` question has a type of ``goal``, and an ``id`` of ``2020-02-b-01-01-01-02-01`` (year, section, subsection, part, question, objective, question, goal).
+    The lone (initial) direct child of the ``questions`` property of that ``repeatables`` question has a type of ``repeatable``, and an ``id`` of ``2020-02-b-01-01-01-02-01`` (year, section, subsection, part, question, objective, question, goal).
 
-    The first direct child of the ``questions`` property of that ``goal`` question can have any type (other than ``objectives``, ``objective``, ``goals``, or ``goal``, you monster), and an ``id`` of ``2020-02-b-01-01-01-02-01-01`` (year, section, subsection, part, question, objective, question, goal, question).
+    The first direct child of the ``questions`` property of that ``repeatable`` question can have any type (other than ``objectives``, ``objective``, ``repeatables``, or ``repeatable``, you monster), and an ``id`` of ``2020-02-b-01-01-01-02-01-01`` (year, section, subsection, part, question, objective, question, goal, question).
 
     While this sounds appalling, in practice for a new goal the frontend just has to copy the previous goal and increment the ``id`` properties accordingly. So with the above example, the first goal of the first objective has the ``id`` ``2020-02-b-01-01-01-02-01``, so the frontend would replace that string in every ``id`` field in the new goal (which would be the second goal) with ``2020-02-b-01-01-01-02-02``.
 
@@ -796,7 +804,7 @@ When creating new goals and/or objectives, the frontend must
 
 This is one approach to the above process for adding a new objective (it assumes that the structure for Section 2 has already been parsed from JSON and is avaliable as ``sectionTwo``):
 
-..  code:: json
+..  code:: javascript
 
     const jp = require('jsonpath');
     const lastObjective = jp.query(sectionTwo, "$..*[?(@.id=='2020-02-b-01-01')].questions[-1:]"); // Get objective by referring to id of objectives item and then getting the last thing in that item's questions array.
@@ -807,7 +815,7 @@ This is one approach to the above process for adding a new objective (it assumes
     deconstructedId.push(last);
     const newId = deconstructedId.join("-"); // "2020-02-b-01-01-02"
 
-    // Convert it to string for two reasons. First reason: tn ensure we're doing a deep copy, not a shallow copy.
+    // Convert it to string for two reasons. First reason: to ensure we're doing a deep copy, not a shallow copy.
     const stringifiedFirstObjective = JSON.stringify(lastObjective);
     // Second reason: replace all references to the prior ID with the new ID
     const stringifiedNewObjective = stringifiedFirstObjective.split(priorId).join(newId);
@@ -830,16 +838,12 @@ This is one approach to the above process for adding a new objective (it assumes
 
 ``objective``
 +++++++++++++
-A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_long`` for the description of the objective, and one of the type ``goals`` to contain the goals for the objective.
+A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_long`` for the description of the objective, and one of the type ``repeatables`` to contain the goals for the objective.
 
-``goals``
-+++++++++
-A child construct of the ``objective`` construct. This should have at least one value in its ``questions`` property, and all of the values in its ``questions`` property should be of the type ``goal``.
+``repeatables``
++++++++++++++++
+A child construct of the ``objective`` construct or the ``part`` construct. This should have at least one value in its ``questions`` property, and all of the values in its ``questions`` property should be of the type ``repeatable``.
 
-``goal``
-++++++++
-A child construct of the ``goals`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``goals``, or ``goal`` here we won't be happy and suspect you won't be either.
-
-
-
-
+``repeatable``
+++++++++++++++
+A child construct of the ``repeatables`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``repeatables``, or ``repeatable`` here we won't be happy and suspect you won't be either.
