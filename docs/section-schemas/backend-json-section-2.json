@@ -345,11 +345,11 @@
                       },
                       {
                         "id": "2020-02-b-01-01-01-02",
-                        "type": "goals",
+                        "type": "repeatables",
                         "questions": [
                           {
                             "id": "2020-02-b-01-01-01-02-01",
-                            "type": "goal",
+                            "type": "repeatable",
                             "questions": [
                               {
                                 "id": "2020-02-b-01-01-01-02-01-01",
