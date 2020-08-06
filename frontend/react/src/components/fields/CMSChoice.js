@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
+import { faTheaterMasks } from "@fortawesome/free-solid-svg-icons";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -26,7 +27,14 @@ class CMSChoice extends Component {
     let isChecked = null;
 
     // Checkboxes manage their own checks, skip
-    if (this.props.type !== "checkbox") {
+    if (this.props.type === "checkbox") {
+      if (Array.isArray(this.props.answer)) {
+        // if value is in the answers array
+        isChecked = this.props.answer.includes(this.props.value)
+          ? "checked"
+          : null;
+      }
+    } else {
       isChecked = this.props.value === currentValue ? "checked" : null;
     }
 
