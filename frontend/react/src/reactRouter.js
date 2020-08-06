@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./components/sections/homepage/Homepage";
 import BasicInfo from "./components/sections/basicInfo/BasicInfo";
+import BasicInfoApi from "./components/sections/basicinfoapi/BasicInfo";
 import Section1 from "./components/sections/section1/Section1";
 import Section1Api from "./components/sections/section1api/Section1";
 import Section2a from "./components/sections/section2a/Section2A";
@@ -26,6 +27,7 @@ const Routes = () => (
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/basic-info" component={BasicInfo} />
+          <Route exact path="/basic-info-api" component={BasicInfoApi} />
           <Route exact path="/section1" component={Section1} />
           <Route exact path="/section1-api" component={Section1Api} />
           <Route exact path="/section2/2a" component={Section2a} />
