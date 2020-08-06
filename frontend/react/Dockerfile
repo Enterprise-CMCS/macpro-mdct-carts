@@ -23,6 +23,11 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+
+COPY ../s3sync.sh /usr/local/bin/s3sync.sh
+RUN chmod +x /usr/local/bin/s3sync.sh
+
+
 # Install modules from the package-lock.json
 RUN npm ci
 
@@ -40,8 +45,6 @@ RUN npm run build
 # RUN aws s3 cp /app/build s3://cartsui-cloudfront-origin --recursive
 
 
-COPY ../s3sync.sh /usr/local/bin/s3sync.sh
-RUN chmod +x /usr/local/bin/s3sync.sh
 CMD ["s3sync.sh"]
 
 
