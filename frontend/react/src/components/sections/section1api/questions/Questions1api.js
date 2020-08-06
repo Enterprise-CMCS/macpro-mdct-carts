@@ -9,8 +9,6 @@ class Questions1 extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { temp: "Here is the original stuff" };
-
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -24,7 +22,6 @@ class Questions1 extends Component {
     // Get state program (temporary; will be set by API)
     const stateProgram = "combo"; // medicaid_exp_chip, separate_chip, combo
 
-    let valueFromParent;
     return (
       <form>
         {/* Begin parsing through subsection */}
