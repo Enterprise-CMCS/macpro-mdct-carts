@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import FPL from "../../../layout/FPL";
 import Data from "./../backend-json-section-1.json";
-import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
 
@@ -16,7 +15,6 @@ class Questions1 extends Component {
   }
 
   handleChange(evt) {
-    console.log("Handle Change occured", evt);
     this.setState({
       [evt[0]]: evt[1],
     });

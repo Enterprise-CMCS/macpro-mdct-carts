@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
-import { faTheaterMasks } from "@fortawesome/free-solid-svg-icons";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -152,9 +151,6 @@ class CMSChoice extends Component {
           }
         });
       }
-    }
-    if (this.props.name === "2020-01-a-01-01") {
-      console.log("this.props.value", this.props.value);
     }
     // Return Choice component after creating subquestion components
     return (
