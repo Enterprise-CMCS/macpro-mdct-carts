@@ -20,7 +20,7 @@
               {
                 "id": "2020-00-a-01-01",
                 "label": "State or territory name:",
-                "type": "text_long",
+                "type": "text_short",
                 "answer": {
                   "prepopulated": true,
                   "readonly": true,
@@ -87,6 +87,7 @@
               {
                 "id": "2020-00-a-02-04",
                 "label": "Full mailing address:",
+                "hint": "Include city, state and zip code",
                 "type": "mailing_address",
                 "answer": {
                   "entry": null

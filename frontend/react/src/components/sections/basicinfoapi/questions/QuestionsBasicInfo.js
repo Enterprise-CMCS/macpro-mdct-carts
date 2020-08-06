@@ -99,6 +99,7 @@ class QuestionsBasicInfo extends Component {
          {subsections.parts.map((part) => (
            <div className="part">
              <h3 className="part-title">{part.title}</h3>
+             <h3 className="part-text">{part.text}</h3>
 
              {/* Determine if question should be shown */}
                {part.questions.map((question) => (
@@ -139,11 +140,13 @@ class QuestionsBasicInfo extends Component {
 
                      {question.type === "text_long" ? (
                        <div>
-                         <textarea
+                         <TextField
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
+                           hint={question.hint}
                            type="text"
+                           multiline
                            rows="6"
                          />
                        </div>
@@ -151,11 +154,13 @@ class QuestionsBasicInfo extends Component {
 
                      {question.type === "mailing_address" ? (
                        <div>
-                         <textarea
+                         <TextField
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
+                           hint={question.hint}
                            type="text"
+                           multiline
                            rows="6"
                          />
                        </div>
