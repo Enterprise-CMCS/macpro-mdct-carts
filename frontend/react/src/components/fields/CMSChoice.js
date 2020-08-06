@@ -17,8 +17,13 @@ class CMSChoice extends Component {
   };
 
   render() {
+    // Get Current Value from state(passed from parent) or fall back to DB answer
+    const currentValue = this.props.valueFromParent
+      ? this.props.valueFromParent
+      : this.props.answer;
+
     // Determine if choice is checked
-    const isChecked = this.props.answer === this.props.value ? "checked" : null;
+    let isChecked = this.props.value === currentValue ? "checked" : null;
 
     // Create children based on field type
     let fields = [];
@@ -135,7 +140,9 @@ class CMSChoice extends Component {
         });
       }
     }
-
+    if (this.props.name === "2020-01-a-01-01") {
+      console.log("this.props.value", this.props.value);
+    }
     // Return Choice component after creating subquestion components
     return (
       <>

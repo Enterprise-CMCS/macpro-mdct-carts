@@ -28,9 +28,10 @@
                 "answer": {
                   "options": {
                     "Yes": "yes",
-                    "No": "no"
+                    "No": "no",
+                    "Maybe": "maybe"
                   },
-                  "entry": "yes"
+                  "entry": "no"
                 },
                 "conditional": ["yes"],
                 "questions": [
@@ -297,7 +298,7 @@
                 "label": "Does your program charge a premium fee?",
                 "type": "radio",
                 "answer": {
-                  "entry": "yes",
+                  "entry": "no",
                   "options": {
                     "Yes": "yes",
                     "No": "no"
