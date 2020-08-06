@@ -298,7 +298,7 @@
                 "label": "Does your program charge a premium fee?",
                 "type": "radio",
                 "answer": {
-                  "entry": "no",
+                  "entry": "yes",
                   "options": {
                     "Yes": "yes",
                     "No": "no"

@@ -88,7 +88,9 @@ class Questions1 extends Component {
                         {/* If FPL Range */}
                         {question.type === "ranges" ? (
                           <div>
-                            <FPL label={question.label} />
+                            <FPL
+                              fieldLabels={question.answer.range_categories}
+                            />
                           </div>
                         ) : null}
                       </fieldset>

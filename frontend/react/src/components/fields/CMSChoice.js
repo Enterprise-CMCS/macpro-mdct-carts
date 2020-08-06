@@ -133,7 +133,7 @@ class CMSChoice extends Component {
                 return fields.push(
                   <>
                     <CMSLegend label={item.label} id={item.id} />
-                    <FPL />
+                    <FPL fieldLabels={item.answer.range_categories} />
                   </>
                 );
               }
