@@ -714,15 +714,16 @@ This is an example of using both ``identity`` and ``sum`` in a table:
           {"contents": "Total number of loosely-defined tales of the fantastical"},
         ],
         "rows": [
-            {"targets": ["$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry"]},
-            {"targets": ["$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"]},
-            {
-              "targets": [
-                "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
-                "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
-              ],
-              "actions": ["sum"]
-            }
+          {"targets": ["$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry"]},
+          {"targets": ["$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"]},
+          {
+            "targets": [
+              "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
+              "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
+            ],
+            "actions": ["sum"]
+          }
+        ]
       }
     }
 
