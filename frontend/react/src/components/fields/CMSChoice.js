@@ -7,12 +7,19 @@ class CMSChoice extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {};
     // Bind functions for use throughout controller
     this.sendData = this.sendData.bind(this);
   }
 
-  // Send event information back to parent component
   sendData = (evt) => {
+    // Add item to array
+    let selections = [];
+    selections.push(evt.target.value);
+
+    // Set checkbox array of selected items
+    this.setState({ [evt.target.name]: selections });
+    // Send event information back to parent component
     this.props.onChange([evt.target.name, evt.target.value]);
   };
 
@@ -29,7 +36,11 @@ class CMSChoice extends Component {
     if (this.props.type === "checkbox") {
       if (Array.isArray(this.props.answer)) {
         // if value is in the answers array
-        isChecked = this.props.answer.includes(this.props.value)
+        isChecked = this.props.answer.includes(
+          this.state[this.props.name]
+            ? this.state[this.props.name]
+            : this.props.value
+        )
           ? "checked"
           : null;
       }
