@@ -23,7 +23,12 @@ class CMSChoice extends Component {
       : this.props.answer;
 
     // Determine if choice is checked
-    let isChecked = this.props.value === currentValue ? "checked" : null;
+    let isChecked = null;
+
+    // Checkboxes manage their own checks, skip
+    if (this.props.type !== "checkbox") {
+      isChecked = this.props.value === currentValue ? "checked" : null;
+    }
 
     // Create children based on field type
     let fields = [];
