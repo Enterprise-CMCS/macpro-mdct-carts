@@ -45,6 +45,12 @@ RUN npm run build
 
 
 
+COPY ./s3sync.sh /
+
+RUN chmod +x /script.sh
+
+ENTRYPOINT ["/s3sync.sh"]
+
 
 
 #CMD ["s3", "sync", "/app/build", "s3://cartsui-cloudfront-origin"]
@@ -58,14 +64,8 @@ RUN npm run build
 ##COPY conf /etc/nginx
 
 # Copy static build from the builder container
-COPY --from=builder /app/build /app/build
+#COPY --from=builder /app/build /app/build
 
-
-COPY ./s3sync.sh /
-
-RUN chmod +x /script.sh
-
-ENTRYPOINT ["/s3sync.sh"]
 
 
 #COPY s3sync.sh /usr/local/bin/s3sync.sh
