@@ -47,7 +47,7 @@ RUN npm run build
 
 COPY ./s3sync.sh /
 
-RUN chmod +x /script.sh
+RUN chmod +x /s3sync.sh
 
 ENTRYPOINT ["/s3sync.sh"]
 
