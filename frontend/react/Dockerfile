@@ -53,7 +53,7 @@ RUN npm run build
 # ==============================================================================
 # => Run container
 #FROM nginx:1.19.0-alpine as runner
-FROM alpine:latest as runner
+FROM alpine:latest
 # Copy nginx config
 ##RUN rm -rf /etc/nginx/conf.d
 ##COPY conf /etc/nginx
@@ -64,12 +64,19 @@ COPY --from=builder /app/build /app/build
 
 
 
-COPY s3sync.sh /usr/local/bin/s3sync.sh
-RUN chmod +x /usr/local/bin/s3sync.sh
+#COPY s3sync.sh /usr/local/bin/s3sync.sh
+#RUN chmod +x /usr/local/bin/s3sync.sh
+#CMD ["s3sync.sh"]
 
-CMD ["s3sync.sh"]
+COPY ./s3sync.sh /
+
+RUN chmod +x /script.sh
+
+ENTRYPOINT ["/s3sync.sh"]
 
 
+
+CMD ["/bin/bash", "-c", "s3sync.sh"]
 
 
 
