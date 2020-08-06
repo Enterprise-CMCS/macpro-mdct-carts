@@ -12,6 +12,8 @@ import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import test from "./components/test";
 
+import Section3FApi from "./components/sections/section3Fapi/Section3F";
+
 let VisibleSidebar =
   window.location.pathname === "/" ||
   window.location.pathname.split("/")[1] === "reports" ? null : (
@@ -28,6 +30,7 @@ const Routes = () => (
           <Route exact path="/basic-info" component={BasicInfo} />
           <Route exact path="/section1" component={Section1} />
           <Route exact path="/section1-api" component={Section1Api} />
+          <Route exact path="/section3F-api" component={Section3FApi} />
           <Route exact path="/section2/2a" component={Section2a} />
           <Route exact path="/section2/2b" component={Section2b} />
           <Route exact path="/section3/3a" component={Section3a} />
