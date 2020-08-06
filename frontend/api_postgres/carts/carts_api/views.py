@@ -1,9 +1,9 @@
 import json
-from django.contrib.auth.models import User, Group
-from django.http import HttpResponse
-from django.template.loader import get_template
-from rest_framework import viewsets
-from rest_framework.permissions import (
+from django.contrib.auth.models import User, Group  # type: ignore
+from django.http import HttpResponse  # type: ignore
+from django.template.loader import get_template  # type: ignore
+from rest_framework import viewsets  # type: ignore
+from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
@@ -11,8 +11,14 @@ from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
     SectionSerializer,
+    SectionBaseSerializer,
+    SectionSchemaSerializer,
 )
-from carts.carts_api.models import Section
+from carts.carts_api.models import (
+    Section,
+    SectionBase,
+    SectionSchema,
+)
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -28,6 +34,7 @@ STATE_INFO = {
     },
 
 }
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -61,8 +68,17 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     API endpoint that allows groups to be viewed or edited.
     """
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Section.objects.all()
-    serializer_class = SectionSerializer
+    queryset = SectionBase.objects.all()
+    serializer_class = SectionBaseSerializer
+
+
+class SectionSchemaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = SectionSchema.objects.all()
+    serializer_class = SectionSchemaSerializer
 
 
 def report(request, year=None, state=None):

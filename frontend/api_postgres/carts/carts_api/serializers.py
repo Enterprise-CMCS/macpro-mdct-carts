@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from carts.carts_api.models import Section, SectionBase
+from carts.carts_api.models import Section, SectionBase, SectionSchema
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -25,3 +25,9 @@ class SectionBaseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SectionBase
         fields = ['contents']
+
+
+class SectionSchemaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SectionSchema
+        fields = ['year', 'contents']

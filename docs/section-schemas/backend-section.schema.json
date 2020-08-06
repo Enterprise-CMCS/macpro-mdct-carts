@@ -106,6 +106,9 @@
                 "$ref": "#/definitions/fieldset"
               },
               {
+                "$ref": "#/definitions/repeatables"
+              },
+              {
                 "$ref": "#/definitions/objectives"
               },
               {
@@ -206,11 +209,11 @@
               "$ref": "#/definitions/question"
             },
             {
-              "$ref": "#/definitions/goals"
+              "$ref": "#/definitions/repeatables"
             }
           ],
           "additionalItems": {
-            "$ref": "#/definitions/goals"
+            "$ref": "#/definitions/repeatables"
           }
         }
       },
@@ -220,14 +223,14 @@
         "type"
       ]
     },
-    "goals": {
+    "repeatables": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
         },
         "type": {
-          "const": "goals"
+          "const": "repeatables"
         },
         "comment": {
           "type": "string"
@@ -235,7 +238,7 @@
         "questions": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/goal"
+            "$ref": "#/definitions/repeatable"
           }
         }
       },
@@ -245,14 +248,14 @@
         "type"
       ]
     },
-    "goal": {
+    "repeatable": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
         },
         "type": {
-          "const": "goal"
+          "const": "repeatable"
         },
         "comment": {
           "type": "string"
