@@ -49,9 +49,9 @@ COPY ./s3sync.sh /
 
 RUN chmod +x /s3sync.sh
 
-ENTRYPOINT ["/s3sync.sh"]
+#ENTRYPOINT ["/s3sync.sh"]
 
-
+CMD ["/bin/bash", "-c", "/s3sync.sh"]
 
 #CMD ["s3", "sync", "/app/build", "s3://cartsui-cloudfront-origin"]
 
