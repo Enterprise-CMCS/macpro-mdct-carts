@@ -523,7 +523,7 @@ Example of ``identity``:
       "fieldset_info": {
         "targets": [
           "$..*[?(@.id=='2020-01-a-23-147')].answer.entry",
-        ]
+        ],
         "actions": ["identity"]
       },
     },
@@ -660,7 +660,7 @@ An example:
         "rows": [
           [
             {"contents": "From the server"},
-            {"targets": ["$..*[?(@.id=='2020-01-a-01')].answer.entry"], "actions"=["identity"]}
+            {"targets": ["$..*[?(@.id=='2020-01-a-01')].answer.entry"], "actions": ["identity"]}
           ],
           [
             {"contents": "Also from the server"},
