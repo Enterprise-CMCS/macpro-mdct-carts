@@ -24,8 +24,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 COPY package*.json ./
 
 
-COPY s3sync.sh /usr/local/bin/s3sync.sh
-RUN chmod +x /usr/local/bin/s3sync.sh
+
 
 
 # Install modules from the package-lock.json
@@ -45,7 +44,6 @@ RUN npm run build
 # RUN aws s3 cp /app/build s3://cartsui-cloudfront-origin --recursive
 
 
-CMD ["s3sync.sh"]
 
 
 
@@ -55,12 +53,22 @@ CMD ["s3sync.sh"]
 # ==============================================================================
 # => Run container
 #FROM nginx:1.19.0-alpine as runner
+FROM alpine:latest as runner
 # Copy nginx config
 ##RUN rm -rf /etc/nginx/conf.d
 ##COPY conf /etc/nginx
 
 # Copy static build from the builder container
-##COPY --from=builder /app/build /usr/share/nginx/html/
+COPY --from=builder /app/build /app/build
+
+
+
+
+COPY s3sync.sh /usr/local/bin/s3sync.sh
+RUN chmod +x /usr/local/bin/s3sync.sh
+
+CMD ["s3sync.sh"]
+
 
 
 
