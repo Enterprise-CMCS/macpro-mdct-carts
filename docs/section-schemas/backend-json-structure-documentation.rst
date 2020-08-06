@@ -501,11 +501,11 @@ Example of ``sum``:
       "fieldset_type": "synthesized_value",
       "label": "Total number of loosely-defined tales of the fantastical",
       "fieldset_info": {
-          "targets": [
-            "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
-            "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"
-          ]
-          "actions": ["sum"]
+        "targets": [
+          "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
+          "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"
+        ],
+        "actions": ["sum"]
       }
     }
 
