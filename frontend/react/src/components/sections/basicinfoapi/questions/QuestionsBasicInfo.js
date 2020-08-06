@@ -5,6 +5,7 @@ import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
 import FillForm from "../../../layout/FillForm";
 import Data from "../backend-json-section-0.json";
+import {TextField} from "@cmsgov/design-system-core";
 
 const validEmailRegex = RegExp(
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
@@ -30,20 +31,20 @@ class QuestionsBasicInfo extends Component {
   }
 
   handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
+    // this.setState({
+    //   [evt.target.name]: evt.target.value,
+    // });
 
     //Inline validation/error messaging for email and phone
     let errors = this.state.errors;
 
-    switch (evt.target.name) {
-      case "contactEmail":
+    switch (evt.target.type) {
+      case "email":
         errors.email = validEmailRegex.test(evt.target.value)
           ? ""
           : "Please enter a valid email";
         break;
-      case "contactPhone":
+      case "phone_number":
         errors.phone = validTelephoneRegex.test(evt.target.value)
           ? ""
           : "Please enter a valid 10 digit phone number";
@@ -127,12 +128,11 @@ class QuestionsBasicInfo extends Component {
 
                       {question.type === "text_short" ? (
                        <div>
-                         <textarea
+                         <TextField
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
-                           name={question.id}
                          />
                        </div>
                      ) : null}
@@ -144,7 +144,6 @@ class QuestionsBasicInfo extends Component {
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
-                           name={question.id}
                            rows="6"
                          />
                        </div>
@@ -157,7 +156,6 @@ class QuestionsBasicInfo extends Component {
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
-                           name={question.id}
                            rows="6"
                          />
                        </div>
@@ -165,24 +163,22 @@ class QuestionsBasicInfo extends Component {
 
                      {question.type === "email" ? (
                        <div>
-                         <textarea
+                         <TextField
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
-                           name={question.id}
                          />
                        </div>
                      ) : null}
 
                      {question.type === "phone_number" ? (
                        <div>
-                         <textarea
+                         <TextField
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
-                           name={question.id}
                          />
                        </div>
                      ) : null}
