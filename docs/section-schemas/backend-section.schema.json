@@ -136,6 +136,9 @@
         "display_prior_year_data": {
           "type": "boolean"
         },
+        "enable_copying_prior_year_data": {
+          "type": "boolean"
+        },
         "interactive_conditional": {
           "type": "string"
         },
