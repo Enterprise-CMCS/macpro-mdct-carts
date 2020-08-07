@@ -26,7 +26,7 @@ export const getStateData = (stateObject) => ({
 const initialState = {
   name: "New York",
   abbr: "NY",
-  programType: "combo", //values can be medicaid_exp_chip, separate_chip, combo
+  programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
   programName: "NY Combo Program",
   imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
   formName: "CARTS FY",

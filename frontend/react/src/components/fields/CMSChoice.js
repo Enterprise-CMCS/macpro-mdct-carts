@@ -7,46 +7,18 @@ class CMSChoice extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
     // Bind functions for use throughout controller
     this.sendData = this.sendData.bind(this);
   }
 
+  // Send event information back to parent component
   sendData = (evt) => {
-    // Add item to array
-    let selections = [];
-    selections.push(evt.target.value);
-
-    // Set checkbox array of selected items
-    this.setState({ [evt.target.name]: selections });
-    // Send event information back to parent component
     this.props.onChange([evt.target.name, evt.target.value]);
   };
 
   render() {
-    // Get Current Value from state(passed from parent) or fall back to DB answer
-    const currentValue = this.props.valueFromParent
-      ? this.props.valueFromParent
-      : this.props.answer;
-
     // Determine if choice is checked
-    let isChecked = null;
-
-    // Checkboxes manage their own checks, skip
-    if (this.props.type === "checkbox") {
-      if (Array.isArray(this.props.answer)) {
-        // if value is in the answers array
-        isChecked = this.props.answer.includes(
-          this.state[this.props.name]
-            ? this.state[this.props.name]
-            : this.props.value
-        )
-          ? "checked"
-          : null;
-      }
-    } else {
-      isChecked = this.props.value === currentValue ? "checked" : null;
-    }
+    const isChecked = this.props.answer === this.props.value ? "checked" : null;
 
     // Create children based on field type
     let fields = [];
@@ -133,7 +105,7 @@ class CMSChoice extends Component {
                 return fields.push(
                   <>
                     <CMSLegend label={item.label} id={item.id} />
-                    <FPL fieldLabels={item.answer.range_categories} />
+                    <FPL />
                   </>
                 );
               }
@@ -163,6 +135,7 @@ class CMSChoice extends Component {
         });
       }
     }
+
     // Return Choice component after creating subquestion components
     return (
       <>

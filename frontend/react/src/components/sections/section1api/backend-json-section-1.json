@@ -28,10 +28,9 @@
                 "answer": {
                   "options": {
                     "Yes": "yes",
-                    "No": "no",
-                    "Maybe": "maybe"
+                    "No": "no"
                   },
-                  "entry": "no"
+                  "entry": "yes"
                 },
                 "conditional": ["yes"],
                 "questions": [
@@ -61,7 +60,7 @@
               },
               {
                 "id": "2020-01-a-01-02",
-                "label": "Does your program charge a premium fee?",
+                "label": "Does your program charge a premium feedd?",
                 "type": "radio",
                 "answer": {
                   "entry": "yes",
@@ -231,7 +230,7 @@
                 "hint": "Select all that apply.",
                 "type": "checkbox",
                 "answer": {
-                  "entry": ["mco", "ffs"],
+                  "entry": null,
                   "options": {
                     "Managed Care Organization (MCO)": "mco",
                     "Primary Care Case Management (PCCM)": "pccm",
