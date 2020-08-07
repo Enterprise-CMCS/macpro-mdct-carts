@@ -77,7 +77,7 @@ COPY --from=builder /app/build /app/build
 COPY ./s3sync.sh /
 
 RUN chmod +x /s3sync.sh
-RUN /s3sync.sh
+
 
 #ENTRYPOINT ["/s3sync.sh"]
 
