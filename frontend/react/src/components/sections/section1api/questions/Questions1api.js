@@ -53,7 +53,11 @@ class Questions1 extends Component {
                   part.questions.map((question) => (
                     <div className="question">
                       <fieldset className="ds-c-fieldset">
-                        <CMSLegend label={question.label} id={question.id} />
+                        <CMSLegend
+                          label={question.label}
+                          id={question.id}
+                          type="question"
+                        />
 
                         {question.type === "radio" ||
                         question.type === "checkbox"

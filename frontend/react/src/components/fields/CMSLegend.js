@@ -9,13 +9,21 @@ class CMSLegend extends Component {
     // Get ID as array split by hyphen
     let idArray = this.props.id.split("-");
 
-    // Remove leading zero by enforcing the question number as a Number
-    let questionNumber = Number(idArray[4]);
+    // Get array length
+    let length = idArray.length;
+
+    // Create question number string
+    let questionNumber;
+    if (this.props.type === "subquestion") {
+      questionNumber = Number(idArray[length - 2]) + idArray[length - 1] + ".";
+    } else {
+      questionNumber = Number(idArray[length - 1]) + ". ";
+    }
+
     return (
       <>
         <legend className="ds-c-label">
-          {questionNumber}
-          {idArray[5]}. {this.props.label}
+          {questionNumber} {this.props.label}
         </legend>
       </>
     );
