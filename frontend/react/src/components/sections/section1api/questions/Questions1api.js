@@ -5,6 +5,7 @@ import Data from "./../backend-json-section-1.json";
 import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
+import CMSHeader from "../../../fields/CMSHeader";
 
 class Questions1 extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class Questions1 extends Component {
             {/* Begin parsing through parts */}
             {subsections.parts.map((part) => (
               <div className="part">
-                <h3 className="part-title">{part.title}</h3>
+                <CMSHeader title={part.title} id={part.id} type="Part" />
 
                 {/* Determine if question should be shown */}
                 {!part.context_data.show_if_state_program_type_in.includes(
