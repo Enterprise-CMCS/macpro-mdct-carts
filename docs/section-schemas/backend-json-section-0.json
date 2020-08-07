@@ -20,7 +20,7 @@
               {
                 "id": "2020-00-a-01-01",
                 "label": "State or territory name:",
-                "type": "text_long",
+                "type": "text_short",
                 "answer": {
                   "prepopulated": true,
                   "readonly": true,
@@ -36,7 +36,7 @@
                   "readonly": true,
                   "entry": null,
                   "options": {
-                    "Combination (Medicaid Expansion CHIP and Separate CHIP)": "combo",
+                    "Combination": "combo",
                     "Medicaid Expansion CHIP only": "medicaid_exp_chip",
                     "Separate CHIP only": "separate_chip"
                   }
@@ -44,7 +44,7 @@
               },
               {
                 "id": "2020-00-a-01-03",
-                "label": "CHIP program name(s): ",
+                "label": "CHIP program name(s):",
                 "type": "text_long",
                 "answer": {
                   "prepopulated": true,
