@@ -13,6 +13,7 @@ import Sidebar from "./components/layout/Sidebar";
 import test from "./components/test";
 
 import Section3FApi from "./components/sections/section3Fapi/Section3F";
+import Section3AApi from "./components/sections/section3Aapi/Section3A";
 
 let VisibleSidebar =
   window.location.pathname === "/" ||
@@ -31,6 +32,7 @@ const Routes = () => (
           <Route exact path="/section1" component={Section1} />
           <Route exact path="/section1-api" component={Section1Api} />
           <Route exact path="/section3F-api" component={Section3FApi} />
+          <Route exact path="/section3A-api" component={Section3AApi} />
           <Route exact path="/section2/2a" component={Section2a} />
           <Route exact path="/section2/2b" component={Section2b} />
           <Route exact path="/section3/3a" component={Section3a} />

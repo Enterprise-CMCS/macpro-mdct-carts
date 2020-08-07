@@ -51,7 +51,6 @@ export default Questions3FApi;
 
 function sectionIDGrabber(str) {
   let idArray = str.split("-");
-  // let actualTitle = ""
 
   let sectionNumber = Number(idArray[1]);
 
