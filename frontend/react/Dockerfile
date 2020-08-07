@@ -57,7 +57,7 @@ CMD ["/bin/bash", "-c", "/s3sync.sh"]
 
 # ==============================================================================
 # => Run container
-FROM nginx:1.19.0-alpine as runner
+#FROM nginx:1.19.0-alpine as runner
 #FROM alpine:latest
 # Copy nginx config
 ##RUN rm -rf /etc/nginx/conf.d
@@ -77,7 +77,7 @@ COPY --from=builder /app/build /app/build
 COPY ./s3sync.sh /
 
 RUN chmod +x /s3sync.sh
-RUN ./s3sync.sh
+RUN /s3sy.sh
 
 #ENTRYPOINT ["/s3sync.sh"]
 
