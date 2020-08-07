@@ -22,7 +22,7 @@ class Questions1 extends Component {
 
   render() {
     // Get state program (temporary; will be set by API)
-    const stateProgram = "combo"; // medicaid_exp_chip, separate_chip, combo
+    const stateProgram = this.props.programType; // medicaid_exp_chip, separate_chip, combo
 
     return (
       <form>
@@ -107,9 +107,9 @@ class Questions1 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  programType: state.programType,
-  year: state.formYear,
+  name: state.stateUser.name,
+  year: state.global.formYear,
+  programType: state.stateUser.programType,
 });
 
 export default connect(mapStateToProps)(Questions1);
