@@ -11,21 +11,23 @@ class Questions3FApi extends Component {
     this.state = {};
   }
   render() {
-    // Get state program (temporary; will be set by API)
+    const section3FPart1 = sectionData.parts[0];
+    const section3Ftitle = sectionData.title;
     const stateProgram = "combo"; // medicaid_exp_chip, separate_chip, combo
+
+    // Get state program (temporary; will be set by API)
 
     // console.log("whats in here??", sectionData.parts.length);
 
     // sectionF has only one part
-    const section3FPart1 = sectionData.parts[0];
-    const section3Ftitle = sectionData.title;
-    console.log(
-      "whats in the array",
-      section3FPart1.context_data.show_if_state_program_type_in
-    );
+    let sectionID = sectionIDGrabber(sectionData.id);
+
     return (
       <form>
         <div className="section">
+          <h3 className="part-title">
+            {sectionID}: {sectionData.title}
+          </h3>
           {!section3FPart1.context_data.show_if_state_program_type_in.includes(
             stateProgram
           ) ? (
@@ -46,3 +48,12 @@ class Questions3FApi extends Component {
 }
 
 export default Questions3FApi;
+
+function sectionIDGrabber(str) {
+  let idArray = str.split("-");
+  // let actualTitle = ""
+
+  let sectionNumber = Number(idArray[1]);
+
+  return `Section ${sectionNumber}${idArray[2].toUpperCase()}`;
+}
