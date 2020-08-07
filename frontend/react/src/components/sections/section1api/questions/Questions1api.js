@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import FPL from "../../../layout/FPL";
 import data from "./../backend-json-section-1.json";
-import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
-import CMSChoice from "../../../fields/CMSChoice";
-import CMSLegend from "../../../fields/CMSLegend";
+import { FormType } from "./../../../fields/FormType";
 
 class Questions1 extends Component {
   constructor(props) {
@@ -50,53 +47,8 @@ class Questions1 extends Component {
                       </div>
                     </div>
                   ) : (
-                    part.questions.map((question) => (
-                      <div className="question">
-                        <fieldset className="ds-c-fieldset">
-                          <CMSLegend label={question.label} id={question.id} />
-
-                          {question.type === "radio" ||
-                            question.type === "checkbox"
-                            ? Object.entries(question.answer.options).map(
-                              (key, index) => {
-                                return (
-                                  <CMSChoice
-                                    name={question.id}
-                                    value={key[1]}
-                                    label={key[0]}
-                                    type={question.type}
-                                    answer={question.answer.entry}
-                                    conditional={question.conditional}
-                                    children={question.questions}
-                                    valueFromParent={this.state[question.id]}
-                                    onChange={this.handleChange}
-                                  />
-                                );
-                              }
-                            )
-                            : null}
-
-                          {/* If textarea */}
-                          {question.type === "text_long" ? (
-                            <div>
-                              <textarea
-                                class="ds-c-field"
-                                name={question.id}
-                                value={question.answer.entry}
-                                type="text"
-                                name={question.id}
-                                rows="6"
-                              />
-                            </div>
-                          ) : null}
-                          {/* If FPL Range */}
-                          {question.type === "ranges" ? (
-                            <div>
-                              <FPL label={question.label} />
-                            </div>
-                          ) : null}
-                        </fieldset>
-                      </div>
+                    part.questions.map(question => (
+                      <FormType {...question} />
                     ))
                   )}
               </div>
