@@ -48,7 +48,9 @@ class Questions1 extends Component {
                     </div>
                   ) : (
                     part.questions.map(question => (
-                      <FormType {...question} />
+                      <div className="question">
+                        <FormType {...question} />
+                      </div>
                     ))
                   )}
               </div>
