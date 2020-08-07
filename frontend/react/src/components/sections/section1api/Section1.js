@@ -6,7 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
-import Data from "./backend-json-section-1.json";
+import data from "./backend-json-section-1.json";
 
 import {
   Button as button,
@@ -23,11 +23,11 @@ class Section1 extends Component {
         <div className="main">
           <PageInfo />
           <div className="print-only">
-            <h3>{Data.section.title}</h3>
+            <h3>{data.section.title}</h3>
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={Data.section.title}>
+              <TabPanel id="tab-form" tab={data.section.title}>
                 <Questions previousEntry="false" />
                 <FormNavigation
                   nextUrl="/section2/2a"
@@ -41,7 +41,7 @@ class Section1 extends Component {
               >
                 <div className="print-only ly_header">
                   <PageInfo />
-                  <h3>{Data.section.title}</h3>
+                  <h3>{data.section.title}</h3>
                 </div>
                 <div disabled>
                   <Questions previousEntry="true" />
