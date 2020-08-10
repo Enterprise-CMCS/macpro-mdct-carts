@@ -75,7 +75,11 @@ class CMSChoice extends Component {
                 // Add to field to render array
                 fields.push(
                   <>
-                    <CMSLegend label={item.label} id={item.id} />
+                    <CMSLegend
+                      label={item.label}
+                      id={item.id}
+                      type="subquestion"
+                    />
                     <textarea
                       class="ds-c-field"
                       name={item.id}
@@ -105,7 +109,11 @@ class CMSChoice extends Component {
                   return fields.push(
                     <>
                       {index === 0 ? (
-                        <CMSLegend label={item.label} id={item.id} />
+                        <CMSLegend
+                          label={item.label}
+                          id={item.id}
+                          type="subquestion"
+                        />
                       ) : null}
                       {/* Output only matching answers */}
 
@@ -132,7 +140,11 @@ class CMSChoice extends Component {
                 // Add field to render array
                 return fields.push(
                   <>
-                    <CMSLegend label={item.label} id={item.id} />
+                    <CMSLegend
+                      label={item.label}
+                      id={item.id}
+                      type="subquestion"
+                    />
                     <FPL fieldLabels={item.answer.range_categories} />
                   </>
                 );
@@ -146,7 +158,11 @@ class CMSChoice extends Component {
                 // Add field to render array
                 fields.push(
                   <>
-                    <CMSLegend label={item.label} id={item.id} />
+                    <CMSLegend
+                      label={item.label}
+                      id={item.id}
+                      type="subquestion"
+                    />
                     <TextField
                       className="fpl-input"
                       // label={item.label}
