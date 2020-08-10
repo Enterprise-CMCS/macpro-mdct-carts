@@ -6,26 +6,21 @@ class CMSLegend extends Component {
   }
 
   render() {
-    // Get ID as array split by hyphen
-    let idArray = this.props.id.split("-");
-
-    // Get array length
-    let length = idArray.length;
-
     // Create question number string
     let questionNumber;
     if (this.props.type === "subquestion") {
-      questionNumber = Number(idArray[length - 2]) + idArray[length - 1] + ".";
+      questionNumber =
+        Number(this.props.id.split("-").slice(-2, -1)) +
+        this.props.id.split("-").slice(-1) +
+        ":";
     } else {
-      questionNumber = Number(idArray[length - 1]) + ". ";
+      questionNumber = Number(this.props.id.split("-").slice(-1)) + ":";
     }
 
     return (
-      <>
-        <legend className="ds-c-label">
-          {questionNumber} {this.props.label}
-        </legend>
-      </>
+      <legend className="ds-c-label">
+        {questionNumber} {this.props.label}
+      </legend>
     );
   }
 }
