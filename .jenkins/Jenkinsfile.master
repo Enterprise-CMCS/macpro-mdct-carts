@@ -132,7 +132,7 @@ pipeline {
             remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
             git config user.name 'Jenkins'
             git config user.email 'jenkins@mycompany.com'
-            git tag $BUILD_TAG
+            git tag $BUILD_TAG -f
             git push -f https://$GIT_CREDENTIAL@$remote_url refs/tags/$BUILD_TAG
           '''
           if (env.DOWNSTREAM_JOB != "") {
