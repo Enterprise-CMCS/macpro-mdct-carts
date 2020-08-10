@@ -9,6 +9,10 @@ data "aws_subnet_ids" "private" {
   tags = {
     Type = "private"
   }
+  filter {
+    name   = "tag:vpc-conf-layer"
+    values = ["data"]
+  }
 }
 
 data "aws_subnet_ids" "public" {
