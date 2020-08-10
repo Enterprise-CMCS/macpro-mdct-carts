@@ -2,6 +2,7 @@ import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
 import Home from "./Home";
+import Profile from './Profile';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 
@@ -21,6 +22,7 @@ const App = () => {
       <Security {...config}>
         <SecureRoute path="/" exact component={Home} />
         <Route path={CALLBACK_PATH} component={LoginCallback} />
+        <SecureRoute path="/profile" component={Profile} />
       </Security>
     </Router>
   );
