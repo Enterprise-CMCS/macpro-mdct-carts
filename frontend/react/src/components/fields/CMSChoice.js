@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
+import { shouldDisplay } from "../Utils/helperFunctions";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -51,10 +52,7 @@ class CMSChoice extends Component {
     // Create children based on field type
     let fields = [];
 
-    // If there is a conditional
-    // if (this.props.conditional) {
-
-    // If there is a conditional value AND children are specified
+    // If children are specified
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
@@ -67,13 +65,7 @@ class CMSChoice extends Component {
         switch (item.type) {
           case "text_long":
             // Check if question (toMatch) matches the currently selected option (parent)
-            if (
-              item.context_data.conditional_display.hide_if.values
-                .interactive &&
-              !item.context_data.conditional_display.hide_if.values.interactive.includes(
-                parentValue
-              )
-            ) {
+            if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
               fields.push(
                 <>
@@ -104,13 +96,7 @@ class CMSChoice extends Component {
                 key[1] === item.answer.entry ? "checked" : null;
 
               // Check if question (toMatch) matches the currently selected option (parent)
-              if (
-                item.context_data.conditional_display.hide_if.values
-                  .interactive &&
-                !item.context_data.conditional_display.hide_if.values.interactive.includes(
-                  parentValue
-                )
-              ) {
+              if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
                 return fields.push(
                   <>
@@ -140,13 +126,7 @@ class CMSChoice extends Component {
           case "ranges":
             // Check if question (toMatch) matches the currently selected option (parent)
 
-            if (
-              item.context_data.conditional_display.hide_if.values
-                .interactive &&
-              !item.context_data.conditional_display.hide_if.values.interactive.includes(
-                parentValue
-              )
-            ) {
+            if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
               return fields.push(
                 <>
@@ -163,13 +143,7 @@ class CMSChoice extends Component {
           case "money":
             // Check if question (toMatch) matches the currently selected option (parent)
 
-            if (
-              item.context_data.conditional_display.hide_if.values
-                .interactive &&
-              !item.context_data.conditional_display.hide_if.values.interactive.includes(
-                parentValue
-              )
-            ) {
+            if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
               fields.push(
                 <>
