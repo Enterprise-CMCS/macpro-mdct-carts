@@ -369,6 +369,7 @@
               "phone_number",
               "radio",
               "ranges",
+              "text",
               "text_medium",
               "text_multiline",
               "text_small"

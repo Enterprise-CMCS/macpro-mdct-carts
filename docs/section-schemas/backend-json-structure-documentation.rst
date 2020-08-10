@@ -63,7 +63,7 @@ As an example, if the form had a Section 23 and that section was extremely simpl
                         "header": "Sagacity",
                         "questions": [{
                                 "id": "2020-23-a-01-01",
-                                "type": "text_medium",
+                                "type": "text",
                                 "text": "To be, or not to be?",
                                 "answer": {
                                     "type": "string",
@@ -90,7 +90,7 @@ If the user answered the long question with “Take up arms against a sea of tro
                         "header": "Sagacity",
                         "questions": [{
                                 "id": "2020-23-a-01-01",
-                                "type": "text_medium",
+                                "type": "text",
                                 "text": "To be, or not to be?",
                                 "answer": {
                                     "type": "string",
@@ -639,14 +639,14 @@ An example:
 ..  code:: json
 
     {
-      "type": "text_medium",
+      "type": "text",
       "id": "2020-01-a-01",
       "answer": {
         "entry": "I'm over here"
       }
     },
     {
-      "type": "text_medium",
+      "type": "text",
       "id": "2020-01-a-02",
       "answer": {
         "entry": "And I'm over here"
@@ -810,9 +810,13 @@ A long string. As this will probably be represented by the ``TEXT`` type in Post
 
     If absent or set to 0, no minimum will be enforced.
 
+``text``
++++++++++++++++++++++++++
+A text entry field that doesn't need multiple lines.
+
 ``text_medium``
 +++++++++++++++++++++++++
-A medium-sized text entry field that doesn't need multiple lines.
+A small-ish text entry field.
 
 ``text_small``
 +++++++++++++++++++++++++
