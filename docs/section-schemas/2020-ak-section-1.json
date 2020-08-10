@@ -266,7 +266,7 @@
               {
                 "id": "2020-01-a-01-04",
                 "label": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -288,7 +288,7 @@
               {
                 "id": "2020-01-a-01-06",
                 "label": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -549,7 +549,7 @@
               {
                 "id": "2020-01-a-02-04",
                 "label": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -571,7 +571,7 @@
               {
                 "id": "2020-01-a-02-06",
                 "label": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -888,7 +888,7 @@
               {
                 "id": "2020-01-a-03-20",
                 "label": "Anything else you'd like to add that wasn't already covered?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -897,7 +897,7 @@
                 "id": "2020-01-a-03-21",
                 "comment": "Display bulleted list of all 2020-01-a-03 questions 1\u201319 with yes answers",
                 "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven\u2019t done so already?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
@@ -1218,7 +1218,7 @@
               {
                 "id": "2020-01-a-04-20",
                 "label": "Anything else you'd like to add that wasn't already covered?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1227,7 +1227,7 @@
                 "id": "2020-01-a-04-21",
                 "comment": "Display bulleted list of all 2020-01-a-04 questions 1\u201319 with yes answers",
                 "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven\u2019t done so already?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
