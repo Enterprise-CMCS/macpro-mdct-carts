@@ -89,11 +89,10 @@ pipeline {
           dir('frontend/aws') {
             env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_NAME, "application_endpoint")
           }
-          dir('tests/testcafe') {
+          dir('tests') {
             sh '''
               set -e
-              docker build . -t loaded_testcafe:${JOB_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
-              docker run --rm --name ${JOB_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${JOB_NAME} chromium /tests/**/*.js
+              docker run --rm -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT -v $(pwd)/testcafe:/tests testcafe/testcafe chromium /tests/**/*.js
             '''
           }
         }
