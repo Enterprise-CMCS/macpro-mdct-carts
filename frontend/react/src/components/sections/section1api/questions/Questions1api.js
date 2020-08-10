@@ -2,32 +2,29 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import FPL from "../../../layout/FPL";
 import Data from "./../backend-json-section-1.json";
-import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
+import CMSHeader from "../../../fields/CMSHeader";
 
 class Questions1 extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { temp: "Here is the original stuff" };
+    this.state = {};
 
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(evt) {
-    console.log("Handle Change occured", evt);
     this.setState({
-      temp: "This has been changed",
       [evt[0]]: evt[1],
     });
   }
 
   render() {
     // Get state program (temporary; will be set by API)
-    const stateProgram = "combo"; // medicaid_exp_chip, separate_chip, combo
+    const stateProgram = this.props.programType; // medicaid_exp_chip, separate_chip, combo
 
-    let valueFromParent;
     return (
       <form>
         {/* Begin parsing through subsection */}
@@ -36,7 +33,7 @@ class Questions1 extends Component {
             {/* Begin parsing through parts */}
             {subsections.parts.map((part) => (
               <div className="part">
-                <h3 className="part-title">{part.title}</h3>
+                <CMSHeader title={part.title} id={part.id} type="Part" />
 
                 {/* Determine if question should be shown */}
                 {!part.context_data.show_if_state_program_type_in.includes(
@@ -53,7 +50,11 @@ class Questions1 extends Component {
                   part.questions.map((question) => (
                     <div className="question">
                       <fieldset className="ds-c-fieldset">
-                        <CMSLegend label={question.label} id={question.id} />
+                        <CMSLegend
+                          label={question.label}
+                          id={question.id}
+                          type="question"
+                        />
 
                         {question.type === "radio" ||
                         question.type === "checkbox"
@@ -92,7 +93,9 @@ class Questions1 extends Component {
                         {/* If FPL Range */}
                         {question.type === "ranges" ? (
                           <div>
-                            <FPL label={question.label} />
+                            <FPL
+                              fieldLabels={question.answer.range_categories}
+                            />
                           </div>
                         ) : null}
                       </fieldset>
@@ -109,9 +112,9 @@ class Questions1 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.name,
-  programType: state.programType,
-  year: state.formYear,
+  name: state.stateUser.name,
+  year: state.global.formYear,
+  programType: state.stateUser.programType,
 });
 
 export default connect(mapStateToProps)(Questions1);
