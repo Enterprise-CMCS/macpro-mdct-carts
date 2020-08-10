@@ -4,6 +4,7 @@ import FPL from "../../../layout/FPL";
 import Data from "./../backend-json-section-1.json";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
+import CMSHeader from "../../../fields/CMSHeader";
 
 class Questions1 extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Questions1 extends Component {
             {/* Begin parsing through parts */}
             {subsections.parts.map((part) => (
               <div className="part">
-                <h3 className="part-title">{part.title}</h3>
+                <CMSHeader title={part.title} id={part.id} type="Part" />
 
                 {/* Determine if question should be shown */}
                 {!part.context_data.show_if_state_program_type_in.includes(
@@ -49,7 +50,11 @@ class Questions1 extends Component {
                   part.questions.map((question) => (
                     <div className="question">
                       <fieldset className="ds-c-fieldset">
-                        <CMSLegend label={question.label} id={question.id} />
+                        <CMSLegend
+                          label={question.label}
+                          id={question.id}
+                          type="question"
+                        />
 
                         {question.type === "radio" ||
                         question.type === "checkbox"
