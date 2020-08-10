@@ -8,8 +8,8 @@ import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 const CALLBACK_PATH = '/implicit/callback';
 
 const config = {
-  clientId: '0oaokz2apFWZl91724x6',
-  issuer: 'https://astrolabe.okta.com/oauth2/default',
+  clientId: '0oa4juv4poiQ6nDB6297',
+  issuer: 'https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297',
   redirectUri: 'http://localhost:81/implicit/callback',
   scopes: ['openid', 'profile', 'email'],
   pkce: true
@@ -19,8 +19,8 @@ const App = () => {
   return (
     <Router>
       <Security {...config}>
-        <Route path="/" exact component={Home} />
-        <Route path="/implicit/callback" component={LoginCallback} />
+        <SecureRoute path="/" exact component={Home} />
+        <Route path={CALLBACK_PATH} component={LoginCallback} />
       </Security>
     </Router>
   );
