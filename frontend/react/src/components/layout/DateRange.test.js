@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import renderer from "react-test-renderer";
-import { shallow, mount, ShallowWrapper } from "enzyme";
+import { shallow, ShallowWrapper, render } from "enzyme";
 import {
   storeFactory,
   findByTestAttribute,
@@ -23,13 +23,19 @@ const defaultProps = { previousEntry: false };
 const setup = (initialState = {}, props = {}) => {
   const setupProps = { ...defaultProps, ...props };
   const store = storeFactory(initialState);
-  return shallow(<DateRange store={store} props={setupProps} />)
+  return shallow(<DateRange store={store} {...setupProps} />)
     .dive()
     .dive();
 };
 
+const setupTopmostComponent = (initialState = {}, props = {}) => {
+  const setupProps = { ...defaultProps, ...props };
+  const store = storeFactory(initialState);
+  return shallow(<DateRange store={store} {...setupProps} />);
+};
+
 describe("DateRange Component (shallow)", () => {
-  const wrapper = setup(mockInitialState, { previousEntry: false });
+  const wrapper = setup(mockInitialState);
   it("renders with test attributes", () => {
     const dateComponent = findByTestAttribute(wrapper, "component-date-range");
     expect(dateComponent.length).toBe(1);
@@ -38,26 +44,35 @@ describe("DateRange Component (shallow)", () => {
     const dateClassname = wrapper.find(".date-range");
     expect(dateClassname.length).toBe(1);
   });
-
-  it("does not throw warning with expected props", () => {
-    const expectedProps = { previousEntry: false };
-    checkProps(DateRange, expectedProps);
-  });
-
-  it("throws a warning when given the wrong props", () => {
-    const expectedProps = { previousEntry: "incorrect props" };
-    checkProps(DateRange, expectedProps);
-  });
-});
-
-describe("DateRange Component rendered with previous entries", () => {
-  const wrapper = setup(mockInitialState, { previousEntry: true });
-  it("displays previous entries when loaded with previousEntry prop", () => {
+  it("initializes as empty string when props.previousEntry is false", () => {
     const previousEntryDisplay = findByTestAttribute(
       wrapper,
       "component-daterange-monthstart"
-    );
-    // console.log("value???", previousEntryDisplay.debug());
-    expect(previousEntryDisplay.dive().text()).toBe("");
+    )
+      .shallow()
+      .props().children[1].props.value;
+    expect(previousEntryDisplay).toBe("");
+  });
+  it("initializes as empty string when props.previousEntry is true", () => {
+    const previousEntrywrapper = setup(mockInitialState, {
+      previousEntry: true,
+    });
+    const previousEntryDisplay = findByTestAttribute(
+      previousEntrywrapper,
+      "component-daterange-monthstart"
+    )
+      .shallow()
+      .props().children[1].props.value;
+    expect(previousEntryDisplay).toBe(5);
+  });
+});
+
+describe("DateRange Component (shallow)", () => {
+  it("starts with the initial props", () => {
+    const wrapper = setupTopmostComponent(mockInitialState, {
+      previousEntry: true,
+    });
+    let props = wrapper.props().children.props;
+    expect(props.previousEntry).toBe(true);
   });
 });

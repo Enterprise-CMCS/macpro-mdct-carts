@@ -17,7 +17,7 @@
             "id": "2020-02-a-01",
             "type": "part",
             "title": "Number of Children Enrolled in CHIP",
-            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  \u201cUnduplicated Number Ever Enrolled\u201d in your fourth quarter SEDS report) and refresh the page. There may be a slight delay when updating data.",
+            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  \u201cUnduplicated Number Ever Enrolled\u201d in your fourth quarter SEDS report) and refresh the page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
             "questions": [
               {
                 "type": "fieldset",
@@ -48,7 +48,7 @@
                   {
                     "id": "2020-02-a-01",
                     "label": "What are some possible reasons why your state had more than a 10% change in enrollment numbers?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -135,7 +135,7 @@
                       {
                         "id": "2020-02-a-01",
                         "label": "What are some possible reasons why your state had more than a 10% change in the number of uninsured children?",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         },
@@ -164,7 +164,7 @@
                   {
                     "id": "2020-02-a-02-a",
                     "label": "What are some reasons why the American Community Survey estimates might not be accurate? ",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -207,7 +207,7 @@
                       {
                         "id": "2020-02-a-03-a",
                         "label": "What is the alternate data source or methodology?",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -227,7 +227,7 @@
                       {
                         "id": "2020-02-a-03-c",
                         "label": "Define the population you\u2019re measuring, including ages and federal poverty levels.",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -235,7 +235,7 @@
                       {
                         "id": "2020-02-a-03-d",
                         "label": "Give numbers and/or the percent of uninsured children for at least two points in time.",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -243,7 +243,7 @@
                       {
                         "id": "2020-02-a-03-e",
                         "label": "Why did your state choose to adopt this alternate data source?",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -251,7 +251,7 @@
                       {
                         "id": "2020-02-a-03-f",
                         "label": "How reliable are these estimates? Provide standard errors, confidence intervals, and/or p-values if available.",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -259,7 +259,7 @@
                       {
                         "id": "2020-02-a-03-g",
                         "label": "What are the limitations of this alternate data source or methodology?",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -267,7 +267,7 @@
                       {
                         "id": "2020-02-a-03-h",
                         "label": "How do you use this alternate data source in CHIP program planning?",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         }
@@ -297,7 +297,7 @@
               {
                 "id": "2020-02-a-04",
                 "label": "Anything else you\u2019d like to add about your data?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -333,34 +333,35 @@
                     "id": "2020-02-b-01-01-01",
                     "questions": [
                       {
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "label": "What is your objective as listed in your state plan?",
                         "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
                         "id": "2020-02-b-01-01-01-01",
                         "answer": {
+                          "readonly": true,
                           "default_entry": "Reduce the number of uninsured children.",
                           "entry": null
                         }
                       },
                       {
                         "id": "2020-02-b-01-01-01-02",
-                        "type": "goals",
+                        "type": "repeatables",
                         "questions": [
                           {
-                            "id": "2020-02-b-01-01-01",
-                            "type": "goal",
+                            "id": "2020-02-b-01-01-01-02-01",
+                            "type": "repeatable",
                             "questions": [
                               {
-                                "id": "2020-02-b-01-01-01-01",
+                                "id": "2020-02-b-01-01-01-02-01-01",
                                 "label": "Briefly describe your goal.",
                                 "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
-                                "type": "text_long",
+                                "type": "text_multiline",
                                 "answer": {
                                   "entry": null
                                 }
                               },
                               {
-                                "id": "2020-02-b-01-01-01-02",
+                                "id": "2020-02-b-01-01-01-02-01-02",
                                 "label": "What type of goal is it?",
                                 "type": "radio",
                                 "answer": {
@@ -374,18 +375,18 @@
                                 },
                                 "questions": [
                                   {
-                                    "id": "2020-02-b-01-01-01-02-a",
+                                    "id": "2020-02-b-01-01-01-02-01-02-a",
                                     "label": "Why was this goal discontinued?",
-                                    "type": "text_long",
+                                    "type": "text_multiline",
                                     "answer": {
                                       "entry": null
                                     },
                                     "context_data": {
                                       "conditional_display": {
                                         "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-02-b-01-01-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "comment": "Interactive: Hide if 2020-02-b-01-01-01-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                         "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
+                                          "target": "$..*[?(@.id=='2020-02-b-01-01-01-02-01-02')].answer.entry",
                                           "values": {
                                             "interactive": [
                                               null,
@@ -408,7 +409,7 @@
                                 "label": "Define the numerator you're measuring",
                                 "questions": [
                                   {
-                                    "id": "2020-02-b-01-01-01-03",
+                                    "id": "2020-02-b-01-01-01-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
                                     "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
                                     "type": "integer",
@@ -417,7 +418,7 @@
                                     }
                                   },
                                   {
-                                    "id": "2020-02-b-01-01-01-04",
+                                    "id": "2020-02-b-01-01-01-02-01-04",
                                     "label": "Numerator (total number)",
                                     "type": "integer",
                                     "answer": {
@@ -431,7 +432,7 @@
                                 "label": "Define the denominator you're measuring",
                                 "questions": [
                                   {
-                                    "id": "2020-02-b-01-01-01-05",
+                                    "id": "2020-02-b-01-01-01-02-01-05",
                                     "label": "Which population are you measuring in the denominator?",
                                     "hint": "For example: The total number of eligible children in the last federal fiscal year.",
                                     "type": "integer",
@@ -440,7 +441,7 @@
                                     }
                                   },
                                   {
-                                    "id": "2020-02-b-01-01-01-06",
+                                    "id": "2020-02-b-01-01-01-02-01-06",
                                     "label": "Denominator (total number)",
                                     "type": "integer",
                                     "answer": {
@@ -453,13 +454,13 @@
                                 "type": "fieldset",
                                 "fieldset_type": "percentage",
                                 "fieldset_info": {
-                                    "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-04')].answer.entry",
-                                    "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-06')].answer.entry"
+                                    "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-02-01-04')].answer.entry",
+                                    "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-02-01-06')].answer.entry"
                                 },
                                 "questions": []
                               },
                               {
-                                "id": "2020-02-b-01-01-01-07",
+                                "id": "2020-02-b-01-01-01-02-01-07",
                                 "label": "What is the date range of your data?",
                                 "type": "daterange",
                                 "answer": {
@@ -471,7 +472,7 @@
                                 }
                               },
                               {
-                                "id": "2020-02-b-01-01-01-08",
+                                "id": "2020-02-b-01-01-01-02-01-08",
                                 "label": "Which data source did you use?",
                                 "type": "radio",
                                 "answer": {
@@ -484,31 +485,31 @@
                                 }
                               },
                               {
-                                "id": "2020-02-b-01-01-01-09",
+                                "id": "2020-02-b-01-01-01-02-01-09",
                                 "label": "How did your progress towards your goal last year compare to your previous year\u2019s progress?",
-                                "type": "text_long",
+                                "type": "text_multiline",
                                 "answer": {
                                   "entry": null
                                 }
                               },
                               {
-                                "id": "2020-02-b-01-01-01-10",
+                                "id": "2020-02-b-01-01-01-02-01-10",
                                 "label": "What are you doing to continually make progress towards your goal?",
-                                "type": "text_long",
+                                "type": "text_multiline",
                                 "answer": {
                                   "entry": null
                                 }
                               },
                               {
-                                "id": "2020-02-b-01-01-01-11",
+                                "id": "2020-02-b-01-01-01-02-01-11",
                                 "label": "Anything else you'd like to tell us about this goal?",
-                                "type": "text_long",
+                                "type": "text_multiline",
                                 "answer": {
                                   "entry": null
                                 }
                               },
                               {
-                                "id": "2020-02-b-01-01-01-12",
+                                "id": "2020-02-b-01-01-01-02-01-12",
                                 "label": "Do you have any supporting documentation?",
                                 "hint": "Optional",
                                 "type": "file_upload",
