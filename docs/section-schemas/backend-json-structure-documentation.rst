@@ -63,10 +63,10 @@ As an example, if the form had a Section 23 and that section was extremely simpl
                         "header": "Sagacity",
                         "questions": [{
                                 "id": "2020-23-a-01-01",
-                                "type": "text_long",
+                                "type": "text_medium",
                                 "text": "To be, or not to be?",
                                 "answer": {
-                                    "type": "text_long",
+                                    "type": "string",
                                     "entry": null
                                 }}]}]}]}
 
@@ -90,10 +90,10 @@ If the user answered the long question with “Take up arms against a sea of tro
                         "header": "Sagacity",
                         "questions": [{
                                 "id": "2020-23-a-01-01",
-                                "type": "text_long",
+                                "type": "text_medium",
                                 "text": "To be, or not to be?",
                                 "answer": {
-                                    "type": "text_long",
+                                    "type": "string",
                                     "entry": "Take up arms against a sea of troubles"
                                 }}]}]}]}
 
@@ -639,14 +639,14 @@ An example:
 ..  code:: json
 
     {
-      "type": "text_long",
+      "type": "text_medium",
       "id": "2020-01-a-01",
       "answer": {
         "entry": "I'm over here"
       }
     },
     {
-      "type": "text_long",
+      "type": "text_medium",
       "id": "2020-01-a-02",
       "answer": {
         "entry": "And I'm over here"
@@ -774,7 +774,7 @@ An example:
         {
           "id": "2020-02-a-01",
           "label": "How does this table make you feel?",
-          "type": "text_long",
+          "type": "text_multiline",
           "answer": {"entry": null}
         }
       ]
@@ -793,8 +793,8 @@ This would produce something like:
 
     How does this table make you feel?
 
-``text_long``
-+++++++++++++
+``text_multiline``
+++++++++++++++++++
 A long string. As this will probably be represented by the ``TEXT`` type in Postgres, its max length should be longer than anything we will realistically encounter. Its ``entry`` value should be represented as a string. It has optional properties:
 
 ``max_length``
@@ -809,6 +809,14 @@ A long string. As this will probably be represented by the ``TEXT`` type in Post
     The minimum length of the string. The backend will accept submissions with answers shorter than this limit and may mark them as invalid.
 
     If absent or set to 0, no minimum will be enforced.
+
+``text_medium``
++++++++++++++++++++++++++
+A medium-sized text entry field that doesn't need multiple lines.
+
+``text_small``
++++++++++++++++++++++++++
+A small text entry field.
 
 ``radio``
 +++++++++
@@ -931,7 +939,7 @@ The first objective in an array of objectives has an answer—the description of
 
 Questions of the type ``objectives`` have a ``questions`` property, and the immediate children in that array must be questions of type ``objective``.
 
-Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_long`` (for the description) and question of the type ``repeatables``.
+Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_multiline`` (for the description) and question of the type ``repeatables``.
 
 Questions of the type ``repeatables`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``repeatable``.
 
@@ -961,7 +969,7 @@ When creating new goals and/or objectives, the frontend must
     
     The lone (initial) direct child in its ``questions`` property has a type of ``objective``, and an ``id`` of ``2020-02-b-01-01-01`` (year, section, subsection, part, question, objective).
 
-    The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_long``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).
+    The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_multiline``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).
 
     The second direct child of the ``questions`` property of that ``objective`` question has a type of ``repeatables``, and an ``id`` of ``2020-02-b-01-01-01-02`` (year, section, subsection, part, question, objective, question).
 
@@ -1015,7 +1023,7 @@ This is one approach to the above process for adding a new objective (it assumes
 
 ``objective``
 +++++++++++++
-A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_long`` for the description of the objective, and one of the type ``repeatables`` to contain the goals for the objective.
+A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_multiline`` for the description of the objective, and one of the type ``repeatables`` to contain the goals for the objective.
 
 ``repeatables``
 +++++++++++++++
