@@ -1,0 +1,57 @@
+{
+  "section": {
+    "year": 2020,
+    "state": null,
+    "valid": null,
+    "ordinal": 5,
+    "id": "2020-05",
+    "type": "section",
+    "title": "Challenges and Accomplishments",
+    "subsections": [
+      {
+        "type": "subsection",
+        "id": "2020-05-a",
+        "parts": [
+          {
+            "id": "2020-05-a-01",
+            "type": "part",
+            "questions": [
+              {
+                "id": "2020-05-a-01-01",
+                "label": "How has your state’s political and fiscal environment affected your ability to provide healthcare to low-income children and families?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-05-a-01-02",
+                "label": "What’s the greatest challenge your CHIP program has experienced in the past federal fiscal year (FFY)?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-05-a-01-02",
+                "label": "What are some of the greatest accomplishments your CHIP program has experienced in the past FFY?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-05-a-01-04",
+                "label": "Anything else you’d like to add about your state’s challenges and accomplishments?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -369,8 +369,9 @@
               "phone_number",
               "radio",
               "ranges",
-              "text_long",
-              "text_short"
+              "text_medium",
+              "text_multiline",
+              "text_small"
             ]
           },
           "hint": {

@@ -32,7 +32,7 @@
                   {
                     "id": "2020-03-a-01-01-a",
                     "label": "What are you doing differently?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -73,7 +73,7 @@
                   {
                     "id": "2020-03-a-01-02-a",
                     "label": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -102,7 +102,7 @@
                 "id": "2020-03-a-01-03",
                 "label": "What methods have been most effective in reaching low-income, uninsured children?",
                 "hint": "For example: TV, school outreach, or word of mouth.",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -110,7 +110,7 @@
               {
                 "id": "2020-03-a-01-04",
                 "label": "Anything else you\u2019d like to add about your outreach efforts?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -145,7 +145,7 @@
                   {
                     "id": "2020-03-b-01-01-a",
                     "label": "What percent of children who enrolled in CHIP had access to private health insurance at the time of application?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -188,7 +188,7 @@
                   {
                     "id": "2020-03-b-01-02-a",
                     "label": "Which database do you use?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -237,7 +237,7 @@
                           {
                             "id": "2020-03-b-01-03-a",
                             "label": "How long is the waiting period?",
-                            "type": "text_long",
+                            "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
@@ -245,7 +245,7 @@
                           {
                             "id": "2020-03-b-01-03-b",
                             "label": "Which populations does the waiting period apply to?  (Include FPLs for each group.)",
-                            "type": "text_long",
+                            "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
@@ -253,7 +253,7 @@
                           {
                             "id": "2020-03-b-01-03-c",
                             "label": "What exemptions apply to the waiting period?",
-                            "type": "text_long",
+                            "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
@@ -261,7 +261,7 @@
                           {
                             "id": "2020-03-b-01-03-c",
                             "label": "What percent of children subject to the waiting period meet an exemption?",
-                            "type": "text_long",
+                            "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
@@ -273,7 +273,7 @@
                   {
                     "id": "2020-03-b-01-04",
                     "label": "What percent of children screened for S-CHIP eligibility cannot be enrolled because they have group health plan coverage?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     }
@@ -290,7 +290,7 @@
               {
                 "id": "2020-03-b-01-05",
                 "label": "Anything else you\u2019d like to add about crowd-out that wasn\u2019t already covered? Did you run into any limitations when collecting data?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -346,7 +346,7 @@
                   {
                     "id": "2020-03-d-01-02-a",
                     "label": "What information or tools do you provide families with so they can track cost sharing?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -378,7 +378,7 @@
                   {
                     "id": "2020-03-d-01-02-b",
                     "label": "Who tracks cost sharing?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -429,7 +429,7 @@
               {
                 "id": "2020-03-d-01-03",
                 "label": "How are healthcare providers notified that they shouldn\u2019t charge families once families have reached the 5% cap?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
@@ -454,7 +454,7 @@
               {
                 "id": "2020-03-d-01-04",
                 "label": "Approximately how many families exceeded the 5% cap in the last federal fiscal year?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
@@ -491,7 +491,7 @@
                   {
                     "id": "2020-03-d-01-05-a",
                     "label": "What did you find in your assessment?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -548,7 +548,7 @@
                   {
                     "id": "2020-03-d-01-06-a",
                     "label": "What did you find in your assessment?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -593,7 +593,7 @@
               {
                 "id": "2020-03-d-01-07",
                 "label": "You indicated in Section 1 that you changed your cost sharing requirements in the past federal fiscal year. How are you monitoring the impact of these changes on whether families apply, enroll, disenroll, and use CHIP health services? What have you found when monitoring the impact?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
@@ -621,7 +621,7 @@
               {
                 "id": "2020-03-d-01-08",
                 "label": "Anything else you\u2019d like to add that wasn\u2019t already covered?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
@@ -723,7 +723,7 @@
               {
                 "id": "2020-03-e-01-03",
                 "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -731,7 +731,7 @@
               {
                 "id": "2020-03-e-01-04",
                 "label": "Which benefit package is offered as part of your premium assistance program?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -800,7 +800,7 @@
                   {
                     "id": "2020-03-e-01-09-a",
                     "label": "How do you track cost sharing to ensure families don\u2019t pay more than 5% of the aggregate household income in a year?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -828,7 +828,7 @@
               {
                 "id": "2020-03-e-01-10",
                 "label": "How many children were enrolled monthly in the premium assistance program on average each month in the last FFY?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -836,7 +836,7 @@
               {
                 "id": "2020-03-e-01-11",
                 "label": "What\u2019s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1027,7 +1027,7 @@
               {
                 "id": "2020-03-e-01-22",
                 "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1035,7 +1035,7 @@
               {
                 "id": "2020-03-e-01-23",
                 "label": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you\u2019ve measured this impact, how have you done so?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1043,7 +1043,7 @@
               {
                 "id": "2020-03-e-01-24",
                 "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1051,7 +1051,7 @@
               {
                 "id": "2020-03-e-01-25",
                 "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1059,7 +1059,7 @@
               {
                 "id": "2020-03-e-01-26",
                 "label": "Anything else you\u2019d like to add that wasn\u2019t already covered?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1281,7 +1281,7 @@
                   {
                     "id": "2020-03-f-01-15-a",
                     "label": "How do you provide oversight of the contractors? ",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -1321,7 +1321,7 @@
                   {
                     "id": "2020-03-f-01-16-a",
                     "label": "What specifically are they responsible for in terms of oversight?",
-                    "type": "text_long",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -1349,7 +1349,7 @@
               {
                 "id": "2020-03-f-01-17",
                 "label": "Anything else you\u2019d like to add that wasn\u2019t already covered?",
-                "type": "text_long",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -1430,7 +1430,7 @@
                     "questions": [
                       {
                         "id": "2020-03-i-02-01-01-01",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "label": "What is the name of your HSI program?",
                         "answer": {
                           "entry": null
@@ -1438,7 +1438,7 @@
                       },
                       {
                         "id": "2020-03-i-02-01-01-02",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "label": "Which populations are served by your HSI program?",
                         "answer": {
                           "entry": null
@@ -1467,7 +1467,7 @@
                       },
                       {
                         "id": "2020-03-i-02-01-01-05",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact.",
                         "answer": {
                           "entry": null
@@ -1475,7 +1475,7 @@
                       },
                       {
                         "id": "2020-03-i-02-01-01-06",
-                        "type": "text_long",
+                        "type": "text_multiline",
                         "label": "What outcomes have you found in measuring the impact?",
                         "answer": {
                           "entry": null
@@ -1512,7 +1512,7 @@
             "questions": [
               {
                 "id": "2020-03-i-03-01",
-                "type": "text_long",
+                "type": "text_multiline",
                 "label": "Anything else you’d like to add about your HSI programs?",
                 "answer": {
                   "entry": "null"
