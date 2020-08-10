@@ -28,7 +28,11 @@ router.register(r'sectionschemas', views.SectionSchemaViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path("report/<int:year>/<str:state>", views.report),
+    path("report/<int:year>/<str:state>/", views.report),
+    path("data/<int:year>/<str:state>/", views.section_by_year_and_state),
+    path("structure/<int:year>/<int:section>/",
+         views.sectionbase_by_year_and_section),
+    path("subsection/<str:subsection>/", views.sectionbase_subsection),
     # path('api-auth/', include('rest_framework.urls',
     #  namespace='rest_framework'))
 ]

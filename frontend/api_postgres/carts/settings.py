@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.staticfiles',
     'rest_framework',
+    'carts',
     'carts.carts_api'
 ]
 
