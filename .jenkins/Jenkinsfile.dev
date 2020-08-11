@@ -76,7 +76,7 @@ pipeline {
         }
         
         
-        sh 'docker run -v ${PWD}/frontend/react:/app node:14.4.0 -w /app npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start build'
+        sh 'docker run -v ${PWD}/frontend/react:/app node:14.4.0  npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start build'
         
       }
     }
