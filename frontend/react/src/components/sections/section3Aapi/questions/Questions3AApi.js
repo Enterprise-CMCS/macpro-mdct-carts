@@ -42,23 +42,22 @@ class Questions3AApi extends Component {
 
                     {question.type === "radio" || question.type === "checkbox"
                       ? Object.entries(question.answer.options).map(
-                          (key, index) => {
-                            return (
-                              <CMSChoice
-                                name={question.id}
-                                value={key[1]}
-                                label={key[0]}
-                                type={question.type}
-                                answer={question.answer.entry}
-                                conditional={question.context_data}
-                                children={question.questions}
-                                valueFromParent={this.state[question.id]}
-                                onChange={this.handleChange}
-                                key={index}
-                              />
-                            );
-                          }
-                        )
+                        (key, index) => {
+                          return (
+                            <CMSChoice
+                              name={question.id}
+                              value={key[1]}
+                              label={key[0]}
+                              type={question.type}
+                              answer={question.answer.entry}
+                              children={question.questions}
+                              valueFromParent={this.state[question.id]}
+                              onChange={this.handleChange}
+                              key={index}
+                            />
+                          );
+                        }
+                      )
                       : null}
 
                     {/* If textarea */}
@@ -77,7 +76,7 @@ class Questions3AApi extends Component {
                     ) : null}
                     {/* If FPL Range */}
                     {question.type === "ranges" && (
-                      <FPL label={question.label} />
+                      <FPL label={question.label} fieldLabels={question.answer.range_categories} />
                     )}
                   </fieldset>
                 </div>
