@@ -453,6 +453,7 @@ Fieldsets do not have ``id`` properties, and the questions within them increment
 
 Special ``fieldset`` types
 **************************
+Special ``fieldset`` types that don't necessarily contain questions. They must still have a ``questions`` field because these uses are outliers and it makes more sense to require the field for the vast majority of uses that do contain questions.
 
 ``synthesized_value``
 #####################
@@ -470,6 +471,9 @@ Supported actions are:
     Return the value unchanged, except that it's now in an array.
 ``sum``
     Add all of the values and return the result. This probably implies casting them to number types first.
+``percentage``
+    Divide the contents of the first target by the contents of the second target, multiply by 100. This probably implies casting them to number types first. The default is to round to two decimal places, but if a ``precision`` property is also present, its integer value will be used to determing how many digits of precision are required (``0`` would mean round to the nearest integer, ``2`` would mean round to the second decimal place, etc.),
+
 
 The property is called ``actions``, but hopefully we'll only ever need to have one action listed, and thus won't have to define what happens in what order if there are multiple values.
 
@@ -511,6 +515,45 @@ Example of ``sum``:
 
 
 The above would display the two questions, and below them a label followed by the sum of the two answers.
+
+Example of ``percentage``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "questions": [
+        {
+          "id": "2020-02-b-01-01-01-01",
+          "label": "How many fables were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        },
+        {
+          "id": "2020-02-b-01-01-01-02",
+          "label": "How many stories were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Total number of loosely-defined tales of the fantastical",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
+          "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"
+        ],
+        "actions": ["percentage"],
+        "precision": 0
+
+      }
+    }
+
+
+The above would display the two questions, and below them a label followed by a percentage (100 × the number of fables divided by the number of stories). Because ``precision: 0`` is present, the number would be rounded to the nearest integer.
 
 Example of ``identity``:
 
@@ -555,71 +598,6 @@ Example of using ``contents``:
     }
 
 The above would display ``The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998`` and ``12.2``.
-
-
-``percentage``
-##############
-This displays a percentage field as an aid to the user, calculating it from two fields other fields. Those other fields are specified in the ``fieldset_info`` object.
-
-The percentage value would be displayed at the end of wherever the fieldset is in the hierarchy, and isn't necessarily dependent on the locations of the target questions in the hierarchy.
-
-The ``fieldset_info`` object for ``percentage`` has two properties, ``numerator`` and ``denominator``, each of which contains a string that is a JSON Path expression of the target. For example:
-
-..  code:: json
-
-      {
-        "type": "fieldset",
-        "label": "Define the numerator you're measuring",
-        "questions": [
-          {
-            "id": "2020-02-b-01-01-01-03",
-            "label": "Which population are you measuring in the numerator?",
-            "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
-            "type": "integer",
-            "answer": { "entry": null }
-          },
-          {
-            "id": "2020-02-b-01-01-01-04",
-            "label": "Numerator (total number)",
-            "type": "integer",
-            "answer": { "entry": null }
-          }
-        ]
-      },
-      {
-        "type": "fieldset",
-        "label": "Define the denominator you're measuring",
-        "questions": [
-          {
-            "id": "2020-02-b-01-01-01-05",
-            "label": "Which population are you measuring in the denominator?",
-            "hint": "For example: The total number of eligible children in the last federal fiscal year.",
-            "type": "integer",
-            "answer": { "entry": null }
-          },
-          {
-            "id": "2020-02-b-01-01-01-06",
-            "label": "Denominator (total number)",
-            "type": "integer",
-            "answer": { "entry": null }
-          }
-        ]
-      },
-      {
-        "type": "fieldset",
-        "fieldset_type": "percentage",
-        "fieldset_info": {
-            "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-04')].answer.entry",
-            "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-06')].answer.entry"
-        },
-        "questions": []
-      }
-
-Here the ``fieldset`` at the end would contain no questions and would indicate where in the document the percentage calculated from the targeted fields would be displayed. It still has a ``questions`` field because this is an outlier and it makes more sense to require the field for the vast majority of uses that do contain questions.
-
-..  note:: Tentative
-
-   This approach to handling ``percentage`` isn't final.
 
 ``synthesized_table``
 ########################
