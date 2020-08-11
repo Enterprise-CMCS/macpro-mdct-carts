@@ -771,13 +771,14 @@ This would produce something like:
 
     How does this table make you feel?
 
-``unmarked``
-############
+``unmarked_descendants``
+########################
+
 This fieldset contains questions that aren't really being collected and are purely ways of letting users indicate that they do not have the ability to answer certain questions—for example, in the infamous Section 3C, Part 4 has a checkbox that lets the user indicate whether or not they only have totals for the following questions, or whether they have breakdowns\ [#]_. Since the following answers will make clear what data they have available, the state of the checkbox isn't really part of the collected data. It'll still be recorded, but will be marked as distinct.
 
-The main implications of this are that questions in an ``unmarked`` fieldset (or any questions that are descendants of an ``unmarked`` fieldset) do not have list markers, and their ids do not follow the structure of other ids.
+The main implications of this are that questions in an ``unmarked_descendants`` fieldset (or any questions that are descendants of an ``unmarked_descendants`` fieldset) do not have list markers, and their ids do not follow the structure of other ids.
 
-The values for the ``id`` properties of the questions that are descendants of an ``unmarked`` fieldset should be the same as the question immediately preceding them, but with ``-unmarked`` appended. For example, in Section 3C Part 4, the aforementioned checkbox comes right after question ``2020-03-c-04-01``. I would therefore give its ``id`` property a value of ``2020-03-c-04-01-unmarked``. If there were multiple ``unmarked`` questions for some reason, I would increment them as if they were real questions—but ``-unmarked`` would still need to be appended to their ``id`` values.
+The values for the ``id`` properties of the questions that are descendants of an ``unmarked_descendants`` fieldset should be the same as the question immediately preceding them, but with ``-unmarked_descendants`` appended. For example, in Section 3C Part 4, the aforementioned checkbox comes right after question ``2020-03-c-04-01``. I would therefore give its ``id`` property a value of ``2020-03-c-04-01-unmarked_descendants``. If there were multiple ``unmarked_descendants`` questions for some reason, I would increment them as if they were real questions—but ``-unmarked_descendants`` would still need to be appended to their ``id`` values.
 
 .. [#]  Data broken down into age cohorts, not the other kind of breakdown associated with exposure to that section.
 
