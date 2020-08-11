@@ -42,22 +42,22 @@ class Questions1 extends Component {
                 {!part.context_data.show_if_state_program_type_in.includes(
                   stateProgram
                 ) ? (
-                  <div class="ds-c-alert ds-c-alert--hide-icon">
-                    <div class="ds-c-alert__body">
-                      <h3 class="ds-c-alert__heading">
-                        {part.context_data.skip_text}
-                      </h3>
+                    <div class="ds-c-alert ds-c-alert--hide-icon">
+                      <div class="ds-c-alert__body">
+                        <h3 class="ds-c-alert__heading">
+                          {part.context_data.skip_text}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  part.questions.map((question) => (
-                    <div className="question">
-                      <fieldset className="ds-c-fieldset">
-                        <CMSLegend label={question.label} id={question.id} />
+                  ) : (
+                    part.questions.map((question) => (
+                      <div className="question">
+                        <fieldset className="ds-c-fieldset">
+                          <CMSLegend label={question.label} id={question.id} />
 
-                        {question.type === "radio" ||
-                        question.type === "checkbox"
-                          ? Object.entries(question.answer.options).map(
+                          {question.type === "radio" ||
+                            question.type === "checkbox"
+                            ? Object.entries(question.answer.options).map(
                               (key, index) => {
                                 return (
                                   <CMSChoice
@@ -74,31 +74,31 @@ class Questions1 extends Component {
                                 );
                               }
                             )
-                          : null}
+                            : null}
 
-                        {/* If textarea */}
-                        {question.type === "text_long" ? (
-                          <div>
-                            <textarea
-                              class="ds-c-field"
-                              name={question.id}
-                              value={question.answer.entry}
-                              type="text"
-                              name={question.id}
-                              rows="6"
-                            />
-                          </div>
-                        ) : null}
-                        {/* If FPL Range */}
-                        {question.type === "ranges" ? (
-                          <div>
-                            <FPL label={question.label} />
-                          </div>
-                        ) : null}
-                      </fieldset>
-                    </div>
-                  ))
-                )}
+                          {/* If textarea */}
+                          {question.type === "text_long" ? (
+                            <div>
+                              <textarea
+                                class="ds-c-field"
+                                name={question.id}
+                                value={question.answer.entry}
+                                type="text"
+                                name={question.id}
+                                rows="6"
+                              />
+                            </div>
+                          ) : null}
+                          {/* If FPL Range */}
+                          {question.type === "ranges" ? (
+                            <div>
+                              <FPL label={question.label} />
+                            </div>
+                          ) : null}
+                        </fieldset>
+                      </div>
+                    ))
+                  )}
               </div>
             ))}
           </div>
