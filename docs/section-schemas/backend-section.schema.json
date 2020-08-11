@@ -488,6 +488,9 @@
                       },
                       {
                         "type": "string"
+                      },
+                      {
+                        "type": "boolean"
                       }
                     ]
                   }
@@ -504,6 +507,9 @@
                       },
                       {
                         "type": "string"
+                      },
+                      {
+                        "type": "boolean"
                       }
                     ]
                   }
