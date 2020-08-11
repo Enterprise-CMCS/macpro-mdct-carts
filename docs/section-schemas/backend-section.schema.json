@@ -420,7 +420,8 @@
             "noninteractive_table",
             "sum",
             "synthesized_table",
-            "synthesized_value"
+            "synthesized_value",
+            "unmarked"
           ]
         },
         "fieldset_info": {
