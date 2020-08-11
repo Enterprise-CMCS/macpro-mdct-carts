@@ -847,6 +847,11 @@ A set of choices, multiples of which can be chosen. Its ``entry`` value should b
             "Sleeping": "sleeping"
         }
 
+
+``checkbox_flag``
++++++++++++++++++
+A single checkbox; if checked, its value is ``True``, otherwise it's ``null`` or ``False``. Its ``answer.options`` property object should always have a ``type`` of ``boolean``,
+
 ``money``
 +++++++++
 A short string that can represent an integer or a float. Constrained to two decimal places.
