@@ -414,10 +414,10 @@
         },
         "fieldset_type": {
           "enum": [
-            "percentage",
+            "noninteractive_table",
             "sum",
             "synthesized_table",
-            "noninteractive_table"
+            "synthesized_value"
           ]
         },
         "fieldset_info": {
