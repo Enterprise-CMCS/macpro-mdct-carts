@@ -75,7 +75,7 @@ pipeline {
 
             # Build static zip
             docker run -v $(pwd)/frontend/react:/app node:14.4.0 npm run build
-
+            docker ps 
           }
         }
       }
