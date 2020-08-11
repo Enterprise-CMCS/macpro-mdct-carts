@@ -59,7 +59,8 @@ pipeline {
         }
       }
     }
-    stage("Build/Push Images") {
+
+    stage("Build and push artifacts") {
       when {
         expression { env.DEPLOY == "true"}
       }
@@ -70,11 +71,17 @@ pipeline {
             jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.BRANCH_NAME])
+    ###     jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.BRANCH_NAME])
+
+            # Build static zip
+            docker run -v $(pwd)/frontend/react:/app node:14.4.0 npm run build
+
           }
         }
       }
     }
+
+
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
@@ -85,7 +92,7 @@ pipeline {
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
+      ##  jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
         }
       }
       post {
@@ -96,6 +103,9 @@ pipeline {
         }
       }
     }
+
+
+
     stage("Deploy Data Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -121,6 +131,8 @@ pipeline {
         }
       }
     }
+  /*
+
     stage("Deploy Frontend Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -166,6 +178,9 @@ pipeline {
         }
       }
     }
+
+    */
+    
     stage("Destroy at the end") {
       when {
         expression { env.DESTROY_AT_THE_END == "true"}
