@@ -406,6 +406,9 @@
         "type": {
           "const": "fieldset"
         },
+        "comment": {
+          "type": "string"
+        },
         "label": {
           "type": "string"
         },
