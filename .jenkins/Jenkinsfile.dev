@@ -79,7 +79,6 @@ pipeline {
       }
     }
 
-
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
@@ -129,7 +128,7 @@ pipeline {
         }
       }
     }
-  /*
+ 
 
     stage("Deploy Frontend Layer") {
       when {
@@ -177,7 +176,7 @@ pipeline {
       }
     }
 
-    */
+    
     
     stage("Destroy at the end") {
       when {
