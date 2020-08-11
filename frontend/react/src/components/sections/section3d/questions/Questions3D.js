@@ -7,7 +7,7 @@ import CMSLegend from "../../../fields/CMSLegend";
 import { TextField } from "@cmsgov/design-system-core";
 
 // Get subsection of DATA
-const sectionData = Data.section.subsections[4];
+const sectionData = Data.section.subsections[3];
 
 class Questions3d extends Component {
   constructor(props) {

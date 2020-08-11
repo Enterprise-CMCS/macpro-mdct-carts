@@ -11,7 +11,7 @@ import {
   TabPanel,
 } from "@cmsgov/design-system-core";
 
-const sectionData = Data.section.subsections[4];
+const sectionData = Data.section.subsections[3];
 
 class Section3d extends Component {
  constructor(props) {
