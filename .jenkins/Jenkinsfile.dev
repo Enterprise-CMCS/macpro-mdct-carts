@@ -22,7 +22,6 @@ pipeline {
           currentBuild.displayName = env.BUILD_TAG
 
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
-
           jenkinsUtils.installAwsCli()
           jenkinsUtils.installTerraform("0.12.24")
 
@@ -69,7 +68,12 @@ pipeline {
             }
         }
         steps {
-            sh 'npm install'
+            sh 'ls -la'
+            sh 'npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start'
+            sh 'cp -r package*.json ./'
+            sh 'npm ci'
+            sh 'npm run build'
+            
         }
     }
     
@@ -88,11 +92,7 @@ pipeline {
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])  
             
           }
-        }
-        
-        
-        sh 'docker run -v ${PWD}/frontend/react:/app node:14.4.0  npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start build'
-        
+       }          
       }
     }
 
