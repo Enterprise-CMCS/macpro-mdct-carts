@@ -15,9 +15,9 @@ FROM dev as builder
 
 #install aws cli
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
-        unzip awscliv2.zip &&\
-        ./aws/install
+#RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
+ #       unzip awscliv2.zip &&\
+  #      ./aws/install
 
 
 # Copy package.json and package-lock.json
@@ -45,11 +45,11 @@ RUN npm run build
 
 
 
-COPY ./s3sync.sh /
+#COPY ./s3sync.sh /
 
-RUN chmod +x /s3sync.sh
+#RUN chmod +x /s3sync.sh
 
-CMD ["/bin/bash", "-c", "/s3sync.sh"]
+#CMD ["/bin/bash", "-c", "/s3sync.sh"]
 
 #CMD ["s3", "sync", "/app/build", "s3://cartsui-cloudfront-origin"]
 
