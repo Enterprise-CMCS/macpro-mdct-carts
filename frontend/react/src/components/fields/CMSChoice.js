@@ -64,7 +64,7 @@ class CMSChoice extends Component {
         // Add fields to render array based on type (from api)
         switch (item.type) {
           case "text_long":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
               fields.push(
@@ -74,7 +74,7 @@ class CMSChoice extends Component {
                     id={item.id}
                     type="subquestion"
                   />
-                  <textarea
+                  <TextField
                     class="ds-c-field"
                     name={item.id}
                     value={item.answer.entry}
@@ -95,7 +95,7 @@ class CMSChoice extends Component {
               const isCheckedChild =
                 key[1] === item.answer.entry ? "checked" : null;
 
-              // Check if question (toMatch) matches the currently selected option (parent)
+              // Check if question matches the currently selected option (from parent)
               if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
                 return fields.push(
@@ -124,7 +124,7 @@ class CMSChoice extends Component {
             });
             break;
           case "ranges":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
 
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
@@ -141,7 +141,7 @@ class CMSChoice extends Component {
             }
             break;
           case "money":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
 
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
