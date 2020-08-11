@@ -19,7 +19,7 @@ The form is hierarchical::
                 Question
                     Subquestion
 
-However, a variety of special cases make the hierarchy less straightforward (in particular, ``goals`` and ``objectives``).
+However, a variety of special cases make the hierarchy less straightforward (in particular, ``repeatables`` and ``objectives``).
 
 The ``fieldset`` construct is not quite analogous to the HTML element with the same name; in most cases they go together, but not always. See `Fieldsets`_ for more information.
 
@@ -63,10 +63,10 @@ As an example, if the form had a Section 23 and that section was extremely simpl
                         "header": "Sagacity",
                         "questions": [{
                                 "id": "2020-23-a-01-01",
-                                "type": "text_long",
+                                "type": "text",
                                 "text": "To be, or not to be?",
                                 "answer": {
-                                    "type": "text_long",
+                                    "type": "string",
                                     "entry": null
                                 }}]}]}]}
 
@@ -90,10 +90,10 @@ If the user answered the long question with “Take up arms against a sea of tro
                         "header": "Sagacity",
                         "questions": [{
                                 "id": "2020-23-a-01-01",
-                                "type": "text_long",
+                                "type": "text",
                                 "text": "To be, or not to be?",
                                 "answer": {
-                                    "type": "text_long",
+                                    "type": "string",
                                     "entry": "Take up arms against a sea of troubles"
                                 }}]}]}]}
 
@@ -127,6 +127,8 @@ Section 3E
     This only applies to a specific subset of states, and should be skipped or shown based on information about states that will have to be handled with custom code.
 
     In addition, questions 12–17 have their answers compiled into a table for display, interaction that will be handled entirely in custom code.
+Section 3I
+    The HSI Programs here are repeatables, similar to goals in Section 2B.
 
 Section
 -------
@@ -240,7 +242,7 @@ Parts are contained by subsections.
     Comment directed at developer or admin users.
 
 ``context_data``
-
+----------------
 A property that contains data about whether and/or how the segment should be displayed.
 
 ``bullet_text`` (optional)
@@ -251,6 +253,10 @@ A property that contains data about whether and/or how the segment should be dis
     Boolean.
 
     Present and ``true`` if the UI is supposed to display data from the prior year as an aid to data entry.
+``enable_copying_prior_year_data`` (optional)
+    Boolean.
+
+    Present and ``true`` if the UI is supposed to help the user copy over data from the prior year.
 ``conditional_display`` (optional)
     Extremely limited logic mini-schema to control display of questions. See `Conditional display`_ below.
 ``interactive_conditional`` (optional)
@@ -447,6 +453,110 @@ Fieldsets do not have ``id`` properties, and the questions within them increment
 
 Special ``fieldset`` types
 **************************
+
+``synthesized_value``
+#####################
+Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result.
+
+Both ``targets`` and ``actions`` expect arrays.
+
+For convenience, there is also a ``contents`` property that can be used instead of the above if all that's desired is to display a literal value. This property isn't too useful on its own (because you could just put the literal value into the ``label`` property of a fieldset), but becomes useful with ``synthesized_table``, which expects objects of the same shape.
+
+The value of the ``contents`` property can be a string, integer, or float.
+
+Supported actions are:
+
+``identity``
+    Return the value unchanged, except that it's now in an array.
+``sum``
+    Add all of the values and return the result. This probably implies casting them to number types first.
+
+The property is called ``actions``, but hopefully we'll only ever need to have one action listed, and thus won't have to define what happens in what order if there are multiple values.
+
+If ``actions`` is empty, we should assume that this is equivalent to having a value of ``["identity"]``.
+
+Example of ``sum``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "questions": [
+        {
+          "id": "2020-02-b-01-01-01-01",
+          "label": "How many fables were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        },
+        {
+          "id": "2020-02-b-01-01-01-02",
+          "label": "How many fairy tales were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Total number of loosely-defined tales of the fantastical",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
+          "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"
+        ],
+        "actions": ["sum"]
+      }
+    }
+
+
+The above would display the two questions, and below them a label followed by the sum of the two answers.
+
+Example of ``identity``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Your answer to Section 1A, Part 23, Question 147",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='2020-01-a-23-147')].answer.entry",
+        ],
+        "actions": ["identity"]
+      },
+    },
+    {
+      "type": "fieldset",
+      "questions": [
+        {
+          "id": "2020-02-b-01-01-01-01",
+          "label": "Attempt to justify your above answer to Section 1A, Part 23, Question 147",
+          "type": "integer",
+          "answer": { "entry": null }
+        }
+      ]
+    }
+
+The above would display a question accompanied by the user's answer to the indicated question from another section.
+
+Example of using ``contents``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998",
+      "fieldset_info": {
+        "contents": 12.2,
+      },
+    }
+
+The above would display ``The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998`` and ``12.2``.
+
+
 ``percentage``
 ##############
 This displays a percentage field as an aid to the user, calculating it from two fields other fields. Those other fields are specified in the ``fieldset_info`` object.
@@ -456,7 +566,6 @@ The percentage value would be displayed at the end of wherever the fieldset is i
 The ``fieldset_info`` object for ``percentage`` has two properties, ``numerator`` and ``denominator``, each of which contains a string that is a JSON Path expression of the target. For example:
 
 ..  code:: json
-
 
       {
         "type": "fieldset",
@@ -522,25 +631,22 @@ The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
 
 ``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
 
-Values for those arrays are objects with either a ``contents`` property or a ``target`` property.
+Values for those arrays are objects with the same shape as those for ``synthesized_value``, that is, with either a ``contents`` property or both ``targets`` and ``actions`` properties.
 
-The value of the ``contents`` property can be a string, integer, or float.
-
-The value of the ``target`` property is a string representing the JSON Path of the location of the target value.
 
 An example:
 
 ..  code:: json
 
     {
-      "type": "text_long",
+      "type": "text",
       "id": "2020-01-a-01",
       "answer": {
         "entry": "I'm over here"
       }
     },
     {
-      "type": "text_long",
+      "type": "text",
       "id": "2020-01-a-02",
       "answer": {
         "entry": "And I'm over here"
@@ -552,8 +658,14 @@ An example:
       "fieldset_info": {
         "headers": [{"contents": "Contents"}, {"contents": "Targets"}],
         "rows": [
-          [{"contents": "From the server"}, {"target": "$..*[?(@.id=='2020-01-a-01')].answer.entry"}],
-          [{"contents": "Also from the server"}, {"target": "$..*[?(@.id=='2020-01-a-02')].answer.entry"}],
+          [
+            {"contents": "From the server"},
+            {"targets": ["$..*[?(@.id=='2020-01-a-01')].answer.entry"], "actions": ["identity"]}
+          ],
+          [
+            {"contents": "Also from the server"},
+            {"targets": ["$..*[?(@.id=='2020-01-a-02')].answer.entry"]}
+          ],
         ]
       },
       "questions": []
@@ -567,6 +679,65 @@ This would produce something like:
     From the server       I'm over here
     Also from the server  And I'm over here
     ====================  =================
+
+I omitted the ``actions`` property from the second row because ``["identity"]`` is its default value.
+
+This is an example of using both ``identity`` and ``sum`` in a table:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "questions": [
+        {
+          "id": "2020-02-b-01-01-01-01",
+          "label": "How many fables were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        },
+        {
+          "id": "2020-02-b-01-01-01-02",
+          "label": "How many fairy tales were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_table",
+      "label": "Fantastical narratives data summary",
+      "fieldset_info": {
+        "headers": [
+          {"contents": "Fables"},
+          {"contents": "Fairy tales"},
+          {"contents": "Total number of loosely-defined tales of the fantastical"},
+        ],
+        "rows": [
+          {"targets": ["$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry"]},
+          {"targets": ["$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"]},
+          {
+            "targets": [
+              "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
+              "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry",
+            ],
+            "actions": ["sum"]
+          }
+        ]
+      }
+    }
+
+I omitted the ``actions`` property for brevity where it would have been the default value.
+
+Assuming the answers to the two questions were ``2`` and ``3``, the above would produce something like:
+
+    ..  table:: Fantastical narratives data summary
+
+        ======  ===========  ========================================================
+        Fables  Fairy tales  Total number of loosely-defined tales of the fantastical
+        ======  ===========  ========================================================
+             2            3                                                         5
+        ======  ===========  ========================================================
 
 
 ``noninteractive_table``
@@ -603,7 +774,7 @@ An example:
         {
           "id": "2020-02-a-01",
           "label": "How does this table make you feel?",
-          "type": "text_long",
+          "type": "text_multiline",
           "answer": {"entry": null}
         }
       ]
@@ -622,8 +793,8 @@ This would produce something like:
 
     How does this table make you feel?
 
-``text_long``
-+++++++++++++
+``text_multiline``
+++++++++++++++++++
 A long string. As this will probably be represented by the ``TEXT`` type in Postgres, its max length should be longer than anything we will realistically encounter. Its ``entry`` value should be represented as a string. It has optional properties:
 
 ``max_length``
@@ -638,6 +809,18 @@ A long string. As this will probably be represented by the ``TEXT`` type in Post
     The minimum length of the string. The backend will accept submissions with answers shorter than this limit and may mark them as invalid.
 
     If absent or set to 0, no minimum will be enforced.
+
+``text``
++++++++++++++++++++++++++
+A text entry field that doesn't need multiple lines.
+
+``text_medium``
++++++++++++++++++++++++++
+A small-ish text entry field.
+
+``text_small``
++++++++++++++++++++++++++
+A small text entry field.
 
 ``radio``
 +++++++++
@@ -746,9 +929,13 @@ If the user entered data stating that answer was the same as our example, i.e. e
 
 ``objectives``
 ++++++++++++++
-A particular construct specific to Section 2B.
+A particular construct specific to Section 2B. They contain repeatables, a construct specific to Section 2B and Section 3I.
 
-A number of sets of questions. The ``objective`` and ``goal`` answer types are broadly equivalent to ``part`` constructs, except that the user enters an arbitrary number of them.
+Essentially, repeatables are a set of questions that can be repeated a number of times. Each objective may have any number of goals, and goals are addressed by a specific set of questions, so whenever a new goal is created, a new copy of that set of questions is added to the form. HSI programs, from Section 3I, are similar in that any number of them can be entered by the user, and the questions for each one are identical (HSI programs don't have a container construct similar to ``objective``.)
+
+Objectives are handled as different types because they, unlike the others, can themselves contain other repeatables.
+
+The ``objective`` and ``repeatable`` answer types are broadly equivalent to ``part`` constructs, except that the user enters an arbitrary number of them.
 
 Allowing users to enter an arbitary number of objectives and an arbitrary number of goals per objective does not lend itself to a simple schema, at least not one we've found so far; in our defense we can only say that we think the implementation of the following will not be as bad as its description.
 
@@ -756,15 +943,21 @@ The first objective in an array of objectives has an answer—the description of
 
 Questions of the type ``objectives`` have a ``questions`` property, and the immediate children in that array must be questions of type ``objective``.
 
-Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_long`` (for the description) and question of the type ``goals``.
+Questions of the type ``objective`` have a ``questions`` property, and the immediate children in that array must be a question of the type ``text_multiline`` (for the description) and question of the type ``repeatables``.
 
-Questions of the type ``goals`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``goal``.
+Questions of the type ``repeatables`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``repeatable``.
 
-Questions of the type ``goal`` have a ``questions`` property, and these questions aren't constrained in terms of their types.
+Questions of the type ``repeatable`` have a ``questions`` property, and these questions aren't constrained in terms of their types.
+
+The term “goal” below means a ``repeatable`` construct that's being used to represent a goal that is part of an objective's set of goals. HSI programs in Section 2B are handled similarly, except that there's only one level of repeatable there so it's simpler.
 
 The frontend must allow users to create new objectives, and to create new goals in a given objective. A newly-created objective is created with one goal.
 
 The API JSON representation of the first goal in the first objective is the template for any further goals, and the API JSON representation of the first objective is the template for any further objectives.
+
+There must be at least one of these in their arrays at any time: the ``objectives`` property must contain at least one ``objective``, and the ``repeatables`` property must contain at least one ``repeatable``.
+
+The first ``objective`` is a special case in that its first question isn't displayed; its displayed content begins with its first goal. That first question has ``answer.readonly`` and ``answer.default_entry`` properties set. Removing these is part of creating the structure for a new objective.
 
 When creating new goals and/or objectives, the frontend must
 
@@ -772,7 +965,7 @@ When creating new goals and/or objectives, the frontend must
 +   Set all ``entry`` properties at all levels of the new construct to be empty.
 +   For new objectives:
     +   Delete all but the first goal in the new construct.
-    +   For the first question, in addition to setting ``answer.entry`` to ``null``, delete the ``answer.readonly`` and ``default_entry`` properties.
+    +   For the first question, in addition to setting ``answer.entry`` to ``null``, delete the ``answer.readonly`` and ``answer.default_entry`` properties.
 
 +   Set the ``id`` properties at all levels of the new construct to the appropriate values.
 
@@ -780,13 +973,13 @@ When creating new goals and/or objectives, the frontend must
     
     The lone (initial) direct child in its ``questions`` property has a type of ``objective``, and an ``id`` of ``2020-02-b-01-01-01`` (year, section, subsection, part, question, objective).
 
-    The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_long``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).
+    The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_multiline``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).
 
-    The second direct child of the ``questions`` property of that ``objective`` question has a type of ``goals``, and an ``id`` of ``2020-02-b-01-01-01-02`` (year, section, subsection, part, question, objective, question).
+    The second direct child of the ``questions`` property of that ``objective`` question has a type of ``repeatables``, and an ``id`` of ``2020-02-b-01-01-01-02`` (year, section, subsection, part, question, objective, question).
 
-    The lone (initial) direct child of the ``questions`` property of that ``goals`` question has a type of ``goal``, and an ``id`` of ``2020-02-b-01-01-01-02-01`` (year, section, subsection, part, question, objective, question, goal).
+    The lone (initial) direct child of the ``questions`` property of that ``repeatables`` question has a type of ``repeatable``, and an ``id`` of ``2020-02-b-01-01-01-02-01`` (year, section, subsection, part, question, objective, question, goal).
 
-    The first direct child of the ``questions`` property of that ``goal`` question can have any type (other than ``objectives``, ``objective``, ``goals``, or ``goal``, you monster), and an ``id`` of ``2020-02-b-01-01-01-02-01-01`` (year, section, subsection, part, question, objective, question, goal, question).
+    The first direct child of the ``questions`` property of that ``repeatable`` question can have any type (other than ``objectives``, ``objective``, ``repeatables``, or ``repeatable``, you monster), and an ``id`` of ``2020-02-b-01-01-01-02-01-01`` (year, section, subsection, part, question, objective, question, goal, question).
 
     While this sounds appalling, in practice for a new goal the frontend just has to copy the previous goal and increment the ``id`` properties accordingly. So with the above example, the first goal of the first objective has the ``id`` ``2020-02-b-01-01-01-02-01``, so the frontend would replace that string in every ``id`` field in the new goal (which would be the second goal) with ``2020-02-b-01-01-01-02-02``.
 
@@ -796,10 +989,13 @@ When creating new goals and/or objectives, the frontend must
 
 This is one approach to the above process for adding a new objective (it assumes that the structure for Section 2 has already been parsed from JSON and is avaliable as ``sectionTwo``):
 
-..  code:: json
+..  code:: javascript
 
     const jp = require('jsonpath');
-    const lastObjective = jp.query(sectionTwo, "$..*[?(@.id=='2020-02-b-01-01')].questions[-1:]"); // Get objective by referring to id of objectives item and then getting the last thing in that item's questions array.
+
+    /* Get objective by referring to id of objectives item and then getting the last thing in that
+    item's questions array: */
+    const lastObjective = jp.query(sectionTwo, "$..*[?(@.id=='2020-02-b-01-01')].questions[-1:]");
 
     const priorId = lastObjective[0].id; // "2020-02-b-01-01-01"
     let deconstructedId = priorId.split("-");
@@ -807,7 +1003,8 @@ This is one approach to the above process for adding a new objective (it assumes
     deconstructedId.push(last);
     const newId = deconstructedId.join("-"); // "2020-02-b-01-01-02"
 
-    // Convert it to string for two reasons. First reason: tn ensure we're doing a deep copy, not a shallow copy.
+    // Convert it to string for two reasons.
+    // First reason: to ensure we're doing a deep copy, not a shallow copy.
     const stringifiedFirstObjective = JSON.stringify(lastObjective);
     // Second reason: replace all references to the prior ID with the new ID
     const stringifiedNewObjective = stringifiedFirstObjective.split(priorId).join(newId);
@@ -830,16 +1027,12 @@ This is one approach to the above process for adding a new objective (it assumes
 
 ``objective``
 +++++++++++++
-A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_long`` for the description of the objective, and one of the type ``goals`` to contain the goals for the objective.
+A child construct of the ``objectives`` construct. This should have two values in its ``questions`` property, one of the type ``text_multiline`` for the description of the objective, and one of the type ``repeatables`` to contain the goals for the objective.
 
-``goals``
-+++++++++
-A child construct of the ``objective`` construct. This should have at least one value in its ``questions`` property, and all of the values in its ``questions`` property should be of the type ``goal``.
+``repeatables``
++++++++++++++++
+A child construct of the ``objective`` construct or the ``part`` construct. This should have at least one value in its ``questions`` property, and all of the values in its ``questions`` property should be of the type ``repeatable``.
 
-``goal``
-++++++++
-A child construct of the ``goals`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``goals``, or ``goal`` here we won't be happy and suspect you won't be either.
-
-
-
-
+``repeatable``
+++++++++++++++
+A child construct of the ``repeatables`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``repeatables``, or ``repeatable`` here we won't be happy and suspect you won't be either.
