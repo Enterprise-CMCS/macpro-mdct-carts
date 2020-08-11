@@ -301,11 +301,427 @@
       },
       {
         "id": "2020-03-c",
-        "title": "Tablehouse of Horrors",
+        "title": "Eligibility",
         "type": "subsection",
         "text": "",
-        "parts": []
+        "parts": [
+          {
+            "id": "2020-03-c-01",
+            "type": "part",
+            "title": "Eligibility Renewal and Retention",
+            "questions": [
+              {
+                "id": "2020-03-c-01-01",
+                "label": "Does your state provide presumptive eligibility, allowing children who are presumed to be eligible to access CHIP services?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Yes": "yes",
+                    "No": "no",
+                    "N/A": "na"
+                  }
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide these two subquestions if the answer to 2020-03-c-01-01 is no or N/A.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-c-01-01')].answer.entry",
+                          "values": {
+                            "interactive": [
+                                "no",
+                                "na",
+                                null
+                            ],
+                            "noninteractive": [
+                                "no",
+                                "na"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-c-01-01-a",
+                        "label": "What percent of children are presumptively enrolled in CHIP pending a full eligibility determination?",
+                        "type": "percentage",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-c-01-01-b",
+                        "label": "Of the children who are presumptively enrolled, what percent are determined fully eligible and enrolled in the program?",
+                        "type": "percentage",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-c-01-02",
+                "label": "In an effort to retain more children in CHIP, do you conduct follow-up communication with families through caseworkers and outreach workers?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Yes": "yes",
+                    "No": "no"
+                  }
+                }
+              },
+              {
+                "id": "2020-03-c-01-03",
+                "label": "Do you send renewal reminder notices to families?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Yes": "yes",
+                    "No": "no"
+                  }
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide these two subquestions if the answer to 2020-03-c-01-03 is no or N/A.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-c-01-03')].answer.entry",
+                          "values": {
+                            "interactive": [
+                                "no",
+                                null
+                            ],
+                            "noninteractive": [
+                                "no"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-c-01-03-a",
+                        "label": "How many notices do you send to families before disenrolling a child from the program?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-c-01-03-b",
+                        "label": "How many days before the end of the eligibility period did you send reminder notices to families?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-c-01-04",
+                "label": "What else have you done to simplify the eligibility renewal process for families in order to increase retention?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-01-05",
+                "label": "Which retention strategies have you found to be most effective?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-01-06",
+                "label": "How do you measure the effectiveness of your retention strategies? What data sources and methodology do you use to track retention?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-01-07",
+                "label": "Anything else you’d like to add that wasn’t already covered?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          },
+          {
+            "id": "2020-03-c-02",
+            "type": "part",
+            "title": "Eligibility Denials for First-time Applicants (Not Redetermination)",
+            "questions": [
+              {
+                "id": "2020-03-c-02-01",
+                "label": "How many first-time applicants were denied CHIP coverage in the last federal fiscal year?",
+                "hint": "This only applies to denials for first-time CHIP applicants—don’t include applicants being considered for redetermination.",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-02-02",
+                "label": "How many first-time applicants were denied CHIP coverage for procedural reasons?",
+                "hint": "For example: They were denied because of an incomplete application, missing documentation, or a missing enrollment fee.",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-02-03",
+                "label": "How many first-time applicants were denied CHIP coverage for eligibility reasons?",
+                "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                },
+                "questions": [
+                  {
+
+                    "id": "2020-03-c-02-03-a",
+                    "label": "How many first-time applicants were denied CHIP coverage for eligibility reasons?",
+                    "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-c-02-04",
+                "label": "How many applicants were denied CHIP coverage for other reasons?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-02-05",
+                "label": "Did you have any limitations in collecting this data?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "synthesized_table",
+                "label": "Table: Denials for First-Time Applicants",
+                "hint": "This table is auto-populated with the data you entered above.",
+                "fieldset_info": {
+                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "rows": [
+                    [
+                      {"contents": "Total denials"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-01')].answer.entry"]},
+                      {"contents": "100%"}
+                    ],
+                    [
+                      {"contents": "Denied for procedural reasons"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-02')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-02')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                    ],
+                    [
+                      {"contents": "Denied for eligibility reasons"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                    ],
+                    [
+                      {"contents": "Denied for eligibility reasons"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                    ]
+                  ]
+                },
+                "questions": []
+              }
+            ]
+          },
+          {
+            "id": "2020-03-c-03",
+            "type": "part",
+            "title": "Eligibility for Redetermination in CHIP",
+            "text": "Redetermination is the process of redetermining whether a child is eligible to renew in CHIP every 12 months, assuming children haven’t already aged out of the program. Families must resubmit their income each year to determine if they still qualify for the program.",
+            "questions": [
+              {
+                "id": "2020-03-c-03-01",
+                "label": "How many children were eligible for redetermination in CHIP in the last federal fiscal year?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-03-02",
+                "label": "Of the eligible children, how many were then screened for redetermination?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-03-03",
+                "label": "How many children were retained in CHIP after the redetermination process?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-03-04",
+                "label": "How many children were disenrolled in CHIP after the redetermination process?",
+                "comment": "This is very tricky; having 4 apparently be a question the user can enter but also be the total of its subquestions presents issues. Which value takes precedence is one of them. Another is that in addition to being something that apparently can be entered by the user, it is both the output for a synthesized_value operation (sum 4a, 4b, and 4c) and the source for another synthesized_value operation (in the two tables below, where it's one of the inputs to the percentage action). My suggestion is to have 4 be a normal field of its own and have a hint next to it that sums the subquestion answers and tells the user the value they enter for 4 should equal that value. Not ideal, but otherwise we seem to have to either use custom frontend code or support way more nonsense in the data structure spec than we do already.",
+                "type": "integer",
+                "answer": {
+                  "readonly": true,
+                  "entry": null
+                },
+                "questions": [
+                  {
+                      "type": "fieldset",
+                      "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
+                      "fieldset_type": "synthesized_value",
+                      "fieldset_info": {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
+                        ],
+                        "actions": ["sum"]
+                      },
+                      "questions": []
+                  },
+                  {
+                    "id": "2020-03-c-03-04-a",
+                    "label": "How many children were disenrolled for procedural reasons?",
+                    "hint": "For example: They were denied because of an incomplete application, missing documentation, or a missing enrollment fee.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-c-03-04-b",
+                    "label": "How many children were disenrolled for eligibility reasons?",
+                    "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-c-03-04-c",
+                    "label": "How many children were disenrolled for other reasons?",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-c-03-05",
+                "label": "Did you have any limitations in collecting this data?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "synthesized_table",
+                "label": "Table: Enrollment Data for CHIP Redetermination",
+                "hint": "These tables are auto-populated with the data you entered above.",
+                "fieldset_info": {
+                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "rows": [
+                    [
+                      {"contents": "Children screened for redetermination"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-02')].answer.entry"]},
+                      {"contents": "100%"}
+                    ],
+                    [
+                      {"contents": "Children retained after redetermination"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-03')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-03')].answer.entry", "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"], "actions": ["percentage"]}
+                    ],
+                    [
+                      {"contents": "Children disenrolled after redetermination"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry", "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"], "actions": ["percentage"]}
+                    ]
+                  ]
+                },
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "label": "Table: Disenrollment Data for CHIP Redetermination",
+                "comment": "This is assuming that we make the user manually enter the answer to question 4; otherwise we don't currently have a way to support this functionality; see the comment on question 4 above.",
+                "fieldset_type": "synthesized_table",
+                "fieldset_info": {
+                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "rows": [
+                    [
+                      {"contents": "Children disenrolled after redetermination"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry"]},
+                      {"contents": "100%"}
+                    ],
+                    [
+                      {"contents": "Children disenrolled for procedural reasons"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                    ],
+                    [
+                      {"contents": "Children disenrolled for eligibility reasons"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                    ],
+                    [
+                      {"contents": "Children disenrolled for other reasons"},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"]},
+                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                    ]
+                  ]
+                },
+                "questions": []
+              }
+            ]
+          }
+
+        ]
       },
+
+
+
+
+
+
+
+
+
       {
         "id": "2020-03-d",
         "title": "Cost Sharing (Out-of-Pocket Costs)",
