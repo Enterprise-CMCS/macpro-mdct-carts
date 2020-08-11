@@ -417,6 +417,7 @@
         },
         "fieldset_type": {
           "enum": [
+            "marked",
             "noninteractive_table",
             "sum",
             "synthesized_table",

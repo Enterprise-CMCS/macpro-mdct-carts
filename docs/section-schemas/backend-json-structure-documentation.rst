@@ -455,6 +455,12 @@ Special ``fieldset`` types
 **************************
 Special ``fieldset`` types that don't necessarily contain questions. They must still have a ``questions`` field because these uses are outliers and it makes more sense to require the field for the vast majority of uses that do contain questions.
 
+``marked``
+##########
+Thanks to Section 3C, we need a ``fieldset`` type that *does* have an ``id`` property, and *does* act as if it were a real question and thus the questions it contains are marked as subquestions. So that's what this is for. Essentially, it's a ``question`` that can't actually accept answers; all the other parts of a question component except the actual input element.
+
+Other ``fieldset`` instances nested below it do not inherit its ``marked`` nature.
+
 ``synthesized_value``
 #####################
 Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result.
