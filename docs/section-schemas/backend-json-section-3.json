@@ -709,18 +709,1658 @@
                 "questions": []
               }
             ]
+          },
+
+          {
+            "id": "2020-03-c-04",
+            "type": "part",
+            "title": "Tracking a CHIP cohort over 18 months",
+            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will measure how long a specific group stays enrolled over a 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 17 years who are newly enrolled in CHIP (Medicaid Expansion CHIP, Separate CHIP, or both) as of the first three months (Jan-Mar) of the last federal fiscal year.\n\nChildren must be 16.5 years or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period.\n\nIf your eligibility system doesn’t have the ability to track a cohort, you may need to use a unique identifier or flag to track each child over the 18-month period.",
+            "questions": [
+              {
+                "type": "fieldset",
+                "label": "January – March 2019 (start of the cohort)",
+                "questions": [
+                  {
+                    "comment": "The “sum” question, that they answer if they don't have the breakdowns, can't really be a true top-level question, because then we couldn't hide it in the case where the breakdown data is available. So it has to be a subquestion, meaning that the top-level question isn't real and can't actually be answered. This introduces the need for the special fieldset used here; see the schema docs for more details.",
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were newly enrolled in CHIP between January and March of the last federal fiscal year?",
+                    "hint": "Only include children that weren’t enrolled in CHIP the previous month. (For example: Children who enrolled in January 2020 are “newly enrolled” if they weren’t enrolled in the CHIP in December 2019.)",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-01"
+                    },
+                    "questions": [
+                      {
+                        "comment": "Yes, this is a marked fieldset, i.e. a fieldset mainly pretending to be a question for the purposes of the list markers, immediately followed by an unmarked_descendants fieldset used so that the age range breakdown question gets to pretend to not be a question for the purposes of the list markers.",
+                        "type": "fieldset",
+                        "fieldset_type": "unmarked_descendants",
+                        "questions": [
+                          {
+                            "id": "2020-03-c-04-01-unmarked_descendants",
+                            "label": "I don’t have data for the individual age groups. I’ll report data for the total number for all age groups (0-18 years) instead.",
+                            "type": "checkbox_flag",
+                            "answer": {
+                              "options": {
+                                "type": "boolean"
+                              },
+                              "entry": null
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "question",
+                        "id": "2020-03-c-04-01-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "1a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "1b–1e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-01-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-01-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-01-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-01-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "fieldset",
+                "label": "July – September 2019 (6 months later)",
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were still continuously enrolled in CHIP six months later?",
+                    "hint": "Only include children that didn’t have a break in coverage during the six-month period.",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-02"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-02-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "2a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "2b–2e omitted because you indicated that don't you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-02-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-02-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-02-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-02-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children had a break in CHIP coverage but were re-enrolled in CHIP six months later?",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-03"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-03-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "3a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "3b–3e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-03-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-03-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-03-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-03-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "marked",
+                            "label": "How many children had a break in CHIP coverage but were re-enrolled in Medicaid six months later?",
+                            "fieldset_info": {
+                              "id": "2020-03-c-04-03-f"
+                            },
+                            "questions": [
+                              {
+                                "type": "question",
+                                "id": "2020-03-c-04-03-f-01",
+                                "label": "Total for all ages",
+                                "type": "integer",
+                                "answer": {
+                                  "entry": null
+                                },
+                                "context_data": {
+                                  "skip_text": "3f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          false,
+                                          null
+                                        ],
+                                        "noninteractive": [
+                                          false,
+                                          null
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "fieldset",
+                                "context_data": {
+                                  "skip_text": "3f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          true
+                                        ],
+                                        "noninteractive": [
+                                          true
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-03-f-02",
+                                    "label": "0–1 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-03-f-03",
+                                    "label": "1–5 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-03-f-04",
+                                    "label": "6–12 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-03-f-05",
+                                    "label": "13–18 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were no longer enrolled in CHIP at the end of the six-month period?",
+                    "hint": "Possible reasons for disenrollment:\n•  Transferred to another health insurance program other than CHIP.\n•  Didn’t meet eligibility criteria anymore.\n•  Didn’t complete documentation.\n•  Didn’t pay a premium or enrollment fee.",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-04"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-04-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "4b–4e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-04-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-04-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-04-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-04-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "marked",
+                            "label": "How many children were no longer enrolled in CHIP but enrolled in Medicaid six months later?",
+                            "fieldset_info": {
+                              "id": "2020-03-c-04-04-f"
+                            },
+                            "questions": [
+                              {
+                                "type": "question",
+                                "id": "2020-03-c-04-04-f-01",
+                                "label": "Total for all ages",
+                                "type": "integer",
+                                "answer": {
+                                  "entry": null
+                                },
+                                "context_data": {
+                                  "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          false,
+                                          null
+                                        ],
+                                        "noninteractive": [
+                                          false,
+                                          null
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "fieldset",
+                                "context_data": {
+                                  "skip_text": "4f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          true
+                                        ],
+                                        "noninteractive": [
+                                          true
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-04-f-02",
+                                    "label": "0–1 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-04-f-03",
+                                    "label": "1–5 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-04-f-04",
+                                    "label": "6–12 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-04-f-05",
+                                    "label": "13–18 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-c-04-05",
+                    "label": "Anything else you’d like to add about your data?",
+                    "type": "text_multiline",
+                    "answer": {
+                        "entry": null
+                    }
+                  }
+                ]
+              },
+
+
+
+              {
+                "type": "fieldset",
+                "label": "January – March 2020 (12 months later)",
+                "hint": "Next year you’ll submit the rest of your data at 12 months and 18 months later of tracking your cohort",
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were still continuously enrolled in CHIP 12 months later?",
+                    "hint": "Only include children that didn’t have a break in coverage during the 12-month period.",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-06"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-06-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "6a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "6b–6e omitted because you indicated that don't you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-06-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-06-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-06-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-06-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children had a break in CHIP coverage but were re-enrolled in CHIP 12 months later?",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-07"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-07-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "7a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "7b–7e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-07-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-07-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-07-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-07-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "marked",
+                            "label": "How many children had a break in CHIP coverage but were re-enrolled in Medicaid 12 months later?",
+                            "fieldset_info": {
+                              "id": "2020-03-c-04-07-f"
+                            },
+                            "questions": [
+                              {
+                                "type": "question",
+                                "id": "2020-03-c-04-07-f-01",
+                                "label": "Total for all ages",
+                                "type": "integer",
+                                "answer": {
+                                  "entry": null
+                                },
+                                "context_data": {
+                                  "skip_text": "7f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          false,
+                                          null
+                                        ],
+                                        "noninteractive": [
+                                          false,
+                                          null
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "fieldset",
+                                "context_data": {
+                                  "skip_text": "7f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          true
+                                        ],
+                                        "noninteractive": [
+                                          true
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-07-f-02",
+                                    "label": "0–1 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-07-f-03",
+                                    "label": "1–5 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-07-f-04",
+                                    "label": "6–12 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-07-f-05",
+                                    "label": "13–18 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were no longer enrolled in CHIP at the end of the 12-month period?",
+                    "hint": "Possible reasons for disenrollment:\n•  Transferred to another health insurance program other than CHIP.\n•  Didn’t meet eligibility criteria anymore.\n•  Didn’t complete documentation.\n•  Didn’t pay a premium or enrollment fee.",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-08"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-08-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "4b–4e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-08-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-08-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-08-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-08-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "marked",
+                            "label": "How many children were no longer enrolled in CHIP at the end of the 12-month period, and enrolled in Medicaid instead?",
+                            "fieldset_info": {
+                              "id": "2020-03-c-04-08-f"
+                            },
+                            "questions": [
+                              {
+                                "type": "question",
+                                "id": "2020-03-c-04-08-f-01",
+                                "label": "Total for all ages",
+                                "type": "integer",
+                                "answer": {
+                                  "entry": null
+                                },
+                                "context_data": {
+                                  "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          false,
+                                          null
+                                        ],
+                                        "noninteractive": [
+                                          false,
+                                          null
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "fieldset",
+                                "context_data": {
+                                  "skip_text": "4f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          true
+                                        ],
+                                        "noninteractive": [
+                                          true
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-08-f-02",
+                                    "label": "0–1 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-08-f-03",
+                                    "label": "1–5 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-08-f-04",
+                                    "label": "6–12 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-08-f-05",
+                                    "label": "13–18 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+
+              {
+                "type": "fieldset",
+                "label": "July – September 2020 (18 months later)",
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were still continuously enrolled in CHIP 18 months later?",
+                    "hint": "Only include children that didn’t have a break in coverage during the 18-month period.",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-09"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-09-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "6a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "6b–6e omitted because you indicated that don't you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-09-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-09-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-09-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-09-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children had a break in CHIP coverage but were re-enrolled in CHIP 18 months later?",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-10"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-10-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "7a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "7b–7e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-10-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-10-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-10-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-10-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "marked",
+                            "label": "How many children had a break in CHIP coverage but were re-enrolled in Medicaid 18 months later?",
+                            "fieldset_info": {
+                              "id": "2020-03-c-04-10-f"
+                            },
+                            "questions": [
+                              {
+                                "type": "question",
+                                "id": "2020-03-c-04-10-f-01",
+                                "label": "Total for all ages",
+                                "type": "integer",
+                                "answer": {
+                                  "entry": null
+                                },
+                                "context_data": {
+                                  "skip_text": "7f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          false,
+                                          null
+                                        ],
+                                        "noninteractive": [
+                                          false,
+                                          null
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "fieldset",
+                                "context_data": {
+                                  "skip_text": "7f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          true
+                                        ],
+                                        "noninteractive": [
+                                          true
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-10-f-02",
+                                    "label": "0–1 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-10-f-03",
+                                    "label": "1–5 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-10-f-04",
+                                    "label": "6–12 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-10-f-05",
+                                    "label": "13–18 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "marked",
+                    "label": "How many children were no longer enrolled in CHIP at the end of the 18-month period?",
+                    "hint": "Possible reasons for disenrollment:\n•  Transferred to another health insurance program other than CHIP.\n•  Didn’t meet eligibility criteria anymore.\n•  Didn’t complete documentation.\n•  Didn’t pay a premium or enrollment fee.",
+                    "fieldset_info": {
+                      "id": "2020-03-c-04-11"
+                    },
+                    "questions": [
+                      {
+                        "type": "question",
+                        "id": "2020-03-c-04-11-a",
+                        "label": "Total for all ages",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  false,
+                                  null
+                                ],
+                                "noninteractive": [
+                                  false,
+                                  null
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "4b–4e omitted because you indicated that you don't have the age range breakdown data available.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  true
+                                ],
+                                "noninteractive": [
+                                  true
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-11-b",
+                            "label": "0–1 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-11-c",
+                            "label": "1–5 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-11-d",
+                            "label": "6–12 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-11-e",
+                            "label": "13–18 year olds",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "marked",
+                            "label": "How many children were no longer enrolled in CHIP at the end of the 12-month period, and enrolled in Medicaid instead?",
+                            "fieldset_info": {
+                              "id": "2020-03-c-04-11-f"
+                            },
+                            "questions": [
+                              {
+                                "type": "question",
+                                "id": "2020-03-c-04-11-f-01",
+                                "label": "Total for all ages",
+                                "type": "integer",
+                                "answer": {
+                                  "entry": null
+                                },
+                                "context_data": {
+                                  "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          false,
+                                          null
+                                        ],
+                                        "noninteractive": [
+                                          false,
+                                          null
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "fieldset",
+                                "context_data": {
+                                  "skip_text": "4f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is true; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [
+                                          true
+                                        ],
+                                        "noninteractive": [
+                                          true
+                                        ]
+                                      }
+                                    }
+                                  }
+                                },
+                                "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-11-f-02",
+                                    "label": "0–1 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-11-f-03",
+                                    "label": "1–5 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-11-f-04",
+                                    "label": "6–12 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-11-f-05",
+                                    "label": "13–18 year olds",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+
+
+
+
+            ]
           }
+
 
         ]
       },
-
-
-
-
-
-
-
-
 
       {
         "id": "2020-03-d",
