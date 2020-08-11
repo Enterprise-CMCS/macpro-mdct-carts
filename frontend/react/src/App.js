@@ -1,22 +1,28 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import Routes from "./reactRouter";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+import Home from "./Home";
 
 function App() {
-  let VisibleHeader =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Header />;
+  const CALLBACK_PATH = '/implicit/callback';
 
-  let VisibleFooter =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
+  const config = {
+    clientId: '0oa4juv4poiQ6nDB6297',
+    issuer: 'https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297',
+    redirectUri: 'http://localhost:81/implicit/callback',
+    scopes: ['openid', 'profile', 'email'],
+    pkce: true
+  };
+
   return (
-    <div className="App" data-test="component-app">
-      {VisibleHeader}
-      <Routes />
-      {VisibleFooter}
-    </div>
+    <Router>
+      <Security {...config}>
+        <SecureRoute path="/" component={Home} />
+        <Route path={CALLBACK_PATH} component={LoginCallback} />
+      </Security>
+    </Router>
   );
 }
 
