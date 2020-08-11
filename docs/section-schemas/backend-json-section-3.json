@@ -549,7 +549,7 @@
                       {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
                     ],
                     [
-                      {"contents": "Denied for eligibility reasons"},
+                      {"contents": "Denials for other reasons"},
                       {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry"]},
                       {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
                     ]
