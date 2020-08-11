@@ -68,6 +68,7 @@ pipeline {
             }
         }
         steps {
+            sh 'pwd && docker ps'
             sh 'ls -la'
             sh 'npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start'
             sh 'cp -r package*.json ./'
