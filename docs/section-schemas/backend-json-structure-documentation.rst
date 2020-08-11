@@ -459,6 +459,8 @@ Special ``fieldset`` types that don't necessarily contain questions. They must s
 ##########
 Thanks to Section 3C, we need a ``fieldset`` type that *does* have an ``id`` property, and *does* act as if it were a real question and thus the questions it contains are marked as subquestions. So that's what this is for. Essentially, it's a ``question`` that can't actually accept answers; all the other parts of a question component except the actual input element.
 
+Because ``fieldset`` can't have an ``id`` property, we have to store the ``id`` for these in the ``fieldset_info`` object, which may be annoying at implementation time. However, this kind of ``fieldset`` will require custom handling anyway, and adding that wrinkle will hopefully not be too difficult.
+
 Other ``fieldset`` instances nested below it do not inherit its ``marked`` nature.
 
 ``synthesized_value``
