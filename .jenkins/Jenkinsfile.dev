@@ -68,7 +68,7 @@ pipeline {
             }
         }
         steps {
-           sh 'ln -s /home/jenkins/.local/bin /usr/local/bin/aws'
+         //  sh 'ln -s /home/jenkins/.local/bin /usr/local/bin/aws'
             sh 'curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"'
             sh 'unzip awscli-bundle.zip && ./awscli-bundle/install -All -i /usr/local/aws -b /usr/local/bin/aws'
             dir('frontend/react') {
