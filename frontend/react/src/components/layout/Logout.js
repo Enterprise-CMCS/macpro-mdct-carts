@@ -2,7 +2,6 @@ import React from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import config from '../../auth-config';
 
-const issuer = 'https://${yourOktaDomain}/oauth2/default';
 const redirectUri = `${window.location.origin}`;
 
 // Basic component with logout button
