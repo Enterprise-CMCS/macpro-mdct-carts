@@ -4,6 +4,13 @@ import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
 
+import {
+  generateMoneyField,
+  generateRangeField,
+  generateRadioCheckField,
+  generateTextLongField,
+} from "../Utils/questionUtils";
+
 class CMSChoice extends Component {
   constructor(props) {
     super(props);
@@ -67,23 +74,7 @@ class CMSChoice extends Component {
             // Check if question (toMatch) matches the currently selected option (parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
-              fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <textarea
-                    class="ds-c-field"
-                    name={item.id}
-                    value={item.answer.entry}
-                    type="text"
-                    name={item.id}
-                    rows="6"
-                  />
-                </>
-              );
+              fields.push(generateTextLongField(item, "subquestion"));
             }
 
             break;
@@ -92,76 +83,34 @@ class CMSChoice extends Component {
             // Loop through available answers object
             Object.entries(item.answer.options).map((key, index) => {
               // If entry matches current answer, mark as checked
-              const isCheckedChild =
-                key[1] === item.answer.entry ? "checked" : null;
 
               // Check if question (toMatch) matches the currently selected option (parent)
               if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
                 return fields.push(
-                  <>
-                    {index === 0 ? (
-                      <CMSLegend
-                        label={item.label}
-                        id={item.id}
-                        type="subquestion"
-                      />
-                    ) : null}
-                    {/* Output only matching answers */}
-
-                    <Choice
-                      className="fpl-input"
-                      name={item.id}
-                      value={key[1]}
-                      type={this.props.type}
-                      checked={isCheckedChild}
-                    >
-                      {key[0]}
-                    </Choice>
-                  </>
+                  generateRadioCheckField(
+                    item,
+                    key,
+                    this.props.type,
+                    index,
+                    "subquestion"
+                  )
                 );
               }
             });
             break;
           case "ranges":
             // Check if question (toMatch) matches the currently selected option (parent)
-
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
-              return fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <FPL fieldLabels={item.answer.range_categories} />
-                </>
-              );
+              return fields.push(generateRangeField(item));
             }
             break;
           case "money":
             // Check if question (toMatch) matches the currently selected option (parent)
-
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
-              fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <TextField
-                    className="fpl-input"
-                    // label={item.label}
-                    inputMode="currency"
-                    mask="currency"
-                    pattern="[0-9]*"
-                    value={item.answer.entry}
-                  />
-                </>
-              );
+              fields.push(generateMoneyField(item));
             }
             break;
         }

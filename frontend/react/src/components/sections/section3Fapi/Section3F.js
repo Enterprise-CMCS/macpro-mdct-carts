@@ -21,20 +21,44 @@ const sectionData = Data.section.subsections[5];
 class Section3FApi extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      temporaryComponentID: "Section 3F",
+      parentHasBeenChanged: 0,
+    };
+    this.bindToParentContext = this.bindToParentContext.bind(this);
+  }
+
+  bindToParentContext(arg) {
+    this.setState({
+      parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
+      lastChangedBy: arg,
+    });
   }
   render() {
+    let sectionID = sectionIDGrabber(this.props.section3FData.id);
+    console.log("Data from redux??", this.props.section3FData);
+    console.log("Who is my this??", this.state.temporaryComponentID);
+
     return (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="print-only">
-            <h3>{sectionData.title}</h3>
+            <h3>{this.props.section3FData.title}</h3>
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={sectionData.title}>
-                <Questions3FApi previousEntry="false" />
+              <TabPanel id="tab-form" tab={this.props.section3FData.title}>
+                <h3 className="part-title">
+                  {sectionID}: {this.props.section3FData.title}
+                </h3>
+                {this.props.section3FData.parts.map((part) => (
+                  <Questions3FApi
+                    previousEntry="false"
+                    data={part.questions}
+                    sectionContext={this.bindToParentContext}
+                  />
+                ))}
                 <FormNavigation previousUrl="/section3/3c" />
               </TabPanel>
 
@@ -44,10 +68,19 @@ class Section3FApi extends Component {
               >
                 <div className="print-only ly_header">
                   <PageInfo />
-                  <h3>{sectionData.title}</h3>
+                  <h3>{this.props.section3FData.title}</h3>
                 </div>
                 <div disabled>
-                  <Questions3FApi previousEntry="true" />
+                  <h3 className="part-title">
+                    {sectionID}: {this.props.section3FData.title}
+                  </h3>
+                  {this.props.section3FData.parts.map((part) => (
+                    <Questions3FApi
+                      previousEntry="true"
+                      data={part.questions}
+                      sectionContext={this.bindToParentContext}
+                    />
+                  ))}
                 </div>
               </TabPanel>
             </Tabs>
@@ -63,6 +96,17 @@ const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   year: state.global.formYear,
   programType: state.stateUser.programType,
+  section3FData: state.section3.questionData.section3FData,
 });
 
 export default connect(mapStateToProps)(Section3FApi);
+
+// Temporary throwaway function, replaced by CMSHeader
+function sectionIDGrabber(str) {
+  let idArray = str.split("-");
+  let sectionNumber = Number(idArray[1]);
+  return `Section ${sectionNumber}${idArray[2].toUpperCase()}`;
+}
+
+// Map through the parts in the parent section.
+// Give the questions component just an array of questions
