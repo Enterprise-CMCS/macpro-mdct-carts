@@ -72,10 +72,11 @@ class SectionViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
-def section_by_year_and_state(request, year, state):
+def section_by_year_and_state(request, year, state, section):
     try:
         data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper())
+                                   contents__section__state=state.upper(),
+                                   contents__section__ordinal=section)
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -98,21 +99,25 @@ def sectionbase_by_year_and_section(request, year, section):
 
 
 @api_view(["GET"])
-def sectionbase_subsection(request, subsection):
+def section_subsection_by_state(request, subsection, state):
     year, section, subsection_letter = subsection.split("-")
     year, section = int(year), int(section)
     try:
 
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = Section.objects.get(contents__section__year=year,
+                                   contents__section__state=state.upper(),
+                                   contents__section__ordinal=section)
         subsections = data.contents["section"]["subsections"]
         targets = [_ for _ in subsections if _["id"] == subsection]
         if len(targets) == 1:
             target = targets[0]
-        else:
+        elif len(targets) > 1:
             target = targets
+        else:
+            return HttpResponse(status=404)
+
         data.contents = target
-    except SectionBase.DoesNotExist:
+    except Section.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':

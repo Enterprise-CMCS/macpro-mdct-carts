@@ -29,10 +29,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path("report/<int:year>/<str:state>/", views.report),
-    path("data/<int:year>/<str:state>/", views.section_by_year_and_state),
-    path("structure/<int:year>/<int:section>/",
+    path("data/<int:year>/<str:state>/<int:section>",
+         views.section_by_year_and_state),
+    path("structure/<int:year>/<int:section>",
          views.sectionbase_by_year_and_section),
-    path("subsection/<str:subsection>/", views.sectionbase_subsection),
+    path("subsection_data/<str:subsection>/<str:state>",
+         views.section_subsection_by_state),
     # path('api-auth/', include('rest_framework.urls',
     #  namespace='rest_framework'))
 ]
