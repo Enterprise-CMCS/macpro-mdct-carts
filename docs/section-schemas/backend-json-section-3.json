@@ -751,7 +751,6 @@
                       },
                       {
                         "comment": "This is the first real question so far in this part…",
-                        "type": "question",
                         "id": "2020-03-c-04-01-a",
                         "label": "Total for all ages",
                         "type": "integer",
