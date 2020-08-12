@@ -7,7 +7,7 @@ class PageInfo extends Component {
       <div className="page-info">
         <div className="edit-info">Draft | Last Edit: 4/3/20</div>
         <h1>
-          {this.props.name} CARTS{} FY2020
+          {this.props.name} CARTS{} FY{this.props.year}
         </h1>
       </div>
     );
@@ -16,6 +16,7 @@ class PageInfo extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
+  year: state.global.formYear,
 });
 
 export default connect(mapStateToProps)(PageInfo);
