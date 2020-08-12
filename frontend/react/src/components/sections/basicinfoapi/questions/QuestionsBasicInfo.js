@@ -127,13 +127,27 @@ class QuestionsBasicInfo extends Component {
                        }
                       ) : null}
 
-                      {question.type === "text_short" ? (
+                      {question.type === "text" ? (
                        <div>
                          <TextField
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
+                         />
+                       </div>
+                     ) : null}
+
+                     {question.type === "text_medium" ? (
+                       <div>
+                         <TextField
+                           class="ds-c-field"
+                           name={question.id}
+                           value={question.answer.entry}
+                           hint={question.hint}
+                           type="text"
+                           multiline
+                           rows="3"
                          />
                        </div>
                      ) : null}
