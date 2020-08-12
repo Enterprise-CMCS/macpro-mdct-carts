@@ -68,10 +68,13 @@ pipeline {
             }
         }
         steps {
+            sh 'curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" &&'
             sh 'unzip awscli-bundle.zip && ./awscli-bundle/install -y -i /usr/local/aws -b /usr/local/bin/aws'
             dir('frontend/react') {
             sh '''
-            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" &&
+            echo $PATH
+            ln -s /home/jenkins/.local/bin /usr/local/bin/aws
+       
             
             
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
