@@ -134,6 +134,7 @@ class QuestionsBasicInfo extends Component {
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
+                           disabled={question.answer.readonly}
                          />
                        </div>
                      ) : null}
@@ -148,6 +149,7 @@ class QuestionsBasicInfo extends Component {
                            type="text"
                            multiline
                            rows="3"
+                           disabled={question.answer.readonly}
                          />
                        </div>
                      ) : null}
@@ -162,6 +164,7 @@ class QuestionsBasicInfo extends Component {
                            type="text"
                            multiline
                            rows="6"
+                           disabled={question.answer.readonly}
                          />
                        </div>
                      ) : null}
