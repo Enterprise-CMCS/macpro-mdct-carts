@@ -122,6 +122,7 @@ class QuestionsBasicInfo extends Component {
                             children={question.questions}
                             valueFromParent={this.state[question.id]}
                             onChange={this.handleChange}
+                            disabled={question.answer.readonly}
                           />
                         );
                        }
@@ -134,6 +135,7 @@ class QuestionsBasicInfo extends Component {
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
+                            onChange={this.handleChange}
                            disabled={question.answer.readonly}
                          />
                        </div>
@@ -149,6 +151,7 @@ class QuestionsBasicInfo extends Component {
                            type="text"
                            multiline
                            rows="3"
+                           onChange={this.handleChange}
                            disabled={question.answer.readonly}
                          />
                        </div>
@@ -164,6 +167,7 @@ class QuestionsBasicInfo extends Component {
                            type="text"
                            multiline
                            rows="6"
+                           onChange={this.handleChange}
                            disabled={question.answer.readonly}
                          />
                        </div>
@@ -179,6 +183,7 @@ class QuestionsBasicInfo extends Component {
                            type="text"
                            multiline
                            rows="6"
+                           onChange={this.handleChange}
                          />
                        </div>
                      ) : null}
@@ -189,7 +194,8 @@ class QuestionsBasicInfo extends Component {
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
-                           type="text"
+                           type="email"
+                           onChange={this.handleChange}
                          />
                        </div>
                      ) : null}
@@ -200,7 +206,8 @@ class QuestionsBasicInfo extends Component {
                            class="ds-c-field"
                            name={question.id}
                            value={question.answer.entry}
-                           type="text"
+                           type="phone_number"
+                           onChange={this.handleChange}
                          />
                        </div>
                      ) : null}
