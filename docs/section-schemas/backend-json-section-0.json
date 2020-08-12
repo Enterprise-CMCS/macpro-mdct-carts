@@ -87,6 +87,7 @@
               {
                 "id": "2020-00-a-02-04",
                 "label": "Full mailing address:",
+                "hint": "Include city, state, and zip code.",
                 "type": "mailing_address",
                 "answer": {
                   "entry": null
@@ -99,6 +100,11 @@
                 "answer": {
                   "entry": null
                 }
+              },
+              {
+                "type": "fieldset",
+                "questions": [],
+                "label": "If any of the above information is incorrect, contact the CARTS Help Desk."
               }
             ]
           }
