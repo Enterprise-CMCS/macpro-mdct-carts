@@ -71,7 +71,7 @@ pipeline {
             dir('frontend/react') {
             sh '''
             curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" &&
-            unzip awscli-bundle.zip && sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            unzip awscli-bundle.zip && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
             npm ci && npm run build
