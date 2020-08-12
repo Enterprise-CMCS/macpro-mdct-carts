@@ -14,19 +14,28 @@ import "@reach/accordion/styles.css";
 import { sliceId } from "../../../Utils/helperFunctions";
 import FPL from "../../../layout/FPL";
 import CMSChoice from "../../../fields/CMSChoice";
+import CMSLegend from "../../../fields/CMSLegend";
+import Questions2Bapi from "../questions/Questions2Bapi";
 
 class Objective2bApi extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      goalCount: this.props.goalCount,
-      goalArray: this.props.goalArray,
+      /*goalCount: this.props.goalCount,
+      goalsArray: this.props.goalsArray,*/
       objective2bDummyData: "",
       objectiveDescription: "",
       previousGoalsArray: [],
       previousEntry: this.props.previousEntry
     };
     this.newGoal = this.newGoal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(evt) {
+    this.setState({
+      [evt[0]]: evt[1],
+    });
   }
 
   componentDidMount() {
@@ -85,17 +94,15 @@ class Objective2bApi extends Component {
 
     this.setState({
       goalCount: newGoalId,
-      goalArray: this.state.goalArray.concat(newGoal),
+      goalsArray: this.state.goalsArray.concat(newGoal),
     });
   }
 
   render() {
     return (
       <Fragment>
+
         <div className="objective-body">
-          {console.log("objective Goals")}
-          {
-            console.log(this.props.goalArray)}
           <div className="goals">
             {/**
              * Maps through array of Previous Goals in state
@@ -122,34 +129,76 @@ class Objective2bApi extends Component {
               </Accordion>
             ) : (
                 //  Alternatively,  This maps through the current goals in state
+                <>
+                  {this.props.goalsArray.map((goals) => (
+                    <>
+                      <Accordion multiple defaultIndex={0}>
+                        <AccordionItem key={goals.id} >
+                          <h3>
+                            <AccordionButton>
+                              <div>
+                                Goal {goals.id}:
+                              </div>
+                            </AccordionButton>
+                          </h3>
+                          {goals.questions.map((question) => (
+                            <>
+                              {console.log("question", question)}
+                              {question.type !== "fieldset" ? (
 
-                <Accordion multiple defaultIndex={[...Array(100).keys()]}>
-                  {this.props.goalArray.map((element) => (
-                    <AccordionItem key={element.id} >
-                      <AccordionButton>
-                        <div>Goal {element.id}:</div>{/* {tempString.substring(5)}*/}
-                      </AccordionButton>
-                      <h3>
-                        {console.log("inside element")}
-                        {console.log(element.id)}
-                        <div>
-
-
-                        </div>
-
-                      </h3>
-
-                      <AccordionPanel>{<CMSChoice
-                        name={element.id}
-                        label={element.label}
-                        type={element.type}
-                        answer={element.answer}
-                      />}</AccordionPanel>
-                    </AccordionItem>
-
-                  )
-                  )}
-                </Accordion>
+                                <AccordionPanel>
+                                  <div className="singleGoal">
+                                    <div className="question">
+                                      <fieldset className="ds-c-fieldset">
+                                        {question.label}
+                                        {question.type === "radio" || question.type === "checkbox"
+                                          ? Object.entries(question.answer.options).map((
+                                            key,
+                                            index
+                                          ) => {
+                                            return (
+                                              <CMSChoice
+                                                name={question.id}
+                                                value={key[1]}
+                                                label={key[0]}
+                                                type={question.type}
+                                                onChange={this.handleChange}
+                                                answer={question.answer.entry}
+                                                conditional={question.conditional}
+                                                children={question.questions}
+                                              />
+                                            );
+                                          })
+                                          : null}
+                                        {/* If textarea */}
+                                        {question.type === "text_long" || question.type === "text_multiline" ? (
+                                          <div>
+                                            <textarea
+                                              class="ds-c-field"
+                                              name={question.id}
+                                              value={question.answer.entry}
+                                              type="text"
+                                              name={question.id}
+                                              rows="6"
+                                            />
+                                          </div>
+                                        ) : null}
+                                        {/* If FPL Range */}
+                                        {question.type === "ranges" ? (
+                                          <div>
+                                            <FPL label={question.label} />
+                                          </div>
+                                        ) : null}
+                                      </fieldset>
+                                    </div>
+                                  </div>
+                                </AccordionPanel>) : null}
+                            </>
+                          ))}
+                        </AccordionItem>
+                      </Accordion>
+                    </>))}
+                </>
               )}
           </div>
         </div>

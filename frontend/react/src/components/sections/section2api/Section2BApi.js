@@ -47,7 +47,7 @@ class Section2BApi extends Component {
                   previousEntry="false"
                   objectiveCount={Data.section.subsections[1].parts[0].questions[0].questions[0].length}
                   objectiveArray={Data.section.subsections[1].parts[0].questions[0].questions[0].questions}
-                  goalArray={Data.section.subsections[1].parts[0].questions[0].questions[0].questions[1].questions[0].questions}
+
                 />
               </TabPanel>
 

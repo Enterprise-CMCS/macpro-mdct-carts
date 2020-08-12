@@ -24,7 +24,6 @@ class Questions2BApi extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.newObjective = this.newObjective.bind(this);
     this.objectiveArray = this.props.objectiveArray;
-    this.goalArray = this.props.goalArray;
   }
   // Get state program (temporary; will be set by API)
   newObjective() {
@@ -56,7 +55,7 @@ class Questions2BApi extends Component {
     let createChoices;
     const tempData = Data.section.subsections[1];
     return (
-      < form >
+      <form>
         {/* Begin parsing through subsection */}
         <div className="section" >
           {/* Begin parsing through parts */}
@@ -69,6 +68,7 @@ class Questions2BApi extends Component {
                     this.props.programType === "combo") ? console.log("allow display?") : null)
                   : (
                     <div>
+
                       <h3 className="part-title">{/*not used?*/}</h3>
                       {/* NOT USED? Determine if question should be shown */}
                       {part.text}
@@ -77,66 +77,71 @@ class Questions2BApi extends Component {
                       <div>
                         {/*Actually looping through objectives */}
                         {/*      objectives    objective   */}
-                        {part.questions[0].questions[0].questions.map((objective) =>
-                          (
-                            <div className="objective">
-                              <Accordion multiple defaultIndex={[...Array(100).keys()]}>
+                        <div className="objective">
+
+                          <Accordion multiple defaultIndex={[...Array(100).keys()]}>
+                            {part.questions.map((objectives) => (
+                              objectives.questions.map((objective) => (
                                 <AccordionItem key={objective.id}>
-                                  <div className="accordion-header">
-                                    <h3>{objective.answer ? (
-                                      <AccordionButton>
-                                        <div className="accordion-title">
-                                          {console.log("objectives")}
-                                          {console.log(objective)}
-                                          <div>
-                                            Objective: {objective.answer.default_entry}
-                                          </div>
-                                        </div>
-                                        <div className="arrow"></div>
-                                      </AccordionButton>
-                                    )
-                                      : null}
-                                      <AccordionPanel>{/*Data.section.subsections[1].parts[0].questions[0].questions[0].questions[1].questions[0].questions*/}
-                                        {objective.type === "goals" ? (
+                                  {objective.questions.map((objectiveGoals, index) => (
+                                    index === 0 ? (
+
+                                      <div className="accordion-header">
+                                        <h3>
+
+                                          <AccordionButton>
+                                            <div className="accordion-title">
+                                              Objective: {objectiveGoals.answer.default_entry}
+                                            </div>
+                                            <div className="arrow"></div>
+                                          </AccordionButton>
+                                        </h3>
+                                      </div>) :
+                                      (<h3>
+                                        <AccordionPanel>{/*Data.section.subsections[1].parts[0].questions[0].questions[0].questions[1].questions[0].questions*/}
                                           <Objective2bApi
-                                            goalArray={this.props.goalArray}
+                                            goalsArray={objectiveGoals.questions}//gives object that contains array of goals
                                             goalCount={12}
                                             previousEntry={this.props.previousEntry}
-                                          ></Objective2bApi>)
-                                          : null}
+                                          ></Objective2bApi>
 
-                                        <div className="question">
-                                          {objective.id === "2020-02-b-01-01-01" ? "" : null}
-                                        </div>
-                                      </AccordionPanel>
-                                    </h3>
-                                  </div>
+
+                                          <div className="question">
+                                            {objective.id === "2020-02-b-01-01-01" ? "" : null}
+                                          </div>
+                                        </AccordionPanel>
+                                      </h3>)
+                                  )
+                                  )}
                                 </AccordionItem>
-                              </Accordion>
+                              )
+                              )
+                            ))
+                            }
+                          </Accordion>
+                        </div>
 
-                            </div>
-                          ))}
                       </div>
-
-                    </div>)
+                    </div>
+                  )
                 }
-              </div>
+                <div className="section-footer">
+                  <h3 className="question-inner-header">
+                    Do you have another objective in your State Plan?
+                      </h3>
+                  <div className="ds-c-field__hint">Optional</div>
+                  <button
+                    onClick={this.newObjective}
+                    type="button"
+                    className="add-objective ds-c-button ds-c-button--primary"
+                  >
+                    Add another objective
+                        <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                </div>
+              </div >
             ))
           }
-          <div className="section-footer">
-            <h3 className="question-inner-header">
-              Do you have another objective in your State Plan?
-                      </h3>
-            <div className="ds-c-field__hint">Optional</div>
-            <button
-              onClick={this.newObjective}
-              type="button"
-              className="add-objective ds-c-button ds-c-button--primary"
-            >
-              Add another objective
-                        <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
         </div>
       </form >
     )
