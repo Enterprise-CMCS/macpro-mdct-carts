@@ -455,6 +455,10 @@ Special ``fieldset`` types
 **************************
 Special ``fieldset`` types that don't necessarily contain questions. They must still have a ``questions`` field because these uses are outliers and it makes more sense to require the field for the vast majority of uses that do contain questions.
 
+``datagrid``
+############
+The child questions of a ``datagrid`` ``fieldset`` should be grouped together and presented as a table, possibly without showing their question markers. Currently the only design for this (in, of course, Section 3C) has four questions presented as a single row. As a result, the ``fieldset_info`` details are still undetermined, and will probably change during Section 3C development.
+
 ``marked``
 ##########
 Thanks to Section 3C, we need a ``fieldset`` type that *does* have an ``id`` property, and *does* act as if it were a real question and thus the questions it contains are marked as subquestions. So that's what this is for. Essentially, it's a ``question`` that can't actually accept answers; all the other parts of a question component except the actual input element.
