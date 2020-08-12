@@ -71,7 +71,7 @@ class CMSChoice extends Component {
         // Add fields to render array based on type (from api)
         switch (item.type) {
           case "text_long":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
               fields.push(generateTextLongField(item, "subquestion"));
@@ -84,7 +84,7 @@ class CMSChoice extends Component {
             Object.entries(item.answer.options).map((key, index) => {
               // If entry matches current answer, mark as checked
 
-              // Check if question (toMatch) matches the currently selected option (parent)
+              // Check if question matches the currently selected option (from parent)
               if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
                 return fields.push(
@@ -100,14 +100,16 @@ class CMSChoice extends Component {
             });
             break;
           case "ranges":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
+
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
               return fields.push(generateRangeField(item));
             }
             break;
           case "money":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
+
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
               fields.push(generateMoneyField(item));

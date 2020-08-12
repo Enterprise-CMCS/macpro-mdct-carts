@@ -37,7 +37,6 @@ class Section3FApi extends Component {
   render() {
     let sectionID = sectionIDGrabber(this.props.section3FData.id);
     console.log("Data from redux??", this.props.section3FData);
-    console.log("Who is my this??", this.state.temporaryComponentID);
 
     return (
       <div className="section-1 ds-l-col--9 content">

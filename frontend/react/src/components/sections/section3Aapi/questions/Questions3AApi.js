@@ -4,6 +4,7 @@ import Data from "../backend-json-section-3.json";
 import FPL from "../../../layout/FPL";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
+import { TextField } from "@cmsgov/design-system-core";
 
 // Get subsection of DATA
 const sectionData = Data.section.subsections[0];
@@ -25,11 +26,9 @@ class Questions3AApi extends Component {
   render() {
     const stateProgram = this.props.programType; // medicaid_exp_chip, separate_chip, combo
 
-    let valueFromParent;
     return (
       <form>
         {/* Begin parsing through subsection */}
-        {/* {Data.section.subsections.map((subsections) => ( */}
         <div className="section">
           {/* Begin parsing through parts */}
           {sectionData.parts.map((part) => (
@@ -43,43 +42,42 @@ class Questions3AApi extends Component {
 
                     {question.type === "radio" || question.type === "checkbox"
                       ? Object.entries(question.answer.options).map(
-                          (key, index) => {
-                            return (
-                              <CMSChoice
-                                name={question.id}
-                                value={key[1]}
-                                label={key[0]}
-                                type={question.type}
-                                answer={question.answer.entry}
-                                conditional={question.conditional}
-                                children={question.questions}
-                                valueFromParent={this.state[question.id]}
-                                onChange={this.handleChange}
-                              />
-                            );
-                          }
-                        )
+                        (key, index) => {
+                          return (
+                            <CMSChoice
+                              name={question.id}
+                              value={key[1]}
+                              label={key[0]}
+                              type={question.type}
+                              answer={question.answer.entry}
+                              children={question.questions}
+                              valueFromParent={this.state[question.id]}
+                              onChange={this.handleChange}
+                              key={index}
+                            />
+                          );
+                        }
+                      )
                       : null}
 
                     {/* If textarea */}
                     {question.type === "text_long" ? (
                       <div>
-                        <textarea
+                        <TextField
                           class="ds-c-field"
                           name={question.id}
-                          value={question.answer.entry}
+                          value={question.answer.entry || ""}
                           type="text"
                           name={question.id}
                           rows="6"
+                          multiline
                         />
                       </div>
                     ) : null}
                     {/* If FPL Range */}
-                    {question.type === "ranges" ? (
-                      <div>
-                        <FPL label={question.label} />
-                      </div>
-                    ) : null}
+                    {question.type === "ranges" && (
+                      <FPL label={question.label} fieldLabels={question.answer.range_categories} />
+                    )}
                   </fieldset>
                 </div>
               ))}
