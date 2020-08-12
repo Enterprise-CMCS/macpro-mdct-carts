@@ -63,13 +63,13 @@ pipeline {
         agent {
             docker {
                 image 'node:14.4.0'
-                args '-v ${PWD}/frontend/react:/app '
+       //         args '-v ${PWD}/frontend/react:/app '
                 reuseNode true
             }
         }
         steps {
-            sh 'pwd && docker ps'
-            sh 'ls -la'
+            
+          
             sh 'cd frontend/react && npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start && ls -la'
             sh 'pwd && docker ps'
             sh 'cd frontend/react && npm ci && npm run build && ls -la'
