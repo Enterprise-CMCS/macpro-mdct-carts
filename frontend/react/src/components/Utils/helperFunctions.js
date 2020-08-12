@@ -6,17 +6,4 @@ const sliceId = (id) => {
   return num;
 };
 
-const shouldDisplay = (parentValue, context) => {
-  if (
-    context.conditional_display.hide_if.values.interactive &&
-    !context.conditional_display.hide_if.values.interactive.includes(
-      parentValue
-    )
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-export { sliceId, shouldDisplay };
+export { sliceId };
