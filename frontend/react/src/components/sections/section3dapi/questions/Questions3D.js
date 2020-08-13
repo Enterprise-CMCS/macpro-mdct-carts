@@ -34,63 +34,50 @@ class Questions3d extends Component {
           {sectionData.parts.map((part) => (
             <div className="part">
               <h3 className="part-title">{part.title}</h3>
-              
+
               {part.questions.map((question) => (
                 <div className="question">
                   <fieldset className="ds-c-fieldset">
                     <CMSLegend label={question.label} id={question.id} />
 
-                    {/* Determine if question should be shown */}
-                    {question.context_data.type} === "conditional_display" ? (
-                      <div class="ds-c-alert ds-c-alert--hide-icon">
-                        <div class="ds-c-alert__body">
-                          <h3 class="ds-c-alert__heading">
-                            {question.context_data.skip_text}
-                          </h3>
-                        </div>
+                    {question.type === "radio" || question.type === "checkbox"
+                      ? Object.entries(question.answer.options).map(
+                        (key, index) => {
+                          return (
+                            <CMSChoice
+                              name={question.id}
+                              value={key[1]}
+                              label={key[0]}
+                              type={question.type}
+                              answer={question.answer.entry}
+                              children={question.questions}
+                              valueFromParent={this.state[question.id]}
+                              onChange={this.handleChange}
+                              key={index}
+                            />
+                          );
+                        }
+                      )
+                      : null}
+
+                    {/* If textarea */}
+                    {question.type === "text_multiline" ? (
+                      <div>
+                        <TextField
+                          class="ds-c-field"
+                          name={question.id}
+                          value={question.answer.entry || ""}
+                          type="text"
+                          name={question.id}
+                          rows="6"
+                          multiline
+                        />
                       </div>
-                    ) : (
-                      {question.type === "radio" || question.type === "checkbox"
-                        ? Object.entries(question.answer.options).map(
-                          (key, index) => {
-                            return (
-                              <CMSChoice
-                                name={question.id}
-                                value={key[1]}
-                                label={key[0]}
-                                type={question.type}
-                                answer={question.answer.entry}
-                                children={question.questions}
-                                valueFromParent={this.state[question.id]}
-                                onChange={this.handleChange}
-                                key={index}
-                              />
-                            );
-                          }
-                        )
-                        : null}
-
-                      {/* If textarea */}
-                      {question.type === "text_multiline" ? (
-                        <div>
-                          <TextField
-                            class="ds-c-field"
-                            name={question.id}
-                            value={question.answer.entry || ""}
-                            type="text"
-                            name={question.id}
-                            rows="6"
-                            multiline
-                          />
-                        </div>
-                      ) : null}
-
-                      {/* If FPL Range */}
-                      {question.type === "ranges" && (
-                        <FPL label={question.label} fieldLabels={question.answer.range_categories} />
-                      )}
-                    )
-                    }
+                    ) : null}
+                    {/* If FPL Range */}
+                    {question.type === "ranges" && (
+                      <FPL label={question.label} fieldLabels={question.answer.range_categories} />
+                    )}
                   </fieldset>
                 </div>
               ))}

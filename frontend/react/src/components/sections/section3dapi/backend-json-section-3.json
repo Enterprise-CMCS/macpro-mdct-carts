@@ -326,24 +326,6 @@
                     "Yes": "yes",
                     "No": "no"
                   }
-                },
-                "context_data": {
-                  "conditional_display": {
-                    "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
-                    "skip_text": "This section doesn\u2019t apply to your state. Skip to next section",
-                    "hide_if": {
-                      "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
-                      "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
-                      }
-                    }
-                  }
                 }
               },
               {

@@ -30,7 +30,6 @@ class Section3dapi extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={sectionData.title}>
-                <p className="section-text">{sectionData.text}</p>
                 <Questions previousEntry="false" />
                 <FormNavigation
                   // nextUrl="/section3/3e"
@@ -47,7 +46,6 @@ class Section3dapi extends Component {
                   <h3>{sectionData.title}</h3>
                 </div>
                 <div disabled>
-                  <p className="section-text">{sectionData.text}</p>
                   <Questions previousEntry="true" />
                 </div>
               </TabPanel>
