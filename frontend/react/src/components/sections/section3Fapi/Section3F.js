@@ -14,9 +14,11 @@ import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormNavigation";
 import Questions3FApi from "./questions/Questions3FApi";
 
+import QuestionComponent from "../../fields/QuestionComponent";
+
 //JSON data starts on line 1071,
 // it is an element in the subsections array
-const sectionData = Data.section.subsections[5];
+// const sectionData = Data.section.subsections[5];
 
 class Section3FApi extends Component {
   constructor(props) {
@@ -52,7 +54,7 @@ class Section3FApi extends Component {
                   {sectionID}: {this.props.section3FData.title}
                 </h3>
                 {this.props.section3FData.parts.map((part) => (
-                  <Questions3FApi
+                  <QuestionComponent
                     previousEntry="false"
                     data={part.questions}
                     sectionContext={this.bindToParentContext}
@@ -74,7 +76,7 @@ class Section3FApi extends Component {
                     {sectionID}: {this.props.section3FData.title}
                   </h3>
                   {this.props.section3FData.parts.map((part) => (
-                    <Questions3FApi
+                    <QuestionComponent
                       previousEntry="true"
                       data={part.questions}
                       sectionContext={this.bindToParentContext}

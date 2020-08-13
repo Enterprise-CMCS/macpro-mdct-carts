@@ -11,6 +11,8 @@ import {
   generateTextLongField,
 } from "../Utils/questionUtils";
 
+import QuestionComponent from "../fields/QuestionComponent";
+
 class CMSChoice extends Component {
   constructor(props) {
     super(props);
@@ -62,6 +64,12 @@ class CMSChoice extends Component {
     // If children are specified
     if (this.props.children) {
       // Loop through subquestions
+
+      fields.push(<QuestionComponent data={this.props.children} />);
+
+      // should display??? -- should this conditional show up??
+      //parent value??? -- if theres no answer, check JSON
+
       this.props.children.map((item) => {
         // Set parent value to state, fallback to entered answer
         let parentValue = this.props.valueFromParent
@@ -69,53 +77,54 @@ class CMSChoice extends Component {
           : this.props.answer;
 
         // Add fields to render array based on type (from api)
-        switch (item.type) {
-          case "text_long":
-            // Check if question matches the currently selected option (from parent)
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add to field to render array
-              fields.push(generateTextLongField(item, "subquestion"));
-            }
 
-            break;
-          case "radio":
-          case "checkbox":
-            // Loop through available answers object
-            Object.entries(item.answer.options).map((key, index) => {
-              // If entry matches current answer, mark as checked
+        // switch (item.type) {
+        //   case "text_long":
+        //     // Check if question matches the currently selected option (from parent)
+        //     if (shouldDisplay(parentValue, item.context_data)) {
+        //       // Add to field to render array
+        //       fields.push(generateTextLongField(item, "subquestion"));
+        //     }
 
-              // Check if question matches the currently selected option (from parent)
-              if (shouldDisplay(parentValue, item.context_data)) {
-                // Add field to render array
-                return fields.push(
-                  generateRadioCheckField(
-                    item,
-                    key,
-                    this.props.type,
-                    index,
-                    "subquestion"
-                  )
-                );
-              }
-            });
-            break;
-          case "ranges":
-            // Check if question matches the currently selected option (from parent)
+        //     break;
+        //   case "radio":
+        //   case "checkbox":
+        //     // Loop through available answers object
+        //     Object.entries(item.answer.options).map((key, index) => {
+        //       // If entry matches current answer, mark as checked
 
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add field to render array
-              return fields.push(generateRangeField(item));
-            }
-            break;
-          case "money":
-            // Check if question matches the currently selected option (from parent)
+        //       // Check if question matches the currently selected option (from parent)
+        //       if (shouldDisplay(parentValue, item.context_data)) {
+        //         // Add field to render array
+        //         return fields.push(
+        //           generateRadioCheckField(
+        //             item,
+        //             key,
+        //             this.props.type,
+        //             index,
+        //             "subquestion"
+        //           )
+        //         );
+        //       }
+        //     });
+        //     break;
+        //   case "ranges":
+        //     // Check if question matches the currently selected option (from parent)
 
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add field to render array
-              fields.push(generateMoneyField(item));
-            }
-            break;
-        }
+        //     if (shouldDisplay(parentValue, item.context_data)) {
+        //       // Add field to render array
+        //       return fields.push(generateRangeField(item));
+        //     }
+        //     break;
+        //   case "money":
+        //     // Check if question matches the currently selected option (from parent)
+
+        //     if (shouldDisplay(parentValue, item.context_data)) {
+        //       // Add field to render array
+        //       fields.push(generateMoneyField(item));
+        //     }
+        //     break;
+        // }
       });
     }
 
