@@ -36,7 +36,8 @@ const Routes = () => (
           <Route exact path="/section3A-api" component={Section3AApi} />
           <Route exact path="/section2/2a" component={Section2a} />
           <Route exact path="/section2/2b" component={Section2b} />
-          <Route exact path="/section3/3a" component={Section3a} />
+          {/* <Route exact path="/section3/3a" component={Section3a} /> */}
+          <Route exact path="/section3/3a" component={Section3AApi} />
           <Route exact path="/section3/3c" component={Section3c} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route exact path="/test" component={test} />
