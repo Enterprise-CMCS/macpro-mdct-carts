@@ -13,7 +13,7 @@ import {
   generateTextLongField,
 } from "../Utils/questionUtils";
 
-import shouldDisplay from "../Utils/helperFunctions";
+import { shouldDisplay } from "../Utils/helperFunctions";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -23,9 +23,10 @@ class QuestionComponent extends Component {
     this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
-  handleChange(evt) {
+  handleChange(evtArr) {
+    this.props.sectionContext(evtArr);
     this.setState({
-      [evt[0]]: evt[1],
+      [evtArr[0]]: evtArr[1],
     });
   }
 
@@ -36,10 +37,14 @@ class QuestionComponent extends Component {
   };
 
   render() {
+    let input;
+
+    // console.log("questions??", this.props.data[0]);
     return (
       <>
         {this.props.data.map((question) =>
-          question.context_data &&
+          // if this subuestion has context data && it should be displaying
+          this.props.childrenComponent &&
           shouldDisplay(
             this.props.conditionalParentChoice,
             question.context_data
@@ -55,9 +60,6 @@ class QuestionComponent extends Component {
                         // ? this.props.valueFromParent
                         // : this.props.answer;
 
-                        let input = this.state[question.id]
-                          ? this.state[question.id]
-                          : question.answer.entry;
                         return (
                           <CMSChoice
                             name={question.id}
@@ -65,10 +67,10 @@ class QuestionComponent extends Component {
                             label={key[0]}
                             type={question.type}
                             answer={question.answer.entry}
-                            conditional={question.conditional}
                             children={question.questions}
-                            valueFromParent={this.props.conditionalParentChoice}
-                            //   onChange={this.handleChange}
+                            valueFromParent={input}
+                            // valueFromParent={this.props.conditionalParentChoice}
+                            sectionContext={this.props.sectionContext}
                           />
                         );
                       }
@@ -135,8 +137,8 @@ class QuestionComponent extends Component {
                     {
                       <QuestionComponent
                         data={question.questions} //Array of subquestions to map through
-                        sectionContext={this.props.sectionContext} // object with conditional conditions
-                        conditionalParentChoice={question.answer.entry} // selection, if needed for children to know how to render
+                        sectionContext={this.props.sectionContext} // function binding children to parent context
+                        conditionalParentChoice={question.answer.entry ?? null} // selection, if needed for children to know how to render
                         //   shouldDisplayProp={this.shouldDisplay(question.answer.entry, question.context_data)}
                       />
                     }

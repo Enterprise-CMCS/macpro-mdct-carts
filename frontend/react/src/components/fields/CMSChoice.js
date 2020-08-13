@@ -30,14 +30,14 @@ class CMSChoice extends Component {
     // Set checkbox array of selected items
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
-    this.props.onChange([evt.target.name, evt.target.value]);
+    this.props.sectionContext([evt.target.name, evt.target.value]);
   };
 
   render() {
     // Get Current Value from state(passed from parent) or fall back to DB answer
     const currentValue = this.props.valueFromParent
       ? this.props.valueFromParent
-      : this.props.answer;
+      : null;
 
     // Determine if choice is checked
     let isChecked = null;
@@ -65,7 +65,13 @@ class CMSChoice extends Component {
     if (this.props.children) {
       // Loop through subquestions
 
-      fields.push(<QuestionComponent data={this.props.children} />);
+      fields.push(
+        <QuestionComponent
+          data={this.props.children}
+          sectionContext={this.props.sectionContext}
+          childrenComponents={"children"}
+        />
+      );
 
       // should display??? -- should this conditional show up??
       //parent value??? -- if theres no answer, check JSON
@@ -75,56 +81,6 @@ class CMSChoice extends Component {
         let parentValue = this.props.valueFromParent
           ? this.props.valueFromParent
           : this.props.answer;
-
-        // Add fields to render array based on type (from api)
-
-        // switch (item.type) {
-        //   case "text_long":
-        //     // Check if question matches the currently selected option (from parent)
-        //     if (shouldDisplay(parentValue, item.context_data)) {
-        //       // Add to field to render array
-        //       fields.push(generateTextLongField(item, "subquestion"));
-        //     }
-
-        //     break;
-        //   case "radio":
-        //   case "checkbox":
-        //     // Loop through available answers object
-        //     Object.entries(item.answer.options).map((key, index) => {
-        //       // If entry matches current answer, mark as checked
-
-        //       // Check if question matches the currently selected option (from parent)
-        //       if (shouldDisplay(parentValue, item.context_data)) {
-        //         // Add field to render array
-        //         return fields.push(
-        //           generateRadioCheckField(
-        //             item,
-        //             key,
-        //             this.props.type,
-        //             index,
-        //             "subquestion"
-        //           )
-        //         );
-        //       }
-        //     });
-        //     break;
-        //   case "ranges":
-        //     // Check if question matches the currently selected option (from parent)
-
-        //     if (shouldDisplay(parentValue, item.context_data)) {
-        //       // Add field to render array
-        //       return fields.push(generateRangeField(item));
-        //     }
-        //     break;
-        //   case "money":
-        //     // Check if question matches the currently selected option (from parent)
-
-        //     if (shouldDisplay(parentValue, item.context_data)) {
-        //       // Add field to render array
-        //       fields.push(generateMoneyField(item));
-        //     }
-        //     break;
-        // }
       });
     }
 

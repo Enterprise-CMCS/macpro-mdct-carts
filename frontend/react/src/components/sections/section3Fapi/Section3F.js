@@ -30,15 +30,16 @@ class Section3FApi extends Component {
     this.bindToParentContext = this.bindToParentContext.bind(this);
   }
 
-  bindToParentContext(arg) {
+  bindToParentContext(evtArr) {
     this.setState({
       parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
-      lastChangedBy: arg,
+      lastChangedBy: evtArr[0],
+      [evtArr[0]]: evtArr[1],
     });
   }
   render() {
     let sectionID = sectionIDGrabber(this.props.section3FData.id);
-    console.log("Data from redux??", this.props.section3FData);
+    // console.log("Data from redux??", this.props.section3FData.parts[0].text);
 
     return (
       <div className="section-1 ds-l-col--9 content">
