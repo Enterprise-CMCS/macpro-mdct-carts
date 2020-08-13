@@ -150,6 +150,7 @@ class CMSChoice extends Component {
               <div className="ds-c-choice__checkedChild">{fields}</div>
             ) : null
           }
+          disabled={this.props.disabled}
           onChange={this.sendData}
         >
           {this.props.label}
