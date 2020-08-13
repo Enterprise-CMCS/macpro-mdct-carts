@@ -19,6 +19,7 @@ class Goal2bApi extends Component {
       p1_q1_answer: null,
       p1_q2_answer: "",
       previousEntry: this.props.previousEntry,
+      questions: []
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);

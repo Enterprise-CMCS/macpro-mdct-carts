@@ -26,7 +26,9 @@ class Objective2bApi extends Component {
       objective2bDummyData: "",
       objectiveDescription: "",
       previousGoalsArray: [],
-      previousEntry: this.props.previousEntry
+      previousEntry: this.props.previousEntry,
+      goalsArray: this.props.goalsArray,
+      goalCount: this.props.goalsArray.length
     };
     this.newGoal = this.newGoal.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -104,7 +106,8 @@ class Objective2bApi extends Component {
 
         <div className="objective-body">
           <div className="goals">
-            {/**
+            {console.log(this.state.goalsArray)
+            /**
              * Maps through array of Previous Goals in state
              * If the props include previousEntry==="true", render previous year's data
              */}
@@ -130,74 +133,82 @@ class Objective2bApi extends Component {
             ) : (
                 //  Alternatively,  This maps through the current goals in state
                 <>
-                  {this.props.goalsArray.map((goals) => (
-                    <>
-                      <Accordion multiple defaultIndex={0}>
-                        <AccordionItem key={goals.id} >
-                          <h3>
-                            <AccordionButton>
-                              <div>
-                                Goal {goals.id}:
-                              </div>
-                            </AccordionButton>
-                          </h3>
-                          {goals.questions.map((question) => (
-                            <>
-                              {console.log("question", question)}
-                              {question.type !== "fieldset" ? (
+                  {this.state.goalsArray.map((goals) => {
+                    const tempId = goals.id.split("-")
+                    return (
+                      <>
 
-                                <AccordionPanel>
-                                  <div className="singleGoal">
-                                    <div className="question">
-                                      <fieldset className="ds-c-fieldset">
-                                        {question.label}
-                                        {question.type === "radio" || question.type === "checkbox"
-                                          ? Object.entries(question.answer.options).map((
-                                            key,
-                                            index
-                                          ) => {
-                                            return (
-                                              <CMSChoice
+                        <Accordion multiple defaultIndex={0}>
+                          <AccordionItem key={goals.id} >
+                            <h3>
+                              <AccordionButton>
+                                <div>
+
+                                  Goal {tempId[tempId.length - 1]}:
+                              </div>
+                              </AccordionButton>
+                            </h3>
+                            {goals.questions.map((question) => (
+                              <>
+                                {question.type !== "fieldset" ? (
+                                  <AccordionPanel>
+                                    <div className="singleGoal">
+                                      <div className="question">
+                                        <fieldset className="ds-c-fieldset">
+                                          <CMSLegend
+                                            label={question.label}
+                                            id={question.id}
+                                            type="question"
+                                          />
+                                          {question.type === "radio" || question.type === "checkbox"
+                                            ? Object.entries(question.answer.options).map((
+                                              key,
+                                              index
+                                            ) => {
+                                              return (
+                                                <CMSChoice
+                                                  name={question.id}
+                                                  value={key[1]}
+                                                  label={key[0]}
+                                                  type={question.type}
+                                                  onChange={this.handleChange}
+                                                  answer={question.answer.entry}
+                                                  conditional={question.conditional}
+                                                  children={question.questions}
+                                                  valueFromParent={this.state[question.id]}
+                                                />
+                                              );
+                                            })
+                                            : null}
+                                          {/* If textarea */}
+                                          {question.type === "text_long" || question.type === "text_multiline" ? (
+                                            <div>
+                                              <textarea
+                                                class="ds-c-field"
                                                 name={question.id}
-                                                value={key[1]}
-                                                label={key[0]}
-                                                type={question.type}
-                                                onChange={this.handleChange}
-                                                answer={question.answer.entry}
-                                                conditional={question.conditional}
-                                                children={question.questions}
+                                                value={question.answer.entry}
+                                                type="text"
+                                                name={question.id}
+                                                rows="6"
                                               />
-                                            );
-                                          })
-                                          : null}
-                                        {/* If textarea */}
-                                        {question.type === "text_long" || question.type === "text_multiline" ? (
-                                          <div>
-                                            <textarea
-                                              class="ds-c-field"
-                                              name={question.id}
-                                              value={question.answer.entry}
-                                              type="text"
-                                              name={question.id}
-                                              rows="6"
-                                            />
-                                          </div>
-                                        ) : null}
-                                        {/* If FPL Range */}
-                                        {question.type === "ranges" ? (
-                                          <div>
-                                            <FPL label={question.label} />
-                                          </div>
-                                        ) : null}
-                                      </fieldset>
+                                            </div>
+                                          ) : null}
+                                          {/* If FPL Range */}
+                                          {question.type === "ranges" ? (
+                                            <div>
+                                              <FPL label={question.label} />
+                                            </div>
+                                          ) : null}
+                                        </fieldset>
+                                      </div>
                                     </div>
-                                  </div>
-                                </AccordionPanel>) : null}
-                            </>
-                          ))}
-                        </AccordionItem>
-                      </Accordion>
-                    </>))}
+                                  </AccordionPanel>) : null}
+                              </>
+                            ))}
+                          </AccordionItem>
+                        </Accordion>
+                      </>)
+                  })}
                 </>
               )}
           </div>

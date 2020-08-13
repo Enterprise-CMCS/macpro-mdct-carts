@@ -63,7 +63,7 @@ class CMSChoice extends Component {
 
         // Add fields to render array based on type (from api)
         switch (item.type) {
-          case "text_long":
+          case "text_multiline":
             // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array

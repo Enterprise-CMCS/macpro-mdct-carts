@@ -210,6 +210,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -222,6 +240,24 @@
                             "End"
                           ],
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -230,6 +266,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -238,6 +292,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -246,6 +318,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -254,6 +344,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -262,6 +370,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -270,6 +396,24 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-02-a-03 is unanswered or no; noninteractive: hide if no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-02-a-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       }
                     ],
