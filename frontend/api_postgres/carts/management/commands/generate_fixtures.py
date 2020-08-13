@@ -15,6 +15,8 @@ class Command(BaseCommand):
         for glob in globs:
             paths = paths + [_ for _ in fd.glob(glob)]
 
+        schemapath = Path(fd, "backend-section.schema.json")
+        paths = paths + schemapath
         schemabase = loads(Path(fd, "backend-section.schema.json").read_text())
         schema = schemabase[0]["fields"]["contents"]
         sections = [loads(_.read_text())[0] for _ in paths]
