@@ -39,116 +39,98 @@ class QuestionComponent extends Component {
   render() {
     let input;
 
-    // console.log("questions??", this.props.data[0]);
     return (
       <>
-        {this.props.data.map((question) =>
-          // if this subuestion has context data && it should be displaying
-          this.props.childrenComponent &&
-          shouldDisplay(
-            this.props.conditionalParentChoice,
-            question.context_data
-          ) ? (
-            <div className="question">
-              <fieldset className="ds-c-fieldset">
-                {/* Generating question label */}
-                <CMSLegend label={question.label} id={question.id} />
-                {question.type === "radio" || question.type === "checkbox"
-                  ? Object.entries(question.answer.options).map(
-                      (key, index) => {
-                        // let parentValue = this.props.valueFromParent
-                        // ? this.props.valueFromParent
-                        // : this.props.answer;
-
-                        return (
-                          <CMSChoice
-                            name={question.id}
-                            value={key[1]}
-                            label={key[0]}
-                            type={question.type}
-                            answer={question.answer.entry}
-                            children={question.questions}
-                            valueFromParent={input}
-                            // valueFromParent={this.props.conditionalParentChoice}
-                            sectionContext={this.props.sectionContext}
-                          />
-                        );
-                      }
-                    )
-                  : null}
-                {/* If textarea */}
-                {question.type === "text_long" ? (
-                  <div>
-                    <TextField
-                      className="ds-c-field"
-                      multiple
-                      name={question.id}
-                      value={question.answer.entry}
-                      type="text"
-                      name={question.id}
-                      rows="6"
-                      // onChange={this.props.sectionContext("some value")}
-                    />
-                  </div>
-                ) : null}
-                {/* If FPL Range */}
-                {question.type === "ranges" ? (
-                  <div>
-                    <FPL label={question.label} />
-                  </div>
-                ) : null}
-                {question.type === "integer" ? (
-                  <div>
-                    <TextField
-                      // label={question.label}
-                      className="ds-u-margin-top--0"
-                      name="integer"
-                      multiple
-                    />
-                  </div>
-                ) : null}
-                {/* If FPL Range */}
-                {question.type === "file_upload" ? (
-                  <div>
-                    <TextField
-                      // label={question.label}
-                      className="ds-u-margin-top--0"
-                      onChange={this.handleFileUpload}
-                      name="fileUpload"
-                      type="file"
-                      multiple
-                    />
-                  </div>
-                ) : null}
-                {question.type === "money" ? (
-                  <>
-                    <TextField
-                      className="fpl-input"
-                      // label={item.label}
-                      inputMode="currency"
-                      mask="currency"
-                      pattern="[0-9]*"
-                      value={question.answer.entry}
-                    />
-                  </>
-                ) : null}
-                {question.questions ? (
-                  <div>
-                    {
-                      <QuestionComponent
-                        data={question.questions} //Array of subquestions to map through
-                        sectionContext={this.props.sectionContext} // function binding children to parent context
-                        conditionalParentChoice={question.answer.entry ?? null} // selection, if needed for children to know how to render
-                        //   shouldDisplayProp={this.shouldDisplay(question.answer.entry, question.context_data)}
+        {this.props.data.map((question) => (
+          <div className="question">
+            <fieldset className="ds-c-fieldset">
+              {/* Generating question label */}
+              <CMSLegend label={question.label} id={question.id} />
+              {question.type === "radio" || question.type === "checkbox"
+                ? Object.entries(question.answer.options).map((key, index) => {
+                    return (
+                      <CMSChoice
+                        name={question.id}
+                        value={key[1]}
+                        label={key[0]}
+                        type={question.type}
+                        answer={question.answer.entry} // JSON Answer
+                        children={question.questions}
+                        valueFromParent={this.state[question.id]} // User selection in local state
+                        sectionContext={this.props.sectionContext}
                       />
-                    }
-                  </div>
-                ) : null}
-                ) : (null )
-              </fieldset>
-            </div>
-          ) : null
-        )}
+                    );
+                  })
+                : null}
+              {/* If textarea */}
+              {question.type === "text_multiline" ? (
+                <div>
+                  <TextField
+                    className="ds-c-field"
+                    multiple
+                    name={question.id}
+                    value={question.answer.entry}
+                    type="text"
+                    name={question.id}
+                    rows="6"
+                    // onChange={this.props.sectionContext("some value")}
+                  />
+                </div>
+              ) : null}
+              {/* If FPL Range */}
+              {question.type === "ranges" ? (
+                <div>
+                  <FPL label={question.label} />
+                </div>
+              ) : null}
+              {question.type === "integer" ? (
+                <div>
+                  <TextField
+                    // label={question.label}
+                    className="ds-u-margin-top--0"
+                    name="integer"
+                    multiple
+                  />
+                </div>
+              ) : null}
+              {/* If FPL Range */}
+              {question.type === "file_upload" ? (
+                <div>
+                  <TextField
+                    // label={question.label}
+                    className="ds-u-margin-top--0"
+                    onChange={this.handleFileUpload}
+                    name="fileUpload"
+                    type="file"
+                    multiple
+                  />
+                </div>
+              ) : null}
+              {question.type === "money" ? (
+                <>
+                  <TextField
+                    className="fpl-input"
+                    // label={item.label}
+                    inputMode="currency"
+                    mask="currency"
+                    pattern="[0-9]*"
+                    value={question.answer.entry}
+                  />
+                </>
+              ) : null}
+              {question.questions ? (
+                <div>
+                  {
+                    <QuestionComponent
+                      data={question.questions} //Array of subquestions to map through
+                      sectionContext={this.props.sectionContext} // function binding children to parent context
+                    />
+                  }
+                </div>
+              ) : null}
+            </fieldset>
+          </div>
+        ))}
       </>
     );
   }
