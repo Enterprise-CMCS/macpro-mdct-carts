@@ -10,9 +10,6 @@ import { TextField } from "@cmsgov/design-system-core";
 // Get subsection of DATA
 const sectionData = Data.section.subsections[3];
 
-var S1P3Q8 = Section1.subsections.parts.questions.id["2020-01-a-03-08"].answer.entry
-var S1P4Q8 = Section1.subsections.parts.questions.id["2020-01-a-04-08"].answer.entry
-
 class Questions3d extends Component {
   constructor(props) {
     super(props);
@@ -66,21 +63,17 @@ class Questions3d extends Component {
 
                     {/* If textarea */}
                     {question.type === "text_multiline" ? (
-                      S1P3Q8 === "no" && S1P4Q8 === "no" || S1P3Q8 === null && S1P4Q8 === null ? (
-                        <p>{question.context_data.skip_text}</p>
-                        ) : (
-                        <div>
-                          <TextField
-                            class="ds-c-field"
-                            name={question.id}
-                            value={question.answer.entry || ""}
-                            type="text"
-                            name={question.id}
-                            rows="6"
-                            multiline
-                          />
-                        </div>
-                        )
+                      <div>
+                        <TextField
+                          class="ds-c-field"
+                          name={question.id}
+                          value={question.answer.entry || ""}
+                          type="text"
+                          name={question.id}
+                          rows="6"
+                          multiline
+                        />
+                      </div>
                     ) : null}
 
                     {/* If FPL Range */}

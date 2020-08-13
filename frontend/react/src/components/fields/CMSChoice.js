@@ -183,6 +183,7 @@ class CMSChoice extends Component {
             ) : null
           }
           onChange={this.sendData}
+          disabled={this.props.disabled}
         >
           {this.props.label}
         </Choice>
