@@ -61,7 +61,7 @@ class Questions3AApi extends Component {
                       : null}
 
                     {/* If textarea */}
-                    {question.type === "text_long" ? (
+                    {question.type === "text_multiline" ? (
                       <div>
                         <TextField
                           class="ds-c-field"
