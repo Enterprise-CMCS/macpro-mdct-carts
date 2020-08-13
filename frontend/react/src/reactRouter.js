@@ -29,14 +29,17 @@ const Routes = () => (
         {VisibleSidebar}
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route exact path="/basic-info" component={BasicInfo} />
+          {/* <Route exact path="/basic-info" component={BasicInfo} /> */}
+          <Route exact path="/basic-info" component={BasicInfoApi} />
           <Route exact path="/basic-info-api" component={BasicInfoApi} />
-          <Route exact path="/section1" component={Section1} />
+          {/* <Route exact path="/section1" component={Section1} /> */}
+          <Route exact path="/section1" component={Section1Api} />
           <Route exact path="/section1-api" component={Section1Api} />
           <Route exact path="/section3A-api" component={Section3AApi} />
           <Route exact path="/section2/2a" component={Section2a} />
           <Route exact path="/section2/2b" component={Section2b} />
-          <Route exact path="/section3/3a" component={Section3a} />
+          {/* <Route exact path="/section3/3a" component={Section3a} /> */}
+          <Route exact path="/section3/3a" component={Section3AApi} />
           <Route exact path="/section3/3c" component={Section3c} />
           <Route exact path="/section3/3d-api" component={Section3dapi} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />

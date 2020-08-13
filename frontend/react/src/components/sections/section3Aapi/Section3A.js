@@ -35,7 +35,10 @@ class Section3AApi extends Component {
             <Tabs>
               <TabPanel id="tab-form" tab={sectionData.title}>
                 <Questions3AApi previousEntry="false" />
-                <FormNavigation previousUrl="/section3/3c" />
+                <FormNavigation 
+                  nextUrl="/section3/3c"
+                  previousUrl="/section2/2b" 
+                />
               </TabPanel>
 
               <TabPanel
