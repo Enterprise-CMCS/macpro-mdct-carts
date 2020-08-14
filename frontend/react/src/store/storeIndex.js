@@ -25,6 +25,9 @@ const middleware = composeWithDevTools(applyMiddleware(...middlewareArray));
 
 // Create store with reducers and middleware
 const store = createStore(reducer, middleware);
+
+/* Initialize the data for section 1. This will need to happen for
+   every section in the current structure.                        */
 store.dispatch(selectSection('1'));
 store.dispatch(fetchSectionData('1'));
 
