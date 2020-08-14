@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Section3C from './section3c/Section3C'
-import { SharedViewAlert } from './../layout/SharedViewAlert'
+import { SharedViewModal } from '../layout/SharedViewModal'
 import { Alert, Button } from "@cmsgov/design-system-core"
 
 export const SharedView = _ => {
@@ -20,7 +20,7 @@ export const SharedView = _ => {
         All finished?</p>
         <Button className="ds-c-button ds-c-button--primary ds-c-button--small ds-u-margin-top--1 ds-u-margin-bottom--1" onClick={_ => showModal(true)}>I’m finished with this section</Button>
       </Alert>
-      {modal && <SharedViewAlert hide={hideModal} />}
+      {modal && <SharedViewModal hide={hideModal} />}
       <Section3C />
     </>
   )
