@@ -88,7 +88,7 @@ pipeline {
         expression { env.DEPLOY == "true"}
       }
       steps {
-      sh 'pwd && ls -la frontend/react'
+      sh 'aws s3 cp frontend/react/build.tar.gz s3://cartsui-cloudfront-origin --recursive '
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           lock('docker_socket') {
@@ -149,7 +149,7 @@ pipeline {
           }
         }
       }
-    }   */
+    }   
  
 
     stage("Deploy Frontend Layer") {
@@ -198,7 +198,7 @@ pipeline {
       }
     }
 
-    
+    */
     
     stage("Destroy at the end") {
       when {
