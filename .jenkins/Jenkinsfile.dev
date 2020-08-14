@@ -68,26 +68,13 @@ pipeline {
             }
         }
         steps {
-         //  sh 'ln -s /home/jenkins/.local/bin /usr/local/bin/aws'
-          
-        //  sh '''   
-        //    su - && apt install -y python-pip
-        //    pip install --user --upgrade awscli >/dev/null
-  //  if [ -z "${AWS_REGION}" ]; then AWS_REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`; fi
-  //  aws configure set region $AWS_REGION
- //   aws configure set output json
- //           '''
+ 
             dir('frontend/react') {
-            sh '''
-            echo $PATH
-         //   ln -s /home/jenkins/.local/bin /usr/local/bin/aws
-       
-            
-            
+            sh '''           
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
             npm ci && npm run build
             tar -zcvf build.tar.gz build && ls -la
-    //        aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin --recursive      
+         
               '''
           }
             
