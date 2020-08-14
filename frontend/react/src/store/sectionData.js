@@ -1,4 +1,5 @@
 // Mostly taken from https://redux.js.org/advanced/async-actions
+
 const initialState = {
   selectedSection: '1',
   dataBySection: {
@@ -9,9 +10,25 @@ const initialState = {
   }
 };
 
+// Actions
 const SELECT_SECTION = "SELECT_SECTION";
 const REQUEST_SECTION_DATA = "REQUEST_SECTION_DATA";
 const RECEIVE_SECTION_DATA = "RECEIVE_SECTION_DATA";
+
+const requestSectionData = (section) => {
+  return {
+    type: REQUEST_SECTION_DATA,
+    section
+  }
+}
+
+const receiveSectionData = (section, json) => {
+  return {
+    type: RECEIVE_SECTION_DATA,
+    section,
+    data: json.contents.section
+  }
+}
 
 export const selectSection = (section) => {
   return {
@@ -29,21 +46,7 @@ export const selectedSection = (state = '0', action) => {
   }
 }
 
-const requestSectionData = (section) => {
-  return {
-    type: REQUEST_SECTION_DATA,
-    section
-  }
-}
-
-const receiveSectionData = (section, json) => {
-  return {
-    type: RECEIVE_SECTION_DATA,
-    section,
-    data: json.contents.section
-  }
-}
-
+// Reducers
 const sectionData = (
   state = {
     isFetching: false,
