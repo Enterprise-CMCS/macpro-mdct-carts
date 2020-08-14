@@ -73,7 +73,7 @@ pipeline {
             sh '''           
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
             npm ci && npm run build
-          //  tar -zcvf build.tar.gz build && ls -la
+          
          
               '''
           }
