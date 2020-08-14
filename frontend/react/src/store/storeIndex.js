@@ -3,7 +3,12 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
-import { selectSection, dataBySection, selectedSection, fetchSectionData } from "./initialData";
+import {
+  selectSection,
+  dataBySection,
+  selectedSection,
+  fetchSectionData
+} from "./sectionData";
 
 // Consolidate reducers
 export const reducer = combineReducers({ stateUser, global, selectedSection, dataBySection });
