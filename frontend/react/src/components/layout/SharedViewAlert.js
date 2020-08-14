@@ -1,26 +1,26 @@
 import React from 'react'
 import { Dialog } from "@cmsgov/design-system-core"
 
-export const SharedViewAlert = _ => {
-
+export const SharedViewAlert = ({ hide }) => {
   return (
     <Dialog
+      onExit={hide}
       getApplicationNode={() => document.getElementById('App')}
-      heading="Dialog heading"
+      heading="Before you submit"
       actions={[
         <button className="ds-c-button ds-c-button--primary" key="primary">
-          Dialog action
+          Submit
         </button>,
         <button
           className="ds-c-button ds-c-button--transparent"
           key="cancel"
+          onClick={hide}
         >
           Cancel
         </button>,
       ]}
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan diam vitae metus
-      lacinia, eget tempor purus placerat.
+      You’ll no longer be able to edit this page once you’re finished, unless you receive a new link to edit this section again.
     </Dialog>
   )
 }
