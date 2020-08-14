@@ -88,12 +88,13 @@ pipeline {
         expression { env.DEPLOY == "true"}
       }
       steps {
-      sh 'pwd && ls -la frontend/react'
-      sh 'cd frontend/react && aws s3 cp build s3://cartsui-cloudfront-origin --recursive'
-   //   sh 'cd frontend/react && aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin'
       
-      sh 'cd frontend/react && tar -zcvf build1.tar.gz build | aws s3 cp - s3://cartsui-cloudfront-origin'
-  
+    //  sh 'cd frontend/react && aws s3 cp build s3://cartsui-cloudfront-origin --recursive'
+   //   sh 'cd frontend/react && aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin'
+      sh 'pwd && ls -la frontend/react'
+      sh 'cd frontend/react && tar -zcvf build1.tar.gz build'
+      sh 'cd frontend/react && aws s3 cp build1.tar.gz s3://cartsui-cloudfront-origin/build1.tar.gz'
+ 
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           lock('docker_socket') {
