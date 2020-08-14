@@ -21,16 +21,6 @@ let VisibleSidebar =
       <Sidebar />
     );
 
-/**
- * UUID generator
- * 
- * Generates a unique id using a timestamp and the MAC address 
- * of the computer on which it was generated.
- * 
- * @see https://www.uuidgenerator.net/api
- */
-const uuid = `667177b6-f008-4cf1-b728-e52b0cb94920`
-
 const Routes = () => (
   <Router>
     <div className="ds-l-container">
@@ -46,7 +36,7 @@ const Routes = () => (
           <Route exact path="/section2/2b" component={Section2b} />
           <Route exact path="/section3/3a" component={Section3a} />
           <Route exact path="/section3/3c" component={Section3c} />
-          <Route exact path={`/shared/${uuid}`} component={SharedView} />
+          <Route exact path="/shared/:uuid" component={SharedView} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route exact path="/test" component={test} />
         </Switch>
