@@ -9,7 +9,6 @@ class FormActions extends Component {
     super(props);
 
     this.state = {
-      copyUrl: "https://cartsdemo.cms.gov/l32kksf3isdgf823nsd9",
       shareShow: false,
     };
 
@@ -63,6 +62,7 @@ class FormActions extends Component {
             Share
           </Button>
         </div>
+
         {this.state["shareShow"] && <ShareLinkModal hide={this.hideModal} />}
       </section>
     );
