@@ -38,14 +38,18 @@ class QuestionComponent extends Component {
 
   render() {
     let input;
-
     return (
       <>
         {this.props.data.map((question) => (
           <div className="question">
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
-              <CMSLegend label={question.label} id={question.id} />
+
+              <CMSLegend
+                label={question.label}
+                id={question.id}
+                type={this.props.subquestion ? "subquestion" : null}
+              />
               {question.type === "radio" || question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
                     return (
@@ -118,16 +122,32 @@ class QuestionComponent extends Component {
                   />
                 </>
               ) : null}
-              {question.questions ? (
+
+              {question.questions && question.type !== "fieldset" ? (
                 <div>
                   {
                     <QuestionComponent
+                      subquestion={true}
                       data={question.questions} //Array of subquestions to map through
                       sectionContext={this.props.sectionContext} // function binding children to parent context
                     />
                   }
                 </div>
               ) : null}
+
+              {/* {question.questions && question.type === "fieldset" ? (
+                shouldDisplay(null, question.context_data) ? (
+                  <div>
+                    {
+                      <QuestionComponent
+                        subquestion="subquestion"
+                        data={question.questions} //Array of subquestions to map through
+                        sectionContext={this.props.sectionContext} // function binding children to parent context
+                      />
+                    }
+                  </div>
+                ) : null
+              ) : null} */}
             </fieldset>
           </div>
         ))}
@@ -136,4 +156,11 @@ class QuestionComponent extends Component {
   }
 }
 
-export default QuestionComponent;
+const mapStateToProps = (state) => ({
+  name: state.stateUser.name,
+  year: state.global.formYear,
+  programType: state.stateUser.programType,
+  section3FData: state.section3.questionData.section3FData,
+});
+
+export default connect(mapStateToProps)(QuestionComponent);
