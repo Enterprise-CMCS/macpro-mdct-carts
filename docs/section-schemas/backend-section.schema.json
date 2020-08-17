@@ -133,9 +133,6 @@
         "comment": {
           "type": "string"
         },
-        "allow_add_range": {
-            "type": "boolean"
-        },
         "display_prior_year_data": {
           "type": "boolean"
         },
