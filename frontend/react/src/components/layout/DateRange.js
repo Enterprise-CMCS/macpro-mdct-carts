@@ -170,6 +170,7 @@ class DateRange extends Component {
                 data-test="component-daterange-monthstart"
                 name="monthStart"
                 numeric
+                label={""}
                 inputRef={(monthStart) => (this.monthStart = monthStart)}
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
@@ -184,6 +185,7 @@ class DateRange extends Component {
                 className="ds-c-field--small"
                 inputRef={(yearStart) => (this.yearStart = yearStart)}
                 name="yearStart"
+                label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
                 numeric
@@ -213,6 +215,7 @@ class DateRange extends Component {
                 inputRef={(monthEnd) => (this.monthEnd = monthEnd)}
                 name="monthEnd"
                 numeric
+                label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 value={
@@ -227,6 +230,7 @@ class DateRange extends Component {
                 className="ds-c-field--small"
                 inputRef={(yearEnd) => (this.yearEnd = yearEnd)}
                 name="yearEnd"
+                label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 numeric
@@ -244,12 +248,12 @@ class DateRange extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  year: state.stateUser.formYear,
-});
-
 DateRange.propTypes = {
   previousEntry: PropTypes.bool,
 };
+
+const mapStateToProps = (state) => ({
+  year: state.stateUser.formYear,
+});
 
 export default connect(mapStateToProps)(DateRange);

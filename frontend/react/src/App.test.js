@@ -1,11 +1,12 @@
 import React from "react";
+import { Provider } from "react-redux";
 import {
   storeFactory,
   findByTestAttribute,
   mockInitialState,
   checkProps,
 } from "./testUtils";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 
 import App from "./App";
 
@@ -35,32 +36,22 @@ describe("renders necessary components (shallow)", () => {
   });
 });
 
-const mountedSetup = (initialState = {}, props = {}) => {
+const mountedSetup = (initialState = {}) => {
   const store = storeFactory(initialState);
-  return shallow(<App store={store} />)
-    .dive()
-    .dive();
+  return mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 };
 
-describe("renders internal components (mounted)", () => {
+describe("renders internal components, sidebar and header (mounted)", () => {
   const wrapper = mountedSetup(mockInitialState);
 
-  it("renders header (mounted)", () => {
-    const appComponent = wrapper.find("[data-test='component-header']");
-    expect(appComponent.length).toBe(1);
+  it("renders child components, header", () => {
+    expect(wrapper.exists(".header")).toBe(true);
   });
-
-  // it("App renders", () => {
-  //   expect(wrapper.exists(".App")).toBe(true);
-  // });
-  // it("header renders", () => {
-  //   expect(wrapper.exists(".header")).toBe(true);
-  // });
-  // it("footer renders", () => {
-  //   expect(wrapper.exists(".footer")).toBe(true);
-  // });
-
-  // it("sidebar renders", () => {
-  //   expect(wrapper.exists(".sidebar")).toBe(true);
-  // });
+  it("renders child components, footer", () => {
+    expect(wrapper.exists(".footer")).toBe(true);
+  });
 });
