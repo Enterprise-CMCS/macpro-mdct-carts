@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button, Dialog, TextField } from "@cmsgov/design-system-core"
+import { Button, Dialog } from "@cmsgov/design-system-core"
 import { useState, useRef } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 
 export const ShareLinkModal = ({ hide }) => {
   const [link, linkGenerated] = useState('')
-  const copyUrl = "https://cartsdemo.cms.gov/shared/667177b6-f008-4cf1-b728-e52b0cb94920"
+  const copyUrl = `${window.location.hostname}/shared/667177b6-f008-4cf1-b728-e52b0cb94920`
   const expires = `7`
   const shareLink = useRef(null)  // React hook. Sets its `.current` property to the corresponding DOM node whenever that node changes
 
