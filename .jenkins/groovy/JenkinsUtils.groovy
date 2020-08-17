@@ -13,6 +13,15 @@ void buildAndPushImageToEcr(String buildDir, String repositoryName, List tags) {
   }
 }
 
+void triggerEcrScan(String repositoryName, String tag) {
+  loginToEcr()
+  sh """
+    # There is a 1 scan/image/day limit.  We will start a scan, but ignore failures, as we may have already requested a scan.
+    # If a scan is already complete, we're happy.  We will just fetch those results.  So ignoring failure is deemed OK.
+    aws ecr start-image-scan --repository-name $repositoryName --image-id imageTag=$tag | true
+  """
+}
+
 void fetchEcrScanResult(String repositoryName, String tag) {
   loginToEcr()
   sh """
@@ -35,6 +44,13 @@ void installAwsCli() {
     if [ -z "${AWS_REGION}" ]; then AWS_REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`; fi
     aws configure set region $AWS_REGION
     aws configure set output json
+  '''
+}
+
+void installEcsCli() {
+  sh '''
+    curl -Lo ~/.local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+    chmod +x ~/.local/bin/ecs-cli
   '''
 }
 
@@ -116,6 +132,16 @@ def terraformOutput(String stateBucket, String workspace, String outputVar) {
   terraformInit(stateBucket)
   terraformSelectWorkspace(workspace)
   sh(script: "~/.local/bin/terraform output ${outputVar}", returnStdout: true).trim()
+}
+
+void runInspecScan(String name, String taskDef, String cluster, String subnets, String securityGroup){
+  sh """
+    PATH=~/.local/bin:$PATH
+    taskArn=`aws ecs run-task --task-definition ${taskDef} --cluster ${cluster} --count 1 --network-configuration "awsvpcConfiguration={subnets=[${subnets}],securityGroups=[${securityGroup}],assignPublicIp=DISABLED}" --capacity-provider-strategy "capacityProvider=FARGATE" --output text --query 'tasks[0].taskArn'`
+    taskId=`echo \$taskArn | sed 's|.*/||'`
+    aws ecs wait tasks-stopped --cluster ${cluster} --tasks "\$taskArn"
+    ecs-cli logs --task-id \$taskId --task-def ${taskDef} --cluster ${cluster} | sed -n '/BEGIN_JSON_RESULTS/,/END_JSON_RESULTS/p' | sed 's/BEGIN_JSON_RESULTS//' | sed 's/END_JSON_RESULTS//'  | tr -d '\r\n' | tr -d '\n' | python -m json.tool > inspec_scan_result_${name}.json
+  """
 }
 
 return this
