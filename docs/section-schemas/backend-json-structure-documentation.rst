@@ -453,6 +453,19 @@ Fieldsets do not have ``id`` properties, and the questions within them increment
 
 Special ``fieldset`` types
 **************************
+Special ``fieldset`` types that don't necessarily contain questions. They must still have a ``questions`` field because these uses are outliers and it makes more sense to require the field for the vast majority of uses that do contain questions.
+
+``datagrid``
+############
+The child questions of a ``datagrid`` ``fieldset`` should be grouped together and presented as a table, possibly without showing their question markers. Currently the only design for this (in, of course, Section 3C) has four questions presented as a single row. As a result, the ``fieldset_info`` details are still undetermined, and will probably change during Section 3C development.
+
+``marked``
+##########
+Thanks to Section 3C, we need a ``fieldset`` type that *does* have an ``id`` property, and *does* act as if it were a real question and thus the questions it contains are marked as subquestions. So that's what this is for. Essentially, it's a ``question`` that can't actually accept answers; all the other parts of a question component except the actual input element.
+
+Because ``fieldset`` can't have an ``id`` property, we have to store the ``id`` for these in the ``fieldset_info`` object, which may be annoying at implementation time. However, this kind of ``fieldset`` will require custom handling anyway, and adding that wrinkle will hopefully not be too difficult.
+
+Other ``fieldset`` instances nested below it do not inherit its ``marked`` nature.
 
 ``synthesized_value``
 #####################
@@ -470,6 +483,9 @@ Supported actions are:
     Return the value unchanged, except that it's now in an array.
 ``sum``
     Add all of the values and return the result. This probably implies casting them to number types first.
+``percentage``
+    Divide the contents of the first target by the contents of the second target, multiply by 100. This probably implies casting them to number types first. The default is to round to two decimal places, but if a ``precision`` property is also present, its integer value will be used to determing how many digits of precision are required (``0`` would mean round to the nearest integer, ``2`` would mean round to the second decimal place, etc.),
+
 
 The property is called ``actions``, but hopefully we'll only ever need to have one action listed, and thus won't have to define what happens in what order if there are multiple values.
 
@@ -511,6 +527,45 @@ Example of ``sum``:
 
 
 The above would display the two questions, and below them a label followed by the sum of the two answers.
+
+Example of ``percentage``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "questions": [
+        {
+          "id": "2020-02-b-01-01-01-01",
+          "label": "How many fables were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        },
+        {
+          "id": "2020-02-b-01-01-01-02",
+          "label": "How many stories were you told?",
+          "type": "integer",
+          "answer": { "entry": null }
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Total number of loosely-defined tales of the fantastical",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='2020-02-b-01-01-01-01')].answer.entry",
+          "$..*[?(@.id=='2020-02-b-01-01-01-02')].answer.entry"
+        ],
+        "actions": ["percentage"],
+        "precision": 0
+
+      }
+    }
+
+
+The above would display the two questions, and below them a label followed by a percentage (100 × the number of fables divided by the number of stories). Because ``precision: 0`` is present, the number would be rounded to the nearest integer.
 
 Example of ``identity``:
 
@@ -555,71 +610,6 @@ Example of using ``contents``:
     }
 
 The above would display ``The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998`` and ``12.2``.
-
-
-``percentage``
-##############
-This displays a percentage field as an aid to the user, calculating it from two fields other fields. Those other fields are specified in the ``fieldset_info`` object.
-
-The percentage value would be displayed at the end of wherever the fieldset is in the hierarchy, and isn't necessarily dependent on the locations of the target questions in the hierarchy.
-
-The ``fieldset_info`` object for ``percentage`` has two properties, ``numerator`` and ``denominator``, each of which contains a string that is a JSON Path expression of the target. For example:
-
-..  code:: json
-
-      {
-        "type": "fieldset",
-        "label": "Define the numerator you're measuring",
-        "questions": [
-          {
-            "id": "2020-02-b-01-01-01-03",
-            "label": "Which population are you measuring in the numerator?",
-            "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
-            "type": "integer",
-            "answer": { "entry": null }
-          },
-          {
-            "id": "2020-02-b-01-01-01-04",
-            "label": "Numerator (total number)",
-            "type": "integer",
-            "answer": { "entry": null }
-          }
-        ]
-      },
-      {
-        "type": "fieldset",
-        "label": "Define the denominator you're measuring",
-        "questions": [
-          {
-            "id": "2020-02-b-01-01-01-05",
-            "label": "Which population are you measuring in the denominator?",
-            "hint": "For example: The total number of eligible children in the last federal fiscal year.",
-            "type": "integer",
-            "answer": { "entry": null }
-          },
-          {
-            "id": "2020-02-b-01-01-01-06",
-            "label": "Denominator (total number)",
-            "type": "integer",
-            "answer": { "entry": null }
-          }
-        ]
-      },
-      {
-        "type": "fieldset",
-        "fieldset_type": "percentage",
-        "fieldset_info": {
-            "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-04')].answer.entry",
-            "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-06')].answer.entry"
-        },
-        "questions": []
-      }
-
-Here the ``fieldset`` at the end would contain no questions and would indicate where in the document the percentage calculated from the targeted fields would be displayed. It still has a ``questions`` field because this is an outlier and it makes more sense to require the field for the vast majority of uses that do contain questions.
-
-..  note:: Tentative
-
-   This approach to handling ``percentage`` isn't final.
 
 ``synthesized_table``
 ########################
@@ -793,6 +783,17 @@ This would produce something like:
 
     How does this table make you feel?
 
+``unmarked_descendants``
+########################
+
+This fieldset contains questions that aren't really being collected and are purely ways of letting users indicate that they do not have the ability to answer certain questions—for example, in the infamous Section 3C, Part 4 has a checkbox that lets the user indicate whether or not they only have totals for the following questions, or whether they have breakdowns\ [#]_. Since the following answers will make clear what data they have available, the state of the checkbox isn't really part of the collected data. It'll still be recorded, but will be marked as distinct.
+
+The main implications of this are that questions in an ``unmarked_descendants`` fieldset (or any questions that are descendants of an ``unmarked_descendants`` fieldset) do not have list markers, and their ids do not follow the structure of other ids.
+
+The values for the ``id`` properties of the questions that are descendants of an ``unmarked_descendants`` fieldset should be the same as the question immediately preceding them, but with ``-unmarked_descendants`` appended. For example, in Section 3C Part 4, the aforementioned checkbox comes right after question ``2020-03-c-04-01``. I would therefore give its ``id`` property a value of ``2020-03-c-04-01-unmarked_descendants``. If there were multiple ``unmarked_descendants`` questions for some reason, I would increment them as if they were real questions—but ``-unmarked_descendants`` would still need to be appended to their ``id`` values.
+
+.. [#]  Data broken down into age cohorts, not the other kind of breakdown associated with exposure to that section.
+
 ``text_multiline``
 ++++++++++++++++++
 A long string. As this will probably be represented by the ``TEXT`` type in Postgres, its max length should be longer than anything we will realistically encounter. Its ``entry`` value should be represented as a string. It has optional properties:
@@ -849,6 +850,11 @@ A set of choices, multiples of which can be chosen. Its ``entry`` value should b
             "Green": "green",
             "Sleeping": "sleeping"
         }
+
+
+``checkbox_flag``
++++++++++++++++++
+A single checkbox; if checked, its value is ``True``, otherwise it's ``null`` or ``False``. Its ``answer.options`` property object should always have a ``type`` of ``boolean``,
 
 ``money``
 +++++++++
