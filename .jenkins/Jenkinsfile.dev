@@ -181,6 +181,7 @@ pipeline {
         aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
         
            '''
+           }
       }
       post {
         always {
