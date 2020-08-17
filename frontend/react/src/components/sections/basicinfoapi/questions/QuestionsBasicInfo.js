@@ -135,7 +135,7 @@ class QuestionsBasicInfo extends Component {
                            name={question.id}
                            value={question.answer.entry}
                            type="text"
-                            onChange={this.handleChange}
+                           onChange={this.handleChange}
                            disabled={question.answer.readonly}
                          />
                        </div>
