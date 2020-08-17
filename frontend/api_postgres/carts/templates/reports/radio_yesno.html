@@ -1,0 +1,22 @@
+<question id={{question.id}}>
+        <dl class="text_answer radio">
+            <div class="text_answer_dl">
+                <dt class="question_text">{{question.label}} <strong>(Yes/No)</strong></dt>
+                <dd class="answer">
+                    <answer>
+                {% if question.answer.entry is None %}
+                    <em>Unanswered</em>
+                {% else %}
+                    {% for k, v in question.answer.options.items %}
+                        {% if v == question.answer.entry %}
+                            <ul>
+                                <li><strong>{{k}}</strong></li>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                    </answer>
+                </dd>
+            </div>
+        </dl>
+</question>
