@@ -14,22 +14,8 @@ class FormActions extends Component {
     };
 
     this.printWindow = this.printWindow.bind(this);
-    this.copyInput = this.copyInput.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-  }
-
-  showModal() {
-    console.log(this.state.shareShow)
-    this.setState({
-      shareShow: true
-    })
-  }
-
-  hideModal() {
-    this.setState({
-      shareShow: this.state.shareShow ? false : true,
-    })
   }
 
   /**
@@ -40,15 +26,6 @@ class FormActions extends Component {
   printWindow(event) {
     event.preventDefault();
     window.print();
-  }
-
-  /**
-   * Copy contents from share URL input
-   *
-   */
-  copyInput() {
-    this.shareURL.select();
-    document.execCommand("copy");
   }
 
   render() {
