@@ -86,7 +86,6 @@ class Section1 extends Component {
 
 const mapStateToProps = (state) => {
   const { selectedSection, dataBySection, stateUser, global } = state;
-  // not sure if items: data is correct
   const { isFetching, items: data } = dataBySection[selectedSection] || { isFetching: true, items: [] };
   return {
     name: stateUser.name,
