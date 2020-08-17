@@ -13,11 +13,6 @@ CMD ["/bin/bash", "-c", "npm install && ./env.sh && cp ./env-config.js ./public/
 # => Build container
 FROM dev as builder
 
-#install aws cli
-
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
-        unzip awscliv2.zip &&\
-        ./aws/install
 
 
 # Copy package.json and package-lock.json
