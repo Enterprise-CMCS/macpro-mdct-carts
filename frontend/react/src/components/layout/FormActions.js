@@ -18,6 +18,18 @@ class FormActions extends Component {
     this.hideModal = this.hideModal.bind(this);
   }
 
+  showModal() {
+    this.setState({
+      shareShow: true
+    })
+  }
+
+  hideModal() {
+    this.setState({
+      shareShow: this.state.shareShow ? false : true,
+    })
+  }
+
   /**
    * Opens print dialogue for current view
    *
