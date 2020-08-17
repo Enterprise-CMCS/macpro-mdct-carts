@@ -33,7 +33,7 @@ export const ShareLinkModal = ({ hide }) => {
       onClick={generateLink}
       className={`ds-c-button ds-c-button--primary ${link && `ds-u-display--none`}`}
       key="primary">
-      Generate
+      Generate a link
     </button>,
     <button
       onClick={revokeLink}
