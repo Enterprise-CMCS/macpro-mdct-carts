@@ -6,15 +6,19 @@ import { faCopy } from "@fortawesome/free-regular-svg-icons";
 
 export const ShareLinkModal = ({ hide }) => {
   const [link, linkGenerated] = useState('')
-  const copyUrl = "https://cartsdemo.cms.gov/l32kksf3isdgf823nsd9"
+  const copyUrl = "https://cartsdemo.cms.gov/shared/667177b6-f008-4cf1-b728-e52b0cb94920"
   const expires = `7`
 
   const generateLink = _ => {
+    // Hide generate button.
     linkGenerated(true)
+    // Get a new uuid and append to copyurl. 
   }
 
   const revokeLink = _ => {
+    // Show generate button.
     linkGenerated(!link)
+    // Expire uuid.
   }
 
   const generateActions = [
@@ -50,7 +54,7 @@ export const ShareLinkModal = ({ hide }) => {
       {/* Replace with SharedLinkCopy component */}
       {link &&
         (<form>
-          <TextField name="copyUrl" value={copyUrl} disabled />
+          <TextField className="ds-c-field ds-u-display--inline-block ds-u-border--0" name="copyUrl" value={copyUrl} disabled />
           <Button
             className="ds-c-button--transparent ds-c-button--small"
             title="Copy to clipboard"

@@ -13,17 +13,10 @@ class FormActions extends Component {
     };
 
     this.printWindow = this.printWindow.bind(this);
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.toggleShare = this.toggleShare.bind(this);
   }
 
-  showModal() {
-    this.setState({
-      shareShow: true
-    })
-  }
-
-  hideModal() {
+  toggleShare() {
     this.setState({
       shareShow: this.state.shareShow ? false : true,
     })
@@ -55,7 +48,7 @@ class FormActions extends Component {
         <div className="share-button">
           <Button
             className="ds-c-button--primary ds-c-button--small"
-            onClick={this.showModal}
+            onClick={this.toggleShare}
             title="Share"
           >
             <FontAwesomeIcon icon={faShareSquare} />
@@ -63,7 +56,7 @@ class FormActions extends Component {
           </Button>
         </div>
 
-        {this.state["shareShow"] && <ShareLinkModal hide={this.hideModal} />}
+        {this.state["shareShow"] && <ShareLinkModal hide={this.toggleShare} />}
       </section>
     );
   }
