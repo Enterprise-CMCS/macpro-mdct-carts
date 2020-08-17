@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "site_bucket" {
     index_document = "index.html"
 #    error_document = "error.html"
   }
-
+}
 # cloudfront distribution
 resource "aws_cloudfront_distribution" "site_distribution" {
   origin {
