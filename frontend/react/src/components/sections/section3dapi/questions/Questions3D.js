@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Data from "../backend-json-section-3.json";
+import Section1 from "../backend-json-section-1.json";
 import FPL from "../../../layout/FPL";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
 import { TextField } from "@cmsgov/design-system-core";
 
 // Get subsection of DATA
-const sectionData = Data.section.subsections[0];
+const sectionData = Data.section.subsections[3];
 
-class Questions3AApi extends Component {
+class Questions3d extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -74,6 +75,7 @@ class Questions3AApi extends Component {
                         />
                       </div>
                     ) : null}
+
                     {/* If FPL Range */}
                     {question.type === "ranges" && (
                       <FPL label={question.label} fieldLabels={question.answer.range_categories} />
@@ -95,4 +97,4 @@ const mapStateToProps = (state) => ({
   year: state.formYear,
 });
 
-export default connect(mapStateToProps)(Questions3AApi);
+export default connect(mapStateToProps)(Questions3d);

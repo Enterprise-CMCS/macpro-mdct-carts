@@ -7,9 +7,9 @@ import CMSLegend from "../../../fields/CMSLegend";
 import { TextField } from "@cmsgov/design-system-core";
 
 // Get subsection of DATA
-const sectionData = Data.section.subsections[0];
+const sectionData = Data.section.subsections[3];
 
-class Questions3AApi extends Component {
+class Questions3d extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -95,4 +95,4 @@ const mapStateToProps = (state) => ({
   year: state.formYear,
 });
 
-export default connect(mapStateToProps)(Questions3AApi);
+export default connect(mapStateToProps)(Questions3d);

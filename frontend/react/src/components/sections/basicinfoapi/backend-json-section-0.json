@@ -20,7 +20,7 @@
               {
                 "id": "2020-00-a-01-01",
                 "label": "State or territory name:",
-                "type": "text_long",
+                "type": "text",
                 "answer": {
                   "prepopulated": true,
                   "readonly": true,
@@ -45,14 +45,15 @@
               {
                 "id": "2020-00-a-01-03",
                 "label": "CHIP program name(s): ",
-                "type": "text_long",
+                "type": "text_medium",
                 "answer": {
                   "prepopulated": true,
                   "readonly": true,
                   "entry": null
                 }
               }
-            ]
+            ],
+            "helpdesk": "If any of the above information is incorrect, contact CARTS Help Desk."
           },
           {
             "id": "2020-00-a-02",
@@ -63,7 +64,7 @@
               {
                 "id": "2020-00-a-02-01",
                 "label": "Contact name:",
-                "type": "text_short",
+                "type": "text",
                 "answer": {
                   "entry": null
                 }
@@ -71,7 +72,7 @@
               {
                 "id": "2020-00-a-02-02",
                 "label": "Job title:",
-                "type": "text_short",
+                "type": "text",
                 "answer": {
                   "entry": null
                 }
@@ -87,7 +88,7 @@
               {
                 "id": "2020-00-a-02-04",
                 "label": "Full mailing address:",
-                "hint": "Include city, state, and zip code.",
+                "hint": "Include city, state and zip code",
                 "type": "mailing_address",
                 "answer": {
                   "entry": null
@@ -100,11 +101,6 @@
                 "answer": {
                   "entry": null
                 }
-              },
-              {
-                "type": "fieldset",
-                "questions": [],
-                "label": "If any of the above information is incorrect, contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>."
               }
             ]
           }

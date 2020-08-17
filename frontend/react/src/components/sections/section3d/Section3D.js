@@ -1,31 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Questions from "./questions/Questions3D.js";
+import PageInfo from "../../layout/PageInfo";
+import FormNavigation from "../../layout/FormNavigation";
+import FormActions from "../../layout/FormActions";
+import Data from "./backend-json-section-3.json";
+
 import {
-  Button as button,
-  ChoiceList,
   Tabs,
   TabPanel,
-  TextField,
 } from "@cmsgov/design-system-core";
 
-import PageInfo from "../../layout/PageInfo";
-import Data from "./backend-json-section-3.json";
-import FormNavigation from "../../layout/FormNavigation";
-import FormActions from "../../layout/FormNavigation";
-import Questions3AApi from "./questions/Questions3AApi";
+const sectionData = Data.section.subsections[3];
 
-//JSON data starts on line 1071,
-// it is an element in the subsections array
-const sectionData = Data.section.subsections[1];
+class Section3d extends Component {
+ constructor(props) {
+  super(props);
+  this.state = {};
+ }
 
-class Section3AApi extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
     return (
-      <div className="section-1 ds-l-col--9 content">
+      <div className="section-3d ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="print-only">
@@ -34,10 +30,10 @@ class Section3AApi extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={sectionData.title}>
-                <Questions3AApi previousEntry="false" />
-                <FormNavigation 
-                  nextUrl="/section3/3c"
-                  previousUrl="/section2/2b" 
+                <Questions previousEntry="false" />
+                <FormNavigation
+                  // nextUrl="/section2/2a"
+                  previousUrl="/section3/3c"
                 />
               </TabPanel>
 
@@ -50,7 +46,7 @@ class Section3AApi extends Component {
                   <h3>{sectionData.title}</h3>
                 </div>
                 <div disabled>
-                  <Questions3AApi previousEntry="true" />
+                  <Questions previousEntry="true" />
                 </div>
               </TabPanel>
             </Tabs>
@@ -64,8 +60,8 @@ class Section3AApi extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
-  year: state.global.formYear,
   programType: state.stateUser.programType,
+  year: state.global.formYear,
 });
 
-export default connect(mapStateToProps)(Section3AApi);
+export default connect(mapStateToProps)(Section3d);
