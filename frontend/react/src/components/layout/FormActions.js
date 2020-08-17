@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareSquare, faPrint } from "@fortawesome/free-solid-svg-icons";
-import { faWindowClose, faCopy } from "@fortawesome/free-regular-svg-icons";
+import { ShareLinkModal } from "./ShareLinkModal";
 
 class FormActions extends Component {
   constructor(props) {
@@ -15,18 +15,21 @@ class FormActions extends Component {
 
     this.printWindow = this.printWindow.bind(this);
     this.copyInput = this.copyInput.bind(this);
-    this.toggleShare = this.toggleShare.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
-  /**
-   * Toggle state value for showing shareURL box
-   *
-   * @param {Event} event
-   */
-  toggleShare(event) {
+  showModal() {
+    console.log(this.state.shareShow)
+    this.setState({
+      shareShow: true
+    })
+  }
+
+  hideModal() {
     this.setState({
       shareShow: this.state.shareShow ? false : true,
-    });
+    })
   }
 
   /**
@@ -64,47 +67,14 @@ class FormActions extends Component {
         <div className="share-button">
           <Button
             className="ds-c-button--primary ds-c-button--small"
-            onClick={this.toggleShare}
+            onClick={this.showModal}
             title="Share"
           >
             <FontAwesomeIcon icon={faShareSquare} />
             Share
           </Button>
-          <div
-            className={
-              "share-container " + (this.state["shareShow"] ? "active" : "")
-            }
-          >
-            <div className="close">
-              <Button
-                className="ds-c-button--transparent ds-c-button--small"
-                onClick={this.toggleShare}
-                title="close"
-              >
-                <FontAwesomeIcon icon={faWindowClose} />
-              </Button>
-            </div>
-            <h4>Share your progress</h4>
-            <div className="form">
-              <form>
-                <input
-                  type="text"
-                  value={this.state.copyUrl}
-                  ref={(shareURL) => (this.shareURL = shareURL)}
-                />
-              </form>
-            </div>
-            <div className="copy">
-              <Button
-                className="ds-c-button--transparent ds-c-button--small"
-                onClick={this.copyInput}
-                title="Copy to clipboard"
-              >
-                <FontAwesomeIcon icon={faCopy} />
-              </Button>
-            </div>
-          </div>
         </div>
+        {this.state["shareShow"] && <ShareLinkModal hide={this.hideModal} />}
       </section>
     );
   }
