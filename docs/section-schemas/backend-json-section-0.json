@@ -104,7 +104,7 @@
               {
                 "type": "fieldset",
                 "questions": [],
-                "label": "If any of the above information is incorrect, contact the CARTS Help Desk."
+                "label": "If any of the above information is incorrect, contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>."
               }
             ]
           }
