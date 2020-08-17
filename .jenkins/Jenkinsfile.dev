@@ -59,19 +59,35 @@ pipeline {
       }
     }
 
+
+  stage('static build') { 
     
-    stage("Build/push images") {
+        agent {
+            docker {
+                image 'node:14.4.0'
+                args '-v ${PWD}/frontend/react:/app '
+                reuseNode true
+            }
+        }
+        steps {
+ 
+            dir('frontend/react') {
+            sh '''           
+            npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
+            npm ci && npm run build
+          
+         
+              '''
+          }
+            
+        }
+    }
+    
+    stage("Build and Push Artifacts") {
       when {
         expression { env.DEPLOY == "true"}
       }
       steps {
-      
-
-   //   sh 'cd frontend/react && aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin'
-     
-   //   sh 'cd frontend/react && tar -zcvf build.tar.gz build'
-   //   sh 'cd frontend/react && aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz'
- 
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           lock('docker_socket') {
@@ -80,7 +96,14 @@ pipeline {
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])  
             
           }
-       }          
+       } 
+       dir('frontend/react'){
+        sh '''
+        tar -zcvf build.tar.gz build
+        aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
+        
+           '''
+           }
       }
     }
 
@@ -135,30 +158,6 @@ pipeline {
     }   
  */
      
-    stage('static build') { 
-    
-        agent {
-            docker {
-                image 'node:14.4.0'
-                args '-v ${PWD}/frontend/react:/app '
-                reuseNode true
-            }
-        }
-        steps {
- 
-            dir('frontend/react') {
-            sh '''           
-            npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
-            npm ci && npm run build
-          
-         
-              '''
-          }
-            
-        }
-    }
-    
-
     stage("Deploy Frontend Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -175,13 +174,13 @@ pipeline {
             )
           }
         }
-        dir('frontend/react'){
+        dir('frontend/react')
         sh '''
-        tar -zcvf build.tar.gz build
-        aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
-        
-           '''
-           }
+         aws s3 sync s3://cartsui-cloudfront-origin/build.tar.gz build1.tar.gz 
+         tar -xzf build1.tar.gz
+         ls -la 
+         '''
+         
       }
       post {
         always {
