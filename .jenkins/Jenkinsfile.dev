@@ -107,7 +107,7 @@ pipeline {
     }
 
 
-
+/*
     stage("Deploy Data Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -133,7 +133,7 @@ pipeline {
         }
       }
     }   
- 
+ */
      
     stage('static build') { 
     
