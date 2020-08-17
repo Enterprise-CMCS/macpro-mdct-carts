@@ -12,6 +12,10 @@ import {
   TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
+import {
+  selectSection,
+  fetchSectionData
+} from "../../../store/sectionData";
 
 class Section1 extends Component {
   constructor(props) {
@@ -20,6 +24,18 @@ class Section1 extends Component {
     this.state = {
       pageTitle: "Section 1: Program Fees and Policy Changes",
     };
+  }
+
+  componentDidMount() {
+    const { dispatch, selectedSection } = this.props;
+    dispatch(selectSection('1'));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedSection !== prevProps.selectedSection) {
+      const { dispatch, selectedSection } = this.props;
+      dispatch(fetchSectionData(selectedSection));
+    }
   }
 
   render() {
@@ -61,10 +77,25 @@ class Section1 extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.stateUser.name,
-  programType: state.stateUser.programType,
-  year: state.global.formYear,
-});
+// Section1.propTypes = {
+//   selectedSection: PropTypes.string.isRequired,
+//   data: PropTypes.object.isRequired,
+//   isFetching: PropTypes.bool.isRequired,
+//   dispatch: PropTypes.func.isRequired
+// }
+
+const mapStateToProps = (state) => {
+  const { selectedSection, dataBySection, stateUser, global } = state;
+  // not sure if items: data is correct
+  const { isFetching, items: data } = dataBySection[selectedSection] || { isFetching: true, items: [] };
+  return {
+    name: stateUser.name,
+    programType: stateUser.programType,
+    year: global.formYear,
+    selectedSection,
+    data,
+    isFetching
+  }
+};
 
 export default connect(mapStateToProps)(Section1);

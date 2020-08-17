@@ -27,9 +27,9 @@ const middleware = composeWithDevTools(applyMiddleware(...middlewareArray));
 const store = createStore(reducer, middleware);
 
 /* Initialize the data for section 1. This will need to happen for
-   every section in the current structure.                        */
+   every section in the current structure.                        
 store.dispatch(selectSection('1'));
-store.dispatch(fetchSectionData('1'));
+store.dispatch(fetchSectionData('1'));*/
 
 // Export the store to be picked up by the root component in index.js
 export default store;
