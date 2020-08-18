@@ -138,6 +138,7 @@
     margin: ($margin * 4) 0 0 0;
   }
 }
+.cmsrange-container,
 .fpl-container {
   align-items: baseline;
   display: flex;
@@ -145,10 +146,12 @@
   position: relative;
   width: auto;
 
+  .cmsrange-input,
   .fpl-input {
     width: auto;
   }
 
+  .cmsrange-percentage,
   .fpl-percentage {
     position: absolute;
     right: 8px;

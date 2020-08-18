@@ -3,6 +3,7 @@ import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
+import CMSRange from "./CMSRange";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -126,19 +127,14 @@ class CMSChoice extends Component {
           case "ranges":
             // Check if question matches the currently selected option (from parent)
 
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add field to render array
-              return fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <FPL fieldLabels={item.answer.range_categories} />
-                </>
-              );
-            }
+            // if (shouldDisplay(parentValue, item.context_data)) {
+            // Add field to render array
+            return fields.push(
+              <>
+                <CMSRange item={item} mask="currency" numeric />
+              </>
+            );
+            // }
             break;
           case "money":
             // Check if question matches the currently selected option (from parent)
