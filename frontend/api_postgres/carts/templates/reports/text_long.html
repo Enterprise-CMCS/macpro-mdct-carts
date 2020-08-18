@@ -1,0 +1,14 @@
+<question id={{question.id}}>
+    <dl class="text_answer">
+        <div class="text_answer_dl">
+            <dt class="question_text">{{question.label}}</dt>
+            <dd class="answer">
+                {% if question.answer.entry is None %}
+                    <em>Unanswered</em>
+                {% else %}
+                    {{question.answer.entry}}
+                {% endif %}
+            </dd>
+        </div>
+    </dl>
+</question>

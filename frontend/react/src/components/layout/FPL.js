@@ -66,7 +66,7 @@ class FPL extends Component {
             <div className="fpl-container fpl-start">
               <TextField
                 className="fpl-input"
-                label={this.props.fieldLabels[0][0]}
+                label="FPL starts at"
                 inputMode="percentage"
                 pattern="[0-9]*"
                 type="text"
@@ -88,7 +88,7 @@ class FPL extends Component {
             <div className="fpl-container fpl-end">
               <TextField
                 className="fpl-input"
-                label={this.props.fieldLabels[0][1]}
+                label="FPL ends at"
                 inputMode="numeric"
                 pattern="[0-9]*"
                 type="text"
@@ -115,7 +115,7 @@ class FPL extends Component {
             <div className="fpl-container fpl-start">
               <TextField
                 className="fpl-input"
-                label={this.props.fieldLabels[1][0]}
+                label="Premium fee starts at"
                 inputMode="currency"
                 mask="currency"
                 pattern="[0-9]*"
@@ -133,7 +133,7 @@ class FPL extends Component {
             <div className="fpl-container fpl-end">
               <TextField
                 className="fpl-input"
-                label={this.props.fieldLabels[1][1]}
+                label="Premium fee ends at"
                 inputMode="currency"
                 mask="currency"
                 pattern="[0-9]*"
