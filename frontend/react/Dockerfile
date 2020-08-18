@@ -31,10 +31,10 @@ COPY package*.json ./
 
 
 # Install modules from the package-lock.json
-RUN npm ci
+#RUN npm ci
 
 # Copy source code
-COPY . .
+#COPY . .
 
 # Create static build
 RUN npm run build

@@ -7,9 +7,7 @@
 #  }
 #}
 
-locals {
-  endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}" : "https://${aws_alb.ui.dns_name}"
-}
+
 
 
 # s3 Bucket with Website settings
@@ -53,7 +51,7 @@ resource "aws_cloudfront_distribution" "site_distribution" {
     }
   }
   viewer_certificate {
-    acm_certificate_arn = "var.acm_certificate_domain_ui"
+    acm_certificate_arn = "var.acm_cert_arn"
     ssl_support_method  = "sni-only"
     minimum_protocol_version = "TLSv1.1_2016" # defaults wrong, set
   }
