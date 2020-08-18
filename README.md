@@ -23,11 +23,27 @@ A PR must be reviewed and approved by someone other than the submitter. When the
 3. Ensure you are in the `master` branch
 4. Navigate into the cloned repository in a terminal
    1. `cd cms-carts-seds`
-5. Navigate into the 'app' subfolder
-   1. `cd app`
+5. Navigate into the 'frontend' subfolder
+   1. `cd frontend`
 6. Run the deploy.sh script, or run the deployDev.sh script on linux. The deploy script will deploy the application as it would deploy in production, the static content being compiled and served from an nginx container. The deployDev script will deploy the application more suitable for development, on a node container with src files mounted to it; this enables live reloading of the application when src files are changed.
    1. Use `.\deploy.bat` or `.\deployDev.bat` on Windows
 7. Visit the react frontend at http://localhost:81 Visit the Django api at http://localhost:8000 The local postgres db is available at localhost:5432. The api and db are currently hello world, and are not deploying meaningful code; they can likely be entirely ignored. They are incorporated into the deployment with an eye to the future.
+
+## Start Up Localhost with Django/Postgres Backend
+
+1. Navigate to the cloned repository in a terminal
+   1. `cd cms-carts-seds`
+2. Navigate to the 'frontend' subfolder
+   1. `cd frontend`
+3. Run `docker-compose -f docker-compose.dev.yml down`
+4. Run `docker-compose -f docker-compose.dev.yml up --build`
+5. In another terminal window:
+   1. For Linux: run `local-additional.sh`
+   2. For Windows: run `docker-compose -f docker-compose.dev.yml run api_postgres sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py generate_fixtures"`
+6. Available Endpoints:
+   1. JSON by Section: localhost:8000/structure/2020/1?format=json
+      Change the Section number to see another Section
+   2. Sample JSON for AK, AZ or MA for Sections 0, 1, or 3: localhost:8000/subsection_data/2020-03-c/AK?format=json
 
 ### Running the React Test Suite
 
