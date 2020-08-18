@@ -7,6 +7,9 @@
 #  }
 #}
 
+locals {
+  endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}" : "https://${aws_alb.ui.dns_name}"
+}
 
 
 # s3 Bucket with Website settings
