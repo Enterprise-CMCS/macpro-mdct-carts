@@ -50,9 +50,9 @@ resource "aws_cloudfront_distribution" "site_distribution" {
       restriction_type = "none"
     }
   }
-  viewer_certificate {
-    acm_certificate_arn = "var.acm_cert_arn"
-    ssl_support_method  = "sni-only"
-    minimum_protocol_version = "TLSv1.1_2016" # defaults wrong, set
-  }
+  #viewer_certificate {
+  #  acm_certificate_arn = "arn:aws:acm:us-east-1:730373213083:certificate/0ee49785-ebd8-41fb-b401-7393a9a3d7c1"
+  #  ssl_support_method  = "sni-only"
+  #  minimum_protocol_version = "TLSv1.2_2019" # defaults wrong, set
+  #}
 }
