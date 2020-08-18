@@ -3,7 +3,7 @@ import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
-import CMSRange from "./CMSRange";
+import CMSRanges from "./CMSRanges";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class CMSChoice extends Component {
 
         // Add fields to render array based on type (from api)
         switch (item.type) {
-          case "text_multiline":
+          case "text_long":
             // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
@@ -131,7 +131,8 @@ class CMSChoice extends Component {
             // Add field to render array
             return fields.push(
               <>
-                <CMSRange item={item} mask="currency" numeric />
+                {/* <CMSRange item={item} mask="currency" numeric /> */}
+                <CMSRanges item={item} />
               </>
             );
             // }
@@ -179,7 +180,6 @@ class CMSChoice extends Component {
             ) : null
           }
           onChange={this.sendData}
-          disabled={this.props.disabled}
         >
           {this.props.label}
         </Choice>

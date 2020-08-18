@@ -138,6 +138,8 @@
     margin: ($margin * 4) 0 0 0;
   }
 }
+
+.cmsranges-container,
 .cmsrange-container,
 .fpl-container {
   align-items: baseline;
@@ -149,16 +151,27 @@
   .cmsrange-input,
   .fpl-input {
     width: auto;
+
+    input {
+      text-indent: 12px;
+    }
   }
 
   .cmsrange-percentage,
+  .cmsrange-currency,
   .fpl-percentage {
     position: absolute;
     right: 8px;
-    top: 58px;
+    bottom: 14px;
+  }
+
+  .cmsrange-currency {
+    right: auto;
+    left: 8px;
   }
 }
 
+.cmsrange-arrow,
 .fpl-arrow {
   align-self: flex-end;
   font-size: 1.8rem;
