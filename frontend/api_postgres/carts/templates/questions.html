@@ -1,0 +1,10 @@
+{% for question in questions %}
+    {% if question.type == "fieldset" %}
+        {% include "reports/fieldset.html" with question=question state=state %}
+    {% elif question.type == "objectives" %}
+        {% include "reports/objectives.html" with question=question state=state %}
+    {% elif question.type == "question" %}
+    {% else %}
+        {% include "reports/question.html" with question=question state=state %}
+    {% endif %}
+{% endfor %}

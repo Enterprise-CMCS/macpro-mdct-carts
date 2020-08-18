@@ -66,7 +66,7 @@ class TOC extends Component {
                 },
                 {
                   label: "Section 3D: Cost Sharing",
-                  url: "javascript:void(0);",
+                  url: "/section3/3d",
                   selected:
                     paths[1] === "section3" && paths[2] === "3d" ? true : false,
                 },

@@ -1,0 +1,19 @@
+{% for part in parts %}
+    <part id="{{part.id}}">
+    {% if not part.context_data and not part_context_data.show_if_state_program_type_in %}
+        <h2>Part {{forloop.counter}}: {{part.title}}</h2>
+        <p class="part_text">{{part.text}}</p>
+        {% include "reports/questions.html" with questions=part.questions state=state %}
+    {% else %}
+        {% if state.program_type in part.context_data.show_if_state_program_type_in %}
+            <h2>Part {{forloop.counter}}: {{part.title}}</h2>
+            <p class="part_text">{{part.text}}</p>
+            {% include "reports/questions.html" with questions=part.questions state=state %}
+        {% elif not state.program_type in part.context_data.show_if_state_program_type_in %}
+            <p class="skip">{{part.context_data.skip_text}}</p>
+        {% endif %}
+    {% endif %}
+    </part>
+
+{% endfor %}
+
