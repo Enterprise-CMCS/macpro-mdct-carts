@@ -23,7 +23,7 @@ resource "aws_s3_bucket" "site_bucket" {
 resource "aws_cloudfront_distribution" "site_distribution" {
   origin {
     domain_name = "${aws_s3_bucket.site_bucket.bucket_domain_name}"
-    origin_id = "cartsui-origin-${terraform.workspace}"
+    origin_id = "${aws_s3_bucket.site_bucket.id}"
   }
   enabled = true
   aliases = ["${terraform.workspace}"]
@@ -33,7 +33,7 @@ resource "aws_cloudfront_distribution" "site_distribution" {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH",
                       "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "cartsui-origin-${terraform.workspace}"
+    target_origin_id = "${aws_s3_bucket.site_bucket.id}"
      forwarded_values {
       query_string = true
       cookies {
@@ -50,9 +50,10 @@ resource "aws_cloudfront_distribution" "site_distribution" {
       restriction_type = "none"
     }
   }
-  #viewer_certificate {
+  viewer_certificate {
   #  acm_certificate_arn = "arn:aws:acm:us-east-1:730373213083:certificate/0ee49785-ebd8-41fb-b401-7393a9a3d7c1"
-  #  ssl_support_method  = "sni-only"
-  #  minimum_protocol_version = "TLSv1.2_2019" # defaults wrong, set
-  #}
+     cloudfront_default_certificate = true
+     ssl_support_method  = "sni-only"
+     minimum_protocol_version = "TLSv1.2_2019" # defaults wrong, set
+   }
 }
