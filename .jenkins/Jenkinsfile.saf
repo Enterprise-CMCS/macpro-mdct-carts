@@ -27,12 +27,12 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           jenkinsUtils.triggerEcrScan("postgres_deployer", env.BUILD_TAG)
-          jenkinsUtils.triggerEcrScan("api_postgres", env.BUILD_TAG)
-          jenkinsUtils.triggerEcrScan("api_sqlserver", env.BUILD_TAG)
+          jenkinsUtils.triggerEcrScan("postgres_django", env.BUILD_TAG)
+          jenkinsUtils.triggerEcrScan("sqlserver_django", env.BUILD_TAG)
           jenkinsUtils.triggerEcrScan("react", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("api_postgres", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("api_sqlserver", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
         }
       }
