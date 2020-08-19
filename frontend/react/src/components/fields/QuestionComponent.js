@@ -22,6 +22,7 @@ class QuestionComponent extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.validatePercentage = this.validatePercentage.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
 
   validatePercentage(evt) {
@@ -33,11 +34,24 @@ class QuestionComponent extends Component {
     return true;
   }
 
-  handleChange(evtArr) {
-    this.props.sectionContext(evtArr);
+  validateEmail(evt) {
+    const validEmailRegex = RegExp(
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+    );
+    if (evt.target.value.length > 0) {
+      this.setState({
+        [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
+      });
+    }
+  }
+
+  handleChange(evt) {
     this.setState({
-      [evtArr[0]]: evtArr[1],
+      [evt.target.name]: evt.target.value ? evt.target.value : null,
+      [evt.target.name + "Mod"]: true,
     });
+
+    this.props.sectionContext(["questionid", "some value"]);
   }
 
   handleFileUpload = (event) => {
@@ -86,7 +100,7 @@ class QuestionComponent extends Component {
                     name={question.id}
                     value={question.answer.entry}
                     type="text"
-                    name={question.id}
+
                     // onChange={this.props.sectionContext("some value")}
                   />
                 </div>
@@ -101,7 +115,6 @@ class QuestionComponent extends Component {
                     name={question.id}
                     value={question.answer.entry}
                     type="text"
-                    name={question.id}
                     size="small"
                     // onChange={this.props.sectionContext("some value")}
                   />
@@ -130,7 +143,6 @@ class QuestionComponent extends Component {
                   <TextField
                     className="ds-c-field"
                     multiple
-                    name={question.id}
                     value={question.answer.entry}
                     type="text"
                     name={question.id}
@@ -156,6 +168,29 @@ class QuestionComponent extends Component {
                   />
                 </div>
               ) : null}
+
+              {/* Email  */}
+              {question.type === "email" ? (
+                <div>
+                  <TextField
+                    name={question.id}
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    type="text"
+                    onBlur={this.validateEmail}
+                    onChange={this.handleChange}
+                    errorMessage={
+                      this.state[question.id + "Err"]
+                        ? "Please enter a valid email address"
+                        : false
+                    }
+                  />
+                </div>
+              ) : null}
+
               {/* If FPL Range */}
               {question.type === "file_upload" ? (
                 <div>
@@ -248,19 +283,21 @@ class QuestionComponent extends Component {
 // "integer",[x]
 // "money",[x]
 // "percentage",  [x]
-// "phone_number", [x]
 // "radio",[x]
 // "ranges",[x]
 // "text",[x]
 // "text_medium",[x]
 // "text_multiline",[x]
 // "text_small"   [x]
-// "daterange", [*** Will take from new CMSRanges component ***]
+// "phone_number", [x]
 
-// "objectives", [???]
-// "checkbox_flag", [????]
-// "email", [??? validation??]
-// "mailing_address", [??? is this several fields?? is this a component??? ]
+//TO-DO
+// "daterange", [use daterange component]
+// "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
+// "email", [??? validation??YES, snatch from basic info ]
+// "mailing_address", [??? is this several fields?? is this a component???, just a multiline textbox ]
+
+// "objectives", [??? foggedaboutit]
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,

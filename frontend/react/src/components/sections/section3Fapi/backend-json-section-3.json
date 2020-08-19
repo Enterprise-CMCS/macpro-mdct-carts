@@ -43,13 +43,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -84,13 +79,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -156,15 +146,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -199,15 +182,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -281,10 +257,7 @@
                 ],
                 "context_data": {
                   "skip_text": "Some questions omitted because they do not apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
+                  "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               },
               {
@@ -415,12 +388,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -440,12 +409,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -465,12 +430,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -502,13 +463,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -522,12 +478,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -559,13 +511,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -579,12 +526,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -607,12 +550,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -632,12 +571,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -706,13 +641,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -811,13 +741,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-09')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -911,9 +836,23 @@
                     "fieldset_type": "synthesized_table",
                     "label": "Child",
                     "fieldset_info": {
-                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "headers": [
+                        { "contents": "State" },
+                        { "contents": "Employer" },
+                        { "contents": "Employee" }
+                      ],
                       "rows": [
-                          [{"target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"}]
+                        [
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"
+                          }
+                        ]
                       ]
                     },
                     "questions": []
@@ -923,9 +862,23 @@
                     "fieldset_type": "synthesized_table",
                     "label": "Parent",
                     "fieldset_info": {
-                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "headers": [
+                        { "contents": "State" },
+                        { "contents": "Employer" },
+                        { "contents": "Employee" }
+                      ],
                       "rows": [
-                          [{"target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"}]
+                        [
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"
+                          }
+                        ]
                       ]
                     },
                     "questions": []
@@ -943,15 +896,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -963,15 +909,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -989,15 +928,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -1009,15 +941,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -1078,10 +1003,7 @@
             "type": "part",
             "context_data": {
               "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
             "questions": [
@@ -1129,6 +1051,15 @@
                   "entry": null
                 }
               },
+
+              {
+                "id": "2020-00-a-02-03",
+                "label": "Email:",
+                "type": "email",
+                "answer": {
+                  "entry": null
+                }
+              },
               {
                 "id": "2020-03-f-01-05",
                 "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
@@ -1156,15 +1087,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -1292,13 +1216,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -1332,13 +1251,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -1408,13 +1322,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      null,
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
+                    "interactive": [null, "no"],
+                    "noninteractive": ["no"]
                   }
                 }
               }
@@ -1498,13 +1407,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      null,
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
+                    "interactive": [null, "no"],
+                    "noninteractive": ["no"]
                   }
                 }
               }
@@ -1519,7 +1423,7 @@
                 }
               }
             ]
-          }        
+          }
         ]
       }
     ]
