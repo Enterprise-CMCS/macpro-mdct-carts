@@ -1,3 +1,14 @@
+/* 
+To Enable OKTA Authentication, you will need to:
+1. Uncomment out the OKTA Enabled section below
+2. Comment out the OKTA Disabled section below
+3. Go to layout > Header.js and ensure the Logout feature is uncommented
+
+To Disable OKTA Authentication, you will need to:
+1. Uncomment out the OKTA Disabled section below
+2. Comment out the OKTA Enabled section below
+3. Got to layout > Header.js and ensure the Logout feature is commented out
+*/
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
@@ -14,16 +25,12 @@ function App() {
   return (
     <Router>
       {/* OKTA Enabled */}
-      {/* To enable OKTA Authentication, you will also need to go into layout > Header.js
-      and ensure the Logout feature around Line 59 is uncommented */}
       {/* <Security {...config.oidc}>
         <SecureRoute path="/" component={Home} />
         <Route path={config.callback} component={LoginCallback} />
       </Security> */}
 
       {/* OKTA Disabled */}
-      {/* To disable OKTA Authentication, you will also need to go into layout > Header.js
-      and ensure the Logout feature around Line 59 is commented out*/}
       <Route component={Home} />
 
     </Router>
