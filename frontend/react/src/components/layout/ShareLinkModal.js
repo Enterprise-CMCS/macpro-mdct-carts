@@ -1,27 +1,16 @@
 import React from 'react'
-import { Button, Dialog } from "@cmsgov/design-system-core"
+import { connect } from 'react-redux'
 import { useState, useRef } from 'react'
+import { Button, Dialog } from "@cmsgov/design-system-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { createShareLink, expireShareLink } from './../../store/shareLinkActions'
 
-export const ShareLinkModal = ({ hide }) => {
-  const [link, linkGenerated] = useState('')
+export const ShareLinkModal = ({ hide, share, addOnClick }) => {
+  const [button, toggleButton] = useState(false)
   const copyUrl = `${window.location.hostname}/shared/667177b6-f008-4cf1-b728-e52b0cb94920`
   const expires = `7`
-  const shareLink = useRef(null)  // React hook. Sets its `.current` property to the corresponding DOM node whenever that node changes
-
-  const generateLink = _ => {
-    // Hide generate button.
-    linkGenerated(true)
-    // Get a new uuid and append to copyurl. 
-  }
-
-  const revokeLink = _ => {
-    // Show generate button.
-    linkGenerated(!link)
-    // Expire uuid.
-  }
-
+  const shareLink = useRef(null)  // Sets its `.current` property to the corresponding DOM node whenever that node changes.
   const copyInput = _ => {
     // `.current` points to the mounted text input element
     shareLink.current.select()
@@ -30,17 +19,20 @@ export const ShareLinkModal = ({ hide }) => {
 
   const generateActions = [
     <button
-      onClick={generateLink}
-      className={`ds-c-button ds-c-button--primary ${link && `ds-u-display--none`}`}
+      onClick={_ => {
+        toggleButton(!button)
+        addOnClick(copyUrl)
+      }}
+      className={`ds-c-button ds-c-button--primary ${button && `ds-u-display--none`}`}
       key="primary">
       Generate a link
     </button>,
     <button
-      onClick={revokeLink}
-      className={`ds-c-button ds-c-button--danger ${link || `ds-u-display--none`}`}
-      key="primary">
+      onClick={_ => { toggleButton(!button) }}
+      className={`ds-c-button ds-c-button--danger ${button || `ds-u-display--none`}`}
+      key="primary" >
       Revoke
-    </button>,
+    </button >,
     <button
       className="ds-c-button ds-c-button--transparent"
       key="cancel"
@@ -58,8 +50,7 @@ export const ShareLinkModal = ({ hide }) => {
       actions={generateActions}
     >
       Generate a link to share this section with someone on your team. Once you share the link, they’ll be able to edit the page until the link expires in {expires} days. If you need to edit the page before then, you can cancel the link and revoke their access. You can always generate a new link to share the page again.
-      {/* Replace with SharedLinkCopy component */}
-      {link &&
+      {button &&
         (<form>
           <input
             className="ds-c-field ds-u-display--inline-block ds-u-border--1"
@@ -78,3 +69,15 @@ export const ShareLinkModal = ({ hide }) => {
     </Dialog>
   )
 }
+
+const mapStateToProps = (state) => ({
+  url: state.share.url,
+  isReviewed: state.share.isReviewed,
+  isExpired: state.share.isExpired,
+})
+
+const mapDispatchToProps = dispatch => ({
+  addOnClick: link => dispatch(createShareLink(link)),
+})
+
+export const SharedLink = connect(mapStateToProps, mapDispatchToProps)(ShareLinkModal)

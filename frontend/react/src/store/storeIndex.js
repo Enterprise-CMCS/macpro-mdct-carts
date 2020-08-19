@@ -3,9 +3,10 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
+import { shareLink } from "./shareLinkReducers"
 
 // Consolidate reducers
-export const reducer = combineReducers({ stateUser, global });
+export const reducer = combineReducers({ stateUser, global, shareLink });
 
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware];
