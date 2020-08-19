@@ -164,11 +164,7 @@ def idx_to_lettermarker(val: int) -> str:
     return lettermarkers[val]
 
 
-gmarkers = {}
-
-
 def main(args: List[str] = None) -> None:
-    global gmarkers
     options = setup_cli_parser().parse_args()
     if options.content:
         data = json.loads(Path(options.content).read_text())
@@ -226,23 +222,12 @@ def dfs_questions(parent_id: str, qs: List, graph_markers: Dict,
         qresult = dfs_question(parent_id, question, graph_markers,
                                parent_is_question=parent_is_question)
         graph_markers[parent_id] = {**graph_markers[parent_id], **qresult}
-
-        """
-        graph_markers[parent_id] = {**graph_markers[parent_id],
-                                    **qresult[parent_id]}
-        """
-        # new_graph_markers = {**graph_markers, **qresult[parent_id]}
-        # graph_markers = qresult
     return graph_markers
 
 
 def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
                  parent_is_question: bool = False) -> Dict:
     # What kind of question am I?
-    if question.value["type"] in ("obective", "objectives"):
-        print("----------")
-        print("objective", is_marking(question))
-        print("----------")
     marking = is_marking(question)
     qtypes = [
         "checkbox",
