@@ -1,0 +1,87 @@
+pipeline {
+  agent { label "ec2-jnlp-slave" }
+  options {
+    disableConcurrentBuilds()
+    quietPeriod(0)
+    ansiColor('xterm')
+  }
+  environment {
+    BUILD_TAG = resolveBuildTag()
+  }
+  stages {
+    stage("Prep Agent") {
+      steps {
+        script {
+          currentBuild.displayName = env.ENVIRONMENT
+
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+
+          jenkinsUtils.installAwsCli()
+          jenkinsUtils.installEcsCli()
+          jenkinsUtils.installTerraform("0.12.24")
+        }
+      }
+    }
+    stage("Scan Images") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          jenkinsUtils.triggerEcrScan("postgres_deployer", env.BUILD_TAG)
+          jenkinsUtils.triggerEcrScan("postgres_django", env.BUILD_TAG)
+          jenkinsUtils.triggerEcrScan("sqlserver_django", env.BUILD_TAG)
+          jenkinsUtils.triggerEcrScan("react", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_*.json'
+          }
+        }
+      }
+    }
+    stage("Run Inspec Scans") {
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          lock('docker_socket') {
+            jenkinsUtils.buildAndPushImageToEcr("saf/postgres_rds", "inspec_postgres_rds", [env.BUILD_TAG, env.JOB_BASE_NAME])
+          }
+          dir('saf/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.ENVIRONMENT, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+            jenkinsUtils.runInspecScan(
+              "postgres_rds",
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.ENVIRONMENT, "inspec_postgres_rds_task_definition_arn"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.ENVIRONMENT, "inspec_postgres_rds_cluster"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.ENVIRONMENT, "inspec_postgres_rds_subnets"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.ENVIRONMENT, "inspec_postgres_rds_security_group")
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'saf/aws/inspec_scan_result_*'
+          }
+        }
+      }
+    }
+  }
+}
+
+def resolveBuildTag() {
+  tag_prefix = sh(script: 'cat versionPrefix', returnStdout: true).trim()
+  commit_count = sh(script: 'git rev-list --count $GIT_COMMIT', returnStdout: true).trim()
+  build_tag = "${tag_prefix}.${commit_count}"
+  return build_tag
+}

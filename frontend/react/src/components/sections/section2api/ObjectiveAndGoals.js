@@ -17,6 +17,7 @@ const addNewObjective = (newObjectiveId) => {
                         "default_entry": "",
                         "entry": null
                     }
+
                 },
                 {
                     "id": `2020-02-b-01-01-${objectiveIdString}-02`,

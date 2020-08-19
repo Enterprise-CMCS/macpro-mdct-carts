@@ -1,0 +1,32 @@
+{% if question.type == "checkbox" %}
+    {% include "reports/checkbox.html" with question=question state=state %}
+{% elif question.type == "daterange" %}
+    {% include "reports/daterange.html" with question=question state=state %}
+{% elif question.type == "email" %}
+    {% include "reports/email.html" with question=question state=state %}
+{% elif question.type == "file_upload" %}
+    {% include "reports/file_upload.html" with question=question state=state %}
+{% elif question.type == "integer" %}
+    {% include "reports/integer.html" with question=question state=state %}
+{% elif question.type == "mailing_address" %}
+    {% include "reports/mailing_address.html" with question=question state=state %}
+{% elif question.type == "money" %}
+    {% include "reports/money.html" with question=question state=state %}
+{% elif question.type == "objectives" %}
+    {% include "reports/objectives.html" with question=question state=state %}
+{% elif question.type == "percentage" %}
+    {% include "reports/percentage.html" with question=question state=state %}
+{% elif question.type == "phone_number" %}
+    {% include "reports/phone_number.html" with question=question state=state %}
+{% elif question.type == "radio" %}
+    {% include "reports/radio.html" with question=question state=state %}
+{% elif question.type == "ranges" %}
+    {% include "reports/ranges.html" with question=question state=state %}
+{% elif question.type == "text_long" %}
+    {% include "reports/text_long.html" with question=question state=state %}
+{% elif question.type == "text_short" %}
+    {% include "reports/text_short.html" with question=question state=state %}
+{% else %}
+    <h2>UNKNOWN TYPE</h2>
+    <pre>{{ question }}</pre>
+{% endif %}
