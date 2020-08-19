@@ -55,7 +55,10 @@ class Header extends Component {
                       <a href="javascript:void(0)">Manage account</a>
                     </li>
                     <li className="logout">
-                      <Logout />
+                      {/* OKTA Enabled */}
+                      {/* <Logout /> */}
+                      {/* OKTA Disabled */}
+                      <a href="javascript:void(0)">Log out</a>
                     </li>
                   </ul>
                 </div>
