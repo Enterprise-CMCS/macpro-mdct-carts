@@ -64,7 +64,6 @@ class CMSRanges extends Component {
     // Pull ranges from state and spread
     const ranges = [...this.state.ranges];
 
-
     // Remove last inputs based on how many are needed to be removed
     for (let i = 0; i < count; i++) {
       ranges.pop();
@@ -72,8 +71,6 @@ class CMSRanges extends Component {
 
     // Reset state with less ranges components
     this.setState({ ranges: ranges });
-
-
   }
 
   render() {
