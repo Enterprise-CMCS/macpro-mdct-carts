@@ -4,7 +4,8 @@ import jsonschema  # type: ignore
 import pdb
 import string
 import sys
-from jsonpath_ng.ext import parse
+from jsonpath_ng.ext import parse  # type: ignore
+from jsonpath_ng import DatumInContext  # type: ignore
 from pathlib import Path
 from typing import (
     Dict,
@@ -16,11 +17,11 @@ sample = {
     "section": {
         "year": 2020,
         "ordinal": 1,
-        "id": None,
+        "id": "2020-01",
         "subsections": [
             {
                 "type": "subsection",
-                "id": None,
+                "id": "2020-01-a",
                 "parts": [
                     {
                         "type": "part",
@@ -162,13 +163,18 @@ def idx_to_lettermarker(val: int) -> str:
     return lettermarkers[val]
 
 
+gmarkers = {}
+
+
 def main(args: List[str] = None) -> None:
+    global gmarkers
     options = setup_cli_parser().parse_args()
     if options.content:
         data = json.loads(Path(options.content).read_text())
     else:
         data = json.loads(sys.stdin.read().strip())
 
+    # data = sample
     with_ids = parse("$..*[?(@.id)].id")
     # with_ids2 = parse("$.*[?(@.id==null)].id")
     res = with_ids.find(data)
@@ -178,6 +184,7 @@ def main(args: List[str] = None) -> None:
     # all be root id plus two in length
     target_length = len(root_id) + 2
     subsections = [x for x in res if len(x.value) == target_length]
+    graph_markers = {}
     for i, _ in enumerate(subsections):
         ideal = "-".join([root_id, lettermarkers[i]])
         if not _.value == ideal:
@@ -193,30 +200,255 @@ def main(args: List[str] = None) -> None:
             qs_expr = parse("questions[*]")
             qs = qs_expr.find(part.context.value)
             # Questions are recursive, so this is where things get tricky.
-            handle_questions(part_ideal, qs)
+            # handle_questions(part_ideal, qs)
+            # graph_markers = {}
+            # graph_markers[part_ideal] = {}
+            graph_markers[part_ideal] = dfs_questions(part_ideal, qs,
+                                                      {})[part_ideal]
 
-    import pdb; pdb.set_trace()
+    print("miraculously, no problems encountered")
+    print(json.dumps(graph_markers))
+    # print(graph_markers)
 
     # with_ids = generate_ids(data)
     # with_ids = generate_ids(sample)
 
 
-def handle_questions(parent_id: str, qs: List) -> None:
-    fieldset_count = 0
-    for i, question in enumerate(qs):
-        if question.value["type"] == "fieldset":
-            fieldset_count = fieldset_count + 1
-            fqs_expr = parse("questions[*]")
-            fqs = fqs_expr.find(question.value)
-            handle_questions(parent_id, fqs)
-        continue
+def dfs_questions(parent_id: str, qs: List, graph_markers: Dict,
+                  parent_is_question: bool = False):
+    if parent_id in graph_markers:
+        print("Why is the key here already?")
+    else:
+        print(parent_id)
+        graph_markers[parent_id] = {}
+    for question in qs:
+        qresult = dfs_question(parent_id, question, graph_markers,
+                               parent_is_question=parent_is_question)
+        graph_markers[parent_id] = {**graph_markers[parent_id], **qresult}
 
-        iternum = i + 1 - fieldset_count
-        q_ideal = "-".join([parent_id, numbermarkers[iternum]])
-        if question.value.get("id", "") != q_ideal:
+        """
+        graph_markers[parent_id] = {**graph_markers[parent_id],
+                                    **qresult[parent_id]}
+        """
+        # new_graph_markers = {**graph_markers, **qresult[parent_id]}
+        # graph_markers = qresult
+    return graph_markers
+
+
+def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
+                 parent_is_question: bool = False) -> Dict:
+    # What kind of question am I?
+    if question.value["type"] in ("obective", "objectives"):
+        print("----------")
+        print("objective", is_marking(question))
+        print("----------")
+    marking = is_marking(question)
+    qtypes = [
+        "checkbox",
+        "checkbox_flag",
+        "daterange",
+        "email",
+        "file_upload",
+        "integer",
+        "mailing_address",
+        "money",
+        "objectives",
+        "percentage",
+        "phone_number",
+        "radio",
+        "ranges",
+        "text",
+        "text_medium",
+        "text_multiline",
+        "text_small"
+    ]
+
+    if question.value["type"] in ("objective", "objectives", "repeatable",
+                                  "repeatables"):
+        sending_parent_is_question = False
+    elif question.value["type"] == "fieldset":
+        if is_marking(question):
+            sending_parent_is_question = True
+        else:
+            sending_parent_is_question = parent_is_question
+    elif question.value["type"] in qtypes:
+        sending_parent_is_question = True
+    else:
+        sending_parent_is_question = parent_is_question
+
+    if marking:
+        # We know we're marking and we know who the parent is. So if the
+        # parent_id has no keys, we're the first.
+        if not graph_markers.get(parent_id):
+            print("making first descendant")
+            if check_for_unmarked(question):
+                this_marker = make_first_descendant(parent_id, False, True)
+            else:
+                this_marker = make_first_descendant(parent_id,
+                                                    parent_is_question)
+            print("received descendant", this_marker)
+            graph_markers[parent_id][this_marker] = {}
+            # print(this_marker)
+        else:
+            print("making sibling")
+            this_marker = make_next_sibling(parent_id,
+                                            graph_markers[parent_id])
+            print("received sibling", this_marker)
+            graph_markers[parent_id][this_marker] = {}
+
+        if question.value.get("id"):
+            if question.value.get("id") != this_marker:
+                print(question.value["id"], this_marker)
+                import pdb; pdb.set_trace()
+
+        subqs_expr = parse("questions[*]")
+        subqs = subqs_expr.find(question.value)
+        if not subqs:
+            print("no subquestions, returning", graph_markers.keys())
+            return graph_markers[parent_id]
+
+        graph_markers[parent_id][this_marker] = dfs_questions(
+            this_marker, subqs, {},
+            parent_is_question=sending_parent_is_question)
+        return graph_markers[parent_id]
+    else:
+        this_marker = parent_id
+        subqs_expr = parse("questions[*]")
+        subqs = subqs_expr.find(question.value)
+        if not subqs:
+            return graph_markers[parent_id]
+
+        return dfs_questions(
+            this_marker, subqs, graph_markers,
+            parent_is_question=sending_parent_is_question)[parent_id]
+
+
+def is_marking(question_jsonpath: DatumInContext) -> bool:
+    question = question_jsonpath.value
+
+    if question["type"] == "fieldset":
+        if question.get("fieldset_type", "") == "marked":
+            return True
+        else:
+            return False
+    else:
+        return True
+
+
+def make_first_descendant(parent_id: str, parent_is_question: bool = False,
+                          unmarked_descendants: bool = False) -> str:
+    if not parent_is_question:
+        if unmarked_descendants:
+            return f"{parent_id}-unmarked_descendants"
+        else:
+            return "-".join([parent_id, numbermarkers[1]])
+    else:
+        count = len([_ for _ in parent_id.split("-") if _ in lettermarkers])
+        if count < 2:
+            return "-".join([parent_id, lettermarkers[0]])
+        else:
+            return "-".join([parent_id, numbermarkers[1]])
+
+
+def make_next_sibling(parent_id: str, graph_markers: Dict) -> str:
+    print("parent_id in make_next_sibling", parent_id)
+    print(graph_markers.keys())
+    last_sibling = [*graph_markers.keys()][-1]
+    deconstructed = last_sibling.split("-")
+    last_chunk = deconstructed[-1]
+    if last_chunk == "unmarked_descendants":
+        deconstructed = last_sibling.split("-")[:-1]
+        last_chunk = deconstructed[-1]
+        return make_first_descendant("-".join(deconstructed), True)
+    replacement_chunk = ""
+    if is_lettermarker(last_chunk):
+        replacement_chunk = increment_letter(last_chunk)
+    elif is_numbermarker(last_chunk):
+        replacement_chunk = increment_number(last_chunk)
+    else:
+        raise
+    new_sibling = "-".join(deconstructed[:-1] + [replacement_chunk])
+    print("making sibling", last_sibling, new_sibling)
+    return new_sibling
+
+
+def check_for_unmarked(question: DatumInContext) -> bool:
+    try:
+        val = question.context.context.value
+        if val.get("fieldset_type", "") == "unmarked_descendants":
+            print("unmarked descendants")
+            return True
+    except Exception:
+        return False
+    return False
+
+
+'''
+def handle_questions(parent_id: str, qs: List, itercount: int = 0,
+                     parent_is_question: bool = False,
+                     unmarked_descendants: bool = False,
+                     fieldset_count: int = 0,
+                     ud_count: int = 0) -> None:
+    c = {"unmarked_desc_count": ud_count}
+    for i, question in enumerate(qs):
+        print(question.value.get("id", "no id"), itercount, i)
+        if question.value["type"] == "fieldset":
+            if question.value.get("fieldset_type") != "marked":
+                print("found a fieldset", parent_id)
+                fieldset_count = fieldset_count + 1
+
+                fs_subids_expr = parse("*[?(@.id)].id")
+                fs_subids = fs_subids_expr.find(question.value)
+                relevant_subids = [_.value for _ in fs_subids if len(_.value) ==
+                                   len(parent_id) + 3]
+                fieldset_count = fieldset_count - len(relevant_subids)
+
+                fqs_expr = parse("questions[*]")
+                fqs = fqs_expr.find(question.value)
+                pass_parent_is_question = parent_is_question
+                pass_unmarked_descendants = False
+                if question.value.get("fieldset_type") == "unmarked_descendants":
+                    pass_unmarked_descendants = True
+                    pass_parent_is_question = False
+                handle_questions(parent_id, fqs, itercount=i,
+                                 parent_is_question=pass_parent_is_question,
+                                 unmarked_descendants=pass_unmarked_descendants,
+                                 ud_count = c["unmarked_desc_count"])
+                if question.value.get("fieldset_type") == "unmarked_descendants":
+                    print("unmarked_descendants")
+                    c["unmarked_desc_count"] = c["unmarked_desc_count"] + 1
+                    print(c["unmarked_desc_count"])
+                continue
+
+        iternum = i - fieldset_count + itercount -c["unmarked_desc_count"] 
+        if unmarked_descendants:
+            parent_id = parent_id.replace("-unmarked_descendants", "")
+        if not parent_is_question:
+            if unmarked_descendants:
+                q_ideal = f"{parent_id}-unmarked_descendants"
+            else:
+                q_ideal = "-".join([parent_id, numbermarkers[iternum + 1]])
+        else:
+            q_ideal = "-".join([parent_id, lettermarkers[iternum]])
+        if unmarked_descendants and "-unmarked_descendants" not in q_ideal:
+            q_ideal = f"{q_ideal}-unmarked_descendants"
+
+        qid = question.value.get("id") or question.value["fieldset_info"]["id"]
+        if qid != q_ideal:
             import pdb; pdb.set_trace()
 
-        assert question.value.get("id", "") == q_ideal
+        # assert qid == q_ideal
+        subqs_expr = parse("questions[*]")
+        subqs = subqs_expr.find(question.value)
+        # Questions are recursive, so this is where things get tricky.
+        shadow_unmarked_desc_count = c["unmarked_desc_count"]
+        handle_questions(q_ideal, subqs, parent_is_question=True,
+                         itercount=itercount,
+                         unmarked_descendants=unmarked_descendants)
+        c["unmarked_desc_count"] = shadow_unmarked_desc_count
+
+        print("end of loop", c["unmarked_desc_count"])
+        print("end of loop", qid, q_ideal)
 
 
 
@@ -294,6 +526,7 @@ def walk(items, new_id, level, parent_is_question):
             print(new_id, level -1)
             return new_id, level - 1
     return new_id, level - 1
+'''
 
 
 
