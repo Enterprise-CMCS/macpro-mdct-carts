@@ -21,6 +21,16 @@ class QuestionComponent extends Component {
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
+    this.validatePercentage = this.validatePercentage.bind(this);
+  }
+
+  validatePercentage(evt) {
+    // Take in evt.target.value
+    // parseInt(evt.target.value).toFixed(2)
+    // Needs to be added to state so state value can be validated
+
+    // placeholder
+    return true;
   }
 
   handleChange(evtArr) {
@@ -50,6 +60,7 @@ class QuestionComponent extends Component {
                 id={question.id}
                 type={this.props.subquestion ? "subquestion" : null}
               />
+
               {question.type === "radio" || question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
                     return (
@@ -67,6 +78,53 @@ class QuestionComponent extends Component {
                   })
                 : null}
               {/* If textarea */}
+              {question.type === "text" ? (
+                <div>
+                  <TextField
+                    className="ds-c-field"
+                    multiple
+                    name={question.id}
+                    value={question.answer.entry}
+                    type="text"
+                    name={question.id}
+                    // onChange={this.props.sectionContext("some value")}
+                  />
+                </div>
+              ) : null}
+
+              {/* If small textarea */}
+              {question.type === "text_small" ? (
+                <div>
+                  <TextField
+                    className="ds-c-field"
+                    multiple
+                    name={question.id}
+                    value={question.answer.entry}
+                    type="text"
+                    name={question.id}
+                    size="small"
+                    // onChange={this.props.sectionContext("some value")}
+                  />
+                </div>
+              ) : null}
+
+              {/* If medium textarea */}
+              {question.type === "text_medium" ? (
+                <div>
+                  <TextField
+                    className="ds-c-field"
+                    multiple
+                    name={question.id}
+                    value={question.answer.entry}
+                    type="text"
+                    name={question.id}
+                    size="medium"
+                    // onChange={this.props.sectionContext("some value")}
+                  />
+                </div>
+              ) : null}
+
+              {/* If large textarea */}
               {question.type === "text_multiline" ? (
                 <div>
                   <TextField
@@ -81,6 +139,7 @@ class QuestionComponent extends Component {
                   />
                 </div>
               ) : null}
+
               {/* If FPL Range */}
               {question.type === "ranges" ? (
                 <div>
@@ -102,7 +161,7 @@ class QuestionComponent extends Component {
                 <div>
                   <TextField
                     // label={question.label}
-                    className="ds-u-margin-top--0"
+                    className="file_upload"
                     onChange={this.handleFileUpload}
                     name="fileUpload"
                     type="file"
@@ -113,13 +172,40 @@ class QuestionComponent extends Component {
               {question.type === "money" ? (
                 <>
                   <TextField
-                    className="fpl-input"
+                    className="money"
                     // label={item.label}
                     inputMode="currency"
                     mask="currency"
                     pattern="[0-9]*"
                     value={question.answer.entry}
                   />
+                </>
+              ) : null}
+
+              {question.type === "phone_number" ? (
+                <>
+                  <TextField
+                    className="phone_number"
+                    // label={item.label}
+                    numeric={true}
+                    mask="phone"
+                    pattern="[0-9]*"
+                    value={question.answer.entry}
+                  />
+                </>
+              ) : null}
+
+              {question.type === "percentage" ? (
+                <>
+                  <TextField
+                    className="percentage"
+                    inputMode="percentage"
+                    pattern="[0-9]*"
+                    numeric={true}
+                    value={question.answer.entry}
+                    onChange={this.validatePercentage}
+                  />
+                  <>%</>
                 </>
               ) : null}
 
@@ -135,19 +221,17 @@ class QuestionComponent extends Component {
                 </div>
               ) : null}
 
-              {/* {question.questions && question.type === "fieldset" ? (
-                shouldDisplay(null, question.context_data) ? (
-                  <div>
-                    {
-                      <QuestionComponent
-                        subquestion="subquestion"
-                        data={question.questions} //Array of subquestions to map through
-                        sectionContext={this.props.sectionContext} // function binding children to parent context
-                      />
-                    }
-                  </div>
-                ) : null
-              ) : null} */}
+              {question.questions && question.type === "fieldset" ? (
+                <div className="cmsfieldset">
+                  {
+                    <QuestionComponent
+                      subquestion={true}
+                      data={question.questions} //Array of subquestions to map through
+                      sectionContext={this.props.sectionContext} // function binding children to parent context
+                    />
+                  }
+                </div>
+              ) : null}
             </fieldset>
           </div>
         ))}
@@ -155,6 +239,28 @@ class QuestionComponent extends Component {
     );
   }
 }
+
+// anticipated question types
+// for ones that are unclear, put a textfield with 'PLACEHOLDER'
+
+// "checkbox",[x]
+// "file_upload",[x]
+// "integer",[x]
+// "money",[x]
+// "percentage",  [x]
+// "phone_number", [x]
+// "radio",[x]
+// "ranges",[x]
+// "text",[x]
+// "text_medium",[x]
+// "text_multiline",[x]
+// "text_small"   [x]
+// "daterange", [*** Will take from new CMSRanges component ***]
+
+// "objectives", [???]
+// "checkbox_flag", [????]
+// "email", [??? validation??]
+// "mailing_address", [??? is this several fields?? is this a component??? ]
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
