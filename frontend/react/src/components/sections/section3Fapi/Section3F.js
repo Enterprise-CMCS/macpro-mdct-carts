@@ -31,6 +31,10 @@ class Section3FApi extends Component {
   }
 
   bindToParentContext(evtArr) {
+    // Parent context function expects an array
+    // evtArr[0] is the question ID
+    // evtArr[1] is the payload, the question entry
+
     this.setState({
       parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
       lastChangedBy: evtArr[0],

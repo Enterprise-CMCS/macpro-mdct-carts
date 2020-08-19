@@ -153,6 +153,21 @@ class QuestionComponent extends Component {
                 </div>
               ) : null}
 
+              {/* If mailing address */}
+              {question.type === "mailing_address" ? (
+                <div>
+                  <TextField
+                    className="ds-c-field"
+                    multiple
+                    value={question.answer.entry}
+                    type="text"
+                    name={question.id}
+                    rows="6"
+                    // onChange={this.props.sectionContext("some value")}
+                  />
+                </div>
+              ) : null}
+
               {/* If FPL Range */}
               {question.type === "ranges" ? (
                 <div>
@@ -303,10 +318,10 @@ class QuestionComponent extends Component {
 // "phone_number", [x]
 // "email", [x]
 // "daterange", [x]
+// "mailing_address", [??? is this several fields?? is this a component???, just a multiline textbox ]
 
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
-// "mailing_address", [??? is this several fields?? is this a component???, just a multiline textbox ]
 
 // "objectives", [??? foggedaboutit]
 

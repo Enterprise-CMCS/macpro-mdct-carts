@@ -44,8 +44,13 @@ class DateRange extends Component {
       let startDate = new Date(yearStart, monthStart - 1);
       let endDate = new Date(yearEnd, monthEnd - 1);
 
-      // TODO: Awaiting format decision for daterange answer
-      let payload = "";
+      // The entry value for daterange must be sent to the server as an array of two strings
+      // The format must be an ISO 8601 Date format.
+      //Because we are only asking for month/year, the last digit is a placeholder of '01'
+      let payload = [
+        `${yearStart}-${monthStart}-01`,
+        `${yearEnd}-${monthEnd}-01`,
+      ];
 
       if (startDate > endDate) {
         chronologyError = true;
