@@ -75,7 +75,7 @@ class CMSRanges extends Component {
         <button
           onClick={(e) => this.newRanges()}
           type="button"
-          className="ds-c-button ds-c-button--primary"
+          className="ds-c-button ds-c-button--primary cmsranges-btn"
         >
           Add another? <FontAwesomeIcon icon={faPlus} />
         </button>
