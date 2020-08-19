@@ -452,10 +452,10 @@
                               },
                               {
                                 "type": "fieldset",
-                                "fieldset_type": "percentage",
+                                "fieldset_type": "synthesized_value",
                                 "fieldset_info": {
-                                    "numerator": "$..*[?(@.id=='2020-02-b-01-01-01-02-01-04')].answer.entry",
-                                    "denominator": "$..*[?(@.id=='2020-02-b-01-01-01-02-01-06')].answer.entry"
+                                    "targets": ["$..*[?(@.id=='2020-02-b-01-01-01-02-01-04')].answer.entry", "$..*[?(@.id=='2020-02-b-01-01-01-02-01-06')].answer.entry"],
+                                    "actions": ["percentage"]
                                 },
                                 "questions": []
                               },

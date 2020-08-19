@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Logout from './Logout'
 
 class Header extends Component {
   constructor() {
