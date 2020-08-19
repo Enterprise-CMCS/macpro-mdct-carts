@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import Objective2bApi from "../objectives/Objective2bApi"
+import { addNewObjective } from "../ObjectiveAndGoals"
 import {
   Accordion,
   AccordionItem,
@@ -18,27 +19,22 @@ import {
 class Questions2BApi extends Component {
   constructor(props) {
     super(props);
-    this.objectiveCount = 1;
-    this.state = { temp: "Here is the original stuff" };
+    this.state = {
+      subsectionB: this.props.subsectionB,
+      objectivesArray: this.props.subsectionB.parts[0].questions[0].questions,
+      objectiveCount: this.props.subsectionB.parts[0].questions[0].questions.length
+    };
     this.previousEntry = this.props.previousEntry;
     this.handleChange = this.handleChange.bind(this);
     this.newObjective = this.newObjective.bind(this);
-    this.objectiveArray = this.props.objectiveArray;
   }
   // Get state program (temporary; will be set by API)
   newObjective() {
     console.log("adding new objective")
     let newObjectiveId = this.state.objectiveCount + 1;
-    let newObjective = {
-      id: `${this.props.year}_${newObjectiveId}`,
-      // This builds a new component with an ID taken from the current year and the next available ID
-      component: (
-        <Objective2bApi objectiveId={`${this.props.year}_${newObjectiveId}`} />
-      ),
-    };
     this.setState({
       objectiveCount: newObjectiveId,
-      objectiveArray: this.state.objectiveArray.concat(newObjective),
+      objectiveArray: this.state.objectivesArray.push(addNewObjective(newObjectiveId)),
     });
   }
 
@@ -52,20 +48,16 @@ class Questions2BApi extends Component {
 
   render() {
     const stateProgram = "medicaid_exp_chip";
-    let createChoices;
-    const tempData = Data.section.subsections[1];
     return (
       <form>
-        {/* Begin parsing through subsection */}
         <div className="section" >
-          {/* Begin parsing through parts */}
-          {
-            tempData.parts.map((part) => (
+          {/* Begin parsing through parts */
+            this.state.subsectionB.parts.map((part) => (
               <div className="part">
-                {part.id === "2020-02-b-02" ? /*this isn't right*/
-                  ((this.props.programType === "medicaid_exp_chip" ||
-                    this.props.programType === "separate_chip" ||
-                    this.props.programType === "combo") ? console.log("allow display?") : null)
+                {part.id === "2020-02-b" ? /*this isn't right*/
+                  ((part.programType === "medicaid_exp_chip" ||
+                    part.programType === "separate_chip" ||
+                    part.programType === "combo") ? console.log("allow display?") : null)
                   : (
                     <div>
 
@@ -85,10 +77,8 @@ class Questions2BApi extends Component {
                                 <AccordionItem key={objective.id}>
                                   {objective.questions.map((objectiveGoals, index) => (
                                     index === 0 ? (
-
                                       <div className="accordion-header">
                                         <h3>
-
                                           <AccordionButton>
                                             <div className="accordion-title">
                                               Objective: {objectiveGoals.answer.default_entry}
@@ -101,7 +91,6 @@ class Questions2BApi extends Component {
                                         <AccordionPanel>{/*Data.section.subsections[1].parts[0].questions[0].questions[0].questions[1].questions[0].questions*/}
                                           <Objective2bApi
                                             goalsArray={objectiveGoals.questions}//gives object that contains array of goals
-                                            goalCount={12}
                                             previousEntry={this.props.previousEntry}
                                           ></Objective2bApi>
 
@@ -116,7 +105,8 @@ class Questions2BApi extends Component {
                                 </AccordionItem>
                               )
                               )
-                            ))
+                            )
+                            )
                             }
                           </Accordion>
                         </div>

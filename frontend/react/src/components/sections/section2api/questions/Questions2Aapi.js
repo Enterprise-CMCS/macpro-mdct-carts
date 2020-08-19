@@ -26,7 +26,6 @@ class Questions2A extends Component {
   }
 
   handleChange(evt) {
-    console.log("Handle Change occured", evt);
     this.setState({
       temp: "This has been changed",
       [evt[0]]: evt[1],

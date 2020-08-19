@@ -42,11 +42,10 @@ class Section2BApi extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={`Section 2B:${tempData.title}`}>
-                {console.log("section")}
+                {console.log("array of objective", Data.section.subsections[1].parts[0].questions[0].questions)}
                 <Questions2BApi
                   previousEntry="false"
-                  objectiveCount={Data.section.subsections[1].parts[0].questions[0].questions[0].length}
-                  objectiveArray={Data.section.subsections[1].parts[0].questions[0].questions[0].questions}
+                  subsectionB={Data.section.subsections[1]}//[0].questions[0].questions
 
                 />
               </TabPanel>
