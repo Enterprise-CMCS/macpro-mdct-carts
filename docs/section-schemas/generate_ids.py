@@ -28,11 +28,11 @@ sample = {
                         "id": "2020-01-a-01",
                         "questions": [
                             {
-                                "type": "text_long",
+                                "type": "text_multiline",
                                 "id": "2020-01-a-01-01",
                                 "questions": [
                                     {
-                                        "type": "text_long",
+                                        "type": "text_multiline",
                                         "id": "2020-01-a-01-01-a",
                                     }
                                 ]
@@ -41,17 +41,17 @@ sample = {
                                 "type": "fieldset",
                                 "questions": [
                                     {
-                                        "type": "text_long",
+                                        "type": "text_multiline",
                                         "id": "2020-01-a-01-02",
                                     },
                                     {
-                                        "type": "text_long",
+                                        "type": "text_multiline",
                                         "id": "2020-01-a-01-03",
                                     }
                                 ]
                             },
                             {
-                                "type": "text_long",
+                                "type": "text_multiline",
                                 "id": "2020-01-a-01-04",
                                 "questions": [
                                     {
@@ -67,7 +67,6 @@ sample = {
         ]
     }
 }
-DictOrList = Union[Dict, List]
 
 lettermarkers = [_ for _ in string.ascii_lowercase] +\
                 [f'{_ * 2}' for _ in string.ascii_lowercase]
@@ -77,21 +76,6 @@ lettermarkers = [_ for _ in string.ascii_lowercase] +\
                  string.ascii_lowercase]
 """
 numbermarkers = [str(_).zfill(2) for _ in range(0, 100)]
-question_types = (
-    "checkbox",
-    "daterange",
-    "email",
-    "file_upload",
-    "integer",
-    "mailing_address",
-    "money",
-    "percentage",
-    "phone_number",
-    "radio",
-    "ranges",
-    "text_long",
-    "text_short",
-)
 
 
 def is_lettermarker(val: str) -> bool:
@@ -171,7 +155,10 @@ def main(args: List[str] = None) -> None:
     else:
         data = json.loads(sys.stdin.read().strip())
 
+    schema = json.loads(Path(".", "backend-section.schema.json").read_text())
+
     # data = sample
+    jsonschema.validate(instance=data, schema=schema)
     with_ids = parse("$..*[?(@.id)].id")
     res = with_ids.find(data)
     # paths = with_ids.paths(data)
