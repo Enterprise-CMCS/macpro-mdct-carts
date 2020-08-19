@@ -17,7 +17,10 @@
             "type": "part",
             "title": "Medicaid Expansion CHIP Enrollment and Premium Fees",
             "context_data": {
-              "show_if_state_program_type_in": ["medicaid_exp_chip", "combo"],
+              "show_if_state_program_type_in": [
+                "medicaid_exp_chip",
+                "combo"
+              ],
               "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program. Skip to Part 2."
             },
             "questions": [
@@ -32,7 +35,9 @@
                   },
                   "entry": "yes"
                 },
-                "conditional": ["yes"],
+                "conditional": [
+                  "yes"
+                ],
                 "questions": [
                   {
                     "id": "2020-01-a-01-01-a",
@@ -49,8 +54,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-01')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -69,7 +79,9 @@
                     "No": "no"
                   }
                 },
-                "conditional": ["yes"],
+                "conditional": [
+                  "yes"
+                ],
                 "questions": [
                   {
                     "id": "2020-01-a-01-02-a",
@@ -91,8 +103,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -106,10 +123,19 @@
                       "entry": null,
                       "header": "Premium fees",
                       "range_categories": [
-                        ["FPL starts at", "FPL ends at"],
-                        ["Premium fee starts at", "Premium fee ends at"]
+                        [
+                          "FPL starts at",
+                          "FPL ends at"
+                        ],
+                        [
+                          "Premium fee starts at",
+                          "Premium fee ends at"
+                        ]
                       ],
-                      "range_type": ["percentage", "money"],
+                      "range_type": [
+                        "percentage",
+                        "money"
+                      ],
                       "entry_min": 1,
                       "entry_max": 0
                     },
@@ -121,8 +147,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -142,8 +173,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-02-a')].answer.entry",
                           "values": {
-                            "interactive": [null, "yes"],
-                            "noninteractive": ["yes"]
+                            "interactive": [
+                              null,
+                              "yes"
+                            ],
+                            "noninteractive": [
+                              "yes"
+                            ]
                           }
                         }
                       }
@@ -171,10 +207,19 @@
                       "entry": null,
                       "header": "Premium fees",
                       "range_categories": [
-                        ["FPL starts at", "FPL ends at"],
-                        ["Premium fee starts at", "Premium fee ends at"]
+                        [
+                          "FPL starts at",
+                          "FPL ends at"
+                        ],
+                        [
+                          "Premium fee starts at",
+                          "Premium fee ends at"
+                        ]
                       ],
-                      "range_type": ["percentage", "money"],
+                      "range_type": [
+                        "percentage",
+                        "money"
+                      ],
                       "entry_min": 1,
                       "entry_max": 0
                     },
@@ -186,8 +231,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -207,8 +257,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "yes"],
-                            "noninteractive": ["yes"]
+                            "interactive": [
+                              null,
+                              "yes"
+                            ],
+                            "noninteractive": [
+                              "yes"
+                            ]
                           }
                         }
                       }
@@ -254,7 +309,10 @@
             "title": "Separate CHIP Enrollment and Premium Fees",
             "context_data": {
               "skip_text": "Part 2 only applies to states with a separate CHIP program. Skip to Part 3.",
-              "show_if_state_program_type_in": ["separate_chip", "combo"]
+              "show_if_state_program_type_in": [
+                "separate_chip",
+                "combo"
+              ]
             },
             "questions": [
               {
@@ -283,8 +341,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-01')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -303,7 +366,10 @@
                     "No": "no"
                   }
                 },
-                "conditional": ["yes", "no"],
+                "conditional": [
+                  "yes",
+                  "no"
+                ],
                 "questions": [
                   {
                     "id": "2020-01-a-02-02-a",
@@ -316,7 +382,6 @@
                         "No": "no"
                       }
                     },
-
                     "context_data": {
                       "conditional_display": {
                         "toMatch": "yes",
@@ -326,8 +391,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -341,10 +411,19 @@
                       "entry": null,
                       "header": "Premium fees",
                       "range_categories": [
-                        ["FPL starts at", "FPL ends at"],
-                        ["Premium fee starts at", "Premium fee ends at"]
+                        [
+                          "FPL starts at",
+                          "FPL ends at"
+                        ],
+                        [
+                          "Premium fee starts at",
+                          "Premium fee ends at"
+                        ]
                       ],
-                      "range_type": ["percentage", "money"],
+                      "range_type": [
+                        "percentage",
+                        "money"
+                      ],
                       "entry_min": 1,
                       "entry_max": 0
                     },
@@ -357,8 +436,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -379,8 +463,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-02-a')].answer.entry",
                           "values": {
-                            "interactive": [null, "yes"],
-                            "noninteractive": ["yes"]
+                            "interactive": [
+                              null,
+                              "yes"
+                            ],
+                            "noninteractive": [
+                              "yes"
+                            ]
                           }
                         }
                       }
@@ -408,10 +497,19 @@
                       "entry": null,
                       "header": "Premium fees",
                       "range_categories": [
-                        ["FPL starts at", "FPL ends at"],
-                        ["Premium fee starts at", "Premium fee ends at"]
+                        [
+                          "FPL starts at",
+                          "FPL ends at"
+                        ],
+                        [
+                          "Premium fee starts at",
+                          "Premium fee ends at"
+                        ]
                       ],
-                      "range_type": ["percentage", "money"],
+                      "range_type": [
+                        "percentage",
+                        "money"
+                      ],
                       "entry_min": 1,
                       "entry_max": 0
                     },
@@ -423,8 +521,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -444,8 +547,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "yes"],
-                            "noninteractive": ["yes"]
+                            "interactive": [
+                              null,
+                              "yes"
+                            ],
+                            "noninteractive": [
+                              "yes"
+                            ]
                           }
                         }
                       }
@@ -491,7 +599,10 @@
             "title": "Changes in Medicaid Expansion CHIP Programs and Policies",
             "context_data": {
               "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program. Skip to Part 4.",
-              "show_if_state_program_type_in": ["medicaid_exp_chip", "combo"]
+              "show_if_state_program_type_in": [
+                "medicaid_exp_chip",
+                "combo"
+              ]
             },
             "text": "Indicate any changes you\u2019ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
             "questions": [
@@ -818,7 +929,10 @@
             "title": "Changes in Separate CHIP Programs and Policies",
             "context_data": {
               "skip_text": "Part 4 only applies to states with a separate CHIP program.",
-              "show_if_state_program_type_in": ["separate_chip", "combo"]
+              "show_if_state_program_type_in": [
+                "separate_chip",
+                "combo"
+              ]
             },
             "text": "Indicate any changes you\u2019ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
             "questions": [
