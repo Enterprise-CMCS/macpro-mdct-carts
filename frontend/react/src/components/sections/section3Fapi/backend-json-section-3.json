@@ -1071,6 +1071,17 @@
                 }
               },
               {
+                "id": "2020-03-c-04-01",
+                "label": "I don’t have data for the individual age groups. I’ll report data for the total number for all age groups (0-18 years) instead.",
+                "type": "checkbox_flag",
+                "answer": {
+                  "options": {
+                    "type": "boolean"
+                  },
+                  "entry": null
+                }
+              },
+              {
                 "id": "2020-03-f-01-05",
                 "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
                 "type": "radio",

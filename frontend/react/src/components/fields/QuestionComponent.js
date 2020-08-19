@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import FPL from "../layout/FPL";
 import CMSChoice from "./CMSChoice";
 import CMSLegend from "./CMSLegend";
-import { TextField, Choice } from "@cmsgov/design-system-core";
+import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
 
 import {
   generateMoneyField,
@@ -24,6 +24,7 @@ class QuestionComponent extends Component {
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.validatePercentage = this.validatePercentage.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.validateCheckboxFlag = this.validateCheckboxFlag.bind(this);
   }
 
   validatePercentage(evt) {
@@ -44,6 +45,10 @@ class QuestionComponent extends Component {
         [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
       });
     }
+  }
+
+  validateCheckboxFlag(evt) {
+    this.props.sectionContext([evt.target.name, evt.target.checked]);
   }
 
   handleChange(evt) {
@@ -267,6 +272,23 @@ class QuestionComponent extends Component {
                     onChange={this.validatePercentage}
                   />
                   <>%</>
+                </>
+              ) : null}
+
+              {question.type === "checkbox_flag" ? (
+                <>
+                  <ChoiceList
+                    name={question.id}
+                    choices={[
+                      {
+                        label: "Select",
+                        defaultChecked: question.answer.entry,
+                      },
+                    ]}
+                    type="checkbox"
+                    answer={question.answer.entry}
+                    onChange={this.validateCheckboxFlag}
+                  />
                 </>
               ) : null}
 
