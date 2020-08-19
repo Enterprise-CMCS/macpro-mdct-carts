@@ -14,6 +14,7 @@ import {
 } from "../Utils/questionUtils";
 
 import { shouldDisplay } from "../Utils/helperFunctions";
+import DateRange from "../layout/DateRange";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -191,7 +192,7 @@ class QuestionComponent extends Component {
                 </div>
               ) : null}
 
-              {/* If FPL Range */}
+              {/* If file upload */}
               {question.type === "file_upload" ? (
                 <div>
                   <TextField
@@ -204,11 +205,13 @@ class QuestionComponent extends Component {
                   />
                 </div>
               ) : null}
+
+              {/* If money */}
               {question.type === "money" ? (
                 <>
                   <TextField
                     className="money"
-                    // label={item.label}
+                    label=""
                     inputMode="currency"
                     mask="currency"
                     pattern="[0-9]*"
@@ -217,11 +220,19 @@ class QuestionComponent extends Component {
                 </>
               ) : null}
 
+              {/* If Date range */}
+              {question.type === "daterange" ? (
+                <DateRange
+                  question={question}
+                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                />
+              ) : null}
+
               {question.type === "phone_number" ? (
                 <>
                   <TextField
                     className="phone_number"
-                    // label={item.label}
+                    label=""
                     numeric={true}
                     mask="phone"
                     pattern="[0-9]*"
@@ -290,11 +301,11 @@ class QuestionComponent extends Component {
 // "text_multiline",[x]
 // "text_small"   [x]
 // "phone_number", [x]
+// "email", [x]
+// "daterange", [x]
 
 //TO-DO
-// "daterange", [use daterange component]
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
-// "email", [??? validation??YES, snatch from basic info ]
 // "mailing_address", [??? is this several fields?? is this a component???, just a multiline textbox ]
 
 // "objectives", [??? foggedaboutit]

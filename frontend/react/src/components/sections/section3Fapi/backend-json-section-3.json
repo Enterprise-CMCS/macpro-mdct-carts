@@ -1060,6 +1060,16 @@
                   "entry": null
                 }
               },
+
+              {
+                "id": "2020-02-a-03-b",
+                "label": "Give a date range for your data",
+                "type": "daterange",
+                "answer": {
+                  "labels": ["Start", "End"],
+                  "entry": null
+                }
+              },
               {
                 "id": "2020-03-f-01-05",
                 "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
