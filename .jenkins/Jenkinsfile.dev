@@ -59,7 +59,7 @@ pipeline {
       }
     }
 
-/*
+
   stage('static build') { 
     
         agent {
@@ -99,14 +99,15 @@ pipeline {
        } 
        dir('frontend/react'){
         sh '''
+        aws s3 sync build s3://www.cartsdemosite.com
         tar -zcvf build.tar.gz build
-        aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
+    #    aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
         
            '''
            }
       }
     }
-
+/*
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
