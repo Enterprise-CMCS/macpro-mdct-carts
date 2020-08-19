@@ -1,59 +1,50 @@
+// Create a variable for our domain name because we'll be using it a lot.
+variable "www_domain_name" {
+  default = "www.cartsdemosite.com"
 
-#resource "aws_s3_bucket" "ui" {
-#  bucket = "cartsui-cloudfrontorigin"
-#  acl = "private"
-#  versioning {
-#    enabled = true
-#  }
-#}
-
-
-
-
-# s3 Bucket with Website settings
-resource "aws_s3_bucket" "site_bucket" {
-  bucket = "cartsui-origin-${terraform.workspace}"
-  acl = "public-read"
-  website {
-    index_document = "index.html"
-#    error_document = "error.html"
-  }
 }
-# cloudfront distribution
-resource "aws_cloudfront_distribution" "site_distribution" {
-  origin {
-    domain_name = "${aws_s3_bucket.site_bucket.bucket_domain_name}"
-    origin_id = "cartsui-origin-${terraform.workspace}"
-  }
-  enabled = true
-  aliases = ["${terraform.workspace}"]
-  price_class = "PriceClass_100"
-  default_root_object = "index.html"
-  default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH",
-                      "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${aws_s3_bucket.site_bucket.id}"
-     forwarded_values {
-      query_string = true
-      cookies {
-        forward = "all"
-      }
+
+// We'll also need the root domain (also known as zone apex or naked domain).
+variable "root_domain_name" {
+  default = "cartsdemosite.com"
+}
+
+
+
+
+
+
+resource "aws_s3_bucket" "www" {
+  // Our bucket's name is going to be the same as our site's domain name.
+  bucket = "${var.www_domain_name}"
+  // Because we want our site to be available on the internet, we set this so
+  // anyone can read this bucket.
+  acl    = "public-read"
+  // We also need to create a policy that allows anyone to view the content.
+  // This is basically duplicating what we did in the ACL but it's required by
+  // AWS. This post: http://amzn.to/2Fa04ul explains why.
+  policy = <<POLICY
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"AddPerm",
+      "Effect":"Allow",
+      "Principal": "*",
+      "Action":["s3:GetObject"],
+      "Resource":["arn:aws:s3:::${var.www_domain_name}/*"]
     }
-    viewer_protocol_policy = "https-only"
-    min_ttl                = 0
-    default_ttl            = 1000
-    max_ttl                = 86400
+  ]
+}
+POLICY
+
+  // S3 understands what it means to host a website.
+  website {
+    // Here we tell S3 what to use when a request comes in to the root
+    // ex. https://www.cartsdemosite.com
+    index_document = "index.html"
+    // The page to serve up if a request results in an error or a non-existing
+    // page.
+  #  error_document = "404.html"
   }
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-  viewer_certificate {
-  #  acm_certificate_arn = "arn:aws:acm:us-east-1:730373213083:certificate/0ee49785-ebd8-41fb-b401-7393a9a3d7c1"
-     cloudfront_default_certificate = true
-     ssl_support_method  = "sni-only"
-     minimum_protocol_version = "TLSv1.1_2016" # defaults wrong, set
-   }
 }
