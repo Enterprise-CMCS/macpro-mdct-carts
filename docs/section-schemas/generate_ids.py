@@ -69,12 +69,13 @@ sample = {
 }
 DictOrList = Union[Dict, List]
 
-# lettermarkers1 = [_ for _ in string.ascii_lowercase]
-# lettermarkers = [_ for _ in string.ascii_lowercase] +\
-#                 [f'{_ * 2}' for _ in string.ascii_lowercase]
+lettermarkers = [_ for _ in string.ascii_lowercase] +\
+                [f'{_ * 2}' for _ in string.ascii_lowercase]
+"""
 lettermarkers = [_ for _ in string.ascii_lowercase] +\
                 [f'{a}{b}' for a in string.ascii_lowercase for b in
                  string.ascii_lowercase]
+"""
 numbermarkers = [str(_).zfill(2) for _ in range(0, 100)]
 question_types = (
     "checkbox",
@@ -381,159 +382,6 @@ def check_for_unmarked(question: DatumInContext) -> bool:
     except Exception:
         return False
     return False
-
-
-'''
-def handle_questions(parent_id: str, qs: List, itercount: int = 0,
-                     parent_is_question: bool = False,
-                     unmarked_descendants: bool = False,
-                     fieldset_count: int = 0,
-                     ud_count: int = 0) -> None:
-    c = {"unmarked_desc_count": ud_count}
-    for i, question in enumerate(qs):
-        print(question.value.get("id", "no id"), itercount, i)
-        if question.value["type"] == "fieldset":
-            if question.value.get("fieldset_type") != "marked":
-                print("found a fieldset", parent_id)
-                fieldset_count = fieldset_count + 1
-
-                fs_subids_expr = parse("*[?(@.id)].id")
-                fs_subids = fs_subids_expr.find(question.value)
-                relevant_subids = [_.value for _ in fs_subids if len(_.value) ==
-                                   len(parent_id) + 3]
-                fieldset_count = fieldset_count - len(relevant_subids)
-
-                fqs_expr = parse("questions[*]")
-                fqs = fqs_expr.find(question.value)
-                pass_parent_is_question = parent_is_question
-                pass_unmarked_descendants = False
-                if question.value.get("fieldset_type") == "unmarked_descendants":
-                    pass_unmarked_descendants = True
-                    pass_parent_is_question = False
-                handle_questions(parent_id, fqs, itercount=i,
-                                 parent_is_question=pass_parent_is_question,
-                                 unmarked_descendants=pass_unmarked_descendants,
-                                 ud_count = c["unmarked_desc_count"])
-                if question.value.get("fieldset_type") == "unmarked_descendants":
-                    print("unmarked_descendants")
-                    c["unmarked_desc_count"] = c["unmarked_desc_count"] + 1
-                    print(c["unmarked_desc_count"])
-                continue
-
-        iternum = i - fieldset_count + itercount -c["unmarked_desc_count"] 
-        if unmarked_descendants:
-            parent_id = parent_id.replace("-unmarked_descendants", "")
-        if not parent_is_question:
-            if unmarked_descendants:
-                q_ideal = f"{parent_id}-unmarked_descendants"
-            else:
-                q_ideal = "-".join([parent_id, numbermarkers[iternum + 1]])
-        else:
-            q_ideal = "-".join([parent_id, lettermarkers[iternum]])
-        if unmarked_descendants and "-unmarked_descendants" not in q_ideal:
-            q_ideal = f"{q_ideal}-unmarked_descendants"
-
-        qid = question.value.get("id") or question.value["fieldset_info"]["id"]
-        if qid != q_ideal:
-            import pdb; pdb.set_trace()
-
-        # assert qid == q_ideal
-        subqs_expr = parse("questions[*]")
-        subqs = subqs_expr.find(question.value)
-        # Questions are recursive, so this is where things get tricky.
-        shadow_unmarked_desc_count = c["unmarked_desc_count"]
-        handle_questions(q_ideal, subqs, parent_is_question=True,
-                         itercount=itercount,
-                         unmarked_descendants=unmarked_descendants)
-        c["unmarked_desc_count"] = shadow_unmarked_desc_count
-
-        print("end of loop", c["unmarked_desc_count"])
-        print("end of loop", qid, q_ideal)
-
-
-
-def generate_ids(data: DictOrList) -> DictOrList:
-    # Start with section.
-    section = data["section"]
-    assert markers["year"](section["year"])
-    sectionmarker = str(section["ordinal"]).zfill(2)
-    assert markers["section"](sectionmarker)
-    identifier = [str(section["year"]), sectionmarker]
-    section["id"] = "-".join(identifier)
-    subsections = section["subsections"]
-    for i, subsection in enumerate(subsections):
-        subsection = add_id_to_lettermarker(subsection, i, identifier[:])
-
-
-def add_id_to_numbermarker(item: Dict, idx: int, identifier: List[str]):
-    assert item["type"] in numbered
-    fragment = idx_to_numbermarker(idx)
-    new_id = identifier + [fragment]
-    assert item["id"] == "-".join(new_id)
-    for child in enumerate(item["questions"]):
-        if is_subquestion(item.get("type"), child.get("type")):
-            child = add_id_to_
-
-
-def add_id_to_lettermarker(item: Dict, idx: int, identifier: List[str]):
-    assert item["type"] in lettered
-    fragment = idx_to_lettermarker(idx)
-    new_id = identifier + [fragment]
-    assert item["id"] == "-".join(new_id)
-    children = "parts" if "parts" in item else "questions"
-    walk(item[children], new_id, 3, False)
-
-    """
-    for i, child in enumerate(item[children]):
-        if child.get("type") == "fieldset":
-            child = pass_through(child, i + 1, new_id[:]
-        else:
-            child = add_id_to_numbermarker(child, i + 1, new_id[:])
-    """
-
-def walk(items, new_id, level, parent_is_question):
-    print("walking", new_id, level, parent_is_question)
-    for item in items:
-        # if the item is of a type that gets an id, give it a new id, update
-        # new_id, and walk its children while incrementing the level.
-        # Otherwise, walk its children without incrementing the level.
-        if level + 1 == len(new_id):
-            new_id[-1] = increment(new_id[-1])
-        elif level + 1 > len(new_id):
-            if parent_is_question and item.get("type") in question_types:
-                new_id.append(lettermarkers[0])
-            else:
-                new_id.append(numbermarkers[1])
-            if "id" in item:
-                if not "-".join(new_id) == item.get("id"):
-                    pdb.set_trace()
-                assert "-".join(new_id) == item.get("id")
-                print("-".join(new_id))
-        if item.get("questions"):
-            if item.get("type") in question_types:
-                new_id, level = walk(item["questions"], new_id,
-                                     level + 1, True)
-            elif item.get("type") in ("objective", "objectives", "repeatable",
-                                      "repeatables", "part"):
-                new_id, level = walk(item["questions"], new_id,
-                                     level + 1, False)
-            elif item.get("type") == "fieldset":
-                new_id, level = walk(item["questions"], new_id, level + 1,
-                                     parent_is_question)
-            else:
-                pdb.set_trace()
-        else:
-            print(new_id, level -1)
-            return new_id, level - 1
-    return new_id, level - 1
-'''
-
-
-
-
-
-
-
 
 
 def setup_cli_parser() -> argparse.ArgumentParser:
