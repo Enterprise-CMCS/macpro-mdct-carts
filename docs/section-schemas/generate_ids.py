@@ -173,12 +173,13 @@ def main(args: List[str] = None) -> None:
 
     # data = sample
     with_ids = parse("$..*[?(@.id)].id")
-    # with_ids2 = parse("$.*[?(@.id==null)].id")
     res = with_ids.find(data)
     # paths = with_ids.paths(data)
     root_id = data["section"]["id"]
     # we know all children of sections should be letters, so subsections should
-    # all be root id plus two in length
+    # all be root id plus two in length. This approach is basically cheating
+    # and should change as soon as we're trying to generate rather than
+    # validate ids.
     target_length = len(root_id) + 2
     subsections = [x for x in res if len(x.value) == target_length]
     graph_markers = {}
@@ -197,18 +198,10 @@ def main(args: List[str] = None) -> None:
             qs_expr = parse("questions[*]")
             qs = qs_expr.find(part.context.value)
             # Questions are recursive, so this is where things get tricky.
-            # handle_questions(part_ideal, qs)
-            # graph_markers = {}
-            # graph_markers[part_ideal] = {}
-            graph_markers[part_ideal] = dfs_questions(part_ideal, qs,
-                                                      {})[part_ideal]
-
+            markers_for_part = dfs_questions(part_ideal, qs, {})
+            graph_markers[part_ideal] = markers_for_part[part_ideal]
     print("miraculously, no problems encountered")
     print(json.dumps(graph_markers))
-    # print(graph_markers)
-
-    # with_ids = generate_ids(data)
-    # with_ids = generate_ids(sample)
 
 
 def dfs_questions(parent_id: str, qs: List, graph_markers: Dict,
@@ -274,7 +267,6 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
                                                     parent_is_question)
             print("received descendant", this_marker)
             graph_markers[parent_id][this_marker] = {}
-            # print(this_marker)
         else:
             print("making sibling")
             this_marker = make_next_sibling(parent_id,
