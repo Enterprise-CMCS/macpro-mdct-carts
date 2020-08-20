@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "www" {
   // Our bucket's name is going to be the same as our site's domain name.
   bucket = "${var.www_domain_name}"
   acl    = "private"
-
+}
 
   data "aws_iam_policy_document" "s3_policy" {
       statement {
