@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import Data from "../backend-json-section-3.json";
 import FPL from "../layout/FPL";
 import CMSChoice from "./CMSChoice";
 import CMSLegend from "./CMSLegend";
 import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
+import NumberFormat from "react-number-format";
 
 import {
   generateMoneyField,
@@ -15,6 +15,7 @@ import {
 
 import { shouldDisplay } from "../Utils/helperFunctions";
 import DateRange from "../layout/DateRange";
+import CMSRanges from "./CMSRanges";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class QuestionComponent extends Component {
     this.validatePercentage = this.validatePercentage.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.handleCheckboxFlag = this.handleCheckboxFlag.bind(this);
+    this.handleIntegerChange = this.handleIntegerChange.bind(this);
+    this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
   }
 
   validatePercentage(evt) {
@@ -36,14 +39,58 @@ class QuestionComponent extends Component {
     return true;
   }
 
+  // For input that will be validated onBlur but need to update state onChange
+  updateLocalStateOnly(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value ? evt.target.value : null,
+      [evt.target.name + "Mod"]: true,
+    });
+  }
+
+  handleIntegerChange(evt) {
+    // let newNumber = NumberFormat.removeFormatting(evt.target.value);
+    // console.log("what do you look like??", newNumber);
+    // this.setState({
+    //   [evt.target.name]: NumberFormat.removeFormatting(evt.target.value),
+    // });
+    // this.props.sectionContext([
+    //   evt.target.name,
+    //   NumberFormat.removeFormatting(evt.target.value),
+    // ]);
+    const validNumberRegex = RegExp("^(?:d{1,3}(?:,d{3})*|d+)(?:.d+)?$");
+    if (evt.target.value.length > 0) {
+      if (validNumberRegex.test(evt.target.value)) {
+        // this.props.sectionContext([evt.target.name, evt.target.value]);
+        // this.setState({
+        //   [evt.target.name]: evt.target.value ? evt.target.value : null,
+        //   [evt.target.name + "Mod"]: true,
+        //   [evt.target.name + "Err"]: !validNumberRegex.test(evt.target.value),
+        // });
+      } else {
+        this.setState({
+          [evt.target.name + "Err"]: !validNumberRegex.test(evt.target.value),
+        });
+      }
+    }
+  }
+
   validateEmail(evt) {
     const validEmailRegex = RegExp(
       /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
     );
     if (evt.target.value.length > 0) {
-      this.setState({
-        [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
-      });
+      if (validEmailRegex.test(evt.target.value)) {
+        this.props.sectionContext([evt.target.name, evt.target.value]);
+        this.setState({
+          [evt.target.name]: evt.target.value ? evt.target.value : null,
+          [evt.target.name + "Mod"]: true,
+          [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
+        });
+      } else {
+        this.setState({
+          [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
+        });
+      }
     }
   }
 
@@ -128,7 +175,7 @@ class QuestionComponent extends Component {
                     }
                     type="text"
                     onBlur={this.validateEmail}
-                    onChange={this.handleChange}
+                    onChange={this.updateLocalStateOnly}
                     errorMessage={
                       this.state[question.id + "Err"]
                         ? "Please enter a valid email address"
@@ -180,6 +227,7 @@ class QuestionComponent extends Component {
               question.type === "mailing_address" ? (
                 <div>
                   <TextField
+                    label=""
                     className="ds-c-input"
                     multiline
                     value={
@@ -197,20 +245,45 @@ class QuestionComponent extends Component {
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
-                <div>
-                  <FPL label={question.label} />
-                </div>
+                <CMSRanges
+                  item={question}
+                  sectionContext={this.props.sectionContext}
+                />
               ) : null}
+
+              {/* If integer*/}
+
+              {/* 
+              Allow commas && periods?? (ask erin/austin)
+              if so:
+              do we want that stripped out before saving to state? YES
+              
+              */}
+              {/* {question.type === "integer" ? (
+                <NumberFormat
+                  name={question.id}
+                  className="ds-c-input"
+                  value={
+                    this.state[question.id] || this.state[question.id + "Mod"]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
+                  onValueChange={this.handleIntegerChange}
+                />
+              ) : null} */}
+
               {question.type === "integer" ? (
-                <div>
-                  <TextField
-                    label=""
-                    className="ds-u-margin-top--0"
-                    name="integer"
-                    size="small"
-                    numeric
-                  />
-                </div>
+                <TextField
+                  name={question.id}
+                  className="ds-c-input"
+                  label=""
+                  value={
+                    this.state[question.id] || this.state[question.id + "Mod"]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
+                  onChange={this.handleIntegerChange}
+                />
               ) : null}
 
               {/* If file upload */}

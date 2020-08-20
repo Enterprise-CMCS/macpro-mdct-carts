@@ -55,7 +55,7 @@ export const updatedSubsectionData = (dataObject) => ({
 //   questionAnswer
 // ) => async (dispatch) => {
 //   try {
-//     const { data } = await axios.put(`/api/some/endpoint/${sectionID}`, {
+//     const { data } = await axios.post(`/api/some/endpoint/${sectionID}`, {
 //       questionID,
 //       questionAnswer,
 //     });
