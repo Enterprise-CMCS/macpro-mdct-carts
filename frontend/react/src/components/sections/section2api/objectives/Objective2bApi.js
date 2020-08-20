@@ -17,6 +17,7 @@ import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
 import Questions2Bapi from "../questions/Questions2Bapi";
 import { addNewGoal } from "../ObjectiveAndGoals"
+import QuestionComponent from "../../../fields/QuestionComponent";
 
 class Objective2bApi extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class Objective2bApi extends Component {
                       <h3>
                         <AccordionButton>
                           <div className="accordion-title">
-                            Goal {goals.id.substring(goals.id.length - 3)}:
+                            Goal {goals.id.substring(goals.id.length - 2)}:
                             </div>
                         </AccordionButton>
                       </h3>
@@ -77,11 +78,7 @@ class Objective2bApi extends Component {
                               <div className="singleGoal">
                                 <div className="question">
                                   <fieldset className="ds-c-fieldset">
-                                    <CMSLegend
-                                      label={question.label}
-                                      id={question.id}
-                                      type="question"
-                                    />
+                                    {parseInt(goals.id.substring(goals.id.length - 2))}.
                                     {question.type === "radio" || question.type === "checkbox"
                                       ? Object.entries(question.answer.options).map((
                                         key,
@@ -149,63 +146,8 @@ class Objective2bApi extends Component {
                           </h3>
                         </div>
                         <AccordionPanel>
-                          {goals.questions.map((question) => (
-                            <>
-                              {question.type !== "fieldset" ? (
-
-                                <div className="singleGoal">
-                                  <div className="question">
-                                    <fieldset className="ds-c-fieldset">
-                                      <CMSLegend
-                                        label={question.label}
-                                        id={question.id}
-                                        type="question"
-                                      />
-                                      {question.type === "radio" || question.type === "checkbox"
-                                        ? Object.entries(question.answer.options).map((
-                                          key,
-                                          index
-                                        ) => {
-                                          return (
-                                            <CMSChoice
-                                              name={question.id}
-                                              value={key[1]}
-                                              label={key[0]}
-                                              type={question.type}
-                                              onChange={this.handleChange}
-                                              answer={question.answer.entry}
-                                              conditional={question.conditional}
-                                              children={question.questions}
-                                              valueFromParent={this.state[question.id]}
-                                            />
-                                          );
-                                        })
-                                        : null}
-                                      {/* If textarea */}
-                                      {question.type === "text_long" || question.type === "text_multiline" ? (
-                                        <div>
-                                          <textarea
-                                            class="ds-c-field"
-                                            name={question.id}
-                                            value={question.answer.entry}
-                                            type="text"
-                                            name={question.id}
-                                            rows="6"
-                                          />
-                                        </div>
-                                      ) : null}
-                                      {/* If FPL Range */}
-                                      {question.type === "ranges" ? (
-                                        <div>
-                                          <FPL label={question.label} />
-                                        </div>
-                                      ) : null}
-                                    </fieldset>
-                                  </div>
-                                </div>
-                              ) : null}
-                            </>
-                          ))}</AccordionPanel>
+                          <QuestionComponent data={goals.questions} />
+                        </AccordionPanel>
                       </AccordionItem>
 
                     )
