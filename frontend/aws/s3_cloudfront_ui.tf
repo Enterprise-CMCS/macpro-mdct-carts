@@ -16,7 +16,6 @@ resource "aws_s3_bucket" "www" {
   bucket = "${var.www_domain_name}"
   acl    = "public-read"
 
- update this policy
   policy = <<POLICY
 {
   "Version":"2012-10-17",
