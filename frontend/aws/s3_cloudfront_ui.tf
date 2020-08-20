@@ -5,24 +5,18 @@ variable "www_domain_name" {
 }
 
 // We'll also need the root domain (also known as zone apex or naked domain).
-variable "root_domain_name" {
-  default = "carts-demo1.com"
-}
-
-
-
+//variable "root_domain_name" {
+//  default = "carts-demo1.com"
+//}
 
 
 
 resource "aws_s3_bucket" "www" {
   // Our bucket's name is going to be the same as our site's domain name.
   bucket = "${var.www_domain_name}"
-  // Because we want our site to be available on the internet, we set this so
-  // anyone can read this bucket.
   acl    = "public-read"
-  // We also need to create a policy that allows anyone to view the content.
-  // This is basically duplicating what we did in the ACL but it's required by
-  // AWS. This post: http://amzn.to/2Fa04ul explains why.
+
+ update this policy
   policy = <<POLICY
 {
   "Version":"2012-10-17",
@@ -38,45 +32,14 @@ resource "aws_s3_bucket" "www" {
 }
 POLICY
 
-  // S3 understands what it means to host a website.
   website {
-    // Here we tell S3 what to use when a request comes in to the root
-    // ex. https://www.cartsdemosite.com
     index_document = "index.html"
-    // The page to serve up if a request results in an error or a non-existing
-    // page.
   //  error_document = "404.html"
   }
 }
 
-
-
-
-
-
-// Use the AWS Certificate Manager to create an SSL cert for our domain.
-// This resource won't be created until you receive the email verifying you
-// own the domain and you click on the confirmation link.
-// #resource "aws_acm_certificate" "certificate" {
-  // We want a wildcard cert so we can host subdomains later.
-//#  domain_name       = "*.${var.root_domain_name}"
-//#  validation_method = "EMAIL"
-
-  // We also want the cert to be valid for the root domain even though we'll be
-  // redirecting to the www. domain immediately.
-//  ##subject_alternative_names = ["${var.root_domain_name}"]
-//##}
-
-
-
-
-
 resource "aws_cloudfront_distribution" "www_distribution" {
-  // origin is where CloudFront gets its content from.
   origin {
-    // We need to set up a "custom" origin because otherwise CloudFront won't
-    // redirect traffic from the root domain to the www domain, that is from
-    // runatlantis.io to www.runatlantis.io.
     custom_origin_config {
       // These are all the defaults.
       http_port              = "80"
@@ -114,10 +77,10 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     }
   }
 
-  // Here we're ensuring we can hit this distribution using www.runatlantis.io
+  // Here we're ensuring we can hit this distribution using var.www_domain_name
   // rather than the domain name CloudFront gives us.
 
-// #  aliases = ["${var.www_domain_name}"]
+  // #aliases = ["${var.www_domain_name}"]
 
   restrictions {
     geo_restriction {
@@ -125,11 +88,10 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     }
   }
 
-  // Here's where our certificate is loaded in!
+  // We will use the cloudfront default cert in this code
   viewer_certificate {
-  //  # acm_certificate_arn = "${aws_acm_certificate.certificate.arn}"
-
-    acm_certificate_arn = "arn:aws:acm:us-east-1:730373213083:certificate/0ee49785-ebd8-41fb-b401-7393a9a3d7c1"
+  // #acm_certificate_arn = "${aws_acm_certificate.certificate.arn}"
+    cloudfront_default_certificate = true
     ssl_support_method  = "sni-only"
   }
 }
