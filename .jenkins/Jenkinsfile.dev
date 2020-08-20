@@ -102,7 +102,7 @@ pipeline {
         sh '''
     #    tar -zcvf build.tar.gz build
     #    aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
-         aws s3 cp build  s3://www.carts-demo1.com
+         aws s3 cp build  s3://www.carts-demo1.com --recursive
            '''
            }
       }
