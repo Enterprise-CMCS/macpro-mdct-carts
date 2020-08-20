@@ -59,7 +59,7 @@ pipeline {
         }
       }
     }
-
+/*
 
   stage('static build') {
 
