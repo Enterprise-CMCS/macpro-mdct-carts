@@ -1,0 +1,34 @@
+<question id={{question.id}}>
+        <answer>
+            <dl class="text_answer">
+
+                <div class="text_answer_dl">
+                    <dt class="question_text">{{question.label}}</dt>
+                    <dd class="answer">
+                    {% if question.answer.entry is None %}
+                        <em>Unanswered</em>
+
+                    {% else %}
+                        {% for k, v in question.answer.options.items %}
+                            {% if v == question.answer.entry %}
+                                <p>Answer:</p>
+                                <ul>
+                                    <li>{{k}}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                                Options not chosen:
+                        {% for k, v in question.answer.options.items %}
+                                <ul>
+                            {% if not v == question.answer.entry %}
+                                <li>{{k}}</li>
+                            {% endif %}
+                                </ul>
+                        {% endfor %}
+                    {% endif %}
+                    </dd>
+                </div>
+            </dl>
+        </answer>
+</question>
+

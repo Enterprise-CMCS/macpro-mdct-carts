@@ -3,6 +3,7 @@ import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
+import CMSRanges from "./CMSRanges";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class CMSChoice extends Component {
         // Add fields to render array based on type (from api)
         switch (item.type) {
           case "text_long":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
               fields.push(
@@ -74,7 +75,7 @@ class CMSChoice extends Component {
                     id={item.id}
                     type="subquestion"
                   />
-                  <textarea
+                  <TextField
                     class="ds-c-field"
                     name={item.id}
                     value={item.answer.entry}
@@ -95,7 +96,7 @@ class CMSChoice extends Component {
               const isCheckedChild =
                 key[1] === item.answer.entry ? "checked" : null;
 
-              // Check if question (toMatch) matches the currently selected option (parent)
+              // Check if question matches the currently selected option (from parent)
               if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
                 return fields.push(
@@ -124,24 +125,20 @@ class CMSChoice extends Component {
             });
             break;
           case "ranges":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
 
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add field to render array
-              return fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <FPL fieldLabels={item.answer.range_categories} />
-                </>
-              );
-            }
+            // if (shouldDisplay(parentValue, item.context_data)) {
+            // Add field to render array
+            return fields.push(
+              <>
+                {/* <CMSRange item={item} mask="currency" numeric /> */}
+                <CMSRanges item={item} />
+              </>
+            );
+            // }
             break;
           case "money":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
 
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
