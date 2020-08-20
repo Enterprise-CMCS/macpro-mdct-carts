@@ -24,7 +24,7 @@ class QuestionComponent extends Component {
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.validatePercentage = this.validatePercentage.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
-    this.validateCheckboxFlag = this.validateCheckboxFlag.bind(this);
+    this.handleCheckboxFlag = this.handleCheckboxFlag.bind(this);
   }
 
   validatePercentage(evt) {
@@ -47,17 +47,17 @@ class QuestionComponent extends Component {
     }
   }
 
-  validateCheckboxFlag(evt) {
+  handleCheckboxFlag(evt) {
     this.props.sectionContext([evt.target.name, evt.target.checked]);
   }
 
   handleChange(evt) {
+    this.props.sectionContext([evt.target.name, evt.target.value]);
+
     this.setState({
       [evt.target.name]: evt.target.value ? evt.target.value : null,
       [evt.target.name + "Mod"]: true,
     });
-
-    this.props.sectionContext(["questionid", "some value"]);
   }
 
   handleFileUpload = (event) => {
@@ -97,6 +97,7 @@ class QuestionComponent extends Component {
                     );
                   })
                 : null}
+
               {/* If textarea */}
               {question.type === "text" ? (
                 <div>
@@ -104,88 +105,13 @@ class QuestionComponent extends Component {
                     className="ds-c-field"
                     multiple
                     name={question.id}
-                    value={question.answer.entry}
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
                     type="text"
-
-                    // onChange={this.props.sectionContext("some value")}
-                  />
-                </div>
-              ) : null}
-
-              {/* If small textarea */}
-              {question.type === "text_small" ? (
-                <div>
-                  <TextField
-                    className="ds-c-field"
-                    multiple
-                    name={question.id}
-                    value={question.answer.entry}
-                    type="text"
-                    size="small"
-                    // onChange={this.props.sectionContext("some value")}
-                  />
-                </div>
-              ) : null}
-
-              {/* If medium textarea */}
-              {question.type === "text_medium" ? (
-                <div>
-                  <TextField
-                    className="ds-c-field"
-                    multiple
-                    name={question.id}
-                    value={question.answer.entry}
-                    type="text"
-                    name={question.id}
-                    size="medium"
-                    // onChange={this.props.sectionContext("some value")}
-                  />
-                </div>
-              ) : null}
-
-              {/* If large textarea */}
-              {question.type === "text_multiline" ? (
-                <div>
-                  <TextField
-                    className="ds-c-field"
-                    multiple
-                    value={question.answer.entry}
-                    type="text"
-                    name={question.id}
-                    rows="6"
-                    // onChange={this.props.sectionContext("some value")}
-                  />
-                </div>
-              ) : null}
-
-              {/* If mailing address */}
-              {question.type === "mailing_address" ? (
-                <div>
-                  <TextField
-                    className="ds-c-field"
-                    multiple
-                    value={question.answer.entry}
-                    type="text"
-                    name={question.id}
-                    rows="6"
-                    // onChange={this.props.sectionContext("some value")}
-                  />
-                </div>
-              ) : null}
-
-              {/* If FPL Range */}
-              {question.type === "ranges" ? (
-                <div>
-                  <FPL label={question.label} />
-                </div>
-              ) : null}
-              {question.type === "integer" ? (
-                <div>
-                  <TextField
-                    // label={question.label}
-                    className="ds-u-margin-top--0"
-                    name="integer"
-                    multiple
+                    onChange={this.handleChange}
                   />
                 </div>
               ) : null}
@@ -208,6 +134,81 @@ class QuestionComponent extends Component {
                         ? "Please enter a valid email address"
                         : false
                     }
+                  />
+                </div>
+              ) : null}
+
+              {/* If small textarea */}
+              {question.type === "text_small" ? (
+                <div>
+                  <TextField
+                    className="ds-c-input"
+                    name={question.id}
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    type="text"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              ) : null}
+
+              {/* If medium textarea */}
+              {question.type === "text_medium" ? (
+                <div>
+                  <TextField
+                    className="ds-c-input"
+                    multiline
+                    name={question.id}
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    type="text"
+                    name={question.id}
+                    rows={3}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              ) : null}
+
+              {/* If large textarea */}
+              {question.type === "text_multiline" ||
+              question.type === "mailing_address" ? (
+                <div>
+                  <TextField
+                    className="ds-c-input"
+                    multiline
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    type="text"
+                    name={question.id}
+                    rows="6"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              ) : null}
+
+              {/* If FPL Range */}
+              {question.type === "ranges" ? (
+                <div>
+                  <FPL label={question.label} />
+                </div>
+              ) : null}
+              {question.type === "integer" ? (
+                <div>
+                  <TextField
+                    label=""
+                    className="ds-u-margin-top--0"
+                    name="integer"
+                    size="small"
+                    numeric
                   />
                 </div>
               ) : null}
@@ -287,7 +288,7 @@ class QuestionComponent extends Component {
                     ]}
                     type="checkbox"
                     answer={question.answer.entry}
-                    onChange={this.validateCheckboxFlag}
+                    onChange={this.handleCheckboxFlag}
                   />
                 </>
               ) : null}
@@ -333,7 +334,7 @@ class QuestionComponent extends Component {
 // "percentage",  [x]
 // "radio",[x]
 // "ranges",[x]
-// "text",[x]
+// "text",[x] [BOUND]
 // "text_medium",[x]
 // "text_multiline",[x]
 // "text_small"   [x]

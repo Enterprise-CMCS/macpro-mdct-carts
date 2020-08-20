@@ -1032,6 +1032,15 @@
                 }
               },
               {
+                "id": "2020-00-a-02-04",
+                "label": "WHATS YOUR ADDRESS",
+                "hint": "Include city, state and zip code",
+                "type": "mailing_address",
+                "answer": {
+                  "entry": "somehwere"
+                }
+              },
+              {
                 "id": "2020-03-f-01-03",
                 "label": "Do you have a written plan with safeguards and procedures in place for the referral of fraud and abuse cases?",
                 "type": "radio",
@@ -1051,7 +1060,16 @@
                   "entry": null
                 }
               },
-
+              {
+                "id": "2020-00-a-01-01",
+                "label": "State or territory name:",
+                "type": "text",
+                "answer": {
+                  "prepopulated": true,
+                  "readonly": true,
+                  "entry": "New YAWK"
+                }
+              },
               {
                 "id": "2020-00-a-02-03",
                 "label": "Email:",
@@ -1116,6 +1134,24 @@
                     }
                   }
                 ]
+              },
+              {
+                "id": "2020-00-a-01-03",
+                "label": "TESTING TEXT MEDIUM",
+                "type": "text_medium",
+                "answer": {
+                  "prepopulated": true,
+                  "readonly": true,
+                  "entry": "some entry???"
+                }
+              },
+              {
+                "id": "2020-00-a-02-01",
+                "label": "TESTING TEXT SMALL",
+                "type": "text_small",
+                "answer": {
+                  "entry": "initual value??"
+                }
               },
               {
                 "id": "2020-03-f-01-06",
@@ -1228,7 +1264,7 @@
                     "label": "How do you provide oversight of the contractors? ",
                     "type": "text_multiline",
                     "answer": {
-                      "entry": null
+                      "entry": "some previous entry"
                     },
                     "context_data": {
                       "conditional_display": {
