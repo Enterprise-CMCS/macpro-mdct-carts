@@ -32,6 +32,7 @@ pipeline {
         }
       }
     }
+/*
     stage("Destroy at the start") {
       when {
         expression { env.DESTROY_AT_THE_START == "true"}
@@ -60,8 +61,8 @@ pipeline {
     }
 
 
-  stage('static build') { 
-    
+  stage('static build') {
+
         agent {
             docker {
                 image 'node:14.4.0'
@@ -70,19 +71,19 @@ pipeline {
             }
         }
         steps {
- 
+
             dir('frontend/react') {
-            sh '''           
+            sh '''
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
             npm ci && npm run build
-          
-         
+
+
               '''
           }
-            
+
         }
     }
-    
+
     stage("Build and Push Artifacts") {
       when {
         expression { env.DEPLOY == "true"}
@@ -93,21 +94,20 @@ pipeline {
           lock('docker_socket') {
             jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])  
-            
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])
+
           }
-       } 
+       }
        dir('frontend/react'){
         sh '''
-        aws s3 sync build s3://www.cartsdemosite.com
         tar -zcvf build.tar.gz build
-    #    aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
-        
+        aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
+
            '''
            }
       }
     }
-/*
+
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
@@ -118,7 +118,7 @@ pipeline {
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
-     
+
         }
       }
       post {
@@ -156,9 +156,9 @@ pipeline {
           }
         }
       }
-    }   
+    }
  */
-     
+
     stage("Deploy Frontend Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -177,11 +177,11 @@ pipeline {
         }
         dir('frontend/react')
         sh '''
-         aws s3 sync s3://cartsui-cloudfront-origin/build.tar.gz build1.tar.gz 
+         aws s3 sync s3://cartsui-cloudfront-origin/build.tar.gz build1.tar.gz
          tar -xzf build1.tar.gz
-         ls -la 
+         ls -la
          '''
-         
+
       }
       post {
         always {
@@ -212,8 +212,8 @@ pipeline {
       }
     }
 
-    
-    
+
+
     stage("Destroy at the end") {
       when {
         expression { env.DESTROY_AT_THE_END == "true"}
