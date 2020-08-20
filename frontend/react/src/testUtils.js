@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { shallow } from "enzyme";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 import checkPropTypes from "check-prop-types";
 
@@ -11,7 +12,7 @@ export const findByTestAttribute = (wrapper, val) => {
 };
 
 export const storeFactory = (initialState) => {
-  return createStore(reducer, initialState);
+  return createStore(reducer, initialState, applyMiddleware(thunk));
 };
 
 export const checkProps = (component, conformingProps) => {
@@ -25,6 +26,7 @@ export const checkProps = (component, conformingProps) => {
 };
 
 export const mockInitialState = {
+  formData: [],
   stateUser: {
     name: "New York",
     abbr: "NY",
