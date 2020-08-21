@@ -25,6 +25,21 @@ router.register(r'sections', views.SectionViewSet)
 router.register(r'sectionbases', views.SectionBaseViewSet)
 router.register(r'sectionschemas', views.SectionSchemaViewSet)
 
+api_patterns = [
+    path("sections/<int:year>/<str:state>/<int:section>",
+         views.section_by_year_and_state),
+    path("sections/<int:year>/<str:state>/<int:section>/<str:subsection>",
+         views.section_subsection_by_year_and_state),
+    path("questions/<str:state>/<slug:id>",
+         views.fragment_by_year_state_id),
+    path("generic-sections/<int:year>/<int:section>",
+         views.sectionbase_by_year_and_section),
+    path("generic-sections/<int:year>/<int:section>/<str:subsection>",
+         views.sectionbase_by_year_section_subsection),
+    path("generic-questions/<slug:id>",
+         views.generic_fragment_by_id),
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
@@ -33,8 +48,8 @@ urlpatterns = [
          views.section_by_year_and_state),
     path("structure/<int:year>/<int:section>",
          views.sectionbase_by_year_and_section),
-    path("subsection_data/<str:subsection>/<str:state>",
-         views.section_subsection_by_state),
     # path('api-auth/', include('rest_framework.urls',
     #  namespace='rest_framework'))
+    path("api/v1/", include(api_patterns)),
 ]
+
