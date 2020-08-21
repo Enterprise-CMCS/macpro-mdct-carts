@@ -130,8 +130,8 @@ class QuestionComponent extends Component {
     let input;
     return (
       <>
-        {this.props.data.map((question) => (
-          <div className="question">
+        {this.props.data.map((question, index) => (
+          <div className="question" key={index}>
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
 
@@ -149,10 +149,12 @@ class QuestionComponent extends Component {
                       value={key[1]}
                       label={key[0]}
                       type={question.type}
-                      answer={question.answer.entry} // JSON Answer
+                      answer={question.answer.entry}
+                      conditional={question.conditional}
                       children={question.questions}
-                      valueFromParent={this.state[question.id]} // User selection in local state
-                      sectionContext={this.props.sectionContext}
+                      valueFromParent={this.state[question.id]}
+                      onChange={this.handleChange}
+                      key={index}
                     />
                   );
                 })
@@ -171,6 +173,7 @@ class QuestionComponent extends Component {
                   }
                   type="text"
                   onChange={this.handleChange}
+                  label=""
                 />
               ) : null}
 
@@ -184,6 +187,7 @@ class QuestionComponent extends Component {
                       : question.answer.entry
                   }
                   type="text"
+                  label=""
                   onBlur={this.validateEmail}
                   onChange={this.updateLocalStateOnly}
                   errorMessage={
@@ -206,6 +210,7 @@ class QuestionComponent extends Component {
                   }
                   type="text"
                   onChange={this.handleChange}
+                  label=""
                 />
               ) : null}
 
@@ -225,6 +230,7 @@ class QuestionComponent extends Component {
                     name={question.id}
                     rows={3}
                     onChange={this.handleChange}
+                    label=""
                   />
                 </div>
               ) : null}
@@ -303,6 +309,7 @@ class QuestionComponent extends Component {
                     name="fileUpload"
                     type="file"
                     multiple
+                    label=""
                   />
                 </div>
               ) : null}
@@ -348,42 +355,38 @@ class QuestionComponent extends Component {
                     pattern="[0-9]*"
                     numeric={true}
                     name={question.id}
-                    value={question.answer.entry}
+                    value={this.state[question.id] ? this.state[question.id] : question.answer.entry}
                     errorMessage={this.state[question.id + "Err"] ? this.state[question.id + "Err"] : null}
-                    onChange={this.validatePercentage}
-                    onBlur={this.handleChange}
+                    onChange={this.handleChange, this.validatePercentage}
+                    label=""
                   />
                   <>%</>
                 </>
               ) : null}
 
               {question.type === "checkbox_flag" ? (
-                <>
-                  <ChoiceList
-                    name={question.id}
-                    choices={[
-                      {
-                        label: "Select",
-                        defaultChecked: question.answer.entry,
-                      },
-                    ]}
-                    type="checkbox"
-                    answer={question.answer.entry}
-                    onChange={this.handleCheckboxFlag}
-                  />
-                </>
+                <ChoiceList
+                  name={question.id}
+                  choices={[
+                    {
+                      label: "Select",
+                      defaultChecked: question.answer.entry,
+                      value: ""
+                    },
+                  ]}
+                  type="checkbox"
+                  answer={question.answer.entry}
+                  onChange={this.handleCheckboxFlag}
+                  label=""
+                />
               ) : null}
 
               {question.questions && question.type !== "fieldset" ? (
-                <div>
-                  {
-                    <QuestionComponent
-                      subquestion={true}
-                      data={question.questions} //Array of subquestions to map through
-                      sectionContext={this.props.sectionContext} // function binding children to parent context
-                    />
-                  }
-                </div>
+                <QuestionComponent
+                  subquestion={true}
+                  data={question.questions} //Array of subquestions to map through
+                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                />
               ) : null}
 
               {question.questions && question.type === "fieldset" ? (
