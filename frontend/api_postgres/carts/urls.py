@@ -26,12 +26,16 @@ router.register(r'sectionbases', views.SectionBaseViewSet)
 router.register(r'sectionschemas', views.SectionSchemaViewSet)
 
 api_patterns = [
+    path("sections/<int:year>/<str:state>",
+         views.sections_by_year_and_state),
     path("sections/<int:year>/<str:state>/<int:section>",
          views.section_by_year_and_state),
     path("sections/<int:year>/<str:state>/<int:section>/<str:subsection>",
          views.section_subsection_by_year_and_state),
     path("questions/<str:state>/<slug:id>",
          views.fragment_by_year_state_id),
+    path("generic-sections/<int:year>",
+         views.sectionbases_by_year),
     path("generic-sections/<int:year>/<int:section>",
          views.sectionbase_by_year_and_section),
     path("generic-sections/<int:year>/<int:section>/<str:subsection>",

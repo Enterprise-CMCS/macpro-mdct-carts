@@ -80,6 +80,20 @@ class SectionViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
+def sections_by_year_and_state(request, year, state):
+    try:
+        data = Section.objects.filter(contents__section__year=year,
+                                      contents__section__state=state.upper())
+    except Section.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = SectionSerializer(data, many=True,
+                                       context={"request": request})
+        return Response(serializer.data)
+
+
+@api_view(["GET"])
 def section_by_year_and_state(request, year, state, section):
     try:
         data = Section.objects.get(contents__section__year=year,
@@ -90,6 +104,19 @@ def section_by_year_and_state(request, year, state, section):
 
     if request.method == 'GET':
         serializer = SectionSerializer(data)
+        return Response(serializer.data)
+
+
+@api_view(["GET"])
+def sectionbases_by_year(request, year):
+    try:
+        data = SectionBase.objects.filter(contents__section__year=year)
+    except SectionBase.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = SectionBaseSerializer(data, many=True,
+                                           context={"request": request})
         return Response(serializer.data)
 
 
