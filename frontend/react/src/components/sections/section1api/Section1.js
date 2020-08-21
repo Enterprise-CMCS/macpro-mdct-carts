@@ -17,6 +17,28 @@ import {
 } from "@cmsgov/design-system-core";
 
 class Section1 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      temporaryComponentID: "Section 1",
+      parentHasBeenChanged: 0,
+    };
+    this.bindToParentContext = this.bindToParentContext.bind(this);
+  }
+
+  bindToParentContext(evtArr) {
+    // Parent context function expects an array
+    // evtArr[0] is the question ID
+    // evtArr[1] is the payload, the question entry
+
+    this.setState({
+      parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
+      lastChangedBy: evtArr[0],
+      [evtArr[0]]: evtArr[1],
+    });
+  }
+
+
   render() {
     return (
       <div className="section-1 ds-l-col--9 content">
@@ -44,7 +66,8 @@ class Section1 extends Component {
                   <h3>{Data.section.title}</h3>
                 </div>
                 <div disabled>
-                  <Questions previousEntry="true" />
+                  <Questions previousEntry="true"
+                    sectionContext={this.bindToParentContext} />
                 </div>
               </TabPanel>
             </Tabs>

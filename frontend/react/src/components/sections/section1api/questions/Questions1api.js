@@ -5,6 +5,7 @@ import Data from "./../backend-json-section-1.json";
 import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
 import CMSChoice from "../../../fields/CMSChoice";
 import CMSLegend from "../../../fields/CMSLegend";
+import QuestionComponent from "../../../fields/QuestionComponent";
 
 class Questions1 extends Component {
   constructor(props) {
@@ -42,63 +43,20 @@ class Questions1 extends Component {
                 {!part.context_data.show_if_state_program_type_in.includes(
                   stateProgram
                 ) ? (
-                  <div class="ds-c-alert ds-c-alert--hide-icon">
-                    <div class="ds-c-alert__body">
-                      <h3 class="ds-c-alert__heading">
-                        {part.context_data.skip_text}
-                      </h3>
+                    <div class="ds-c-alert ds-c-alert--hide-icon">
+                      <div class="ds-c-alert__body">
+                        <h3 class="ds-c-alert__heading">
+                          {part.context_data.skip_text}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  part.questions.map((question) => (
-                    <div className="question">
-                      <fieldset className="ds-c-fieldset">
-                        <CMSLegend label={question.label} id={question.id} />
-
-                        {question.type === "radio" ||
-                        question.type === "checkbox"
-                          ? Object.entries(question.answer.options).map(
-                              (key, index) => {
-                                return (
-                                  <CMSChoice
-                                    name={question.id}
-                                    value={key[1]}
-                                    label={key[0]}
-                                    type={question.type}
-                                    answer={question.answer.entry}
-                                    conditional={question.conditional}
-                                    children={question.questions}
-                                    valueFromParent={this.state[question.id]}
-                                    onChange={this.handleChange}
-                                  />
-                                );
-                              }
-                            )
-                          : null}
-
-                        {/* If textarea */}
-                        {question.type === "text_long" ? (
-                          <div>
-                            <textarea
-                              class="ds-c-field"
-                              name={question.id}
-                              value={question.answer.entry}
-                              type="text"
-                              name={question.id}
-                              rows="6"
-                            />
-                          </div>
-                        ) : null}
-                        {/* If FPL Range */}
-                        {question.type === "ranges" ? (
-                          <div>
-                            <FPL label={question.label} />
-                          </div>
-                        ) : null}
-                      </fieldset>
+                  ) : (
+                    <div>WORKS
+                      <QuestionComponent
+                        data={part.questions}
+                        sectionContext={this.props.sectionContext} />
                     </div>
-                  ))
-                )}
+                  )}
               </div>
             ))}
           </div>
