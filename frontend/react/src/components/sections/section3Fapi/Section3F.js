@@ -58,11 +58,12 @@ class Section3FApi extends Component {
                 <h3 className="part-title">
                   {sectionID}: {this.props.section3FData.title}
                 </h3>
-                {this.props.section3FData.parts.map((part) => (
+                {this.props.section3FData.parts.map((part, index) => (
                   <QuestionComponent
                     previousEntry="false"
                     data={part.questions}
                     sectionContext={this.bindToParentContext}
+                    key={index}
                   />
                 ))}
                 <FormNavigation previousUrl="/section3/3c" />
@@ -80,11 +81,12 @@ class Section3FApi extends Component {
                   <h3 className="part-title">
                     {sectionID}: {this.props.section3FData.title}
                   </h3>
-                  {this.props.section3FData.parts.map((part) => (
+                  {this.props.section3FData.parts.map((part, index) => (
                     <QuestionComponent
                       previousEntry="true"
                       data={part.questions}
                       sectionContext={this.bindToParentContext}
+                      key={index}
                     />
                   ))}
                 </div>
