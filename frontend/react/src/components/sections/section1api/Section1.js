@@ -25,7 +25,6 @@ class Section1 extends Component {
     };
     this.bindToParentContext = this.bindToParentContext.bind(this);
   }
-
   bindToParentContext(evtArr) {
     // Parent context function expects an array
     // evtArr[0] is the question ID
@@ -50,7 +49,8 @@ class Section1 extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={Data.section.title}>
-                <Questions previousEntry="false" />
+                <Questions previousEntry="false"
+                  sectionContext={this.bindToParentContext} />
                 <FormNavigation
                   nextUrl="/section2/2a"
                   previousUrl="/basic-info"
