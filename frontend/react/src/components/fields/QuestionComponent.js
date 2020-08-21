@@ -160,59 +160,53 @@ class QuestionComponent extends Component {
 
               {/* If textarea */}
               {question.type === "text" ? (
-                <div>
-                  <TextField
-                    className="ds-c-field"
-                    multiple
-                    name={question.id}
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
-                    type="text"
-                    onChange={this.handleChange}
-                  />
-                </div>
+                <TextField
+                  className="ds-c-field"
+                  multiple
+                  name={question.id}
+                  value={
+                    this.state[question.id] || this.state[question.id + "Mod"]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
+                  type="text"
+                  onChange={this.handleChange}
+                />
               ) : null}
 
               {/* Email  */}
               {question.type === "email" ? (
-                <div>
-                  <TextField
-                    name={question.id}
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
-                    type="text"
-                    onBlur={this.validateEmail}
-                    onChange={this.updateLocalStateOnly}
-                    errorMessage={
-                      this.state[question.id + "Err"]
-                        ? "Please enter a valid email address"
-                        : false
-                    }
-                  />
-                </div>
+                <TextField
+                  name={question.id}
+                  value={
+                    this.state[question.id] || this.state[question.id + "Mod"]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
+                  type="text"
+                  onBlur={this.validateEmail}
+                  onChange={this.updateLocalStateOnly}
+                  errorMessage={
+                    this.state[question.id + "Err"]
+                      ? "Please enter a valid email address"
+                      : false
+                  }
+                />
               ) : null}
 
               {/* If small textarea */}
               {question.type === "text_small" ? (
-                <div>
-                  <TextField
-                    className="ds-c-input"
-                    name={question.id}
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
-                    type="text"
-                    onChange={this.handleChange}
-                  />
-                </div>
+                <TextField
+                  className="ds-c-input"
+                  name={question.id}
+                  value={
+                    this.state[question.id] || this.state[question.id + "Mod"]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
+                  type="text"
+                  onChange={this.handleChange}
+                />
               ) : null}
 
               {/* If medium textarea */}
@@ -336,16 +330,14 @@ class QuestionComponent extends Component {
               ) : null}
 
               {question.type === "phone_number" ? (
-                <>
-                  <TextField
-                    className="phone_number"
-                    label=""
-                    numeric={true}
-                    mask="phone"
-                    pattern="[0-9]*"
-                    value={question.answer.entry}
-                  />
-                </>
+                <TextField
+                  className="phone_number"
+                  label=""
+                  numeric={true}
+                  mask="phone"
+                  pattern="[0-9]*"
+                  value={question.answer.entry}
+                />
               ) : null}
 
               {question.type === "percentage" ? (
@@ -420,7 +412,7 @@ class QuestionComponent extends Component {
 // "file_upload",[x]
 // "integer",[x]
 // "money",[x]
-// "percentage",  [x]
+// "percentage",  [x] [BOUND]
 // "radio",[x]
 // "ranges",[x]
 // "text",[x] [BOUND]
