@@ -31,12 +31,25 @@ class QuestionComponent extends Component {
   }
 
   validatePercentage(evt) {
-    // Take in evt.target.value
-    // parseInt(evt.target.value).toFixed(2)
-    // Needs to be added to state so state value can be validated
+    // Regex to allow only numbers and decimals
+    const regex = new RegExp("^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{0,30})?$");
+    let error;
+    // If content has been entered
+    if (evt.target.value.length > 0) {
 
-    // placeholder
-    return true;
+      // Test returns boolean
+      if (!regex.test(evt.target.value)) {
+        error = "Please enter only numbers and decimals";
+      } else {
+        error = null;
+      }
+
+    }
+
+    // Write to local state
+    this.setState({
+      [evt.target.name + "Err"]: error,
+    });
   }
 
   // For input that will be validated onBlur but need to update state onChange
@@ -130,19 +143,19 @@ class QuestionComponent extends Component {
 
               {question.type === "radio" || question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
-                    return (
-                      <CMSChoice
-                        name={question.id}
-                        value={key[1]}
-                        label={key[0]}
-                        type={question.type}
-                        answer={question.answer.entry} // JSON Answer
-                        children={question.questions}
-                        valueFromParent={this.state[question.id]} // User selection in local state
-                        sectionContext={this.props.sectionContext}
-                      />
-                    );
-                  })
+                  return (
+                    <CMSChoice
+                      name={question.id}
+                      value={key[1]}
+                      label={key[0]}
+                      type={question.type}
+                      answer={question.answer.entry} // JSON Answer
+                      children={question.questions}
+                      valueFromParent={this.state[question.id]} // User selection in local state
+                      sectionContext={this.props.sectionContext}
+                    />
+                  );
+                })
                 : null}
 
               {/* If textarea */}
@@ -224,24 +237,24 @@ class QuestionComponent extends Component {
 
               {/* If large textarea */}
               {question.type === "text_multiline" ||
-              question.type === "mailing_address" ? (
-                <div>
-                  <TextField
-                    label=""
-                    className="ds-c-input"
-                    multiline
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
-                    type="text"
-                    name={question.id}
-                    rows="6"
-                    onChange={this.handleChange}
-                  />
-                </div>
-              ) : null}
+                question.type === "mailing_address" ? (
+                  <div>
+                    <TextField
+                      label=""
+                      className="ds-c-input"
+                      multiline
+                      value={
+                        this.state[question.id] || this.state[question.id + "Mod"]
+                          ? this.state[question.id]
+                          : question.answer.entry
+                      }
+                      type="text"
+                      name={question.id}
+                      rows="6"
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                ) : null}
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
@@ -342,8 +355,11 @@ class QuestionComponent extends Component {
                     inputMode="percentage"
                     pattern="[0-9]*"
                     numeric={true}
+                    name={question.id}
                     value={question.answer.entry}
+                    errorMessage={this.state[question.id + "Err"] ? this.state[question.id + "Err"] : null}
                     onChange={this.validatePercentage}
+                    onBlur={this.handleChange}
                   />
                   <>%</>
                 </>
@@ -418,7 +434,6 @@ class QuestionComponent extends Component {
 
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
-
 // "objectives", [??? foggedaboutit]
 
 const mapStateToProps = (state) => ({
