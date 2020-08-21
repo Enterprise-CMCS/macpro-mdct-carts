@@ -155,6 +155,7 @@ class QuestionComponent extends Component {
                       valueFromParent={this.state[question.id]}
                       onChange={this.handleChange}
                       key={index}
+                      sectionContext={this.props.sectionContext}
                     />
                   );
                 })

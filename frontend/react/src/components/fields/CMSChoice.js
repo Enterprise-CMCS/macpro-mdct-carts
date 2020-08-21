@@ -23,6 +23,7 @@ class CMSChoice extends Component {
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
     this.props.sectionContext([evt.target.name, evt.target.value]);
+    this.props.onChange([evt.target.name, evt.target.value]);
   };
 
   render() {
@@ -169,7 +170,6 @@ class CMSChoice extends Component {
     return (
       <>
         <Choice
-          class="ds-c-choice"
           name={this.props.name}
           value={this.props.value}
           type={this.props.type}
