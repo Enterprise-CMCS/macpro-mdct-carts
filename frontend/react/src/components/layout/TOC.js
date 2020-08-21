@@ -11,7 +11,7 @@ class TOC extends Component {
   click = (e, id, url) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!url.startsWith('javascript:')) {
+    if (!url.startsWith("javascript:")) {
       this.props.history.push(url);
     }
   }

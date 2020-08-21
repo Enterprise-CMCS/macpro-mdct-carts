@@ -18,7 +18,6 @@ const setup = (props = {}, state = null) => {
 
 describe("TOC Component", () => {
   const wrapper = setup();
-  console.log(wrapper.debug())
   let verticalNavWrapper = wrapper.find(VerticalNav).shallow();
   let itemProps = verticalNavWrapper.props().children;
 
