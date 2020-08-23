@@ -12,6 +12,13 @@ export default (data = initialState, action) => {
   }
 };
 
+export const setAnswerEntry = (state, questionId, eventChange) => {
+    console.dir(state);
+    console.log(questionId);
+    console.log(eventChange.target.value);
+}
+
+/* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
   const section = state.formData.filter(c => c.contents.section.ordinal === ordinal);
   if(section.length > 0) {
@@ -20,13 +27,29 @@ export const selectSectionByOrdinal = (state, ordinal) => {
   return null;
 }
 
-export const extractSectionOrdinalFromId = (state, id) => {
+export const extractSectionOrdinalFromId = (id) => {
   const chunks = id.split("-");
   const sectionOrdinal = parseInt(chunks[1], 10);
   return sectionOrdinal;
 };
 
-export const selectFragmentByJsonPath = (state, sectionOrdinal, expr) => {
+export const extractSectionOrdinalFromJPExpr = (jpexpr) => {
+  const id = jpexpr.split("id=='")[1].split("'")[0];
+  return extractSectionOrdinalFromId(id);
+};
+
+export const extractJsonPathExpressionFromQuestionLike = (questionLikeId, parentId, index) => {
+  if (questionLikeId) {
+    return `$..*[?(@.id=='${questionLikeId}')]`;
+  } else {
+    return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
+  }
+}
+
+export const selectFragmentByJsonPath = (state, expr, sectionOrdinal = false) => {
+  if (!sectionOrdinal) {
+    sectionOrdinal = extractSectionOrdinalFromJPExpr(expr);
+  }
   const section = (selectSectionByOrdinal(state, sectionOrdinal));
   // Note that the following assumes that there's only one matching result.
   const fragment = jsonpath.query(section, expr)[0];
@@ -35,16 +58,9 @@ export const selectFragmentByJsonPath = (state, sectionOrdinal, expr) => {
 };
 
 export const selectFragmentById = (state, id) => {
-  const sectionOrdinal = extractSectionOrdinalFromId(state, id);
+  const sectionOrdinal = extractSectionOrdinalFromId(id);
   const jpexpr = `$..*[?(@.id=='${id}')]`;
-  return selectFragmentByJsonPath(state, sectionOrdinal, jpexpr);
-    /*
-    const section = (selectSectionByOrdinal(state, sectionOrdinal));
-    console.log(section);
-    const fragment = jsonpath.query(section, jpexpr)[0];
-    console.log(fragment);
-    return fragment;
-    */
+  return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 }
-
+/* /Helper functions for getting values from the JSON returned by the API */
 

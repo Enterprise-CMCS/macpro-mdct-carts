@@ -18,9 +18,7 @@ const BasicInfo = ({Data}) =>
         <PageInfo />
         <div className="section-content">
          {Data.section.subsections.map((subsection) => (
-             <div>
              <Subsection key={subsection.id} subsectionId={subsection.id}/>
-             </div>
          ))}
         </div>
       </div>

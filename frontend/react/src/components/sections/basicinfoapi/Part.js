@@ -1,21 +1,9 @@
-import React, { Component, Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import FPL from "../../layout/FPL";
-import CMSChoice from "../../fields/CMSChoice";
-import CMSLegend from "../../fields/CMSLegend";
-import FillForm from "../../layout/FillForm";
-import {TextField} from "@cmsgov/design-system-core";
-import { selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
+import { extractJsonPathExpressionFromQuestionLike, selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
+import QuestionLike from "./QuestionLike";
 
-const validEmailRegex = RegExp(
-  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
-);
-  
-const validTelephoneRegex = RegExp(
-  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-);
-
-const Part = ({ Data, fragment, subsectionId }) => {
+const Part = ({ Data, fragment, partId }) => {
   const title = fragment.title ? <h2>{fragment.title}</h2> : <span></span>;
   const text = fragment.text ? <p>{fragment.text}</p> : <span></span>;
   return Data? (
@@ -24,8 +12,17 @@ const Part = ({ Data, fragment, subsectionId }) => {
     {title}
     {text}
 
-    
-      
+    {fragment.questions.map((questionLike, index) => {
+      // Some children might be fieldsets, and most fieldsets don't have ids, so we have to build a jsonpath expression instead:
+      const jpexpr = extractJsonPathExpressionFromQuestionLike(questionLike.id, partId, index);
+      const key = `questionLike-${index}`;
+
+      return (
+        <QuestionLike key={key} fragmentkey={key} jpexpr={jpexpr}/>
+      )
+  
+      })}
+        
     </div>
 
   ) : null;
