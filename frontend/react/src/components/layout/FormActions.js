@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareSquare, faPrint } from "@fortawesome/free-solid-svg-icons";
-import { ShareLinkModal } from "./ShareLinkModal";
+import ShareLinkModal from "./ShareLinkModal";
 
 class FormActions extends Component {
   constructor(props) {

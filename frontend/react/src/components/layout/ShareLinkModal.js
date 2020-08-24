@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { createShareLink, expireShareLink } from './../../store/shareLinkActions'
 
-export const ShareLinkModal = ({ hide, share, addOnClick }) => {
-  const [button, toggleButton] = useState(false)
-  const copyUrl = `${window.location.hostname}/shared/667177b6-f008-4cf1-b728-e52b0cb94920`
+export const ShareLinkModalConnected = props => {
+  const [button, setButton] = useState(false)
+  const uuid = `667177b6-f008-4cf1-b728-e52b0cb94920` // Replace with UUID method
+  const copyUrl = `${window.location.hostname}/shared/${uuid}`
   const expires = `7`
   const shareLink = useRef(null)  // Sets its `.current` property to the corresponding DOM node whenever that node changes.
   const copyInput = _ => {
@@ -20,15 +21,18 @@ export const ShareLinkModal = ({ hide, share, addOnClick }) => {
   const generateActions = [
     <button
       onClick={_ => {
-        toggleButton(!button)
-        addOnClick(copyUrl)
+        setButton(!button)
+        props.addOnClick({ copyUrl })
       }}
       className={`ds-c-button ds-c-button--primary ${button && `ds-u-display--none`}`}
       key="primary">
       Generate a link
     </button>,
     <button
-      onClick={_ => { toggleButton(!button) }}
+      onClick={_ => {
+        setButton(!button)
+        props.removeOnClick({ copyUrl })
+      }}
       className={`ds-c-button ds-c-button--danger ${button || `ds-u-display--none`}`}
       key="primary" >
       Revoke
@@ -36,7 +40,7 @@ export const ShareLinkModal = ({ hide, share, addOnClick }) => {
     <button
       className="ds-c-button ds-c-button--transparent"
       key="cancel"
-      onClick={hide}
+      onClick={props.hide}
     >
       Cancel
     </button>
@@ -44,7 +48,7 @@ export const ShareLinkModal = ({ hide, share, addOnClick }) => {
 
   return (
     <Dialog
-      onExit={hide}
+      onExit={props.hide}
       getApplicationNode={() => document.getElementById('App')}
       heading="Share this section"
       actions={generateActions}
@@ -70,14 +74,13 @@ export const ShareLinkModal = ({ hide, share, addOnClick }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  url: state.share.url,
-  isReviewed: state.share.isReviewed,
-  isExpired: state.share.isExpired,
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    addOnClick: link => dispatch(createShareLink(link)),
+    removeOnClick: link => dispatch(expireShareLink(link))
+  }
+}
 
-const mapDispatchToProps = dispatch => ({
-  addOnClick: link => dispatch(createShareLink(link)),
-})
+const ShareLinkModal = connect(null, mapDispatchToProps)(ShareLinkModalConnected)
 
-export const SharedLink = connect(mapStateToProps, mapDispatchToProps)(ShareLinkModal)
+export default ShareLinkModal
