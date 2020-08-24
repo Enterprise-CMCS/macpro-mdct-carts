@@ -19,14 +19,12 @@ export const shareLink = (state = initialState, action) => {
       return { ...state, ...newState }
     }
     case UNDER_REVIEW: {
-      console.log('in UNDER_REVIEW')
       const reviewState = {
-        underReview: true,
+        underReview: false,
       }
       return { ...state, ...reviewState }
     }
     case EXPIRE_SHARE_LINK: {
-      console.log('in EXPIRE_SHARE_LINK')
       const expiredState = {
         underReview: false,
         isExpired: true,
