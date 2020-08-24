@@ -103,7 +103,7 @@ pipeline {
         tar -zcvf buildfinal1.tar.gz build
         aws s3 cp buildfinal1.tar.gz s3://carts-demo-cloudfront-tar-bucket/buildfinal1.tar.gz
         rm -rf build
-        rm buildfinal1
+        rm buildfinal1.tar.gz
            '''
            }
       }
