@@ -10,7 +10,7 @@ export const createShareLink = url => (
     payload: { url }
   }
 )
-export const submitReview = url => (
+export const underReview = url => (
   {
     type: UNDER_REVIEW,
     payload: { url }
