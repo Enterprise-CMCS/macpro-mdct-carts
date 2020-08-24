@@ -13,7 +13,7 @@ import Section3dapi from "./components/sections/section3dapi/Section3D";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import test from "./components/test";
-import { SharedView } from "./components/sections/SharedView";
+import { ShareView } from "./components/layout/ShareView";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
 
@@ -43,7 +43,7 @@ const Routes = () => (
           <Route exact path="/section3/3d-api" component={Section3dapi} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route exact path="/test" component={test} />
-          <Route path="/shared/:uuid" component={SharedView} />
+          <Route path="/shared/:uuid" component={ShareView} />
         </Switch>
       </div>
     </div>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import Section3C from './section3c/Section3C'
-import { SharedViewModal } from '../layout/SharedViewModal'
+import Section3C from '../sections/section3c/Section3C'
+import { ShareViewModal } from './ShareViewModal'
 import { Alert, Button } from "@cmsgov/design-system-core"
 
 /**
  * TODO:
  * @param {*} section An object containing the section to display on the temporary shared view.
  */
-export const SharedView = _ => {
+export const ShareView = _ => {
   const [modal, setModal] = useState(false)
   const toggleModal = _ => {
     setModal(!modal)
@@ -20,7 +20,7 @@ export const SharedView = _ => {
         </p>
         <Button className="ds-c-button ds-c-button--primary ds-c-button--small ds-u-margin-top--1 ds-u-margin-bottom--1" onClick={toggleModal}>I’m finished with this section</Button>
       </Alert>
-      {modal && <SharedViewModal hide={toggleModal} />}
+      {modal && <ShareViewModal hide={toggleModal} />}
       <Section3C />
     </>
   )

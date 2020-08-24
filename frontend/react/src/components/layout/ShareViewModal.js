@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dialog } from "@cmsgov/design-system-core"
 
-export const SharedViewModal = ({ hide }) => {
+export const ShareViewModal = ({ hide }) => {
   return (
     <Dialog
       onExit={hide}
