@@ -8,7 +8,7 @@ pipeline {
   parameters {
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_START', description: 'Destroy the current environment at the start of the build')
     booleanParam(defaultValue: true, name: 'DEPLOY', description: 'Deploy the application to Amazon')
-    booleanParam(defaultValue: true, name: 'RUN_TESTS', description: 'Run tests against the application')
+    booleanParam(defaultValue: false, name: 'RUN_TESTS', description: 'Run tests against the application')
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_END', description: 'Destroy the environment at the end.')
   }
   environment {
