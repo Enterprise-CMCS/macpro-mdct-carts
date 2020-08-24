@@ -1,11 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import formData from './formData';
 import stateUser from "./stateUser";
 import global from "./globalVariables";
 
 // Consolidate reducers
-export const reducer = combineReducers({ stateUser, global });
+export const reducer = combineReducers({ formData, stateUser, global });
 
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware];

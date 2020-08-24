@@ -17,6 +17,7 @@ pipeline {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
 
           jenkinsUtils.installAwsCli()
+          jenkinsUtils.installEcsCli()
           jenkinsUtils.installTerraform("0.12.24")
 
           env.DEPLOY_DATA = jenkinsUtils.pathHasChanges("data") || jenkinsUtils.pathHasChanges(".jenkins")
@@ -29,15 +30,18 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           lock('docker_socket') {
-            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.JOB_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.JOB_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.JOB_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_BASE_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.JOB_BASE_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.JOB_BASE_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.JOB_BASE_NAME])
           }
         }
       }
     }
     stage("Scan Images") {
+      when {
+        expression { env.SKIP_SCANS != "true" }
+      }
       steps {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
@@ -63,7 +67,7 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('data/aws') {
-            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
                 "vpc_name": env.VPC_NAME
@@ -88,7 +92,7 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('frontend/aws') {
-            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_NAME, "apply",
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
                 "vpc_name": env.VPC_NAME
@@ -110,14 +114,49 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('frontend/aws') {
-            env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_NAME, "application_endpoint")
+            env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "application_endpoint")
           }
           dir('tests/testcafe') {
             sh '''
               set -e
-              docker build . -t loaded_testcafe:${JOB_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
-              docker run --rm --name ${JOB_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${JOB_NAME} chromium /tests/**/*.js
+              docker build . -t loaded_testcafe:${JOB_BASE_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
+              docker run --rm --name ${JOB_BASE_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${JOB_BASE_NAME} chromium /tests/**/*.js
             '''
+          }
+        }
+      }
+    }
+    stage("Run Inspec Scans") {
+      when {
+        expression { env.SKIP_SCANS != "true" }
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          lock('docker_socket') {
+            jenkinsUtils.buildAndPushImageToEcr("saf/postgres_rds", "inspec_postgres_rds", [env.BUILD_TAG, env.JOB_BASE_NAME])
+          }
+          dir('saf/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+            jenkinsUtils.runInspecScan(
+              "postgres_rds",
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_task_definition_arn"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_cluster"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_subnets"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_security_group")
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'saf/aws/inspec_scan_result_*'
           }
         }
       }
@@ -133,8 +172,10 @@ pipeline {
             remote_url=`git config remote.origin.url | sed -e 's|^https://||'`
             git config user.name 'Jenkins'
             git config user.email 'jenkins@mycompany.com'
-            git tag $BUILD_TAG
+            git tag $BUILD_TAG -f
+            git tag master-tag -f
             git push -f https://$GIT_CREDENTIAL@$remote_url refs/tags/$BUILD_TAG
+            git push -f https://$GIT_CREDENTIAL@$remote_url refs/tags/master-tag
           '''
           if (env.DOWNSTREAM_JOB != "") {
             try {
@@ -153,14 +194,14 @@ pipeline {
     failure {
       script {
         if (env.SLACK_CREDENTIAL_NAME != null && env.SLACK_CHANNEL_NAME != null && env.SLACK_TEAM_DOMAIN_NAME != null ){
-          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'danger', message: ":X: Failure.     <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> has failed.  The build is broken."
+          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'danger', message: ":X: Failure.     <${env.BUILD_URL} |${JOB_BASE_NAME} #${env.BUILD_NUMBER}> has failed.  The build is broken."
         }
       }
     }
     fixed {
       script {
         if (env.SLACK_CREDENTIAL_NAME != null && env.SLACK_CHANNEL_NAME != null && env.SLACK_TEAM_DOMAIN_NAME != null ){
-          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'good', message: ":white_check_mark: Fixed.       <${env.BUILD_URL} |${JOB_NAME} #${env.BUILD_NUMBER}> succeeded.  The build is fixed."
+          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'good', message: ":white_check_mark: Fixed.       <${env.BUILD_URL} |${JOB_BASE_NAME} #${env.BUILD_NUMBER}> succeeded.  The build is fixed."
         }
       }
     }
