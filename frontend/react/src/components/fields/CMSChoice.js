@@ -167,7 +167,6 @@ class CMSChoice extends Component {
     return (
       <>
         <Choice
-          class="ds-c-choice"
           name={this.props.name}
           value={this.props.value}
           type={this.props.type}

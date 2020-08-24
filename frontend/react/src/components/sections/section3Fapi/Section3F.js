@@ -69,7 +69,7 @@ class Section3FApi extends Component {
                 <FormNavigation previousUrl="/section3/3c" />
               </TabPanel>
 
-              <TabPanel
+              {/* <TabPanel
                 id="tab-lastyear"
                 tab={`FY${this.props.year - 1} answers`}
               >
@@ -90,7 +90,7 @@ class Section3FApi extends Component {
                     />
                   ))}
                 </div>
-              </TabPanel>
+              </TabPanel> */}
             </Tabs>
             <FormActions />
           </div>
