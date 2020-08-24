@@ -172,7 +172,7 @@ pipeline {
        ls -la
        tar -xvzf buildfinal1.tar.gz
        ls -la
-       aws s3 sync buildfinal1 s3://carts-demo1.com
+       aws s3 sync build s3://carts-demo1.com
        
        '''
        }
