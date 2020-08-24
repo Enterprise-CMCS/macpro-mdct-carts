@@ -169,10 +169,10 @@ pipeline {
       dir('frontend/react'){
       sh '''
        aws s3 cp s3://carts-demo-cloudfront-tar-bucket/buildfinal1.tar.gz buildfinal1.tar.gz 
-       ls -la
+      
        tar -xvzf buildfinal1.tar.gz
-       ls -la
-       aws s3 sync build s3://carts-demo1.com
+       
+       aws s3 sync build s3://www.carts-demo1.com
        
        '''
        }
