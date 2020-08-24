@@ -1,4 +1,4 @@
-import { CREATE_SHARE_LINK, UNDER_REVIEW, EXPIRE_SHARE_LINK } from './shareLinkActions'
+import { CREATE_SHARE_LINK, SUBMIT_REVIEW, EXPIRE_SHARE_LINK } from './shareLinkActions'
 
 const initialState = {
   url: '',
@@ -18,7 +18,7 @@ export const shareLink = (state = initialState, action) => {
       }
       return { ...state, ...newState }
     }
-    case UNDER_REVIEW: {
+    case SUBMIT_REVIEW: {
       const reviewState = {
         underReview: false,
       }
