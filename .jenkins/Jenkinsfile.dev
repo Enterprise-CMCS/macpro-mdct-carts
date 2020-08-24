@@ -76,7 +76,7 @@ pipeline {
             sh '''
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
             npm ci && npm run build
-
+            ls -la
 
               '''
           }
@@ -100,9 +100,9 @@ pipeline {
        }
        dir('frontend/react'){
         sh '''
-    #    tar -zcvf build.tar.gz build
-    #    aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
-         aws s3 cp build  s3://www.carts-demo1.com --recursive
+        tar -zcvf build.tar.gz build
+        aws s3 cp build.tar.gz s3://cartsui-cloudfront-origin/build.tar.gz
+
            '''
            }
       }
@@ -164,7 +164,8 @@ pipeline {
         expression { env.DEPLOY == "true"}
       }
       steps {
-        script {
+
+      /*  script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('frontend/aws') {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
@@ -175,9 +176,11 @@ pipeline {
             )
           }
         }
+        */
+
         dir('frontend/react')
         sh '''
-         aws s3 sync s3://cartsui-cloudfront-origin/build.tar.gz build1.tar.gz
+         aws s3 cp s3://cartsui-cloudfront-origin/build.tar.gz build1.tar.gz
          tar -xzf build1.tar.gz
          ls -la
          '''

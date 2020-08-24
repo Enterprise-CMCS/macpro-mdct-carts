@@ -1,15 +1,6 @@
-// Create a variable for our domain name because we'll be using it a lot.
-variable "www_domain_name" {
-  default = "www.carts-demo1.com"
-
-}
-
-
-
-
 
 resource "aws_s3_bucket" "www" {
-  // Our bucket's name is going to be the same as our site's domain name.
+
   bucket = "${var.www_domain_name}"
   acl    = "private"
 }
@@ -84,7 +75,6 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   // We will use the cloudfront default cert in this code
   viewer_certificate {
-  // #acm_certificate_arn = "${aws_acm_certificate.certificate.arn}"
     cloudfront_default_certificate = true
     ssl_support_method  = "sni-only"
   }
