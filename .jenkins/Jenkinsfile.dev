@@ -163,7 +163,7 @@ pipeline {
       when {
         expression { env.DEPLOY == "true"}
       }
-    /*
+
       steps {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
@@ -176,7 +176,7 @@ pipeline {
             )
           }
         }
-        */
+
         dir('frontend/react')
         sh '''
          aws s3 cp s3://carts-demo-cloudfront-tar-bucket/build.tar.gz build1.tar.gz
