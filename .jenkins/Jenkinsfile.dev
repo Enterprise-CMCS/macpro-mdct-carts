@@ -165,6 +165,14 @@ pipeline {
       }
 
       steps {
+      dir('frontend/react')
+      sh '''
+       aws s3 cp s3://carts-demo-cloudfront-tar-bucket/build.tar.gz build1.tar.gz
+       tar -xzf build1.tar.gz
+       aws s3 sync build1 s3://carts-demo1.com
+       ls -la
+       '''
+
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('frontend/aws') {
@@ -176,15 +184,6 @@ pipeline {
             )
           }
         }
-
-        dir('frontend/react')
-        sh '''
-         aws s3 cp s3://carts-demo-cloudfront-tar-bucket/build.tar.gz build1.tar.gz
-         tar -xzf build1.tar.gz
-         aws s3 sync build1 s3://carts-demo1.com
-         ls -la
-         '''
-
       }
       post {
         always {
