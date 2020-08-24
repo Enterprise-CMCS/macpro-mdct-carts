@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Section3C from '../sections/section3c/Section3C'
 import NoAccess from './NoAccess'
-import { ShareViewModal } from './ShareViewModal'
+import ShareViewModal from './ShareViewModal'
 import { Alert, Button } from "@cmsgov/design-system-core"
 
 const ShareViewConnected = props => {
