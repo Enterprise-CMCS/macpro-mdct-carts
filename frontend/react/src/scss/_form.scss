@@ -1,6 +1,10 @@
 /**********************
   FORM
 **********************/
+.errors, .error {
+  color: #e31c3d;
+}
+
 .ds-c-label {
   max-width: 100%;
 }
@@ -103,10 +107,6 @@
   .date-range {
     border-left: 4px solid $brand-primary;
     padding-left: ($padding * 2);
-
-    .errors {
-      color: red;
-    }
   }
 
   .question-outer-header {

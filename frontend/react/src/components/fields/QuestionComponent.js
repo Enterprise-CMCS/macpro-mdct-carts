@@ -22,6 +22,7 @@ class QuestionComponent extends Component {
     super(props);
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeArray = this.handleChangeArray.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.validatePercentage = this.validatePercentage.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
@@ -111,7 +112,16 @@ class QuestionComponent extends Component {
     this.props.sectionContext([evt.target.name, evt.target.checked]);
   }
 
-  handleChange(evtArray) {
+  handleChange(evt) {
+    this.props.sectionContext([evt.target.name, evt.target.value]);
+
+    this.setState({
+      [evt.target.name]: evt.target.value ? evt.target.value : null,
+      [evt.target.name + "Mod"]: true,
+    });
+  }
+
+  handleChangeArray(evtArray) {
     this.props.sectionContext([evtArray[0], evtArray[1]]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
@@ -133,13 +143,13 @@ class QuestionComponent extends Component {
           <div className="question" key={index}>
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
-
-              <CMSLegend
-                label={question.label}
-                id={question.id}
-                type={this.props.subquestion ? "subquestion" : null}
-              />
-
+              <legend className="ds-c-label">
+                {question.id ? (
+                  (typeof (question.id.substring(question.id.length - 2)) === Number ? (
+                    parseInt(question.id.substring(question.id.length - 2))) : (
+                      question.id.substring(question.id.length - 1))
+                    + '. ' + question.label)) : null}
+              </legend>
               {question.type === "radio" || question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
                   return (
@@ -152,7 +162,7 @@ class QuestionComponent extends Component {
                       conditional={question.conditional}
                       children={question.questions}
                       valueFromParent={this.state[question.id]}
-                      onChange={this.handleChange}
+                      onChange={this.handleChangeArray}
                       key={index}
                       sectionContext={this.props.sectionContext}
                     />
@@ -163,7 +173,7 @@ class QuestionComponent extends Component {
               {/* If textarea */}
               {question.type === "text" ? (
                 <TextField
-                  className="ds-c-field"
+
                   multiple
                   name={question.id}
                   value={
@@ -380,8 +390,8 @@ class QuestionComponent extends Component {
                   label=""
                 />
               ) : null}
-
-              {question.questions && question.type !== "fieldset" ? (
+              {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
+              {question.questions && question.type !== "fieldset" && question.type !== "radio" && question.type !== "checkbox" ? (
                 <QuestionComponent
                   subquestion={true}
                   data={question.questions} //Array of subquestions to map through
@@ -422,9 +432,9 @@ class QuestionComponent extends Component {
 // "text_medium",[x]
 // "text_multiline",[x]
 // "text_small"   [x]
-// "phone_number", [x]
-// "email", [x]
-// "daterange", [x]
+// "phone_number", [x] 
+// "email", [x] [BOUND]
+// "daterange", [x] [BOUND]
 // "mailing_address", [??? is this several fields?? is this a component???, just a multiline textbox ]
 
 //TO-DO

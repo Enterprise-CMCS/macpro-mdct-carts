@@ -163,12 +163,6 @@ class DateRange extends Component {
     return (
       <Fragment>
         <div className="date-range" data-test="component-date-range">
-          <div className="errors">
-            {" "}
-            {this.state.endRangeErr === true ? (
-              <div> End date must come after start date</div>
-            ) : null}{" "}
-          </div>
           <div className="date-range-start">
             <h3 className="question-inner-header">
               {" "}
@@ -265,6 +259,11 @@ class DateRange extends Component {
                     : this.state.yearEnd
                 }
               />
+            </div>
+            <div className="errors">
+              {this.state.endRangeErr === true ? (
+                <div> End date must come after start date</div>
+              ) : null}
             </div>
           </Fragment>
         </div>
