@@ -4,54 +4,49 @@ import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectio
 import { TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
 
-const TextFieldBase = (Data, fragment, changeFunc, multiline = null, rows = null) => {
-  const label = getLabelFromFragment(fragment);
-  const onChange = _.partial(changeFunc, fragment.id);
-  return (
+const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = null}) => (
     <TextField
       name={fragment.id}
       hint={fragment.hint}
-      label={label}
+      label={getLabelFromFragment(fragment)}
       value={fragment.answer.entry}
-      onChange={onChange}
+      onChange={_.partial(changeFunc, fragment.id)}
       type="text"
       multiline={multiline}
       rows={rows}
       disabled={fragment.answer.readonly}
     />
-
-  )
-}
+);
 
 /* Question types */
-const QuestionText = (Data, fragment, setAnswer) => {
+const QuestionText = ({Data, fragment, changeFunc}) => {
   const isNotReallyTextQuestion = fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
   const key = `qt-${fragment.id}`;
-  const tf = TextFieldBase(Data, fragment, setAnswer, null, null)
   return (
 
     <div className="test" key={key}>
       {isNotReallyTextQuestion}
-      {tf}
+      <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
     </div>
   )
 };
 
-const QuestionTextSmall = (Data, fragment, setAnswer) => {
-  return TextFieldBase(Data, fragment, setAnswer, null, null);
-};
+const QuestionTextSmall = ({Data, fragment, changeFunc}) => (
+  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
+);
 
-const QuestionTextMedium = (Data, fragment, setAnswer) => {
-  return TextFieldBase(Data, fragment, true, 3);
-};
+const QuestionTextMedium = ({Data, fragment, changeFunc}) => (
+  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={3} />
+);
 
-const QuestionTextMultiline = (Data, fragment, setAnswer) => {
-  return TextFieldBase(Data, fragment, true, 6);
-}
+const QuestionTextMultiline = ({Data, fragment, changeFunc}) => (
+  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} />
+);
 
-const QuestionTextEmail = (Data, fragment, setAnswer) => {
-  return TextFieldBase(Data, fragment);
-}
+const QuestionTextEmail = ({Data, fragment, changeFunc}) => (
+  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
+);
+
 /* /Question types */
 
 // Map question types to functions:
@@ -60,12 +55,15 @@ const QuestionMap = new Map([
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
   ["text_multiline", QuestionTextMultiline],
+  ["email", QuestionTextEmail],
 ])
 
 // Connect question types to functions via their types:
-const QuestionHolder = (Data, fragment, elementId, setAnswer) => {
-  const func = QuestionMap.has(fragment.type) ? QuestionMap.get(fragment.type) : QuestionMap.get("text");
-  return func(Data, fragment, setAnswer);
+const QuestionHolder = ({Data, fragment, elementId, changeFunc}) => {
+  const Component = QuestionMap.has(fragment.type) ? QuestionMap.get(fragment.type) : QuestionMap.get("text");
+  return (
+      <Component Data={Data} fragment={fragment} changeFunc={changeFunc} elementId={elementId} />
+  )
 }
 
 /* Helper functions for Questions */
@@ -111,14 +109,14 @@ const QuestionLike = ({Data, fragment, fragmentkey, setAnswer}) => {
 
   const fragmentId = getQuestionLikeId(fragment);
   const elementId = fragmentId ? fragmentId : fragmentkey;
-  const body = QuestionHolder(Data, fragment, elementId, setAnswer);
+  //const body = QuestionHolder(Data, fragment, elementId, setAnswer);
 
   return fragment ? (
     <div id={elementId}>
     {/* Debugging */}
     I am a  question-like thing of type {type} {label} {hint}
     {/* /Debugging */}
-    {body}
+    <QuestionHolder Data={Data} fragment={fragment} elementId={elementId} changeFunc={setAnswer} />
     </div>
 
   ) : null;
