@@ -29,6 +29,7 @@ class QuestionComponent extends Component {
     this.handleCheckboxFlag = this.handleCheckboxFlag.bind(this);
     this.handleIntegerChange = this.handleIntegerChange.bind(this);
     this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
+    this.validatePhone = this.validatePhone.bind(this);
   }
 
   validatePercentage(evt) {
@@ -106,6 +107,24 @@ class QuestionComponent extends Component {
         });
       }
     }
+  }
+
+  // Limit to 10 digits or throw error
+  validatePhone(evt) {
+
+    // Remove hyphens
+    let digits = evt.target.value.replace(/-/g, "");
+
+    let errorMessage;
+    if (digits.length > 10) {
+      errorMessage = "Please limit to 10 digits"
+    } else {
+      errorMessage = null;
+    }
+
+    this.setState({
+      [evt.target.name + "Err"]: errorMessage
+    })
   }
 
   handleCheckboxFlag(evt) {
@@ -354,6 +373,9 @@ class QuestionComponent extends Component {
                   mask="phone"
                   pattern="[0-9]*"
                   value={question.answer.entry}
+                  name={question.id}
+                  onBlur={this.validatePhone}
+                  errorMessage={this.state[question.id + "Err"] ? this.state[question.id + "Err"] : null}
                 />
               ) : null}
 
@@ -430,12 +452,12 @@ class QuestionComponent extends Component {
 // "ranges",[x]
 // "text",[x] [BOUND]
 // "text_medium",[x]
-// "text_multiline",[x]
+// "text_multiline",[x] [BOUND]
 // "text_small"   [x]
-// "phone_number", [x] 
+// "phone_number", [x] [BOUND]
 // "email", [x] [BOUND]
 // "daterange", [x] [BOUND]
-// "mailing_address", [??? is this several fields?? is this a component???, just a multiline textbox ]
+// "mailing_address",[x] [BOUND] [??? is this several fields?? is this a component???, just a multiline textbox ]
 
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
