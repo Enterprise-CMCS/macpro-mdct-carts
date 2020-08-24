@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareSquare, faPrint } from "@fortawesome/free-solid-svg-icons";
+import ShareLinkModal from "./ShareLinkModal";
 
 class FormActions extends Component {
   constructor(props) {
@@ -18,8 +19,8 @@ class FormActions extends Component {
   toggleShare() {
     this.setState({
       shareShow: this.state.shareShow ? false : true,
-    })
-  };
+    });
+  }
 
   /**
    * Opens print dialogue for current view
@@ -54,6 +55,8 @@ class FormActions extends Component {
             Share
           </Button>
         </div>
+
+        {this.state["shareShow"] && <ShareLinkModal hide={this.toggleShare} />}
       </section>
     );
   }
