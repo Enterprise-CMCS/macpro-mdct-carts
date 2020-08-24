@@ -60,7 +60,7 @@ pipeline {
       }
     }
 
-/*
+
   stage('static build') {
 
         agent {
@@ -107,7 +107,7 @@ pipeline {
            }
       }
     }
-
+/*
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
