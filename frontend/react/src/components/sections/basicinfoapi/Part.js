@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { extractJsonPathExpressionFromQuestionLike, selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
+import { extractJsonPathExpressionFromQuestionLike, extractSectionOrdinalFromId, selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
 import QuestionLike from "./QuestionLike";
 
 const Part = ({ Data, fragment, partId }) => {
@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => ({
   partId: ownProps.partId,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
-  Data: selectSectionByOrdinal(state, 0),
+  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromId(ownProps.partId)),
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
 });

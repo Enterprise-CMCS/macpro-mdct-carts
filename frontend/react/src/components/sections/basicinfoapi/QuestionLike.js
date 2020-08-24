@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectFragmentByJsonPath, selectSectionByOrdinal, setAnswerEntry } from "../../../store/formData";
+import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectionByOrdinal, setAnswerEntry } from "../../../store/formData";
 import { TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
 
@@ -129,7 +129,7 @@ const mapStateToProps = (state, ownProps) => ({
   fragmentkey: ownProps.fragmentkey,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
-  Data: selectSectionByOrdinal(state, 0),
+  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromJPExpr(ownProps.jpexpr)),
   setAnswer: _.partial(setAnswerEntry, state),
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
