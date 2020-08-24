@@ -63,24 +63,9 @@ class QuestionComponent extends Component {
   }
 
   handleIntegerChange(evt) {
-    // let newNumber = NumberFormat.removeFormatting(evt.target.value);
-    // console.log("what do you look like??", newNumber);
-    // this.setState({
-    //   [evt.target.name]: NumberFormat.removeFormatting(evt.target.value),
-    // });
-    // this.props.sectionContext([
-    //   evt.target.name,
-    //   NumberFormat.removeFormatting(evt.target.value),
-    // ]);
     const validNumberRegex = RegExp("^(?:d{1,3}(?:,d{3})*|d+)(?:.d+)?$");
     if (evt.target.value.length > 0) {
       if (validNumberRegex.test(evt.target.value)) {
-        // this.props.sectionContext([evt.target.name, evt.target.value]);
-        // this.setState({
-        //   [evt.target.name]: evt.target.value ? evt.target.value : null,
-        //   [evt.target.name + "Mod"]: true,
-        //   [evt.target.name + "Err"]: !validNumberRegex.test(evt.target.value),
-        // });
       } else {
         this.setState({
           [evt.target.name + "Err"]: !validNumberRegex.test(evt.target.value),
@@ -299,21 +284,7 @@ class QuestionComponent extends Component {
               Allow commas && periods?? (ask erin/austin)
               if so:
               do we want that stripped out before saving to state? YES
-              
               */}
-              {/* {question.type === "integer" ? (
-                <NumberFormat
-                  name={question.id}
-                  className="ds-c-input"
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
-                  onValueChange={this.handleIntegerChange}
-                />
-              ) : null} */}
-
               {question.type === "integer" ? (
                 <TextField
                   name={question.id}
@@ -441,7 +412,6 @@ class QuestionComponent extends Component {
 }
 
 // anticipated question types
-// for ones that are unclear, put a textfield with 'PLACEHOLDER'
 
 // "checkbox",[x]
 // "file_upload",[x]
@@ -461,7 +431,6 @@ class QuestionComponent extends Component {
 
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
-// "objectives", [??? foggedaboutit]
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
