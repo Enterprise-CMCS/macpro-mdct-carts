@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Autosave from './Autosave'
 
 class Header extends Component {
   constructor() {
@@ -35,7 +36,7 @@ class Header extends Component {
             </div>
             <div className="user-details ds-l-col--6 ds-u-padding--2">
               <div className="ds-l-row">
-                <div className="save-status ds-l-col--6">Autosaved</div>
+                <Autosave />
                 <div className="nav-user ds-l-col--6" id="nav-user">
                   <ul className="user-email-button">
                     <li>

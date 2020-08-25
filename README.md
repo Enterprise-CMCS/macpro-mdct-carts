@@ -41,9 +41,19 @@ A PR must be reviewed and approved by someone other than the submitter. When the
    1. For Linux: run `local-additional.sh`
    2. For Windows: run `docker-compose -f docker-compose.dev.yml run api_postgres sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py generate_fixtures"`
 6. Available Endpoints:
-   1. JSON by Section: localhost:8000/structure/2020/1?format=json
-      Change the Section number to see another Section
-   2. Sample JSON for AK, AZ or MA for Sections 0, 1, or 3: localhost:8000/subsection_data/2020-03-c/AK?format=json
+    - `/api/v1/sections/<int:year>/<str:state>`: all the sections for a year and state, e.g. `/api/v1/sections/2020/ak`.
+    - `/api/v1/sections/<int:year>/<str:state>/<int:section>`: the section for that year and state, e.g. `/api/v1/sections/2020/ak/1`.
+    - `/api/v1/sections/<int:year>/<str:state>/<int:section>/<str:subsection>`: the subsection for that year and state, e.g. `/api/v1/sections/2020/az/3/c`.
+    - `/api/v1/questions/<str:state>/<slug:id>`: e.g. `/api/v1/questions/ma/2020-03-c-01-01`.
+    - `/api/v1/generic-sections/<int:year>`: all the default sections for a year e.g. `/api/v1/generic-sections/2020`.
+    - `/api/v1/generic-sections/<int:year>/<int:section>`: the default section for that year e.g. `/api/v1/generic-sections/2020/1`.
+    - `/api/v1/generic-sections/<int:year>/<int:section>/<str:subsection>`: the default subsection for that year e.g. `/api/v1/generic-sections/2020/1/a`.
+    - `/api/v1/generic-questions/<slug:id>`: the default corresponding question, e.g. `/api/v1/generic-questions/2020-01-a-01`.
+
+    Currently only Sections 1, 2, 3 (incomplete) and 5 are available, and only mock data for AK, AZ, and MA is available.
+
+    Append `?format=json` to the URLs to get bare JSON.
+
 
 ### Running the React Test Suite
 
