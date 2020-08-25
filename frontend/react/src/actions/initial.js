@@ -12,8 +12,6 @@ export const loadSections = () => {
 
 // Move this to where actions should go when we know where that is.
 export const setAnswerEntry = (fragmentId, eventChange) => {
-  console.log(fragmentId);
-  console.log(eventChange);
   return {
     type: QUESTION_ANSWERED,
     fragmentId: fragmentId,
