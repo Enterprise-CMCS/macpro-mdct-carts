@@ -420,10 +420,10 @@ class QuestionComponent extends Component {
 // "percentage",  [x] [BOUND]
 // "radio",[x]
 // "ranges",[x]
-// "text",[x] [BOUND]
-// "text_medium",[x]
+// "text",[x] [BOUND] multiline not working?
+// "text_medium",[x] [BOUND]
 // "text_multiline",[x] [BOUND]
-// "text_small"   [x]
+// "text_small"   [x] [BOUND]
 // "phone_number", [x] [BOUND]
 // "email", [x] [BOUND]
 // "daterange", [x] [BOUND]
