@@ -30,7 +30,7 @@
               {
                 "id": "2020-00-a-01-02",
                 "label": "Program type:",
-                "type": "checkbox",
+                "type": "radio",
                 "answer": {
                   "prepopulated": true,
                   "readonly": true,
