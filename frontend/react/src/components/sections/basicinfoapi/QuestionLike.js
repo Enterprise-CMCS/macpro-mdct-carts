@@ -13,7 +13,7 @@ const validTelephoneRegex = RegExp(
   /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 );
 
-const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = null, ...fieldProps}) => {
+const TextFieldBase = ({fragment, changeFunc, multiline = null, rows = null, ...fieldProps}) => {
     return (
     <TextField
       name={fragment.id}
@@ -30,57 +30,57 @@ const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = nul
 );
 }
 /* Question types */
-const QuestionText = ({Data, fragment, changeFunc}) => {
+const QuestionText = ({fragment, changeFunc}) => {
   const isNotReallyTextQuestion = fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
   const key = `qt-${fragment.id}`;
   return (
 
     <div className="test" key={key}>
       {isNotReallyTextQuestion}
-      <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
+      <TextFieldBase fragment={fragment} changeFunc={changeFunc} />
     </div>
   )
 };
 
-const QuestionTextSmall = ({Data, fragment, changeFunc}) => (
-  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
+const QuestionTextSmall = ({fragment, changeFunc}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} />
 );
 
-const QuestionTextMedium = ({Data, fragment, changeFunc}) => (
-  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={3} />
+const QuestionTextMedium = ({fragment, changeFunc}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={3} />
 );
 
-const QuestionTextMultiline = ({Data, fragment, changeFunc}) => (
-  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} />
+const QuestionTextMultiline = ({fragment, changeFunc}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} />
 );
 
-const QuestionTextMailingAddress = ({Data, fragment, changeFunc}) => (
-  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={4} />
+const QuestionTextMailingAddress = ({fragment, changeFunc}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={4} />
 );
 
-const QuestionTextEmail = ({Data, fragment, changeFunc}) => {
+const QuestionTextEmail = ({fragment, changeFunc}) => {
   const valid = validEmailRegex.test(fragment.answer.entry);
   const errorMessage = valid ? null : "YOUR EMAIL ADDRESS IS AN OFFENSE AGAINST THE INTERNET";
   return (
-    <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
+    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
   );
 }
 
-const QuestionTextPhone = ({Data, fragment, changeFunc}) => {
+const QuestionTextPhone = ({fragment, changeFunc}) => {
   const valid = validTelephoneRegex.test(fragment.answer.entry);
   const errorMessage = valid ? null : "WE'RE CALLING YOU RIGHT NOW BUT YOU'RE NOT ANSWERING";
   return (
-    <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
+    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
 );
 }
 
-const QuestionRadio = ({Data, fragment, changeFunc}) => {
+const QuestionRadio = ({fragment, changeFunc}) => {
   return (
-      <QuestionCheckbox Data={Data} fragment={fragment} changeFunc={changeFunc} />
+      <QuestionCheckbox fragment={fragment} changeFunc={changeFunc} />
   )
 }
 
-const QuestionCheckbox = ({Data, fragment, changeFunc}) => {
+const QuestionCheckbox = ({fragment, changeFunc}) => {
   return (
     <>
     <legend className="ds-c-label">
@@ -124,10 +124,10 @@ const QuestionMap = new Map([
 ])
 
 // Connect question types to functions via their types:
-const QuestionHolder = ({Data, fragment, elementId, changeFunc}) => {
+const QuestionHolder = ({fragment, elementId, changeFunc}) => {
   const Component = QuestionMap.has(fragment.type) ? QuestionMap.get(fragment.type) : QuestionMap.get("text");
   return (
-      <Component Data={Data} fragment={fragment} changeFunc={changeFunc} elementId={elementId} />
+      <Component fragment={fragment} changeFunc={changeFunc} elementId={elementId} />
   )
 }
 
@@ -166,7 +166,7 @@ const getLabelFromFragment = (fragment) => {
 /* /Helper functions for Questions */
 
 // The generic function for questions and question-like constructs:
-const QuestionLike = ({Data, fragment, fragmentkey, setAnswer}) => {
+const QuestionLike = ({fragment, fragmentkey, setAnswer}) => {
   /* Debugging */
   const label = fragment.label ? <span>{fragment.label}</span> : <span></span>;
   const type = fragment.type ? <strong>{fragment.type}</strong> : <span></span>;
@@ -182,7 +182,7 @@ const QuestionLike = ({Data, fragment, fragmentkey, setAnswer}) => {
     {/* Debugging 
     I am apparently a question-like thing of type {type} {label} {hint}
      /Debugging */}
-    <QuestionHolder Data={Data} fragment={fragment} elementId={elementId} changeFunc={setAnswer} />
+    <QuestionHolder fragment={fragment} elementId={elementId} changeFunc={setAnswer} />
     </div>
 
   ) : null;
@@ -193,7 +193,6 @@ const mapStateToProps = (state, ownProps) => ({
   fragmentkey: ownProps.fragmentkey,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
-  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromJPExpr(ownProps.jpexpr)) && true,
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
 });
