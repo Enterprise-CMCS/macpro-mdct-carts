@@ -20,7 +20,7 @@
               {
                 "id": "2020-00-a-01-01",
                 "label": "State or territory name:",
-                "type": "text_small",
+                "type": "text",
                 "answer": {
                   "prepopulated": true,
                   "readonly": true,
@@ -63,7 +63,7 @@
               {
                 "id": "2020-00-a-02-01",
                 "label": "Contact name:",
-                "type": "text_small",
+                "type": "text",
                 "answer": {
                   "entry": null
                 }
@@ -71,7 +71,7 @@
               {
                 "id": "2020-00-a-02-02",
                 "label": "Job title:",
-                "type": "text_small",
+                "type": "text",
                 "answer": {
                   "entry": null
                 }
@@ -87,6 +87,7 @@
               {
                 "id": "2020-00-a-02-04",
                 "label": "Full mailing address:",
+                "hint": "Include city, state, and zip code.",
                 "type": "mailing_address",
                 "answer": {
                   "entry": null
@@ -99,6 +100,11 @@
                 "answer": {
                   "entry": null
                 }
+              },
+              {
+                "type": "fieldset",
+                "questions": [],
+                "label": "If any of the above information is incorrect, contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>."
               }
             ]
           }

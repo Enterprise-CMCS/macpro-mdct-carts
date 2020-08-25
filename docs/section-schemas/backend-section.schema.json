@@ -358,6 +358,7 @@
           "type": {
             "enum": [
               "checkbox",
+              "checkbox_flag",
               "daterange",
               "email",
               "file_upload",
@@ -369,6 +370,7 @@
               "phone_number",
               "radio",
               "ranges",
+              "text",
               "text_medium",
               "text_multiline",
               "text_small"
@@ -405,6 +407,9 @@
         "type": {
           "const": "fieldset"
         },
+        "comment": {
+          "type": "string"
+        },
         "label": {
           "type": "string"
         },
@@ -413,10 +418,13 @@
         },
         "fieldset_type": {
           "enum": [
-            "percentage",
+            "datagrid",
+            "marked",
+            "noninteractive_table",
             "sum",
             "synthesized_table",
-            "noninteractive_table"
+            "synthesized_value",
+            "unmarked_descendants"
           ]
         },
         "fieldset_info": {
@@ -481,6 +489,9 @@
                       },
                       {
                         "type": "string"
+                      },
+                      {
+                        "type": "boolean"
                       }
                     ]
                   }
@@ -497,6 +508,9 @@
                       },
                       {
                         "type": "string"
+                      },
+                      {
+                        "type": "boolean"
                       }
                     ]
                   }
