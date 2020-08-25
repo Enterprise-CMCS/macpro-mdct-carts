@@ -9,6 +9,7 @@ import {
   TabPanel
 } from "@cmsgov/design-system-core";
 import QuestionsBasicInfo from "./questions/QuestionsBasicInfo";
+import Subsection from "./Subsection";
 
 const BasicInfo = ({Data}) =>
   Data ? (
@@ -16,22 +17,9 @@ const BasicInfo = ({Data}) =>
       <div className="main">
         <PageInfo />
         <div className="section-content">
-          <Tabs>
-            <TabPanel id="tab-form" tab={Data.section.title}>
-              <QuestionsBasicInfo previousYear="false"/>
-              <FormNavigation nextUrl="/section1" />
-            </TabPanel>
-
-            <TabPanel
-              id="tab-lastyear"
-              tab={`FY${Data.section.year - 1} answers`}
-            >
-              <div disabled>
-                <QuestionsBasicInfo previousYear="true"/>
-              </div>
-            </TabPanel>
-          </Tabs>
-          <FormActions />
+         {Data.section.subsections.map((subsection) => (
+             <Subsection key={subsection.id} subsectionId={subsection.id}/>
+         ))}
         </div>
       </div>
     </div>
