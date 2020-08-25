@@ -8,7 +8,6 @@ const Part = ({ fragment, partId }) => {
   const text = fragment.text ? <p>{fragment.text}</p> : <span></span>;
   return fragment? (
     <div id={fragment.id}>
-    I am a part
     {title}
     {text}
 

@@ -7,7 +7,6 @@ const Subsection = ({ Data, fragment, subsectionId }) => {
   const title = fragment.title ? <h2>{fragment.title}</h2> : <span></span>;
   return Data? (
     <div id={fragment.id}>
-    I am a subsection
     {title}
     {fragment.parts.map((part) => (
       <Part key={part.id} partId={part.id}/>

@@ -2,11 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectionByOrdinal } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
-import { TextField } from "@cmsgov/design-system-core";
+import { Choice, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
-import CMSChoice from "../../fields/CMSChoice";
 
-const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = null}) => {
+const validEmailRegex = RegExp(
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
+  
+const validTelephoneRegex = RegExp(
+  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
+
+const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = null, ...fieldProps}) => {
     return (
     <TextField
       name={fragment.id}
@@ -18,6 +25,7 @@ const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = nul
       multiline={multiline}
       rows={rows}
       disabled={fragment.answer.readonly}
+      {...fieldProps}
     />
 );
 }
@@ -46,46 +54,57 @@ const QuestionTextMultiline = ({Data, fragment, changeFunc}) => (
   <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} />
 );
 
+const QuestionTextMailingAddress = ({Data, fragment, changeFunc}) => (
+  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={4} />
+);
+
 const QuestionTextEmail = ({Data, fragment, changeFunc}) => {
+  const valid = validEmailRegex.test(fragment.answer.entry);
+  const errorMessage = valid ? null : "YOUR EMAIL ADDRESS IS AN OFFENSE AGAINST THE INTERNET";
   return (
-    <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
+    <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
+  );
+}
+
+const QuestionTextPhone = ({Data, fragment, changeFunc}) => {
+  const valid = validTelephoneRegex.test(fragment.answer.entry);
+  const errorMessage = valid ? null : "WE'RE CALLING YOU RIGHT NOW BUT YOU'RE NOT ANSWERING";
+  return (
+    <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
 );
 }
 
 const QuestionRadio = ({Data, fragment, changeFunc}) => {
-  Object.entries(fragment.answer.options).map( (key, index) => {
-    return (
-      <CMSChoice
-        name={fragment.id}
-        value={key[1]}
-        label={key[0]}
-        type={fragment.type}
-        answer={fragment.answer.entry}
-        conditional={fragment.conditional}
-        children={fragment.fragments}
-        valueFromParent={fragment.answer.entry}
-        onChange={changeFunc}
-      />
-    )
-  })
+  return (
+      <QuestionCheckbox Data={Data} fragment={fragment} changeFunc={changeFunc} />
+  )
 }
 
 const QuestionCheckbox = ({Data, fragment, changeFunc}) => {
-  Object.entries(fragment.answer.options).map( (key, index) => {
-    return (
-      <CMSChoice
-        name={fragment.id}
-        value={key[1]}
-        label={key[0]}
-        type={fragment.type}
-        answer={fragment.answer.entry}
-        conditional={fragment.conditional}
-        children={fragment.fragments}
-        valueFromParent={fragment.answer.entry}
-        onChange={changeFunc}
-      />
-    )
-  })
+  return (
+    <>
+    <legend className="ds-c-label">
+      {getLabelFromFragment(fragment)}    
+    </legend>
+      {Object.entries(fragment.answer.options).map( (key, index) => {
+        return (
+          <Choice
+            className="fpl-input"
+            name={fragment.id}
+            value={key[1]}
+            hint={fragment.hint}
+            type={fragment.type}
+            checked={fragment.answer.entry === key[1] ? "checked": null}
+            conditional={fragment.conditional}
+            onChange={_.partial(changeFunc, fragment.id)}
+            disabled={fragment.answer.readonly}
+          >
+            {key[0]}
+          </Choice>
+        )
+      })}
+    </>
+  )
 }
 
 
@@ -93,9 +112,11 @@ const QuestionCheckbox = ({Data, fragment, changeFunc}) => {
 
 // Map question types to functions:
 const QuestionMap = new Map([
-  ["xcheckbox", QuestionCheckbox],
+  ["checkbox", QuestionCheckbox],
   ["email", QuestionTextEmail],
-  ["xradio", QuestionRadio],
+  ["mailing_address", QuestionTextMailingAddress],
+  ["phone_number", QuestionTextPhone],
+  ["radio", QuestionRadio],
   ["text", QuestionText],
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
@@ -155,13 +176,12 @@ const QuestionLike = ({Data, fragment, fragmentkey, setAnswer}) => {
 
   const fragmentId = getQuestionLikeId(fragment);
   const elementId = fragmentId ? fragmentId : fragmentkey;
-  //const body = QuestionHolder(Data, fragment, elementId, setAnswer);
 
   return fragment ? (
     <div id={elementId} xonClick={yo}>
-    {/* Debugging */}
+    {/* Debugging 
     I am apparently a question-like thing of type {type} {label} {hint}
-    {/* /Debugging */}
+     /Debugging */}
     <QuestionHolder Data={Data} fragment={fragment} elementId={elementId} changeFunc={setAnswer} />
     </div>
 
