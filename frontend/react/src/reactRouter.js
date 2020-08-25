@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
+import { constructIdFromYearSectionAndSubsection } from "./store/formData";
 import Homepage from "./components/sections/homepage/Homepage";
 import BasicInfo from "./components/sections/basicInfo/BasicInfo";
 import BasicInfoApi from "./components/sections/basicinfoapi/BasicInfo";
@@ -12,6 +13,7 @@ import Section3c from "./components/sections/section3c/Section3C";
 import Section3dapi from "./components/sections/section3dapi/Section3D";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
+import Section from "./components/sections/Section";
 import test from "./components/test";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
@@ -41,11 +43,21 @@ const Routes = () => (
           <Route exact path="/section3/3d" component={Section3dapi} />
           <Route exact path="/section3/3d-api" component={Section3dapi} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
+          <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker" children={<InvokeSection />} />
           <Route exact path="/test" component={test} />
         </Switch>
       </div>
     </div>
   </Router>
 );
+
+const InvokeSection = () => {
+  let {year, sectionOrdinal, subsectionMarker} = useParams();
+  const fragmentId = constructIdFromYearSectionAndSubsection(Number(year), Number(sectionOrdinal), subsectionMarker.toLowerCase());
+  return (
+    <Section fragmentId={fragmentId} />
+  )
+
+}
 
 export default Routes;
