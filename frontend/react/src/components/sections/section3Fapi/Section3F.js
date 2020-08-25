@@ -1,55 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Button as button,
-  ChoiceList,
-  Tabs,
-  TabPanel,
-  TextField,
-} from "@cmsgov/design-system-core";
-
+import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import PageInfo from "../../layout/PageInfo";
-import Data from "./backend-json-section-3.json";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormNavigation";
-import Questions3FApi from "./questions/Questions3FApi";
-
 import QuestionComponent from "../../fields/QuestionComponent";
-
-import { selectSectionByOrdinal } from "../../../store/formData";
-
-//JSON data starts on line 1071,
-// it is an element in the subsections array
-// const sectionData = Data.section.subsections[5];
+import {
+  selectSectionByOrdinal,
+  generateSubsectionLabel,
+} from "../../../store/formData";
 
 class Section3FApi extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      temporaryComponentID: "Section 3F",
-      parentHasBeenChanged: 0,
-    };
+    this.state = {};
     this.bindToParentContext = this.bindToParentContext.bind(this);
   }
 
+  // Parent context function expects an array
+  // evtArr[0] is the question ID
+  // evtArr[1] is the payload, the question entry
   bindToParentContext(evtArr) {
-    // Parent context function expects an array
-    // evtArr[0] is the question ID
-    // evtArr[1] is the payload, the question entry
-
     this.setState({
-      parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
       lastChangedBy: evtArr[0],
       [evtArr[0]]: evtArr[1],
     });
   }
   render() {
-    // TODO: FIND ID GRABBER FUNCTION
-
-    // let sectionID = sectionIDGrabber(this.props.section3FData.id);
-    // console.log("Data from redux??", this.props.section3FData.parts[0].text);
     const subsectionData = this.props.Data
-      ? this.props.Data.section.subsections[2] // 3F
+      ? this.props.Data.section.subsections[5] // 3F JSON Data
+      : null;
+
+    const sectionTitle = this.props.Data
+      ? generateSubsectionLabel(subsectionData.id) // Section 3F title
       : null;
 
     return subsectionData ? (
@@ -63,11 +46,15 @@ class Section3FApi extends Component {
             <Tabs>
               <TabPanel id="tab-form" tab={subsectionData.title}>
                 <h3 className="part-title">
-                  {subsectionData.id}: {subsectionData.title}
+                  {sectionTitle}: {subsectionData.title}
                 </h3>
+                {/**
+                 * Map through the parts array of the subsection
+                 * data: Provide the part.questions array for the question component to map through
+                 * sectionContext: Provide a method from the parent component to bind all answers to the parent context
+                 */}
                 {subsectionData.parts.map((part, index) => (
                   <QuestionComponent
-                    previousEntry="false"
                     data={part.questions}
                     sectionContext={this.bindToParentContext}
                     key={index}
@@ -112,17 +99,6 @@ const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   year: state.global.formYear,
   programType: state.stateUser.programType,
-  // section3FData: state.section3.questionData.section3FData,
 });
 
 export default connect(mapStateToProps)(Section3FApi);
-
-// Temporary throwaway function, replaced by CMSHeader
-function sectionIDGrabber(str) {
-  let idArray = str.split("-");
-  let sectionNumber = Number(idArray[1]);
-  return `Section ${sectionNumber}${idArray[2].toUpperCase()}`;
-}
-
-// Map through the parts in the parent section.
-// Give the questions component just an array of questions
