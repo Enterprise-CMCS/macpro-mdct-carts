@@ -171,14 +171,13 @@ const QuestionLike = ({fragment, fragmentkey, setAnswer}) => {
   const label = fragment.label ? <span>{fragment.label}</span> : <span></span>;
   const type = fragment.type ? <strong>{fragment.type}</strong> : <span></span>;
   const hint = fragment.hint ? <em>{fragment.hint}</em> : <span></span>;
-  const yo = type === "email" ? console.log : _.partial(setAnswer, "2020-00-a-02-04", {target: {value: "I am so lost"}})
   /* /Debugging */
 
   const fragmentId = getQuestionLikeId(fragment);
   const elementId = fragmentId ? fragmentId : fragmentkey;
 
   return fragment ? (
-    <div id={elementId} xonClick={yo}>
+    <div id={elementId}>
     {/* Debugging 
     I am apparently a question-like thing of type {type} {label} {hint}
      /Debugging */}
