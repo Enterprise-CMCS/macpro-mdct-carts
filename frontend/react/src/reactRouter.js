@@ -19,7 +19,9 @@ import Section3AApi from "./components/sections/section3Aapi/Section3A";
 
 let VisibleSidebar =
   window.location.pathname === "/" ||
-    window.location.pathname.split("/")[1] === ("reports" && "shared") ? null : (
+    window.location.pathname.split("/")[1] === ("reports") ||
+    window.location.pathname.split("/")[1] === ("shared")
+    ? null : (
       <Sidebar />
     );
 
