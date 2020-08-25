@@ -27,6 +27,8 @@ class Section3FApi extends Component {
     });
   }
   render() {
+    // this.props.Data includes all of section 3
+    // This variable narrows it down to a subsection
     const subsectionData = this.props.Data
       ? this.props.Data.section.subsections[5] // 3F JSON Data
       : null;

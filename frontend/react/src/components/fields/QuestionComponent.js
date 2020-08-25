@@ -280,12 +280,6 @@ class QuestionComponent extends Component {
               ) : null}
 
               {/* If integer*/}
-
-              {/* 
-              Allow commas && periods?? (ask erin/austin)
-              if so:
-              do we want that stripped out before saving to state? YES
-              */}
               {question.type === "integer" ? (
                 <TextField
                   name={question.id}
