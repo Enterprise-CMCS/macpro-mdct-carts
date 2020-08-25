@@ -16,6 +16,8 @@ import Questions3FApi from "./questions/Questions3FApi";
 
 import QuestionComponent from "../../fields/QuestionComponent";
 
+import { selectSectionByOrdinal } from "../../../store/formData";
+
 //JSON data starts on line 1071,
 // it is an element in the subsections array
 // const sectionData = Data.section.subsections[5];
@@ -42,23 +44,28 @@ class Section3FApi extends Component {
     });
   }
   render() {
-    let sectionID = sectionIDGrabber(this.props.section3FData.id);
-    // console.log("Data from redux??", this.props.section3FData.parts[0].text);
+    // TODO: FIND ID GRABBER FUNCTION
 
-    return (
+    // let sectionID = sectionIDGrabber(this.props.section3FData.id);
+    // console.log("Data from redux??", this.props.section3FData.parts[0].text);
+    const subsectionData = this.props.Data
+      ? this.props.Data.section.subsections[2] // 3F
+      : null;
+
+    return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="print-only">
-            <h3>{this.props.section3FData.title}</h3>
+            <h3>{subsectionData.title}</h3>
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={this.props.section3FData.title}>
+              <TabPanel id="tab-form" tab={subsectionData.title}>
                 <h3 className="part-title">
-                  {sectionID}: {this.props.section3FData.title}
+                  {subsectionData.id}: {subsectionData.title}
                 </h3>
-                {this.props.section3FData.parts.map((part, index) => (
+                {subsectionData.parts.map((part, index) => (
                   <QuestionComponent
                     previousEntry="false"
                     data={part.questions}
@@ -96,15 +103,16 @@ class Section3FApi extends Component {
           </div>
         </div>
       </div>
-    );
+    ) : null;
   }
 }
 
 const mapStateToProps = (state) => ({
+  Data: selectSectionByOrdinal(state, 3),
   name: state.stateUser.name,
   year: state.global.formYear,
   programType: state.stateUser.programType,
-  section3FData: state.section3.questionData.section3FData,
+  // section3FData: state.section3.questionData.section3FData,
 });
 
 export default connect(mapStateToProps)(Section3FApi);

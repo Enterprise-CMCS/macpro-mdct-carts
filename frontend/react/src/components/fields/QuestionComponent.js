@@ -34,18 +34,18 @@ class QuestionComponent extends Component {
 
   validatePercentage(evt) {
     // Regex to allow only numbers and decimals
-    const regex = new RegExp("^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{0,30})?$");
+    const regex = new RegExp(
+      "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:.[0-9]{0,30})?$"
+    );
     let error;
     // If content has been entered
     if (evt.target.value.length > 0) {
-
       // Test returns boolean
       if (!regex.test(evt.target.value)) {
         error = "Please enter only numbers and decimals";
       } else {
         error = null;
       }
-
     }
 
     // Write to local state
@@ -96,20 +96,19 @@ class QuestionComponent extends Component {
 
   // Limit to 10 digits or throw error
   validatePhone(evt) {
-
     // Remove hyphens
     let digits = evt.target.value.replace(/-/g, "");
 
     let errorMessage;
     if (digits.length > 10) {
-      errorMessage = "Please limit to 10 digits"
+      errorMessage = "Please limit to 10 digits";
     } else {
       errorMessage = null;
     }
 
     this.setState({
-      [evt.target.name + "Err"]: errorMessage
-    })
+      [evt.target.name + "Err"]: errorMessage,
+    });
   }
 
   handleCheckboxFlag(evt) {
@@ -148,36 +147,38 @@ class QuestionComponent extends Component {
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
               <legend className="ds-c-label">
-                {question.id ? (
-                  (typeof (question.id.substring(question.id.length - 2)) === Number ? (
-                    parseInt(question.id.substring(question.id.length - 2))) : (
-                      question.id.substring(question.id.length - 1))
-                    + '. ' + question.label)) : null}
+                {question.id
+                  ? typeof question.id.substring(question.id.length - 2) ===
+                    Number
+                    ? parseInt(question.id.substring(question.id.length - 2))
+                    : question.id.substring(question.id.length - 1) +
+                      ". " +
+                      question.label
+                  : null}
               </legend>
               {question.type === "radio" || question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
-                  return (
-                    <CMSChoice
-                      name={question.id}
-                      value={key[1]}
-                      label={key[0]}
-                      type={question.type}
-                      answer={question.answer.entry}
-                      conditional={question.conditional}
-                      children={question.questions}
-                      valueFromParent={this.state[question.id]}
-                      onChange={this.handleChangeArray}
-                      key={index}
-                      sectionContext={this.props.sectionContext}
-                    />
-                  );
-                })
+                    return (
+                      <CMSChoice
+                        name={question.id}
+                        value={key[1]}
+                        label={key[0]}
+                        type={question.type}
+                        answer={question.answer.entry}
+                        conditional={question.conditional}
+                        children={question.questions}
+                        valueFromParent={this.state[question.id]}
+                        onChange={this.handleChangeArray}
+                        key={index}
+                        sectionContext={this.props.sectionContext}
+                      />
+                    );
+                  })
                 : null}
 
               {/* If textarea */}
               {question.type === "text" ? (
                 <TextField
-
                   multiple
                   name={question.id}
                   value={
@@ -251,24 +252,24 @@ class QuestionComponent extends Component {
 
               {/* If large textarea */}
               {question.type === "text_multiline" ||
-                question.type === "mailing_address" ? (
-                  <div>
-                    <TextField
-                      label=""
-                      className="ds-c-input"
-                      multiline
-                      value={
-                        this.state[question.id] || this.state[question.id + "Mod"]
-                          ? this.state[question.id]
-                          : question.answer.entry
-                      }
-                      type="text"
-                      name={question.id}
-                      rows="6"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                ) : null}
+              question.type === "mailing_address" ? (
+                <div>
+                  <TextField
+                    label=""
+                    className="ds-c-input"
+                    multiline
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    type="text"
+                    name={question.id}
+                    rows="6"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              ) : null}
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
@@ -346,7 +347,11 @@ class QuestionComponent extends Component {
                   value={question.answer.entry}
                   name={question.id}
                   onBlur={this.validatePhone}
-                  errorMessage={this.state[question.id + "Err"] ? this.state[question.id + "Err"] : null}
+                  errorMessage={
+                    this.state[question.id + "Err"]
+                      ? this.state[question.id + "Err"]
+                      : null
+                  }
                 />
               ) : null}
 
@@ -358,9 +363,17 @@ class QuestionComponent extends Component {
                     pattern="[0-9]*"
                     numeric={true}
                     name={question.id}
-                    value={this.state[question.id] ? this.state[question.id] : question.answer.entry}
-                    errorMessage={this.state[question.id + "Err"] ? this.state[question.id + "Err"] : null}
-                    onChange={this.handleChange, this.validatePercentage}
+                    value={
+                      this.state[question.id]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    errorMessage={
+                      this.state[question.id + "Err"]
+                        ? this.state[question.id + "Err"]
+                        : null
+                    }
+                    onChange={(this.handleChange, this.validatePercentage)}
                     label=""
                   />
                   <>%</>
@@ -374,7 +387,7 @@ class QuestionComponent extends Component {
                     {
                       label: "Select",
                       defaultChecked: question.answer.entry,
-                      value: ""
+                      value: "",
                     },
                   ]}
                   type="checkbox"
@@ -384,7 +397,10 @@ class QuestionComponent extends Component {
                 />
               ) : null}
               {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
-              {question.questions && question.type !== "fieldset" && question.type !== "radio" && question.type !== "checkbox" ? (
+              {question.questions &&
+              question.type !== "fieldset" &&
+              question.type !== "radio" &&
+              question.type !== "checkbox" ? (
                 <QuestionComponent
                   subquestion={true}
                   data={question.questions} //Array of subquestions to map through
@@ -436,7 +452,7 @@ const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   year: state.global.formYear,
   programType: state.stateUser.programType,
-  section3FData: state.section3.questionData.section3FData,
+  // section3FData: state.section3.questionData.section3FData,
 });
 
 export default connect(mapStateToProps)(QuestionComponent);
