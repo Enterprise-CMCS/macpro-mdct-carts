@@ -1,10 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectionByOrdinal, setAnswerEntry } from "../../../store/formData";
+import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectionByOrdinal } from "../../../store/formData";
+import { setAnswerEntry } from "../../../actions/initial.js";
 import { TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
+import CMSChoice from "../../fields/CMSChoice";
 
-const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = null}) => (
+const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = null}) => {
+    return (
     <TextField
       name={fragment.id}
       hint={fragment.hint}
@@ -17,7 +20,7 @@ const TextFieldBase = ({Data, fragment, changeFunc, multiline = null, rows = nul
       disabled={fragment.answer.readonly}
     />
 );
-
+}
 /* Question types */
 const QuestionText = ({Data, fragment, changeFunc}) => {
   const isNotReallyTextQuestion = fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
@@ -43,19 +46,60 @@ const QuestionTextMultiline = ({Data, fragment, changeFunc}) => (
   <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} />
 );
 
-const QuestionTextEmail = ({Data, fragment, changeFunc}) => (
-  <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
+const QuestionTextEmail = ({Data, fragment, changeFunc}) => {
+  return (
+    <TextFieldBase Data={Data} fragment={fragment} changeFunc={changeFunc} />
 );
+}
+
+const QuestionRadio = ({Data, fragment, changeFunc}) => {
+  Object.entries(fragment.answer.options).map( (key, index) => {
+    return (
+      <CMSChoice
+        name={fragment.id}
+        value={key[1]}
+        label={key[0]}
+        type={fragment.type}
+        answer={fragment.answer.entry}
+        conditional={fragment.conditional}
+        children={fragment.fragments}
+        valueFromParent={fragment.answer.entry}
+        onChange={changeFunc}
+      />
+    )
+  })
+}
+
+const QuestionCheckbox = ({Data, fragment, changeFunc}) => {
+  Object.entries(fragment.answer.options).map( (key, index) => {
+    return (
+      <CMSChoice
+        name={fragment.id}
+        value={key[1]}
+        label={key[0]}
+        type={fragment.type}
+        answer={fragment.answer.entry}
+        conditional={fragment.conditional}
+        children={fragment.fragments}
+        valueFromParent={fragment.answer.entry}
+        onChange={changeFunc}
+      />
+    )
+  })
+}
+
 
 /* /Question types */
 
 // Map question types to functions:
 const QuestionMap = new Map([
+  ["xcheckbox", QuestionCheckbox],
+  ["email", QuestionTextEmail],
+  ["xradio", QuestionRadio],
   ["text", QuestionText],
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
   ["text_multiline", QuestionTextMultiline],
-  ["email", QuestionTextEmail],
 ])
 
 // Connect question types to functions via their types:
@@ -97,6 +141,7 @@ const getLabelFromFragment = (fragment) => {
   }
   return null;
 }
+
 /* /Helper functions for Questions */
 
 // The generic function for questions and question-like constructs:
@@ -105,6 +150,7 @@ const QuestionLike = ({Data, fragment, fragmentkey, setAnswer}) => {
   const label = fragment.label ? <span>{fragment.label}</span> : <span></span>;
   const type = fragment.type ? <strong>{fragment.type}</strong> : <span></span>;
   const hint = fragment.hint ? <em>{fragment.hint}</em> : <span></span>;
+  const yo = type === "email" ? console.log : _.partial(setAnswer, "2020-00-a-02-04", {target: {value: "I am so lost"}})
   /* /Debugging */
 
   const fragmentId = getQuestionLikeId(fragment);
@@ -112,9 +158,9 @@ const QuestionLike = ({Data, fragment, fragmentkey, setAnswer}) => {
   //const body = QuestionHolder(Data, fragment, elementId, setAnswer);
 
   return fragment ? (
-    <div id={elementId}>
+    <div id={elementId} xonClick={yo}>
     {/* Debugging */}
-    I am a  question-like thing of type {type} {label} {hint}
+    I am apparently a question-like thing of type {type} {label} {hint}
     {/* /Debugging */}
     <QuestionHolder Data={Data} fragment={fragment} elementId={elementId} changeFunc={setAnswer} />
     </div>
@@ -127,10 +173,12 @@ const mapStateToProps = (state, ownProps) => ({
   fragmentkey: ownProps.fragmentkey,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
-  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromJPExpr(ownProps.jpexpr)),
-  setAnswer: _.partial(setAnswerEntry, state),
+  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromJPExpr(ownProps.jpexpr)) && true,
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
 });
 
-export default connect(mapStateToProps)(QuestionLike);
+const mapDispatchToProps = {
+    setAnswer: setAnswerEntry
+}
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionLike);

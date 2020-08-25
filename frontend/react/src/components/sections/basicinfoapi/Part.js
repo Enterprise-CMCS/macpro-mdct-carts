@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { extractJsonPathExpressionFromQuestionLike, extractSectionOrdinalFromId, selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
 import QuestionLike from "./QuestionLike";
 
-const Part = ({ Data, fragment, partId }) => {
+const Part = ({ fragment, partId }) => {
   const title = fragment.title ? <h2>{fragment.title}</h2> : <span></span>;
   const text = fragment.text ? <p>{fragment.text}</p> : <span></span>;
-  return Data? (
+  return fragment? (
     <div id={fragment.id}>
     I am a part
     {title}
@@ -34,7 +34,6 @@ const mapStateToProps = (state, ownProps) => ({
   partId: ownProps.partId,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
-  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromId(ownProps.partId)),
   programType: state.stateUser.programType,
   programName: state.stateUser.programName,
 });

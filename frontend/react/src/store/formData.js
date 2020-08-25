@@ -1,22 +1,20 @@
-import { LOAD_SECTIONS } from "../actions/initial";
+import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
 
 const initialState = [ ];
 
-export default (data = initialState, action) => {
+export default (sdata = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       return action.data;
+    case QUESTION_ANSWERED:
+      const fragment = selectFragmentById({formData: sdata}, action.fragmentId);
+      fragment.answer.entry = action.data;
+      return JSON.parse(JSON.stringify(sdata));
     default:
-      return data;
+      return sdata;
   }
 };
-
-export const setAnswerEntry = (state, questionId, eventChange) => {
-    console.dir(state);
-    console.log(questionId);
-    console.log(eventChange.target.value);
-}
 
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
