@@ -315,6 +315,7 @@ class QuestionComponent extends Component {
                   <TextField
                     className="money"
                     label=""
+<<<<<<< HEAD
                     numeric
                     inputMode="currency"
                     mask="currency"
@@ -325,6 +326,12 @@ class QuestionComponent extends Component {
                         : question.answer.entry
                     }
                     onChange={this.handleChange}
+=======
+                    inputMode="currency"
+                    mask="currency"
+                    pattern="[0-9]*"
+                    value={question.answer.entry}
+>>>>>>> 006a487f98308cf7fbecdc81dcfe66a74ddc11d4
                   />
                 </>
               ) : null}
@@ -431,8 +438,13 @@ class QuestionComponent extends Component {
 
 // "checkbox",[x]
 // "file_upload",[x]
+<<<<<<< HEAD
 // "integer",[x] [ME]
 // "money",[x] [ME]
+=======
+// "integer",[x]
+// "money",[x]
+>>>>>>> 006a487f98308cf7fbecdc81dcfe66a74ddc11d4
 // "percentage",  [x] [BOUND]
 // "radio",[x]
 // "ranges",[x]
