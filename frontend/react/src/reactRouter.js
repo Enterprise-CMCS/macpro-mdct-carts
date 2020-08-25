@@ -44,6 +44,7 @@ const Routes = () => (
           <Route exact path="/section3/3d-api" component={Section3dapi} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker" children={<InvokeSection />} />
+          <Route path="/sections/:year/:sectionOrdinal" children={<InvokeSection />} />
           <Route exact path="/test" component={test} />
         </Switch>
       </div>
@@ -53,7 +54,9 @@ const Routes = () => (
 
 const InvokeSection = () => {
   let {year, sectionOrdinal, subsectionMarker} = useParams();
-  const fragmentId = constructIdFromYearSectionAndSubsection(Number(year), Number(sectionOrdinal), subsectionMarker.toLowerCase());
+  const filteredMarker = subsectionMarker ? subsectionMarker.toLowerCase() : "a";
+  console.log(filteredMarker);
+  const fragmentId = constructIdFromYearSectionAndSubsection(Number(year), Number(sectionOrdinal), filteredMarker);
   return (
     <Section fragmentId={fragmentId} />
   )
