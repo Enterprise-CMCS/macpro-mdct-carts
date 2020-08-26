@@ -22,7 +22,7 @@ const TextFieldBase = ({ fragment, changeFunc, multiline = null, rows = null, ma
     <TextField
       name={fragment.id}
       hint={fragment.hint}
-      label={getLabelFromFragment(fragment)}
+      label={getLabelFromFragment(fragment, marked)}
       value={answer && answer.entry}
       onChange={_.partial(changeFunc, fragment.id)}
       type="text"
@@ -46,8 +46,8 @@ const QuestionText = ({ fragment, changeFunc }) => {
   )
 };
 
-export const QuestionInteger = ({ fragment, changeFunc }) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} marked={true} size="small" numeric />
+export const QuestionInteger = ({ fragment, changeFunc, ...props }) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} size="small" numeric {...props} />
 );
 
 const QuestionTextSmall = ({ fragment, changeFunc }) => (
