@@ -49,7 +49,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     // This needs to match the `origin_id` above.
-    target_origin_id       = "$cartsfrontend-${terraform.workspace}"
+    target_origin_id       = "cartsfrontendbucket-${terraform.workspace}"
     min_ttl                = 0
     default_ttl            = 86400
     max_ttl                = 31536000
