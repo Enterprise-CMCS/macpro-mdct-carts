@@ -164,9 +164,7 @@ class QuestionComponent extends Component {
   }
 
   handleFileUpload = (event) => {
-    this.setState({
-      selectedFiles: event.target.files,
-    });
+    this.props.sectionContext([event.target.name, event.target.files]);
   };
 
   render() {
@@ -355,10 +353,14 @@ class QuestionComponent extends Component {
               {question.type === "file_upload" ? (
                 <div>
                   <TextField
-                    // label={question.label}
                     className="file_upload"
                     onChange={this.handleFileUpload}
-                    name="fileUpload"
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
+                    name={question.id}
                     type="file"
                     multiple
                     label=""
@@ -494,9 +496,9 @@ class QuestionComponent extends Component {
 // e starts at 651
 
 // "checkbox",[x]
-// "file_upload",[x]
+// "file_upload",[x] [BOUND]
 // "integer",[x]    [BOUND]
-// "money",[x]            [ME]
+// "money",[x]           [BOUND]
 // "percentage",  [x] [BOUND]
 // "radio",[x]
 // "ranges",[x]
@@ -520,5 +522,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(QuestionComponent);
-
-parentArray.push([rangesArray[i][1], rangesArray[i + 1][1]]);
