@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
+import { setAnswerEntry } from "../../actions/initial";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -104,12 +106,13 @@ class QuestionComponent extends Component {
   }
 
   handleChange(evt) {
-    this.props.sectionContext([evt.target.name, evt.target.value]);
+    this.props.setAnswer(evt.target.name, evt);
+    // this.props.sectionContext([evt.target.name, evt.target.value]);
 
-    this.setState({
-      [evt.target.name]: evt.target.value ? evt.target.value : null,
-      [evt.target.name + "Mod"]: true,
-    });
+    // this.setState({
+    //   [evt.target.name]: evt.target.value ? evt.target.value : null,
+    //   [evt.target.name + "Mod"]: true,
+    // });
   }
 
   handleChangeArray(evtArray) {
@@ -168,11 +171,7 @@ class QuestionComponent extends Component {
                 <TextField
                   multiple
                   name={question.id}
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
+                  value={question.answer.entry || ''}
                   type="text"
                   onChange={this.handleChange}
                   label=""
@@ -205,11 +204,7 @@ class QuestionComponent extends Component {
                 <TextField
                   className="ds-c-input"
                   name={question.id}
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
+                  value={question.answer.entry || ''}
                   type="text"
                   onChange={this.handleChange}
                   label=""
@@ -223,11 +218,7 @@ class QuestionComponent extends Component {
                     className="ds-c-input"
                     multiline
                     name={question.id}
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
+                    value={question.answer.entry || null}
                     type="text"
                     name={question.id}
                     rows={3}
@@ -245,11 +236,7 @@ class QuestionComponent extends Component {
                     label=""
                     className="ds-c-input"
                     multiline
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
+                    value={question.answer.entry || ''}
                     type="text"
                     name={question.id}
                     rows="6"
@@ -429,4 +416,8 @@ class QuestionComponent extends Component {
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
 
-export default QuestionComponent;
+const mapDispatchToProps = {
+  setAnswer: setAnswerEntry
+};
+
+export default connect(null, mapDispatchToProps)(QuestionComponent);
