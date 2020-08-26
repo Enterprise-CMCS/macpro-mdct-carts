@@ -67,9 +67,8 @@ class QuestionComponent extends Component {
 
     if (evt.target.value.length > 0) {
       if (validNumberRegex.test(evt.target.value)) {
-        console.log("TEST PASSED", evt.target.value);
-        console.log("PARSED", parseevt.target.value);
-        this.props.sectionContext([evt.target.name, evt.target.value]);
+        let formattedNum = evt.target.value.replace(/[ ,]/g, "");
+        this.props.sectionContext([evt.target.name, formattedNum]);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
           [evt.target.name + "Mod"]: true,
@@ -83,8 +82,6 @@ class QuestionComponent extends Component {
       }
     }
   }
-
-  // PICK UP, REGEX????
 
   validateEmail(evt) {
     const validEmailRegex = RegExp(
@@ -295,6 +292,7 @@ class QuestionComponent extends Component {
               {/* If integer*/}
               {question.type === "integer" ? (
                 <TextField
+                  numeric
                   name={question.id}
                   className="ds-c-input"
                   label=""
@@ -338,6 +336,7 @@ class QuestionComponent extends Component {
                     inputMode="currency"
                     mask="currency"
                     pattern="[0-9]*"
+                    name={question.id}
                     value={
                       this.state[question.id] || this.state[question.id + "Mod"]
                         ? this.state[question.id]
@@ -345,14 +344,6 @@ class QuestionComponent extends Component {
                     }
                     onChange={this.handleChange}
                   />
-                  <div
-                    className={
-                      "ds-c-field__after ds-c-field__after--percent cmsrange-" +
-                      rangeType
-                    }
-                  >
-                    {rangeType === "currency" ? "$" : "%"}
-                  </div>
                 </>
               ) : null}
 
@@ -459,7 +450,7 @@ class QuestionComponent extends Component {
 
 // "checkbox",[x]
 // "file_upload",[x]
-// "integer",[x]          [ME]
+// "integer",[x]          [BOUND]
 // "money",[x]            [ME]
 // "percentage",  [x] [BOUND]
 // "radio",[x]

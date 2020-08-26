@@ -605,6 +605,14 @@
                 }
               },
               {
+                "id": "2020-03-e-01-12",
+                "label": "MONEY TEST",
+                "type": "money",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
                 "id": "2020-00-a-02-03",
                 "label": "Email:",
                 "type": "email",
