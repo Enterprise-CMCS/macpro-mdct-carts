@@ -17,22 +17,18 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 import Home from "./Home";
 import config from './auth-config';
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import Profile from './Profile';
 import InitialDataLoad from "./components/Utils/InitialDataLoad";
 
-function App() {
+function App(props) {
   return (
-    <InitialDataLoad />
+    // <InitialDataLoad />
     <Router>
-      {/* OKTA Enabled */}
-      {/* <Security {...config.oidc}>
+      <Security {...config.oidc}>
         <SecureRoute path="/" component={Home} />
         <Route path={config.callback} component={LoginCallback} />
-      </Security> */}
-
-      {/* OKTA Disabled */}
-      <Route component={Home}/>
+        <SecureRoute path="/profile" component={Profile} />
+      </Security>
     </Router>
   );
 }

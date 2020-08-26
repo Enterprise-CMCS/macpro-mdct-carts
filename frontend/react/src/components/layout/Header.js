@@ -55,11 +55,13 @@ class Header extends Component {
                       <a href="javascript:void(0)">Manage account</a>
                     </li>
                     <li className="logout">
-                      {/* OKTA Enabled */}
-                      {/* <Logout /> */}
-
-                      {/* OKTA Disabled */}
-                      <a href="javascript:void(0)">Log out</a>
+                      {this.props.oktaEnabled === false} ? (
+                        {/* OKTA Disabled */}
+                        <a href="javascript:void(0)">Log out</a>
+                      ) : (
+                        {/* OKTA Enabled */}
+                        <Logout />
+                      )
                     </li>
                   </ul>
                 </div>

@@ -4,6 +4,7 @@ const initialState = {
   formName: "CARTS FY",
   formYear: new Date().getFullYear().toString(),
   largeTextBoxHeight: 6,
+  oktaEnabled: false,
 };
 
 // REDUCER
