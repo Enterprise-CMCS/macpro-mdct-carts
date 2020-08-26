@@ -12,8 +12,3 @@ variable "acm_certificate_domain_api_postgres" {
 variable "acm_certificate_domain_api_sqlserver" {
   default = ""
 }
-
-// Create a variable for our domain name.
-variable "www_domain_name" {
-  default = "www.carts-demo1.com-${terraform.workspace}"
-}
