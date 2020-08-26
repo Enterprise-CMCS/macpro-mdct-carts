@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectionByOrdinal } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
+import { SynthesizedTable } from "./../../layout/SynthesizedTable";
+import { InputGrid } from "./../../fields/InputGrid";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
 
@@ -108,6 +110,21 @@ const QuestionCheckbox = ({ fragment, changeFunc }) => {
   )
 }
 
+const QuestionFieldset = ({ fragment, changeFunc }) => {
+  if (fragment.fieldset_type === "synthesized_table") {
+    return (
+      <SynthesizedTable settings={fragment} changeFunc={changeFunc} />
+    )
+  }
+  else if (fragment.fieldset_type === "datagrid") {
+    return (
+      <InputGrid question={fragment} changeFunc={changeFunc} />
+    )
+  }
+  else return <fieldset>lonely fieldset</fieldset>
+}
+
+
 /* /Question types */
 
 // Map question types to functions:
@@ -121,6 +138,7 @@ const QuestionMap = new Map([
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
   ["text_multiline", QuestionTextMultiline],
+  ["fieldset", QuestionFieldset],
 ])
 
 // Connect question types to functions via their types:
