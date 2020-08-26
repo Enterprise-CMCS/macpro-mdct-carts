@@ -113,6 +113,10 @@
     margin-bottom: 0;
     margin-top: ($margin * 4);
   }
+
+  label {
+    margin-top: 0;
+  }
 }
 
 .question-inner-header {
@@ -311,4 +315,24 @@
   .objective-accordion div[hidden] {
     display: block;
   }
+}
+
+.part fieldset {
+  border: 0;
+  margin-top: 32px;
+  margin-left: 0;
+  padding-left:0;
+}
+
+.part legend {
+  padding: 0;
+  margin: 0;
+  color: $brand-primary;
+  font-weight: bold;
+}
+
+.part .subquestion {
+  border-left: 4px solid #0071bc;
+  margin-left: 32px;
+  padding: 0 16px 16px;
 }

@@ -1,0 +1,23 @@
+/**********************
+  INPUT-GRID COMPONENT
+**********************/
+
+.part__checkboxFlag ~ fieldset .input-grid {
+  .input-grid__total {
+    display: none;
+  }
+
+  .input-grid__groups {
+    display: flex;
+  }
+}
+
+.part__checkboxFlag.checked ~ fieldset .input-grid {
+  .input-grid__total {
+    display: flex;
+  }
+
+  .input-grid__groups {
+    display: none;
+  }
+}

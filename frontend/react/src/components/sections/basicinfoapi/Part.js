@@ -4,24 +4,24 @@ import { extractJsonPathExpressionFromQuestionLike, extractSectionOrdinalFromId,
 import QuestionLike from "./QuestionLike";
 
 const Part = ({ fragment, partId }) => {
-  const title = fragment.title ? <h2>{fragment.title}</h2> : <span></span>;
+  const title = fragment.title ? <h3 className="part-header">{fragment.title}</h3> : <span></span>;
   const text = fragment.text ? <p>{fragment.text}</p> : <span></span>;
-  return fragment? (
-    <div id={fragment.id}>
-    {title}
-    {text}
+  return fragment ? (
+    <div id={fragment.id} className="part">
+      {title}
+      {text}
 
-    {fragment.questions.map((questionLike, index) => {
-      // Some children might be fieldsets, and most fieldsets don't have ids, so we have to build a jsonpath expression instead:
-      const jpexpr = extractJsonPathExpressionFromQuestionLike(questionLike.id, partId, index);
-      const key = `questionLike-${index}`;
+      {fragment.questions.map((questionLike, index) => {
+        // Some children might be fieldsets, and most fieldsets don't have ids, so we have to build a jsonpath expression instead:
+        const jpexpr = extractJsonPathExpressionFromQuestionLike(questionLike.id, partId, index);
+        const key = `questionLike-${index}`;
 
-      return (
-        <QuestionLike key={key} fragmentkey={key} jpexpr={jpexpr}/>
-      )
-  
+        return (
+          <QuestionLike key={key} fragmentkey={key} jpexpr={jpexpr} />
+        )
+
       })}
-        
+
     </div>
 
   ) : null;

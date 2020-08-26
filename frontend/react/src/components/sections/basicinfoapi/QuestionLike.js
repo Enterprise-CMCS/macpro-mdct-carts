@@ -149,7 +149,7 @@ const QuestionFieldset = ({ fragment, changeFunc }) => {
                 </>
               )
             }
-            else return <h4>unmarked: {type}</h4>
+            else return <span className="ds-u-color--error">unmarked: {type}</span>
           })
         }
       </fieldset>
