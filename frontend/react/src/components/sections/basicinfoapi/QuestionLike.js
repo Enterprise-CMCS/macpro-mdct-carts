@@ -115,13 +115,31 @@ const QuestionFieldset = ({ fragment, changeFunc }) => {
     return (
       <SynthesizedTable settings={fragment} changeFunc={changeFunc} />
     )
-  }
-  else if (fragment.fieldset_type === "datagrid") {
+  } else if (!fragment.fieldset_info && fragment.label) { //TODO: Would be great to have a "wrapper" fieldset_info type
     return (
-      <InputGrid question={fragment} changeFunc={changeFunc} />
+      <fieldset>
+        <legend className="part__legend">{fragment.label}</legend>
+        {
+          fragment.questions.map(question => {
+            const type = question.fieldset_type;
+            if (type === "marked") {
+              return (
+                <>
+                  <label className="ds-c-label" >
+                    {type === "marked" && getLabelFromFragment(question)}
+                  </label>
+                  <span className="ds-c-field__hint">
+                    {question.hint}
+                  </span>
+                </>
+              )
+            }
+            else return <h4>{type}</h4>
+          })
+        }
+      </fieldset>
     )
-  }
-  else return <fieldset>lonely fieldset</fieldset>
+  } else return <fieldset>lonely fieldset</fieldset>
 }
 
 
@@ -156,7 +174,7 @@ const getQuestionLikeId = (fragment) => {
   } else if (fragment.type === "fieldset" && fragment.fieldset_type === "marked") {
     return fragment.fieldset_info.id;
   }
-  console.log("WTF", fragment);
+  console.log("Fieldset", fragment);
   return null;
 }
 
