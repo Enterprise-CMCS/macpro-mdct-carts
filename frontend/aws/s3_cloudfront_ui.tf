@@ -1,7 +1,7 @@
 
 resource "aws_s3_bucket" "www" {
 
-  bucket = "${var.www_domain_name}"
+  bucket = "cartsfrontendbucket-${terraform.workspace}"
   acl    = "private"
 }
 

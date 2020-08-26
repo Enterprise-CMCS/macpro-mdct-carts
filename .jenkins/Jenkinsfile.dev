@@ -61,8 +61,7 @@ pipeline {
     }
 
 
-  stage('static build') {
-
+    stage('static build') {
         agent {
             docker {
                 image 'node:14.4.0'
@@ -71,7 +70,6 @@ pipeline {
             }
         }
         steps {
-
             dir('frontend/react') {
             sh '''
             npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
@@ -80,7 +78,6 @@ pipeline {
 
               '''
           }
-
         }
     }
 
@@ -106,9 +103,9 @@ pipeline {
         rm buildfinal1.tar.gz
            '''
            }
-      }
+       }
     }
-/*
+
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
@@ -130,8 +127,6 @@ pipeline {
         }
       }
     }
-
-
 
     stage("Deploy Data Layer") {
       when {
@@ -158,13 +153,11 @@ pipeline {
         }
       }
     }
- */
 
     stage("Deploy Frontend Layer") {
       when {
         expression { env.DEPLOY == "true"}
       }
-
       steps {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
@@ -176,16 +169,14 @@ pipeline {
               ]
             )
           }
-          dir('frontend/react'){
+          dir('frontend/aws') {
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "s3_bucket_name")
+          }
             sh '''
-             aws s3 cp s3://carts-demo-cloudfront-tar-bucket/buildfinal1.tar.gz buildfinal1.tar.gz
-
-             tar -xvzf buildfinal1.tar.gz
-
-             aws s3 sync build s3://www.carts-demo1.com
-
+               aws s3 cp s3://carts-demo-cloudfront-tar-bucket/buildfinal1.tar.gz buildfinal1.tar.gz
+               tar -xvzf buildfinal1.tar.gz
+               aws s3 sync build s3:${S3_BUCKET_NAME}
              '''
-           }
         }
       }
       post {
@@ -196,6 +187,7 @@ pipeline {
         }
       }
     }
+
     stage("Test") {
       when {
         expression { env.RUN_TESTS == "true"}
@@ -216,8 +208,6 @@ pipeline {
         }
       }
     }
-
-
 
     stage("Destroy at the end") {
       when {
