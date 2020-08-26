@@ -30,7 +30,7 @@ class Section3EApi extends Component {
     // this.props.Data includes all of section 3
     // This variable narrows it down to a subsection
     const subsectionData = this.props.Data
-      ? this.props.Data.section.subsections[4] // 3E JSON Data
+      ? this.props.Data.subsections[4] // 3E JSON Data
       : null;
 
     const sectionTitle = this.props.Data
