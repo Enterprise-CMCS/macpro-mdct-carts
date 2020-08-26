@@ -60,7 +60,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
         forward = "none"
       }
     }
-
+ }
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -71,6 +71,5 @@ resource "aws_cloudfront_distribution" "www_distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
     ssl_support_method  = "sni-only"
-  }
  }
 }
