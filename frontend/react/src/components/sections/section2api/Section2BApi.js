@@ -25,9 +25,16 @@ class Section2BApi extends Component {
       previousObjectivesArray: [],
       pageTitle: "Section 2B: State Plan Goals and Objectives",
     };
+    this.bindToParentContext = this.bindToParentContext.bind(this);
   };
 
-
+  bindToParentContext(evtArr) {
+    this.setState({
+      parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
+      lastChangedBy: evtArr[0],
+      [evtArr[0]]: evtArr[1],
+    });
+  }
 
 
   render() {
@@ -46,6 +53,7 @@ class Section2BApi extends Component {
                 <Questions2BApi
                   previousEntry="false"
                   subsectionB={Data.section.subsections[1]}//[0].questions[0].questions
+                  sectionContext={this.bindToParentContext}
 
                 />
               </TabPanel>

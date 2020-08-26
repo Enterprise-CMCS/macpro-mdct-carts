@@ -16,7 +16,7 @@ import {
   TextField,
 } from "@cmsgov/design-system-core";
 
-class Section2 extends Component {
+class Section2AApi extends Component {
   render() {
     return (
       <div className="section-1 ds-l-col--9 content">
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => ({
   year: state.global.formYear,
 });
 
-export default connect(mapStateToProps)(Section2);
+export default connect(mapStateToProps)(Section2AApi);

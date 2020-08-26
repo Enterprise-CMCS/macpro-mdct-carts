@@ -4,6 +4,7 @@ import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
 import CMSRanges from "./CMSRanges";
+import QuestionComponent from "../fields/QuestionComponent";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class CMSChoice extends Component {
 
         // Add fields to render array based on type (from api)
         switch (item.type) {
-          case "text_long":
+          case "text_multiline":
             // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
@@ -161,8 +162,18 @@ class CMSChoice extends Component {
               );
             }
             break;
+          case "fieldset":
+            if (shouldDisplay(parentValue, item.context_data)) {
+              fields.push(
+                <QuestionComponent
+                  data={item.questions} //Array of subquestions to map through
+                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                />)
+            }
+            break;
         }
-      });
+      }
+      );
     }
 
     // Return Choice component after creating subquestion components

@@ -16,7 +16,7 @@ class Questions2A extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.bindToParentContext = this.bindToParentContext.bind(this);
   }
-  // Get state program (temporary; will be set by API)
+
   bindToParentContext(evtArr) {
     this.setState({
       parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
@@ -51,109 +51,8 @@ class Questions2A extends Component {
                         (<h3 className="part-title">{part.title}</h3>)
                         : null}
                       {/* Determine if question should be shown */}
-                      {part.questions.map((question) => (
-                        <div className="question">
-                          <fieldset className="ds-c-fieldset">
-                            <CMSLegend
-                              label={question.label}
-                              id={question.id}
-                              type="question"
-                            />
-                            {question.type === "radio" || question.type === "checkbox"
-                              ? Object.entries(question.answer.options).map((
-                                key,
-                                index
-                              ) => {
-                                return (
-                                  <>
-                                    {question.id === "2020-02-a-03" ? (//JSON was altered here. Child of a-03 is fieldset. Children of fieldset now have context_data
-                                      <CMSChoice
-                                        name={question.id}
-                                        value={key[1]}
-                                        label={key[0]}
-                                        type={question.type}
-                                        onChange={this.handleChange}
-                                        answer={question.answer.entry}
-                                        conditional={question.conditional}
-                                        children={question.questions[0].questions}
-                                        valueFromParent={this.state[question.id]}
-                                      />)
-                                      : <CMSChoice
-                                        name={question.id}
-                                        value={key[1]}
-                                        label={key[0]}
-                                        type={question.type}
-                                        onChange={this.handleChange}
-                                        answer={question.answer.entry}
-                                        conditional={question.conditional}
-                                        children={question.questions}
-                                        valueFromParent={this.state[question.id]}
-                                      />}
-                                  </>
-                                );
-                              })
-                              : null}
-                            {question.type === "fieldset" && question.fieldset_type === "noninteractive_table"
-                              ? Object.entries(question.fieldset_info).map((value) => {
-                                return (
-                                  <table className="ds-c-table" width="100%">
-                                    {(value[0] === "headers") ? (
-                                      <thead>
-                                        <tr>
-                                          {question.fieldset_info.headers.map(function (value) {
-                                            return (
-                                              <th width={`${100 / question.fieldset_info.headers.length}%`} name={`${value}`}>
-                                                {value}
-                                              </th>
-                                            )
-                                          })}
-                                        </tr>
-                                      </thead>
-                                    ) : null}
-                                    {(value[0] === "rows") ? (
-                                      question.fieldset_info.rows.map((value) => {
-                                        return (
-                                          <tr>
-                                            {value.map((value) => {
-                                              return (
-                                                <td width={`${100 / question.fieldset_info.headers.length}%`}>{value}</td>
-                                              )
-                                            })
-                                            }
-                                          </tr>
-                                        )
-                                      })
-                                    ) : null}
-                                  </table>
-                                );
-                              })
-                              : null}
-                            {question.type === "fieldset" ?
-                              <></>
-                              : null}
-                            {/* If textarea */}
-                            {question.type === "text_multiline" ? (
-                              <div>
-                                <textarea
-                                  class="ds-c-field"
-                                  name={question.id}
-                                  value={question.answer.entry}
-                                  type="text"
-                                  name={question.id}
-                                  rows="6"
-                                />
-                              </div>
-                            ) : null}
-                            {/* If FPL Range */}
-                            {question.type === "ranges" ? (
-                              <div>
-                                <FPL label={question.label} />
-                              </div>
-                            ) : null}
-                          </fieldset>
-                        </div>
-                      ))
-                      }
+                      <QuestionComponent data={part.questions}
+                        sectionContext={this.bindToParentContext} />
                     </div>
                   ))}
                 </> : null}

@@ -38,6 +38,7 @@ class Questions2BApi extends Component {
     });
   }
 
+
   handleChange(evt) {
     console.log("Handle Change occured", evt);
     this.setState({
@@ -92,6 +93,7 @@ class Questions2BApi extends Component {
                                           <Objective2bApi
                                             goalsArray={objectiveGoals.questions}//gives object that contains array of goals
                                             previousEntry={this.props.previousEntry}
+                                            sectionContext={this.props.sectionContext}
                                           ></Objective2bApi>
 
 

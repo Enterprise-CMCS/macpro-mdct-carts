@@ -37,6 +37,8 @@ class Objective2bApi extends Component {
     });
   }
 
+
+
   newGoal() {
     let newGoalId = this.state.goalCount + 1;
     this.props.goalsArray.push(addNewGoal(newGoalId));
@@ -146,7 +148,8 @@ class Objective2bApi extends Component {
                           </h3>
                         </div>
                         <AccordionPanel>
-                          <QuestionComponent data={goals.questions} />
+                          <QuestionComponent data={goals.questions}
+                            sectionContext={this.props.sectionContext} />
                         </AccordionPanel>
                       </AccordionItem>
 
