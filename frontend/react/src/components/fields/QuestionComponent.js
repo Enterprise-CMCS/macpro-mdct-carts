@@ -382,7 +382,12 @@ class QuestionComponent extends Component {
                         ? this.state[question.id]
                         : question.answer.entry
                     }
-                    onChange={this.handleChange}
+                    onChange={this.handleIntegerChange}
+                    errorMessage={
+                      this.state[question.id + "Err"] === false
+                        ? "Please enter numbers only"
+                        : false
+                    }
                   />
                 </>
               ) : null}
@@ -490,7 +495,7 @@ class QuestionComponent extends Component {
 
 // "checkbox",[x]
 // "file_upload",[x]
-// "integer",[x]          [BOUND]
+// "integer",[x]    [BOUND]
 // "money",[x]            [ME]
 // "percentage",  [x] [BOUND]
 // "radio",[x]
@@ -515,3 +520,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(QuestionComponent);
+
+parentArray.push([rangesArray[i][1], rangesArray[i + 1][1]]);
