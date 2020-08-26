@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PageInfo from "../../layout/PageInfo";
-import FormNavigation from "../../layout/FormNavigation";
-import FormActions from "../../layout/FormActions";
-import { selectSectionByOrdinal } from "../../../store/formData";
-import {
-  Tabs,
-  TabPanel
-} from "@cmsgov/design-system-core";
-import QuestionsBasicInfo from "./questions/QuestionsBasicInfo";
-import Subsection from "./Subsection";
+import PageInfo from "../layout/PageInfo";
+import { extractSectionOrdinalFromId, selectSectionByOrdinal } from "../../store/formData";
+import Subsection from "./basicinfoapi/Subsection";
 
-const BasicInfo = ({Data}) =>
+const Section = ({Data}) =>
   Data ? (
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
@@ -27,14 +20,14 @@ const BasicInfo = ({Data}) =>
   
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     abbr: state.stateUser.currentUser.state.id,
-    Data: selectSectionByOrdinal(state, 0),
+    Data: selectSectionByOrdinal(state, extractSectionOrdinalFromId(ownProps.fragmentId)),
     year: state.global.formYear,
     programType: state.stateUser.programType,
     programName: state.stateUser.programName,
   }
 };
 
-export default connect(mapStateToProps)(BasicInfo);
+export default connect(mapStateToProps)(Section);
