@@ -14,17 +14,18 @@ const validTelephoneRegex = RegExp(
 );
 
 const TextFieldBase = ({ fragment, changeFunc, multiline = null, rows = null, ...fieldProps }) => {
+  const answer = fragment.answer
   return (
     <TextField
       name={fragment.id}
       hint={fragment.hint}
       label={getLabelFromFragment(fragment)}
-      value={fragment.answer.entry}
+      value={answer && answer.entry}
       onChange={_.partial(changeFunc, fragment.id)}
       type="text"
       multiline={multiline}
       rows={rows}
-      disabled={fragment.answer.readonly}
+      disabled={answer && answer.readonly}
       {...fieldProps}
     />
   );
@@ -106,7 +107,6 @@ const QuestionCheckbox = ({ fragment, changeFunc }) => {
     </>
   )
 }
-
 
 /* /Question types */
 
