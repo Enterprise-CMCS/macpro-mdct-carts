@@ -52,7 +52,11 @@ export const constructIdFromYearSectionAndSubsection = (
   subsectionMarker
 ) => {
   const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
-  return [year, sectionChunk, subsectionMarker].join("-");
+  if(subsectionMarker) {
+    return [year, sectionChunk, subsectionMarker].join("-");
+  } else {
+    return [year, sectionChunk].join("-");
+  }
 };
 
 export const extractJsonPathExpressionFromQuestionLike = (
@@ -121,3 +125,27 @@ export const generateSubsectionLabel = (str) => {
   let sectionNumber = Number(idArray[1]);
   return `Section ${sectionNumber}${idArray[2]}`;
 };
+
+export const selectSectionTitle = (state, sectionId) => {
+  const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
+  const sectionTitles = jsonpath.query(state, jspath);
+  
+  if(sectionTitles.length) {
+    return sectionTitles[0];
+  }
+  return null;
+};
+
+export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
+  const jspath = `$..formData[*].contents.section.subsections[?(@.id=='${subsectionId}')]`;
+  const subsections = jsonpath.query(state, jspath);
+
+  if(subsections.length) {
+    const subsection = subsections[0];
+    return {
+      parts: subsection.parts.map(part => part.id),
+      title: subsection.title
+    }
+  }
+  return null;
+}
