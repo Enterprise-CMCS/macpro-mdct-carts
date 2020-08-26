@@ -4,7 +4,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import formData from "./formData";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
-import section3 from "./section3";
 
 // Consolidate reducers
 export const reducer = combineReducers({ formData, stateUser, global });

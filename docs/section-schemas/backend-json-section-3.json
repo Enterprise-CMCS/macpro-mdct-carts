@@ -43,13 +43,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -84,13 +79,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -156,15 +146,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -199,15 +182,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -281,10 +257,7 @@
                 ],
                 "context_data": {
                   "skip_text": "Some questions omitted because they do not apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
+                  "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               },
               {
@@ -332,15 +305,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-c-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                                "no",
-                                "na",
-                                null
-                            ],
-                            "noninteractive": [
-                                "no",
-                                "na"
-                            ]
+                            "interactive": ["no", "na", null],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -399,13 +365,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-c-01-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                                "no",
-                                null
-                            ],
-                            "noninteractive": [
-                                "no"
-                            ]
+                            "interactive": ["no", null],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -498,7 +459,6 @@
                 },
                 "questions": [
                   {
-
                     "id": "2020-03-c-02-03-a",
                     "label": "How many first-time applicants were denied CHIP coverage for eligibility reasons?",
                     "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
@@ -531,27 +491,65 @@
                 "label": "Table: Denials for First-Time Applicants",
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "Number" },
+                    { "contents": "Percent" }
+                  ],
                   "rows": [
                     [
-                      {"contents": "Total denials"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-01')].answer.entry"]},
-                      {"contents": "100%"}
+                      { "contents": "Total denials" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ]
+                      },
+                      { "contents": "100%" }
                     ],
                     [
-                      {"contents": "Denied for procedural reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-02')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-02')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                      { "contents": "Denied for procedural reasons" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-02')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-02')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ],
                     [
-                      {"contents": "Denied for eligibility reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                      { "contents": "Denied for eligibility reasons" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-03')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ],
                     [
-                      {"contents": "Denials for other reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                      { "contents": "Denials for other reasons" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ]
                   ]
                 },
@@ -600,18 +598,18 @@
                 },
                 "questions": [
                   {
-                      "type": "fieldset",
-                      "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
-                      "fieldset_type": "synthesized_value",
-                      "fieldset_info": {
-                        "targets": [
-                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
-                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
-                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
-                        ],
-                        "actions": ["sum"]
-                      },
-                      "questions": []
+                    "type": "fieldset",
+                    "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
+                    "fieldset_type": "synthesized_value",
+                    "fieldset_info": {
+                      "targets": [
+                        "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
+                      ],
+                      "actions": ["sum"]
+                    },
+                    "questions": []
                   },
                   {
                     "id": "2020-03-c-03-04-a",
@@ -655,22 +653,52 @@
                 "label": "Table: Enrollment Data for CHIP Redetermination",
                 "hint": "These tables are auto-populated with the data you entered above.",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "Number" },
+                    { "contents": "Percent" }
+                  ],
                   "rows": [
                     [
-                      {"contents": "Children screened for redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-02')].answer.entry"]},
-                      {"contents": "100%"}
+                      { "contents": "Children screened for redetermination" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ]
+                      },
+                      { "contents": "100%" }
                     ],
                     [
-                      {"contents": "Children retained after redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-03')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-03')].answer.entry", "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"], "actions": ["percentage"]}
+                      { "contents": "Children retained after redetermination" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-03')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled after redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry", "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ]
                   ]
                 },
@@ -682,27 +710,71 @@
                 "comment": "This is assuming that we make the user manually enter the answer to question 4; otherwise we don't currently have a way to support this functionality; see the comment on question 4 above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "Number" },
+                    { "contents": "Percent" }
+                  ],
                   "rows": [
                     [
-                      {"contents": "Children disenrolled after redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry"]},
-                      {"contents": "100%"}
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ]
+                      },
+                      { "contents": "100%" }
                     ],
                     [
-                      {"contents": "Children disenrolled for procedural reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled for procedural reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled for eligibility reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled for eligibility reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled for other reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                      { "contents": "Children disenrolled for other reasons" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
                     ]
                   ]
                 },
@@ -766,14 +838,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -790,12 +856,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -873,14 +935,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -897,12 +953,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -972,14 +1024,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -996,12 +1042,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1067,14 +1109,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          false,
-                                          null
-                                        ],
-                                        "noninteractive": [
-                                          false,
-                                          null
-                                        ]
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
                                       }
                                     }
                                   }
@@ -1091,12 +1127,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1171,14 +1203,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -1195,12 +1221,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1266,14 +1288,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          false,
-                                          null
-                                        ],
-                                        "noninteractive": [
-                                          false,
-                                          null
-                                        ]
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
                                       }
                                     }
                                   }
@@ -1290,12 +1306,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1350,13 +1362,11 @@
                     "label": "Anything else you’d like to add about your data?",
                     "type": "text_multiline",
                     "answer": {
-                        "entry": null
+                      "entry": null
                     }
                   }
                 ]
               },
-
-
 
               {
                 "type": "fieldset",
@@ -1388,14 +1398,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -1412,12 +1416,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1487,14 +1487,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -1511,12 +1505,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1582,14 +1572,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          false,
-                                          null
-                                        ],
-                                        "noninteractive": [
-                                          false,
-                                          null
-                                        ]
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
                                       }
                                     }
                                   }
@@ -1606,12 +1590,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1686,14 +1666,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -1710,12 +1684,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1781,14 +1751,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          false,
-                                          null
-                                        ],
-                                        "noninteractive": [
-                                          false,
-                                          null
-                                        ]
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
                                       }
                                     }
                                   }
@@ -1805,12 +1769,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1863,7 +1823,6 @@
                 ]
               },
 
-
               {
                 "type": "fieldset",
                 "label": "July – September 2020 (18 months later)",
@@ -1893,14 +1852,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -1917,12 +1870,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1992,14 +1941,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -2016,12 +1959,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -2087,14 +2026,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          false,
-                                          null
-                                        ],
-                                        "noninteractive": [
-                                          false,
-                                          null
-                                        ]
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
                                       }
                                     }
                                   }
@@ -2111,12 +2044,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -2191,14 +2120,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  false,
-                                  null
-                                ],
-                                "noninteractive": [
-                                  false,
-                                  null
-                                ]
+                                "interactive": [false, null],
+                                "noninteractive": [false, null]
                               }
                             }
                           }
@@ -2215,12 +2138,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -2286,14 +2205,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          false,
-                                          null
-                                        ],
-                                        "noninteractive": [
-                                          false,
-                                          null
-                                        ]
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
                                       }
                                     }
                                   }
@@ -2310,12 +2223,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -2367,14 +2276,8 @@
                   }
                 ]
               }
-
-
-
-
             ]
           }
-
-
         ]
       },
       {
@@ -2486,12 +2389,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2511,12 +2410,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2536,12 +2431,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2573,13 +2464,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2593,12 +2479,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2630,13 +2512,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2650,12 +2527,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2678,12 +2551,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2703,12 +2572,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2733,8 +2598,16 @@
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
             "questions": [
               {
+                "id": "2020-03-f-01-06",
+                "label": "INTEGER TEST",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
                 "id": "2020-03-e-01-01",
-                "label": "Under which authority and statutes does your state offer premium assistance?",
+                "label": "Under which authoritxxxxxxxy and statutes does your state offer premium assistance?",
                 "hint": "Check all that apply.",
                 "type": "checkbox",
                 "answer": {
@@ -2777,13 +2650,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2882,13 +2750,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-09')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2982,9 +2845,23 @@
                     "fieldset_type": "synthesized_table",
                     "label": "Child",
                     "fieldset_info": {
-                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "headers": [
+                        { "contents": "State" },
+                        { "contents": "Employer" },
+                        { "contents": "Employee" }
+                      ],
                       "rows": [
-                          [{"target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"}]
+                        [
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"
+                          }
+                        ]
                       ]
                     },
                     "questions": []
@@ -2994,9 +2871,23 @@
                     "fieldset_type": "synthesized_table",
                     "label": "Parent",
                     "fieldset_info": {
-                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "headers": [
+                        { "contents": "State" },
+                        { "contents": "Employer" },
+                        { "contents": "Employee" }
+                      ],
                       "rows": [
-                          [{"target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"}]
+                        [
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"
+                          }
+                        ]
                       ]
                     },
                     "questions": []
@@ -3014,15 +2905,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3034,15 +2918,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3060,15 +2937,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3080,15 +2950,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3149,10 +3012,7 @@
             "type": "part",
             "context_data": {
               "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
             "questions": [
@@ -3227,15 +3087,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -3363,13 +3216,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3403,13 +3251,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }

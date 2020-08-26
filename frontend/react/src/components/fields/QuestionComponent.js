@@ -54,7 +54,7 @@ class QuestionComponent extends Component {
     });
   }
 
-  // For input that will be validated onBlur but need to update state onChange
+  // For input that will be validated onBlur but needs to update state onChange
   updateLocalStateOnly(evt) {
     this.setState({
       [evt.target.name]: evt.target.value ? evt.target.value : null,
@@ -63,16 +63,28 @@ class QuestionComponent extends Component {
   }
 
   handleIntegerChange(evt) {
-    const validNumberRegex = RegExp("^(?:d{1,3}(?:,d{3})*|d+)(?:.d+)?$");
+    const validNumberRegex = RegExp(/^(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?$/);
+
     if (evt.target.value.length > 0) {
       if (validNumberRegex.test(evt.target.value)) {
+        console.log("TEST PASSED", evt.target.value);
+        console.log("PARSED", parseevt.target.value);
+        this.props.sectionContext([evt.target.name, evt.target.value]);
+        this.setState({
+          [evt.target.name]: evt.target.value ? evt.target.value : null,
+          [evt.target.name + "Mod"]: true,
+          [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
+        });
       } else {
         this.setState({
-          [evt.target.name + "Err"]: !validNumberRegex.test(evt.target.value),
+          [evt.target.name + "Mod"]: true,
+          [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
         });
       }
     }
   }
+
+  // PICK UP, REGEX????
 
   validateEmail(evt) {
     const validEmailRegex = RegExp(
@@ -88,6 +100,7 @@ class QuestionComponent extends Component {
         });
       } else {
         this.setState({
+          [evt.target.name + "Mod"]: true,
           [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
         });
       }
@@ -290,7 +303,13 @@ class QuestionComponent extends Component {
                       ? this.state[question.id]
                       : question.answer.entry
                   }
-                  onChange={this.handleIntegerChange}
+                  errorMessage={
+                    this.state[question.id + "Err"] === false
+                      ? "Please enter numbers only"
+                      : false
+                  }
+                  onBlur={this.handleIntegerChange}
+                  onChange={this.updateLocalStateOnly}
                 />
               ) : null}
 
@@ -315,7 +334,6 @@ class QuestionComponent extends Component {
                   <TextField
                     className="money"
                     label=""
-<<<<<<< HEAD
                     numeric
                     inputMode="currency"
                     mask="currency"
@@ -326,13 +344,15 @@ class QuestionComponent extends Component {
                         : question.answer.entry
                     }
                     onChange={this.handleChange}
-=======
-                    inputMode="currency"
-                    mask="currency"
-                    pattern="[0-9]*"
-                    value={question.answer.entry}
->>>>>>> 006a487f98308cf7fbecdc81dcfe66a74ddc11d4
                   />
+                  <div
+                    className={
+                      "ds-c-field__after ds-c-field__after--percent cmsrange-" +
+                      rangeType
+                    }
+                  >
+                    {rangeType === "currency" ? "$" : "%"}
+                  </div>
                 </>
               ) : null}
 
@@ -435,16 +455,12 @@ class QuestionComponent extends Component {
 }
 
 // anticipated question types
+// e starts at 651
 
 // "checkbox",[x]
 // "file_upload",[x]
-<<<<<<< HEAD
-// "integer",[x] [ME]
-// "money",[x] [ME]
-=======
-// "integer",[x]
-// "money",[x]
->>>>>>> 006a487f98308cf7fbecdc81dcfe66a74ddc11d4
+// "integer",[x]          [ME]
+// "money",[x]            [ME]
 // "percentage",  [x] [BOUND]
 // "radio",[x]
 // "ranges",[x]
