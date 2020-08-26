@@ -3,7 +3,7 @@ import { shallow, mount } from "enzyme";
 import { storeFactory, findByTestAttribute } from "../../testUtils";
 import { VerticalNav } from "@cmsgov/design-system-core";
 
-import TOC from "./TOC";
+import { TOC } from "./TOC";
 
 /**
  * Factory functon to create a ShallowWrapper for the Footer component.

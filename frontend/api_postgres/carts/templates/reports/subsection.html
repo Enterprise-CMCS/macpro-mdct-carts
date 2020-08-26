@@ -1,0 +1,11 @@
+{{subsections|length}}
+{% for subsection in subsections %}
+    
+    <subsection id="{{subsection.id}}">
+        <strong>subsection {{subsection.id}}</strong>
+        <h2>{{subsection.title}}</h2>
+        <p class="subsection_text">{{subsection.text}}</p>
+        {% include "reports/part.html" with parts=subsection.parts state=state %}
+    </subsection>
+
+{% endfor %}

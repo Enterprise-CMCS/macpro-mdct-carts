@@ -3,6 +3,7 @@ import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
+import CMSRanges from "./CMSRanges";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class CMSChoice extends Component {
     // Set checkbox array of selected items
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
-    this.props.onChange([evt.target.name, evt.target.value]);
+    this.props.onChange([evt.target.name, evt.target.value])
   };
 
   render() {
@@ -29,7 +30,6 @@ class CMSChoice extends Component {
     const currentValue = this.props.valueFromParent
       ? this.props.valueFromParent
       : this.props.answer;
-
     // Determine if choice is checked
     let isChecked = null;
 
@@ -64,7 +64,7 @@ class CMSChoice extends Component {
         // Add fields to render array based on type (from api)
         switch (item.type) {
           case "text_long":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add to field to render array
               fields.push(
@@ -74,7 +74,7 @@ class CMSChoice extends Component {
                     id={item.id}
                     type="subquestion"
                   />
-                  <textarea
+                  <TextField
                     class="ds-c-field"
                     name={item.id}
                     value={item.answer.entry}
@@ -94,8 +94,7 @@ class CMSChoice extends Component {
               // If entry matches current answer, mark as checked
               const isCheckedChild =
                 key[1] === item.answer.entry ? "checked" : null;
-
-              // Check if question (toMatch) matches the currently selected option (parent)
+              // Check if question matches the currently selected option (from parent)
               if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
                 return fields.push(
@@ -124,24 +123,20 @@ class CMSChoice extends Component {
             });
             break;
           case "ranges":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
 
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add field to render array
-              return fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <FPL fieldLabels={item.answer.range_categories} />
-                </>
-              );
-            }
+            // if (shouldDisplay(parentValue, item.context_data)) {
+            // Add field to render array
+            return fields.push(
+              <>
+                {/* <CMSRange item={item} mask="currency" numeric /> */}
+                <CMSRanges item={item} />
+              </>
+            );
+            // }
             break;
           case "money":
-            // Check if question (toMatch) matches the currently selected option (parent)
+            // Check if question matches the currently selected option (from parent)
 
             if (shouldDisplay(parentValue, item.context_data)) {
               // Add field to render array
@@ -172,7 +167,6 @@ class CMSChoice extends Component {
     return (
       <>
         <Choice
-          class="ds-c-choice"
           name={this.props.name}
           value={this.props.value}
           type={this.props.type}

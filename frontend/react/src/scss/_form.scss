@@ -1,6 +1,10 @@
 /**********************
   FORM
 **********************/
+.errors, .error {
+  color: #e31c3d;
+}
+
 .ds-c-label {
   max-width: 100%;
 }
@@ -103,10 +107,6 @@
   .date-range {
     border-left: 4px solid $brand-primary;
     padding-left: ($padding * 2);
-
-    .errors {
-      color: red;
-    }
   }
 
   .question-outer-header {
@@ -138,6 +138,21 @@
     margin: ($margin * 4) 0 0 0;
   }
 }
+
+.cmsranges {
+
+  h3 {
+    margin: 2.2rem 0 0 0;
+  }
+
+  .cmsranges-btn {
+    margin: 2.2rem 1.2rem 0 0;
+    min-height: 3rem;
+  }
+}
+
+.cmsranges-container,
+.cmsrange-container,
 .fpl-container {
   align-items: baseline;
   display: flex;
@@ -145,17 +160,30 @@
   position: relative;
   width: auto;
 
+  .cmsrange-input,
   .fpl-input {
     width: auto;
+
+    input {
+      text-indent: 12px;
+    }
   }
 
+  .cmsrange-percentage,
+  .cmsrange-currency,
   .fpl-percentage {
     position: absolute;
     right: 8px;
-    top: 58px;
+    bottom: 14px;
+  }
+
+  .cmsrange-currency {
+    right: auto;
+    left: 8px;
   }
 }
 
+.cmsrange-arrow,
 .fpl-arrow {
   align-self: flex-end;
   font-size: 1.8rem;

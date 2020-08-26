@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-
 class CMSLegend extends Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     // Create question number string
     let questionNumber;
@@ -26,5 +24,4 @@ class CMSLegend extends Component {
     );
   }
 }
-
 export default CMSLegend;

@@ -8,7 +8,7 @@ pipeline {
   parameters {
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_START', description: 'Destroy the current environment at the start of the build')
     booleanParam(defaultValue: true, name: 'DEPLOY', description: 'Deploy the application to Amazon')
-    booleanParam(defaultValue: true, name: 'RUN_TESTS', description: 'Run tests against the application')
+    booleanParam(defaultValue: false, name: 'RUN_TESTS', description: 'Run tests against the application')
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_END', description: 'Destroy the environment at the end.')
   }
   environment {
@@ -23,6 +23,7 @@ pipeline {
 
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           jenkinsUtils.installAwsCli()
+          jenkinsUtils.installEcsCli()
           jenkinsUtils.installTerraform("0.12.24")
 
           if( env.BUILD_NUMBER == "1" ) {
@@ -198,17 +199,54 @@ pipeline {
           dir('frontend/aws') {
             env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "application_endpoint")
           }
-          dir('tests/testcafe') {
+          dir('tests') {
             sh '''
               set -e
-              docker build . -t loaded_testcafe:${BRANCH_NAME} --build-arg application_endpoint=$APPLICATION_ENDPOINT
-              docker run --rm --name ${BRANCH_NAME} -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT loaded_testcafe:${BRANCH_NAME} chromium /tests/**/*.js
+              docker run --rm -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT -v $(pwd)/testcafe:/tests testcafe/testcafe chromium /tests/**/*.js
             '''
           }
         }
       }
     }
+<<<<<<< HEAD
 
+=======
+    stage("Run Inspec Scans") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          lock('docker_socket') {
+            jenkinsUtils.buildAndPushImageToEcr("saf/postgres_rds", "inspec_postgres_rds", [env.BUILD_TAG, env.JOB_BASE_NAME])
+          }
+          dir('saf/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+            jenkinsUtils.runInspecScan(
+              "postgres_rds",
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_task_definition_arn"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_cluster"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_subnets"),
+              jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "inspec_postgres_rds_security_group")
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'saf/aws/inspec_scan_result_*'
+          }
+        }
+      }
+    }
+>>>>>>> master
     stage("Destroy at the end") {
       when {
         expression { env.DESTROY_AT_THE_END == "true"}
