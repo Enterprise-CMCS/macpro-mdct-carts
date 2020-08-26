@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { extractSectionOrdinalFromJPExpr, selectFragmentByJsonPath, selectSectionByOrdinal } from "../../../store/formData";
+import { selectFragmentByJsonPath, winnowProperties } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
@@ -188,7 +188,7 @@ const QuestionLike = ({fragment, fragmentkey, setAnswer}) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  fragment: selectFragmentByJsonPath(state, ownProps.jpexpr),
+  fragment: winnowProperties(selectFragmentByJsonPath(state, ownProps.jpexpr)),
   fragmentkey: ownProps.fragmentkey,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
