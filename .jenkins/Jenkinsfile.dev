@@ -208,9 +208,9 @@ pipeline {
         }
       }
     }
-<<<<<<< HEAD
 
-=======
+
+
     stage("Run Inspec Scans") {
       when {
         expression { env.DEPLOY == "true"}
@@ -246,7 +246,7 @@ pipeline {
         }
       }
     }
->>>>>>> master
+
     stage("Destroy at the end") {
       when {
         expression { env.DESTROY_AT_THE_END == "true"}
