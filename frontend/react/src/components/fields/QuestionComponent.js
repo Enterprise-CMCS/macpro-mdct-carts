@@ -107,12 +107,6 @@ class QuestionComponent extends Component {
 
   handleChange(evt) {
     this.props.setAnswer(evt.target.name, evt);
-    // this.props.sectionContext([evt.target.name, evt.target.value]);
-
-    // this.setState({
-    //   [evt.target.name]: evt.target.value ? evt.target.value : null,
-    //   [evt.target.name + "Mod"]: true,
-    // });
   }
 
   handleChangeArray(evtArray) {
