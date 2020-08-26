@@ -321,11 +321,7 @@ class QuestionComponent extends Component {
                   name={question.id}
                   className="ds-c-input"
                   label=""
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
+                  value={question.answer.entry || ""}
                   errorMessage={
                     this.state[question.id + "Err"] === false
                       ? "Please enter numbers only"
