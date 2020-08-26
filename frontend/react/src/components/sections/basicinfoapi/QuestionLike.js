@@ -15,13 +15,13 @@ const validTelephoneRegex = RegExp(
   /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 );
 
-const TextFieldBase = ({ fragment, changeFunc, multiline = null, rows = null, ...fieldProps }) => {
+const TextFieldBase = ({ fragment, changeFunc, multiline = null, rows = null, marked = true, ...fieldProps }) => {
   const answer = fragment.answer
   return (
     <TextField
       name={fragment.id}
       hint={fragment.hint}
-      label={getLabelFromFragment(fragment)}
+      label={getLabelFromFragment(fragment, marked)}
       value={answer && answer.entry}
       onChange={_.partial(changeFunc, fragment.id)}
       type="text"
@@ -44,6 +44,10 @@ const QuestionText = ({ fragment, changeFunc }) => {
     </div>
   )
 };
+
+export const QuestionInteger = ({ fragment, changeFunc }) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} marked={false} size="small" numeric />
+);
 
 const QuestionTextSmall = ({ fragment, changeFunc }) => (
   <TextFieldBase fragment={fragment} changeFunc={changeFunc} />
@@ -115,14 +119,14 @@ const QuestionFieldset = ({ fragment, changeFunc }) => {
     return (
       <SynthesizedTable settings={fragment} changeFunc={changeFunc} />
     )
-  } else if (!fragment.fieldset_info && fragment.label) { //TODO: Would be great to have a "wrapper" fieldset_info type
+  } else if (!fragment.fieldset_info && fragment.label) { //TODO: Would be great to have a `wrapper` fieldset_info type
     return (
       <fieldset>
         <legend className="part__legend">{fragment.label}</legend>
         {
           fragment.questions.map(question => {
             const type = question.fieldset_type;
-            if (type === "marked") {
+            if (type === "marked") {  //TODO: Should know if I need to add `inputgrid` class once I know this question is marked.
               return (
                 <>
                   <label className="ds-c-label" >
@@ -131,10 +135,21 @@ const QuestionFieldset = ({ fragment, changeFunc }) => {
                   <span className="ds-c-field__hint">
                     {question.hint}
                   </span>
+                  {
+                    question.questions.map(field => {
+                      if (field.type === "integer") {
+                        return <QuestionInteger fragment={field} changeFunc={changeFunc} marked={false} />//TODO: Please group a-f, making Total field part of the `datagrid` type.
+                      }
+                      else if (field.fieldset_type === "datagrid") {
+                        return <InputGrid fragment={field.questions} marked={false} /> //TODO: Need to know earlier that this is a datagrid.
+                      }
+                      else return field.type;
+                    })
+                  }
                 </>
               )
             }
-            else return <h4>{type}</h4>
+            else return <h4>unmarked: {type}</h4>
           })
         }
       </fieldset>
@@ -188,9 +203,9 @@ const getMarkerFromId = (id) => {
   return null;
 }
 
-const getLabelFromFragment = (fragment) => {
+const getLabelFromFragment = (fragment, marked = true) => {
   const id = getQuestionLikeId(fragment);
-  if (id && fragment.label) {
+  if (id && fragment.label && marked) {
     const marker = getMarkerFromId(id);
     return `${marker}. ${fragment.label}`
   } else if (fragment.label) {
