@@ -16,6 +16,7 @@ class CMSRanges extends Component {
 
     this.newRanges = this.newRanges.bind(this);
     this.removeRanges = this.removeRanges.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
 
   componentDidMount() {
@@ -25,7 +26,7 @@ class CMSRanges extends Component {
       let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
       newRanges.push({
         id: 0,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} /></>,
+        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onBlur={this.onBlur} /></>,
       });
 
     })
@@ -34,6 +35,43 @@ class CMSRanges extends Component {
       [`ranges`]: this.state.ranges.concat(newRanges),
       [`rangesId`]: this.state.rangesId + 1,
     });
+  }
+
+  onBlur(evt) {
+    this.setState({ [evt[0]]: evt[1] })
+
+    let currentState = this.state;
+
+    let rangesArray = [];
+    for (const [key, value] of Object.entries(currentState)) {
+      let chunks = key.split("-");
+
+      // get all range values from state
+      if (chunks[0] === "range") {
+        rangesArray.push([key, value]);
+      }
+    }
+    // sort array alphabetically
+    rangesArray.sort();
+
+    let parentArray = [];
+
+    let k = 0;
+    for (let i = 0; i < rangesArray.length; i++) {
+      let chunks = rangesArray[i][0].split("-");
+
+      // For every other item in rangesArray add to parentArray
+      if (i % 2 === 0) {
+        if (rangesArray.length - 1 !== i) {
+          parentArray.push([rangesArray[i][1], rangesArray[i + 1][1]]);
+          k++
+        }
+      }
+    }
+
+    this.setState({ [this.props.item.id]: parentArray })
+    // Pass up to parent component
+    this.props.onChange([this.props.item.id, parentArray]);
   }
 
   /**
@@ -46,7 +84,7 @@ class CMSRanges extends Component {
       let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
       newRanges.push({
         id: this.state.rangesId,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} /></>,
+        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onBlur={this.onBlur} /></>,
       });
 
     })
