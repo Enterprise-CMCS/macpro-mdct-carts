@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     }
 
     domain_name = aws_s3_bucket.www.bucket_regional_domain_name
-    origin_id   =    "cartsfrontend-${terraform.workspace}"
+    origin_id   =    "cartsfrontendbucket-${terraform.workspace}"
   }
 
   enabled             = true
