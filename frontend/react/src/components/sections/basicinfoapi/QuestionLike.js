@@ -21,7 +21,7 @@ const TextFieldBase = ({ fragment, changeFunc, multiline = null, rows = null, ma
     <TextField
       name={fragment.id}
       hint={fragment.hint}
-      label={getLabelFromFragment(fragment, marked)}
+      label={getLabelFromFragment(fragment)}
       value={answer && answer.entry}
       onChange={_.partial(changeFunc, fragment.id)}
       type="text"
@@ -46,7 +46,7 @@ const QuestionText = ({ fragment, changeFunc }) => {
 };
 
 export const QuestionInteger = ({ fragment, changeFunc }) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} marked={false} size="small" numeric />
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} marked={true} size="small" numeric />
 );
 
 const QuestionTextSmall = ({ fragment, changeFunc }) => (
@@ -141,7 +141,7 @@ const QuestionFieldset = ({ fragment, changeFunc }) => {
                         return <QuestionInteger fragment={field} changeFunc={changeFunc} marked={false} />//TODO: Please group a-f, making Total field part of the `datagrid` type.
                       }
                       else if (field.fieldset_type === "datagrid") {
-                        return <InputGrid fragment={field.questions} marked={false} /> //TODO: Need to know earlier that this is a datagrid.
+                        return <InputGrid fragment={field.questions} /> //TODO: Need to know earlier that this is a datagrid.
                       }
                       else return field.type;
                     })

@@ -10,10 +10,7 @@ export const InputGrid = ({ fragment }) => {
             if (field.type === "integer") {
               return (
                 <div className="ds-l-col">
-                  <QuestionInteger fragment={field} />
-                  {
-                    console.log(field.questions)
-                  }
+                  <QuestionInteger fragment={field} marked={false} />
                 </div>
               )
             }
