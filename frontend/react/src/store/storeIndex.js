@@ -4,13 +4,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import formData from "./formData";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
-import section3 from "./section3";
+import saveMiddleware from "./saveMiddleware";
 
 // Consolidate reducers
 export const reducer = combineReducers({ formData, stateUser, global });
 
 // Consolidate middleware
-let middlewareArray = [thunkMiddleware];
+let middlewareArray = [thunkMiddleware, saveMiddleware];
 // log redux only in dev environment
 if (process.env.NODE_ENV === `development`) {
   const { logger } = require(`redux-logger`);
