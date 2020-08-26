@@ -11,4 +11,6 @@ then
     echo "PostgreSQL started"
 fi
 
+docker-compose run api_postgres sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py idempotent_fixtures"
+
 exec "$@"
