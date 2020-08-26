@@ -22,8 +22,10 @@ export default (sdata = initialState, action) => {
 
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
-  const section = state.formData.filter(c => c.contents.section.ordinal === ordinal);
-  if(section.length > 0) {
+  const section = state.formData.filter(
+    (c) => c.contents.section.ordinal === ordinal
+  );
+  if (section.length > 0) {
     return section[0].contents.section;
   }
   return null;
@@ -41,17 +43,10 @@ export const extractSectionOrdinalFromJPExpr = (jpexpr) => {
 };
 
 /**
-<<<<<<< HEAD
- * @param int year: full four-digit year.
- * @param int sectionOrdinal: just the digit; we don't expect it to have a leading zero here.
- * @param string subsectionMarker: a–z or aa–zz. Should be lowercase by the time it gets here.
- * @return string e.g. 2020-01-a.
-=======
  * @param {int} year: full four-digit year.
  * @param {int} sectionOrdinal: just the digit; we don't expect it to have a leading zero here.
  * @param {string} subsectionMarker: a–z or aa–zz. Should be lowercase by the time it gets here.
  * @returns {string} e.g. 2020-01-a.
->>>>>>> a329c01ebe188318c3efd9b4aa22e921024f327c
  */
 export const constructIdFromYearSectionAndSubsection = (
   year,
@@ -107,11 +102,11 @@ export const winnowProperties = (fragment) => {
   // Remove the property named key, then replace it with a list of objects containing only the ids of the original objects in the list.
   const winnow = (orig, key) => {
     let copy = _.omit(orig, [key]);
-    copy[key] = orig[key].map( (item) => item.id ? { id: item.id } : {})
+    copy[key] = orig[key].map((item) => (item.id ? { id: item.id } : {}));
     return copy;
-  }
+  };
 
-  // Check for subsections, parts, and questions, in that order. 
+  // Check for subsections, parts, and questions, in that order.
   const props = ["subsections", "parts", "questions"];
   for (let prop of props) {
     if (prop in fragment) {
@@ -120,7 +115,7 @@ export const winnowProperties = (fragment) => {
   }
 
   return fragment;
-}
+};
 
 // Generate subsection label including letter, ie: 'Section 3F'
 export const generateSubsectionLabel = (str) => {
