@@ -1,19 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import FPL from "../layout/FPL";
 import CMSChoice from "./CMSChoice";
-import CMSLegend from "./CMSLegend";
-import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
-import NumberFormat from "react-number-format";
+import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 
-import {
-  generateMoneyField,
-  generateRangeField,
-  generateRadioCheckField,
-  generateTextLongField,
-} from "../Utils/questionUtils";
-
-import { shouldDisplay } from "../Utils/helperFunctions";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 
@@ -139,7 +127,6 @@ class QuestionComponent extends Component {
   };
 
   render() {
-    let input;
     return (
       <>
         {this.props.data.map((question, index) => (
@@ -442,11 +429,4 @@ class QuestionComponent extends Component {
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
 
-const mapStateToProps = (state) => ({
-  name: state.stateUser.name,
-  year: state.global.formYear,
-  programType: state.stateUser.programType,
-  // section3FData: state.section3.questionData.section3FData,
-});
-
-export default connect(mapStateToProps)(QuestionComponent);
+export default QuestionComponent;
