@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import formData from './formData';
+import formData from "./formData";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
 import saveMiddleware from "./saveMiddleware";
