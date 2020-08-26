@@ -10,9 +10,6 @@ import {
   generateSubsectionLabel,
 } from "../../../store/formData";
 
-import Data from "./backend-json-section-3.json";
-const subsectionData = Data.section.subsections[4];
-
 class Section3EApi extends Component {
   constructor(props) {
     super(props);
@@ -32,16 +29,13 @@ class Section3EApi extends Component {
   render() {
     // this.props.Data includes all of section 3
     // This variable narrows it down to a subsection
-    // const subsectionData = this.props.Data
-    //   ? this.props.Data.section.subsections[4] // 3E JSON Data
-    //   : null;
+    const subsectionData = this.props.Data
+      ? this.props.Data.section.subsections[4] // 3E JSON Data
+      : null;
 
-    // const sectionTitle = this.props.Data
-    //   ? generateSubsectionLabel(subsectionData.id) // Section 3F title
-    //   : null;
-
-    //TEMPORARY
-    let sectionTitle = generateSubsectionLabel(subsectionData.id);
+    const sectionTitle = this.props.Data
+      ? generateSubsectionLabel(subsectionData.id) // Section 3F title
+      : null;
 
     return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
@@ -103,7 +97,7 @@ class Section3EApi extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  // Data: selectSectionByOrdinal(state, 3),
+  Data: selectSectionByOrdinal(state, 3),
   name: state.stateUser.name,
   year: state.global.formYear,
   programType: state.stateUser.programType,

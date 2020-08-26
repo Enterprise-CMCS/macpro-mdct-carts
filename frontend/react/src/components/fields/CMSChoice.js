@@ -22,7 +22,7 @@ class CMSChoice extends Component {
     // Set checkbox array of selected items
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
-    this.props.onChange([evt.target.name, evt.target.value])
+    this.props.onChange([evt.target.name, evt.target.value]);
   };
 
   render() {

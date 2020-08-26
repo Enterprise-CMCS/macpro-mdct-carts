@@ -30,6 +30,7 @@ class QuestionComponent extends Component {
     this.handleIntegerChange = this.handleIntegerChange.bind(this);
     this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
     this.validatePhone = this.validatePhone.bind(this);
+    this.handleCheckboxInput = this.handleCheckboxInput.bind(this);
   }
 
   validatePercentage(evt) {
@@ -121,6 +122,26 @@ class QuestionComponent extends Component {
     });
   }
 
+  handleCheckboxInput(evtArr) {
+    // An array of the checkbox items already selected, or an empty array
+    let selections = this.state[evtArr[0]] ?? [];
+
+    // If the current choice is already in state, find it's index in that array
+    // returns -1 if the choice isnt in the selections array
+    let alreadySelected = selections.indexOf(evtArr[1]);
+
+    // if its already there and it is being selected again, remove it
+    if (alreadySelected !== -1) {
+      selections.splice(alreadySelected, 1);
+    } else {
+      // if its not in the array of selections, add it
+      selections.push(evtArr[1]);
+    }
+
+    this.setState({ [evtArr[0]]: [...selections] });
+    this.props.sectionContext([[evtArr[0]], selections]);
+  }
+
   handleCheckboxFlag(evt) {
     this.props.sectionContext([evt.target.name, evt.target.checked]);
   }
@@ -166,7 +187,7 @@ class QuestionComponent extends Component {
                       question.label
                   : null}
               </legend>
-              {question.type === "radio" || question.type === "checkbox"
+              {question.type === "radio"
                 ? Object.entries(question.answer.options).map((key, index) => {
                     return (
                       <CMSChoice
@@ -179,6 +200,26 @@ class QuestionComponent extends Component {
                         children={question.questions}
                         valueFromParent={this.state[question.id]}
                         onChange={this.handleChangeArray}
+                        key={index}
+                        sectionContext={this.props.sectionContext}
+                      />
+                    );
+                  })
+                : null}
+
+              {question.type === "checkbox"
+                ? Object.entries(question.answer.options).map((key, index) => {
+                    return (
+                      <CMSChoice
+                        name={question.id}
+                        value={key[1]}
+                        label={key[0]}
+                        type={question.type}
+                        answer={question.answer.entry}
+                        conditional={question.conditional}
+                        children={question.questions}
+                        valueFromParent={this.state[question.id]}
+                        onChange={this.handleCheckboxInput}
                         key={index}
                         sectionContext={this.props.sectionContext}
                       />
@@ -245,7 +286,6 @@ class QuestionComponent extends Component {
                   <TextField
                     className="ds-c-input"
                     multiline
-                    name={question.id}
                     value={
                       this.state[question.id] || this.state[question.id + "Mod"]
                         ? this.state[question.id]
