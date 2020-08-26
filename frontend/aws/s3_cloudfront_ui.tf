@@ -72,4 +72,5 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     cloudfront_default_certificate = true
     ssl_support_method  = "sni-only"
   }
+ }
 }
