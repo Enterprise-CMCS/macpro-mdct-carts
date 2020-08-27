@@ -1,15 +1,18 @@
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
-import * as _ from "underscore";
+import { _ } from "underscore";
 
-const initialState = [ ];
+const initialState = [];
 
 export default (sdata = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       return action.data;
     case QUESTION_ANSWERED:
-      const fragment = selectFragmentById({formData: sdata}, action.fragmentId);
+      const fragment = selectFragmentById(
+        { formData: sdata },
+        action.fragmentId
+      );
       fragment.answer.entry = action.data;
       return JSON.parse(JSON.stringify(sdata));
     default:
@@ -24,7 +27,7 @@ export const selectSectionByOrdinal = (state, ordinal) => {
     return section[0].contents.section;
   }
   return null;
-}
+};
 
 export const extractSectionOrdinalFromId = (id) => {
   const chunks = id.split("-");
@@ -43,28 +46,43 @@ export const extractSectionOrdinalFromJPExpr = (jpexpr) => {
  * @param {string} subsectionMarker: a–z or aa–zz. Should be lowercase by the time it gets here.
  * @returns {string} e.g. 2020-01-a.
  */
-export const constructIdFromYearSectionAndSubsection= (year, sectionOrdinal, subsectionMarker) => {
-    const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
-    return [year, sectionChunk, subsectionMarker].join("-")
-}
+export const constructIdFromYearSectionAndSubsection = (
+  year,
+  sectionOrdinal,
+  subsectionMarker
+) => {
+  const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
+  if(subsectionMarker) {
+    return [year, sectionChunk, subsectionMarker].join("-");
+  } else {
+    return [year, sectionChunk].join("-");
+  }
+};
 
-export const extractJsonPathExpressionFromQuestionLike = (questionLikeId, parentId, index) => {
+export const extractJsonPathExpressionFromQuestionLike = (
+  questionLikeId,
+  parentId,
+  index
+) => {
   if (questionLikeId) {
     return `$..*[?(@.id=='${questionLikeId}')]`;
   } else {
     return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
   }
-}
+};
 
-export const selectFragmentByJsonPath = (state, expr, sectionOrdinal = false) => {
+export const selectFragmentByJsonPath = (
+  state,
+  expr,
+  sectionOrdinal = false
+) => {
   if (!sectionOrdinal) {
     sectionOrdinal = extractSectionOrdinalFromJPExpr(expr);
   }
-  const section = (selectSectionByOrdinal(state, sectionOrdinal));
+  const section = selectSectionByOrdinal(state, sectionOrdinal);
   // Note that the following assumes that there's only one matching result.
   const fragment = jsonpath.query(section, expr)[0];
   return fragment;
-
 };
 
 export const selectFragmentFromTarget = (target, expr) => {
@@ -82,15 +100,16 @@ export const selectFragmentById = (state, id) => {
 export const letterMarkers = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
     "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"
-]
+];
 
 export const selectFragment = (state, id = null, jp = null, index = null) => {
+  if (!state.formData || state.formData.length === 0) {
+      return null;
+  }
   if (!id && !jp) {
     return null;
   }
-  if (!id) {
-    id = jp.split("id=='")[1].split("'")[0];
-  }
+  id = id ? id : jp.split("id=='")[1].split("'")[0];
   const sectionOrdinal = extractSectionOrdinalFromId(id);
   const section = (selectSectionByOrdinal(state, sectionOrdinal));
   let targetObject = section;
@@ -126,7 +145,7 @@ export const selectFragment = (state, id = null, jp = null, index = null) => {
     jp = `$..*[?(@.id=='${id}')]`;
   }
   return selectFragmentFromTarget(targetObject, jp);
-}
+};
 
 /* /Helper functions for getting values from the JSON returned by the API */
 
@@ -155,4 +174,33 @@ export const winnowProperties = (fragment) => {
   }
 
   return fragment;
-}
+};
+
+// Generate subsection label including letter, ie: 'Section 3F'
+export const generateSubsectionLabel = (str) => {
+  let idArray = str.split("-");
+  let sectionNumber = Number(idArray[1]);
+  return `Section ${sectionNumber}${idArray[2]}`;
+};
+
+export const selectSectionTitle = (state, sectionId) => {
+  const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
+  const sectionTitles = jsonpath.query(state, jspath);
+  
+  if(sectionTitles.length) {
+    return sectionTitles[0];
+  }
+  return null;
+};
+
+export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
+  const subsection = selectFragment(state, subsectionId);
+
+  if(subsection) {
+    return {
+      parts: subsection.parts.map(part => part.id),
+      title: subsection.title
+    }
+  }
+  return null;
+};

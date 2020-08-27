@@ -44,11 +44,21 @@ class DateRange extends Component {
       let startDate = new Date(yearStart, monthStart - 1);
       let endDate = new Date(yearEnd, monthEnd - 1);
 
+      // The entry value for daterange must be sent to the server as an array of two strings
+      // The format must be an ISO 8601 Date format.
+      //Because we are only asking for month/year, the last digit is a placeholder of '01'
+      let payload = [
+        `${yearStart}-${monthStart}-01`,
+        `${yearEnd}-${monthEnd}-01`,
+      ];
+
       if (startDate > endDate) {
         chronologyError = true;
       } else {
         chronologyError = false;
+        this.props.sectionContext([this.props.question.id, payload]);
       }
+
       this.setState({
         endRangeErr: chronologyError,
       });
@@ -144,18 +154,22 @@ class DateRange extends Component {
     });
   }
 
+  sendToParent() {
+    // check that all four values are present
+    // if they are, send them to parent state
+  }
+
   render() {
     return (
       <Fragment>
         <div className="date-range" data-test="component-date-range">
-          <div className="errors">
-            {" "}
-            {this.state.endRangeErr === true ? (
-              <div> End date must come after start date</div>
-            ) : null}{" "}
-          </div>
           <div className="date-range-start">
-            <h3 className="question-inner-header"> Start </h3>
+            <h3 className="question-inner-header">
+              {" "}
+              {this.props.question.answer.labels[0]
+                ? this.props.question.answer.labels[0]
+                : "Start"}{" "}
+            </h3>
             <div className="ds-c-field__hint"> mm/yyyy</div>
             <div className="errors">
               {this.state.startErrorMessage.map((e, idx) => {
@@ -199,7 +213,12 @@ class DateRange extends Component {
           </div>
 
           <Fragment>
-            <h3 className="question-inner-header"> End </h3>
+            <h3 className="question-inner-header">
+              {" "}
+              {this.props.question.answer.labels[1]
+                ? this.props.question.answer.labels[1]
+                : "End"}{" "}
+            </h3>
             <div className="ds-c-field__hint"> mm/yyyy</div>
             <div className="errors">
               {this.state.endErrorMessage.map((e, idx) => {
@@ -240,6 +259,11 @@ class DateRange extends Component {
                     : this.state.yearEnd
                 }
               />
+            </div>
+            <div className="errors">
+              {this.state.endRangeErr === true ? (
+                <div> End date must come after start date</div>
+              ) : null}
             </div>
           </Fragment>
         </div>

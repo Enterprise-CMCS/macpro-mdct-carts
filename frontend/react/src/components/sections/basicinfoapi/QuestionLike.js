@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectFragment, winnowProperties } from "../../../store/formData";
+import {
+  selectFragment,
+  winnowProperties,
+} from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
 import { ChoiceList, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
@@ -8,69 +11,115 @@ import { _ } from "underscore";
 const validEmailRegex = RegExp(
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
 );
-  
+
 const validTelephoneRegex = RegExp(
   /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 );
 
-const TextFieldBase = ({fragment, changeFunc, multiline = null, rows = null, ...fieldProps}) => {
-    return (
+const TextFieldBase = ({
+  fragment,
+  changeFunc,
+  multiline = null,
+  rows = null,
+  ...fieldProps
+}) => {
+  return (
     <TextField
       name={fragment.id}
       hint={fragment.hint}
       label={getLabelFromFragment(fragment)}
-      value={fragment.answer.entry || ""}
+      value={(fragment.answer && fragment.answer.entry) || ""}
       onChange={_.partial(changeFunc, fragment.id)}
       type="text"
       multiline={multiline}
       rows={rows}
-      disabled={fragment.answer.readonly}
+      disabled={fragment.answer && fragment.answer.readonly}
       {...fieldProps}
     />
-);
-}
+  );
+};
 /* Question types */
 const QuestionText = ({fragment, changeFunc, ...fieldProps}) => {
-  const isNotReallyTextQuestion = fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
+  const isNotReallyTextQuestion =
+    fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
   const key = `qt-${fragment.id}`;
   return (
-
     <div className="test" key={key}>
       {isNotReallyTextQuestion}
-      <TextFieldBase fragment={fragment} changeFunc={changeFunc} {...fieldProps}/>
+      <TextFieldBase
+        fragment={fragment}
+        changeFunc={changeFunc}
+        {...fieldProps}
+      />
     </div>
-  )
+  );
 };
 
 const QuestionTextSmall = ({fragment, changeFunc, ...fieldProps}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} {...fieldProps}/>
+  <TextFieldBase
+    fragment={fragment}
+    changeFunc={changeFunc}
+    {...fieldProps}
+  />
 );
 
 const QuestionTextMedium = ({fragment, changeFunc, ...fieldProps}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={3} {...fieldProps}/>
+  <TextFieldBase
+    fragment={fragment}
+    changeFunc={changeFunc}
+    multiline={true}
+    rows={3}
+    {...fieldProps}
+  />
 );
 
 const QuestionTextMultiline = ({fragment, changeFunc, ...fieldProps}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} {...fieldProps}/>
+  <TextFieldBase
+    fragment={fragment}
+    changeFunc={changeFunc}
+    multiline={true}
+    rows={6}
+    {...fieldProps}
+  />
 );
 
 const QuestionTextMailingAddress = ({fragment, changeFunc, ...fieldProps}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={4} {...fieldProps}/>
+  <TextFieldBase
+    fragment={fragment}
+    changeFunc={changeFunc}
+    multiline={true}
+    rows={4}
+    {...fieldProps}
+  />
 );
 
 const QuestionTextEmail = ({fragment, changeFunc, ...fieldProps}) => {
   const valid = validEmailRegex.test(fragment.answer.entry);
-  const errorMessage = valid ? null : "YOUR EMAIL ADDRESS IS AN OFFENSE AGAINST THE INTERNET";
+  const errorMessage = valid
+    ? null
+    : "YOUR EMAIL ADDRESS IS AN OFFENSE AGAINST THE INTERNET";
   return (
-    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage} {...fieldProps}/>
+    <TextFieldBase
+      fragment={fragment}
+      changeFunc={changeFunc}
+      errorMessage={errorMessage}
+    {...fieldProps}
+    />
   );
-}
+};
 
 const QuestionTextPhone = ({fragment, changeFunc, ...fieldProps}) => {
   const valid = validTelephoneRegex.test(fragment.answer.entry);
-  const errorMessage = valid ? null : "WE'RE CALLING YOU RIGHT NOW BUT YOU'RE NOT ANSWERING";
+  const errorMessage = valid
+    ? null
+    : "WE'RE CALLING YOU RIGHT NOW BUT YOU'RE NOT ANSWERING";
   return (
-    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage} {...fieldProps}/>
+    <TextFieldBase
+      fragment={fragment}
+      changeFunc={changeFunc}
+      errorMessage={errorMessage}
+    {...fieldProps}
+    />
 );
 }
 
@@ -100,9 +149,13 @@ const QuestionChoiceList = ({fragment, changeFunc, ...fieldProps}) => {
 
 const QuestionRadioButtons = ({fragment, changeFunc, ...fieldProps}) => {
   return (
-    <QuestionChoiceList fragment={fragment} changeFunc={changeFunc}  {...fieldProps}/>
+    <QuestionChoiceList
+      fragment={fragment}
+      changeFunc={changeFunc}
+      {...fieldProps}
+    />
   )
-}
+};
 
 const QuestionCheckboxes = ({fragment, changeFunc, ...fieldProps}) => {
   const handleCheckboxesChange = (fragmentId, eventChange) => {
@@ -111,9 +164,13 @@ const QuestionCheckboxes = ({fragment, changeFunc, ...fieldProps}) => {
     return changeFunc(fragmentId, {target: {value: values}});
   }
   return (
-    <QuestionChoiceList fragment={fragment} changeFunc={handleCheckboxesChange} {...fieldProps}/>
+    <QuestionChoiceList
+      fragment={fragment}
+      changeFunc={handleCheckboxesChange}
+      {...fieldProps}
+    />
   )
-}
+};
 
 /* /Question types */
 
@@ -128,25 +185,34 @@ const QuestionMap = new Map([
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
   ["text_multiline", QuestionTextMultiline],
-])
+]);
 
 // Connect question types to functions via their types:
-const QuestionHolder = ({fragment, elementId, changeFunc}) => {
-  const Component = QuestionMap.has(fragment.type) ? QuestionMap.get(fragment.type) : QuestionMap.get("text");
+const QuestionHolder = ({ fragment, elementid, changeFunc }) => {
+  const Component = QuestionMap.has(fragment.type)
+    ? QuestionMap.get(fragment.type)
+    : QuestionMap.get("text");
   return (
-      <Component fragment={fragment} changeFunc={changeFunc} elementId={elementId} />
-  )
-}
+    <Component
+      fragment={fragment}
+      changeFunc={changeFunc}
+      elementid={elementid}
+    />
+  );
+};
 
 /* Helper functions for Questions */
 const getQuestionLikeId = (fragment) => {
   if (fragment.id) {
     return fragment.id;
-  } else if (fragment.type === "fieldset" && fragment.fieldset_type === "marked") {
+  } else if (
+    fragment.type === "fieldset" &&
+    fragment.fieldset_type === "marked"
+  ) {
     return fragment.fieldset_info.id;
   }
   return null;
-}
+};
 
 const getMarkerFromId = (id) => {
   if (id) {
@@ -156,23 +222,23 @@ const getMarkerFromId = (id) => {
     return marker;
   }
   return null;
-}
+};
 
 const getLabelFromFragment = (fragment) => {
   const id = getQuestionLikeId(fragment);
   if (id && fragment.label) {
     const marker = getMarkerFromId(id);
-    return `${marker}. ${fragment.label}`
+    return `${marker}. ${fragment.label}`;
   } else if (fragment.label) {
     return fragment.label;
   }
   return null;
-}
+};
 
 /* /Helper functions for Questions */
 
 // The generic function for questions and question-like constructs:
-const QuestionLike = ({fragment, fragmentkey, setAnswer}) => {
+const QuestionLike = ({ fragment, fragmentkey, setAnswer }) => {
   /* Debugging */
   const label = fragment.label ? <span>{fragment.label}</span> : <span></span>;
   const type = fragment.type ? <strong>{fragment.type}</strong> : <span></span>;
@@ -180,18 +246,21 @@ const QuestionLike = ({fragment, fragmentkey, setAnswer}) => {
   /* /Debugging */
 
   const fragmentId = getQuestionLikeId(fragment);
-  const elementId = fragmentId ? fragmentId : fragmentkey;
+  const elementid = fragmentId ? fragmentId : fragmentkey;
 
   return fragment ? (
-    <div id={elementId}>
-    {/* Debugging 
-    I am apparently a question-like thing of type {type} {label} {hint}
+    <div id={`div-${elementid}`}>
+      {/* Debugging
+        I am apparently a question-like thing of type {type} {label} {hint}
      /Debugging */}
-    <QuestionHolder fragment={fragment} elementId={elementId} changeFunc={setAnswer} />
+      <QuestionHolder
+        fragment={fragment}
+        elementid={elementid}
+        changeFunc={setAnswer}
+      />
     </div>
-
   ) : null;
-}
+};
 
 const mapStateToProps = (state, ownProps) => ({
   fragment: winnowProperties(selectFragment(state, null, ownProps.jpexpr)),
@@ -203,6 +272,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = {
-    setAnswer: setAnswerEntry
-}
+  setAnswer: setAnswerEntry,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionLike);
