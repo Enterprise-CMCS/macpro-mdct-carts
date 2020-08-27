@@ -5,7 +5,7 @@
     "essential": true,
     "environment": [
       {
-        "name": "API_URL",
+        "name": "REACT_APP_API_URL",
         "value": "${api_url}"
       }
     ],
