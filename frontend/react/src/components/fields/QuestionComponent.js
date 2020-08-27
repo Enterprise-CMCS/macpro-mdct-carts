@@ -1,21 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import FPL from "../layout/FPL";
 import CMSChoice from "./CMSChoice";
-import CMSLegend from "./CMSLegend";
-import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
-import NumberFormat from "react-number-format";
+import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 
-import {
-  generateMoneyField,
-  generateRangeField,
-  generateRadioCheckField,
-  generateTextLongField,
-} from "../Utils/questionUtils";
-
-import { shouldDisplay } from "../Utils/helperFunctions";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
+import { setAnswerEntry } from "../../actions/initial";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -116,12 +106,7 @@ class QuestionComponent extends Component {
   }
 
   handleChange(evt) {
-    this.props.sectionContext([evt.target.name, evt.target.value]);
-
-    this.setState({
-      [evt.target.name]: evt.target.value ? evt.target.value : null,
-      [evt.target.name + "Mod"]: true,
-    });
+    this.props.setAnswer(evt.target.name, evt);
   }
 
   handleChangeArray(evtArray) {
@@ -139,7 +124,6 @@ class QuestionComponent extends Component {
   };
 
   render() {
-    let input;
     return (
       <>
         {this.props.data.map((question, index) => (
@@ -181,11 +165,7 @@ class QuestionComponent extends Component {
                 <TextField
                   multiple
                   name={question.id}
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
+                  value={question.answer.entry || ''}
                   type="text"
                   onChange={this.handleChange}
                   label=""
@@ -218,11 +198,7 @@ class QuestionComponent extends Component {
                 <TextField
                   className="ds-c-input"
                   name={question.id}
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
+                  value={question.answer.entry || ''}
                   type="text"
                   onChange={this.handleChange}
                   label=""
@@ -236,11 +212,7 @@ class QuestionComponent extends Component {
                     className="ds-c-input"
                     multiline
                     name={question.id}
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
+                    value={question.answer.entry || null}
                     type="text"
                     name={question.id}
                     rows={3}
@@ -258,11 +230,7 @@ class QuestionComponent extends Component {
                     label=""
                     className="ds-c-input"
                     multiline
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
+                    value={question.answer.entry || ''}
                     type="text"
                     name={question.id}
                     rows="6"
@@ -442,11 +410,8 @@ class QuestionComponent extends Component {
 //TO-DO
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
 
-const mapStateToProps = (state) => ({
-  name: state.stateUser.name,
-  year: state.global.formYear,
-  programType: state.stateUser.programType,
-  // section3FData: state.section3.questionData.section3FData,
-});
+const mapDispatchToProps = {
+  setAnswer: setAnswerEntry
+};
 
-export default connect(mapStateToProps)(QuestionComponent);
+export default connect(null, mapDispatchToProps)(QuestionComponent);

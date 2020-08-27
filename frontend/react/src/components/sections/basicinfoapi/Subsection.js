@@ -1,32 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
-import { extractSectionOrdinalFromId, selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
+import { selectSubsectionTitleAndPartIDs } from "../../../store/formData";
 import Part from "./Part";
 
-const Subsection = ({ Data, fragment, subsectionId }) => {
-  const title = fragment.title ? <h2>{fragment.title}</h2> : <span></span>;
-  return Data? (
-    <div id={fragment.id}>
-    {title}
-    {fragment.parts.map((part) => (
-      <Part key={part.id} partId={part.id}/>
-    ))}
-    
-      
+const Subsection = ({ partIds, subsectionId, title }) => {
+  return (
+    <div id={subsectionId}>
+      <h2>{title}</h2>
+      {partIds.map((partId) => (
+        <Part key={partId} partId={partId} />
+      ))}
     </div>
+  );
+};
 
-  ) : null;
-}
-
-const mapStateToProps = (state, ownProps) => ({
-  fragment: selectFragmentById(state, ownProps.subsectionId),
-  subsectionId: ownProps.subsectionId,
-  abbr: state.stateUser.currentUser.state.id,
-  year: state.global.formYear,
-  Data: selectSectionByOrdinal(state, extractSectionOrdinalFromId(ownProps.subsectionId)),
-  programType: state.stateUser.programType,
-  programName: state.stateUser.programName,
-});
+const mapStateToProps = (state, ownProps) => {
+  const subsection = selectSubsectionTitleAndPartIDs(
+    state,
+    ownProps.subsectionId
+  );
+  return {
+    partIds: subsection ? subsection.parts : [],
+    title: subsection ? subsection.title : null,
+  };
+};
 
 export default connect(mapStateToProps)(Subsection);
-
