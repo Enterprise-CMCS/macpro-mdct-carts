@@ -85,24 +85,45 @@ export const selectFragmentByJsonPath = (
   return fragment;
 };
 
-export const selectFragmentFromTarget = (target, expr) => {
-  const fragment = jsonpath.query(target, expr)[0];
-  return fragment;
-
-};
-
 export const selectFragmentById = (state, id) => {
   const sectionOrdinal = extractSectionOrdinalFromId(id);
   const jpexpr = `$..*[?(@.id=='${id}')]`;
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
-}
+};
 
+/*
+ * Letter markers go from a to z, and then from aa to zz although we all hope
+ * that will never be needed.
+ */
 export const letterMarkers = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
     "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"
 ];
 
-export const selectFragment = (state, id = null, jp = null, index = null) => {
+/**
+ * Selects a fragment from a given object using the jsonpath expression passed in.
+ * Assumes there's only one matching result and returns it.
+ * @param {Object} target - the data structure to be searched.
+ * @param {strign} expr - the JSONPath expression to be used to search.
+ */
+export const selectFragmentFromTarget = (target, expr) => {
+  const results = jsonpath.query(target, expr);
+  return results.length ? results[0] : null;
+};
+
+/**
+ * Selects a fragment from state if given an id or a JSONPath expression.  Does
+ * this more efficiently than selectFragmentById or selectFragmentByJsonPath,
+ * by using knowledge of how this particular JSON is structured to take a lot
+ * of shortcuts.
+ * If id isn't supplied, jp must contain an id lookup in it, as this function
+ * depends on being able to use knowledge of how ids correspond to the data
+ * structure.
+ * @param {Object} state - the overall state object. If this doesn't have the formData property, or it's an empty array, returns null.
+ * @param {string} id - The id of what we're looking for, e.g. 2020-01-a-01-01-a-01.
+ * @param {string} jp - JSONPath expression, although if id is not supplied it must be a JSONPath expression with an id lookup in it.
+ */
+export const selectFragment = (state, id = null, jp = null) => {
   if (!state.formData || state.formData.length === 0) {
       return null;
   }
@@ -132,7 +153,7 @@ export const selectFragment = (state, id = null, jp = null, index = null) => {
     // id of e.g. (2020-01-)a-01-01-a means our target is the fragment's parent, question 01 (although it could also be an objective, etc.):
     targetObject = targetObject.questions[Number(chunks[2]) - 1];
   } else {
-    //if it's just two chunks it's a question, so:
+    //if it's just three chunks it's a question, so:
     return targetObject.questions[Number(chunks[2]) - 1];
   }
   if (chunks.length >= 5 && letterMarkers.includes(chunks[3])) {
