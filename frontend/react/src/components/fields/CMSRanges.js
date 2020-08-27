@@ -16,7 +16,7 @@ class CMSRanges extends Component {
 
     this.newRanges = this.newRanges.bind(this);
     this.removeRanges = this.removeRanges.bind(this);
-    this.onBlur = this.onBlur.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class CMSRanges extends Component {
       let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
       newRanges.push({
         id: 0,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onBlur={this.onBlur} /></>,
+        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
       });
 
     })
@@ -37,41 +37,53 @@ class CMSRanges extends Component {
     });
   }
 
-  onBlur(evt) {
-    this.setState({ [evt[0]]: evt[1] })
+  onChange(evt) {
 
-    let currentState = this.state;
+    // Use callback for additional processing
+    this.setState({ [evt[0]]: evt[1] }, () => {
 
-    let rangesArray = [];
-    for (const [key, value] of Object.entries(currentState)) {
-      let chunks = key.split("-");
+      let currentState = this.state;
 
-      // get all range values from state
-      if (chunks[0] === "range") {
-        rangesArray.push([key, value]);
-      }
-    }
-    // sort array alphabetically
-    rangesArray.sort();
+      let rangesArray = [];
+      for (const [key, value] of Object.entries(currentState)) {
+        let chunks = key.split("-");
 
-    let parentArray = [];
-
-    let k = 0;
-    for (let i = 0; i < rangesArray.length; i++) {
-      let chunks = rangesArray[i][0].split("-");
-
-      // For every other item in rangesArray add to parentArray
-      if (i % 2 === 0) {
-        if (rangesArray.length - 1 !== i) {
-          parentArray.push([rangesArray[i][1], rangesArray[i + 1][1]]);
-          k++
+        // get all range values from state
+        if (chunks[0] === "range") {
+          rangesArray.push([key, value]);
         }
       }
-    }
+      // sort array alphabetically
+      rangesArray.sort();
 
-    this.setState({ [this.props.item.id]: parentArray })
-    // Pass up to parent component
-    this.props.onChange([this.props.item.id, parentArray]);
+      let parentArray = [];
+
+      // Loop through all ranges
+      for (let i = 0; i < rangesArray.length; i++) {
+        let tempArray = [];
+
+        // Loop through all ranges again
+        for (let k = 0; k < rangesArray.length; k++) {
+
+          // Get current iteration from state name
+          let chunk = rangesArray[k][0].split("-")[1];
+
+          // If current iteration matches chunk from state name
+          if (Number(i) === Number(chunk)) {
+            tempArray.push(rangesArray[k][1]);
+          }
+        }
+
+        // If temparray has values, add to parent array
+        if (tempArray.length > 0) {
+          parentArray.push(tempArray);
+        }
+      }
+
+      this.setState({ [this.props.item.id]: parentArray })
+      // Pass up to parent component
+      this.props.onChange([this.props.item.id, parentArray]);
+    })
   }
 
   /**
@@ -84,7 +96,7 @@ class CMSRanges extends Component {
       let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
       newRanges.push({
         id: this.state.rangesId,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onBlur={this.onBlur} /></>,
+        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
       });
 
     })

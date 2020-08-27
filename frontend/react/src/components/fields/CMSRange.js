@@ -32,7 +32,7 @@ class CMSRange extends Component {
       [`${evt.target.name}`]: numericValue,
     });
 
-    this.props.onBlur([`${evt.target.name}`, numericValue])
+    this.props.onChange([`${evt.target.name}`, numericValue]);
   }
 
   render() {
@@ -53,7 +53,7 @@ class CMSRange extends Component {
                 type="text"
                 name={`range-${[this.props.index]}-a`}
                 inputRef={(start) => (this.start = start)}
-                onBlur={this.calculateRanges}
+                onChange={this.calculateRanges}
                 value={this.state.rangeStartsAt}
               />
               <div
@@ -74,7 +74,7 @@ class CMSRange extends Component {
                 type="text"
                 name={`range-${[this.props.index]}-b`}
                 inputRef={(end) => (this.end = end)}
-                onBlur={this.calculateRanges}
+                onChange={this.calculateRanges}
                 value={this.state.rangeEndsAt}
               />
               <div
