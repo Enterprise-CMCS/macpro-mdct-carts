@@ -1,14 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-  selectFragmentByJsonPath,
+  selectFragment,
   winnowProperties,
 } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
+<<<<<<< HEAD
 import { SynthesizedTable } from "./../../layout/SynthesizedTable";
 import { InputGrid } from "./../../fields/InputGrid";
 import { Fieldset } from "./../../layout/Fieldset";
 import { Choice, TextField } from "@cmsgov/design-system-core";
+=======
+import { ChoiceList, TextField } from "@cmsgov/design-system-core";
+>>>>>>> master
 import { _ } from "underscore";
 
 const validEmailRegex = RegExp(
@@ -44,7 +48,11 @@ const TextFieldBase = ({
 };
 
 /* Question types */
+<<<<<<< HEAD
 const QuestionText = ({ fragment, changeFunc, ...fieldProps }) => {
+=======
+const QuestionText = ({fragment, changeFunc, ...fieldProps}) => {
+>>>>>>> master
   const isNotReallyTextQuestion =
     fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
   const key = `qt-${fragment.id}`;
@@ -60,42 +68,54 @@ const QuestionText = ({ fragment, changeFunc, ...fieldProps }) => {
   );
 };
 
+<<<<<<< HEAD
 export const QuestionInteger = ({ fragment, changeFunc, ...props }) => (
   <TextFieldBase fragment={fragment} changeFunc={changeFunc} size="small" numeric {...props} />
 );
 
 const QuestionTextSmall = ({ fragment, changeFunc }) => (
   <TextFieldBase fragment={fragment} changeFunc={changeFunc} />
+=======
+const QuestionTextSmall = ({fragment, changeFunc, ...fieldProps}) => (
+  <TextFieldBase
+    fragment={fragment}
+    changeFunc={changeFunc}
+    {...fieldProps}
+  />
+>>>>>>> master
 );
 
-const QuestionTextMedium = ({ fragment, changeFunc }) => (
+const QuestionTextMedium = ({fragment, changeFunc, ...fieldProps}) => (
   <TextFieldBase
     fragment={fragment}
     changeFunc={changeFunc}
     multiline={true}
     rows={3}
+    {...fieldProps}
   />
 );
 
-const QuestionTextMultiline = ({ fragment, changeFunc }) => (
+const QuestionTextMultiline = ({fragment, changeFunc, ...fieldProps}) => (
   <TextFieldBase
     fragment={fragment}
     changeFunc={changeFunc}
     multiline={true}
     rows={6}
+    {...fieldProps}
   />
 );
 
-const QuestionTextMailingAddress = ({ fragment, changeFunc }) => (
+const QuestionTextMailingAddress = ({fragment, changeFunc, ...fieldProps}) => (
   <TextFieldBase
     fragment={fragment}
     changeFunc={changeFunc}
     multiline={true}
     rows={4}
+    {...fieldProps}
   />
 );
 
-const QuestionTextEmail = ({ fragment, changeFunc }) => {
+const QuestionTextEmail = ({fragment, changeFunc, ...fieldProps}) => {
   const valid = validEmailRegex.test(fragment.answer.entry);
   const errorMessage = valid
     ? null
@@ -105,11 +125,12 @@ const QuestionTextEmail = ({ fragment, changeFunc }) => {
       fragment={fragment}
       changeFunc={changeFunc}
       errorMessage={errorMessage}
+    {...fieldProps}
     />
   );
 };
 
-const QuestionTextPhone = ({ fragment, changeFunc }) => {
+const QuestionTextPhone = ({fragment, changeFunc, ...fieldProps}) => {
   const valid = validTelephoneRegex.test(fragment.answer.entry);
   const errorMessage = valid
     ? null
@@ -119,16 +140,53 @@ const QuestionTextPhone = ({ fragment, changeFunc }) => {
       fragment={fragment}
       changeFunc={changeFunc}
       errorMessage={errorMessage}
+    {...fieldProps}
     />
-  );
-};
+);
+}
 
-const QuestionRadio = ({ fragment, changeFunc }) => {
-  return <QuestionCheckbox fragment={fragment} changeFunc={changeFunc} />;
-};
+const QuestionChoiceList = ({fragment, changeFunc, ...fieldProps}) => {
+  const buildChoice = (entry, options, key) => {
+    let choice = {label: key, value: options[key]};
+    let isChecked = (choice.value === entry) || (entry && entry.includes && entry.includes(choice.value));
+    choice["checked"] = (!_.isUndefined(isChecked) && !_.isNull(isChecked)) ? isChecked : false;
+    return choice;
+  }
+  const choices = Object.keys(fragment.answer.options).map((k) => buildChoice(fragment.answer.entry, fragment.answer.options, k));
 
-const QuestionCheckbox = ({ fragment, changeFunc }) => {
   return (
+    <ChoiceList
+      label={fragment.label}
+      hint={fragment.hint}
+      name={fragment.id}
+      type={fragment.type}
+      choices={choices}
+      onChange={_.partial(changeFunc, fragment.id)}
+      disabled={fragment.answer.readonly}
+      {...fieldProps}
+    >
+    </ChoiceList>
+  )
+}
+
+const QuestionRadioButtons = ({fragment, changeFunc, ...fieldProps}) => {
+  return (
+    <QuestionChoiceList
+      fragment={fragment}
+      changeFunc={changeFunc}
+      {...fieldProps}
+    />
+  )
+};
+
+const QuestionCheckboxes = ({fragment, changeFunc, ...fieldProps}) => {
+  const handleCheckboxesChange = (fragmentId, eventChange) => {
+    const inputs = Array.from(document.querySelectorAll(`[name='${eventChange.target.name}']`));
+    const values = inputs.filter(input => input.checked).map(input => input.value);
+    return changeFunc(fragmentId, {target: {value: values}});
+  }
+  return (
+<<<<<<< HEAD
     <>
       <legend className="ds-c-label">{getLabelFromFragment(fragment)}</legend>
       {Object.entries(fragment.answer.options).map((key, index) => {
@@ -164,16 +222,25 @@ const QuestionFieldset = ({ fragment, changeFunc }) => {
   } else return <fieldset>lonely fieldset</fieldset>
 }
 
+=======
+    <QuestionChoiceList
+      fragment={fragment}
+      changeFunc={handleCheckboxesChange}
+      {...fieldProps}
+    />
+  )
+};
+>>>>>>> master
 
 /* /Question types */
 
 // Map question types to functions:
 const QuestionMap = new Map([
-  ["checkbox", QuestionCheckbox],
+  ["checkbox", QuestionCheckboxes],
   ["email", QuestionTextEmail],
   ["mailing_address", QuestionTextMailingAddress],
   ["phone_number", QuestionTextPhone],
-  ["radio", QuestionRadio],
+  ["radio", QuestionRadioButtons],
   ["text", QuestionText],
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
@@ -182,7 +249,11 @@ const QuestionMap = new Map([
 ])
 
 // Connect question types to functions via their types:
+<<<<<<< HEAD
 const QuestionHolder = ({ fragment, elementid, changeFunc, ...fieldProps }) => {
+=======
+const QuestionHolder = ({ fragment, elementid, changeFunc, ...fieldProps}) => {
+>>>>>>> master
   const Component = QuestionMap.has(fragment.type)
     ? QuestionMap.get(fragment.type)
     : QuestionMap.get("text");
@@ -206,7 +277,10 @@ const getQuestionLikeId = (fragment) => {
   ) {
     return fragment.fieldset_info.id;
   }
+<<<<<<< HEAD
   console.log("Fieldset", fragment);
+=======
+>>>>>>> master
   return null;
 };
 
@@ -242,16 +316,16 @@ const QuestionLike = ({ fragment, fragmentkey, setAnswer }) => {
   /* /Debugging */
 
   const fragmentId = getQuestionLikeId(fragment);
-  const elementId = fragmentId ? fragmentId : fragmentkey;
+  const elementid = fragmentId ? fragmentId : fragmentkey;
 
   return fragment ? (
-    <div id={elementId}>
+    <div id={`div-${elementid}`}>
       {/* Debugging
-    I am apparently a question-like thing of type {type} {label} {hint}
+        I am apparently a question-like thing of type {type} {label} {hint}
      /Debugging */}
       <QuestionHolder
         fragment={fragment}
-        elementId={elementId}
+        elementid={elementid}
         changeFunc={setAnswer}
       />
     </div>
@@ -259,7 +333,7 @@ const QuestionLike = ({ fragment, fragmentkey, setAnswer }) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  fragment: winnowProperties(selectFragmentByJsonPath(state, ownProps.jpexpr)),
+  fragment: winnowProperties(selectFragment(state, null, ownProps.jpexpr)),
   fragmentkey: ownProps.fragmentkey,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,

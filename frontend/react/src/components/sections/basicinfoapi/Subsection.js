@@ -19,7 +19,6 @@ const mapStateToProps = (state, ownProps) => {
     state,
     ownProps.subsectionId
   );
-
   return {
     partIds: subsection ? subsection.parts : [],
     title: subsection ? subsection.title : null,
