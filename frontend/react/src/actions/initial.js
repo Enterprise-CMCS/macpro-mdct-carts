@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
+export const QUESTION_FORMATTED = "QUESTION_FORMATTED";
 
 export const loadSections = () => {
   return async (dispatch) => {
@@ -23,7 +24,7 @@ export const setAnswerEntry = (fragmentId, eventChange) => {
 // Move this to where actions should go when we know where that is.
 export const setFormattedAnswerEntry = (fragmentId, input) => {
   return {
-    type: QUESTION_ANSWERED,
+    type: QUESTION_FORMATTED,
     fragmentId: fragmentId,
     data: input,
   };

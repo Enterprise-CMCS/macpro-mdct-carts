@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
+import { QUESTION_FORMATTED } from "../actions/initial";
 
 const saveMiddleware = () => {
   let isSaving = false;
@@ -71,6 +72,9 @@ const saveMiddleware = () => {
     const result = next(action);
     switch (action.type) {
       case QUESTION_ANSWERED:
+        runSave(action);
+        break;
+      case QUESTION_FORMATTED:
         runSave(action);
         break;
       default:
