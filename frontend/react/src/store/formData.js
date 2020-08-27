@@ -1,5 +1,6 @@
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
+import * as _ from "underscore";
 
 const initialState = [];
 
@@ -21,11 +22,9 @@ export default (sdata = initialState, action) => {
 
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
-  const section = state.formData.filter(
-    (c) => c.contents.section.ordinal === ordinal
-  );
-  if (section.length > 0) {
-    return section[0].contents;
+  const section = state.formData.filter(c => c.contents.section.ordinal === ordinal);
+  if(section.length > 0) {
+    return section[0].contents.section;
   }
   return null;
 };
@@ -42,10 +41,10 @@ export const extractSectionOrdinalFromJPExpr = (jpexpr) => {
 };
 
 /**
- * @param int year: full four-digit year.
- * @param int sectionOrdinal: just the digit; we don't expect it to have a leading zero here.
- * @param string subsectionMarker: a–z or aa–zz. Should be lowercase by the time it gets here.
- * @return string e.g. 2020-01-a.
+ * @param {int} year: full four-digit year.
+ * @param {int} sectionOrdinal: just the digit; we don't expect it to have a leading zero here.
+ * @param {string} subsectionMarker: a–z or aa–zz. Should be lowercase by the time it gets here.
+ * @returns {string} e.g. 2020-01-a.
  */
 export const constructIdFromYearSectionAndSubsection = (
   year,
@@ -88,6 +87,33 @@ export const selectFragmentById = (state, id) => {
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 };
 /* /Helper functions for getting values from the JSON returned by the API */
+
+/**
+ * @param {Object} fragment: the fragment we want to turn into a shallower tree.
+ * @returns {Object} The shallower-tree version of the fragment.
+ */
+export const winnowProperties = (fragment) => {
+  if (!fragment) {
+    return null;
+  }
+
+  // Remove the property named key, then replace it with a list of objects containing only the ids of the original objects in the list.
+  const winnow = (orig, key) => {
+    let copy = _.omit(orig, [key]);
+    copy[key] = orig[key].map( (item) => item.id ? { id: item.id } : {})
+    return copy;
+  }
+
+  // Check for subsections, parts, and questions, in that order. 
+  const props = ["subsections", "parts", "questions"];
+  for (let prop of props) {
+    if (prop in fragment) {
+      return winnow(fragment, prop);
+    }
+  }
+
+  return fragment;
+}
 
 // Generate subsection label including letter, ie: 'Section 3F'
 export const generateSubsectionLabel = (str) => {

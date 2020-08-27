@@ -53,7 +53,9 @@ A PR must be reviewed and approved by someone other than the submitter. When the
     Currently only Sections 1, 2, 3 (incomplete) and 5 are available, and only mock data for AK, AZ, and MA is available.
 
     Append `?format=json` to the URLs to get bare JSON.
-
+7. Available Routes:
+   - `/sections/:year/:sectionOrdinal/:subsectionMarker` e.g. `http://localhost:81/sections/2020/3/c`
+   - `/sections/:year/:sectionOrdinal/` e.g. `http://localhost:81/sections/2020/3`
 
 ### Running the React Test Suite
 
