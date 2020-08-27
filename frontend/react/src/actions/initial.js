@@ -14,18 +14,14 @@ export const loadSections = () => {
 };
 
 // Move this to where actions should go when we know where that is.
-export const setAnswerEntry = (fragmentId, eventChange) => {
+export const setAnswerEntry = (fragmentId, something) => {
+  const value =
+    something.target && something.target.value
+      ? something.target.value
+      : something;
   return {
     type: QUESTION_ANSWERED,
     fragmentId: fragmentId,
-    data: eventChange.target.value,
-  };
-};
-// Move this to where actions should go when we know where that is.
-export const setFormattedAnswerEntry = (fragmentId, input) => {
-  return {
-    type: QUESTION_FORMATTED,
-    fragmentId: fragmentId,
-    data: input,
+    data: value,
   };
 };

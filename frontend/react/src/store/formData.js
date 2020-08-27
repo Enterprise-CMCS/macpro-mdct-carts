@@ -1,6 +1,6 @@
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
-import * as _ from "underscore";
+import { _ } from "underscore";
 
 import { selectQuestion } from './selectors'
 
@@ -56,7 +56,11 @@ export const constructIdFromYearSectionAndSubsection = (
   subsectionMarker
 ) => {
   const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
-  return [year, sectionChunk, subsectionMarker].join("-");
+  if(subsectionMarker) {
+    return [year, sectionChunk, subsectionMarker].join("-");
+  } else {
+    return [year, sectionChunk].join("-");
+  }
 };
 
 export const extractJsonPathExpressionFromQuestionLike = (
@@ -90,6 +94,84 @@ export const selectFragmentById = (state, id) => {
   const jpexpr = `$..*[?(@.id=='${id}')]`;
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 };
+
+/*
+ * Letter markers go from a to z, and then from aa to zz although we all hope
+ * that will never be needed.
+ */
+export const letterMarkers = [
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"
+];
+
+/**
+ * Selects a fragment from a given object using the jsonpath expression passed in.
+ * Assumes there's only one matching result and returns it.
+ * @param {Object} target - the data structure to be searched.
+ * @param {strign} expr - the JSONPath expression to be used to search.
+ */
+export const selectFragmentFromTarget = (target, expr) => {
+  const results = jsonpath.query(target, expr);
+  return results.length ? results[0] : null;
+};
+
+/**
+ * Selects a fragment from state if given an id or a JSONPath expression.  Does
+ * this more efficiently than selectFragmentById or selectFragmentByJsonPath,
+ * by using knowledge of how this particular JSON is structured to take a lot
+ * of shortcuts.
+ * If id isn't supplied, jp must contain an id lookup in it, as this function
+ * depends on being able to use knowledge of how ids correspond to the data
+ * structure.
+ * @param {Object} state - the overall state object. If this doesn't have the formData property, or it's an empty array, returns null.
+ * @param {string} id - The id of what we're looking for, e.g. 2020-01-a-01-01-a-01.
+ * @param {string} jp - JSONPath expression, although if id is not supplied it must be a JSONPath expression with an id lookup in it.
+ */
+export const selectFragment = (state, id = null, jp = null) => {
+  if (!state.formData || state.formData.length === 0) {
+      return null;
+  }
+  if (!id && !jp) {
+    return null;
+  }
+  id = id ? id : jp.split("id=='")[1].split("'")[0];
+  const sectionOrdinal = extractSectionOrdinalFromId(id);
+  const section = (selectSectionByOrdinal(state, sectionOrdinal));
+  let targetObject = section;
+  let chunks = id.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
+  if (chunks.length >= 2) {
+    // id of e.g. (2020-01-)a-01 means our target is the fragment's parent, subsection a:
+    targetObject = targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+  } else {
+    // if it's just one chunk, it's a subsection, so:
+    return targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+  }
+  if (chunks.length >= 3) {
+    // id of e.g. (2020-01-)a-01-01 means our target is the fragment's parent, part 01:
+    targetObject = targetObject.parts[Number(chunks[1]) - 1];
+  } else {
+    //if it's just two chunks it's a part, so:
+    return targetObject.parts[Number(chunks[1]) - 1];
+  }
+  if (chunks.length >= 4) {
+    // id of e.g. (2020-01-)a-01-01-a means our target is the fragment's parent, question 01 (although it could also be an objective, etc.):
+    targetObject = targetObject.questions[Number(chunks[2]) - 1];
+  } else {
+    //if it's just three chunks it's a question, so:
+    return targetObject.questions[Number(chunks[2]) - 1];
+  }
+  if (chunks.length >= 5 && letterMarkers.includes(chunks[3])) {
+    // id of e.g. (2020-01-)a-01-01-a-01 means our target is the fragment's parent, question a:
+    targetObject = targetObject.questions[letterMarkers.indexOf(chunks[3])];
+  }
+  // TODO: account for objectives/repeatables here.
+
+  if (!jp) {
+    jp = `$..*[?(@.id=='${id}')]`;
+  }
+  return selectFragmentFromTarget(targetObject, jp);
+};
+
 /* /Helper functions for getting values from the JSON returned by the API */
 
 /**
@@ -124,4 +206,26 @@ export const generateSubsectionLabel = (str) => {
   let idArray = str.split("-");
   let sectionNumber = Number(idArray[1]);
   return `Section ${sectionNumber}${idArray[2]}`;
+};
+
+export const selectSectionTitle = (state, sectionId) => {
+  const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
+  const sectionTitles = jsonpath.query(state, jspath);
+  
+  if(sectionTitles.length) {
+    return sectionTitles[0];
+  }
+  return null;
+};
+
+export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
+  const subsection = selectFragment(state, subsectionId);
+
+  if(subsection) {
+    return {
+      parts: subsection.parts.map(part => part.id),
+      title: subsection.title
+    }
+  }
+  return null;
 };

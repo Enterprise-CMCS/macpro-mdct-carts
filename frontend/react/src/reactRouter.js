@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useParams,
+} from "react-router-dom";
 import { constructIdFromYearSectionAndSubsection } from "./store/formData";
 import Homepage from "./components/sections/homepage/Homepage";
 import BasicInfo from "./components/sections/basicInfo/BasicInfo";
@@ -47,8 +52,14 @@ const Routes = () => (
           <Route exact path="/section3F-api" component={Section3FApi} />
           <Route exact path="/section3E-api" component={Section3EApi} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
-          <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker" children={<InvokeSection />} />
-          <Route path="/sections/:year/:sectionOrdinal" children={<InvokeSection />} />
+          <Route
+            path="/sections/:year/:sectionOrdinal/:subsectionMarker"
+            children={<InvokeSection />}
+          />
+          <Route
+            path="/sections/:year/:sectionOrdinal"
+            children={<InvokeSection />}
+          />
           <Route exact path="/test" component={test} />
         </Switch>
       </div>
@@ -57,14 +68,20 @@ const Routes = () => (
 );
 
 const InvokeSection = () => {
-  let {year, sectionOrdinal, subsectionMarker} = useParams();
-  const filteredMarker = subsectionMarker ? subsectionMarker.toLowerCase() : "a";
-  console.log(filteredMarker);
-  const fragmentId = constructIdFromYearSectionAndSubsection(Number(year), Number(sectionOrdinal), filteredMarker);
-  return (
-    <Section fragmentId={fragmentId} />
-  )
-
-}
+  let { year, sectionOrdinal, subsectionMarker } = useParams();
+  const filteredMarker = subsectionMarker
+    ? subsectionMarker.toLowerCase()
+    : "a";
+  const sectionId = constructIdFromYearSectionAndSubsection(
+    Number(year),
+    Number(sectionOrdinal)
+  );
+  const subsectionId = constructIdFromYearSectionAndSubsection(
+    Number(year),
+    Number(sectionOrdinal),
+    filteredMarker
+  );
+  return <Section sectionId={sectionId} subsectionId={subsectionId} />;
+};
 
 export default Routes;

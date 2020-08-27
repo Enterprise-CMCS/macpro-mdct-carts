@@ -822,32 +822,8 @@
                         ]
                       },
                       {
-                        "comment": "This is the first real question so far in this part…",
-                        "type": "question",
-                        "id": "2020-03-c-04-01-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "1a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "1b–1e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -863,6 +839,30 @@
                           }
                         },
                         "questions": [
+                          {
+                            "comment": "This is the first real question so far in this part…",
+                            "type": "question",
+                            "id": "2020-03-c-04-01-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "1a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-01-b",
@@ -920,31 +920,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-02-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "2a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "2b–2e omitted because you indicated that don't you have the age range breakdown data available.",
                           "conditional_display": {
@@ -960,6 +937,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-02-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "2a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-02-b",
@@ -1009,31 +1009,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-03-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "3a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "3b–3e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -1049,6 +1026,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-03-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "3a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-03-b",
@@ -1094,31 +1094,8 @@
                             },
                             "questions": [
                               {
-                                "type": "question",
-                                "id": "2020-03-c-04-03-f-01",
-                                "label": "Total for all ages",
-                                "type": "integer",
-                                "answer": {
-                                  "entry": null
-                                },
-                                "context_data": {
-                                  "skip_text": "3f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                  "conditional_display": {
-                                    "type": "conditional_display",
-                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                    "hide_if": {
-                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                      "values": {
-                                        "interactive": [false, null],
-                                        "noninteractive": [false, null]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
                                 "type": "fieldset",
-                                "fieldset_type": "datagrid",
+                                "fieldset_type": "datagrid_with_total",
                                 "context_data": {
                                   "skip_text": "3f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
                                   "conditional_display": {
@@ -1134,6 +1111,29 @@
                                   }
                                 },
                                 "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-03-f-01",
+                                    "label": "Total for all ages",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "skip_text": "3f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                          "values": {
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
                                   {
                                     "type": "question",
                                     "id": "2020-03-c-04-03-f-02",
@@ -1188,31 +1188,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-04-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "4b–4e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -1228,6 +1205,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-04-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-04-b",
@@ -1273,31 +1273,8 @@
                             },
                             "questions": [
                               {
-                                "type": "question",
-                                "id": "2020-03-c-04-04-f-01",
-                                "label": "Total for all ages",
-                                "type": "integer",
-                                "answer": {
-                                  "entry": null
-                                },
-                                "context_data": {
-                                  "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                  "conditional_display": {
-                                    "type": "conditional_display",
-                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                    "hide_if": {
-                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                      "values": {
-                                        "interactive": [false, null],
-                                        "noninteractive": [false, null]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
                                 "type": "fieldset",
-                                "fieldset_type": "datagrid",
+                                "fieldset_type": "datagrid_with_total",
                                 "context_data": {
                                   "skip_text": "4f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
                                   "conditional_display": {
@@ -1313,6 +1290,29 @@
                                   }
                                 },
                                 "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-04-f-01",
+                                    "label": "Total for all ages",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                          "values": {
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
                                   {
                                     "type": "question",
                                     "id": "2020-03-c-04-04-f-02",
@@ -1367,7 +1367,6 @@
                   }
                 ]
               },
-
               {
                 "type": "fieldset",
                 "label": "January – March 2020 (12 months later)",
@@ -1383,31 +1382,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-06-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "6a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "6b–6e omitted because you indicated that don't you have the age range breakdown data available.",
                           "conditional_display": {
@@ -1423,6 +1399,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-06-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "6a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-06-b",
@@ -1472,31 +1471,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-07-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "7a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "7b–7e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -1512,6 +1488,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-07-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "7a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-07-b",
@@ -1557,31 +1556,8 @@
                             },
                             "questions": [
                               {
-                                "type": "question",
-                                "id": "2020-03-c-04-07-f-01",
-                                "label": "Total for all ages",
-                                "type": "integer",
-                                "answer": {
-                                  "entry": null
-                                },
-                                "context_data": {
-                                  "skip_text": "7f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                  "conditional_display": {
-                                    "type": "conditional_display",
-                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                    "hide_if": {
-                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                      "values": {
-                                        "interactive": [false, null],
-                                        "noninteractive": [false, null]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
                                 "type": "fieldset",
-                                "fieldset_type": "datagrid",
+                                "fieldset_type": "datagrid_with_total",
                                 "context_data": {
                                   "skip_text": "7f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
                                   "conditional_display": {
@@ -1597,6 +1573,29 @@
                                   }
                                 },
                                 "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-07-f-01",
+                                    "label": "Total for all ages",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "skip_text": "7f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                          "values": {
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
                                   {
                                     "type": "question",
                                     "id": "2020-03-c-04-07-f-02",
@@ -1651,31 +1650,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-08-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "8a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "8b–8e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -1691,6 +1667,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-08-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "8a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-08-b",
@@ -1736,31 +1735,8 @@
                             },
                             "questions": [
                               {
-                                "type": "question",
-                                "id": "2020-03-c-04-08-f-01",
-                                "label": "Total for all ages",
-                                "type": "integer",
-                                "answer": {
-                                  "entry": null
-                                },
-                                "context_data": {
-                                  "skip_text": "8f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                  "conditional_display": {
-                                    "type": "conditional_display",
-                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                    "hide_if": {
-                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                      "values": {
-                                        "interactive": [false, null],
-                                        "noninteractive": [false, null]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
                                 "type": "fieldset",
-                                "fieldset_type": "datagrid",
+                                "fieldset_type": "datagrid_with_total",
                                 "context_data": {
                                   "skip_text": "8f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
                                   "conditional_display": {
@@ -1776,6 +1752,29 @@
                                   }
                                 },
                                 "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-08-f-01",
+                                    "label": "Total for all ages",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "skip_text": "8f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                          "values": {
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
                                   {
                                     "type": "question",
                                     "id": "2020-03-c-04-08-f-02",
@@ -1837,31 +1836,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-09-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "9a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "9b–9e omitted because you indicated that don't you have the age range breakdown data available.",
                           "conditional_display": {
@@ -1877,6 +1853,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-09-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "9a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-09-b",
@@ -1926,31 +1925,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-10-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "10a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "10b–10e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -1966,6 +1942,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-10-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "10a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-10-b",
@@ -2011,31 +2010,8 @@
                             },
                             "questions": [
                               {
-                                "type": "question",
-                                "id": "2020-03-c-04-10-f-01",
-                                "label": "Total for all ages",
-                                "type": "integer",
-                                "answer": {
-                                  "entry": null
-                                },
-                                "context_data": {
-                                  "skip_text": "10f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                  "conditional_display": {
-                                    "type": "conditional_display",
-                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                    "hide_if": {
-                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                      "values": {
-                                        "interactive": [false, null],
-                                        "noninteractive": [false, null]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
                                 "type": "fieldset",
-                                "fieldset_type": "datagrid",
+                                "fieldset_type": "datagrid_with_total",
                                 "context_data": {
                                   "skip_text": "10f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
                                   "conditional_display": {
@@ -2051,6 +2027,29 @@
                                   }
                                 },
                                 "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-10-f-01",
+                                    "label": "Total for all ages",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "skip_text": "10f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                          "values": {
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
                                   {
                                     "type": "question",
                                     "id": "2020-03-c-04-10-f-02",
@@ -2105,31 +2104,8 @@
                     },
                     "questions": [
                       {
-                        "type": "question",
-                        "id": "2020-03-c-04-11-a",
-                        "label": "Total for all ages",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "skip_text": "11a omitted because you indicated that you have the age range breakdown data available.",
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                              "values": {
-                                "interactive": [false, null],
-                                "noninteractive": [false, null]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
                         "type": "fieldset",
-                        "fieldset_type": "datagrid",
+                        "fieldset_type": "datagrid_with_total",
                         "context_data": {
                           "skip_text": "11b–11e omitted because you indicated that you don't have the age range breakdown data available.",
                           "conditional_display": {
@@ -2145,6 +2121,29 @@
                           }
                         },
                         "questions": [
+                          {
+                            "type": "question",
+                            "id": "2020-03-c-04-11-a",
+                            "label": "Total for all ages",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "skip_text": "11a omitted because you indicated that you have the age range breakdown data available.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                  "values": {
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
+                                  }
+                                }
+                              }
+                            }
+                          },
                           {
                             "type": "question",
                             "id": "2020-03-c-04-11-b",
@@ -2190,31 +2189,8 @@
                             },
                             "questions": [
                               {
-                                "type": "question",
-                                "id": "2020-03-c-04-11-f-01",
-                                "label": "Total for all ages",
-                                "type": "integer",
-                                "answer": {
-                                  "entry": null
-                                },
-                                "context_data": {
-                                  "skip_text": "11f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                  "conditional_display": {
-                                    "type": "conditional_display",
-                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                    "hide_if": {
-                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                      "values": {
-                                        "interactive": [false, null],
-                                        "noninteractive": [false, null]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              {
                                 "type": "fieldset",
-                                "fieldset_type": "datagrid",
+                                "fieldset_type": "datagrid_with_total",
                                 "context_data": {
                                   "skip_text": "11f 2–5 omitted because you indicated that you don't have the age range breakdown data available.",
                                   "conditional_display": {
@@ -2230,6 +2206,29 @@
                                   }
                                 },
                                 "questions": [
+                                  {
+                                    "type": "question",
+                                    "id": "2020-03-c-04-11-f-01",
+                                    "label": "Total for all ages",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "skip_text": "11f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                          "values": {
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
                                   {
                                     "type": "question",
                                     "id": "2020-03-c-04-11-f-02",
