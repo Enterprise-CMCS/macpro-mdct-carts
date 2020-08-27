@@ -6,16 +6,19 @@ class CMSLegend extends Component {
   }
 
   render() {
-    // Get ID as array split by hyphen
-    let idArray = this.props.id.split("-");
 
-    // Remove leading zero by enforcing the question number as a Number
-    let questionNumber = Number(idArray[4]);
+    let questionId = this.props.id
+    let questionLabel = this.props.label
     return (
       <>
         <legend className="ds-c-label">
-          {questionNumber}
-          {idArray[5]}. {this.props.label}
+          {questionId ? (
+            (isNaN(questionId.substring(questionId.length - 2)) ? (
+              parseInt(questionId.substring(questionId.length - 4, questionId.length - 2)) + questionId.substring(questionId.length - 1) + '. ' + questionLabel) : (
+                parseInt(questionId.substring(questionId.length - 2))
+                + '. ' + questionLabel))
+          ) : null
+          }
         </legend>
       </>
     );

@@ -158,12 +158,10 @@ class QuestionComponent extends Component {
                         <fieldset className="ds-c-fieldset">
                             {/* Generating question label */}
                             <legend className="ds-c-label">
-                                {question.id ? (
-                                    (isNaN(question.id.substring(question.id.length - 2)) ? (
-                                        question.id.substring(question.id.length - 1) + '. ' + question.label) : (
-                                            parseInt(question.id.substring(question.id.length - 1))
-                                            + '. ' + question.label))
-                                ) : null
+                                {<CMSLegend
+                                    label={question.label}
+                                    id={question.id}
+                                />
                                 }
                             </legend>
                             {question.type === "radio" || question.type === "checkbox"
