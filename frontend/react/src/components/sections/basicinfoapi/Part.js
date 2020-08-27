@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   extractJsonPathExpressionFromQuestionLike,
-  selectFragmentById,
+  selectFragment,
   winnowProperties,
 } from "../../../store/formData";
+
 import QuestionLike from "./QuestionLike";
 
 const Part = ({ fragment, partId }) => {
@@ -31,7 +32,7 @@ const Part = ({ fragment, partId }) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  fragment: winnowProperties(selectFragmentById(state, ownProps.partId)),
+  fragment: winnowProperties(selectFragment(state, ownProps.partId)),
   partId: ownProps.partId,
 });
 
