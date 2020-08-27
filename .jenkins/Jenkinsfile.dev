@@ -97,10 +97,10 @@ pipeline {
        dir('frontend/react'){
 
         sh '''
-        tar -zcvf buildfinal1.tar.gz build
-        aws s3 cp buildfinal1.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/buildfinal1.tar.gz
+        tar -zcvf cartsbuild.tar.gz build
+        aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
         rm -rf build
-        rm buildfinal1.tar.gz
+        rm cartsbuild.tar.gz
 
             '''
            }
@@ -154,7 +154,7 @@ pipeline {
         }
       }
     }
-    
+
     stage("Deploy Frontend Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -174,8 +174,8 @@ pipeline {
             env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "s3_bucket_name")
           }
             sh '''
-               aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/buildfinal1.tar.gz buildfinal1.tar.gz
-               tar -xvzf buildfinal1.tar.gz
+               aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz cartsbuild.tar.gz
+               tar -xvzf cartsbuild.tar.gz
                aws s3 sync build s3://${S3_BUCKET_NAME}
              '''
         }

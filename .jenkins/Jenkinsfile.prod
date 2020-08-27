@@ -95,6 +95,14 @@ pipeline {
               ]
             )
           }
+          dir('frontend/aws') {
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "s3_bucket_name")
+          }
+            sh '''
+               aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$VERSION/cartsbuild.tar.gz cartsbuild.tar.gz
+               tar -xvzf cartsbuild.tar.gz
+               aws s3 sync build s3://${S3_BUCKET_NAME}
+             '''
         }
       }
       post {
