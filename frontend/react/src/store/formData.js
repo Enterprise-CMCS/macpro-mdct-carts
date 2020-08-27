@@ -2,6 +2,8 @@ import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
 import { _ } from "underscore";
 
+import { selectQuestion } from './selectors'
+
 const initialState = [];
 
 export default (sdata = initialState, action) => {
@@ -9,7 +11,7 @@ export default (sdata = initialState, action) => {
     case LOAD_SECTIONS:
       return action.data;
     case QUESTION_ANSWERED:
-      const fragment = selectFragmentById(
+      const fragment = selectQuestion(
         { formData: sdata },
         action.fragmentId
       );
