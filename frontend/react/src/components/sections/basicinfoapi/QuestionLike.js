@@ -188,7 +188,7 @@ const QuestionMap = new Map([
 ]);
 
 // Connect question types to functions via their types:
-const QuestionHolder = ({ fragment, elementid, changeFunc }) => {
+const QuestionHolder = ({ fragment, elementid, changeFunc, ...fieldProps}) => {
   const Component = QuestionMap.has(fragment.type)
     ? QuestionMap.get(fragment.type)
     : QuestionMap.get("text");
@@ -197,6 +197,7 @@ const QuestionHolder = ({ fragment, elementid, changeFunc }) => {
       fragment={fragment}
       changeFunc={changeFunc}
       elementid={elementid}
+      {...fieldProps}
     />
   );
 };
