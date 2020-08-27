@@ -22,7 +22,7 @@ class CMSChoice extends Component {
     // Set checkbox array of selected items
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
-    this.props.onChange([evt.target.name, evt.target.value]);
+    this.props.onChange([evt.target.name, evt.target.value])
   };
 
   render() {
@@ -30,7 +30,6 @@ class CMSChoice extends Component {
     const currentValue = this.props.valueFromParent
       ? this.props.valueFromParent
       : this.props.answer;
-
     // Determine if choice is checked
     let isChecked = null;
 
@@ -95,7 +94,6 @@ class CMSChoice extends Component {
               // If entry matches current answer, mark as checked
               const isCheckedChild =
                 key[1] === item.answer.entry ? "checked" : null;
-
               // Check if question matches the currently selected option (from parent)
               if (shouldDisplay(parentValue, item.context_data)) {
                 // Add field to render array
@@ -169,7 +167,6 @@ class CMSChoice extends Component {
     return (
       <>
         <Choice
-          class="ds-c-choice"
           name={this.props.name}
           value={this.props.value}
           type={this.props.type}
