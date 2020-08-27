@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectFragmentByJsonPath, winnowProperties } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
-import { Choice, TextField } from "@cmsgov/design-system-core";
+import { ChoiceList, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
 
 const validEmailRegex = RegExp(
@@ -19,7 +19,7 @@ const TextFieldBase = ({fragment, changeFunc, multiline = null, rows = null, ...
       name={fragment.id}
       hint={fragment.hint}
       label={getLabelFromFragment(fragment)}
-      value={fragment.answer.entry}
+      value={fragment.answer.entry || ""}
       onChange={_.partial(changeFunc, fragment.id)}
       type="text"
       multiline={multiline}
@@ -74,49 +74,55 @@ const QuestionTextPhone = ({fragment, changeFunc}) => {
 );
 }
 
-const QuestionRadio = ({fragment, changeFunc}) => {
+const QuestionChoiceList = ({fragment, changeFunc}) => {
+  const buildChoice = (entry, options, key) => {
+    let choice = {label: key, value: options[key]};
+    let isChecked = (choice.value === entry) || (entry && entry.includes && entry.includes(choice.value));
+    choice["checked"] = (!_.isUndefined(isChecked) && !_.isNull(isChecked)) ? isChecked : false;
+    return choice;
+  }
+  const choices = Object.keys(fragment.answer.options).map((k) => buildChoice(fragment.answer.entry, fragment.answer.options, k));
+
   return (
-      <QuestionCheckbox fragment={fragment} changeFunc={changeFunc} />
+    <ChoiceList
+      label={fragment.label}
+      hint={fragment.hint}
+      name={fragment.id}
+      type={fragment.type}
+      choices={choices}
+      onChange={_.partial(changeFunc, fragment.id)}
+      disabled={fragment.answer.readonly}
+    >
+    </ChoiceList>
   )
 }
 
-const QuestionCheckbox = ({fragment, changeFunc}) => {
+const QuestionRadioButtons = ({fragment, changeFunc}) => {
   return (
-    <>
-    <legend className="ds-c-label">
-      {getLabelFromFragment(fragment)}    
-    </legend>
-      {Object.entries(fragment.answer.options).map( (key, index) => {
-        return (
-          <Choice
-            className="fpl-input"
-            name={fragment.id}
-            value={key[1]}
-            hint={fragment.hint}
-            type={fragment.type}
-            checked={fragment.answer.entry === key[1] ? "checked": null}
-            conditional={fragment.conditional}
-            onChange={_.partial(changeFunc, fragment.id)}
-            disabled={fragment.answer.readonly}
-          >
-            {key[0]}
-          </Choice>
-        )
-      })}
-    </>
+    <QuestionChoiceList fragment={fragment} changeFunc={changeFunc} />
   )
 }
 
+const QuestionCheckboxes = ({fragment, changeFunc}) => {
+  const handleCheckboxesChange = (fragmentId, eventChange) => {
+    const inputs = Array.from(document.querySelectorAll(`[name='${eventChange.target.name}']`));
+    const values = inputs.filter(input => input.checked).map(input => input.value);
+    return changeFunc(fragmentId, {target: {value: values}});
+  }
+  return (
+    <QuestionChoiceList fragment={fragment} changeFunc={handleCheckboxesChange} />
+  )
+}
 
 /* /Question types */
 
 // Map question types to functions:
 const QuestionMap = new Map([
-  ["checkbox", QuestionCheckbox],
+  ["checkbox", QuestionCheckboxes],
   ["email", QuestionTextEmail],
   ["mailing_address", QuestionTextMailingAddress],
   ["phone_number", QuestionTextPhone],
-  ["radio", QuestionRadio],
+  ["radio", QuestionRadioButtons],
   ["text", QuestionText],
   ["text_small", QuestionTextSmall],
   ["text_medium", QuestionTextMedium],
@@ -138,7 +144,6 @@ const getQuestionLikeId = (fragment) => {
   } else if (fragment.type === "fieldset" && fragment.fieldset_type === "marked") {
     return fragment.fieldset_info.id;
   }
-  console.log("WTF", fragment);
   return null;
 }
 
