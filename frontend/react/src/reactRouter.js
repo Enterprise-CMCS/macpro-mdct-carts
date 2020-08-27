@@ -55,7 +55,6 @@ const Routes = () => (
 const InvokeSection = () => {
   let {year, sectionOrdinal, subsectionMarker} = useParams();
   const filteredMarker = subsectionMarker ? subsectionMarker.toLowerCase() : "a";
-  console.log(filteredMarker);
   const fragmentId = constructIdFromYearSectionAndSubsection(Number(year), Number(sectionOrdinal), filteredMarker);
   return (
     <Section fragmentId={fragmentId} />

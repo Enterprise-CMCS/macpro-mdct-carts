@@ -67,11 +67,67 @@ export const selectFragmentByJsonPath = (state, expr, sectionOrdinal = false) =>
 
 };
 
+export const selectFragmentFromTarget = (target, expr) => {
+  const fragment = jsonpath.query(target, expr)[0];
+  return fragment;
+
+};
+
 export const selectFragmentById = (state, id) => {
   const sectionOrdinal = extractSectionOrdinalFromId(id);
   const jpexpr = `$..*[?(@.id=='${id}')]`;
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 }
+
+export const letterMarkers = [
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"
+]
+
+export const selectFragment = (state, id = null, jp = null, index = null) => {
+  if (!id && !jp) {
+    return null;
+  }
+  if (!id) {
+    id = jp.split("id=='")[1].split("'")[0];
+  }
+  const sectionOrdinal = extractSectionOrdinalFromId(id);
+  const section = (selectSectionByOrdinal(state, sectionOrdinal));
+  let targetObject = section;
+  let chunks = id.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
+  if (chunks.length >= 2) {
+    // id of e.g. (2020-01-)a-01 means our target is the fragment's parent, subsection a:
+    targetObject = targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+  } else {
+    // if it's just one chunk, it's a subsection, so:
+    return targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+  }
+  if (chunks.length >= 3) {
+    // id of e.g. (2020-01-)a-01-01 means our target is the fragment's parent, part 01:
+    targetObject = targetObject.parts[Number(chunks[1]) - 1];
+  } else {
+    //if it's just two chunks it's a part, so:
+    return targetObject.parts[Number(chunks[1]) - 1];
+  }
+  if (chunks.length >= 4) {
+    // id of e.g. (2020-01-)a-01-01-a means our target is the fragment's parent, question 01 (although it could also be an objective, etc.):
+    targetObject = targetObject.questions[Number(chunks[2]) - 1];
+  } else {
+    //if it's just two chunks it's a question, so:
+    return targetObject.questions[Number(chunks[2]) - 1];
+  }
+  if (chunks.length >= 5 && letterMarkers.includes(chunks[3])) {
+    // id of e.g. (2020-01-)a-01-01-a-01 means our target is the fragment's parent, question a:
+    targetObject = targetObject.questions[letterMarkers.indexOf(chunks[3])];
+  }
+  // TODO: account for objectives/repeatables here.
+
+  if (!jp) {
+    jp = `$..*[?(@.id=='${id}')]`;
+  }
+  return selectFragmentFromTarget(targetObject, jp);
+}
+
 /* /Helper functions for getting values from the JSON returned by the API */
 
 /**

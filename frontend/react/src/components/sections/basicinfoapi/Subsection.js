@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { extractSectionOrdinalFromId, selectFragmentById, selectSectionByOrdinal } from "../../../store/formData";
+import { extractSectionOrdinalFromId, selectFragment, selectSectionByOrdinal } from "../../../store/formData";
 import Part from "./Part";
 
 const Subsection = ({ Data, fragment, subsectionId }) => {
@@ -19,7 +19,7 @@ const Subsection = ({ Data, fragment, subsectionId }) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  fragment: selectFragmentById(state, ownProps.subsectionId),
+  fragment: selectFragment(state, ownProps.subsectionId),
   subsectionId: ownProps.subsectionId,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,

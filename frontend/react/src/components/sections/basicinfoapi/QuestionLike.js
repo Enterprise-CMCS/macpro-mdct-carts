@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectFragmentByJsonPath, winnowProperties } from "../../../store/formData";
+import { selectFragment, winnowProperties } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
 import { ChoiceList, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
@@ -30,51 +30,51 @@ const TextFieldBase = ({fragment, changeFunc, multiline = null, rows = null, ...
 );
 }
 /* Question types */
-const QuestionText = ({fragment, changeFunc}) => {
+const QuestionText = ({fragment, changeFunc, ...fieldProps}) => {
   const isNotReallyTextQuestion = fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
   const key = `qt-${fragment.id}`;
   return (
 
     <div className="test" key={key}>
       {isNotReallyTextQuestion}
-      <TextFieldBase fragment={fragment} changeFunc={changeFunc} />
+      <TextFieldBase fragment={fragment} changeFunc={changeFunc} {...fieldProps}/>
     </div>
   )
 };
 
-const QuestionTextSmall = ({fragment, changeFunc}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} />
+const QuestionTextSmall = ({fragment, changeFunc, ...fieldProps}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} {...fieldProps}/>
 );
 
-const QuestionTextMedium = ({fragment, changeFunc}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={3} />
+const QuestionTextMedium = ({fragment, changeFunc, ...fieldProps}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={3} {...fieldProps}/>
 );
 
-const QuestionTextMultiline = ({fragment, changeFunc}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} />
+const QuestionTextMultiline = ({fragment, changeFunc, ...fieldProps}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={6} {...fieldProps}/>
 );
 
-const QuestionTextMailingAddress = ({fragment, changeFunc}) => (
-  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={4} />
+const QuestionTextMailingAddress = ({fragment, changeFunc, ...fieldProps}) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} multiline={true} rows={4} {...fieldProps}/>
 );
 
-const QuestionTextEmail = ({fragment, changeFunc}) => {
+const QuestionTextEmail = ({fragment, changeFunc, ...fieldProps}) => {
   const valid = validEmailRegex.test(fragment.answer.entry);
   const errorMessage = valid ? null : "YOUR EMAIL ADDRESS IS AN OFFENSE AGAINST THE INTERNET";
   return (
-    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
+    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage} {...fieldProps}/>
   );
 }
 
-const QuestionTextPhone = ({fragment, changeFunc}) => {
+const QuestionTextPhone = ({fragment, changeFunc, ...fieldProps}) => {
   const valid = validTelephoneRegex.test(fragment.answer.entry);
   const errorMessage = valid ? null : "WE'RE CALLING YOU RIGHT NOW BUT YOU'RE NOT ANSWERING";
   return (
-    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage}/>
+    <TextFieldBase fragment={fragment} changeFunc={changeFunc} errorMessage={errorMessage} {...fieldProps}/>
 );
 }
 
-const QuestionChoiceList = ({fragment, changeFunc}) => {
+const QuestionChoiceList = ({fragment, changeFunc, ...fieldProps}) => {
   const buildChoice = (entry, options, key) => {
     let choice = {label: key, value: options[key]};
     let isChecked = (choice.value === entry) || (entry && entry.includes && entry.includes(choice.value));
@@ -92,25 +92,26 @@ const QuestionChoiceList = ({fragment, changeFunc}) => {
       choices={choices}
       onChange={_.partial(changeFunc, fragment.id)}
       disabled={fragment.answer.readonly}
+      {...fieldProps}
     >
     </ChoiceList>
   )
 }
 
-const QuestionRadioButtons = ({fragment, changeFunc}) => {
+const QuestionRadioButtons = ({fragment, changeFunc, ...fieldProps}) => {
   return (
-    <QuestionChoiceList fragment={fragment} changeFunc={changeFunc} />
+    <QuestionChoiceList fragment={fragment} changeFunc={changeFunc}  {...fieldProps}/>
   )
 }
 
-const QuestionCheckboxes = ({fragment, changeFunc}) => {
+const QuestionCheckboxes = ({fragment, changeFunc, ...fieldProps}) => {
   const handleCheckboxesChange = (fragmentId, eventChange) => {
     const inputs = Array.from(document.querySelectorAll(`[name='${eventChange.target.name}']`));
     const values = inputs.filter(input => input.checked).map(input => input.value);
     return changeFunc(fragmentId, {target: {value: values}});
   }
   return (
-    <QuestionChoiceList fragment={fragment} changeFunc={handleCheckboxesChange} />
+    <QuestionChoiceList fragment={fragment} changeFunc={handleCheckboxesChange} {...fieldProps}/>
   )
 }
 
@@ -193,7 +194,7 @@ const QuestionLike = ({fragment, fragmentkey, setAnswer}) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  fragment: winnowProperties(selectFragmentByJsonPath(state, ownProps.jpexpr)),
+  fragment: winnowProperties(selectFragment(state, null, ownProps.jpexpr)),
   fragmentkey: ownProps.fragmentkey,
   abbr: state.stateUser.currentUser.state.id,
   year: state.global.formYear,
