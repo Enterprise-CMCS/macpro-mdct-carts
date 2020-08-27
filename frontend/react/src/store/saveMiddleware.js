@@ -36,7 +36,7 @@ const saveMiddleware = () => {
       isSaving = true;
 
       try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/sections/2020/AK`, pending);
+        await axios.post(`${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`, pending);
 
         // If the save is successful, we can clear out the list of pending
         // saves, because they have been persisted on the server.
