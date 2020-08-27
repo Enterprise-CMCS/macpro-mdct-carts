@@ -1,33 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PageInfo from "../layout/PageInfo";
-import { extractSectionOrdinalFromId, selectSectionByOrdinal } from "../../store/formData";
+import { selectSectionTitle } from "../../store/formData";
 import Subsection from "./basicinfoapi/Subsection";
 
-const Section = ({Data}) =>
-  Data ? (
+const Section = ({ subsectionId, title }) => {
+  console.log(`rendering section with title: ${title}`);
+  return (
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
         <PageInfo />
-        <div className="section-content">
-         {Data.section.subsections.map((subsection) => (
-             <Subsection key={subsection.id} subsectionId={subsection.id}/>
-         ))}
-        </div>
+        <h2>{title}</h2>
+        <Subsection key={subsectionId} subsectionId={subsectionId} />
       </div>
     </div>
-  ) : null;
-  
+  );
+};
 
-
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, { sectionId, subsectionId }) => {
   return {
-    abbr: state.stateUser.currentUser.state.id,
-    Data: selectSectionByOrdinal(state, extractSectionOrdinalFromId(ownProps.fragmentId)),
-    year: state.global.formYear,
-    programType: state.stateUser.programType,
-    programName: state.stateUser.programName,
-  }
+    subsectionId,
+    title: selectSectionTitle(state, sectionId),
+  };
 };
 
 export default connect(mapStateToProps)(Section);
