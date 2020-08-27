@@ -36,6 +36,7 @@ class QuestionComponent extends Component {
         error = "Please enter only numbers and decimals";
       } else {
         error = null;
+        this.props.setAnswer(evt.target.name, evt.target.value);
       }
     }
 
@@ -59,7 +60,7 @@ class QuestionComponent extends Component {
     if (evt.target.value.length > 0) {
       if (validNumberRegex.test(evt.target.value)) {
         let formattedNum = evt.target.value.replace(/[ ,]/g, "");
-        this.props.sectionContext([evt.target.name, formattedNum]);
+        this.props.setAnswer(evt.target.name, formattedNum);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
           [evt.target.name + "Mod"]: true,
@@ -80,7 +81,7 @@ class QuestionComponent extends Component {
     );
     if (evt.target.value.length > 0) {
       if (validEmailRegex.test(evt.target.value)) {
-        this.props.sectionContext([evt.target.name, evt.target.value]);
+        this.props.setAnswer(evt.target.name, evt.target.value);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
           [evt.target.name + "Mod"]: true,
@@ -105,6 +106,8 @@ class QuestionComponent extends Component {
       errorMessage = "Please limit to 10 digits";
     } else {
       errorMessage = null;
+      // this.props.sectionContext([evt.target.name, digits]);
+      this.props.setAnswer(evt.target.name, digits);
     }
 
     this.setState({
@@ -129,11 +132,13 @@ class QuestionComponent extends Component {
     }
 
     this.setState({ [evtArr[0]]: [...selections] });
-    this.props.sectionContext([[evtArr[0]], selections]);
+    // this.props.sectionContext([[evtArr[0]], selections]);
+    this.props.setAnswer([evtArr[0]], selections);
   }
 
   handleCheckboxFlag(evt) {
-    this.props.sectionContext([evt.target.name, evt.target.checked]);
+    // this.props.sectionContext([evt.target.name, evt.target.checked]);
+    this.props.setAnswer(evt.target.name, evt.target.checked);
   }
 
   handleChange(evt) {
@@ -141,7 +146,7 @@ class QuestionComponent extends Component {
   }
 
   handleChangeArray(evtArray) {
-    this.props.sectionContext([evtArray[0], evtArray[1]]);
+    this.props.setAnswer(evtArray[0], evtArray[1]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
@@ -149,7 +154,7 @@ class QuestionComponent extends Component {
   }
 
   handleFileUpload = (event) => {
-    this.props.sectionContext([event.target.name, event.target.files]);
+    this.props.setAnswer(event.target.name, event.target.files);
   };
 
   render() {

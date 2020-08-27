@@ -74,9 +74,6 @@ const saveMiddleware = () => {
       case QUESTION_ANSWERED:
         runSave(action);
         break;
-      case QUESTION_FORMATTED:
-        runSave(action);
-        break;
       default:
         break;
     }
