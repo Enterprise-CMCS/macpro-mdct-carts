@@ -442,7 +442,6 @@ class QuestionComponent extends Component {
                   //   subquestion={true}
                   //   // setAnswer={this.props.setAnswer}
                   //   data={question.questions} //Array of subquestions to map through
-                  //   sectionContext={this.props.sectionContext} // function binding children to parent context
                   // />
                   null}
 
@@ -454,7 +453,6 @@ class QuestionComponent extends Component {
                     //   subquestion={true}
                     //   // setAnswer={this.props.setAnswer}
                     //   data={question.questions} //Array of subquestions to map through
-                    //   sectionContext={this.props.sectionContext} // function binding children to parent context
                     // />
                   }
                 </div>

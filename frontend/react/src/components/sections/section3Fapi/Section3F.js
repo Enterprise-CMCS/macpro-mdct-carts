@@ -14,18 +14,12 @@ class Section3FApi extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.bindToParentContext = this.bindToParentContext.bind(this);
   }
 
   // Parent context function expects an array
   // evtArr[0] is the question ID
   // evtArr[1] is the payload, the question entry
-  bindToParentContext(evtArr) {
-    this.setState({
-      lastChangedBy: evtArr[0],
-      [evtArr[0]]: evtArr[1],
-    });
-  }
+
   render() {
     // this.props.Data includes all of section 3
     // This variable narrows it down to a subsection
@@ -53,14 +47,9 @@ class Section3FApi extends Component {
                 {/**
                  * Map through the parts array of the subsection
                  * data: Provide the part.questions array for the question component to map through
-                 * sectionContext: Provide a method from the parent component to bind all answers to the parent context
                  */}
                 {subsectionData.parts.map((part, index) => (
-                  <QuestionComponent
-                    data={part.questions}
-                    sectionContext={this.bindToParentContext}
-                    key={index}
-                  />
+                  <QuestionComponent data={part.questions} key={index} />
                 ))}
                 <FormNavigation previousUrl="/section3/3c" />
               </TabPanel>
@@ -81,7 +70,7 @@ class Section3FApi extends Component {
                     <QuestionComponent
                       previousEntry="true"
                       data={part.questions}
-                      sectionContext={this.bindToParentContext}
+            
                       key={index}
                     />
                   ))}
