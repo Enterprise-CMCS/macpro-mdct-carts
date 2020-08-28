@@ -21,7 +21,6 @@ export default (sdata = initialState, action) => {
 
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
-  console.log("ordinal state", state);
   const section = state.formData.filter(
     (c) => c.contents.section.ordinal === ordinal
   );
