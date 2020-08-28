@@ -115,7 +115,7 @@ class QuestionComponent extends Component {
       errorMessage = "Please limit to 10 digits";
     } else {
       errorMessage = null;
-      // this.props.sectionContext([evt.target.name, digits]);
+
       this.props.setAnswer(evt.target.name, digits);
     }
 
@@ -141,12 +141,11 @@ class QuestionComponent extends Component {
     }
 
     this.setState({ [evtArr[0]]: [...selections] });
-    // this.props.sectionContext([[evtArr[0]], selections]);
+
     this.props.setAnswer([evtArr[0]], selections);
   }
 
   handleCheckboxFlag(evt) {
-    // this.props.sectionContext([evt.target.name, evt.target.checked]);
     this.props.setAnswer(evt.target.name, evt.target.checked);
   }
 
@@ -218,7 +217,6 @@ class QuestionComponent extends Component {
                         valueFromParent={this.state[question.id]}
                         onChange={this.handleCheckboxInput}
                         key={index}
-                        sectionContext={this.props.sectionContext}
                         // setAnswer={this.props.setAnswer}
                       />
                     );
@@ -301,10 +299,7 @@ class QuestionComponent extends Component {
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
-                <CMSRanges
-                  item={question}
-                  sectionContext={this.props.sectionContext}
-                />
+                <CMSRanges item={question} onChange={this.handleChangeArray} />
               ) : null}
 
               {/* If integer*/}
@@ -374,7 +369,7 @@ class QuestionComponent extends Component {
               {question.type === "daterange" ? (
                 <DateRange
                   question={question}
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                  onChange={this.handleChangeArray}
                 />
               ) : null}
 
