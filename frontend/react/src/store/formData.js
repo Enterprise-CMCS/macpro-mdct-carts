@@ -2,7 +2,7 @@ import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
 import { _ } from "underscore";
 
-import { selectQuestion } from './selectors'
+import { selectQuestion } from "./selectors";
 
 const initialState = [];
 
@@ -11,10 +11,7 @@ export default (sdata = initialState, action) => {
     case LOAD_SECTIONS:
       return action.data;
     case QUESTION_ANSWERED:
-      const fragment = selectQuestion(
-        { formData: sdata },
-        action.fragmentId
-      );
+      const fragment = selectQuestion({ formData: sdata }, action.fragmentId);
       fragment.answer.entry = action.data;
       return JSON.parse(JSON.stringify(sdata));
     default:
@@ -24,6 +21,7 @@ export default (sdata = initialState, action) => {
 
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
+  console.log("ordinal state", state);
   const section = state.formData.filter(
     (c) => c.contents.section.ordinal === ordinal
   );
@@ -56,7 +54,7 @@ export const constructIdFromYearSectionAndSubsection = (
   subsectionMarker
 ) => {
   const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
-  if(subsectionMarker) {
+  if (subsectionMarker) {
     return [year, sectionChunk, subsectionMarker].join("-");
   } else {
     return [year, sectionChunk].join("-");
@@ -100,8 +98,58 @@ export const selectFragmentById = (state, id) => {
  * that will never be needed.
  */
 export const letterMarkers = [
-    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-    "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "aa",
+  "bb",
+  "cc",
+  "dd",
+  "ee",
+  "ff",
+  "gg",
+  "hh",
+  "ii",
+  "jj",
+  "kk",
+  "ll",
+  "mm",
+  "nn",
+  "oo",
+  "pp",
+  "qq",
+  "rr",
+  "ss",
+  "tt",
+  "uu",
+  "vv",
+  "ww",
+  "xx",
+  "yy",
+  "zz",
 ];
 
 /**
@@ -129,14 +177,14 @@ export const selectFragmentFromTarget = (target, expr) => {
  */
 export const selectFragment = (state, id = null, jp = null) => {
   if (!state.formData || state.formData.length === 0) {
-      return null;
+    return null;
   }
   if (!id && !jp) {
     return null;
   }
   id = id ? id : jp.split("id=='")[1].split("'")[0];
   const sectionOrdinal = extractSectionOrdinalFromId(id);
-  const section = (selectSectionByOrdinal(state, sectionOrdinal));
+  const section = selectSectionByOrdinal(state, sectionOrdinal);
   let targetObject = section;
   let chunks = id.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
   if (chunks.length >= 2) {
@@ -211,8 +259,8 @@ export const generateSubsectionLabel = (str) => {
 export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
   const sectionTitles = jsonpath.query(state, jspath);
-  
-  if(sectionTitles.length) {
+
+  if (sectionTitles.length) {
     return sectionTitles[0];
   }
   return null;
@@ -221,11 +269,11 @@ export const selectSectionTitle = (state, sectionId) => {
 export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
   const subsection = selectFragment(state, subsectionId);
 
-  if(subsection) {
+  if (subsection) {
     return {
-      parts: subsection.parts.map(part => part.id),
-      title: subsection.title
-    }
+      parts: subsection.parts.map((part) => part.id),
+      title: subsection.title,
+    };
   }
   return null;
 };

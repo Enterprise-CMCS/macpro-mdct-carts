@@ -21,7 +21,16 @@ class QuestionComponent extends Component {
     this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
     this.validatePhone = this.validatePhone.bind(this);
     this.handleCheckboxInput = this.handleCheckboxInput.bind(this);
+    this.renderChild = this.renderChild.bind(this);
   }
+
+  renderChild = (q) => (
+    <QCContainer
+      subquestion={true}
+      // setAnswer={this.props.setAnswer}
+      data={q.questions} //Array of subquestions to map through
+    />
+  );
 
   validatePercentage(evt) {
     // Regex to allow only numbers and decimals
@@ -189,6 +198,7 @@ class QuestionComponent extends Component {
                         onChange={this.handleChangeArray}
                         key={index}
                         sectionContext={this.props.sectionContext}
+                        setAnswer={this.props.setAnswer}
                       />
                     );
                   })
@@ -209,6 +219,7 @@ class QuestionComponent extends Component {
                         onChange={this.handleCheckboxInput}
                         key={index}
                         sectionContext={this.props.sectionContext}
+                        // setAnswer={this.props.setAnswer}
                       />
                     );
                   })
@@ -430,22 +441,26 @@ class QuestionComponent extends Component {
               {question.questions &&
               question.type !== "fieldset" &&
               question.type !== "radio" &&
-              question.type !== "checkbox" ? (
-                <QuestionComponent
-                  subquestion={true}
-                  data={question.questions} //Array of subquestions to map through
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
-                />
-              ) : null}
+              question.type !== "checkbox"
+                ? this.renderChild(question)
+                : // <QuestionComponent
+                  //   subquestion={true}
+                  //   // setAnswer={this.props.setAnswer}
+                  //   data={question.questions} //Array of subquestions to map through
+                  //   sectionContext={this.props.sectionContext} // function binding children to parent context
+                  // />
+                  null}
 
               {question.questions && question.type === "fieldset" ? (
                 <div className="cmsfieldset">
                   {
-                    <QuestionComponent
-                      subquestion={true}
-                      data={question.questions} //Array of subquestions to map through
-                      sectionContext={this.props.sectionContext} // function binding children to parent context
-                    />
+                    this.renderChild(question)
+                    // <QuestionComponent
+                    //   subquestion={true}
+                    //   // setAnswer={this.props.setAnswer}
+                    //   data={question.questions} //Array of subquestions to map through
+                    //   sectionContext={this.props.sectionContext} // function binding children to parent context
+                    // />
                   }
                 </div>
               ) : null}
@@ -484,3 +499,5 @@ const mapDispatchToProps = {
 };
 
 export default connect(null, mapDispatchToProps)(QuestionComponent);
+
+const QCContainer = connect(null, mapDispatchToProps)(QuestionComponent);
