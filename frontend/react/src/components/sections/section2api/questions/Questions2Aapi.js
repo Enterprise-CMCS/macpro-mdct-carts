@@ -36,31 +36,7 @@ class Questions2A extends Component {
     const stateProgram = "medicaid_exp_chip";
     let rowCount = 0;
     let createChoices;
-    return (
-      < form >
-        {/* Begin parsing through subsection */}
-        {
-          Data.section.subsections.map((subsections) => (
-            <div className="section">
-              {subsections.id === "2020-02-a" ?
-                <>
-                  {/* Begin parsing through parts */}
-                  {subsections.parts.map((part) => (
-                    <div className="part">
-                      {part.title ?
-                        (<h3 className="part-title">{part.title}</h3>)
-                        : null}
-                      {/* Determine if question should be shown */}
-                      <QuestionComponent data={part.questions}
-                        sectionContext={this.bindToParentContext} />
-                    </div>
-                  ))}
-                </> : null}
-            </div>
-          ))
-        }
-      </form >
-    )
+    return console.log();
   }
 }
 

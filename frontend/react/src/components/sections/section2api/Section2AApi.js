@@ -6,6 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
+import QuestionComponent from "../../fields/QuestionComponent";
 import {
   selectSectionByOrdinal,
   generateSubsectionLabel,
@@ -28,8 +29,8 @@ class Section2AApi extends Component {
     const sectionTitle = this.props.Data
       ? generateSubsectionLabel(subsectionData.id) // Section 3F title
       : null;
-
-    return (
+    console.log("SS", subsectionData);
+    return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
           <PageInfo />
@@ -39,14 +40,28 @@ class Section2AApi extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={subsectionData.title}>
-                <Questions2A previousEntry="false" />
+                <form>
+                  {/* Begin parsing through parts */}
+                  {subsectionData.parts.map((part) => (
+                    <div className="part">
+                      {part.title ? (
+                        <h3 className="part-title">{part.title}</h3>
+                      ) : null}
+                      {/* Determine if question should be shown */}
+                      <QuestionComponent
+                        data={part.questions}
+                        sectionContext={this.bindToParentContext}
+                      />
+                    </div>
+                  ))}
+                </form>
                 <FormNavigation
                   nextUrl="/section2/2b"
                   previousUrl="/section1"
                 />
               </TabPanel>
 
-              <TabPanel
+              {/* <TabPanel
                 id="tab-lastyear"
                 tab={`FY${this.props.year - 1} answers`}
               >
@@ -61,13 +76,13 @@ class Section2AApi extends Component {
                   nextUrl="/section2/2b"
                   previousUrl="/section1"
                 />
-              </TabPanel>
+              </TabPanel> */}
             </Tabs>
             <FormActions />
           </div>
         </div>
       </div>
-    );
+    ) : null;
   }
 }
 
