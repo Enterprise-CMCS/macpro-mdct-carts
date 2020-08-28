@@ -419,6 +419,7 @@
         "fieldset_type": {
           "enum": [
             "datagrid",
+            "datagrid_with_total",
             "marked",
             "noninteractive_table",
             "sum",

@@ -6,11 +6,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
-import Data from "./backend-json-section-2.json";
+import {
+  selectSectionByOrdinal,
+  generateSubsectionLabel,
+} from "../../../store/formData";
 
 import {
   Button as button,
-  ChoiceList,
   Tabs,
   TabPanel,
   TextField,
@@ -18,16 +20,25 @@ import {
 
 class Section2AApi extends Component {
   render() {
+    console.log(this.props.Data);
+    const subsectionData = this.props.Data
+      ? this.props.Data.subsections[0] // 2A JSON Data
+      : null;
+
+    const sectionTitle = this.props.Data
+      ? generateSubsectionLabel(subsectionData.id) // Section 3F title
+      : null;
+
     return (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="print-only">
-            <h3>{Data.section.title}</h3>
+            <h3>{sectionTitle}:</h3>
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={Data.section.title}>
+              <TabPanel id="tab-form" tab={subsectionData.title}>
                 <Questions2A previousEntry="false" />
                 <FormNavigation
                   nextUrl="/section2/2b"
@@ -41,7 +52,7 @@ class Section2AApi extends Component {
               >
                 <div className="print-only ly_header">
                   <PageInfo />
-                  <h3>{Data.section.title}</h3>
+                  <h3>{subsectionData.title}</h3>
                 </div>
                 <div disabled>
                   <Questions2A previousEntry="true" />
@@ -64,6 +75,7 @@ const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   programType: state.stateUser.programType,
   year: state.global.formYear,
+  Data: selectSectionByOrdinal(state, 2),
 });
 
 export default connect(mapStateToProps)(Section2AApi);
