@@ -7,7 +7,7 @@ export const QUESTION_FORMATTED = "QUESTION_FORMATTED";
 export const loadSections = () => {
   return async (dispatch) => {
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/v1/sections/2020/AK`
+      `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`
     );
     dispatch({ type: LOAD_SECTIONS, data });
   };

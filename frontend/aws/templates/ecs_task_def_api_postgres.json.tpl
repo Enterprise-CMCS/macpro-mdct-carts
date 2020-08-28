@@ -3,7 +3,7 @@
     "name": "api_postgres",
     "image": "${image}",
     "essential": true,
-    "command": ["gunicorn", "hello_django.wsgi:application", "--bind", "0.0.0.0:8000"],
+    "command": ["gunicorn", "carts.wsgi:application", "--bind", "0.0.0.0:8000"],
     "environment": [
       {
         "name": "POSTGRES_HOST",
