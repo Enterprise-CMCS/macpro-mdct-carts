@@ -159,7 +159,6 @@ export const letterMarkers = [
  */
 export const selectFragmentFromTarget = (target, expr) => {
   const results = jsonpath.query(target, expr);
-  console.log("results??", results);
   return results.length ? results[0] : null;
 };
 
