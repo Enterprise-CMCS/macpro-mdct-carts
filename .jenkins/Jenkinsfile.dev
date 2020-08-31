@@ -62,8 +62,8 @@ pipeline {
     }
 
 
-    stage('static build') {
-        agent {
+  stage('static build') {
+      agent {
             docker {
                 image 'node:14.4.0'
                 args '-v ${PWD}/frontend/react:/app '
