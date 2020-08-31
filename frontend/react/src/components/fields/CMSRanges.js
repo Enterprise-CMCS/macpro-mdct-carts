@@ -5,7 +5,6 @@ import CMSLegend from "../fields/CMSLegend";
 import CMSRange from "./CMSRange";
 
 class CMSRanges extends Component {
-
   constructor(props) {
     super(props);
 
@@ -23,13 +22,24 @@ class CMSRanges extends Component {
     let newRanges = [];
 
     this.props.item.answer.range_categories.map((range, index) => {
-      let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
+      let header =
+        index === 0 ? <h3>{this.props.item.answer.header}</h3> : null;
       newRanges.push({
         id: 0,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
+        component: (
+          <>
+            {header}
+            <CMSRange
+              item={this.props.item}
+              mask="currency"
+              numeric
+              index={index}
+              onChange={this.onChange}
+            />
+          </>
+        ),
       });
-
-    })
+    });
 
     this.setState({
       [`ranges`]: this.state.ranges.concat(newRanges),
@@ -38,10 +48,8 @@ class CMSRanges extends Component {
   }
 
   onChange(evt) {
-
     // Use callback for additional processing
     this.setState({ [evt[0]]: evt[1] }, () => {
-
       let currentState = this.state;
 
       let rangesArray = [];
@@ -64,7 +72,6 @@ class CMSRanges extends Component {
 
         // Loop through all ranges again
         for (let k = 0; k < rangesArray.length; k++) {
-
           // Get current iteration from state name
           let chunk = rangesArray[k][0].split("-")[1];
 
@@ -80,10 +87,10 @@ class CMSRanges extends Component {
         }
       }
 
-      this.setState({ [this.props.item.id]: parentArray })
+      this.setState({ [this.props.item.id]: parentArray });
       // Pass up to parent component
       this.props.onChange([this.props.item.id, parentArray]);
-    })
+    });
   }
 
   /**
@@ -93,13 +100,24 @@ class CMSRanges extends Component {
   newRanges() {
     let newRanges = [];
     this.props.item.answer.range_categories.map((range, index) => {
-      let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
+      let header =
+        index === 0 ? <h3>{this.props.item.answer.header}</h3> : null;
       newRanges.push({
         id: this.state.rangesId,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
+        component: (
+          <>
+            {header}
+            <CMSRange
+              item={this.props.item}
+              mask="currency"
+              numeric
+              index={index}
+              onChange={this.onChange}
+            />
+          </>
+        ),
       });
-
-    })
+    });
     this.setState({
       [`ranges`]: this.state.ranges.concat(newRanges),
       [`rangesId`]: this.state.rangesId + 1,
@@ -110,7 +128,6 @@ class CMSRanges extends Component {
    * Remove last ranges
    */
   removeRanges(count) {
-
     // Pull ranges from state and spread
     const ranges = [...this.state.ranges];
 
@@ -133,15 +150,9 @@ class CMSRanges extends Component {
           id={this.props.item.id}
         />
 
-
-        {this.state.ranges.map(
-          (input) => {
-            return (
-              input.component
-            )
-          }
-        )}
-
+        {this.state.ranges.map((input) => {
+          return input.component;
+        })}
 
         <button
           onClick={(e) => this.newRanges()}
@@ -152,9 +163,12 @@ class CMSRanges extends Component {
         </button>
 
         <button
-          onClick={(e) => this.removeRanges(this.props.item.answer.range_categories.length)}
+          onClick={(e) =>
+            this.removeRanges(this.props.item.answer.range_categories.length)
+          }
           type="button"
-          className="ds-c-button ds-c-button--primary cmsranges-btn cmsranges-remove">
+          className="ds-c-button ds-c-button--primary cmsranges-btn cmsranges-remove"
+        >
           Remove Last Entry <FontAwesomeIcon icon={faMinusCircle} />
         </button>
       </div>

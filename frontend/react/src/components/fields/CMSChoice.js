@@ -27,7 +27,6 @@ class CMSChoice extends Component {
   };
 
   handleChangeArray(evtArray) {
-    this.props.sectionContext([evtArray[0], evtArray[1]]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
