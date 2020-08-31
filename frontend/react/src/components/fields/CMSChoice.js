@@ -15,6 +15,7 @@ class CMSChoice extends Component {
     this.state = {};
     // Bind functions for use throughout controller
     this.sendData = this.sendData.bind(this);
+    this.handleChangeArray = this.handleChangeArray.bind(this);
   }
 
   sendData = (evt) => {
@@ -27,6 +28,14 @@ class CMSChoice extends Component {
     // Send event information back to parent component
     this.props.onChange([evt.target.name, evt.target.value]);
   };
+
+  handleChangeArray(evtArray) {
+    this.props.sectionContext([evtArray[0], evtArray[1]]);
+    this.setState({
+      [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
+      [evtArray[0] + "Mod"]: true,
+    });
+  }
 
   render() {
     // Get Current Value from state(passed from parent) or fall back to DB answer

@@ -5,7 +5,7 @@
     "essential": true,
     "environment": [
       {
-        "name": "API_URL",
+        "name": "API_POSTGRES_URL",
         "value": "${api_url}"
       }
     ],

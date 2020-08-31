@@ -21,13 +21,14 @@ import {
 
 class Section2AApi extends Component {
   render() {
-    console.log(this.props.Data);
+    console.log("loaded data 2a", this.props.Data);
+
     const subsectionData = this.props.Data
       ? this.props.Data.subsections[0] // 2A JSON Data
       : null;
 
     const sectionTitle = this.props.Data
-      ? generateSubsectionLabel(subsectionData.id) // Section 3F title
+      ? generateSubsectionLabel(subsectionData.id) // Section 2A title
       : null;
     console.log("SS", subsectionData);
     return subsectionData ? (

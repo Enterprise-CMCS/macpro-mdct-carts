@@ -7,7 +7,16 @@ from pathlib import Path
 
 
 class Command(BaseCommand):
-    help = "Imports base data, but doesn't overwrite existing data."
+    help = "".join(["Imports base data, but doesn't overwrite existing ",
+                    "data unless --overwrite is present as a flag."])
+
+    def add_arguments(self, parser):
+        # Named (optional) arguments
+        parser.add_argument(
+            '--overwrite',
+            action='store_true',
+            help='Overwrite existing instead of leaving as is',
+        )
 
     def handle(self, *args, **options):
         fd = Path("fixtures")
@@ -21,6 +30,8 @@ class Command(BaseCommand):
         schemabase = loads(Path(fd, "backend-section.schema.json").read_text())
         schema = schemabase[0]["fields"]["contents"]
 
+        overwrite = options.get("overwrite", False)
+
         def validate(s, i):
             jsonschema.validate(schema=s, instance=i["fields"]["contents"])
 
@@ -32,7 +43,10 @@ class Command(BaseCommand):
             if fixture["model"] == "carts_api.sectionschema":
                 year = fixture["fields"]["year"]
                 try:
-                    SectionSchema.objects.get(year=year)
+                    existing = SectionSchema.objects.get(year=year)
+                    if overwrite:
+                        existing.delete()
+                        is_new = True
                 except SectionSchema.DoesNotExist:
                     is_new = True
                 validating = True
@@ -41,9 +55,12 @@ class Command(BaseCommand):
                 ordinal = fixture["fields"]["contents"]["section"].get(
                     "ordinal")
                 try:
-                    SectionBase.objects.get(
+                    existing = SectionBase.objects.get(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal)
+                    if overwrite:
+                        existing.delete()
+                        is_new = True
                 except SectionBase.DoesNotExist:
                     is_new = True
                 try:
@@ -57,10 +74,13 @@ class Command(BaseCommand):
                     "ordinal")
                 state = fixture["fields"]["contents"]["section"].get("state")
                 try:
-                    Section.objects.get(
+                    existing = Section.objects.get(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal,
                         contents__section__state=state)
+                    if overwrite:
+                        existing.delete()
+                        is_new = True
                 except Section.DoesNotExist:
                     is_new = True
                 try:
@@ -75,5 +95,3 @@ class Command(BaseCommand):
 
         for path in paths_to_load:
             management.call_command("loaddata", path)
-
-
