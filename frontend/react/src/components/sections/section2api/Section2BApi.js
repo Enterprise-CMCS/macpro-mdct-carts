@@ -26,7 +26,7 @@ class Section2BApi extends Component {
       pageTitle: "Section 2B: State Plan Goals and Objectives",
     };
     this.bindToParentContext = this.bindToParentContext.bind(this);
-  };
+  }
 
   bindToParentContext(evtArr) {
     this.setState({
@@ -36,9 +36,8 @@ class Section2BApi extends Component {
     });
   }
 
-
   render() {
-    const tempData = Data.section.subsections[1]
+    const tempData = Data.section.subsections[1];
     return (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
@@ -49,12 +48,13 @@ class Section2BApi extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={`Section 2B:${tempData.title}`}>
-                {console.log("array of objective", Data.section.subsections[1].parts[0].questions[0].questions)}
+                {console.log(
+                  "array of objective",
+                  Data.section.subsections[1].parts[0].questions[0].questions
+                )}
                 <Questions2BApi
                   previousEntry="false"
-                  subsectionB={Data.section.subsections[1]}//[0].questions[0].questions
-                  sectionContext={this.bindToParentContext}
-
+                  subsectionB={Data.section.subsections[1]} //[0].questions[0].questions
                 />
               </TabPanel>
 
@@ -67,21 +67,19 @@ class Section2BApi extends Component {
                   <h3>{Data.section.title}</h3>
                 </div>
                 <div disabled>
-                  {//<Questions2BApi previousEntry="true" />
+                  {
+                    //<Questions2BApi previousEntry="true" />
                   }
                 </div>
               </TabPanel>
             </Tabs>
 
-            <FormNavigation
-              nextUrl="/section3/3a"
-              previousUrl="/section2/2a"
-            />
+            <FormNavigation nextUrl="/section3/3a" previousUrl="/section2/2a" />
 
             <FormActions />
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }

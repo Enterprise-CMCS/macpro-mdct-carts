@@ -70,7 +70,6 @@ class QuestionComponent extends Component {
     );
     if (evt.target.value.length > 0) {
       if (validEmailRegex.test(evt.target.value)) {
-        this.props.sectionContext([evt.target.name, evt.target.value]);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
           [evt.target.name + "Mod"]: true,
@@ -102,7 +101,7 @@ class QuestionComponent extends Component {
   }
 
   handleCheckboxFlag(evt) {
-    this.props.sectionContext([evt.target.name, evt.target.checked]);
+    //this.props.sectionContext([evt.target.name, evt.target.checked]);
   }
 
   handleChange(evt) {
@@ -110,7 +109,6 @@ class QuestionComponent extends Component {
   }
 
   handleChangeArray(evtArray) {
-    this.props.sectionContext([evtArray[0], evtArray[1]]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
@@ -146,8 +144,8 @@ class QuestionComponent extends Component {
                         children={question.questions}
                         valueFromParent={this.state[question.id]}
                         onChange={this.handleChangeArray}
+                        setAnswer={this.props.setAnswer}
                         key={index}
-                        sectionContext={this.props.sectionContext}
                       />
                     );
                   })
@@ -234,10 +232,7 @@ class QuestionComponent extends Component {
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
-                <CMSRanges
-                  item={question}
-                  sectionContext={this.props.sectionContext}
-                />
+                <CMSRanges item={question} />
               ) : null}
 
               {/* If integer*/}
@@ -288,7 +283,7 @@ class QuestionComponent extends Component {
               {question.type === "daterange" ? (
                 <DateRange
                   question={question}
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                  onChange={this.props.handleChangeArray}
                 />
               ) : null}
 
@@ -359,7 +354,6 @@ class QuestionComponent extends Component {
                 <QuestionComponent
                   subquestion={true}
                   data={question.questions} //Array of subquestions to map through
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
                 />
               ) : null}
 
@@ -371,7 +365,6 @@ class QuestionComponent extends Component {
                 <QuestionComponent
                   subquestion={true}
                   data={question.questions} //Array of subquestions to map through
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
                 />
               ) : null}
               {question.type === "fieldset" &&
@@ -430,7 +423,6 @@ class QuestionComponent extends Component {
                     <QuestionComponent
                       subquestion={true}
                       data={question.questions} //Array of subquestions to map through
-                      sectionContext={this.props.sectionContext} // function binding children to parent context
                     />
                   }
                 </div>

@@ -15,6 +15,7 @@ export const loadSections = () => {
 
 // Move this to where actions should go when we know where that is.
 export const setAnswerEntry = (fragmentId, something) => {
+  console.log("setAnswer");
   const value =
     something.target && something.target.value
       ? something.target.value

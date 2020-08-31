@@ -21,8 +21,6 @@ import {
 
 class Section2AApi extends Component {
   render() {
-    console.log("loaded data 2a", this.props.Data);
-
     const subsectionData = this.props.Data
       ? this.props.Data.subsections[0] // 2A JSON Data
       : null;
@@ -30,7 +28,6 @@ class Section2AApi extends Component {
     const sectionTitle = this.props.Data
       ? generateSubsectionLabel(subsectionData.id) // Section 2A title
       : null;
-    console.log("SS", subsectionData);
     return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
@@ -49,10 +46,7 @@ class Section2AApi extends Component {
                         <h3 className="part-title">{part.title}</h3>
                       ) : null}
                       {/* Determine if question should be shown */}
-                      <QuestionComponent
-                        data={part.questions}
-                        sectionContext={this.bindToParentContext}
-                      />
+                      <QuestionComponent data={part.questions} />
                     </div>
                   ))}
                 </form>
