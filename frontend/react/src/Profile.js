@@ -17,6 +17,7 @@ import { Header, Icon, Table } from 'semantic-ui-react';
 const Profile = () => {
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
+  console.log(authState)
 
   useEffect(() => {
     if (!authState.isAuthenticated) {
