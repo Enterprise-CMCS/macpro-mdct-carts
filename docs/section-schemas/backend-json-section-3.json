@@ -3425,6 +3425,327 @@
             ]
           }
         ]
+      },
+      {
+        "type": "subsection",
+        "id": "2020-03-g",
+        "title": "NOT IMPLEMENTED",
+        "parts": []
+      },
+      {
+        "type": "subsection",
+        "id": "2020-03-h",
+        "title": "CAHPS Survey Results",
+        "text": "Children's Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
+        "parts": [
+          {
+            "id": "2020-03-h-01",
+            "type": "part",
+            "questions": [
+              {
+                "id": "2020-03-h-01-01",
+                "label": "Did you collect CAHPS survey results?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Yes": "yes",
+                    "No": "no"
+                  }
+                }
+              },
+              {
+                "id": "2020-03-h-01-02",
+                "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Yes": "yes",
+                    "No": "no"
+                  }
+                },
+                "context_data": {
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
+                    "hide_if": {
+                      "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                      "values": {
+                        "interactive": [null, "no"],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "2020-03-h-02",
+            "type": "part",
+            "context_data": {
+              "skip_text": "Part 2 omitted because you indicated that have no collected CAHPS survey results",
+              "conditional_display": {
+                "type": "conditional_display",
+                "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
+                "hide_if": {
+                  "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                  "values": {
+                    "interactive": [null, "no"],
+                    "noninteractive": ["no"]
+                  }
+                }
+              }
+            },
+            "questions": [
+              {
+                "id": "2020-03-h-02-01",
+                "label": "Upload a summary report of your CAHPS survey results.",
+                "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                "type": "file_upload",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-h-02-02",
+                "label": "Which CHIP population did you survey?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Medicaid Expansion CHIP": "medicaid expansion chip",
+                    "Separate CHIP": "separate chip",
+                    "Combination CHIP": "combination chip",
+                    "Other": "other"
+                  }
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "label": "",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-h-02-02 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-h-02-02')].answer.entry",
+                          "values": {
+                            "interactive": [null, "medicaid expansion chip", "separate chip", "combination chip"],
+                            "noninteractive": ["medicaid expansion chip", "separate chip", "combination chip"]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-h-02-02-a",
+                        "label": "Which population did you survey?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-h-02-02-b",
+                        "label": "How many children were included in the survey?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-h-02-03",
+                "label": "Which version of the CAHPS survey did you use?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "CAHPS 5.0": "5.0",
+                    "CAHPS 5.0H": "5.0H",
+                    "Other": "other"
+                  }
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "label": "",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-h-02-03 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
+                          "values": {
+                            "interactive": [null, "5.0", "5.0H"],
+                            "noninteractive": ["5.0", "5.0H"]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-h-02-03-a",
+                        "label": "Which CAHPS survey did you use?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-h-02-04",
+                "label": "Which supplemental item sets did you include in your survey?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "None": "none",
+                    "Children with Chronic Conditions": "chronic",
+                    "Other": "other"
+                  }
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "label": "",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-h-02-04 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
+                          "values": {
+                            "interactive": [null, "none", "chronic"],
+                            "noninteractive": ["none", "chronic"]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-h-02-04-a",
+                        "label": "Which supplemental item sets did you include?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-h-02-05",
+                "label": "Which administrative protocol did you use to administer the survey?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "NCQA HEDIS CAHPS 5.0H": "ncqa hedis cahps 5.0h",
+                    "HRQ CAHPS": "hrq cahps",
+                    "Other": "other"
+                  }
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "label": "",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-h-02-05 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
+                          "values": {
+                            "interactive": [null, "ncqa hedis cahps 5.0h", "hrq cahps"],
+                            "noninteractive": ["ncqa hedis cahps 5.0h", "hrq cahps"]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-h-02-05-a",
+                        "label": "Which administrative protocol did you use?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-h-02-06",
+                "label": "Is there anything else you'd like to add about your CAHPS survey results?",
+                "type": "text",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          },
+          {
+            "id": "2020-03-h-03",
+            "type": "part",
+            "context_data": {
+              "skip_text": "Part 3 omitted because you indicated that have collected CAHPS survey results",
+              "conditional_display": {
+                "type": "conditional_display",
+                "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
+                "hide_if": {
+                  "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                  "values": {
+                    "interactive": [null, "yes"],
+                    "noninteractive": ["yes"]
+                  }
+                }
+              }
+            },
+            "questions": [
+              {
+                "id": "2020-03-h-03-01",
+                "label": "Why didn't you collect CAHPS survey results?",
+                "hint": "Check all that apply.",
+                "type": "checkbox",
+                "answer": {
+                  "entry": null,
+                  "options": {
+                    "Entire population wasn't included in the survey": "Entire population wasn't included in the survey",
+                    "Part of the population wasn't included in the survey": "Part of the population wasn't included in the survey",
+                    "Data wasn't available due to budget constraints": "Data wasn't available due to budget constraints",
+                    "Data wasn't available due to staff constraints": "Data wasn't available due to staff constraints",
+                    "Data wasn't consistent or accurate": "Data wasn't consistent or accurate",
+                    "Data source wasn't easily accessible": "Data source wasn't easily accessible",
+                    "Data source wasn't easily accessible: requires medical records": "Data source wasn't easily accessible: requires medical records",
+                    "Data source wasn't easily accessible: requires data linkage that doesn't currently exist": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
+                    "Data wasn't collected by a provider": "Data wasn't collected by a provider",
+                    "Sample size was too small (fewer than 30)": "Sample size was too small (fewer than 30)",
+                    "Other": "other"
+                  }
+                }
+              },
+              {
+                "id": "2020-03-h-03-02",
+                "label": "Explain in more detail why you weren't able to collect specific survey results.",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }
