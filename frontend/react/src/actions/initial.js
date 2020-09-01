@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
-export const QUESTION_FORMATTED = "QUESTION_FORMATTED";
 
 export const loadSections = () => {
   return async (dispatch) => {
