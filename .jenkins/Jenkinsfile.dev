@@ -189,9 +189,8 @@ pipeline {
                # 2 things you need
                # - you need to get the urls into env variables (see above)
                #  - you need to put them in the right place in the unzipped archive
-
-              cd build && ./env.sh
-
+              pwd
+              bash build/env.sh
 
                aws s3 sync build s3://${S3_BUCKET_NAME}
              '''
@@ -218,9 +217,7 @@ pipeline {
           }
           dir('tests') {
             sh '''
-              set -e
-              echo "LOOK HERE ASDFASDF"
-              echo $APPLICATION_ENDPOINT
+              set -e                            
               docker run --rm -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT -v $(pwd)/testcafe:/tests testcafe/testcafe chromium /tests/**/*.js
             '''
           }
