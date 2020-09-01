@@ -4,12 +4,15 @@ export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const QUESTION_FORMATTED = "QUESTION_FORMATTED";
 
+const temp__data = require("./initial.json");
+
 export const loadSections = () => {
   return async (dispatch) => {
-    const { data } = await axios.get(
-      `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`
-    );
-    dispatch({ type: LOAD_SECTIONS, data });
+    // const { data } = await axios.get(
+    //   `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`
+    // );
+    // dispatch({ type: LOAD_SECTIONS, data });
+    dispatch({ type: LOAD_SECTIONS, data: temp__data });
   };
 };
 
