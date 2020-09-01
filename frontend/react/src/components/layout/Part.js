@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectPartTitleAndQuestionIDs } from "../../store/formData";
+import { selectPartTitle } from "../../store/selectors";
 
 import QuestionComponent from "../fields/QuestionComponent";
 
@@ -16,7 +16,7 @@ const Part = ({ partId, text, title }) => {
 };
 
 const mapStateToProps = (state, { partId }) => {
-  const part = selectPartTitleAndQuestionIDs(state, partId);
+  const part = selectPartTitle(state, partId);
   return {
     text: part ? part.text : null,
     title: part ? part.title : null,

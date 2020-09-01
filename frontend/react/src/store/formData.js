@@ -253,38 +253,3 @@ export const generateSubsectionLabel = (str) => {
   let sectionNumber = Number(idArray[1]);
   return `Section ${sectionNumber}${idArray[2]}`;
 };
-
-export const selectSectionTitle = (state, sectionId) => {
-  const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
-  const sectionTitles = jsonpath.query(state, jspath);
-
-  if (sectionTitles.length) {
-    return sectionTitles[0];
-  }
-  return null;
-};
-
-export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
-  const subsection = selectFragment(state, subsectionId);
-
-  if (subsection) {
-    return {
-      parts: subsection.parts.map((part) => part.id),
-      title: subsection.title,
-    };
-  }
-  return null;
-};
-
-export const selectPartTitleAndQuestionIDs = (state, partId) => {
-  const part = selectFragment(state, partId);
-
-  if (part) {
-    return {
-      questions: part.questions.map((question) => question.id),
-      text: part.text,
-      title: part.title,
-    };
-  }
-  return null;
-};

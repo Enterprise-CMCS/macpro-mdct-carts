@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PageInfo from "./PageInfo";
-import { selectSectionTitle } from "../../store/formData";
+import { selectSectionTitle } from "../../store/selectors";
 import Subsection from "./Subsection";
 
 const Section = ({ subsectionId, title }) => {
