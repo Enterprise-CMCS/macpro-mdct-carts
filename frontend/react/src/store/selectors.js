@@ -9,5 +9,3 @@ export const selectQuestion = (state, id) => {
 
   return null;
 };
-
-// const jp = `$..[*].contents.section.subsections[*].parts[*].questions[*].questions[?(@.id=='${id}')]`;
