@@ -3425,6 +3425,62 @@
             ]
           }
         ]
+      },
+      {
+        "type": "subsection",
+        "id": "2020-03-g",
+        "title": "NOT IMPLEMENTED",
+        "parts": []
+      },
+      {
+        "type": "subsection",
+        "id": "2020-03-h",
+        "title": "CAHPS Survey Results",
+        "text": "Children's Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
+        "parts": [
+          {
+          "id": "2020-03-h-01",
+          "type": "part",
+          "questions": [
+            {
+              "id": "2020-03-h-01-01",
+              "label": "Did you collect CAHPS survey results?",
+              "type": "radio",
+              "answer": {
+                "entry": null,
+                "options": {
+                  "Yes": "yes",
+                  "No": "no"
+                }
+              }
+            },
+            {
+              "id": "2020-03-h-01-02",
+              "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database?",
+              "type": "radio",
+              "answer": {
+                "entry": null,
+                "options": {
+                  "Yes": "yes",
+                  "No": "no"
+                }
+              },
+              "context_data": {
+                "conditional_display": {
+                  "type": "conditional_display",
+                  "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                  "hide_if": {
+                    "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                    "values": {
+                      "interactive": [null, "no"],
+                      "noninteractive": ["no"]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }]
       }
     ]
   }
