@@ -26,12 +26,11 @@ class CMSChoice extends Component {
     // Set checkbox array of selected items
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
-
-    //TODO: Change to send to selections && move logic over from QC
     this.props.onChange([evt.target.name, evt.target.value]);
   };
 
   handleChangeArray(evtArray) {
+    this.props.sectionContext([evtArray[0], evtArray[1]]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
@@ -70,7 +69,6 @@ class CMSChoice extends Component {
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
-        console.log("item", item);
         // Set parent value to state, fallback to entered answer
         let parentValue = this.props.valueFromParent
           ? this.props.valueFromParent
@@ -87,9 +85,7 @@ class CMSChoice extends Component {
             }
           });
         } else {
-          console.log("not fieldset", item);
           if (shouldDisplay(parentValue, item.context_data)) {
-            console.log(tempQuestionHolder.length, item);
             tempQuestionHolder.push(item);
           }
         }
@@ -126,111 +122,3 @@ class CMSChoice extends Component {
   }
 }
 export default CMSChoice;
-// // Add fields to render array based on type (from api)
-// switch (item.type) {
-//   case "text_multiline":
-//     // Check if question matches the currently selected option (from parent)
-//     if (shouldDisplay(parentValue, item.context_data)) {
-//       // Add to field to render array
-//       fields.push(
-//         <>
-//           <CMSLegend
-//             label={item.label}
-//             id={item.id}
-//           />
-//           <TextField
-//             class="ds-c-field"
-//             name={item.id}
-//             value={item.answer.entry}
-//             type="text"
-//             name={item.id}
-//             rows="6"
-//           />
-//         </>
-//       );
-//     }
-
-//     break;
-//   case "radio":
-//   case "checkbox":
-//     // Loop through available answers object
-//     Object.entries(item.answer.options).map((key, index) => {
-//       // If entry matches current answer, mark as checked
-//       const isCheckedChild =
-//         key[1] === item.answer.entry ? "checked" : null;
-
-//       // Check if question matches the currently selected option (from parent)
-//       if (shouldDisplay(parentValue, item.context_data)) {
-//         // Add field to render array
-//         return fields.push(
-//           <>
-//             {index === 0 ? (
-//               <CMSLegend
-//                 label={item.label}
-//                 id={item.id}
-//                 type="subquestion"
-//               />
-//             ) : null}
-//             {/* Output only matching answers */}
-
-//             <Choice
-//               className="fpl-input"
-//               name={item.id}
-//               value={key[1]}
-//               type={this.props.type}
-//               checked={isCheckedChild}
-//             >
-//               {key[0]}
-//             </Choice>
-//           </>
-//         );
-//       }
-//     });
-//     break;
-//   case "ranges":
-//     // Check if question matches the currently selected option (from parent)
-
-//     // if (shouldDisplay(parentValue, item.context_data)) {
-//     // Add field to render array
-//     return fields.push(
-//       <>
-//         {/* <CMSRange item={item} mask="currency" numeric /> */}
-//         <CMSRanges item={item} />
-//       </>
-//     );
-//     // }
-//     break;
-//   case "money":
-//     // Check if question matches the currently selected option (from parent)
-
-//     if (shouldDisplay(parentValue, item.context_data)) {
-//       // Add field to render array
-//       fields.push(
-//         <>
-//           <CMSLegend
-//             label={item.label}
-//             id={item.id}
-//             type="subquestion"
-//           />
-//           <TextField
-//             className="fpl-input"
-//             // label={item.label}
-//             inputMode="currency"
-//             mask="currency"
-//             pattern="[0-9]*"
-//             value={item.answer.entry}
-//           />
-//         </>
-//       );
-//     }
-//     break;
-//   case "fieldset":
-//     if (shouldDisplay(parentValue, item.context_data)) {
-//       fields.push(
-//         <QuestionComponent
-//           data={item.questions} //Array of subquestions to map through
-//           sectionContext={this.props.sectionContext} // function binding children to parent context
-//         />)
-//     }
-//     break;
-// }

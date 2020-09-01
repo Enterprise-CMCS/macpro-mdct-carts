@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
-
+import CMSLegend from "./CMSLegend";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
@@ -424,6 +424,57 @@ class QuestionComponent extends Component {
                   }
                 </div>
               ) : null}
+
+              {question.type === "fieldset" &&
+              question.fieldset_type === "noninteractive_table"
+                ? Object.entries(question.fieldset_info).map((value) => {
+                    return (
+                      <table className="ds-c-table" width="100%">
+                        {value[0] === "headers" ? (
+                          <thead>
+                            <tr>
+                              {question.fieldset_info.headers.map(function (
+                                value
+                              ) {
+                                return (
+                                  <th
+                                    width={`${
+                                      100 /
+                                      question.fieldset_info.headers.length
+                                    }%`}
+                                    name={`${value}`}
+                                  >
+                                    {value}
+                                  </th>
+                                );
+                              })}
+                            </tr>
+                          </thead>
+                        ) : null}
+                        {value[0] === "rows"
+                          ? question.fieldset_info.rows.map((value) => {
+                              return (
+                                <tr>
+                                  {value.map((value) => {
+                                    return (
+                                      <td
+                                        width={`${
+                                          100 /
+                                          question.fieldset_info.headers.length
+                                        }%`}
+                                      >
+                                        {value}
+                                      </td>
+                                    );
+                                  })}
+                                </tr>
+                              );
+                            })
+                          : null}
+                      </table>
+                    );
+                  })
+                : null}
             </fieldset>
           </div>
         ))}
