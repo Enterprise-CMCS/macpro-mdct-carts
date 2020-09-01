@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
-import { QUESTION_FORMATTED } from "../actions/initial";
 
 const saveMiddleware = () => {
   let isSaving = false;
