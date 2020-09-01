@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  selectFragment,
-  winnowProperties,
-} from "../../../store/formData";
+import { selectFragment, winnowProperties } from "../../../store/formData";
 import { setAnswerEntry } from "../../../actions/initial.js";
 import { ChoiceList, TextField } from "@cmsgov/design-system-core";
 import { _ } from "underscore";
@@ -39,7 +36,7 @@ const TextFieldBase = ({
   );
 };
 /* Question types */
-const QuestionText = ({fragment, changeFunc, ...fieldProps}) => {
+const QuestionText = ({ fragment, changeFunc, ...fieldProps }) => {
   const isNotReallyTextQuestion =
     fragment.type === "text" ? "" : `Is actually ${fragment.type}`;
   const key = `qt-${fragment.id}`;
@@ -55,15 +52,11 @@ const QuestionText = ({fragment, changeFunc, ...fieldProps}) => {
   );
 };
 
-const QuestionTextSmall = ({fragment, changeFunc, ...fieldProps}) => (
-  <TextFieldBase
-    fragment={fragment}
-    changeFunc={changeFunc}
-    {...fieldProps}
-  />
+const QuestionTextSmall = ({ fragment, changeFunc, ...fieldProps }) => (
+  <TextFieldBase fragment={fragment} changeFunc={changeFunc} {...fieldProps} />
 );
 
-const QuestionTextMedium = ({fragment, changeFunc, ...fieldProps}) => (
+const QuestionTextMedium = ({ fragment, changeFunc, ...fieldProps }) => (
   <TextFieldBase
     fragment={fragment}
     changeFunc={changeFunc}
@@ -73,7 +66,7 @@ const QuestionTextMedium = ({fragment, changeFunc, ...fieldProps}) => (
   />
 );
 
-const QuestionTextMultiline = ({fragment, changeFunc, ...fieldProps}) => (
+const QuestionTextMultiline = ({ fragment, changeFunc, ...fieldProps }) => (
   <TextFieldBase
     fragment={fragment}
     changeFunc={changeFunc}
@@ -83,7 +76,11 @@ const QuestionTextMultiline = ({fragment, changeFunc, ...fieldProps}) => (
   />
 );
 
-const QuestionTextMailingAddress = ({fragment, changeFunc, ...fieldProps}) => (
+const QuestionTextMailingAddress = ({
+  fragment,
+  changeFunc,
+  ...fieldProps
+}) => (
   <TextFieldBase
     fragment={fragment}
     changeFunc={changeFunc}
@@ -93,7 +90,7 @@ const QuestionTextMailingAddress = ({fragment, changeFunc, ...fieldProps}) => (
   />
 );
 
-const QuestionTextEmail = ({fragment, changeFunc, ...fieldProps}) => {
+const QuestionTextEmail = ({ fragment, changeFunc, ...fieldProps }) => {
   const valid = validEmailRegex.test(fragment.answer.entry);
   const errorMessage = valid
     ? null
@@ -103,12 +100,12 @@ const QuestionTextEmail = ({fragment, changeFunc, ...fieldProps}) => {
       fragment={fragment}
       changeFunc={changeFunc}
       errorMessage={errorMessage}
-    {...fieldProps}
+      {...fieldProps}
     />
   );
 };
 
-const QuestionTextPhone = ({fragment, changeFunc, ...fieldProps}) => {
+const QuestionTextPhone = ({ fragment, changeFunc, ...fieldProps }) => {
   const valid = validTelephoneRegex.test(fragment.answer.entry);
   const errorMessage = valid
     ? null
@@ -118,19 +115,24 @@ const QuestionTextPhone = ({fragment, changeFunc, ...fieldProps}) => {
       fragment={fragment}
       changeFunc={changeFunc}
       errorMessage={errorMessage}
-    {...fieldProps}
+      {...fieldProps}
     />
-);
-}
+  );
+};
 
-const QuestionChoiceList = ({fragment, changeFunc, ...fieldProps}) => {
+const QuestionChoiceList = ({ fragment, changeFunc, ...fieldProps }) => {
   const buildChoice = (entry, options, key) => {
-    let choice = {label: key, value: options[key]};
-    let isChecked = (choice.value === entry) || (entry && entry.includes && entry.includes(choice.value));
-    choice["checked"] = (!_.isUndefined(isChecked) && !_.isNull(isChecked)) ? isChecked : false;
+    let choice = { label: key, value: options[key] };
+    let isChecked =
+      choice.value === entry ||
+      (entry && entry.includes && entry.includes(choice.value));
+    choice["checked"] =
+      !_.isUndefined(isChecked) && !_.isNull(isChecked) ? isChecked : false;
     return choice;
-  }
-  const choices = Object.keys(fragment.answer.options).map((k) => buildChoice(fragment.answer.entry, fragment.answer.options, k));
+  };
+  const choices = Object.keys(fragment.answer.options).map((k) =>
+    buildChoice(fragment.answer.entry, fragment.answer.options, k)
+  );
 
   return (
     <ChoiceList
@@ -142,34 +144,37 @@ const QuestionChoiceList = ({fragment, changeFunc, ...fieldProps}) => {
       onChange={_.partial(changeFunc, fragment.id)}
       disabled={fragment.answer.readonly}
       {...fieldProps}
-    >
-    </ChoiceList>
-  )
-}
+    ></ChoiceList>
+  );
+};
 
-const QuestionRadioButtons = ({fragment, changeFunc, ...fieldProps}) => {
+const QuestionRadioButtons = ({ fragment, changeFunc, ...fieldProps }) => {
   return (
     <QuestionChoiceList
       fragment={fragment}
       changeFunc={changeFunc}
       {...fieldProps}
     />
-  )
+  );
 };
 
-const QuestionCheckboxes = ({fragment, changeFunc, ...fieldProps}) => {
+const QuestionCheckboxes = ({ fragment, changeFunc, ...fieldProps }) => {
   const handleCheckboxesChange = (fragmentId, eventChange) => {
-    const inputs = Array.from(document.querySelectorAll(`[name='${eventChange.target.name}']`));
-    const values = inputs.filter(input => input.checked).map(input => input.value);
-    return changeFunc(fragmentId, {target: {value: values}});
-  }
+    const inputs = Array.from(
+      document.querySelectorAll(`[name='${eventChange.target.name}']`)
+    );
+    const values = inputs
+      .filter((input) => input.checked)
+      .map((input) => input.value);
+    return changeFunc(fragmentId, { target: { value: values } });
+  };
   return (
     <QuestionChoiceList
       fragment={fragment}
       changeFunc={handleCheckboxesChange}
       {...fieldProps}
     />
-  )
+  );
 };
 
 /* /Question types */
@@ -188,7 +193,7 @@ const QuestionMap = new Map([
 ]);
 
 // Connect question types to functions via their types:
-const QuestionHolder = ({ fragment, elementid, changeFunc, ...fieldProps}) => {
+const QuestionHolder = ({ fragment, elementid, changeFunc, ...fieldProps }) => {
   const Component = QuestionMap.has(fragment.type)
     ? QuestionMap.get(fragment.type)
     : QuestionMap.get("text");

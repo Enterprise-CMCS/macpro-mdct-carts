@@ -4,6 +4,9 @@ import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
 import { shouldDisplay } from "../Utils/helperFunctions";
 import CMSRanges from "./CMSRanges";
+import QuestionComponent from "../fields/QuestionComponent";
+import { setAnswerEntry } from "../../actions/initial";
+import { connect } from "react-redux";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -23,6 +26,8 @@ class CMSChoice extends Component {
     // Set checkbox array of selected items
     this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
+
+    //TODO: Change to send to selections && move logic over from QC
     this.props.onChange([evt.target.name, evt.target.value]);
   };
 
@@ -59,119 +64,47 @@ class CMSChoice extends Component {
 
     // Create children based on field type
     let fields = [];
+    let tempQuestionHolder = [];
 
     // If children are specified
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
+        console.log("item", item);
         // Set parent value to state, fallback to entered answer
         let parentValue = this.props.valueFromParent
           ? this.props.valueFromParent
           : this.props.answer;
-
-        // Add fields to render array based on type (from api)
-        switch (item.type) {
-          case "text_long":
-            // Check if question matches the currently selected option (from parent)
+        if (item.type === "fieldset") {
+          item.questions.map((question) => {
             if (shouldDisplay(parentValue, item.context_data)) {
-              // Add to field to render array
               fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <TextField
-                    class="ds-c-field"
-                    name={item.id}
-                    value={item.answer.entry}
-                    type="text"
-                    name={item.id}
-                    rows="6"
-                  />
-                </>
+                <QuestionComponent
+                  data={[question]}
+                  setAnswer={this.props.setAnswer}
+                />
               );
             }
-
-            break;
-          case "radio":
-          case "checkbox":
-            // Loop through available answers object
-            Object.entries(item.answer.options).map((key, index) => {
-              // If entry matches current answer, mark as checked
-              const isCheckedChild =
-                key[1] === item.answer.entry ? "checked" : null;
-              // Check if question matches the currently selected option (from parent)
-              if (shouldDisplay(parentValue, item.context_data)) {
-                // Add field to render array
-                return fields.push(
-                  <>
-                    {index === 0 ? (
-                      <CMSLegend
-                        label={item.label}
-                        id={item.id}
-                        type="subquestion"
-                      />
-                    ) : null}
-                    {/* Output only matching answers */}
-
-                    <Choice
-                      className="fpl-input"
-                      name={item.id}
-                      value={key[1]}
-                      type={this.props.type}
-                      checked={isCheckedChild}
-                    >
-                      {key[0]}
-                    </Choice>
-                  </>
-                );
-              }
-            });
-            break;
-          case "ranges":
-            // Check if question matches the currently selected option (from parent)
-
-            // if (shouldDisplay(parentValue, item.context_data)) {
-            // Add field to render array
-            return fields.push(
-              <>
-                {/* <CMSRange item={item} mask="currency" numeric /> */}
-                <CMSRanges item={item} onChange={this.handleChangeArray} />
-              </>
-            );
-            // }
-            break;
-          case "money":
-            // Check if question matches the currently selected option (from parent)
-
-            if (shouldDisplay(parentValue, item.context_data)) {
-              // Add field to render array
-              fields.push(
-                <>
-                  <CMSLegend
-                    label={item.label}
-                    id={item.id}
-                    type="subquestion"
-                  />
-                  <TextField
-                    className="fpl-input"
-                    // label={item.label}
-                    inputMode="currency"
-                    mask="currency"
-                    pattern="[0-9]*"
-                    value={item.answer.entry}
-                  />
-                </>
-              );
-            }
-            break;
+          });
+        } else {
+          console.log("not fieldset", item);
+          if (shouldDisplay(parentValue, item.context_data)) {
+            console.log(tempQuestionHolder.length, item);
+            tempQuestionHolder.push(item);
+          }
+        }
+        if (tempQuestionHolder.length > 0) {
+          fields.push(
+            <QuestionComponent
+              data={tempQuestionHolder}
+              setAnswer={this.props.setAnswer}
+            />
+          );
         }
       });
-    }
 
-    // Return Choice component after creating subquestion components
+      // Return Choice component after creating subquestion components
+    }
     return (
       <>
         <Choice
@@ -192,5 +125,112 @@ class CMSChoice extends Component {
     );
   }
 }
-
 export default CMSChoice;
+// // Add fields to render array based on type (from api)
+// switch (item.type) {
+//   case "text_multiline":
+//     // Check if question matches the currently selected option (from parent)
+//     if (shouldDisplay(parentValue, item.context_data)) {
+//       // Add to field to render array
+//       fields.push(
+//         <>
+//           <CMSLegend
+//             label={item.label}
+//             id={item.id}
+//           />
+//           <TextField
+//             class="ds-c-field"
+//             name={item.id}
+//             value={item.answer.entry}
+//             type="text"
+//             name={item.id}
+//             rows="6"
+//           />
+//         </>
+//       );
+//     }
+
+//     break;
+//   case "radio":
+//   case "checkbox":
+//     // Loop through available answers object
+//     Object.entries(item.answer.options).map((key, index) => {
+//       // If entry matches current answer, mark as checked
+//       const isCheckedChild =
+//         key[1] === item.answer.entry ? "checked" : null;
+
+//       // Check if question matches the currently selected option (from parent)
+//       if (shouldDisplay(parentValue, item.context_data)) {
+//         // Add field to render array
+//         return fields.push(
+//           <>
+//             {index === 0 ? (
+//               <CMSLegend
+//                 label={item.label}
+//                 id={item.id}
+//                 type="subquestion"
+//               />
+//             ) : null}
+//             {/* Output only matching answers */}
+
+//             <Choice
+//               className="fpl-input"
+//               name={item.id}
+//               value={key[1]}
+//               type={this.props.type}
+//               checked={isCheckedChild}
+//             >
+//               {key[0]}
+//             </Choice>
+//           </>
+//         );
+//       }
+//     });
+//     break;
+//   case "ranges":
+//     // Check if question matches the currently selected option (from parent)
+
+//     // if (shouldDisplay(parentValue, item.context_data)) {
+//     // Add field to render array
+//     return fields.push(
+//       <>
+//         {/* <CMSRange item={item} mask="currency" numeric /> */}
+//         <CMSRanges item={item} />
+//       </>
+//     );
+//     // }
+//     break;
+//   case "money":
+//     // Check if question matches the currently selected option (from parent)
+
+//     if (shouldDisplay(parentValue, item.context_data)) {
+//       // Add field to render array
+//       fields.push(
+//         <>
+//           <CMSLegend
+//             label={item.label}
+//             id={item.id}
+//             type="subquestion"
+//           />
+//           <TextField
+//             className="fpl-input"
+//             // label={item.label}
+//             inputMode="currency"
+//             mask="currency"
+//             pattern="[0-9]*"
+//             value={item.answer.entry}
+//           />
+//         </>
+//       );
+//     }
+//     break;
+//   case "fieldset":
+//     if (shouldDisplay(parentValue, item.context_data)) {
+//       fields.push(
+//         <QuestionComponent
+//           data={item.questions} //Array of subquestions to map through
+//           sectionContext={this.props.sectionContext} // function binding children to parent context
+//         />)
+//     }
+//     break;
+// }

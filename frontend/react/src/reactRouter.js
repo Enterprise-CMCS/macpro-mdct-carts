@@ -11,6 +11,8 @@ import BasicInfo from "./components/sections/basicInfo/BasicInfo";
 import BasicInfoApi from "./components/sections/basicinfoapi/BasicInfo";
 import Section1 from "./components/sections/section1/Section1";
 import Section1Api from "./components/sections/section1api/Section1";
+import Section2BApi from "./components/sections/section2api/Section2BApi";
+import Section2AApi from "./components/sections/section2api/Section2AApi";
 import Section2a from "./components/sections/section2a/Section2A";
 import Section2b from "./components/sections/section2b/Section2B";
 import Section3a from "./components/sections/section3a/Section3A";
@@ -42,6 +44,8 @@ const Routes = () => (
           <Route exact path="/basic-info-api" component={BasicInfoApi} />
           <Route exact path="/section1" component={Section1} />
           <Route exact path="/section1-api" component={Section1Api} />
+          <Route exact path="/section2B-api" component={Section2BApi} />
+          <Route exact path="/section2A-api" component={Section2AApi} />
           <Route exact path="/section3A-api" component={Section3AApi} />
           <Route exact path="/section2/2a" component={Section2a} />
           <Route exact path="/section2/2b" component={Section2b} />

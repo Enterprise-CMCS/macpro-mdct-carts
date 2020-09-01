@@ -50,7 +50,6 @@ class QuestionComponent extends Component {
   updateLocalStateOnly(evt) {
     this.setState({
       [evt.target.name]: evt.target.value ? evt.target.value : null,
-      [evt.target.name + "Mod"]: true,
     });
   }
 
@@ -63,12 +62,11 @@ class QuestionComponent extends Component {
         this.props.setAnswer(evt.target.name, formattedNum);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
-          [evt.target.name + "Mod"]: true,
+
           [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
         });
       } else {
         this.setState({
-          [evt.target.name + "Mod"]: true,
           [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
         });
       }
@@ -161,14 +159,7 @@ class QuestionComponent extends Component {
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
               <legend className="ds-c-label">
-                {question.id
-                  ? typeof question.id.substring(question.id.length - 2) ===
-                    Number
-                    ? parseInt(question.id.substring(question.id.length - 2))
-                    : question.id.substring(question.id.length - 1) +
-                      ". " +
-                      question.label
-                  : null}
+                <CMSLegend id={question.id} label={question.label} />
               </legend>
               {question.type === "radio"
                 ? Object.entries(question.answer.options).map((key, index) => {

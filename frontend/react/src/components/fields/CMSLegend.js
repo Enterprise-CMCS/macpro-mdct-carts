@@ -4,24 +4,20 @@ class CMSLegend extends Component {
     super(props);
   }
   render() {
-    // Create question number string
-    let questionNumber;
-    if (this.props.id) {
-      if (this.props.type === "subquestion") {
-        questionNumber =
-          Number(this.props.id.split("-").slice(-2, -1)) +
-          this.props.id.split("-").slice(-1) +
-          ":";
-      } else {
-        questionNumber = Number(this.props.id.split("-").slice(-1)) + ":";
-      }
-    }
-
+    let questionId = this.props.id
+    let questionLabel = this.props.label
     return (
       <legend className="ds-c-label">
-        {questionNumber} {this.props.label}
+        {questionId ? (
+          (isNaN(questionId.substring(questionId.length - 2)) ? (
+            parseInt(questionId.substring(questionId.length - 4, questionId.length - 2)) + questionId.substring(questionId.length - 1) + '. ' + questionLabel) : (
+              parseInt(questionId.substring(questionId.length - 2))
+              + '. ' + questionLabel))
+        ) : null
+        }
       </legend>
-    );
+    )
   }
 }
 export default CMSLegend;
+

@@ -1,7 +1,6 @@
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import jsonpath from "jsonpath";
 import { _ } from "underscore";
-
 import { selectQuestion } from "./selectors";
 
 const initialState = [];
