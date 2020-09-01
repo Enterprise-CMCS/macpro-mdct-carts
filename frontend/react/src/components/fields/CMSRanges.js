@@ -81,6 +81,7 @@ class CMSRanges extends Component {
       }
 
       this.setState({ [this.props.item.id]: parentArray })
+
       // Pass up to parent component
       this.props.onChange([this.props.item.id, parentArray]);
     })
@@ -92,14 +93,21 @@ class CMSRanges extends Component {
    */
   newRanges() {
     let newRanges = [];
+
+    // Loop through available options in range_categories
     this.props.item.answer.range_categories.map((range, index) => {
+
+      // Add header, if available
       let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
+
+      // Add new component to view array
       newRanges.push({
         id: this.state.rangesId,
         component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
       });
 
     })
+
     this.setState({
       [`ranges`]: this.state.ranges.concat(newRanges),
       [`rangesId`]: this.state.rangesId + 1,
@@ -126,14 +134,6 @@ class CMSRanges extends Component {
   render() {
     return (
       <div className="cmsranges">
-        {/* {alert(this.state.ranges)} */}
-        <CMSLegend
-          label={this.props.item.label}
-          type="subquestion"
-          id={this.props.item.id}
-        />
-
-
         {this.state.ranges.map(
           (input) => {
             return (
@@ -141,7 +141,6 @@ class CMSRanges extends Component {
             )
           }
         )}
-
 
         <button
           onClick={(e) => this.newRanges()}
