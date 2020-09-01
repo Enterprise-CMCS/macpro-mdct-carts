@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
-import CMSLegend from './CMSLegend';
+import CMSLegend from "./CMSLegend";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
-import {selectQuestionsForPart} from '../../store/selectors'
+import { selectQuestionsForPart } from "../../store/selectors";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -450,8 +450,8 @@ class QuestionComponent extends Component {
 // "daterange"             <<831
 // "mailing_address"         <<831
 
-const mapStateToProps = (state, {data, partId}) => ({
-  data: data || selectQuestionsForPart(state, partId)
+const mapStateToProps = (state, { data, partId }) => ({
+  data: data || selectQuestionsForPart(state, partId),
 });
 
 const mapDispatchToProps = {
