@@ -9,7 +9,7 @@ import {
   TabPanel
 } from "@cmsgov/design-system-core";
 import QuestionsBasicInfo from "./questions/QuestionsBasicInfo";
-import Subsection from "./Subsection";
+import Subsection from "../../layout/Subsection";
 
 const BasicInfo = ({Data}) =>
   Data ? (

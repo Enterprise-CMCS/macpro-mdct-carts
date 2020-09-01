@@ -22,7 +22,7 @@ import Section3FApi from "./components/sections/section3Fapi/Section3F";
 import Section3EApi from "./components/sections/section3Eapi/Section3E";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
-import Section from "./components/sections/Section";
+import Section from "./components/layout/Section";
 import test from "./components/test";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
