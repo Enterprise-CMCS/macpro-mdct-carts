@@ -7,12 +7,6 @@ export const selectQuestion = (state, id) => {
     return questions[0];
   }
 
-  // const jpFieldset = `$..[*].contents.section.subsections[*].parts[*].questions[?(@.type=='fieldset')].questions[?(@.id=='${id}')]`;
-  // const fieldsetQuestions = jsonpath.query(state, jpFieldset);
-  // if (fieldsetQuestions.length) {
-  //   return fieldsetQuestions[0];
-  // }
-
   return null;
 };
 
