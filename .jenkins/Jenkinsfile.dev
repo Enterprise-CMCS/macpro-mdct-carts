@@ -184,13 +184,9 @@ pipeline {
                aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz cartsbuild.tar.gz
                tar -xvzf cartsbuild.tar.gz
 
-               #You need to populate the static archive with the API_POSTGRES_URL and the API_SQLSERVER_URL before you sync it to the bucket
-               # how do you do that
-               # 2 things you need
-               # - you need to get the urls into env variables (see above)
-               #  - you need to put them in the right place in the unzipped archive
+               #Populate the static archive with the API_POSTGRES_URL and the API_SQLSERVER_URL before you sync it to the host bucket
 
-              cd build && cat .env && ./env.sh && cat .env cd ..
+              cd build  && ./env.sh  && cd ..
 
                aws s3 sync build s3://${S3_BUCKET_NAME}
              '''
