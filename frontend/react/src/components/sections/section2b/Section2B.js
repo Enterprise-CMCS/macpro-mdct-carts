@@ -149,6 +149,7 @@ class Section2b extends Component {
               </TabPanel>
               {this.props.review !== true ? (
                 <TabPanel
+                  id="section2bPrevious"
                   className="section2b-previous"
                   tab={`FY${this.props.year - 1} answers`}
                 >

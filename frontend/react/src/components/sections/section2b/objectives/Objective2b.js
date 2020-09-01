@@ -17,7 +17,7 @@ class Objective2b extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      goalCount: 1,
+      goalCount: this.props.goalCount,
       goalArray: [],
       objective2bDummyData: "",
       objectiveDescription: "",
@@ -93,19 +93,19 @@ class Objective2b extends Component {
           {this.props.objectiveHeader ? (
             ""
           ) : (
-            <TextField
-              hint="For example: Our objective is to increase enrollment in our CHIP program."
-              label="What is your first objective as listed in your CHIP State Plan?"
-              multiline
-              rows={5}
-              name={"objective_" + this.props.objectiveId + "_text"}
-              value={
-                this.props.previousEntry === "true"
-                  ? this.state.objective2bDummyData
-                  : null
-              }
-            />
-          )}
+              <TextField
+                hint="For example: Our objective is to increase enrollment in our CHIP program."
+                label="What is your first objective as listed in your CHIP State Plan?"
+                multiline
+                rows={5}
+                name={"objective_" + this.props.objectiveId + "_text"}
+                value={
+                  this.props.previousEntry === "true"
+                    ? this.state.objective2bDummyData
+                    : null
+                }
+              />
+            )}
           <div className="goals">
             {/**
              * Maps through array of Previous Goals in state
@@ -128,25 +128,25 @@ class Objective2b extends Component {
                 ))}
               </Accordion>
             ) : (
-              //  Alternatively,  This maps through the current goals in state
+                //  Alternatively,  This maps through the current goals in state
 
-              <Accordion multiple defaultIndex={[...Array(100).keys()]}>
-                {this.state.goalArray.map((element) => (
-                  <AccordionItem key={element.id}>
-                    <h3>
-                      <AccordionButton>
-                        {/**
+                <Accordion multiple defaultIndex={[...Array(100).keys()]}>
+                  {this.state.goalArray.map((element) => (
+                    <AccordionItem key={element.id}>
+                      <h3>
+                        <AccordionButton>
+                          {/**
                          * Returns ID from longer string
                          */}
                         Goal {sliceId(element.id)}:
                       </AccordionButton>
-                    </h3>
+                      </h3>
 
-                    <AccordionPanel>{element.component}</AccordionPanel>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            )}
+                      <AccordionPanel>{element.component}</AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              )}
           </div>
         </div>
 

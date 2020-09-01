@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
-
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
+import CMSLegend from "./CMSLegend";
 import { setAnswerEntry } from "../../actions/initial";
 
 class QuestionComponent extends Component {
@@ -70,7 +70,6 @@ class QuestionComponent extends Component {
     );
     if (evt.target.value.length > 0) {
       if (validEmailRegex.test(evt.target.value)) {
-        this.props.sectionContext([evt.target.name, evt.target.value]);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
           [evt.target.name + "Mod"]: true,
@@ -102,7 +101,7 @@ class QuestionComponent extends Component {
   }
 
   handleCheckboxFlag(evt) {
-    this.props.sectionContext([evt.target.name, evt.target.checked]);
+    //this.props.sectionContext([evt.target.name, evt.target.checked]);
   }
 
   handleChange(evt) {
@@ -110,7 +109,6 @@ class QuestionComponent extends Component {
   }
 
   handleChangeArray(evtArray) {
-    this.props.sectionContext([evtArray[0], evtArray[1]]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
@@ -131,14 +129,7 @@ class QuestionComponent extends Component {
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
               <legend className="ds-c-label">
-                {question.id
-                  ? typeof question.id.substring(question.id.length - 2) ===
-                    Number
-                    ? parseInt(question.id.substring(question.id.length - 2))
-                    : question.id.substring(question.id.length - 1) +
-                      ". " +
-                      question.label
-                  : null}
+                <CMSLegend id={question.id} label={question.label} />
               </legend>
               {question.type === "radio" || question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
@@ -153,8 +144,8 @@ class QuestionComponent extends Component {
                         children={question.questions}
                         valueFromParent={this.state[question.id]}
                         onChange={this.handleChangeArray}
+                        setAnswer={this.props.setAnswer}
                         key={index}
-                        sectionContext={this.props.sectionContext}
                       />
                     );
                   })
@@ -165,7 +156,7 @@ class QuestionComponent extends Component {
                 <TextField
                   multiple
                   name={question.id}
-                  value={question.answer.entry || ''}
+                  value={question.answer.entry || ""}
                   type="text"
                   onChange={this.handleChange}
                   label=""
@@ -198,7 +189,7 @@ class QuestionComponent extends Component {
                 <TextField
                   className="ds-c-input"
                   name={question.id}
-                  value={question.answer.entry || ''}
+                  value={question.answer.entry || ""}
                   type="text"
                   onChange={this.handleChange}
                   label=""
@@ -230,7 +221,7 @@ class QuestionComponent extends Component {
                     label=""
                     className="ds-c-input"
                     multiline
-                    value={question.answer.entry || ''}
+                    value={question.answer.entry || ""}
                     type="text"
                     name={question.id}
                     rows="6"
@@ -241,10 +232,7 @@ class QuestionComponent extends Component {
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
-                <CMSRanges
-                  item={question}
-                  sectionContext={this.props.sectionContext}
-                />
+                <CMSRanges item={question} />
               ) : null}
 
               {/* If integer*/}
@@ -295,7 +283,7 @@ class QuestionComponent extends Component {
               {question.type === "daterange" ? (
                 <DateRange
                   question={question}
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                  onChange={this.props.handleChangeArray}
                 />
               ) : null}
 
@@ -366,17 +354,75 @@ class QuestionComponent extends Component {
                 <QuestionComponent
                   subquestion={true}
                   data={question.questions} //Array of subquestions to map through
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
                 />
               ) : null}
 
+              {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
+              {question.questions &&
+              question.type !== "fieldset" &&
+              question.type !== "radio" &&
+              question.type !== "checkbox" ? (
+                <QuestionComponent
+                  subquestion={true}
+                  data={question.questions} //Array of subquestions to map through
+                />
+              ) : null}
+              {question.type === "fieldset" &&
+              question.fieldset_type === "noninteractive_table"
+                ? Object.entries(question.fieldset_info).map((value) => {
+                    return (
+                      <table className="ds-c-table" width="100%">
+                        {value[0] === "headers" ? (
+                          <thead>
+                            <tr>
+                              {question.fieldset_info.headers.map(function (
+                                value
+                              ) {
+                                return (
+                                  <th
+                                    width={`${
+                                      100 /
+                                      question.fieldset_info.headers.length
+                                    }%`}
+                                    name={`${value}`}
+                                  >
+                                    {value}
+                                  </th>
+                                );
+                              })}
+                            </tr>
+                          </thead>
+                        ) : null}
+                        {value[0] === "rows"
+                          ? question.fieldset_info.rows.map((value) => {
+                              return (
+                                <tr>
+                                  {value.map((value) => {
+                                    return (
+                                      <td
+                                        width={`${
+                                          100 /
+                                          question.fieldset_info.headers.length
+                                        }%`}
+                                      >
+                                        {value}
+                                      </td>
+                                    );
+                                  })}
+                                </tr>
+                              );
+                            })
+                          : null}
+                      </table>
+                    );
+                  })
+                : null}
               {question.questions && question.type === "fieldset" ? (
                 <div className="cmsfieldset">
                   {
                     <QuestionComponent
                       subquestion={true}
                       data={question.questions} //Array of subquestions to map through
-                      sectionContext={this.props.sectionContext} // function binding children to parent context
                     />
                   }
                 </div>
@@ -411,7 +457,7 @@ class QuestionComponent extends Component {
 // "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
 
 const mapDispatchToProps = {
-  setAnswer: setAnswerEntry
+  setAnswer: setAnswerEntry,
 };
 
 export default connect(null, mapDispatchToProps)(QuestionComponent);
