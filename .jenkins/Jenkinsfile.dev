@@ -189,8 +189,8 @@ pipeline {
                # 2 things you need
                # - you need to get the urls into env variables (see above)
                #  - you need to put them in the right place in the unzipped archive
-              cd build && ./env.sh && cd ..
 
+              cd build && cat .env && ./env.sh && cat .env cd ..
 
                aws s3 sync build s3://${S3_BUCKET_NAME}
              '''
