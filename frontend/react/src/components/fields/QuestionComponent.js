@@ -5,6 +5,7 @@ import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
+import CMSLegend from "./CMSLegend";
 import { setAnswerEntry } from "../../actions/initial";
 
 class QuestionComponent extends Component {
@@ -20,7 +21,6 @@ class QuestionComponent extends Component {
     this.handleIntegerChange = this.handleIntegerChange.bind(this);
     this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
     this.validatePhone = this.validatePhone.bind(this);
-    this.handleCheckboxInput = this.handleCheckboxInput.bind(this);
   }
 
   validatePercentage(evt) {
@@ -110,27 +110,6 @@ class QuestionComponent extends Component {
     });
   }
 
-  handleCheckboxInput(evtArr) {
-    // An array of the checkbox items already selected, or an empty array
-    let selections = this.state[evtArr[0]] ?? [];
-
-    // If the current choice is already in state, find it's index in that array
-    // returns -1 if the choice isnt in the selections array
-    let alreadySelected = selections.indexOf(evtArr[1]);
-
-    // if its already there and it is being selected again, remove it
-    if (alreadySelected !== -1) {
-      selections.splice(alreadySelected, 1);
-    } else {
-      // if its not in the array of selections, add it
-      selections.push(evtArr[1]);
-    }
-
-    this.setState({ [evtArr[0]]: [...selections] });
-
-    this.props.setAnswer([evtArr[0]], selections);
-  }
-
   handleCheckboxFlag(evt) {
     this.props.setAnswer(evt.target.name, evt.target.checked);
   }
@@ -141,10 +120,6 @@ class QuestionComponent extends Component {
 
   handleChangeArray(evtArray) {
     this.props.setAnswer(evtArray[0], evtArray[1]);
-    this.setState({
-      [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
-      [evtArray[0] + "Mod"]: true,
-    });
   }
 
   handleFileUpload = (event) => {
@@ -193,7 +168,7 @@ class QuestionComponent extends Component {
                         conditional={question.conditional}
                         children={question.questions}
                         valueFromParent={this.state[question.id]}
-                        onChange={this.handleCheckboxInput}
+                        onChange={this.handleChangeArray}
                         key={index}
                         setAnswer={this.props.setAnswer}
                       />
