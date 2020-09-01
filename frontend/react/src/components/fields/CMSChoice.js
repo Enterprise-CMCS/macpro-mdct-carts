@@ -70,7 +70,6 @@ class CMSChoice extends Component {
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
-        console.log("item", item);
         // Set parent value to state, fallback to entered answer
         let parentValue = this.props.valueFromParent
           ? this.props.valueFromParent
@@ -87,9 +86,7 @@ class CMSChoice extends Component {
             }
           });
         } else {
-          console.log("not fieldset", item);
           if (shouldDisplay(parentValue, item.context_data)) {
-            console.log(tempQuestionHolder.length, item);
             tempQuestionHolder.push(item);
           }
         }

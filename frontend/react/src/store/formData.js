@@ -275,3 +275,16 @@ export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
   }
   return null;
 };
+
+export const selectPartTitleAndQuestionIDs = (state, partId) => {
+  const part = selectFragment(state, partId);
+
+  if(part) {
+    return {
+      questions: part.questions.map(question => question.id),
+      text: part.text,
+      title: part.title
+    };
+  }
+  return null;
+}
