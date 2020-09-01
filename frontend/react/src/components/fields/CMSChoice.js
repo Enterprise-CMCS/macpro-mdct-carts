@@ -19,34 +19,18 @@ class CMSChoice extends Component {
   }
 
   sendData = (evt) => {
-    if (this.props.type === "radio") {
-      // In the case of a radio the data should be sent as [questionId, answer(String)]
-      this.props.onChange([evt.target.name, evt.target.value]);
-    } else if (this.props.type === "checkbox") {
-      // An array of the checkbox items already selected, or an empty array
-      let selections = this.state[evt.target.name] ?? [];
+    // Add item to array
+    let selections = [];
+    selections.push(evt.target.value);
 
-      // If the current choice is already in state, find it's index in that array
-      // indexOf returns -1 if the choice isnt in the selections array
-      let alreadySelected = selections.indexOf(evt.target.value);
-
-      // if its already there and it is being selected again, remove it
-      if (alreadySelected !== -1) {
-        selections.splice(alreadySelected, 1);
-      } else {
-        // if its not in the array of selections, add it
-        selections.push(evt.target.value);
-      }
-
-      // add the new array of selected checkbox items to local state
-      this.setState({ [evt.target.name]: selections });
-
-      // In the case of a checkbox the data should be sent as [questionId, answers(Array)]
-      this.props.onChange([evt.target.name, selections]);
-    }
+    // Set checkbox array of selected items
+    this.setState({ [evt.target.name]: selections });
+    // Send event information back to parent component
+    this.props.onChange([evt.target.name, evt.target.value]);
   };
 
   handleChangeArray(evtArray) {
+    this.props.sectionContext([evtArray[0], evtArray[1]]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
@@ -85,7 +69,6 @@ class CMSChoice extends Component {
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
-        console.log("item", item);
         // Set parent value to state, fallback to entered answer
         let parentValue = this.props.valueFromParent
           ? this.props.valueFromParent
@@ -102,9 +85,7 @@ class CMSChoice extends Component {
             }
           });
         } else {
-          console.log("not fieldset", item);
           if (shouldDisplay(parentValue, item.context_data)) {
-            console.log(tempQuestionHolder.length, item);
             tempQuestionHolder.push(item);
           }
         }
