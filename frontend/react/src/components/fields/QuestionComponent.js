@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
 import CMSLegend from "./CMSLegend";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
-import CMSLegend from "./CMSLegend";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
