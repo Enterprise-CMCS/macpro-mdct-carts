@@ -51,7 +51,7 @@ class CMSRange extends Component {
                 inputMode={this.props.item.answer.range_type[this.props.index]}
                 pattern="[0-9]*"
                 type="text"
-                name={`range-${[this.props.index]}-a`}
+                name={`range-${[this.props.counter]}-${[this.props.index]}-a`}
                 inputRef={(start) => (this.start = start)}
                 onChange={this.calculateRanges}
                 value={this.state.rangeStartsAt}
@@ -72,7 +72,7 @@ class CMSRange extends Component {
                 inputMode={this.props.item.answer.range_type[this.props.index]}
                 pattern="[0-9]*"
                 type="text"
-                name={`range-${[this.props.index]}-b`}
+                name={`range-${[this.props.counter]}-${[this.props.index]}-b`}
                 inputRef={(end) => (this.end = end)}
                 onChange={this.calculateRanges}
                 value={this.state.rangeEndsAt}
@@ -86,7 +86,7 @@ class CMSRange extends Component {
           </div>
           {this.state.rangeError ? (
             <div className="ds-l-row cmsrange-error error">
-              End percent cannot be lower than start percent
+              End value cannot be lower than start value
             </div>
           ) : null}
         </div>
