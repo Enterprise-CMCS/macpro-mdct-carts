@@ -26,7 +26,7 @@ class CMSRanges extends Component {
       let header = index === 0 ? <h3>{this.props.item.answer.header}</h3> : null
       newRanges.push({
         id: 0,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
+        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} counter={this.state.rangesId} onChange={this.onChange} /></>,
       });
 
     })
@@ -42,9 +42,12 @@ class CMSRanges extends Component {
     // Use callback for additional processing
     this.setState({ [evt[0]]: evt[1] }, () => {
 
+      // Get all state items
       let currentState = this.state;
 
       let rangesArray = [];
+
+      // Loop through all state items
       for (const [key, value] of Object.entries(currentState)) {
         let chunks = key.split("-");
 
@@ -63,15 +66,29 @@ class CMSRanges extends Component {
         let tempArray = [];
 
         // Loop through all ranges again
-        for (let k = 0; k < rangesArray.length; k++) {
+        for (let j = 0; j < rangesArray.length; j++) {
 
           // Get current iteration from state name
-          let chunk = rangesArray[k][0].split("-")[1];
+          let rangeId = rangesArray[j][0].split("-")[1]; //range-0-1-a : returns 0
 
           // If current iteration matches chunk from state name
-          if (Number(i) === Number(chunk)) {
-            tempArray.push(rangesArray[k][1]);
+          if (Number(i) === Number(rangeId)) {
+            let tempSubArray = [];
+            // if new row, create array
+            for (let k = 0; k < rangesArray.length; k++) {
+
+              let row = rangesArray[k][0].split("-")[2]; //range-0-1-a : returns 1
+
+              if (Number(j) === Number(row)) {
+                tempSubArray.push(rangesArray[k][1]);
+              }
+            }
+
+            if (tempSubArray.length > 0) {
+              tempArray.push(tempSubArray);
+            }
           }
+
         }
 
         // If temparray has values, add to parent array
@@ -103,7 +120,7 @@ class CMSRanges extends Component {
       // Add new component to view array
       newRanges.push({
         id: this.state.rangesId,
-        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} onChange={this.onChange} /></>,
+        component: <>{header}<CMSRange item={this.props.item} mask="currency" numeric index={index} counter={this.state.rangesId} onChange={this.onChange} /></>,
       });
 
     })
