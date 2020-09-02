@@ -75,7 +75,7 @@ class CMSChoice extends Component {
           : this.props.answer;
         if (item.type === "fieldset") {
           item.questions.map((question) => {
-            if (shouldDisplay(parentValue, item.context_data)) {
+            if (shouldDisplay(item.context_data)) {
               fields.push(
                 <QuestionComponent
                   data={[question]}
@@ -85,7 +85,7 @@ class CMSChoice extends Component {
             }
           });
         } else {
-          if (shouldDisplay(parentValue, item.context_data)) {
+          if (shouldDisplay(item.context_data)) {
             tempQuestionHolder.push(item);
           }
         }
