@@ -1,0 +1,5 @@
+# Fill in with your own values
+# Obviously don't commit any of that.
+
+source_database_password = "source_database_password"
+target_database_password = "target_database_password"
