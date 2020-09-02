@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import CMSLegend from "../fields/CMSLegend";
 import CMSRange from "./CMSRange";
 
 class CMSRanges extends Component {
@@ -34,6 +33,7 @@ class CMSRanges extends Component {
               mask="currency"
               numeric
               index={index}
+              counter={this.state.rangesId}
               onChange={this.onChange}
             />
           </>
@@ -50,9 +50,12 @@ class CMSRanges extends Component {
   onChange(evt) {
     // Use callback for additional processing
     this.setState({ [evt[0]]: evt[1] }, () => {
+      // Get all state items
       let currentState = this.state;
 
       let rangesArray = [];
+
+      // Loop through all state items
       for (const [key, value] of Object.entries(currentState)) {
         let chunks = key.split("-");
 
@@ -61,35 +64,47 @@ class CMSRanges extends Component {
           rangesArray.push([key, value]);
         }
       }
+
       // sort array alphabetically
       rangesArray.sort();
 
-      let parentArray = [];
+      let parentObj = {};
 
-      // Loop through all ranges
       for (let i = 0; i < rangesArray.length; i++) {
-        let tempArray = [];
+        let rangeId = rangesArray[i][0].split("-")[1]; //range-0-1-a : returns 0
+        let rowId = rangesArray[i][0].split("-")[2]; //range-0-1-a : returns 1
 
-        // Loop through all ranges again
-        for (let k = 0; k < rangesArray.length; k++) {
-          // Get current iteration from state name
-          let chunk = rangesArray[k][0].split("-")[1];
+        // filter out matching pairs
+        let matchingInput = rangesArray.filter(function (element) {
+          return (
+            element[0].split("-")[1] === rangeId &&
+            element[0].split("-")[2] === rowId
+          );
+        }); // all of the inputs that have the same 2nd & 3rd characters, pairing the a'S & B's
 
-          // If current iteration matches chunk from state name
-          if (Number(i) === Number(chunk)) {
-            tempArray.push(rangesArray[k][1]);
+        if (matchingInput.length > 1) {
+          // pull out the values from the matching pairs (if they're both present)
+          let pair = [matchingInput[0][1], matchingInput[1][1]];
+
+          // if this rangeID already exists in the parent object, add to that array
+          if (parentObj[rangeId]) {
+            parentObj[rangeId].push(pair);
+          } else {
+            // if this rangeID does not exist in the parent object, create a new array and add to it
+            parentObj[rangeId] = [pair];
           }
-        }
-
-        // If temparray has values, add to parent array
-        if (tempArray.length > 0) {
-          parentArray.push(tempArray);
+          i++;
         }
       }
 
-      this.setState({ [this.props.item.id]: parentArray });
+      // extract the values from all of the keys in the parent object (one array per rangeID)
+      // spread them into one greater array
+      let nestedArray = [...Object.values(parentObj)];
+
+      this.setState({ [this.props.item.id]: nestedArray });
+
       // Pass up to parent component
-      this.props.onChange([this.props.item.id, parentArray]);
+      this.props.onChange([this.props.item.id, nestedArray]);
     });
   }
 
@@ -99,6 +114,8 @@ class CMSRanges extends Component {
    */
   newRanges() {
     let newRanges = [];
+
+    // Loop through available options in range_categories
     this.props.item.answer.range_categories.map((range, index) => {
       let header =
         index === 0 ? <h3>{this.props.item.answer.header}</h3> : null;
@@ -112,6 +129,7 @@ class CMSRanges extends Component {
               mask="currency"
               numeric
               index={index}
+              counter={this.state.rangesId}
               onChange={this.onChange}
             />
           </>
@@ -143,13 +161,6 @@ class CMSRanges extends Component {
   render() {
     return (
       <div className="cmsranges">
-        {/* {alert(this.state.ranges)} */}
-        <CMSLegend
-          label={this.props.item.label}
-          type="subquestion"
-          id={this.props.item.id}
-        />
-
         {this.state.ranges.map((input) => {
           return input.component;
         })}
