@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import CMSLegend from "../fields/CMSLegend";
 import CMSRange from "./CMSRange";
 
 class CMSRanges extends Component {
@@ -34,10 +33,7 @@ class CMSRanges extends Component {
               mask="currency"
               numeric
               index={index}
-<<<<<<< HEAD
               counter={this.state.rangesId}
-=======
->>>>>>> b8f3d5d01759606a51d93832d7d644e7b991e0f7
               onChange={this.onChange}
             />
           </>
@@ -54,10 +50,7 @@ class CMSRanges extends Component {
   onChange(evt) {
     // Use callback for additional processing
     this.setState({ [evt[0]]: evt[1] }, () => {
-<<<<<<< HEAD
       // Get all state items
-=======
->>>>>>> b8f3d5d01759606a51d93832d7d644e7b991e0f7
       let currentState = this.state;
 
       let rangesArray = [];
