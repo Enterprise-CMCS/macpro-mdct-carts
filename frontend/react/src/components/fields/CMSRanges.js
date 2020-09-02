@@ -34,7 +34,10 @@ class CMSRanges extends Component {
               mask="currency"
               numeric
               index={index}
+<<<<<<< HEAD
               counter={this.state.rangesId}
+=======
+>>>>>>> b8f3d5d01759606a51d93832d7d644e7b991e0f7
               onChange={this.onChange}
             />
           </>
@@ -51,7 +54,10 @@ class CMSRanges extends Component {
   onChange(evt) {
     // Use callback for additional processing
     this.setState({ [evt[0]]: evt[1] }, () => {
+<<<<<<< HEAD
       // Get all state items
+=======
+>>>>>>> b8f3d5d01759606a51d93832d7d644e7b991e0f7
       let currentState = this.state;
 
       let rangesArray = [];
@@ -118,11 +124,8 @@ class CMSRanges extends Component {
 
     // Loop through available options in range_categories
     this.props.item.answer.range_categories.map((range, index) => {
-      // Add header, if available
       let header =
         index === 0 ? <h3>{this.props.item.answer.header}</h3> : null;
-
-      // Add new component to view array
       newRanges.push({
         id: this.state.rangesId,
         component: (
@@ -140,7 +143,6 @@ class CMSRanges extends Component {
         ),
       });
     });
-
     this.setState({
       [`ranges`]: this.state.ranges.concat(newRanges),
       [`rangesId`]: this.state.rangesId + 1,

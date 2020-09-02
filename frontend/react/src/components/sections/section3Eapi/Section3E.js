@@ -10,21 +10,17 @@ import {
   generateSubsectionLabel,
 } from "../../../store/formData";
 
-class Section3FApi extends Component {
+class Section3EApi extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  // Parent context function expects an array
-  // evtArr[0] is the question ID
-  // evtArr[1] is the payload, the question entry
-
   render() {
     // this.props.Data includes all of section 3
     // This variable narrows it down to a subsection
     const subsectionData = this.props.Data
-      ? this.props.Data.subsections[5] // 3F JSON Data
+      ? this.props.Data.subsections[4] // 3E JSON Data
       : null;
 
     const sectionTitle = this.props.Data
@@ -51,7 +47,7 @@ class Section3FApi extends Component {
                 {subsectionData.parts.map((part, index) => (
                   <QuestionComponent data={part.questions} key={index} />
                 ))}
-                <FormNavigation previousUrl="/section3/3c" />
+                <FormNavigation previousUrl="/section3/3f" />
               </TabPanel>
 
               {/* <TabPanel
@@ -70,7 +66,7 @@ class Section3FApi extends Component {
                     <QuestionComponent
                       previousEntry="true"
                       data={part.questions}
-            
+                  
                       key={index}
                     />
                   ))}
@@ -92,4 +88,4 @@ const mapStateToProps = (state) => ({
   programType: state.stateUser.programType,
 });
 
-export default connect(mapStateToProps)(Section3FApi);
+export default connect(mapStateToProps)(Section3EApi);

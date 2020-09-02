@@ -7,6 +7,9 @@ const sliceId = (id) => {
 };
 
 const shouldDisplay = (parentValue, context) => {
+  if(!context) {
+    return true;
+  }
   if (
     context.conditional_display.hide_if.values.interactive &&
     !context.conditional_display.hide_if.values.interactive.includes(

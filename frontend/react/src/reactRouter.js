@@ -19,9 +19,10 @@ import Section3a from "./components/sections/section3a/Section3A";
 import Section3c from "./components/sections/section3c/Section3C";
 import Section3dapi from "./components/sections/section3dapi/Section3D";
 import Section3FApi from "./components/sections/section3Fapi/Section3F";
+import Section3EApi from "./components/sections/section3Eapi/Section3E";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
-import Section from "./components/sections/Section";
+import Section from "./components/layout/Section";
 import test from "./components/test";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
@@ -53,6 +54,7 @@ const Routes = () => (
           <Route exact path="/section3/3d" component={Section3dapi} />
           <Route exact path="/section3/3d-api" component={Section3dapi} />
           <Route exact path="/section3F-api" component={Section3FApi} />
+          <Route exact path="/section3E-api" component={Section3EApi} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route
             path="/sections/:year/:sectionOrdinal/:subsectionMarker"

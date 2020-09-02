@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PageInfo from "../layout/PageInfo";
-import { selectSectionTitle } from "../../store/formData";
-import Subsection from "./basicinfoapi/Subsection";
+import PageInfo from "./PageInfo";
+import { selectSectionTitle } from "../../store/selectors";
+import Subsection from "./Subsection";
 
 const Section = ({ subsectionId, title }) => {
   console.log(`rendering section with title: ${title}`);
