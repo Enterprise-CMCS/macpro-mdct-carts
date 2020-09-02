@@ -634,13 +634,14 @@
       "items": {
         "type": "object",
         "properties": {
-          "text": {
+          "label": {
             "type": "string"
           },
           "value": {
             "type": "string"
           }
-        }
+        },
+        "required": ["label", "value"]
       }
     }
   },

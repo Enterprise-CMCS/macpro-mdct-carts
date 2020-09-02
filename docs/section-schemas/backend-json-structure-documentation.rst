@@ -380,8 +380,8 @@ The ``id`` for the first question is ``2020-01-a-01-01``, and it allows for answ
         "type": "radio",
         "answer": {
             "options": [
-                { "text": "Yes", "value": "yes" },
-                { "text": "No", "value": "no" }
+                { "label": "Yes", "value": "yes" },
+                { "label": "No", "value": "no" }
             ],
             "entry": null
         }
@@ -830,9 +830,9 @@ A set of choices, only one of which can be chosen. Its ``entry`` value should be
 ``options``
     Array of available choices.
 
-    Each choice is an object with a user-facing label in the `text` property and the the data representation in the `value` property.
+    Each choice is an object with a user-facing label in the `label` property and the the data representation in the `value` property.
 
-    For example, a yes/no radio question would have this as its ``options``: ``[{ "text": "Yes", "value": "yes" }, { "text": "No", "value": "no"}]``.
+    For example, a yes/no radio question would have this as its ``options``: ``[{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no"}]``.
 
 ``checkbox``
 ++++++++++++
@@ -841,14 +841,14 @@ A set of choices, multiples of which can be chosen. Its ``entry`` value should b
 ``options``
     Array of available choices.
 
-    Each choice is an object with a user-facing label in the `text` property and the the data representation in the `value` property.
+    Each choice is an object with a user-facing label in the `label` property and the the data representation in the `value` property.
 
     For example, a checkbox asking which characteristics of ideas apply would have this ``options`` property::
 
         [
-            { "text": "Colorless", "value": "colorless" },
-            { "text": "Green", "value": "green" },
-            { "text": "Sleeping", "value": "sleeping" }
+            { "label": "Colorless", "value": "colorless" },
+            { "label": "Green", "value": "green" },
+            { "label": "Sleeping", "value": "sleeping" }
         ]
 
 

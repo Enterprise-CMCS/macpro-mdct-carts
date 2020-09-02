@@ -24,12 +24,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -72,12 +72,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -149,16 +149,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     },
                     {
-                      "text": "N/A",
-                      "value": "na"
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 },
@@ -201,16 +201,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     },
                     {
-                      "text": "N/A",
-                      "value": "na"
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 },
@@ -256,16 +256,16 @@
                       "entry": null,
                       "options": [
                         {
-                          "text": "Yes",
-                          "value": "yes"
+                          "value": "yes",
+                          "label": "Yes"
                         },
                         {
-                          "text": "No",
-                          "value": "no"
+                          "value": "no",
+                          "label": "No"
                         },
                         {
-                          "text": "N/A",
-                          "value": "na"
+                          "value": "na",
+                          "label": "N/A"
                         }
                       ]
                     },
@@ -357,16 +357,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     },
                     {
-                      "text": "N/A",
-                      "value": "na"
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 },
@@ -422,12 +422,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -440,12 +440,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -2526,12 +2526,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -2544,24 +2544,24 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Families (“the shoebox method”)",
-                      "value": "families"
+                      "value": "families",
+                      "label": "Families (“the shoebox method”)"
                     },
                     {
-                      "text": "Health plans",
-                      "value": "health_plans"
+                      "value": "health_plans",
+                      "label": "Health plans"
                     },
                     {
-                      "text": "States",
-                      "value": "states"
+                      "value": "states",
+                      "label": "States"
                     },
                     {
-                      "text": "Third party administrator",
-                      "value": "third_party_administrator"
+                      "value": "third_party_administrator",
+                      "label": "Third party administrator"
                     },
                     {
-                      "text": "Other ",
-                      "value": "other"
+                      "value": "other",
+                      "label": "Other "
                     }
                   ]
                 },
@@ -2707,12 +2707,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -2770,12 +2770,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -2905,16 +2905,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]",
-                      "value": "2105(c)(3)"
+                      "value": "2105(c)(3)",
+                      "label": "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]"
                     },
                     {
-                      "text": "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]",
-                      "value": "2105(c)(10)"
+                      "value": "2105(c)(10)",
+                      "label": "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]"
                     },
                     {
-                      "text": "Section 1115 Demonstration (Title XXI)",
-                      "value": "title_xxi"
+                      "value": "title_xxi",
+                      "label": "Section 1115 Demonstration (Title XXI)"
                     }
                   ]
                 }
@@ -2927,12 +2927,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -2945,16 +2945,16 @@
                       "entry": null,
                       "options": [
                         {
-                          "text": "Parents",
-                          "value": "parents"
+                          "value": "parents",
+                          "label": "Parents"
                         },
                         {
-                          "text": "Caretaker relatives",
-                          "value": "caretaker_relatives"
+                          "value": "caretaker_relatives",
+                          "label": "Caretaker relatives"
                         },
                         {
-                          "text": "Pregnant women",
-                          "value": "pregnant_women"
+                          "value": "pregnant_women",
+                          "label": "Pregnant women"
                         }
                       ]
                     },
@@ -3003,12 +3003,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3021,12 +3021,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3039,12 +3039,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3057,16 +3057,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     },
                     {
-                      "text": "N/A",
-                      "value": "na"
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 }
@@ -3079,12 +3079,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -3425,12 +3425,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3443,12 +3443,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3461,12 +3461,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3487,16 +3487,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     },
                     {
-                      "text": "N/A",
-                      "value": "na"
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 },
@@ -3621,12 +3621,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Separate CHIP only",
-                      "value": "separate_chip_only"
+                      "value": "separate_chip_only",
+                      "label": "Separate CHIP only"
                     },
                     {
-                      "text": "Medicaid and separate CHIP combined",
-                      "value": "medicaid_separate_chip_combined"
+                      "value": "medicaid_separate_chip_combined",
+                      "label": "Medicaid and separate CHIP combined"
                     }
                   ]
                 }
@@ -3639,12 +3639,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -3685,12 +3685,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -3759,12 +3759,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 }
@@ -3777,12 +3777,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -3847,20 +3847,20 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Medicaid Expansion CHIP",
-                      "value": "medicaid expansion chip"
+                      "value": "medicaid expansion chip",
+                      "label": "Medicaid Expansion CHIP"
                     },
                     {
-                      "text": "Separate CHIP",
-                      "value": "separate chip"
+                      "value": "separate chip",
+                      "label": "Separate CHIP"
                     },
                     {
-                      "text": "Combination CHIP",
-                      "value": "combination chip"
+                      "value": "combination chip",
+                      "label": "Combination CHIP"
                     },
                     {
-                      "text": "Other",
-                      "value": "other"
+                      "value": "other",
+                      "label": "Other"
                     }
                   ]
                 },
@@ -3919,16 +3919,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "CAHPS 5.0",
-                      "value": "5.0"
+                      "value": "5.0",
+                      "label": "CAHPS 5.0"
                     },
                     {
-                      "text": "CAHPS 5.0H",
-                      "value": "5.0H"
+                      "value": "5.0H",
+                      "label": "CAHPS 5.0H"
                     },
                     {
-                      "text": "Other",
-                      "value": "other"
+                      "value": "other",
+                      "label": "Other"
                     }
                   ]
                 },
@@ -3977,16 +3977,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "None",
-                      "value": "none"
+                      "value": "none",
+                      "label": "None"
                     },
                     {
-                      "text": "Children with Chronic Conditions",
-                      "value": "chronic"
+                      "value": "chronic",
+                      "label": "Children with Chronic Conditions"
                     },
                     {
-                      "text": "Other",
-                      "value": "other"
+                      "value": "other",
+                      "label": "Other"
                     }
                   ]
                 },
@@ -4035,16 +4035,16 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "NCQA HEDIS CAHPS 5.0H",
-                      "value": "ncqa hedis cahps 5.0h"
+                      "value": "ncqa hedis cahps 5.0h",
+                      "label": "NCQA HEDIS CAHPS 5.0H"
                     },
                     {
-                      "text": "HRQ CAHPS",
-                      "value": "hrq cahps"
+                      "value": "hrq cahps",
+                      "label": "HRQ CAHPS"
                     },
                     {
-                      "text": "Other",
-                      "value": "other"
+                      "value": "other",
+                      "label": "Other"
                     }
                   ]
                 },
@@ -4127,48 +4127,48 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Entire population wasn't included in the survey",
-                      "value": "Entire population wasn't included in the survey"
+                      "value": "Entire population wasn't included in the survey",
+                      "label": "Entire population wasn't included in the survey"
                     },
                     {
-                      "text": "Part of the population wasn't included in the survey",
-                      "value": "Part of the population wasn't included in the survey"
+                      "value": "Part of the population wasn't included in the survey",
+                      "label": "Part of the population wasn't included in the survey"
                     },
                     {
-                      "text": "Data wasn't available due to budget constraints",
-                      "value": "Data wasn't available due to budget constraints"
+                      "value": "Data wasn't available due to budget constraints",
+                      "label": "Data wasn't available due to budget constraints"
                     },
                     {
-                      "text": "Data wasn't available due to staff constraints",
-                      "value": "Data wasn't available due to staff constraints"
+                      "value": "Data wasn't available due to staff constraints",
+                      "label": "Data wasn't available due to staff constraints"
                     },
                     {
-                      "text": "Data wasn't consistent or accurate",
-                      "value": "Data wasn't consistent or accurate"
+                      "value": "Data wasn't consistent or accurate",
+                      "label": "Data wasn't consistent or accurate"
                     },
                     {
-                      "text": "Data source wasn't easily accessible",
-                      "value": "Data source wasn't easily accessible"
+                      "value": "Data source wasn't easily accessible",
+                      "label": "Data source wasn't easily accessible"
                     },
                     {
-                      "text": "Data source wasn't easily accessible: requires medical records",
-                      "value": "Data source wasn't easily accessible: requires medical records"
+                      "value": "Data source wasn't easily accessible: requires medical records",
+                      "label": "Data source wasn't easily accessible: requires medical records"
                     },
                     {
-                      "text": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
-                      "value": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist"
+                      "value": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
+                      "label": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist"
                     },
                     {
-                      "text": "Data wasn't collected by a provider",
-                      "value": "Data wasn't collected by a provider"
+                      "value": "Data wasn't collected by a provider",
+                      "label": "Data wasn't collected by a provider"
                     },
                     {
-                      "text": "Sample size was too small (fewer than 30)",
-                      "value": "Sample size was too small (fewer than 30)"
+                      "value": "Sample size was too small (fewer than 30)",
+                      "label": "Sample size was too small (fewer than 30)"
                     },
                     {
-                      "text": "Other",
-                      "value": "other"
+                      "value": "other",
+                      "label": "Other"
                     }
                   ]
                 }

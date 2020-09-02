@@ -157,12 +157,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -203,12 +203,12 @@
                   "entry": null,
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ]
                 },
@@ -379,16 +379,16 @@
                                 "answer": {
                                   "options": [
                                     {
-                                      "text": "New goal",
-                                      "value": "goal_new"
+                                      "value": "goal_new",
+                                      "label": "New goal"
                                     },
                                     {
-                                      "text": "Continuing goal",
-                                      "value": "goal_continuing"
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
                                     },
                                     {
-                                      "text": "Discontinued goal",
-                                      "value": "goal_discontinued"
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
                                     }
                                   ],
                                   "default_entry": "goal_new",
@@ -504,16 +504,16 @@
                                 "answer": {
                                   "options": [
                                     {
-                                      "text": "Eligibility or enrollment data",
-                                      "value": "goal_enrollment_data"
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
                                     },
                                     {
-                                      "text": "Survey data",
-                                      "value": "goal_survey_data"
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
                                     },
                                     {
-                                      "text": "Another data source",
-                                      "value": "goal_other_data"
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
                                     }
                                   ],
                                   "entry": null

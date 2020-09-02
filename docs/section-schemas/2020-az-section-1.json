@@ -31,12 +31,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -77,12 +77,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -96,12 +96,12 @@
                       "entry": null,
                       "options": [
                         {
-                          "text": "Yes",
-                          "value": "yes"
+                          "value": "yes",
+                          "label": "Yes"
                         },
                         {
-                          "text": "No",
-                          "value": "no"
+                          "value": "no",
+                          "label": "No"
                         }
                       ]
                     },
@@ -204,12 +204,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -303,16 +303,16 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Managed Care Organization (MCO)",
-                      "value": "mco"
+                      "value": "mco",
+                      "label": "Managed Care Organization (MCO)"
                     },
                     {
-                      "text": "Primary Care Case Management (PCCM)",
-                      "value": "pccm"
+                      "value": "pccm",
+                      "label": "Primary Care Case Management (PCCM)"
                     },
                     {
-                      "text": "Fee for Service (FFS)",
-                      "value": "ffs"
+                      "value": "ffs",
+                      "label": "Fee for Service (FFS)"
                     }
                   ],
                   "entry": null
@@ -347,12 +347,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -393,12 +393,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "yes"
@@ -411,12 +411,12 @@
                     "answer": {
                       "options": [
                         {
-                          "text": "Yes",
-                          "value": "yes"
+                          "value": "yes",
+                          "label": "Yes"
                         },
                         {
-                          "text": "No",
-                          "value": "no"
+                          "value": "no",
+                          "label": "No"
                         }
                       ],
                       "entry": "yes"
@@ -551,12 +551,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -650,16 +650,16 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Managed Care Organization (MCO)",
-                      "value": "mco"
+                      "value": "mco",
+                      "label": "Managed Care Organization (MCO)"
                     },
                     {
-                      "text": "Primary Care Case Management (PCCM)",
-                      "value": "pccm"
+                      "value": "pccm",
+                      "label": "Primary Care Case Management (PCCM)"
                     },
                     {
-                      "text": "Fee for Service (FFS)",
-                      "value": "ffs"
+                      "value": "ffs",
+                      "label": "Fee for Service (FFS)"
                     }
                   ],
                   "entry": [
@@ -698,12 +698,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -719,12 +719,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -741,12 +741,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -763,12 +763,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -784,12 +784,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -805,12 +805,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -827,12 +827,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -849,12 +849,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -871,12 +871,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -892,12 +892,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -913,12 +913,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -935,12 +935,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -957,12 +957,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -978,12 +978,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -1000,12 +1000,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -1022,12 +1022,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -1043,12 +1043,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -1064,12 +1064,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -1085,12 +1085,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": null
@@ -1142,12 +1142,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1163,12 +1163,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1185,12 +1185,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1207,12 +1207,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "yes"
@@ -1228,12 +1228,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1249,12 +1249,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1271,12 +1271,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1293,12 +1293,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1315,12 +1315,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1336,12 +1336,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1357,12 +1357,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1379,12 +1379,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1401,12 +1401,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1422,12 +1422,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1444,12 +1444,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1466,12 +1466,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1487,12 +1487,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1508,12 +1508,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
@@ -1529,12 +1529,12 @@
                 "answer": {
                   "options": [
                     {
-                      "text": "Yes",
-                      "value": "yes"
+                      "value": "yes",
+                      "label": "Yes"
                     },
                     {
-                      "text": "No",
-                      "value": "no"
+                      "value": "no",
+                      "label": "No"
                     }
                   ],
                   "entry": "no"
