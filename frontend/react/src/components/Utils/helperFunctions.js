@@ -13,6 +13,12 @@ const shouldDisplay = (context) => {
     return true;
   }
 
+  // use select fragment by id function
+  let findAssociatedSection;
+  // give that as the first argument to jsonpath query
+
+  // second argument is target
+
   // Wil return answer from associated question (String)
   let parentAnswer = jsonpath.query(context.conditional_display.hide_if.target);
 
