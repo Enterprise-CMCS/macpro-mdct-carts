@@ -177,6 +177,8 @@ class QuestionComponent extends Component {
                         onChange={this.handleChangeArray}
                         key={index}
                         setAnswer={this.props.setAnswer}
+                        disabled={question.answer.readonly}
+                        disabledFromParent = {question.answer.readonly}
                       />
                     );
                   })
@@ -197,6 +199,7 @@ class QuestionComponent extends Component {
                         onChange={this.handleCheckboxInput}
                         key={index}
                         setAnswer={this.props.setAnswer}
+                        disabled={question.answer.readonly}
                       />
                     );
                   })
@@ -211,6 +214,7 @@ class QuestionComponent extends Component {
                   type="text"
                   onChange={this.handleChange}
                   label=""
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -228,6 +232,7 @@ class QuestionComponent extends Component {
                       ? "Please enter a valid email address"
                       : false
                   }
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -240,6 +245,7 @@ class QuestionComponent extends Component {
                   onChange={this.handleChange}
                   type="text"
                   value={question.answer.entry || ""}
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -255,6 +261,7 @@ class QuestionComponent extends Component {
                     rows={3}
                     type="text"
                     value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                 </div>
               ) : null}
@@ -272,6 +279,7 @@ class QuestionComponent extends Component {
                     rows={6}
                     type="text"
                     value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                 </div>
               ) : null}
@@ -335,6 +343,7 @@ class QuestionComponent extends Component {
                     onChange={this.handleIntegerChange}
                     pattern="[0-9]*"
                     value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                 </>
               ) : null}
@@ -362,6 +371,7 @@ class QuestionComponent extends Component {
                   onBlur={this.validatePhone}
                   pattern="[0-9]*"
                   value={question.answer.entry || ""}
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -381,6 +391,7 @@ class QuestionComponent extends Component {
                     onChange={this.validatePercentage}
                     pattern="[0-9]*"
                     value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                   <>%</>
                 </>
