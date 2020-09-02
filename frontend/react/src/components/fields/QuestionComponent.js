@@ -7,6 +7,7 @@ import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
 import { selectQuestionsForPart } from "../../store/selectors";
+import { shouldDisplay } from "../Utils/helperFunctions";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -156,6 +157,14 @@ class QuestionComponent extends Component {
     return (
       <>
         {this.props.data.map((question, index) => (
+          // should display??
+          // need function for finding context
+          // need parent value
+          // shouldDisplay(parent, context)
+          //question.context_data.conditional_display ?
+          // parent:
+          // context:
+
           <div className="question" key={index}>
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
@@ -178,7 +187,7 @@ class QuestionComponent extends Component {
                         key={index}
                         setAnswer={this.props.setAnswer}
                         disabled={question.answer.readonly}
-                        disabledFromParent = {question.answer.readonly}
+                        disabledFromParent={question.answer.readonly}
                       />
                     );
                   })

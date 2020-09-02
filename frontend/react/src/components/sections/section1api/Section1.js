@@ -37,7 +37,6 @@ class Section1 extends Component {
     });
   }
 
-
   render() {
     return (
       <div className="section-1 ds-l-col--9 content">
@@ -49,15 +48,17 @@ class Section1 extends Component {
           <div className="section-content">
             <Tabs>
               <TabPanel id="tab-form" tab={Data.section.title}>
-                <Questions previousEntry="false"
-                  sectionContext={this.bindToParentContext} />
+                <Questions
+                  previousEntry="false"
+                  sectionContext={this.bindToParentContext}
+                />
                 <FormNavigation
                   nextUrl="/section2/2a"
                   previousUrl="/basic-info"
                 />
               </TabPanel>
 
-              <TabPanel
+              {/* <TabPanel
                 id="tab-lastyear"
                 tab={`FY${this.props.year - 1} answers`}
               >
@@ -69,7 +70,7 @@ class Section1 extends Component {
                   <Questions previousEntry="true"
                     sectionContext={this.bindToParentContext} />
                 </div>
-              </TabPanel>
+              </TabPanel> */}
             </Tabs>
             <FormActions />
           </div>
