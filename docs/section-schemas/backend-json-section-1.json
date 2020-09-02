@@ -29,10 +29,16 @@
                 "label": "Does your program charge an enrollment fee?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "questions": [
@@ -70,10 +76,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -82,16 +94,22 @@
                     "type": "radio",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Yes": "yes",
-                        "No": "no"
-                      }
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
                     },
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 2.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
                           "values": {
@@ -135,7 +153,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 2.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
                           "values": {
@@ -184,10 +202,16 @@
                 "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "questions": [
@@ -219,7 +243,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-01-a-01-03 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 3.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 3.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-03')].answer.entry",
                           "values": {
@@ -278,11 +302,20 @@
                 "type": "checkbox",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Managed Care Organization (MCO)": "mco",
-                    "Primary Care Case Management (PCCM)": "pccm",
-                    "Fee for Service (FFS)": "ffs"
-                  }
+                  "options": [
+                    {
+                      "value": "mco",
+                      "label": "Managed Care Organization (MCO)"
+                    },
+                    {
+                      "value": "pccm",
+                      "label": "Primary Care Case Management (PCCM)"
+                    },
+                    {
+                      "value": "ffs",
+                      "label": "Fee for Service (FFS)"
+                    }
+                  ]
                 }
               },
               {
@@ -312,10 +345,16 @@
                 "label": "Does your program charge an enrollment fee?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "questions": [
@@ -353,10 +392,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -365,16 +410,22 @@
                     "type": "radio",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Yes": "yes",
-                        "No": "no"
-                      }
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
                     },
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-01-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 2.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
@@ -418,7 +469,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-01-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 2.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
@@ -467,10 +518,16 @@
                 "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "questions": [
@@ -502,7 +559,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-01-a-02-03 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn\u2019t apply to your state since you answered NO to Question 3.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 3.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
@@ -561,11 +618,20 @@
                 "type": "checkbox",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Managed Care Organization (MCO)": "mco",
-                    "Primary Care Case Management (PCCM)": "pccm",
-                    "Fee for Service (FFS)": "ffs"
-                  }
+                  "options": [
+                    {
+                      "value": "mco",
+                      "label": "Managed Care Organization (MCO)"
+                    },
+                    {
+                      "value": "pccm",
+                      "label": "Primary Care Case Management (PCCM)"
+                    },
+                    {
+                      "value": "ffs",
+                      "label": "Fee for Service (FFS)"
+                    }
+                  ]
                 }
               },
               {
@@ -589,17 +655,23 @@
                 "combo"
               ]
             },
-            "text": "Indicate any changes you\u2019ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+            "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
             "questions": [
               {
                 "id": "2020-01-a-03-01",
                 "label": "Have you made any changes to the eligibility determination process?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -611,10 +683,16 @@
                 "label": "Have you made any changes to the eligibility redetermination process?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -627,10 +705,16 @@
                 "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -643,10 +727,16 @@
                 "hint": "For example: adding or removing different types of coverage.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -658,10 +748,16 @@
                 "label": "Have you made any changes to the single streamlined application?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -673,10 +769,16 @@
                 "label": "Have you made any changes to your outreach efforts?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -689,10 +791,16 @@
                 "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -705,10 +813,16 @@
                 "hint": "For example: changing amounts, populations, or the collection process.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -721,10 +835,16 @@
                 "hint": "For example: changing substitutions or the waiting periods.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -736,10 +856,16 @@
                 "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -751,10 +877,16 @@
                 "label": "Have you made any changes to the enrollment process for health plan selection?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -767,10 +899,16 @@
                 "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -783,10 +921,16 @@
                 "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -798,10 +942,16 @@
                 "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -814,10 +964,16 @@
                 "hint": "For example: expanding eligibility to pregnant enrollees.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -830,10 +986,16 @@
                 "hint": "For example: extending coverage to pregnant enrollees.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -842,32 +1004,44 @@
               },
               {
                 "id": "2020-01-a-03-17",
-                "label": "Have you made any changes to eligibility for \u201clawfully residing pregnant women\u201d?",
+                "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for \u201clawfully residing pregnant women\u201d"
+                  "bullet_text": "Eligibility for “lawfully residing pregnant women”"
                 }
               },
               {
                 "id": "2020-01-a-03-18",
-                "label": "Have you made any changes to eligibility for \u201clawfully residing children\u201d?",
+                "label": "Have you made any changes to eligibility for “lawfully residing children”?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for \u201clawfully residing children\u201d"
+                  "bullet_text": "Eligibility for “lawfully residing children”"
                 }
               },
               {
@@ -875,10 +1049,16 @@
                 "label": "Have you made any changes to any other program areas?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -895,15 +1075,15 @@
               },
               {
                 "id": "2020-01-a-03-21",
-                "comment": "Display bulleted list of all 2020-01-a-03 questions 1\u201319 with yes answers",
-                "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven\u2019t done so already?",
+                "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
+                "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
                 "context_data": {
-                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1\u201319 has a yes answer, hide otherwise.",
-                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1\u201319 has a yes answer, hide otherwise."
+                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise."
                 }
               }
             ]
@@ -919,17 +1099,23 @@
                 "combo"
               ]
             },
-            "text": "Indicate any changes you\u2019ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+            "text": "Indicate any changes you’ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
             "questions": [
               {
                 "id": "2020-01-a-04-01",
                 "label": "Have you made any changes to the eligibility determination process?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -941,10 +1127,16 @@
                 "label": "Have you made any changes to the eligibility redetermination process?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -957,10 +1149,16 @@
                 "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -973,10 +1171,16 @@
                 "hint": "For example: adding or removing different types of coverage.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -988,10 +1192,16 @@
                 "label": "Have you made any changes to the single streamlined application?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1003,10 +1213,16 @@
                 "label": "Have you made any changes to your outreach efforts?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1019,10 +1235,16 @@
                 "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1035,10 +1257,16 @@
                 "hint": "For example: changing amounts, populations, or the collection process.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1051,10 +1279,16 @@
                 "hint": "For example: changing substitutions or the waiting periods.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1066,10 +1300,16 @@
                 "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1081,10 +1321,16 @@
                 "label": "Have you made any changes to the enrollment process for health plan selection?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1097,10 +1343,16 @@
                 "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1113,10 +1365,16 @@
                 "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1128,10 +1386,16 @@
                 "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1144,10 +1408,16 @@
                 "hint": "For example: expanding eligibility to pregnant enrollees.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1160,10 +1430,16 @@
                 "hint": "For example: extending coverage to pregnant enrollees.",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1172,32 +1448,44 @@
               },
               {
                 "id": "2020-01-a-04-17",
-                "label": "Have you made any changes to eligibility for \u201clawfully residing pregnant women\u201d?",
+                "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for \u201clawfully residing pregnant women\u201d"
+                  "bullet_text": "Eligibility for “lawfully residing pregnant women”"
                 }
               },
               {
                 "id": "2020-01-a-04-18",
-                "label": "Have you made any changes to eligibility for \u201clawfully residing children\u201d?",
+                "label": "Have you made any changes to eligibility for “lawfully residing children”?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for \u201clawfully residing children\u201d"
+                  "bullet_text": "Eligibility for “lawfully residing children”"
                 }
               },
               {
@@ -1205,10 +1493,16 @@
                 "label": "Have you made any changes to any other program areas?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "context_data": {
@@ -1225,15 +1519,15 @@
               },
               {
                 "id": "2020-01-a-04-21",
-                "comment": "Display bulleted list of all 2020-01-a-04 questions 1\u201319 with yes answers",
-                "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven\u2019t done so already?",
+                "comment": "Display bulleted list of all 2020-01-a-04 questions 1–19 with yes answers",
+                "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
                 },
                 "context_data": {
-                  "interactive_conditional": "Show if any 2020-01-a-04 questions 1\u201319 has a yes answer, hide otherwise.",
-                  "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1\u201319 has a yes answer, hide otherwise."
+                  "interactive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
+                  "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise."
                 }
               }
             ]

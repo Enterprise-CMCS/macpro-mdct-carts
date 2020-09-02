@@ -82,15 +82,15 @@ class Objective2bApi extends Component {
                                   <fieldset className="ds-c-fieldset">
                                     {parseInt(goals.id.substring(goals.id.length - 2))}.
                                     {question.type === "radio" || question.type === "checkbox"
-                                      ? Object.entries(question.answer.options).map((
-                                        key,
+                                      ? question.answer.options.map((
+                                        { label, value },
                                         index
                                       ) => {
                                         return (
                                           <CMSChoice
                                             name={question.id}
-                                            value={key[1]}
-                                            label={key[0]}
+                                            value={value}
+                                            label={label}
                                             type={question.type}
                                             onChange={this.handleChange}
                                             answer={question.answer.entry}

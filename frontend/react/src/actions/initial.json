@@ -25,7 +25,10 @@
                     "label": "Does your program charge an enrollment fee?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -55,7 +58,10 @@
                     "label": "Does your program charge a premium fee?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -64,7 +70,10 @@
                         "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
                         "answer": {
                           "entry": null,
-                          "options": { "No": "no", "Yes": "yes" }
+                          "options": [
+                            { "label": "Yes", "value": "yes" },
+                            { "label": "No", "value": "no" }
+                          ]
                         },
                         "context_data": {
                           "conditional_display": {
@@ -138,7 +147,10 @@
                     "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -205,11 +217,17 @@
                     "label": "Which delivery system(s) do you use?",
                     "answer": {
                       "entry": "ffs",
-                      "options": {
-                        "Fee for Service (FFS)": "ffs",
-                        "Managed Care Organization (MCO)": "mco",
-                        "Primary Care Case Management (PCCM)": "pccm"
-                      }
+                      "options": [
+                        {
+                          "label": "Managed Care Organization (MCO)",
+                          "value": "mco"
+                        },
+                        {
+                          "label": "Primary Care Case Management (PCCM)",
+                          "value": "pccm"
+                        },
+                        { "label": "Fee for Service (FFS)", "value": "ffs" }
+                      ]
                     }
                   },
                   {
@@ -238,7 +256,10 @@
                     "label": "Does your program charge an enrollment fee?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -268,7 +289,10 @@
                     "label": "Does your program charge a premium fee?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -277,7 +301,10 @@
                         "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
                         "answer": {
                           "entry": null,
-                          "options": { "No": "no", "Yes": "yes" }
+                          "options": [
+                            { "label": "Yes", "value": "yes" },
+                            { "label": "No", "value": "no" }
+                          ]
                         },
                         "context_data": {
                           "conditional_display": {
@@ -351,7 +378,10 @@
                     "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -418,11 +448,17 @@
                     "label": "Which delivery system(s) do you use?",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Fee for Service (FFS)": "ffs",
-                        "Managed Care Organization (MCO)": "mco",
-                        "Primary Care Case Management (PCCM)": "pccm"
-                      }
+                      "options": [
+                        {
+                          "label": "Managed Care Organization (MCO)",
+                          "value": "mco"
+                        },
+                        {
+                          "label": "Primary Care Case Management (PCCM)",
+                          "value": "pccm"
+                        },
+                        { "label": "Fee for Service (FFS)", "value": "ffs" }
+                      ]
                     }
                   },
                   {
@@ -449,7 +485,10 @@
                     "label": "Have you made any changes to the eligibility determination process?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility determination process"
@@ -461,7 +500,10 @@
                     "label": "Have you made any changes to the eligibility redetermination process?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility redetermination process"
@@ -474,7 +516,10 @@
                     "label": "Have you made any changes to the eligibility levels or target populations?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility levels or target population"
@@ -487,7 +532,10 @@
                     "label": "Have you made any changes to the benefits available to enrolees?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Benefits available to enrollees"
@@ -499,7 +547,10 @@
                     "label": "Have you made any changes to the single streamlined application?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Single streamlined application"
@@ -511,7 +562,10 @@
                     "label": "Have you made any changes to your outreach efforts?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Outreach efforts" }
                   },
@@ -522,7 +576,10 @@
                     "label": "Have you made any changes to the delivery system(s)?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Delivery system(s)" }
                   },
@@ -533,7 +590,10 @@
                     "label": "Have you made any changes to your cost sharing requirements?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Cost sharing" }
                   },
@@ -544,7 +604,10 @@
                     "label": "Have you made any changes to the crowd-out policies?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Crowd-out policies" }
                   },
@@ -554,7 +617,10 @@
                     "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Enrollment freeze and/or enrollment cap"
@@ -566,7 +632,10 @@
                     "label": "Have you made any changes to the enrollment process for health plan selection?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Enrollment process for health plan selection"
@@ -579,7 +648,10 @@
                     "label": "Have you made any changes to the protections for applicants and enrollees?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Protections for applicants and enrollees"
@@ -592,7 +664,10 @@
                     "label": "Have you made any changes to premium assistance?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Premium assistance" }
                   },
@@ -602,7 +677,10 @@
                     "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
@@ -615,7 +693,10 @@
                     "label": "Have you made any changes to your prenatal care eligibility?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Prenatal care eligibility"
@@ -628,7 +709,10 @@
                     "label": "Have you made any changes to your Pregnant Woman State Plan expansion?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Pregnant Woman State Plan expansion"
@@ -640,7 +724,10 @@
                     "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility for “lawfully residing pregnant women”"
@@ -652,7 +739,10 @@
                     "label": "Have you made any changes to eligibility for “lawfully residing children”?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility for “lawfully residing children”"
@@ -664,7 +754,10 @@
                     "label": "Have you made any changes to any other program areas?",
                     "answer": {
                       "entry": "no",
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Other program areas" }
                   },
@@ -706,7 +799,10 @@
                     "label": "Have you made any changes to the eligibility determination process?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility determination process"
@@ -718,7 +814,10 @@
                     "label": "Have you made any changes to the eligibility redetermination process?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility redetermination process"
@@ -731,7 +830,10 @@
                     "label": "Have you made any changes to the eligibility levels or target populations?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility levels or target population"
@@ -744,7 +846,10 @@
                     "label": "Have you made any changes to the benefits available to enrolees?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Benefits available to enrollees"
@@ -756,7 +861,10 @@
                     "label": "Have you made any changes to the single streamlined application?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Single streamlined application"
@@ -768,7 +876,10 @@
                     "label": "Have you made any changes to your outreach efforts?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Outreach efforts" }
                   },
@@ -779,7 +890,10 @@
                     "label": "Have you made any changes to the delivery system(s)?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Delivery system(s)" }
                   },
@@ -790,7 +904,10 @@
                     "label": "Have you made any changes to your cost sharing requirements?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Cost sharing" }
                   },
@@ -801,7 +918,10 @@
                     "label": "Have you made any changes to the crowd-out policies?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Crowd-out policies" }
                   },
@@ -811,7 +931,10 @@
                     "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Enrollment freeze and/or enrollment cap"
@@ -823,7 +946,10 @@
                     "label": "Have you made any changes to the enrollment process for health plan selection?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Enrollment process for health plan selection"
@@ -836,7 +962,10 @@
                     "label": "Have you made any changes to the protections for applicants and enrollees?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Protections for applicants and enrollees"
@@ -849,7 +978,10 @@
                     "label": "Have you made any changes to premium assistance?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Premium assistance" }
                   },
@@ -859,7 +991,10 @@
                     "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Methods and procedures for prevention, investigation, and referral of cases of fraud and abuse"
@@ -872,7 +1007,10 @@
                     "label": "Have you made any changes to your prenatal care eligibility?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Prenatal care eligibility"
@@ -885,7 +1023,10 @@
                     "label": "Have you made any changes to your Pregnant Woman State Plan expansion?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Pregnant Woman State Plan expansion"
@@ -897,7 +1038,10 @@
                     "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility for “lawfully residing pregnant women”"
@@ -909,7 +1053,10 @@
                     "label": "Have you made any changes to eligibility for “lawfully residing children”?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": {
                       "bullet_text": "Eligibility for “lawfully residing children”"
@@ -921,7 +1068,10 @@
                     "label": "Have you made any changes to any other program areas?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "context_data": { "bullet_text": "Other program areas" }
                   },
@@ -961,7 +1111,7 @@
         "type": "section",
         "year": 2020,
         "state": "AK",
-        "title": "Program Operations",
+        "title": null,
         "valid": null,
         "ordinal": 3,
         "subsections": [
@@ -979,7 +1129,10 @@
                     "label": "Have you changed your outreach methods in the last federal fiscal year?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -1010,7 +1163,10 @@
                     "label": "Are you targeting specific populations in your outreach efforts?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -1067,7 +1223,11 @@
                     "label": "Do you track the number of children who have access to private insurance?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "N/A": "na", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" },
+                        { "label": "N/A", "value": "na" }
+                      ]
                     },
                     "questions": [
                       {
@@ -1097,7 +1257,11 @@
                     "label": "Do you use a database to match children to their private insurance status? ",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "N/A": "na", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" },
+                        { "label": "N/A", "value": "na" }
+                      ]
                     },
                     "questions": [
                       {
@@ -1130,7 +1294,11 @@
                         "label": "Does your S-CHIP program require a child to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
                         "answer": {
                           "entry": null,
-                          "options": { "No": "no", "N/A": "na", "Yes": "yes" }
+                          "options": [
+                            { "label": "Yes", "value": "yes" },
+                            { "label": "No", "value": "no" },
+                            { "label": "N/A", "value": "na" }
+                          ]
                         },
                         "questions": [
                           {
@@ -1155,7 +1323,7 @@
                                 "answer": { "entry": null }
                               },
                               {
-                                "id": "2020-03-b-01-03-c",
+                                "id": "2020-03-b-01-03-d",
                                 "type": "text_multiline",
                                 "label": "What percent of children subject to the waiting period meet an exemption?",
                                 "answer": { "entry": null }
@@ -1206,7 +1374,11 @@
                     "label": "Does your state provide presumptive eligibility, allowing children who are presumed to be eligible to access CHIP services?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "N/A": "na", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" },
+                        { "label": "N/A", "value": "na" }
+                      ]
                     },
                     "questions": [
                       {
@@ -1247,7 +1419,10 @@
                     "label": "In an effort to retain more children in CHIP, do you conduct follow-up communication with families through caseworkers and outreach workers?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -1256,7 +1431,10 @@
                     "label": "Do you send renewal reminder notices to families?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -1674,38 +1852,35 @@
                                 "id": "2020-03-c-04-01-unmarked_descendants",
                                 "type": "checkbox_flag",
                                 "label": "I don’t have data for the individual age groups. I’ll report data for the total number for all age groups (0-18 years) instead.",
-                                "answer": {
-                                  "entry": null,
-                                  "options": { "type": "boolean" }
-                                }
+                                "answer": { "entry": null }
                               }
                             ],
                             "fieldset_type": "unmarked_descendants"
                           },
                           {
-                            "id": "2020-03-c-04-01-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "comment": "This is the first real question so far in this part…",
-                            "context_data": {
-                              "skip_text": "1a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-01-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "comment": "This is the first real question so far in this part…",
+                                "context_data": {
+                                  "skip_text": "1a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-01-b",
                                 "type": "integer",
@@ -1745,7 +1920,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-01" },
@@ -1763,28 +1938,28 @@
                         "label": "How many children were still continuously enrolled in CHIP six months later?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-02-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "2a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-02-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "2a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-02-b",
                                 "type": "integer",
@@ -1824,7 +1999,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-02" },
@@ -1835,28 +2010,28 @@
                         "label": "How many children had a break in CHIP coverage but were re-enrolled in CHIP six months later?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-03-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "3a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-03-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "3a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-03-b",
                                 "type": "integer",
@@ -1886,28 +2061,28 @@
                                 "label": "How many children had a break in CHIP coverage but were re-enrolled in Medicaid six months later?",
                                 "questions": [
                                   {
-                                    "id": "2020-03-c-04-03-f-01",
-                                    "type": "integer",
-                                    "label": "Total for all ages",
-                                    "answer": { "entry": null },
-                                    "context_data": {
-                                      "skip_text": "3f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                      "conditional_display": {
-                                        "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                        "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                          "values": {
-                                            "interactive": [false, null],
-                                            "noninteractive": [false, null]
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  {
                                     "type": "fieldset",
                                     "questions": [
+                                      {
+                                        "id": "2020-03-c-04-03-f-01",
+                                        "type": "integer",
+                                        "label": "Total for all ages",
+                                        "answer": { "entry": null },
+                                        "context_data": {
+                                          "skip_text": "3f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                          "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                            "hide_if": {
+                                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                              "values": {
+                                                "interactive": [false, null],
+                                                "noninteractive": [false, null]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
                                       {
                                         "id": "2020-03-c-04-03-f-02",
                                         "type": "integer",
@@ -1947,7 +2122,7 @@
                                         }
                                       }
                                     },
-                                    "fieldset_type": "datagrid"
+                                    "fieldset_type": "datagrid_with_total"
                                   }
                                 ],
                                 "fieldset_info": { "id": "2020-03-c-04-03-f" },
@@ -1968,7 +2143,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-03" },
@@ -1980,28 +2155,28 @@
                         "label": "How many children were no longer enrolled in CHIP at the end of the six-month period?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-04-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-04-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "4a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-04-b",
                                 "type": "integer",
@@ -2031,28 +2206,28 @@
                                 "label": "How many children were no longer enrolled in CHIP but enrolled in Medicaid six months later?",
                                 "questions": [
                                   {
-                                    "id": "2020-03-c-04-04-f-01",
-                                    "type": "integer",
-                                    "label": "Total for all ages",
-                                    "answer": { "entry": null },
-                                    "context_data": {
-                                      "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                      "conditional_display": {
-                                        "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                        "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                          "values": {
-                                            "interactive": [false, null],
-                                            "noninteractive": [false, null]
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  {
                                     "type": "fieldset",
                                     "questions": [
+                                      {
+                                        "id": "2020-03-c-04-04-f-01",
+                                        "type": "integer",
+                                        "label": "Total for all ages",
+                                        "answer": { "entry": null },
+                                        "context_data": {
+                                          "skip_text": "4f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                          "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                            "hide_if": {
+                                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                              "values": {
+                                                "interactive": [false, null],
+                                                "noninteractive": [false, null]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
                                       {
                                         "id": "2020-03-c-04-04-f-02",
                                         "type": "integer",
@@ -2092,7 +2267,7 @@
                                         }
                                       }
                                     },
-                                    "fieldset_type": "datagrid"
+                                    "fieldset_type": "datagrid_with_total"
                                   }
                                 ],
                                 "fieldset_info": { "id": "2020-03-c-04-04-f" },
@@ -2113,7 +2288,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-04" },
@@ -2138,28 +2313,28 @@
                         "label": "How many children were still continuously enrolled in CHIP 12 months later?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-06-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "6a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-06-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "6a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-06-b",
                                 "type": "integer",
@@ -2199,7 +2374,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-06" },
@@ -2210,28 +2385,28 @@
                         "label": "How many children had a break in CHIP coverage but were re-enrolled in CHIP 12 months later?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-07-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "7a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-07-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "7a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-07-b",
                                 "type": "integer",
@@ -2261,28 +2436,28 @@
                                 "label": "How many children had a break in CHIP coverage but were re-enrolled in Medicaid 12 months later?",
                                 "questions": [
                                   {
-                                    "id": "2020-03-c-04-07-f-01",
-                                    "type": "integer",
-                                    "label": "Total for all ages",
-                                    "answer": { "entry": null },
-                                    "context_data": {
-                                      "skip_text": "7f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                      "conditional_display": {
-                                        "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                        "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                          "values": {
-                                            "interactive": [false, null],
-                                            "noninteractive": [false, null]
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  {
                                     "type": "fieldset",
                                     "questions": [
+                                      {
+                                        "id": "2020-03-c-04-07-f-01",
+                                        "type": "integer",
+                                        "label": "Total for all ages",
+                                        "answer": { "entry": null },
+                                        "context_data": {
+                                          "skip_text": "7f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                          "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                            "hide_if": {
+                                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                              "values": {
+                                                "interactive": [false, null],
+                                                "noninteractive": [false, null]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
                                       {
                                         "id": "2020-03-c-04-07-f-02",
                                         "type": "integer",
@@ -2322,7 +2497,7 @@
                                         }
                                       }
                                     },
-                                    "fieldset_type": "datagrid"
+                                    "fieldset_type": "datagrid_with_total"
                                   }
                                 ],
                                 "fieldset_info": { "id": "2020-03-c-04-07-f" },
@@ -2343,7 +2518,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-07" },
@@ -2355,28 +2530,28 @@
                         "label": "How many children were no longer enrolled in CHIP at the end of the 12-month period?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-08-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "8a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-08-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "8a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-08-b",
                                 "type": "integer",
@@ -2406,28 +2581,28 @@
                                 "label": "How many children were no longer enrolled in CHIP at the end of the 12-month period, and enrolled in Medicaid instead?",
                                 "questions": [
                                   {
-                                    "id": "2020-03-c-04-08-f-01",
-                                    "type": "integer",
-                                    "label": "Total for all ages",
-                                    "answer": { "entry": null },
-                                    "context_data": {
-                                      "skip_text": "8f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                      "conditional_display": {
-                                        "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                        "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                          "values": {
-                                            "interactive": [false, null],
-                                            "noninteractive": [false, null]
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  {
                                     "type": "fieldset",
                                     "questions": [
+                                      {
+                                        "id": "2020-03-c-04-08-f-01",
+                                        "type": "integer",
+                                        "label": "Total for all ages",
+                                        "answer": { "entry": null },
+                                        "context_data": {
+                                          "skip_text": "8f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                          "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                            "hide_if": {
+                                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                              "values": {
+                                                "interactive": [false, null],
+                                                "noninteractive": [false, null]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
                                       {
                                         "id": "2020-03-c-04-08-f-02",
                                         "type": "integer",
@@ -2467,7 +2642,7 @@
                                         }
                                       }
                                     },
-                                    "fieldset_type": "datagrid"
+                                    "fieldset_type": "datagrid_with_total"
                                   }
                                 ],
                                 "fieldset_info": { "id": "2020-03-c-04-08-f" },
@@ -2488,7 +2663,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-08" },
@@ -2506,28 +2681,28 @@
                         "label": "How many children were still continuously enrolled in CHIP 18 months later?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-09-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "9a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-09-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "9a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-09-b",
                                 "type": "integer",
@@ -2567,7 +2742,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-09" },
@@ -2578,28 +2753,28 @@
                         "label": "How many children had a break in CHIP coverage but were re-enrolled in CHIP 18 months later?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-10-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "10a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-10-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "10a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-10-b",
                                 "type": "integer",
@@ -2629,28 +2804,28 @@
                                 "label": "How many children had a break in CHIP coverage but were re-enrolled in Medicaid 18 months later?",
                                 "questions": [
                                   {
-                                    "id": "2020-03-c-04-10-f-01",
-                                    "type": "integer",
-                                    "label": "Total for all ages",
-                                    "answer": { "entry": null },
-                                    "context_data": {
-                                      "skip_text": "10f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                      "conditional_display": {
-                                        "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                        "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                          "values": {
-                                            "interactive": [false, null],
-                                            "noninteractive": [false, null]
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  {
                                     "type": "fieldset",
                                     "questions": [
+                                      {
+                                        "id": "2020-03-c-04-10-f-01",
+                                        "type": "integer",
+                                        "label": "Total for all ages",
+                                        "answer": { "entry": null },
+                                        "context_data": {
+                                          "skip_text": "10f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                          "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                            "hide_if": {
+                                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                              "values": {
+                                                "interactive": [false, null],
+                                                "noninteractive": [false, null]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
                                       {
                                         "id": "2020-03-c-04-10-f-02",
                                         "type": "integer",
@@ -2690,7 +2865,7 @@
                                         }
                                       }
                                     },
-                                    "fieldset_type": "datagrid"
+                                    "fieldset_type": "datagrid_with_total"
                                   }
                                 ],
                                 "fieldset_info": { "id": "2020-03-c-04-10-f" },
@@ -2711,7 +2886,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-10" },
@@ -2723,28 +2898,28 @@
                         "label": "How many children were no longer enrolled in CHIP at the end of the 18-month period?",
                         "questions": [
                           {
-                            "id": "2020-03-c-04-11-a",
-                            "type": "integer",
-                            "label": "Total for all ages",
-                            "answer": { "entry": null },
-                            "context_data": {
-                              "skip_text": "11a omitted because you indicated that you have the age range breakdown data available.",
-                              "conditional_display": {
-                                "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                "hide_if": {
-                                  "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                  "values": {
-                                    "interactive": [false, null],
-                                    "noninteractive": [false, null]
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          {
                             "type": "fieldset",
                             "questions": [
+                              {
+                                "id": "2020-03-c-04-11-a",
+                                "type": "integer",
+                                "label": "Total for all ages",
+                                "answer": { "entry": null },
+                                "context_data": {
+                                  "skip_text": "11a omitted because you indicated that you have the age range breakdown data available.",
+                                  "conditional_display": {
+                                    "type": "conditional_display",
+                                    "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                    "hide_if": {
+                                      "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                      "values": {
+                                        "interactive": [false, null],
+                                        "noninteractive": [false, null]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
                               {
                                 "id": "2020-03-c-04-11-b",
                                 "type": "integer",
@@ -2774,28 +2949,28 @@
                                 "label": "How many children were no longer enrolled in CHIP at the end of the 12-month period, and enrolled in Medicaid instead?",
                                 "questions": [
                                   {
-                                    "id": "2020-03-c-04-11-f-01",
-                                    "type": "integer",
-                                    "label": "Total for all ages",
-                                    "answer": { "entry": null },
-                                    "context_data": {
-                                      "skip_text": "11f 1 omitted because you indicated that you have the age range breakdown data available.",
-                                      "conditional_display": {
-                                        "type": "conditional_display",
-                                        "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
-                                        "hide_if": {
-                                          "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
-                                          "values": {
-                                            "interactive": [false, null],
-                                            "noninteractive": [false, null]
-                                          }
-                                        }
-                                      }
-                                    }
-                                  },
-                                  {
                                     "type": "fieldset",
                                     "questions": [
+                                      {
+                                        "id": "2020-03-c-04-11-f-01",
+                                        "type": "integer",
+                                        "label": "Total for all ages",
+                                        "answer": { "entry": null },
+                                        "context_data": {
+                                          "skip_text": "11f 1 omitted because you indicated that you have the age range breakdown data available.",
+                                          "conditional_display": {
+                                            "type": "conditional_display",
+                                            "comment": "Interactive: Hide if 2020-03-c-04-01-a is false or null; noninteractive: same.",
+                                            "hide_if": {
+                                              "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
+                                              "values": {
+                                                "interactive": [false, null],
+                                                "noninteractive": [false, null]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
                                       {
                                         "id": "2020-03-c-04-11-f-02",
                                         "type": "integer",
@@ -2835,7 +3010,7 @@
                                         }
                                       }
                                     },
-                                    "fieldset_type": "datagrid"
+                                    "fieldset_type": "datagrid_with_total"
                                   }
                                 ],
                                 "fieldset_info": { "id": "2020-03-c-04-11-f" },
@@ -2856,7 +3031,7 @@
                                 }
                               }
                             },
-                            "fieldset_type": "datagrid"
+                            "fieldset_type": "datagrid_with_total"
                           }
                         ],
                         "fieldset_info": { "id": "2020-03-c-04-11" },
@@ -2884,7 +3059,10 @@
                     "label": "Does your state require cost sharing?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -2893,13 +3071,19 @@
                     "label": "Who tracks cost sharing to ensure families don’t pay more than the 5% aggregate household income in a year?",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Other ": "other",
-                        "States": "states",
-                        "Health plans": "health_plans",
-                        "Third party administrator": "third_party_administrator",
-                        "Families (“the shoebox method”)": "families"
-                      }
+                      "options": [
+                        {
+                          "label": "Families (“the shoebox method”)",
+                          "value": "families"
+                        },
+                        { "label": "Health plans", "value": "health_plans" },
+                        { "label": "States", "value": "states" },
+                        {
+                          "label": "Third party administrator",
+                          "value": "third_party_administrator"
+                        },
+                        { "label": "Other ", "value": "other" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3021,7 +3205,10 @@
                     "label": "Have you assessed the effects of charging premiums and enrollment fees on whether eligible families enroll in CHIP?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3064,7 +3251,10 @@
                     "label": "Have you assessed the effects of charging co-payments and other out-of-pocket fees on whether enrolled families use CHIP services?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3163,11 +3353,20 @@
                     "label": "Under which authority and statutes does your state offer premium assistance?",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Section 1115 Demonstration (Title XXI)": "title_xxi",
-                        "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]": "2105(c)(3)",
-                        "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]": "2105(c)(10)"
-                      }
+                      "options": [
+                        {
+                          "label": "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]",
+                          "value": "2105(c)(3)"
+                        },
+                        {
+                          "label": "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]",
+                          "value": "2105(c)(10)"
+                        },
+                        {
+                          "label": "Section 1115 Demonstration (Title XXI)",
+                          "value": "title_xxi"
+                        }
+                      ]
                     }
                   },
                   {
@@ -3176,7 +3375,10 @@
                     "label": "Does your premium assistance program include coverage for adults",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3185,11 +3387,17 @@
                         "label": "Who do you cover?",
                         "answer": {
                           "entry": null,
-                          "options": {
-                            "Parents": "parents",
-                            "Pregnant women": "pregnant_women",
-                            "Caretaker relatives": "caretaker_relatives"
-                          }
+                          "options": [
+                            { "label": "Parents", "value": "parents" },
+                            {
+                              "label": "Caretaker relatives",
+                              "value": "caretaker_relatives"
+                            },
+                            {
+                              "label": "Pregnant women",
+                              "value": "pregnant_women"
+                            }
+                          ]
                         },
                         "context_data": {
                           "conditional_display": {
@@ -3225,7 +3433,10 @@
                     "label": "Are there any minimum coverage requirements as part of the benefit package?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -3234,7 +3445,10 @@
                     "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -3243,7 +3457,10 @@
                     "label": "Are there limits on cost sharing for children in your premium assistance program?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -3252,7 +3469,11 @@
                     "label": "Are there limits on cost sharing for adults in your premium assistance program?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "N/A": "na", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" },
+                        { "label": "N/A", "value": "na" }
+                      ]
                     }
                   },
                   {
@@ -3261,7 +3482,10 @@
                     "label": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3522,7 +3746,10 @@
                     "label": "Do you have a written plan with safeguards and procedures in place for the prevention of fraud and abuse cases?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -3531,7 +3758,10 @@
                     "label": "Do you have a written plan with safeguards and procedures in place for the investigation of fraud and abuse cases? ",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -3540,7 +3770,10 @@
                     "label": "Do you have a written plan with safeguards and procedures in place for the referral of fraud and abuse cases?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     }
                   },
                   {
@@ -3555,7 +3788,11 @@
                     "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "N/A": "na", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" },
+                        { "label": "N/A", "value": "na" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3651,10 +3888,16 @@
                     "label": "Does your data for Questions 8–13 include cases for separate CHIP only or for Medicaid and CHIP combined? ",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Separate CHIP only": "separate_chip_only",
-                        "Medicaid and separate CHIP combined": "medicaid_separate_chip_combined"
-                      }
+                      "options": [
+                        {
+                          "label": "Separate CHIP only",
+                          "value": "separate_chip_only"
+                        },
+                        {
+                          "label": "Medicaid and separate CHIP combined",
+                          "value": "medicaid_separate_chip_combined"
+                        }
+                      ]
                     }
                   },
                   {
@@ -3663,7 +3906,10 @@
                     "label": "Do you rely on contractors for the prevention, investigation, and  referral of fraud and abuse cases? ",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3693,7 +3939,10 @@
                     "label": "Do you contract with Managed Care health plans and/or a third party contractor to provide this oversight? ",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -3734,140 +3983,476 @@
           },
           {
             "id": "2020-03-g",
-            "text": "",
             "type": "subsection",
             "parts": [],
-            "title": "Section 3G; not yet implemented"
+            "title": "NOT IMPLEMENTED"
           },
           {
             "id": "2020-03-h",
-            "text": "",
-            "type": "subsection",
-            "parts": [],
-            "title": "Section 3H; not yet implemented"
-          },
-          {
-            "id": "2020-03-i",
-            "text": "States can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.\n All states with approved HSI program(s) should complete this section.",
+            "text": "Children's Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
             "type": "subsection",
             "parts": [
               {
-                "id": "2020-03-i-01",
+                "id": "2020-03-h-01",
                 "type": "part",
                 "questions": [
                   {
-                    "id": "2020-03-i-01-01",
+                    "id": "2020-03-h-01-01",
                     "type": "radio",
-                    "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds?",
+                    "label": "Did you collect CAHPS survey results?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2020-03-h-01-02",
+                    "type": "radio",
+                    "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
+                    },
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                          "values": {
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
+                          }
+                        }
+                      }
                     }
                   }
                 ]
               },
               {
-                "id": "2020-03-i-02",
-                "text": "Tell us about each of your HSI programs.",
+                "id": "2020-03-h-02",
                 "type": "part",
                 "questions": [
                   {
-                    "id": "2020-03-i-02-01",
-                    "type": "repeatables",
+                    "id": "2020-03-h-02-01",
+                    "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                    "type": "file_upload",
+                    "label": "Upload a summary report of your CAHPS survey results.",
+                    "answer": { "entry": null }
+                  },
+                  {
+                    "id": "2020-03-h-02-02",
+                    "type": "radio",
+                    "label": "Which CHIP population did you survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "Medicaid Expansion CHIP",
+                          "value": "medicaid expansion chip"
+                        },
+                        { "label": "Separate CHIP", "value": "separate chip" },
+                        {
+                          "label": "Combination CHIP",
+                          "value": "combination chip"
+                        },
+                        { "label": "Other", "value": "other" }
+                      ]
+                    },
                     "questions": [
                       {
-                        "id": "2020-03-i-02-01-01",
-                        "type": "repeatable",
+                        "type": "fieldset",
+                        "label": "",
                         "questions": [
                           {
-                            "id": "2020-03-i-02-01-01-01",
-                            "type": "text_multiline",
-                            "label": "What is the name of your HSI program?",
+                            "id": "2020-03-h-02-02-a",
+                            "type": "text",
+                            "label": "Which population did you survey?",
                             "answer": { "entry": null }
                           },
                           {
-                            "id": "2020-03-i-02-01-01-02",
-                            "type": "text_multiline",
-                            "label": "Which populations are served by your HSI program?",
-                            "answer": { "entry": null }
-                          },
-                          {
-                            "id": "2020-03-i-02-01-01-03",
+                            "id": "2020-03-h-02-02-b",
                             "type": "integer",
-                            "label": "How many children do you estimate are served by your HSI program?",
-                            "answer": { "entry": null }
-                          },
-                          {
-                            "hint": "Skip the following sections if you're already reporting this information elsewhere to CMS.",
-                            "type": "fieldset",
-                            "questions": []
-                          },
-                          {
-                            "id": "2020-03-i-02-01-01-04",
-                            "type": "integer",
-                            "label": "How many children in the HSI program are below your state's FPL threshold? ",
-                            "answer": { "entry": null }
-                          },
-                          {
-                            "id": "2020-03-i-02-01-01-05",
-                            "type": "text_multiline",
-                            "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact.",
-                            "answer": { "entry": null }
-                          },
-                          {
-                            "id": "2020-03-i-02-01-01-06",
-                            "type": "text_multiline",
-                            "label": "What outcomes have you found in measuring the impact?",
+                            "label": "How many children were included in the survey?",
                             "answer": { "entry": null }
                           }
-                        ]
+                        ],
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-h-02-02 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-h-02-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "medicaid expansion chip",
+                                  "separate chip",
+                                  "combination chip"
+                                ],
+                                "noninteractive": [
+                                  "medicaid expansion chip",
+                                  "separate chip",
+                                  "combination chip"
+                                ]
+                              }
+                            }
+                          }
+                        }
                       }
                     ]
+                  },
+                  {
+                    "id": "2020-03-h-02-03",
+                    "type": "radio",
+                    "label": "Which version of the CAHPS survey did you use?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        { "label": "CAHPS 5.0", "value": "5.0" },
+                        { "label": "CAHPS 5.0H", "value": "5.0H" },
+                        { "label": "Other", "value": "other" }
+                      ]
+                    },
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "label": "",
+                        "questions": [
+                          {
+                            "id": "2020-03-h-02-03-a",
+                            "type": "text",
+                            "label": "Which CAHPS survey did you use?",
+                            "answer": { "entry": null }
+                          }
+                        ],
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-h-02-03 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
+                              "values": {
+                                "interactive": [null, "5.0", "5.0H"],
+                                "noninteractive": ["5.0", "5.0H"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-04",
+                    "type": "radio",
+                    "label": "Which supplemental item sets did you include in your survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        { "label": "None", "value": "none" },
+                        {
+                          "label": "Children with Chronic Conditions",
+                          "value": "chronic"
+                        },
+                        { "label": "Other", "value": "other" }
+                      ]
+                    },
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "label": "",
+                        "questions": [
+                          {
+                            "id": "2020-03-h-02-04-a",
+                            "type": "text",
+                            "label": "Which supplemental item sets did you include?",
+                            "answer": { "entry": null }
+                          }
+                        ],
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-h-02-04 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
+                              "values": {
+                                "interactive": [null, "none", "chronic"],
+                                "noninteractive": ["none", "chronic"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-05",
+                    "type": "radio",
+                    "label": "Which administrative protocol did you use to administer the survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "NCQA HEDIS CAHPS 5.0H",
+                          "value": "ncqa hedis cahps 5.0h"
+                        },
+                        { "label": "HRQ CAHPS", "value": "hrq cahps" },
+                        { "label": "Other", "value": "other" }
+                      ]
+                    },
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "label": "",
+                        "questions": [
+                          {
+                            "id": "2020-03-h-02-05-a",
+                            "type": "text",
+                            "label": "Which administrative protocol did you use?",
+                            "answer": { "entry": null }
+                          }
+                        ],
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-h-02-05 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "ncqa hedis cahps 5.0h",
+                                  "hrq cahps"
+                                ],
+                                "noninteractive": [
+                                  "ncqa hedis cahps 5.0h",
+                                  "hrq cahps"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-06",
+                    "type": "text",
+                    "label": "Is there anything else you'd like to add about your CAHPS survey results?",
+                    "answer": { "entry": null }
                   }
                 ],
                 "context_data": {
+                  "skip_text": "Part 2 omitted because you indicated that have no collected CAHPS survey results",
                   "conditional_display": {
                     "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2020-03-i-01-01 is no or unanswered; noninteractive: hide if that's no.",
+                    "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
                     "hide_if": {
-                      "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
+                      "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                       "values": {
                         "interactive": [null, "no"],
                         "noninteractive": ["no"]
                       }
-                    },
-                    "skip_text": "This section only applies to states with Health Service Initiatives. Skip to the next section."
+                    }
                   }
                 }
               },
               {
-                "id": "2020-03-i-03",
+                "id": "2020-03-h-03",
                 "type": "part",
                 "questions": [
                   {
-                    "id": "2020-03-i-03-01",
+                    "id": "2020-03-h-03-01",
+                    "hint": "Check all that apply.",
+                    "type": "checkbox",
+                    "label": "Why didn't you collect CAHPS survey results?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "Entire population wasn't included in the survey",
+                          "value": "Entire population wasn't included in the survey"
+                        },
+                        {
+                          "label": "Part of the population wasn't included in the survey",
+                          "value": "Part of the population wasn't included in the survey"
+                        },
+                        {
+                          "label": "Data wasn't available due to budget constraints",
+                          "value": "Data wasn't available due to budget constraints"
+                        },
+                        {
+                          "label": "Data wasn't available due to staff constraints",
+                          "value": "Data wasn't available due to staff constraints"
+                        },
+                        {
+                          "label": "Data wasn't consistent or accurate",
+                          "value": "Data wasn't consistent or accurate"
+                        },
+                        {
+                          "label": "Data source wasn't easily accessible",
+                          "value": "Data source wasn't easily accessible"
+                        },
+                        {
+                          "label": "Data source wasn't easily accessible: requires medical records",
+                          "value": "Data source wasn't easily accessible: requires medical records"
+                        },
+                        {
+                          "label": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
+                          "value": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist"
+                        },
+                        {
+                          "label": "Data wasn't collected by a provider",
+                          "value": "Data wasn't collected by a provider"
+                        },
+                        {
+                          "label": "Sample size was too small (fewer than 30)",
+                          "value": "Sample size was too small (fewer than 30)"
+                        },
+                        { "label": "Other", "value": "other" }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2020-03-h-03-02",
                     "type": "text_multiline",
-                    "label": "Anything else you’d like to add about your HSI programs?",
-                    "answer": { "entry": "null" }
+                    "label": "Explain in more detail why you weren't able to collect specific survey results.",
+                    "answer": { "entry": null }
                   }
                 ],
                 "context_data": {
+                  "skip_text": "Part 3 omitted because you indicated that have collected CAHPS survey results",
                   "conditional_display": {
                     "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2020-03-i-01-01 is no or unanswered; noninteractive: hide if that's no.",
+                    "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
                     "hide_if": {
-                      "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
+                      "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                       "values": {
-                        "interactive": [null, "no"],
-                        "noninteractive": ["no"]
+                        "interactive": [null, "yes"],
+                        "noninteractive": ["yes"]
                       }
-                    },
-                    "skip_text": "This section only applies to states with Health Service Initiatives. Skip to the next section."
+                    }
                   }
                 }
               }
             ],
-            "title": "Health Service Initiative (HSI) Programs"
+            "title": "CAHPS Survey Results"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "contents": {
+      "section": {
+        "id": "2020-00",
+        "type": "section",
+        "year": 2020,
+        "state": "AK",
+        "title": "Carts Basic Info",
+        "valid": null,
+        "ordinal": 0,
+        "subsections": [
+          {
+            "id": "2020-00-a",
+            "type": "subsection",
+            "parts": [
+              {
+                "id": "2020-00-a-01",
+                "type": "part",
+                "title": "Welcome!",
+                "questions": [
+                  {
+                    "id": "2020-00-a-01-01",
+                    "type": "text_multiline",
+                    "label": "State or territory name:",
+                    "answer": {
+                      "entry": "AK",
+                      "readonly": true,
+                      "prepopulated": true
+                    }
+                  },
+                  {
+                    "id": "2020-00-a-01-02",
+                    "type": "radio",
+                    "label": "Program type:",
+                    "answer": {
+                      "entry": "medicaid_exp_chip",
+                      "options": [
+                        {
+                          "label": "Combination (Medicaid Expansion CHIP and Separate CHIP)",
+                          "value": "combo"
+                        },
+                        {
+                          "label": "Medicaid Expansion CHIP only",
+                          "value": "medicaid_exp_chip"
+                        },
+                        {
+                          "label": "Separate CHIP only",
+                          "value": "separate_chip"
+                        }
+                      ],
+                      "readonly": true,
+                      "prepopulated": true
+                    }
+                  },
+                  {
+                    "id": "2020-00-a-01-03",
+                    "type": "text_multiline",
+                    "label": "CHIP program name(s): ",
+                    "answer": {
+                      "entry": "All, Denali KidCare",
+                      "readonly": true,
+                      "prepopulated": true
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-00-a-02",
+                "text": "Who should we contact if we have any questions about your report?",
+                "type": "part",
+                "title": "Contact information",
+                "questions": [
+                  {
+                    "id": "2020-00-a-02-01",
+                    "type": "text_small",
+                    "label": "Contact name:",
+                    "answer": { "entry": "Firstname Lastname" }
+                  },
+                  {
+                    "id": "2020-00-a-02-02",
+                    "type": "text_small",
+                    "label": "Job title:",
+                    "answer": { "entry": "Deathless Functionary" }
+                  },
+                  {
+                    "id": "2020-00-a-02-03",
+                    "type": "email",
+                    "label": "Email:",
+                    "answer": { "entry": "example@example.com" }
+                  },
+                  {
+                    "id": "2020-00-a-02-04",
+                    "type": "mailing_address",
+                    "label": "Full mailing address:",
+                    "answer": { "entry": "Some mailing address" }
+                  },
+                  {
+                    "id": "2020-00-a-02-05",
+                    "type": "phone_number",
+                    "label": "Phone number:",
+                    "answer": { "entry": "Some phone number" }
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -3980,7 +4565,10 @@
                     "label": "Are there any reasons why the American Community Survey estimates wouldn’t be an accurate representation of the number of uninsured children in your state?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -4010,7 +4598,10 @@
                     "label": "Do you have any alternate data source(s) or methodology for measuring the number and/or percent of uninsured children in your state?",
                     "answer": {
                       "entry": null,
-                      "options": { "No": "no", "Yes": "yes" }
+                      "options": [
+                        { "label": "Yes", "value": "yes" },
+                        { "label": "No", "value": "no" }
+                      ]
                     },
                     "questions": [
                       {
@@ -4145,11 +4736,20 @@
                                     "label": "What type of goal is it?",
                                     "answer": {
                                       "entry": null,
-                                      "options": {
-                                        "New goal": "goal_new",
-                                        "Continuing goal": "goal_continuing",
-                                        "Discontinued goal": "goal_discontinued"
-                                      },
+                                      "options": [
+                                        {
+                                          "label": "New goal",
+                                          "value": "goal_new"
+                                        },
+                                        {
+                                          "label": "Continuing goal",
+                                          "value": "goal_continuing"
+                                        },
+                                        {
+                                          "label": "Discontinued goal",
+                                          "value": "goal_discontinued"
+                                        }
+                                      ],
                                       "default_entry": "goal_new"
                                     },
                                     "questions": [
@@ -4246,11 +4846,20 @@
                                     "label": "Which data source did you use?",
                                     "answer": {
                                       "entry": null,
-                                      "options": {
-                                        "Survey data": "goal_survey_data",
-                                        "Another data source": "goal_other_data",
-                                        "Eligibility or enrollment data": "goal_enrollment_data"
-                                      }
+                                      "options": [
+                                        {
+                                          "label": "Eligibility or enrollment data",
+                                          "value": "goal_enrollment_data"
+                                        },
+                                        {
+                                          "label": "Survey data",
+                                          "value": "goal_survey_data"
+                                        },
+                                        {
+                                          "label": "Another data source",
+                                          "value": "goal_other_data"
+                                        }
+                                      ]
                                     }
                                   },
                                   {
@@ -4297,107 +4906,6 @@
               }
             ],
             "title": "Enrollment and Uninsured Data"
-          }
-        ]
-      }
-    }
-  },
-  {
-    "contents": {
-      "section": {
-        "id": "2020-00",
-        "type": "section",
-        "year": 2020,
-        "state": "AK",
-        "title": "Carts Basic Info",
-        "valid": null,
-        "ordinal": 0,
-        "subsections": [
-          {
-            "id": "2020-00-a",
-            "type": "subsection",
-            "parts": [
-              {
-                "id": "2020-00-a-01",
-                "type": "part",
-                "title": "Welcome!",
-                "questions": [
-                  {
-                    "id": "2020-00-a-01-01",
-                    "type": "text_multiline",
-                    "label": "State or territory name:",
-                    "answer": {
-                      "entry": "AK",
-                      "readonly": true,
-                      "prepopulated": true
-                    }
-                  },
-                  {
-                    "id": "2020-00-a-01-02",
-                    "type": "radio",
-                    "label": "Program type:",
-                    "answer": {
-                      "entry": "medicaid_exp_chip",
-                      "options": {
-                        "Separate CHIP only": "separate_chip",
-                        "Medicaid Expansion CHIP only": "medicaid_exp_chip",
-                        "Combination (Medicaid Expansion CHIP and Separate CHIP)": "combo"
-                      },
-                      "readonly": true,
-                      "prepopulated": true
-                    }
-                  },
-                  {
-                    "id": "2020-00-a-01-03",
-                    "type": "text_multiline",
-                    "label": "CHIP program name(s): ",
-                    "answer": {
-                      "entry": "All, Denali KidCare",
-                      "readonly": true,
-                      "prepopulated": true
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "2020-00-a-02",
-                "text": "Who should we contact if we have any questions about your report?",
-                "type": "part",
-                "title": "Contact information",
-                "questions": [
-                  {
-                    "id": "2020-00-a-02-01",
-                    "type": "text_small",
-                    "label": "Contact name:",
-                    "answer": { "entry": "Firstname Lastname" }
-                  },
-                  {
-                    "id": "2020-00-a-02-02",
-                    "type": "text_small",
-                    "label": "Job title:",
-                    "answer": { "entry": "Deathless Functionary" }
-                  },
-                  {
-                    "id": "2020-00-a-02-03",
-                    "type": "email",
-                    "label": "Email:",
-                    "answer": { "entry": "example@example.com" }
-                  },
-                  {
-                    "id": "2020-00-a-02-04",
-                    "type": "mailing_address",
-                    "label": "Full mailing address:",
-                    "answer": { "entry": "Some mailing address" }
-                  },
-                  {
-                    "id": "2020-00-a-02-05",
-                    "type": "phone_number",
-                    "label": "Phone number:",
-                    "answer": { "entry": "Some phone number" }
-                  }
-                ]
-              }
-            ]
           }
         ]
       }

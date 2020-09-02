@@ -17,7 +17,7 @@
             "id": "2020-02-a-01",
             "type": "part",
             "title": "Number of Children Enrolled in CHIP",
-            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  \u201cUnduplicated Number Ever Enrolled\u201d in your fourth quarter SEDS report) and refresh the page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
+            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and refresh the page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
             "questions": [
               {
                 "type": "fieldset",
@@ -55,7 +55,7 @@
                     "context_data": {
                       "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
                       "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
-                      "skip_text": "Since your percent change didn\u2019t exceed 10%, you can skip to Part 2."
+                      "skip_text": "Since your percent change didn’t exceed 10%, you can skip to Part 2."
                     }
                   }
                 ]
@@ -142,7 +142,7 @@
                         "context_data": {
                           "interactive_conditional": "Hide if percent change values in parent's table are all under 10.",
                           "noninteractive_conditional": "Hide if percent change values in parent's table are all under 10.",
-                          "skip_text": "Since your percent change didn\u2019t exceed 10%, you can skip to the next question."
+                          "skip_text": "Since your percent change didn’t exceed 10%, you can skip to the next question."
                         }
                       }
                     ]
@@ -151,14 +151,20 @@
               },
               {
                 "id": "2020-02-a-02-02",
-                "label": "Are there any reasons why the American Community Survey estimates wouldn\u2019t be an accurate representation of the number of uninsured children in your state?",
+                "label": "Are there any reasons why the American Community Survey estimates wouldn’t be an accurate representation of the number of uninsured children in your state?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -195,10 +201,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -226,7 +238,7 @@
                       },
                       {
                         "id": "2020-02-a-02-03-c",
-                        "label": "Define the population you\u2019re measuring, including ages and federal poverty levels.",
+                        "label": "Define the population you’re measuring, including ages and federal poverty levels.",
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
@@ -296,7 +308,7 @@
               },
               {
                 "id": "2020-02-a-02-04",
-                "label": "Anything else you\u2019d like to add about your data?",
+                "label": "Anything else you’d like to add about your data?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -365,11 +377,20 @@
                                 "label": "What type of goal is it?",
                                 "type": "radio",
                                 "answer": {
-                                  "options": {
-                                    "New goal": "goal_new",
-                                    "Continuing goal": "goal_continuing",
-                                    "Discontinued goal": "goal_discontinued"
-                                  },
+                                  "options": [
+                                    {
+                                      "value": "goal_new",
+                                      "label": "New goal"
+                                    },
+                                    {
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
+                                    },
+                                    {
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
+                                    }
+                                  ],
                                   "default_entry": "goal_new",
                                   "entry": null
                                 },
@@ -454,8 +475,13 @@
                                 "type": "fieldset",
                                 "fieldset_type": "synthesized_value",
                                 "fieldset_info": {
-                                    "targets": ["$..*[?(@.id=='2020-02-b-01-01-01-02-01-04')].answer.entry", "$..*[?(@.id=='2020-02-b-01-01-01-02-01-06')].answer.entry"],
-                                    "actions": ["percentage"]
+                                  "targets": [
+                                    "$..*[?(@.id=='2020-02-b-01-01-01-02-01-04')].answer.entry",
+                                    "$..*[?(@.id=='2020-02-b-01-01-01-02-01-06')].answer.entry"
+                                  ],
+                                  "actions": [
+                                    "percentage"
+                                  ]
                                 },
                                 "questions": []
                               },
@@ -476,17 +502,26 @@
                                 "label": "Which data source did you use?",
                                 "type": "radio",
                                 "answer": {
-                                  "options": {
-                                    "Eligibility or enrollment data": "goal_enrollment_data",
-                                    "Survey data": "goal_survey_data",
-                                    "Another data source": "goal_other_data"
-                                  },
+                                  "options": [
+                                    {
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
+                                    },
+                                    {
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
+                                    },
+                                    {
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
+                                    }
+                                  ],
                                   "entry": null
                                 }
                               },
                               {
                                 "id": "2020-02-b-01-01-01-02-01-09",
-                                "label": "How did your progress towards your goal last year compare to your previous year\u2019s progress?",
+                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
