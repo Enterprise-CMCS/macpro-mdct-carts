@@ -65,30 +65,11 @@ class CMSRanges extends Component {
           rangesArray.push([key, value]);
         }
       }
+
       // sort array alphabetically
       rangesArray.sort();
 
       let parentObj = {};
-
-      // Ranges array:
-      // // [
-      // 0: (2) ["range-0-0-a", "1"]
-      // 1: (2) ["range-0-0-b", "2"]
-
-      // 2: (2) ["range-0-1-a", "3"]
-      // 3: (2) ["range-0-1-b", "4"]
-
-      // 4: (2) ["range-1-0-a", "5"]
-      // 5: (2) ["range-1-0-b", "6"]
-      // 6: (2) ["range-1-1-a", "7"]
-      // 7: (2) ["range-1-1-b", "8"]
-      // // ]
-
-      // Parent Object
-      // {
-      // 0: [[1,2], [3,4]]
-      // 1: [[5,6], [7,8]]
-      // }
 
       for (let i = 0; i < rangesArray.length; i++) {
         let rangeId = rangesArray[i][0].split("-")[1]; //range-0-1-a : returns 0
@@ -121,49 +102,10 @@ class CMSRanges extends Component {
       // spread them into one greater array
       let nestedArray = [...Object.values(parentObj)];
 
-      console.log("Final nested array????", nestedArray);
-      // let parentArray = [];
-
-      // // Loop through all ranges
-      // for (let i = 0; i < rangesArray.length; i++) {
-      //   let tempArray = [];
-
-      //   // Loop through all ranges again
-      //   for (let j = 0; j < rangesArray.length; j++) {
-
-      //     // Get current iteration from state name
-      //     let rangeId = rangesArray[j][0].split("-")[1]; //range-0-1-a : returns 0
-
-      //     // If current iteration matches chunk from state name
-      //     if (Number(i) === Number(rangeId)) {
-      //       let tempSubArray = [];
-      //       // if new row, create array
-      //       for (let k = 0; k < rangesArray.length; k++) {
-
-      //         let row = rangesArray[k][0].split("-")[2]; //range-0-1-a : returns 1
-
-      //         if (Number(j) === Number(row)) {
-      //           tempSubArray.push(rangesArray[k][1]);
-      //         }
-      //       }
-
-      //       if (tempSubArray.length > 0) {
-      //         tempArray.push(tempSubArray);
-      //       }
-      //     }
-
-      //   }
-
-      //   // If temparray has values, add to parent array
-      //   if (tempArray.length > 0) {
-      //     parentArray.push(tempArray);
-      //   }
-      // }
-
       this.setState({ [this.props.item.id]: nestedArray });
 
       // Pass up to parent component
-      // this.props.onChange([this.props.item.id, parentArray]);
+      this.props.onChange([this.props.item.id, nestedArray]);
     });
   }
 
