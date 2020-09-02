@@ -164,7 +164,6 @@ class QuestionComponent extends Component {
               </legend>
               {question.type === "radio"
                 ? Object.entries(question.answer.options).map((key, index) => {
-<<<<<<< HEAD
                   return (
                     <CMSChoice
                       name={question.id}
@@ -176,52 +175,34 @@ class QuestionComponent extends Component {
                       children={question.questions}
                       valueFromParent={this.state[question.id]}
                       onChange={this.handleChangeArray}
-                      setAnswer={this.props.setAnswer}
                       key={index}
+                      setAnswer={this.props.setAnswer}
+                      disabled={question.answer.readonly}
+                      disabledFromParent={question.answer.readonly}
                     />
                   );
                 })
-=======
-                    return (
-                      <CMSChoice
-                        name={question.id}
-                        value={key[1]}
-                        label={key[0]}
-                        type={question.type}
-                        answer={question.answer.entry}
-                        conditional={question.conditional}
-                        children={question.questions}
-                        valueFromParent={this.state[question.id]}
-                        onChange={this.handleChangeArray}
-                        key={index}
-                        setAnswer={this.props.setAnswer}
-                        disabled={question.answer.readonly}
-                        disabledFromParent = {question.answer.readonly}
-                      />
-                    );
-                  })
                 : null}
 
               {question.type === "checkbox"
                 ? Object.entries(question.answer.options).map((key, index) => {
-                    return (
-                      <CMSChoice
-                        name={question.id}
-                        value={key[1]}
-                        label={key[0]}
-                        type={question.type}
-                        answer={question.answer.entry}
-                        conditional={question.conditional}
-                        children={question.questions}
-                        valueFromParent={this.state[question.id]}
-                        onChange={this.handleCheckboxInput}
-                        key={index}
-                        setAnswer={this.props.setAnswer}
-                        disabled={question.answer.readonly}
-                      />
-                    );
-                  })
->>>>>>> b8f3d5d01759606a51d93832d7d644e7b991e0f7
+                  return (
+                    <CMSChoice
+                      name={question.id}
+                      value={key[1]}
+                      label={key[0]}
+                      type={question.type}
+                      answer={question.answer.entry}
+                      conditional={question.conditional}
+                      children={question.questions}
+                      valueFromParent={this.state[question.id]}
+                      onChange={this.handleCheckboxInput}
+                      key={index}
+                      setAnswer={this.props.setAnswer}
+                      disabled={question.answer.readonly}
+                    />
+                  );
+                })
                 : null}
 
               {/* If textarea */}
