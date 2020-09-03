@@ -22,10 +22,16 @@
                 "label": "Have you changed your outreach methods in the last federal fiscal year?",
                 "type": "radio",
                 "answer": {
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  },
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
                   "entry": null
                 },
                 "questions": [
@@ -64,10 +70,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -109,7 +121,7 @@
               },
               {
                 "id": "2020-03-a-01-04",
-                "label": "Anything else you\u2019d like to add about your outreach efforts?",
+                "label": "Anything else you’d like to add about your outreach efforts?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -135,11 +147,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no",
-                    "N/A": "na"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -178,11 +199,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no",
-                    "N/A": "na"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -220,15 +250,24 @@
                 "questions": [
                   {
                     "id": "2020-03-b-01-03",
-                    "label": "Does your S-CHIP program require a child to be uninsured for a minimum amount of time before enrollment (\u201cthe waiting period\u201d)?",
+                    "label": "Does your S-CHIP program require a child to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
                     "type": "radio",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Yes": "yes",
-                        "No": "no",
-                        "N/A": "na"
-                      }
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        },
+                        {
+                          "value": "na",
+                          "label": "N/A"
+                        }
+                      ]
                     },
                     "questions": [
                       {
@@ -289,7 +328,7 @@
               },
               {
                 "id": "2020-03-b-01-05",
-                "label": "Anything else you\u2019d like to add about crowd-out that wasn\u2019t already covered? Did you run into any limitations when collecting data?",
+                "label": "Anything else you’d like to add about crowd-out that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -316,11 +355,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no",
-                    "N/A": "na"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -333,13 +381,13 @@
                           "target": "$..*[?(@.id=='2020-03-c-01-01')].answer.entry",
                           "values": {
                             "interactive": [
-                                "no",
-                                "na",
-                                null
+                              "no",
+                              "na",
+                              null
                             ],
                             "noninteractive": [
-                                "no",
-                                "na"
+                              "no",
+                              "na"
                             ]
                           }
                         }
@@ -372,10 +420,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -384,10 +438,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -400,11 +460,11 @@
                           "target": "$..*[?(@.id=='2020-03-c-01-03')].answer.entry",
                           "values": {
                             "interactive": [
-                                "no",
-                                null
+                              "no",
+                              null
                             ],
                             "noninteractive": [
-                                "no"
+                              "no"
                             ]
                           }
                         }
@@ -498,7 +558,6 @@
                 },
                 "questions": [
                   {
-
                     "id": "2020-03-c-02-03-a",
                     "label": "How many first-time applicants were denied CHIP coverage for eligibility reasons?",
                     "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
@@ -531,27 +590,87 @@
                 "label": "Table: Denials for First-Time Applicants",
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
                   "rows": [
                     [
-                      {"contents": "Total denials"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-01')].answer.entry"]},
-                      {"contents": "100%"}
+                      {
+                        "contents": "Total denials"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
                     ],
                     [
-                      {"contents": "Denied for procedural reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-02')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-02')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Denied for procedural reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-02')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-02')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ],
                     [
-                      {"contents": "Denied for eligibility reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-03')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Denied for eligibility reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-03')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ],
                     [
-                      {"contents": "Denials for other reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-02-04')].answer.entry", "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Denials for other reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ]
                   ]
                 },
@@ -600,18 +719,20 @@
                 },
                 "questions": [
                   {
-                      "type": "fieldset",
-                      "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
-                      "fieldset_type": "synthesized_value",
-                      "fieldset_info": {
-                        "targets": [
-                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
-                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
-                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
-                        ],
-                        "actions": ["sum"]
-                      },
-                      "questions": []
+                    "type": "fieldset",
+                    "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
+                    "fieldset_type": "synthesized_value",
+                    "fieldset_info": {
+                      "targets": [
+                        "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
+                      ],
+                      "actions": [
+                        "sum"
+                      ]
+                    },
+                    "questions": []
                   },
                   {
                     "id": "2020-03-c-03-04-a",
@@ -655,22 +776,68 @@
                 "label": "Table: Enrollment Data for CHIP Redetermination",
                 "hint": "These tables are auto-populated with the data you entered above.",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
                   "rows": [
                     [
-                      {"contents": "Children screened for redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-02')].answer.entry"]},
-                      {"contents": "100%"}
+                      {
+                        "contents": "Children screened for redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
                     ],
                     [
-                      {"contents": "Children retained after redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-03')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-03')].answer.entry", "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children retained after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-03')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled after redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry", "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ]
                   ]
                 },
@@ -682,27 +849,87 @@
                 "comment": "This is assuming that we make the user manually enter the answer to question 4; otherwise we don't currently have a way to support this functionality; see the comment on question 4 above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "Number"}, {"contents": "Percent"}],
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
                   "rows": [
                     [
-                      {"contents": "Children disenrolled after redetermination"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04')].answer.entry"]},
-                      {"contents": "100%"}
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled for procedural reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled for procedural reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled for eligibility reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled for eligibility reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ],
                     [
-                      {"contents": "Children disenrolled for other reasons"},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"]},
-                      {"targets": ["$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry", "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"], "actions": ["percentage"]}
+                      {
+                        "contents": "Children disenrolled for other reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": [
+                          "percentage"
+                        ]
+                      }
                     ]
                   ]
                 },
@@ -710,7 +937,6 @@
               }
             ]
           },
-
           {
             "id": "2020-03-c-04",
             "type": "part",
@@ -741,9 +967,6 @@
                             "label": "I don’t have data for the individual age groups. I’ll report data for the total number for all age groups (0-18 years) instead.",
                             "type": "checkbox_flag",
                             "answer": {
-                              "options": {
-                                "type": "boolean"
-                              },
                               "entry": null
                             }
                           }
@@ -773,10 +996,9 @@
                         "questions": [
                           {
                             "comment": "This is the first real question so far in this part…",
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-01-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -802,37 +1024,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-01-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-01-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-01-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-01-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -843,7 +1061,6 @@
                   }
                 ]
               },
-
               {
                 "type": "fieldset",
                 "label": "July – September 2019 (6 months later)",
@@ -880,10 +1097,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-02-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -909,37 +1125,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-02-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-02-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-02-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-02-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -979,10 +1191,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-03-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -1008,37 +1219,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-03-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-03-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-03-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-03-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -1074,10 +1281,9 @@
                                 },
                                 "questions": [
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-03-f-01",
                                     "label": "Total for all ages",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     },
@@ -1103,37 +1309,33 @@
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-03-f-02",
                                     "label": "0–1 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-03-f-03",
                                     "label": "1–5 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-03-f-04",
                                     "label": "6–12 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-03-f-05",
                                     "label": "13–18 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
@@ -1178,10 +1380,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-04-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -1207,37 +1408,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-04-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-04-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-04-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-04-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -1273,10 +1470,9 @@
                                 },
                                 "questions": [
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-04-f-01",
                                     "label": "Total for all ages",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     },
@@ -1302,37 +1498,33 @@
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-04-f-02",
                                     "label": "0–1 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-04-f-03",
                                     "label": "1–5 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-04-f-04",
                                     "label": "6–12 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-04-f-05",
                                     "label": "13–18 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
@@ -1350,7 +1542,7 @@
                     "label": "Anything else you’d like to add about your data?",
                     "type": "text_multiline",
                     "answer": {
-                        "entry": null
+                      "entry": null
                     }
                   }
                 ]
@@ -1392,10 +1584,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-06-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -1421,37 +1612,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-06-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-06-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-06-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-06-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -1491,10 +1678,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-07-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -1520,37 +1706,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-07-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-07-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-07-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-07-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -1586,10 +1768,9 @@
                                 },
                                 "questions": [
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-07-f-01",
                                     "label": "Total for all ages",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     },
@@ -1615,37 +1796,33 @@
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-07-f-02",
                                     "label": "0–1 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-07-f-03",
                                     "label": "1–5 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-07-f-04",
                                     "label": "6–12 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-07-f-05",
                                     "label": "13–18 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
@@ -1690,10 +1867,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-08-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -1719,37 +1895,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-08-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-08-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-08-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-08-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -1785,10 +1957,9 @@
                                 },
                                 "questions": [
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-08-f-01",
                                     "label": "Total for all ages",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     },
@@ -1814,37 +1985,33 @@
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-08-f-02",
                                     "label": "0–1 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-08-f-03",
                                     "label": "1–5 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-08-f-04",
                                     "label": "6–12 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-08-f-05",
                                     "label": "13–18 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
@@ -1859,8 +2026,6 @@
                   }
                 ]
               },
-
-
               {
                 "type": "fieldset",
                 "label": "July – September 2020 (18 months later)",
@@ -1897,10 +2062,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-09-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -1926,37 +2090,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-09-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-09-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-09-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-09-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -1996,10 +2156,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-10-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -2025,37 +2184,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-10-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-10-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-10-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-10-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -2091,10 +2246,9 @@
                                 },
                                 "questions": [
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-10-f-01",
                                     "label": "Total for all ages",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     },
@@ -2120,37 +2274,33 @@
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-10-f-02",
                                     "label": "0–1 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-10-f-03",
                                     "label": "1–5 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-10-f-04",
                                     "label": "6–12 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-10-f-05",
                                     "label": "13–18 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
@@ -2195,10 +2345,9 @@
                         },
                         "questions": [
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-11-a",
                             "label": "Total for all ages",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             },
@@ -2224,37 +2373,33 @@
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-11-b",
                             "label": "0–1 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-11-c",
                             "label": "1–5 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-11-d",
                             "label": "6–12 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "type": "question",
+                            "type": "integer",
                             "id": "2020-03-c-04-11-e",
                             "label": "13–18 year olds",
-                            "type": "integer",
                             "answer": {
                               "entry": null
                             }
@@ -2290,10 +2435,9 @@
                                 },
                                 "questions": [
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-11-f-01",
                                     "label": "Total for all ages",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     },
@@ -2319,37 +2463,33 @@
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-11-f-02",
                                     "label": "0–1 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-11-f-03",
                                     "label": "1–5 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-11-f-04",
                                     "label": "6–12 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
                                   },
                                   {
-                                    "type": "question",
+                                    "type": "integer",
                                     "id": "2020-03-c-04-11-f-05",
                                     "label": "13–18 year olds",
-                                    "type": "integer",
                                     "answer": {
                                       "entry": null
                                     }
@@ -2364,14 +2504,8 @@
                   }
                 ]
               }
-
-
-
-
             ]
           }
-
-
         ]
       },
       {
@@ -2390,25 +2524,46 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
                 "id": "2020-03-d-01-02",
-                "label": "Who tracks cost sharing to ensure families don\u2019t pay more than the 5% aggregate household income in a year?",
+                "label": "Who tracks cost sharing to ensure families don’t pay more than the 5% aggregate household income in a year?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Families (\u201cthe shoebox method\u201d)": "families",
-                    "Health plans": "health_plans",
-                    "States": "states",
-                    "Third party administrator": "third_party_administrator",
-                    "Other ": "other"
-                  }
+                  "options": [
+                    {
+                      "value": "families",
+                      "label": "Families (“the shoebox method”)"
+                    },
+                    {
+                      "value": "health_plans",
+                      "label": "Health plans"
+                    },
+                    {
+                      "value": "states",
+                      "label": "States"
+                    },
+                    {
+                      "value": "third_party_administrator",
+                      "label": "Third party administrator"
+                    },
+                    {
+                      "value": "other",
+                      "label": "Other "
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -2479,7 +2634,7 @@
                   "conditional_display": {
                     "type": "conditional_display",
                     "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
-                    "skip_text": "This section doesn\u2019t apply to your state. Skip to the next section.",
+                    "skip_text": "This section doesn’t apply to your state. Skip to the next section.",
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
@@ -2496,7 +2651,7 @@
               },
               {
                 "id": "2020-03-d-01-03",
-                "label": "How are healthcare providers notified that they shouldn\u2019t charge families once families have reached the 5% cap?",
+                "label": "How are healthcare providers notified that they shouldn’t charge families once families have reached the 5% cap?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2550,10 +2705,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -2607,10 +2768,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -2688,7 +2855,7 @@
               },
               {
                 "id": "2020-03-d-01-08",
-                "label": "Anything else you\u2019d like to add that wasn\u2019t already covered?",
+                "label": "Anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2736,11 +2903,20 @@
                 "type": "checkbox",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]": "2105(c)(3)",
-                    "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]": "2105(c)(10)",
-                    "Section 1115 Demonstration (Title XXI)": "title_xxi"
-                  }
+                  "options": [
+                    {
+                      "value": "2105(c)(3)",
+                      "label": "Purchase of Family Coverage under CHIP State Plan [2105(c)(3)]"
+                    },
+                    {
+                      "value": "2105(c)(10)",
+                      "label": "Additional Premium Assistance Option under CHIP State Plan [2105(c)(10)]"
+                    },
+                    {
+                      "value": "title_xxi",
+                      "label": "Section 1115 Demonstration (Title XXI)"
+                    }
+                  ]
                 }
               },
               {
@@ -2749,10 +2925,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -2761,11 +2943,20 @@
                     "type": "checkbox",
                     "answer": {
                       "entry": null,
-                      "options": {
-                        "Parents": "parents",
-                        "Caretaker relatives": "caretaker_relatives",
-                        "Pregnant women": "pregnant_women"
-                      }
+                      "options": [
+                        {
+                          "value": "parents",
+                          "label": "Parents"
+                        },
+                        {
+                          "value": "caretaker_relatives",
+                          "label": "Caretaker relatives"
+                        },
+                        {
+                          "value": "pregnant_women",
+                          "label": "Pregnant women"
+                        }
+                      ]
                     },
                     "context_data": {
                       "conditional_display": {
@@ -2810,10 +3001,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -2822,10 +3019,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -2834,10 +3037,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -2846,11 +3055,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no",
-                    "N/A": "na"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
+                    }
+                  ]
                 }
               },
               {
@@ -2859,15 +3077,21 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
                     "id": "2020-03-e-01-09-a",
-                    "label": "How do you track cost sharing to ensure families don\u2019t pay more than 5% of the aggregate household income in a year?",
+                    "label": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -2903,7 +3127,7 @@
               },
               {
                 "id": "2020-03-e-01-11",
-                "label": "What\u2019s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
+                "label": "What’s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2916,7 +3140,7 @@
                 "questions": [
                   {
                     "id": "2020-03-e-01-12",
-                    "label": "What\u2019s the average monthly contribution the state pays towards coverage of a child?",
+                    "label": "What’s the average monthly contribution the state pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2924,7 +3148,7 @@
                   },
                   {
                     "id": "2020-03-e-01-13",
-                    "label": "What\u2019s the average monthly contribution the employer pays towards coverage of a child?",
+                    "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2932,7 +3156,7 @@
                   },
                   {
                     "id": "2020-03-e-01-14",
-                    "label": "What\u2019s the average monthly contribution the employee pays towards coverage of a child?",
+                    "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2946,7 +3170,7 @@
                 "questions": [
                   {
                     "id": "2020-03-e-01-15",
-                    "label": "What\u2019s the average monthly contribution the state pays towards coverage of the eligible parent?",
+                    "label": "What’s the average monthly contribution the state pays towards coverage of the eligible parent?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2954,7 +3178,7 @@
                   },
                   {
                     "id": "2020-03-e-01-16",
-                    "label": "What\u2019s the average monthly contribution the employer pays towards coverage of the eligible parent?",
+                    "label": "What’s the average monthly contribution the employer pays towards coverage of the eligible parent?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2962,7 +3186,7 @@
                   },
                   {
                     "id": "2020-03-e-01-17",
-                    "label": "What\u2019s the average monthly contribution the employee pays towards coverage of the eligible parent?",
+                    "label": "What’s the average monthly contribution the employee pays towards coverage of the eligible parent?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2979,9 +3203,29 @@
                     "fieldset_type": "synthesized_table",
                     "label": "Child",
                     "fieldset_info": {
-                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "headers": [
+                        {
+                          "contents": "State"
+                        },
+                        {
+                          "contents": "Employer"
+                        },
+                        {
+                          "contents": "Employee"
+                        }
+                      ],
                       "rows": [
-                          [{"target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"}]
+                        [
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-12')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-13')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-14')].answer.entry"
+                          }
+                        ]
                       ]
                     },
                     "questions": []
@@ -2991,9 +3235,29 @@
                     "fieldset_type": "synthesized_table",
                     "label": "Parent",
                     "fieldset_info": {
-                      "headers": [{"contents": "State"}, {"contents": "Employer"}, {"contents": "Employee"}],
+                      "headers": [
+                        {
+                          "contents": "State"
+                        },
+                        {
+                          "contents": "Employer"
+                        },
+                        {
+                          "contents": "Employee"
+                        }
+                      ],
                       "rows": [
-                          [{"target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"}, {"target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"}]
+                        [
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"
+                          },
+                          {
+                            "target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"
+                          }
+                        ]
                       ]
                     },
                     "questions": []
@@ -3006,7 +3270,7 @@
                 "questions": [
                   {
                     "id": "2020-03-e-01-18",
-                    "label": "What\u2019s the range in the average monthly contribution paid by the state on behalf of a child?",
+                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -3026,7 +3290,7 @@
                   },
                   {
                     "id": "2020-03-e-01-19",
-                    "label": "What\u2019s the range in the average monthly contribution paid by the state on behalf of a parent?",
+                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -3052,7 +3316,7 @@
                 "questions": [
                   {
                     "id": "2020-03-e-01-20",
-                    "label": "What\u2019s the range in income levels for children who receive premium assistance?",
+                    "label": "What’s the range in income levels for children who receive premium assistance?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -3072,7 +3336,7 @@
                   },
                   {
                     "id": "2020-03-e-01-21",
-                    "label": "What\u2019s the range in income levels for children who receive premium assistance?",
+                    "label": "What’s the range in income levels for children who receive premium assistance?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -3102,7 +3366,7 @@
               },
               {
                 "id": "2020-03-e-01-23",
-                "label": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you\u2019ve measured this impact, how have you done so?",
+                "label": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you’ve measured this impact, how have you done so?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -3126,7 +3390,7 @@
               },
               {
                 "id": "2020-03-e-01-26",
-                "label": "Anything else you\u2019d like to add that wasn\u2019t already covered?",
+                "label": "Anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -3159,10 +3423,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -3171,10 +3441,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -3183,10 +3459,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -3203,11 +3485,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no",
-                    "N/A": "na"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3324,14 +3615,20 @@
               },
               {
                 "id": "2020-03-f-01-14",
-                "label": "Does your data for Questions 8\u201313 include cases for separate CHIP only or for Medicaid and CHIP combined? ",
+                "label": "Does your data for Questions 8–13 include cases for separate CHIP only or for Medicaid and CHIP combined? ",
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Separate CHIP only": "separate_chip_only",
-                    "Medicaid and separate CHIP combined": "medicaid_separate_chip_combined"
-                  }
+                  "options": [
+                    {
+                      "value": "separate_chip_only",
+                      "label": "Separate CHIP only"
+                    },
+                    {
+                      "value": "medicaid_separate_chip_combined",
+                      "label": "Medicaid and separate CHIP combined"
+                    }
+                  ]
                 }
               },
               {
@@ -3340,10 +3637,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3380,10 +3683,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3416,7 +3725,7 @@
               },
               {
                 "id": "2020-03-f-01-17",
-                "label": "Anything else you\u2019d like to add that wasn\u2019t already covered?",
+                "label": "Anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -3448,10 +3757,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 }
               },
               {
@@ -3460,10 +3775,16 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Yes": "yes",
-                    "No": "no"
-                  }
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
                 },
                 "context_data": {
                   "conditional_display": {
@@ -3472,8 +3793,13 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                       "values": {
-                        "interactive": [null, "no"],
-                        "noninteractive": ["no"]
+                        "interactive": [
+                          null,
+                          "no"
+                        ],
+                        "noninteractive": [
+                          "no"
+                        ]
                       }
                     }
                   }
@@ -3492,8 +3818,13 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
-                    "interactive": [null, "no"],
-                    "noninteractive": ["no"]
+                    "interactive": [
+                      null,
+                      "no"
+                    ],
+                    "noninteractive": [
+                      "no"
+                    ]
                   }
                 }
               }
@@ -3514,12 +3845,24 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Medicaid Expansion CHIP": "medicaid expansion chip",
-                    "Separate CHIP": "separate chip",
-                    "Combination CHIP": "combination chip",
-                    "Other": "other"
-                  }
+                  "options": [
+                    {
+                      "value": "medicaid expansion chip",
+                      "label": "Medicaid Expansion CHIP"
+                    },
+                    {
+                      "value": "separate chip",
+                      "label": "Separate CHIP"
+                    },
+                    {
+                      "value": "combination chip",
+                      "label": "Combination CHIP"
+                    },
+                    {
+                      "value": "other",
+                      "label": "Other"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3532,8 +3875,17 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-02-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "medicaid expansion chip", "separate chip", "combination chip"],
-                            "noninteractive": ["medicaid expansion chip", "separate chip", "combination chip"]
+                            "interactive": [
+                              null,
+                              "medicaid expansion chip",
+                              "separate chip",
+                              "combination chip"
+                            ],
+                            "noninteractive": [
+                              "medicaid expansion chip",
+                              "separate chip",
+                              "combination chip"
+                            ]
                           }
                         }
                       }
@@ -3565,11 +3917,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "CAHPS 5.0": "5.0",
-                    "CAHPS 5.0H": "5.0H",
-                    "Other": "other"
-                  }
+                  "options": [
+                    {
+                      "value": "5.0",
+                      "label": "CAHPS 5.0"
+                    },
+                    {
+                      "value": "5.0H",
+                      "label": "CAHPS 5.0H"
+                    },
+                    {
+                      "value": "other",
+                      "label": "Other"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3582,8 +3943,15 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "5.0", "5.0H"],
-                            "noninteractive": ["5.0", "5.0H"]
+                            "interactive": [
+                              null,
+                              "5.0",
+                              "5.0H"
+                            ],
+                            "noninteractive": [
+                              "5.0",
+                              "5.0H"
+                            ]
                           }
                         }
                       }
@@ -3607,11 +3975,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "None": "none",
-                    "Children with Chronic Conditions": "chronic",
-                    "Other": "other"
-                  }
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "None"
+                    },
+                    {
+                      "value": "chronic",
+                      "label": "Children with Chronic Conditions"
+                    },
+                    {
+                      "value": "other",
+                      "label": "Other"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3624,8 +4001,15 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
                           "values": {
-                            "interactive": [null, "none", "chronic"],
-                            "noninteractive": ["none", "chronic"]
+                            "interactive": [
+                              null,
+                              "none",
+                              "chronic"
+                            ],
+                            "noninteractive": [
+                              "none",
+                              "chronic"
+                            ]
                           }
                         }
                       }
@@ -3649,11 +4033,20 @@
                 "type": "radio",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "NCQA HEDIS CAHPS 5.0H": "ncqa hedis cahps 5.0h",
-                    "HRQ CAHPS": "hrq cahps",
-                    "Other": "other"
-                  }
+                  "options": [
+                    {
+                      "value": "ncqa hedis cahps 5.0h",
+                      "label": "NCQA HEDIS CAHPS 5.0H"
+                    },
+                    {
+                      "value": "hrq cahps",
+                      "label": "HRQ CAHPS"
+                    },
+                    {
+                      "value": "other",
+                      "label": "Other"
+                    }
+                  ]
                 },
                 "questions": [
                   {
@@ -3666,8 +4059,15 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
                           "values": {
-                            "interactive": [null, "ncqa hedis cahps 5.0h", "hrq cahps"],
-                            "noninteractive": ["ncqa hedis cahps 5.0h", "hrq cahps"]
+                            "interactive": [
+                              null,
+                              "ncqa hedis cahps 5.0h",
+                              "hrq cahps"
+                            ],
+                            "noninteractive": [
+                              "ncqa hedis cahps 5.0h",
+                              "hrq cahps"
+                            ]
                           }
                         }
                       }
@@ -3706,8 +4106,13 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
-                    "interactive": [null, "yes"],
-                    "noninteractive": ["yes"]
+                    "interactive": [
+                      null,
+                      "yes"
+                    ],
+                    "noninteractive": [
+                      "yes"
+                    ]
                   }
                 }
               }
@@ -3720,19 +4125,52 @@
                 "type": "checkbox",
                 "answer": {
                   "entry": null,
-                  "options": {
-                    "Entire population wasn't included in the survey": "Entire population wasn't included in the survey",
-                    "Part of the population wasn't included in the survey": "Part of the population wasn't included in the survey",
-                    "Data wasn't available due to budget constraints": "Data wasn't available due to budget constraints",
-                    "Data wasn't available due to staff constraints": "Data wasn't available due to staff constraints",
-                    "Data wasn't consistent or accurate": "Data wasn't consistent or accurate",
-                    "Data source wasn't easily accessible": "Data source wasn't easily accessible",
-                    "Data source wasn't easily accessible: requires medical records": "Data source wasn't easily accessible: requires medical records",
-                    "Data source wasn't easily accessible: requires data linkage that doesn't currently exist": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
-                    "Data wasn't collected by a provider": "Data wasn't collected by a provider",
-                    "Sample size was too small (fewer than 30)": "Sample size was too small (fewer than 30)",
-                    "Other": "other"
-                  }
+                  "options": [
+                    {
+                      "value": "Entire population wasn't included in the survey",
+                      "label": "Entire population wasn't included in the survey"
+                    },
+                    {
+                      "value": "Part of the population wasn't included in the survey",
+                      "label": "Part of the population wasn't included in the survey"
+                    },
+                    {
+                      "value": "Data wasn't available due to budget constraints",
+                      "label": "Data wasn't available due to budget constraints"
+                    },
+                    {
+                      "value": "Data wasn't available due to staff constraints",
+                      "label": "Data wasn't available due to staff constraints"
+                    },
+                    {
+                      "value": "Data wasn't consistent or accurate",
+                      "label": "Data wasn't consistent or accurate"
+                    },
+                    {
+                      "value": "Data source wasn't easily accessible",
+                      "label": "Data source wasn't easily accessible"
+                    },
+                    {
+                      "value": "Data source wasn't easily accessible: requires medical records",
+                      "label": "Data source wasn't easily accessible: requires medical records"
+                    },
+                    {
+                      "value": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
+                      "label": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist"
+                    },
+                    {
+                      "value": "Data wasn't collected by a provider",
+                      "label": "Data wasn't collected by a provider"
+                    },
+                    {
+                      "value": "Sample size was too small (fewer than 30)",
+                      "label": "Sample size was too small (fewer than 30)"
+                    },
+                    {
+                      "value": "other",
+                      "label": "Other"
+                    }
+                  ]
                 }
               },
               {

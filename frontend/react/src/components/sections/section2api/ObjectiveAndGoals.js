@@ -53,11 +53,11 @@ const addNewGoal = (newGoalId) => {
                     "label": "What type of goal is it?",
                     "type": "radio",
                     "answer": {
-                        "options": {
-                            "New goal": "goal_new",
-                            "Continuing goal": "goal_continuing",
-                            "Discontinued goal": "goal_discontinued"
-                        },
+                        "options": [
+                            { label: "New goal", value: "goal_new" },
+                            { label: "Continuing goal", value: "goal_continuing" },
+                            { label: "Discontinued goal", value: "goal_discontinued" }
+                        ],
                         "default_entry": "goal_new",
                         "entry": null
                     },
@@ -164,11 +164,11 @@ const addNewGoal = (newGoalId) => {
                     "label": "Which data source did you use?",
                     "type": "radio",
                     "answer": {
-                        "options": {
-                            "Eligibility or enrollment data": "goal_enrollment_data",
-                            "Survey data": "goal_survey_data",
-                            "Another data source": "goal_other_data"
-                        },
+                        "options": [
+                            { label: "Eligibility or enrollment data", value: "goal_enrollment_data" },
+                            { label: "Survey data", value: "goal_survey_data" },
+                            { label: "Another data source", value: "goal_other_data" }
+                        ],
                         "entry": null
                     }
                 },

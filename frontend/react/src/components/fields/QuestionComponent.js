@@ -172,12 +172,12 @@ class QuestionComponent extends Component {
                 <CMSLegend id={question.id} label={question.label} />
               </legend>
               {question.type === "radio"
-                ? Object.entries(question.answer.options).map((key, index) => {
+                ? question.answer.options.map(({ label, value }, index) => {
                     return (
                       <CMSChoice
                         name={question.id}
-                        value={key[1]}
-                        label={key[0]}
+                        value={value}
+                        label={label}
                         type={question.type}
                         answer={question.answer.entry}
                         conditional={question.conditional}
@@ -194,12 +194,12 @@ class QuestionComponent extends Component {
                 : null}
 
               {question.type === "checkbox"
-                ? Object.entries(question.answer.options).map((key, index) => {
+                ? question.answer.options.map(({ label, value }, index) => {
                     return (
                       <CMSChoice
                         name={question.id}
-                        value={key[1]}
-                        label={key[0]}
+                        value={value}
+                        label={label}
                         type={question.type}
                         answer={question.answer.entry}
                         conditional={question.conditional}

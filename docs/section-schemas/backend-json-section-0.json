@@ -35,11 +35,20 @@
                   "prepopulated": true,
                   "readonly": true,
                   "entry": null,
-                  "options": {
-                    "Combination": "combo",
-                    "Medicaid Expansion CHIP only": "medicaid_exp_chip",
-                    "Separate CHIP only": "separate_chip"
-                  }
+                  "options": [
+                    {
+                      "value": "combo",
+                      "label": "Combination"
+                    },
+                    {
+                      "value": "medicaid_exp_chip",
+                      "label": "Medicaid Expansion CHIP only"
+                    },
+                    {
+                      "value": "separate_chip",
+                      "label": "Separate CHIP only"
+                    }
+                  ]
                 }
               },
               {

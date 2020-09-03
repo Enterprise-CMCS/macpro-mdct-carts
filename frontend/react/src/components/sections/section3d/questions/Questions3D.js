@@ -41,13 +41,13 @@ class Questions3d extends Component {
                     <CMSLegend label={question.label} id={question.id} />
 
                     {question.type === "radio" || question.type === "checkbox"
-                      ? Object.entries(question.answer.options).map(
-                        (key, index) => {
+                      ? question.answer.options.map(
+                        ({ label, value }, index) => {
                           return (
                             <CMSChoice
                               name={question.id}
-                              value={key[1]}
-                              label={key[0]}
+                              value={value}
+                              label={label}
                               type={question.type}
                               answer={question.answer.entry}
                               children={question.questions}
