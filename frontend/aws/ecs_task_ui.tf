@@ -4,12 +4,12 @@ locals {
 
 # Number of container instances to spawn per resource. Default is 1. 
 locals {
-  dev_ui = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
-  master_ui = terraform.workspace == "master" ? 1 : 0
+  dev_ui     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
+  master_ui  = terraform.workspace == "master" ? 1 : 0
   staging_ui = terraform.workspace == "staging" ? 1 : 0
-  prod_ui = terraform.workspace == "prod" ? 3 : 0
+  prod_ui    = terraform.workspace == "prod" ? 3 : 0
 
-  count_ui = local.dev_ui + local.master_ui + local.staging_ui + local.prod_ui
+  count_ui         = local.dev_ui + local.master_ui + local.staging_ui + local.prod_ui
   desired_count_ui = local.count_ui > 0 ? local.count_ui : 1
 }
 

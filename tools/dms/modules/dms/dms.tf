@@ -3,8 +3,8 @@ data "aws_ssm_parameter" "postgres_security_group" {
 }
 
 resource "aws_security_group" "replication_instance" {
-  name        = "replication_instance-${terraform.workspace}"
-  vpc_id      = var.vpc_id
+  name   = "replication_instance-${terraform.workspace}"
+  vpc_id = var.vpc_id
 }
 
 # # Outbound, for target (postgres)
