@@ -6,6 +6,6 @@ for f in $(ls *-section-*.json)
 do
   echo "Checking ${f}"
   jsonschema -i "$f" "./backend-section.schema.json"
-  python generate_ids.py -i "$f" -c
+  python validate_ids.py -i "$f" -c
   echo "✓ ${f} is fine"
 done
