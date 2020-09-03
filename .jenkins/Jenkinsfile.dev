@@ -14,6 +14,7 @@ pipeline {
   environment {
     BUILD_TAG = resolveBuildTag()
     VPC_NAME = "macpro-dev"
+    CONTAINER_COUNT = 1
   }
   stages {
     stage("Prep Agent") {
@@ -45,7 +46,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
           }
@@ -53,7 +55,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
           }
@@ -108,7 +111,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
           }
@@ -133,7 +137,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
           }
@@ -180,7 +185,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
             jenkinsUtils.runInspecScan(
@@ -212,7 +218,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
           }
@@ -220,7 +227,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "container_count": env.CONTAINER_COUNT
               ]
             )
           }
