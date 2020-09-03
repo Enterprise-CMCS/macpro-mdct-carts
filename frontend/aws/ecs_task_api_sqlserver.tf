@@ -106,7 +106,7 @@ resource "aws_ecs_service" "api_sqlserver" {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count = 3
+  desired_count = var.container_count
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
     security_groups = [aws_security_group.api_sqlserver.id]

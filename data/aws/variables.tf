@@ -10,3 +10,7 @@ variable "postgres_user" {
 variable "postgres_db" {
   default = "postgres"
 }
+
+variable "container_count" {
+  default = 1
+}

@@ -10,3 +10,7 @@ variable "acm_certificate_domain_api_postgres" {
 variable "acm_certificate_domain_api_sqlserver" {
   default = ""
 }
+
+variable "container_count" {
+  default = 1
+}
