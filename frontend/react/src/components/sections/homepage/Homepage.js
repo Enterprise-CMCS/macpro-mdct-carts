@@ -34,7 +34,7 @@ class Homepage extends Component {
                   name="2020"
                   lastEditedTime="1:32pm"
                   lastEditedDate="9/21/20"
-                  link1URL="/basic-info"
+                  link1URL="/sections/2020/00"
                   link1Text="Edit"
                   link2URL="#"
                   link2Text="View only"
