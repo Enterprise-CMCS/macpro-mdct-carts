@@ -4,12 +4,12 @@ locals {
 
 # Number of container instances to spawn per resource. Default is 1. 
 locals {
-  dev_postgres = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
-  master_postgres = terraform.workspace == "master" ? 1 : 0
+  dev_postgres     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
+  master_postgres  = terraform.workspace == "master" ? 1 : 0
   staging_postgres = terraform.workspace == "staging" ? 1 : 0
-  prod_postgres = terraform.workspace == "prod" ? 3 : 0
-  
-  count_postgres = local.dev_postgres + local.master_postgres + local.staging_postgres + local.prod_postgres
+  prod_postgres    = terraform.workspace == "prod" ? 3 : 0
+
+  count_postgres         = local.dev_postgres + local.master_postgres + local.staging_postgres + local.prod_postgres
   desired_count_postgres = local.count_postgres > 0 ? local.count_postgres : 1
 }
 

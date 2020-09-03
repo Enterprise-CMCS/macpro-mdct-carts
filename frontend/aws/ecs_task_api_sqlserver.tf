@@ -4,12 +4,12 @@ locals {
 
 # Number of container instances to spawn per resource. Default is 1. 
 locals {
-  dev_sqlserver = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
-  master_sqlserver = terraform.workspace == "master" ? 1 : 0
+  dev_sqlserver     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
+  master_sqlserver  = terraform.workspace == "master" ? 1 : 0
   staging_sqlserver = terraform.workspace == "staging" ? 1 : 0
-  prod_sqlserver = terraform.workspace == "prod" ? 3 : 0
-  
-  count_sqlserver = local.dev_sqlserver + local.master_sqlserver + local.staging_sqlserver + local.prod_sqlserver
+  prod_sqlserver    = terraform.workspace == "prod" ? 3 : 0
+
+  count_sqlserver         = local.dev_sqlserver + local.master_sqlserver + local.staging_sqlserver + local.prod_sqlserver
   desired_count_sqlserver = local.count_sqlserver > 0 ? local.count_sqlserver : 1
 }
 
