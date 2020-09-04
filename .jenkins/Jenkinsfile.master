@@ -194,7 +194,7 @@ pipeline {
     failure {
       script {
         if (env.SLACK_CREDENTIAL_NAME != null && env.SLACK_CHANNEL_NAME != null && env.SLACK_TEAM_DOMAIN_NAME != null ){
-          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'danger', message: ":X: Failure.     <${env.BUILD_URL} |${JOB_BASE_NAME} #${env.BUILD_NUMBER}> has failed.  The build is broken."
+          slackSend channel: env.SLACK_CHANNEL_NAME, teamDomain: env.SLACK_TEAM_DOMAIN_NAME, tokenCredentialId: env.SLACK_CREDENTIAL_NAME, color: 'danger', message: ":kaboom: Failure.     <${env.BUILD_URL} |${JOB_BASE_NAME} #${env.BUILD_NUMBER}> has failed.  The build is broken."
         }
       }
     }
