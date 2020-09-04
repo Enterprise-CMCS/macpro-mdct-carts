@@ -2,6 +2,17 @@ locals {
   endpoint_ui = var.acm_certificate_domain_ui == "" ? "http://${aws_alb.ui.dns_name}" : "https://${aws_alb.ui.dns_name}"
 }
 
+# Number of container instances to spawn per resource. Default is 1. 
+locals {
+  dev_ui     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
+  master_ui  = terraform.workspace == "master" ? 1 : 0
+  staging_ui = terraform.workspace == "staging" ? 1 : 0
+  prod_ui    = terraform.workspace == "prod" ? 3 : 0
+
+  count_ui         = local.dev_ui + local.master_ui + local.staging_ui + local.prod_ui
+  desired_count_ui = local.count_ui > 0 ? local.count_ui : 1
+}
+
 data "aws_ecr_repository" "react" {
   name = "react"
 }
@@ -52,7 +63,7 @@ resource "aws_ecs_service" "ui" {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count = 3
+  desired_count = local.desired_count_ui
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
     security_groups = [aws_security_group.ui.id]
