@@ -89,111 +89,97 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-01-a-01-02-a",
-                    "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
-                    "type": "radio",
-                    "answer": {
-                      "entry": null,
-                      "options": [
-                        {
-                          "value": "yes",
-                          "label": "Yes"
+                    "type": "fieldset",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
+                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
+                          "values": {
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-01-a-01-02-a",
+                        "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
+                        "type": "radio",
+                        "answer": {
+                          "entry": null,
+                          "options": [
+                            {
+                              "value": "yes",
+                              "label": "Yes"
+                            },
+                            {
+                              "value": "no",
+                              "label": "No"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "2020-01-a-01-02-b",
+                        "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                        "type": "ranges",
+                        "answer": {
+                          "entry": null,
+                          "header": "Premium fees",
+                          "range_categories": [
+                            [
+                              "FPL starts at",
+                              "FPL ends at"
+                            ],
+                            [
+                              "Premium fee starts at",
+                              "Premium fee ends at"
+                            ]
+                          ],
+                          "range_type": [
+                            "percentage",
+                            "money"
+                          ],
+                          "entry_min": 1,
+                          "entry_max": 0
+                        }
+                      },
+                      {
+                        "id": "2020-01-a-01-02-c",
+                        "label": "How much is your premium fee?",
+                        "type": "money",
+                        "answer": {
+                          "entry": null
                         },
-                        {
-                          "value": "no",
-                          "label": "No"
-                        }
-                      ]
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-01-a-01-02-a is yes or unanswered; noninteractive: hide if that's yes.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-01-a-01-02-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "yes"
+                                ],
+                                "noninteractive": [
+                                  "yes"
+                                ]
+                              }
+                            }
                           }
                         }
                       }
-                    }
-                  },
-                  {
-                    "id": "2020-01-a-01-02-b",
-                    "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
-                    "type": "ranges",
-                    "answer": {
-                      "entry": null,
-                      "header": "Premium fees",
-                      "range_categories": [
-                        [
-                          "FPL starts at",
-                          "FPL ends at"
-                        ],
-                        [
-                          "Premium fee starts at",
-                          "Premium fee ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage",
-                        "money"
-                      ],
-                      "entry_min": 1,
-                      "entry_max": 0
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
-                        "skip_text": "This question doesn’t apply to your state since you answered NO to Question 2.",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "id": "2020-01-a-01-02-c",
-                    "label": "How much is your premium fee?",
-                    "type": "money",
-                    "answer": {
-                      "entry": null
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-01-a-01-02-a is yes or unanswered; noninteractive: hide if that's yes.",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-01-a-01-02-a')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "yes"
-                            ],
-                            "noninteractive": [
-                              "yes"
-                            ]
-                          }
-                        }
-                      }
-                    }
+                    ]
                   }
                 ]
               },
