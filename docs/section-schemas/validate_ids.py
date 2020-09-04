@@ -173,7 +173,7 @@ def main(args: List[str] = None) -> None:
     for i, _ in enumerate(subsections):
         ideal = "-".join([root_id, lettermarkers[i]])
         if not _.value == ideal:
-            import pdb; pdb.set_trace()
+            raise Exception
 
         assert _.value == ideal
         assert _.context.value["id"] == ideal
@@ -264,7 +264,7 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
         if question.value.get("id"):
             if question.value.get("id") != this_marker:
                 print(question.value["id"], this_marker)
-                import pdb; pdb.set_trace()
+                # import pdb; pdb.set_trace()
 
         subqs_expr = parse("questions[*]")
         subqs = subqs_expr.find(question.value)
