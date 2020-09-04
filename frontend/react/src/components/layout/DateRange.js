@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
-import { faGrinTongueSquint } from "@fortawesome/free-solid-svg-icons";
 
 class DateRange extends Component {
   constructor(props) {
