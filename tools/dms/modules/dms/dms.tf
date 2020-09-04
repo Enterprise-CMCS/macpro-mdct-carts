@@ -66,18 +66,41 @@ resource "aws_dms_replication_instance" "replication-instance" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.replication_instance.id
+    aws_security_group.replication_instance.id,
+    "sg-d67ae9ac",
+    "sg-94c3c7ef"
   ]
 }
 
-# Create a new source endpoint
-resource "aws_dms_endpoint" "source" {
-  endpoint_id                 = "dms-source-endpoint-${var.application}-${terraform.workspace}"
+# Create new source endpoints
+resource "aws_dms_endpoint" "source-carts" {
+  endpoint_id                 = "dms-source-endpoint-${var.application}-${terraform.workspace}-carts"
   endpoint_type               = "source"
   engine_name                 = "sqlserver"
   extra_connection_attributes = ""
   server_name                 = var.source_database_host
-  database_name               = var.source_database_name
+  database_name               = var.source_database_name_carts
+  username                    = var.source_database_username
+  password                    = var.source_database_password
+  port                        = var.source_database_port
+  ssl_mode                    = "none"
+
+  tags = {
+    Name        = "${var.team_name} Source Endpoint"
+    Description = "Managed by Terraform"
+    Application = var.application
+    Owner       = var.team_name
+    Env         = var.environment-name
+  }
+}
+
+resource "aws_dms_endpoint" "source-seds" {
+  endpoint_id                 = "dms-source-endpoint-${var.application}-${terraform.workspace}-seds"
+  endpoint_type               = "source"
+  engine_name                 = "sqlserver"
+  extra_connection_attributes = ""
+  server_name                 = var.source_database_host
+  database_name               = var.source_database_name_seds
   username                    = var.source_database_username
   password                    = var.source_database_password
   port                        = var.source_database_port
@@ -114,24 +137,49 @@ resource "aws_dms_endpoint" "target" {
   }
 }
 
-data "local_file" "replication-table-mappings" {
-  filename = "${path.module}/resources/table-mappings.json"
+data "local_file" "replication-table-mappings-carts" {
+  filename = "${path.module}/resources/table-mappings-carts.json"
+}
+
+data "local_file" "replication-table-mappings-seds" {
+  filename = "${path.module}/resources/table-mappings-seds.json"
 }
 
 data "local_file" "replication-tasks-settings" {
   filename = "${path.module}/resources/settings.json"
 }
 
-# Create a new replication task
-resource "aws_dms_replication_task" "replication-task" {
+# Create new replication tasks
+resource "aws_dms_replication_task" "replication-task-carts" {
   migration_type           = "full-load"
   replication_instance_arn = aws_dms_replication_instance.replication-instance.replication_instance_arn
-  replication_task_id      = "dms-replication-task-${var.application}-${terraform.workspace}"
+  replication_task_id      = "dms-replication-task-${var.application}-${terraform.workspace}-carts"
 
-  source_endpoint_arn = aws_dms_endpoint.source.endpoint_arn
+  source_endpoint_arn = aws_dms_endpoint.source-carts.endpoint_arn
   target_endpoint_arn = aws_dms_endpoint.target.endpoint_arn
 
-  table_mappings            = data.local_file.replication-table-mappings.content
+  table_mappings            = data.local_file.replication-table-mappings-carts.content
+  replication_task_settings = data.local_file.replication-tasks-settings.content
+
+  tags = {
+    Name        = "${var.team_name} Replication Task"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+
+# Create a new replication task
+resource "aws_dms_replication_task" "replication-task-seds" {
+  migration_type           = "full-load"
+  replication_instance_arn = aws_dms_replication_instance.replication-instance.replication_instance_arn
+  replication_task_id      = "dms-replication-task-${var.application}-${terraform.workspace}-seds"
+
+  source_endpoint_arn = aws_dms_endpoint.source-seds.endpoint_arn
+  target_endpoint_arn = aws_dms_endpoint.target.endpoint_arn
+
+  table_mappings            = data.local_file.replication-table-mappings-seds.content
   replication_task_settings = data.local_file.replication-tasks-settings.content
 
   tags = {
