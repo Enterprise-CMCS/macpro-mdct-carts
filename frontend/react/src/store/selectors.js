@@ -37,9 +37,13 @@ export const selectPartTitle = (state, partId) => {
 };
 
 export const selectQuestion = (state, id) => {
-  const jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@.id=='${id}')]`;
+  let jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@.id=='${id}')]`;
+  if (id.substring(0, 15) === "2020-02-b-01-01" && id.length > 21) {
+    jp = `$..[*].contents.section.subsections[*].parts[*].questions[*].questions[*].questions[*]..questions[?(@.id=='${id}')]`;
+  }
   const questions = jsonpath.query(state, jp);
   if (questions.length) {
+    console.log("selectQuestion", questions[0]);
     return questions[0];
   }
 

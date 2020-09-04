@@ -6,7 +6,7 @@ import { TextField, ChoiceList } from "@cmsgov/design-system-core";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
-import { selectQuestionsForPart } from "../../store/selectors";
+import { selectQuestionsForPart, selectQuestion } from "../../store/selectors";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class QuestionComponent extends Component {
     this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
     this.validatePhone = this.validatePhone.bind(this);
     this.handleCheckboxInput = this.handleCheckboxInput.bind(this);
+    this.buildSynthesizedValue = this.buildSynthesizedValue.bind(this);
   }
 
   validatePercentage(evt) {
@@ -152,6 +153,19 @@ class QuestionComponent extends Component {
     this.props.setAnswer(event.target.name, event.target.files);
   };
 
+  buildSynthesizedValue = (question) => {
+    const numerator = selectQuestion(
+      this.props.data,
+      question.fieldset_info.targets[0].split("'")[1]
+    );
+    const denominator = selectQuestion(
+      this.props.data,
+      question.fieldset_info.targets[1].split("'")[1]
+    );
+    console.log("numerator", numerator);
+    console.log("denominator", denominator);
+    return "";
+  };
   render() {
     return (
       <>
@@ -164,45 +178,45 @@ class QuestionComponent extends Component {
               </legend>
               {question.type === "radio"
                 ? question.answer.options.map(({ label, value }, index) => {
-                  return (
-                    <CMSChoice
-                      name={question.id}
-                      value={value}
-                      label={label}
-                      type={question.type}
-                      answer={question.answer.entry}
-                      conditional={question.conditional}
-                      children={question.questions}
-                      valueFromParent={this.state[question.id]}
-                      onChange={this.handleChangeArray}
-                      key={index}
-                      setAnswer={this.props.setAnswer}
-                      disabled={question.answer.readonly}
-                      disabledFromParent={question.answer.readonly}
-                    />
-                  );
-                })
+                    return (
+                      <CMSChoice
+                        name={question.id}
+                        value={value}
+                        label={label}
+                        type={question.type}
+                        answer={question.answer.entry}
+                        conditional={question.conditional}
+                        children={question.questions}
+                        valueFromParent={this.state[question.id]}
+                        onChange={this.handleChangeArray}
+                        key={index}
+                        setAnswer={this.props.setAnswer}
+                        disabled={question.answer.readonly}
+                        disabledFromParent={question.answer.readonly}
+                      />
+                    );
+                  })
                 : null}
 
               {question.type === "checkbox"
                 ? question.answer.options.map(({ label, value }, index) => {
-                  return (
-                    <CMSChoice
-                      name={question.id}
-                      value={value}
-                      label={label}
-                      type={question.type}
-                      answer={question.answer.entry}
-                      conditional={question.conditional}
-                      children={question.questions}
-                      valueFromParent={this.state[question.id]}
-                      onChange={this.handleCheckboxInput}
-                      key={index}
-                      setAnswer={this.props.setAnswer}
-                      disabled={question.answer.readonly}
-                    />
-                  );
-                })
+                    return (
+                      <CMSChoice
+                        name={question.id}
+                        value={value}
+                        label={label}
+                        type={question.type}
+                        answer={question.answer.entry}
+                        conditional={question.conditional}
+                        children={question.questions}
+                        valueFromParent={this.state[question.id]}
+                        onChange={this.handleCheckboxInput}
+                        key={index}
+                        setAnswer={this.props.setAnswer}
+                        disabled={question.answer.readonly}
+                      />
+                    );
+                  })
                 : null}
 
               {/* If textarea */}
@@ -268,21 +282,21 @@ class QuestionComponent extends Component {
 
               {/* If large textarea */}
               {question.type === "text_multiline" ||
-                question.type === "mailing_address" ? (
-                  <div>
-                    <TextField
-                      className="ds-c-input"
-                      label=""
-                      multiline
-                      name={question.id}
-                      onChange={this.handleChange}
-                      rows={6}
-                      type="text"
-                      value={question.answer.entry || ""}
-                      disabled={question.answer.readonly}
-                    />
-                  </div>
-                ) : null}
+              question.type === "mailing_address" ? (
+                <div>
+                  <TextField
+                    className="ds-c-input"
+                    label=""
+                    multiline
+                    name={question.id}
+                    onChange={this.handleChange}
+                    rows={6}
+                    type="text"
+                    value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
+                  />
+                </div>
+              ) : null}
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
@@ -415,15 +429,15 @@ class QuestionComponent extends Component {
               ) : null}
               {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
               {question.questions &&
-                question.type !== "fieldset" &&
-                question.type !== "radio" &&
-                question.type !== "checkbox" ? (
-                  <QuestionComponent
-                    subquestion={true}
-                    setAnswer={this.props.setAnswer}
-                    data={question.questions} //Array of subquestions to map through
-                  />
-                ) : null}
+              question.type !== "fieldset" &&
+              question.type !== "radio" &&
+              question.type !== "checkbox" ? (
+                <QuestionComponent
+                  subquestion={true}
+                  setAnswer={this.props.setAnswer}
+                  data={question.questions} //Array of subquestions to map through
+                />
+              ) : null}
 
               {question.questions && question.type === "fieldset" ? (
                 <div className="cmsfieldset">
@@ -438,55 +452,62 @@ class QuestionComponent extends Component {
               ) : null}
 
               {question.type === "fieldset" &&
-                question.fieldset_type === "noninteractive_table"
-                ? Object.entries(question.fieldset_info).map((value) => {
-                  return (
-                    <table className="ds-c-table" width="100%">
-                      {value[0] === "headers" ? (
-                        <thead>
-                          <tr>
-                            {question.fieldset_info.headers.map(function (
-                              value
-                            ) {
-                              return (
-                                <th
-                                  width={`${
-                                    100 /
-                                    question.fieldset_info.headers.length
-                                    }%`}
-                                  name={`${value}`}
-                                >
-                                  {value}
-                                </th>
-                              );
-                            })}
-                          </tr>
-                        </thead>
-                      ) : null}
-                      {value[0] === "rows"
-                        ? question.fieldset_info.rows.map((value) => {
+              question.fieldset_type === "noninteractive_table" ? (
+                <table className="ds-c-table" width="100%">
+                  <thead>
+                    <tr>
+                      {question.fieldset_info.headers.map(function (value) {
+                        return (
+                          <th
+                            width={`${
+                              100 / question.fieldset_info.headers.length
+                            }%`}
+                            name={`${value}`}
+                          >
+                            {value}
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  {question.fieldset_info.rows.map((value) => {
+                    return (
+                      <tr>
+                        {value.map((value) => {
                           return (
-                            <tr>
-                              {value.map((value) => {
-                                return (
-                                  <td
-                                    width={`${
-                                      100 /
-                                      question.fieldset_info.headers.length
-                                      }%`}
-                                  >
-                                    {value}
-                                  </td>
-                                );
-                              })}
-                            </tr>
+                            <td
+                              width={`${
+                                100 / question.fieldset_info.headers.length
+                              }%`}
+                            >
+                              {value}
+                            </td>
                           );
-                        })
-                        : null}
-                    </table>
-                  );
-                })
-                : null}
+                        })}
+                      </tr>
+                    );
+                  })}
+                </table>
+              ) : null}
+
+              {question.type === "fieldset" &&
+              question.fieldset_type === "synthesized_value" ? (
+                <>
+                  {console.log(
+                    "selectQuestion",
+                    selectQuestion(
+                      this.props.data,
+                      question.fieldset_info.targets[0].split("'")[1]
+                    )
+                  )}
+                  <TextField
+                    name={question.id}
+                    className="ds-c-input"
+                    label="Calculated field from #"
+                    value={this.buildSynthesizedValue(question)}
+                  />
+                </>
+              ) : null}
             </fieldset>
           </div>
         ))}

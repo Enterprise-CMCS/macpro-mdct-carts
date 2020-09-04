@@ -6,7 +6,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../../layout/PageInfo";
 import FormNavigation from "../../layout/FormNavigation";
 import FormActions from "../../layout/FormActions";
-import Data from "./backend-json-section-2.json";
+import {
+  selectSectionByOrdinal,
+  generateSubsectionLabel,
+} from "../../../store/formData";
 
 import {
   Button as button,
@@ -37,24 +40,31 @@ class Section2BApi extends Component {
   }
 
   render() {
-    const tempData = Data.section.subsections[1];
-    return (
+    // This variable narrows it down to a subsection
+    const subsectionData = this.props.Data
+      ? this.props.Data.subsections[1] // 2B JSON Data
+      : null;
+
+    const sectionTitle = this.props.Data
+      ? generateSubsectionLabel(subsectionData.id) // Section 2b title
+      : null;
+    console.log("SubSec", subsectionData);
+    return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
         <div className="main">
           <PageInfo />
           <div className="print-only">
-            <h3>{Data.section.title}</h3>
+            <h3>{sectionTitle}</h3>
           </div>
           <div className="section-content">
             <Tabs>
-              <TabPanel id="tab-form" tab={`Section 2B:${tempData.title}`}>
-                {console.log(
-                  "array of objective",
-                  Data.section.subsections[1].parts[0].questions[0].questions
-                )}
+              <TabPanel
+                id="tab-form"
+                tab={`Section 2B:${subsectionData.title}`}
+              >
                 <Questions2BApi
                   previousEntry="false"
-                  subsectionB={Data.section.subsections[1]} //[0].questions[0].questions
+                  subsectionB={subsectionData} //[0].questions[0].questions
                 />
               </TabPanel>
 
@@ -64,7 +74,7 @@ class Section2BApi extends Component {
               >
                 <div className="print-only ly_header">
                   <PageInfo />
-                  <h3>{Data.section.title}</h3>
+                  <h3>{sectionTitle}</h3>
                 </div>
                 <div disabled>
                   {
@@ -80,11 +90,12 @@ class Section2BApi extends Component {
           </div>
         </div>
       </div>
-    );
+    ) : null;
   }
 }
 
 const mapStateToProps = (state) => ({
+  Data: selectSectionByOrdinal(state, 2),
   name: state.stateUser.name,
   programType: state.stateUser.programType,
   year: state.global.formYear,
