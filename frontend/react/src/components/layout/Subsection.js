@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectSubsectionTitleAndPartIDs } from "../../../store/formData";
+import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 import Part from "./Part";
 
 const Subsection = ({ partIds, subsectionId, title }) => {

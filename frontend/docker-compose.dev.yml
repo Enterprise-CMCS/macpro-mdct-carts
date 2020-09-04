@@ -20,8 +20,9 @@ services:
     networks:
       - data_net
     environment:
-      - API_URL=http://localhost:8000 # This is how a browser would call the api
       - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=3000
+      - API_POSTGRES_URL=http://localhost:8000
     stdin_open: true
     volumes:
       - ./react:/app

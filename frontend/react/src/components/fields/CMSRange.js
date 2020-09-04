@@ -6,13 +6,8 @@ class CMSRange extends Component {
     super(props);
     this.state = {};
     this.calculateRanges = this.calculateRanges.bind(this);
-    this.changeText = this.changeText.bind(this);
   }
 
-  // Allows updating text when value is set to state
-  changeText(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
 
   calculateRanges(evt) {
     // Strip value of all non-numeric chars
@@ -36,6 +31,8 @@ class CMSRange extends Component {
       rangeError: willError,
       [`${evt.target.name}`]: numericValue,
     });
+
+    this.props.onChange([`${evt.target.name}`, numericValue]);
   }
 
   render() {
@@ -54,10 +51,9 @@ class CMSRange extends Component {
                 inputMode={this.props.item.answer.range_type[this.props.index]}
                 pattern="[0-9]*"
                 type="text"
-                name="rangeStartsAt"
+                name={`range-${[this.props.counter]}-${[this.props.index]}-a`}
                 inputRef={(start) => (this.start = start)}
-                onBlur={this.calculateRanges}
-                onChange={this.changeText}
+                onChange={this.calculateRanges}
                 value={this.state.rangeStartsAt}
               />
               <div
@@ -76,10 +72,9 @@ class CMSRange extends Component {
                 inputMode={this.props.item.answer.range_type[this.props.index]}
                 pattern="[0-9]*"
                 type="text"
-                name="rangeEndsAt"
+                name={`range-${[this.props.counter]}-${[this.props.index]}-b`}
                 inputRef={(end) => (this.end = end)}
-                onBlur={this.calculateRanges}
-                onChange={this.changeText}
+                onChange={this.calculateRanges}
                 value={this.state.rangeEndsAt}
               />
               <div
@@ -91,7 +86,7 @@ class CMSRange extends Component {
           </div>
           {this.state.rangeError ? (
             <div className="ds-l-row cmsrange-error error">
-              End percent cannot be lower than start percent
+              End value cannot be lower than start value
             </div>
           ) : null}
         </div>

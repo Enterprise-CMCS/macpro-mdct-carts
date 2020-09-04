@@ -379,10 +379,10 @@ The ``id`` for the first question is ``2020-01-a-01-01``, and it allows for answ
         "text": "Does your program charge an enrollment fee?",
         "type": "radio",
         "answer": {
-            "options": {
-                "Yes": "yes",
-                "No": "no"
-            },
+            "options": [
+                { "label": "Yes", "value": "yes" },
+                { "label": "No", "value": "no" }
+            ],
             "entry": null
         }
 
@@ -828,33 +828,33 @@ A small text entry field.
 A set of choices, only one of which can be chosen. Its ``entry`` value should be represented as a string.
 
 ``options``
-    Dictionary.
+    Array of available choices.
 
-    A set of key-value pairs where the key is the user-facing label and the value is the data representation.
+    Each choice is an object with a user-facing label in the `label` property and the the data representation in the `value` property.
 
-    For example, a yes/no radio question would have this as its ``options``: ``{"Yes": "yes", "No": "no"}``.
+    For example, a yes/no radio question would have this as its ``options``: ``[{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no"}]``.
 
 ``checkbox``
 ++++++++++++
 A set of choices, multiples of which can be chosen. Its ``entry`` value should be represented as an array of strings, where those strings are values from the ``options`` property.
 
 ``options``
-    Dictionary.
+    Array of available choices.
 
-    A set of key-value pairs where the key is the user-facing label and the value is the data representation.
+    Each choice is an object with a user-facing label in the `label` property and the the data representation in the `value` property.
 
     For example, a checkbox asking which characteristics of ideas apply would have this ``options`` property::
 
-        {
-            "Colorless": "colorless",
-            "Green": "green",
-            "Sleeping": "sleeping"
-        }
+        [
+            { "label": "Colorless", "value": "colorless" },
+            { "label": "Green", "value": "green" },
+            { "label": "Sleeping", "value": "sleeping" }
+        ]
 
 
 ``checkbox_flag``
 +++++++++++++++++
-A single checkbox; if checked, its value is ``True``, otherwise it's ``null`` or ``False``. Its ``answer.options`` property object should always have a ``type`` of ``boolean``,
+A single checkbox; if checked, its value is ``True``, otherwise it's ``null`` or ``False``. It does not have an ``answer.options`` property.
 
 ``money``
 +++++++++

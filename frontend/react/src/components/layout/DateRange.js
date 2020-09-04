@@ -56,7 +56,7 @@ class DateRange extends Component {
         chronologyError = true;
       } else {
         chronologyError = false;
-        this.props.sectionContext([this.props.question.id, payload]);
+        this.props.onChange([this.props.question.id, payload]);
       }
 
       this.setState({

@@ -2,6 +2,17 @@ locals {
   endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
 }
 
+# Number of container instances to spawn per resource. Default is 1. 
+locals {
+  dev_postgres     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
+  master_postgres  = terraform.workspace == "master" ? 1 : 0
+  staging_postgres = terraform.workspace == "staging" ? 1 : 0
+  prod_postgres    = terraform.workspace == "prod" ? 3 : 0
+
+  count_postgres         = local.dev_postgres + local.master_postgres + local.staging_postgres + local.prod_postgres
+  desired_count_postgres = local.count_postgres > 0 ? local.count_postgres : 1
+}
+
 data "aws_ssm_parameter" "postgres_user" {
   name = "/${terraform.workspace}/postgres_user"
 }
@@ -93,7 +104,7 @@ resource "aws_ecs_service" "api_postgres" {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count = 3
+  desired_count = local.desired_count_postgres
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
     security_groups = [aws_security_group.api_postgres.id]

@@ -11,6 +11,6 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py makemigrations && python manage.py migrate && python manage.py idempotent_fixtures
+python manage.py makemigrations && python manage.py migrate && python manage.py idempotent_fixtures --overwrite
 
 exec "$@"

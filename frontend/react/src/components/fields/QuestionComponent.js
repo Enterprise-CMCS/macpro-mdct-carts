@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
+import CMSLegend from "./CMSLegend";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
-
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
+import { selectQuestionsForPart } from "../../store/selectors";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class QuestionComponent extends Component {
     this.handleIntegerChange = this.handleIntegerChange.bind(this);
     this.updateLocalStateOnly = this.updateLocalStateOnly.bind(this);
     this.validatePhone = this.validatePhone.bind(this);
+    this.handleCheckboxInput = this.handleCheckboxInput.bind(this);
   }
 
   validatePercentage(evt) {
@@ -35,6 +37,7 @@ class QuestionComponent extends Component {
         error = "Please enter only numbers and decimals";
       } else {
         error = null;
+        this.props.setAnswer(evt.target.name, evt.target.value);
       }
     }
 
@@ -44,21 +47,28 @@ class QuestionComponent extends Component {
     });
   }
 
-  // For input that will be validated onBlur but need to update state onChange
+  // For input that will be validated onBlur but needs to update state onChange
   updateLocalStateOnly(evt) {
     this.setState({
       [evt.target.name]: evt.target.value ? evt.target.value : null,
-      [evt.target.name + "Mod"]: true,
     });
   }
 
   handleIntegerChange(evt) {
-    const validNumberRegex = RegExp("^(?:d{1,3}(?:,d{3})*|d+)(?:.d+)?$");
+    const validNumberRegex = RegExp(/^(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?$/);
+
     if (evt.target.value.length > 0) {
       if (validNumberRegex.test(evt.target.value)) {
+        let formattedNum = evt.target.value.replace(/[ ,]/g, "");
+        this.props.setAnswer(evt.target.name, formattedNum);
+        this.setState({
+          [evt.target.name]: evt.target.value ? evt.target.value : null,
+
+          [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
+        });
       } else {
         this.setState({
-          [evt.target.name + "Err"]: !validNumberRegex.test(evt.target.value),
+          [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
         });
       }
     }
@@ -70,10 +80,8 @@ class QuestionComponent extends Component {
     );
     if (evt.target.value.length > 0) {
       if (validEmailRegex.test(evt.target.value)) {
-        this.props.sectionContext([evt.target.name, evt.target.value]);
+        this.props.setAnswer(evt.target.name, evt.target.value);
         this.setState({
-          [evt.target.name]: evt.target.value ? evt.target.value : null,
-          [evt.target.name + "Mod"]: true,
           [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
         });
       } else {
@@ -94,6 +102,8 @@ class QuestionComponent extends Component {
       errorMessage = "Please limit to 10 digits";
     } else {
       errorMessage = null;
+
+      this.props.setAnswer(evt.target.name, digits);
     }
 
     this.setState({
@@ -101,16 +111,37 @@ class QuestionComponent extends Component {
     });
   }
 
+  handleCheckboxInput(evtArr) {
+    // An array of the checkbox items already selected, or an empty array
+    let selections = this.state[evtArr[0]] ?? [];
+
+    // If the current choice is already in state, find it's index in that array
+    // returns -1 if the choice isnt in the selections array
+    let alreadySelected = selections.indexOf(evtArr[1]);
+
+    // if its already there and it is being selected again, remove it
+    if (alreadySelected !== -1) {
+      selections.splice(alreadySelected, 1);
+    } else {
+      // if its not in the array of selections, add it
+      selections.push(evtArr[1]);
+    }
+
+    this.setState({ [evtArr[0]]: [...selections] });
+
+    this.props.setAnswer([evtArr[0]], selections);
+  }
+
   handleCheckboxFlag(evt) {
-    this.props.sectionContext([evt.target.name, evt.target.checked]);
+    this.props.setAnswer(evt.target.name, evt.target.checked);
   }
 
   handleChange(evt) {
-    this.props.setAnswer(evt.target.name, evt);
+    this.props.setAnswer(evt.target.name, evt.target.value);
   }
 
   handleChangeArray(evtArray) {
-    this.props.sectionContext([evtArray[0], evtArray[1]]);
+    this.props.setAnswer(evtArray[0], evtArray[1]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
@@ -118,9 +149,7 @@ class QuestionComponent extends Component {
   }
 
   handleFileUpload = (event) => {
-    this.setState({
-      selectedFiles: event.target.files,
-    });
+    this.props.setAnswer(event.target.name, event.target.files);
   };
 
   render() {
@@ -131,33 +160,49 @@ class QuestionComponent extends Component {
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
               <legend className="ds-c-label">
-                {question.id
-                  ? typeof question.id.substring(question.id.length - 2) ===
-                    Number
-                    ? parseInt(question.id.substring(question.id.length - 2))
-                    : question.id.substring(question.id.length - 1) +
-                      ". " +
-                      question.label
-                  : null}
+                <CMSLegend id={question.id} label={question.label} />
               </legend>
-              {question.type === "radio" || question.type === "checkbox"
-                ? Object.entries(question.answer.options).map((key, index) => {
-                    return (
-                      <CMSChoice
-                        name={question.id}
-                        value={key[1]}
-                        label={key[0]}
-                        type={question.type}
-                        answer={question.answer.entry}
-                        conditional={question.conditional}
-                        children={question.questions}
-                        valueFromParent={this.state[question.id]}
-                        onChange={this.handleChangeArray}
-                        key={index}
-                        sectionContext={this.props.sectionContext}
-                      />
-                    );
-                  })
+              {question.type === "radio"
+                ? question.answer.options.map(({ label, value }, index) => {
+                  return (
+                    <CMSChoice
+                      name={question.id}
+                      value={value}
+                      label={label}
+                      type={question.type}
+                      answer={question.answer.entry}
+                      conditional={question.conditional}
+                      children={question.questions}
+                      valueFromParent={this.state[question.id]}
+                      onChange={this.handleChangeArray}
+                      key={index}
+                      setAnswer={this.props.setAnswer}
+                      disabled={question.answer.readonly}
+                      disabledFromParent={question.answer.readonly}
+                    />
+                  );
+                })
+                : null}
+
+              {question.type === "checkbox"
+                ? question.answer.options.map(({ label, value }, index) => {
+                  return (
+                    <CMSChoice
+                      name={question.id}
+                      value={value}
+                      label={label}
+                      type={question.type}
+                      answer={question.answer.entry}
+                      conditional={question.conditional}
+                      children={question.questions}
+                      valueFromParent={this.state[question.id]}
+                      onChange={this.handleCheckboxInput}
+                      key={index}
+                      setAnswer={this.props.setAnswer}
+                      disabled={question.answer.readonly}
+                    />
+                  );
+                })
                 : null}
 
               {/* If textarea */}
@@ -165,10 +210,11 @@ class QuestionComponent extends Component {
                 <TextField
                   multiple
                   name={question.id}
-                  value={question.answer.entry || ''}
+                  value={question.answer.entry || ""}
                   type="text"
                   onChange={this.handleChange}
                   label=""
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -176,11 +222,7 @@ class QuestionComponent extends Component {
               {question.type === "email" ? (
                 <TextField
                   name={question.id}
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
-                  }
+                  value={question.answer.entry || ""}
                   type="text"
                   label=""
                   onBlur={this.validateEmail}
@@ -190,6 +232,7 @@ class QuestionComponent extends Component {
                       ? "Please enter a valid email address"
                       : false
                   }
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -197,11 +240,12 @@ class QuestionComponent extends Component {
               {question.type === "text_small" ? (
                 <TextField
                   className="ds-c-input"
-                  name={question.id}
-                  value={question.answer.entry || ''}
-                  type="text"
-                  onChange={this.handleChange}
                   label=""
+                  name={question.id}
+                  onChange={this.handleChange}
+                  type="text"
+                  value={question.answer.entry || ""}
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -210,55 +254,55 @@ class QuestionComponent extends Component {
                 <div>
                   <TextField
                     className="ds-c-input"
+                    label=""
                     multiline
                     name={question.id}
-                    value={question.answer.entry || null}
-                    type="text"
-                    name={question.id}
-                    rows={3}
                     onChange={this.handleChange}
-                    label=""
+                    rows={3}
+                    type="text"
+                    value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                 </div>
               ) : null}
 
               {/* If large textarea */}
               {question.type === "text_multiline" ||
-              question.type === "mailing_address" ? (
-                <div>
-                  <TextField
-                    label=""
-                    className="ds-c-input"
-                    multiline
-                    value={question.answer.entry || ''}
-                    type="text"
-                    name={question.id}
-                    rows="6"
-                    onChange={this.handleChange}
-                  />
-                </div>
-              ) : null}
+                question.type === "mailing_address" ? (
+                  <div>
+                    <TextField
+                      className="ds-c-input"
+                      label=""
+                      multiline
+                      name={question.id}
+                      onChange={this.handleChange}
+                      rows={6}
+                      type="text"
+                      value={question.answer.entry || ""}
+                      disabled={question.answer.readonly}
+                    />
+                  </div>
+                ) : null}
 
               {/* If FPL Range */}
               {question.type === "ranges" ? (
-                <CMSRanges
-                  item={question}
-                  sectionContext={this.props.sectionContext}
-                />
+                <CMSRanges item={question} onChange={this.handleChangeArray} />
               ) : null}
 
               {/* If integer*/}
               {question.type === "integer" ? (
                 <TextField
-                  name={question.id}
                   className="ds-c-input"
-                  label=""
-                  value={
-                    this.state[question.id] || this.state[question.id + "Mod"]
-                      ? this.state[question.id]
-                      : question.answer.entry
+                  errorMessage={
+                    this.state[question.id + "Err"] === false
+                      ? "Please enter numbers only"
+                      : false
                   }
+                  label=""
+                  name={question.id}
+                  numeric
                   onChange={this.handleIntegerChange}
+                  value={question.answer.entry || ""}
                 />
               ) : null}
 
@@ -266,13 +310,17 @@ class QuestionComponent extends Component {
               {question.type === "file_upload" ? (
                 <div>
                   <TextField
-                    // label={question.label}
                     className="file_upload"
-                    onChange={this.handleFileUpload}
-                    name="fileUpload"
-                    type="file"
-                    multiple
                     label=""
+                    multiple
+                    name={question.id}
+                    onChange={this.handleFileUpload}
+                    type="file"
+                    value={
+                      this.state[question.id] || this.state[question.id + "Mod"]
+                        ? this.state[question.id]
+                        : question.answer.entry
+                    }
                   />
                 </div>
               ) : null}
@@ -282,11 +330,20 @@ class QuestionComponent extends Component {
                 <>
                   <TextField
                     className="money"
-                    label=""
+                    errorMessage={
+                      this.state[question.id + "Err"] === false
+                        ? "Please enter numbers only"
+                        : false
+                    }
                     inputMode="currency"
+                    label=""
                     mask="currency"
+                    name={question.id}
+                    numeric
+                    onChange={this.handleIntegerChange}
                     pattern="[0-9]*"
-                    value={question.answer.entry}
+                    value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                 </>
               ) : null}
@@ -295,25 +352,26 @@ class QuestionComponent extends Component {
               {question.type === "daterange" ? (
                 <DateRange
                   question={question}
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
+                  onChange={this.handleChangeArray}
                 />
               ) : null}
 
               {question.type === "phone_number" ? (
                 <TextField
                   className="phone_number"
-                  label=""
-                  numeric={true}
-                  mask="phone"
-                  pattern="[0-9]*"
-                  value={question.answer.entry}
-                  name={question.id}
-                  onBlur={this.validatePhone}
                   errorMessage={
                     this.state[question.id + "Err"]
                       ? this.state[question.id + "Err"]
                       : null
                   }
+                  label=""
+                  mask="phone"
+                  name={question.id}
+                  numeric={true}
+                  onBlur={this.validatePhone}
+                  pattern="[0-9]*"
+                  value={question.answer.entry || ""}
+                  disabled={question.answer.readonly}
                 />
               ) : null}
 
@@ -321,22 +379,19 @@ class QuestionComponent extends Component {
                 <>
                   <TextField
                     className="percentage"
-                    inputMode="percentage"
-                    pattern="[0-9]*"
-                    numeric={true}
-                    name={question.id}
-                    value={
-                      this.state[question.id]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
                     errorMessage={
                       this.state[question.id + "Err"]
                         ? this.state[question.id + "Err"]
                         : null
                     }
-                    onChange={(this.handleChange, this.validatePercentage)}
+                    inputMode="percentage"
                     label=""
+                    name={question.id}
+                    numeric={true}
+                    onChange={this.validatePercentage}
+                    pattern="[0-9]*"
+                    value={question.answer.entry || ""}
+                    disabled={question.answer.readonly}
                   />
                   <>%</>
                 </>
@@ -344,7 +399,6 @@ class QuestionComponent extends Component {
 
               {question.type === "checkbox_flag" ? (
                 <ChoiceList
-                  name={question.id}
                   choices={[
                     {
                       label: "Select",
@@ -352,35 +406,87 @@ class QuestionComponent extends Component {
                       value: "",
                     },
                   ]}
-                  type="checkbox"
-                  answer={question.answer.entry}
-                  onChange={this.handleCheckboxFlag}
                   label=""
+                  name={question.id}
+                  onChange={this.handleCheckboxFlag}
+                  type="checkbox"
+                  value={question.answer.entry || ""}
                 />
               ) : null}
               {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
               {question.questions &&
-              question.type !== "fieldset" &&
-              question.type !== "radio" &&
-              question.type !== "checkbox" ? (
-                <QuestionComponent
-                  subquestion={true}
-                  data={question.questions} //Array of subquestions to map through
-                  sectionContext={this.props.sectionContext} // function binding children to parent context
-                />
-              ) : null}
+                question.type !== "fieldset" &&
+                question.type !== "radio" &&
+                question.type !== "checkbox" ? (
+                  <QuestionComponent
+                    subquestion={true}
+                    setAnswer={this.props.setAnswer}
+                    data={question.questions} //Array of subquestions to map through
+                  />
+                ) : null}
 
               {question.questions && question.type === "fieldset" ? (
                 <div className="cmsfieldset">
                   {
                     <QuestionComponent
                       subquestion={true}
+                      setAnswer={this.props.setAnswer}
                       data={question.questions} //Array of subquestions to map through
-                      sectionContext={this.props.sectionContext} // function binding children to parent context
                     />
                   }
                 </div>
               ) : null}
+
+              {question.type === "fieldset" &&
+                question.fieldset_type === "noninteractive_table"
+                ? Object.entries(question.fieldset_info).map((value) => {
+                  return (
+                    <table className="ds-c-table" width="100%">
+                      {value[0] === "headers" ? (
+                        <thead>
+                          <tr>
+                            {question.fieldset_info.headers.map(function (
+                              value
+                            ) {
+                              return (
+                                <th
+                                  width={`${
+                                    100 /
+                                    question.fieldset_info.headers.length
+                                    }%`}
+                                  name={`${value}`}
+                                >
+                                  {value}
+                                </th>
+                              );
+                            })}
+                          </tr>
+                        </thead>
+                      ) : null}
+                      {value[0] === "rows"
+                        ? question.fieldset_info.rows.map((value) => {
+                          return (
+                            <tr>
+                              {value.map((value) => {
+                                return (
+                                  <td
+                                    width={`${
+                                      100 /
+                                      question.fieldset_info.headers.length
+                                      }%`}
+                                  >
+                                    {value}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })
+                        : null}
+                    </table>
+                  );
+                })
+                : null}
             </fieldset>
           </div>
         ))}
@@ -389,29 +495,28 @@ class QuestionComponent extends Component {
   }
 }
 
-// anticipated question types
+// "checkbox"        <<831
+// "file_upload"   needs component
+// "integer"         <<831
+// "money"             <<831
+// "percentage"      <<831
+// "radio"          <<831
+// "ranges"         <<831
+// "text"            <<831
+// "text_medium"         <<831
+// "text_multiline"         <<831
+// "text_small"         <<831
+// "phone_number"         <<831
+// "email"                <<831
+// "daterange"             <<831
+// "mailing_address"         <<831
 
-// "checkbox",[x]
-// "file_upload",[x]
-// "integer",[x]
-// "money",[x]
-// "percentage",  [x] [BOUND]
-// "radio",[x]
-// "ranges",[x]
-// "text",[x] [BOUND] multiline not working?
-// "text_medium",[x] [BOUND]
-// "text_multiline",[x] [BOUND]
-// "text_small"   [x] [BOUND]
-// "phone_number", [x] [BOUND]
-// "email", [x] [BOUND]
-// "daterange", [x] [BOUND]
-// "mailing_address",[x] [BOUND] [??? is this several fields?? is this a component???, just a multiline textbox ]
-
-//TO-DO
-// "checkbox_flag", [kindof like a 'accept terms and conditions' checkbox, just accepts an input]
+const mapStateToProps = (state, { data, partId }) => ({
+  data: data || selectQuestionsForPart(state, partId),
+});
 
 const mapDispatchToProps = {
-  setAnswer: setAnswerEntry
+  setAnswer: setAnswerEntry,
 };
 
-export default connect(null, mapDispatchToProps)(QuestionComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionComponent);

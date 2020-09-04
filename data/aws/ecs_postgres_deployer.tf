@@ -1,3 +1,13 @@
+# Number of container instances to spawn per resource. Default is 1. 
+locals {
+  dev_pgdeployer     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
+  master_pgdeployer  = terraform.workspace == "master" ? 1 : 0
+  staging_pgdeployer = terraform.workspace == "staging" ? 1 : 0
+  prod_pgdeployer    = terraform.workspace == "prod" ? 1 : 0
+
+  count_pgdeployer         = local.dev_pgdeployer + local.master_pgdeployer + local.staging_pgdeployer + local.prod_pgdeployer
+  desired_count_pgdeployer = local.count_pgdeployer > 0 ? local.count_pgdeployer : 1
+}
 
 ####################################################################################################
 # Create a postgres_deployer ECS Task Def to bootstrap postgres RDS with users, tables, etc
@@ -55,7 +65,7 @@ resource "aws_ecs_service" "postgres_deployer" {
     capacity_provider = "FARGATE"
     weight            = "100"
   }
-  desired_count                      = 1
+  desired_count                      = local.desired_count_pgdeployer
   deployment_minimum_healthy_percent = 0
   network_configuration {
     subnets         = data.aws_subnet_ids.private.ids
