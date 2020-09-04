@@ -42,6 +42,14 @@ resource "aws_cloudfront_distribution" "www_distribution" {
   enabled             = true
   default_root_object = "index.html"
 
+  custom_error_response {
+      error_caching_min_ttl = 3000
+      error_code = 404
+      response_code = 200
+      response_page_path = "/index.html"
+  }
+
+
   // All values are defaults from the AWS console.
   default_cache_behavior {
     viewer_protocol_policy = "redirect-to-https"
