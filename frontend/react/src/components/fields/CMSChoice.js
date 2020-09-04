@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Choice, TextField } from "@cmsgov/design-system-core";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";
-import { shouldDisplay } from "../Utils/helperFunctions";
+import { shouldDisplay } from "../../store/formData";
 import CMSRanges from "./CMSRanges";
 import QuestionComponent from "../fields/QuestionComponent";
 import { setAnswerEntry } from "../../actions/initial";

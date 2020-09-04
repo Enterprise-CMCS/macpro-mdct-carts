@@ -7,7 +7,7 @@ import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
 import { selectQuestionsForPart } from "../../store/selectors";
-import { shouldDisplay } from "../Utils/helperFunctions";
+import { shouldDisplay } from "../../store/formData";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -149,9 +149,9 @@ class QuestionComponent extends Component {
     });
   }
 
-  handleFileUpload = (event) => {
+  handleFileUpload(event) {
     this.props.setAnswer(event.target.name, event.target.files);
-  };
+  }
 
   render() {
     return (
