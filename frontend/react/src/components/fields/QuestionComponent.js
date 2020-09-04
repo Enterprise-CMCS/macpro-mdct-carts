@@ -72,6 +72,9 @@ class QuestionComponent extends Component {
         });
       }
     }
+    else {
+      this.props.setAnswer(evt.target.name, evt.target.value);
+    }
   }
 
   validateEmail(evt) {
