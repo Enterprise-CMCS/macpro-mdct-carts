@@ -48,11 +48,6 @@ class QuestionComponent extends Component {
   }
 
   // For input that will be validated onBlur but needs to update state onChange
-  // updateLocalStateOnly(evt) {
-  //   this.setState({
-  //     [evt.target.name]: evt.target.value ? evt.target.value : null,
-  //   });
-  // }
   updateLocalStateOnly(evt) {
     const value = evt.target.value ? evt.target.value : [];
     this.setState({
