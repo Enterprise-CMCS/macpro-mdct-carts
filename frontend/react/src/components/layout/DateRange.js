@@ -149,8 +149,11 @@ class DateRange extends Component {
 
   // This method takes all user input and sets it to state
   handleInput(evt) {
+
+    let tempValue = evt.target.value ? evt.target.value : [];
+
     this.setState({
-      [evt.target.name]: evt.target.value,
+      [evt.target.name]: tempValue,
     });
   }
 
