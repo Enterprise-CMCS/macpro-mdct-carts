@@ -34,7 +34,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier $(git diff --name-only --relative | grep '.js$' | xargs) -w"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,6 +58,14 @@
     "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "jest-enzyme": "^7.1.2"
+    "husky": "^4.3.0",
+    "jest-enzyme": "^7.1.2",
+    "prettier": "^2.1.1"
+  },
+  "prettier": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx prettier $(git diff --cached --name-only --relative | xargs) --check"
+    }
   }
 }
