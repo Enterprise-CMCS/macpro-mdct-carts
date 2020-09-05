@@ -1,7 +1,7 @@
 import jsonpath from "../util/jsonpath";
 
 import { selectFragment } from "./formData";
-import { shouldDisplay } from '../util/shouldDisplay'
+import { shouldDisplay } from "../util/shouldDisplay";
 
 export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
@@ -54,9 +54,11 @@ export const selectQuestionsForPart = (state, partId) => {
   let unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
 
   // Filter the array of questions based on conditional logic
-  const filteredQuestions = unfilteredData.filter(function (question) {
-    return filterDisplay(question, state);
-  });
+  const filteredQuestions = unfilteredData
+    .map(function (question) {
+      return filterDisplay(question, state);
+    })
+    .filter((q) => q !== false);
 
   return filteredQuestions;
 };
@@ -70,18 +72,30 @@ export const selectQuestionsForPart = (state, partId) => {
  */
 const filterDisplay = (question, state) => {
   if (!shouldDisplay(state, question.context_data)) {
-    // if shouldDisplay returns a false
+    if (
+      question.context_data &&
+      question.context_data.conditional_display &&
+      question.context_data.conditional_display.skip_text
+    ) {
+      return {
+        id: question.id,
+        type: "skip_text",
+        skip_text: question.context_data.conditional_display.skip_text,
+      };
+    }
     return false; // return false to exclude this question from filtered array
   }
 
   if (question.questions) {
     // if the current question has subquestions, filter them recursively
-    question.questions = question.questions.filter(function (question) {
-      // reassign question.questions to be a filtered version of itself
-      return filterDisplay(question, state);
-    });
+    question.questions = question.questions
+      .map(function (question) {
+        // reassign question.questions to be a filtered version of itself
+        return filterDisplay(question, state);
+      })
+      .filter((q) => q !== false);
   }
-  return true; // default for any questions that pass should display
+  return question; // default for any questions that pass should display
 };
 
 export const selectSectionsForNav = (state) => {

@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectFragment } from "../../store/formData";
 import { _ } from "underscore";
-import QuestionComponent from "../fields/QuestionComponent";
+import Question from "./Question";
+import { selectQuestionsForPart } from "../../store/selectors";
 
 const showPart = (context_data, programType) => {
   if (context_data &&
@@ -14,14 +15,14 @@ const showPart = (context_data, programType) => {
   return true;
 }
 
-const Part = ({ partId, text, title, context_data, programType }) => {
+const Part = ({ context_data, partId, programType, questions, text, title }) => {
   if (showPart(context_data, programType)) {
     return (
       <div id={partId}>
         {title ? <h2>{title}</h2> : <></>}
         {text ? <p>{text}</p> : <></>}
   
-        <QuestionComponent partId={partId} />
+        {questions.map(question => <Question key={question.id} question={question} />)}
       </div>
     );
   } else {
@@ -38,11 +39,13 @@ const Part = ({ partId, text, title, context_data, programType }) => {
 
 const mapStateToProps = (state, { partId }) => {
   const part = selectFragment(state, partId);
+  const questions = selectQuestionsForPart(state, partId);
   return {
-    text: part ? part.text : null,
-    title: part ? part.title : null,
     context_data: _.has(part, "context_data") ? part.context_data : null,
     programType: state.stateUser.programType,
+    questions,
+    text: part ? part.text : null,
+    title: part ? part.title : null,
   };
 };
 
