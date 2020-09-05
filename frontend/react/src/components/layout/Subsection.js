@@ -7,9 +7,15 @@ const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
     <div id={subsectionId}>
       <h2>{title}</h2>
-      {text ? <div className="helper-text">{text.split("\n").map(paragraph => <p>{paragraph}</p>)}</div> : null}
-      {partIds.map((partId) => (
-        <Part key={partId} partId={partId} />
+      {text ? (
+        <div className="helper-text">
+          {text.split("\n").map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      ) : null}
+      {partIds.map((partId, index) => (
+        <Part key={partId} partId={partId} partNumber={index + 1} />
       ))}
     </div>
   );
