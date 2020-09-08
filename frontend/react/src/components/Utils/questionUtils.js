@@ -1,4 +1,3 @@
-import { shouldDisplay } from "../../store/formData";
 import React from "react";
 import FPL from "../layout/FPL";
 import CMSLegend from "../fields/CMSLegend";

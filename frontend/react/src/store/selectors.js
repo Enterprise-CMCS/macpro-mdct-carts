@@ -52,13 +52,14 @@ export const selectQuestionsForPart = (state, partId) => {
   let unfilteredData = jsonpath.query(state, jp);
   let data = [];
 
+  console.log("topmost data", unfilteredData);
+
   unfilteredData.forEach(function (element) {
     let filteredQuestion = filterDisplay(element, state); // the result of filterDisplay
+    // console.log("Lets see the filteredQuestion", filteredQuestion);
     if (filteredQuestion) {
       // if the result is truthy, not 'false'
       data.push(filteredQuestion); // add it to the array of questions
-    } else {
-      return;
     }
   });
 
@@ -68,9 +69,9 @@ export const selectQuestionsForPart = (state, partId) => {
 // This function takes in a single question to be investigated for context data & children
 // Returns the question  (if it should display) or'false' for questions that should not
 const filterDisplay = (question, state) => {
-  if (question.context_data) {
+  if (!question.context_data) {
     // if the question contains context_data
-    if (!shouldDisplay(state, question.context_data)) {
+    if (!shouldDisplay(state, question)) {
       // if it should not display, return false
       return false;
     }
@@ -81,10 +82,13 @@ const filterDisplay = (question, state) => {
     question.questions.forEach(function (questionElement, index) {
       let filteredSubQuestion = filterDisplay(questionElement, state);
       if (!filteredSubQuestion) {
-        return false;
+        // return false;
+        console.log("Are we EVER getting here??????"); // the answer is no!
+        question.questions.splice(index, 1);
       }
     });
   }
+
   return question;
 };
 

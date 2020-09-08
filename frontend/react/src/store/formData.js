@@ -257,17 +257,18 @@ export const generateSubsectionLabel = (str) => {
 // This function requires a single question context and the application state
 // Returns a boolean establishing if a question should display or not
 export const shouldDisplay = (state, context) => {
-  if (!context || !context.conditional_display) {
+  console.log("What is tHE CONTEXT", context);
+  if (!context.conditional_display) {
     return true;
   }
-
+  console.log("BBBBBBBBB");
   // Wil return answer from associated question (String)
   let parentAnswer = jsonpath.query(
     state,
     context.conditional_display.hide_if.target
   );
 
-  console.log("Whats the parent answer?", parentAnswer);
+  console.log("CCCCCCCCCCCC \n Whats the parent answer?", parentAnswer);
 
   if (
     !context.conditional_display.hide_if.values.interactive.includes(
