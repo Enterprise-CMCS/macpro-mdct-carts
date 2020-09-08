@@ -32,6 +32,7 @@ class Questions2BApi extends Component {
   // Get state program (temporary; will be set by API)
   newObjective() {
     let newObjectiveId = this.state.objectiveCount + 1;
+    this.props.objectivesArray.push(addNewObjective(newObjectiveId));
     this.setState({
       objectiveCount: newObjectiveId,
       objectiveArray: this.state.objectivesArray.push(
@@ -55,7 +56,7 @@ class Questions2BApi extends Component {
         <div className="section">
           {
             /* Begin parsing through parts */
-            this.state.subsectionB.parts.map((part) => (
+            this.props.subsectionB.parts.map((part) => (
               <div className="part">
                 {part.id === "2020-02-b" /*this isn't right*/ ? (
                   part.programType === "medicaid_exp_chip" ||
@@ -108,13 +109,12 @@ class Questions2BApi extends Component {
                                     ) : (
                                       <h3>
                                         <AccordionPanel>
-                                          {console.log(
-                                            "preObjective2b",
-                                            objectiveGoals.questions
-                                          )}
                                           <Objective2bApi
                                             goalsArray={
                                               objectiveGoals.questions
+                                            }
+                                            goalcount={
+                                              objectiveGoals.questions.length
                                             } //gives object that contains array of goals
                                           />
                                         </AccordionPanel>

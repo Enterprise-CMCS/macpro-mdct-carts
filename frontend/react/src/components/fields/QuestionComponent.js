@@ -50,8 +50,9 @@ class QuestionComponent extends Component {
 
   // For input that will be validated onBlur but needs to update state onChange
   updateLocalStateOnly(evt) {
+    const value = evt.target.value ? evt.target.value : [];
     this.setState({
-      [evt.target.name]: evt.target.value ? evt.target.value : null,
+      [evt.target.name]: value,
     });
   }
 
@@ -155,16 +156,16 @@ class QuestionComponent extends Component {
 
   buildSynthesizedValue = (question) => {
     const numerator = selectQuestion(
-      this.props.data,
+      this.props.store,
       question.fieldset_info.targets[0].split("'")[1]
     );
     const denominator = selectQuestion(
-      this.props.data,
+      this.props.store,
       question.fieldset_info.targets[1].split("'")[1]
     );
-    console.log("numerator", numerator);
-    console.log("denominator", denominator);
-    return "";
+    return numerator.answer.entry && denominator.answer.entry
+      ? numerator.answer.entry / denominator.answer.entry
+      : "";
   };
   render() {
     return (
@@ -236,7 +237,11 @@ class QuestionComponent extends Component {
               {question.type === "email" ? (
                 <TextField
                   name={question.id}
-                  value={question.answer.entry || ""}
+                  value={
+                    this.state[question.id]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
                   type="text"
                   label=""
                   onBlur={this.validateEmail}
@@ -305,19 +310,21 @@ class QuestionComponent extends Component {
 
               {/* If integer*/}
               {question.type === "integer" ? (
-                <TextField
-                  className="ds-c-input"
-                  errorMessage={
-                    this.state[question.id + "Err"] === false
-                      ? "Please enter numbers only"
-                      : false
-                  }
-                  label=""
-                  name={question.id}
-                  numeric
-                  onChange={this.handleIntegerChange}
-                  value={question.answer.entry || ""}
-                />
+                <>
+                  <TextField
+                    className="ds-c-input"
+                    errorMessage={
+                      this.state[question.id + "Err"] === false
+                        ? "Please enter numbers only"
+                        : false
+                    }
+                    label=""
+                    name={question.id}
+                    numeric
+                    onChange={this.handleIntegerChange}
+                    value={question.answer.entry || ""}
+                  />
+                </>
               ) : null}
 
               {/* If file upload */}
@@ -493,17 +500,25 @@ class QuestionComponent extends Component {
               {question.type === "fieldset" &&
               question.fieldset_type === "synthesized_value" ? (
                 <>
-                  {console.log(
-                    "selectQuestion",
-                    selectQuestion(
-                      this.props.data,
-                      question.fieldset_info.targets[0].split("'")[1]
-                    )
-                  )}
                   <TextField
                     name={question.id}
                     className="ds-c-input"
-                    label="Calculated field from #"
+                    label={
+                      "Calculated Value" +
+                      "( #" +
+                      parseInt(
+                        question.fieldset_info.targets[0]
+                          .split("'")[1]
+                          .split("-")[8]
+                      ) +
+                      "/ #" +
+                      parseInt(
+                        question.fieldset_info.targets[1]
+                          .split("'")[1]
+                          .split("-")[8]
+                      ) +
+                      ")"
+                    }
                     value={this.buildSynthesizedValue(question)}
                   />
                 </>
@@ -534,6 +549,7 @@ class QuestionComponent extends Component {
 
 const mapStateToProps = (state, { data, partId }) => ({
   data: data || selectQuestionsForPart(state, partId),
+  store: state,
 });
 
 const mapDispatchToProps = {
