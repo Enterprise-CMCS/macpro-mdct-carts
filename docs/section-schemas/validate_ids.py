@@ -264,7 +264,7 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
         if question.value.get("id"):
             if question.value.get("id") != this_marker:
                 print(question.value["id"], this_marker)
-                # import pdb; pdb.set_trace()
+                raise Exception
 
         subqs_expr = parse("questions[*]")
         subqs = subqs_expr.find(question.value)

@@ -49,8 +49,9 @@ class QuestionComponent extends Component {
 
   // For input that will be validated onBlur but needs to update state onChange
   updateLocalStateOnly(evt) {
+    const value = evt.target.value ? evt.target.value : [];
     this.setState({
-      [evt.target.name]: evt.target.value ? evt.target.value : null,
+      [evt.target.name]: value,
     });
   }
 
@@ -71,6 +72,9 @@ class QuestionComponent extends Component {
           [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
         });
       }
+    }
+    else {
+      this.props.setAnswer(evt.target.name, evt.target.value);
     }
   }
 
@@ -222,7 +226,11 @@ class QuestionComponent extends Component {
               {question.type === "email" ? (
                 <TextField
                   name={question.id}
-                  value={question.answer.entry || ""}
+                  value={
+                    this.state[question.id]
+                      ? this.state[question.id]
+                      : question.answer.entry
+                  }
                   type="text"
                   label=""
                   onBlur={this.validateEmail}
