@@ -65,9 +65,6 @@ export const selectQuestionsForPart = (state, partId) => {
   return data;
 };
 
-// This function is provided a single question and the application state
-// Returns the question (if it should display) or a falsy value if it is to be skipped in selectQuestionsForPart
-
 // This function takes in a single question to be investigated for context data & children
 // Returns the question  (if it should display) or'false' for questions that should not
 const filterDisplay = (question, state) => {
