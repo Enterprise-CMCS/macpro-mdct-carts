@@ -1,6 +1,6 @@
 Declare @currentYear as integer
 
-Set @currentYear = 2016;
+Set @currentYear = 2020;
 
 with MCHIP as (
 	Select StateCode

@@ -3,7 +3,7 @@ GO
 
 Declare @currentYear as integer
 
-Set @currentYear = 2016;
+Set @currentYear = 2020;
 
 with SCHIP as (
 	Select StateCode
