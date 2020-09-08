@@ -1109,6 +1109,48 @@
               },
               {
                 "id": "2020-01-a-03-20",
+                "label": "Please explain why changes have been made.",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                },
+                "context_data": {
+                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                  "conditional_display":{
+                    "type": "conditional_display",
+                    "hide_if_all":{
+                      "targets": [
+                        "$..[?(@.id=='2020-01-a-03-01)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-02)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-03)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-04)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-05)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-06)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-07)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-08)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-09)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-10)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-11)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-12)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-13)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-14)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-15)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-16)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-17)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-18)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-19)].answer.entry"
+                      ],
+                      "values": {
+                        "interactive": ["no", null],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "id": "2020-01-a-03-21",
                 "label": "Anything else you'd like to add that wasn't already covered?",
                 "type": "text_multiline",
                 "answer": {
@@ -1116,7 +1158,7 @@
                 }
               },
               {
-                "id": "2020-01-a-03-21",
+                "id": "2020-01-a-03-22",
                 "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
                 "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
                 "type": "text_multiline",
@@ -1124,8 +1166,38 @@
                   "entry": "[Application]In 2018, the paper application (ACA-3) and the HIX online application were revised to clarify instructions and help text for questions regarding tax filing. In addition, the “sheltered workshop” question was removed as sheltered workshops have been phased out in MA.\n[Delivery system]Managed Care options expanded on 3/1/18 to include Accountable Care Organizations.\n[Eligibility determination process]MassHealth implemented changes to Reasonable Compatibility rules for verification of income to consider income verified if both self-attested income and income returned from electronic data sources are both under applicable income threshold. This change was implemented to align with changes to provisional eligibility rules and to align to federal requirements."
                 },
                 "context_data": {
-                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
-                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise."
+                "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                  "conditional_display":{
+                    "type": "conditional_display",
+                    "hide_if_all":{
+                      "targets": [
+                        "$..[?(@.id=='2020-01-a-03-01)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-02)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-03)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-04)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-05)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-06)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-07)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-08)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-09)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-10)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-11)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-12)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-13)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-14)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-15)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-16)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-17)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-18)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-03-19)].answer.entry"
+                      ],
+                      "values": {
+                        "interactive": ["no", null],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
                 }
               }
             ]
