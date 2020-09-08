@@ -76,3 +76,7 @@ variable "subnet_ids" {
 variable "vpc_id" {
   description = "VPC ID for replication instance security group"
 }
+
+variable "security_group_ids" {
+  description = "Security Group IDs for replication instance"
+}
