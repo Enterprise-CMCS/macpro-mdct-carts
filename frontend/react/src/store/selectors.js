@@ -77,7 +77,8 @@ const filterDisplay = (question, state) => {
     question.questions.forEach(function (questionElement, index) {
       let newVar = filterDisplay(questionElement, state);
       if (!newVar) {
-        question.questions.splice(index, 1);
+        // question.questions.splice(index, 1);
+        return false;
       }
     });
   }
