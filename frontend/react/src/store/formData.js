@@ -254,21 +254,21 @@ export const generateSubsectionLabel = (str) => {
   return `Section ${sectionNumber}${idArray[2]}`;
 };
 
-// GIVE THIS FUNCTION A SINGLE QUESTION CONTEXT && STATE
+// This function requires a single question context and the application state
+// Returns a boolean establishing if a question should display or not
 export const shouldDisplay = (state, context) => {
   if (!context || !context.conditional_display) {
     return true;
   }
 
-  console.log("Boolah boolah!");
+  // Wil return answer from associated question (String)
   let parentAnswer = jsonpath.query(
     state,
     context.conditional_display.hide_if.target
   );
-  console.log("Whats the parent answer?", parentAnswer);
-  // second argument is target
 
-  // Wil return answer from associated question (String)
+  console.log("Whats the parent answer?", parentAnswer);
+
   if (
     !context.conditional_display.hide_if.values.interactive.includes(
       parentAnswer[0]
@@ -279,11 +279,3 @@ export const shouldDisplay = (state, context) => {
     return false;
   }
 };
-
-// const associatedSectionId = context.conditional_display.hide_if.target
-//   .split("'")[1]
-//   .split("-")[1];
-
-// use select fragment by id function
-// let findAssociatedSection;
-// give that as the first argument to jsonpath query

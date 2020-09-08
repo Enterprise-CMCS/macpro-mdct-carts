@@ -58,7 +58,7 @@ class Section1 extends Component {
                 />
               </TabPanel>
 
-              {/* <TabPanel
+              <TabPanel
                 id="tab-lastyear"
                 tab={`FY${this.props.year - 1} answers`}
               >
@@ -67,10 +67,12 @@ class Section1 extends Component {
                   <h3>{Data.section.title}</h3>
                 </div>
                 <div disabled>
-                  <Questions previousEntry="true"
-                    sectionContext={this.bindToParentContext} />
+                  <Questions
+                    previousEntry="true"
+                    sectionContext={this.bindToParentContext}
+                  />
                 </div>
-              </TabPanel> */}
+              </TabPanel>
             </Tabs>
             <FormActions />
           </div>
