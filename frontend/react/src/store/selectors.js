@@ -46,17 +46,17 @@ export const selectQuestion = (state, id) => {
   return null;
 };
 
+// Returns an array of questions for the QuestionComponent to map through
 export const selectQuestionsForPart = (state, partId) => {
   const jp = `$..[*].contents.section.subsections[*].parts[?(@.id=='${partId}')].questions[*]`;
   let unfilteredData = jsonpath.query(state, jp);
   let data = [];
 
-  // unfilteredData.forEach(filterFunction(element))
-
   unfilteredData.forEach(function (element) {
-    let someVar = filterDisplay(element, state);
-    if (someVar) {
-      data.push(someVar);
+    let filteredQuestion = filterDisplay(element, state); // the result of filterDisplay
+    if (filteredQuestion) {
+      // if the result is truthy, not 'false'
+      data.push(filteredQuestion); // add it to the array of questions
     } else {
       return;
     }
@@ -65,19 +65,25 @@ export const selectQuestionsForPart = (state, partId) => {
   return data;
 };
 
+// This function is provided a single question and the application state
+// Returns the question (if it should display) or a falsy value if it is to be skipped in selectQuestionsForPart
+
+// This function takes in a single question to be investigated for context data & children
+// Returns the question  (if it should display) or'false' for questions that should not
 const filterDisplay = (question, state) => {
   if (question.context_data) {
+    // if the question contains context_data
     if (!shouldDisplay(state, question.context_data)) {
+      // if it should not display, return false
       return false;
     }
   }
 
   if (question.questions) {
-    // if the current question has subquestions, filter them
+    // if the current question has subquestions, filter them recursively
     question.questions.forEach(function (questionElement, index) {
-      let newVar = filterDisplay(questionElement, state);
-      if (!newVar) {
-        // question.questions.splice(index, 1);
+      let filteredSubQuestion = filterDisplay(questionElement, state);
+      if (!filteredSubQuestion) {
         return false;
       }
     });
@@ -85,25 +91,12 @@ const filterDisplay = (question, state) => {
   return question;
 };
 
-// const filterFunction = (singleQuestion, state) => {
-// if (singleQuestion.context_data){
-//   shouldDisplay(state, singleQuestion.context_data)
-// }
-
-// };
-
 //TODO: Tuesday,
-// selectQuestionsForPart is not even happening in section1-api!!!
-// because it is reading from manual parts
-// inspect the if statement on lines 73-75
 // Can you edit an element while using filter??
 // if you cant edit it, then something else must be done when (question.questions)
 
 // filter ONLY takes functions that return booleans!! you cannot edit an element
 // that you are iterating over in a filter callback function
 
-// Greg mentioned using foreach, consider where we can use that! maybe that will makeup for filter's shortcomings!!!!!!!!!
+// Greg mentioned using foreach, consider where that can be used. maybe that will makeup for the filter method's shortcomings
 // do we add another new function thats like mimickFilter and if (true), populate array with item (item that can be edited)
-
-// This function is provided a single question and the application state
-// Returns the question (if it should display) or a falsy value if it is to be skipped in selectQuestionsForPart
