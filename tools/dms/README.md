@@ -15,7 +15,13 @@ terraform workspace select <workspace_name>
 terraform plan
 terraform apply
 
-# Workspace Names
+# Automated nightly job
+Serverless architecture adapted from https://serverless-stack.com/
+* To run locally: npm install, serverless invoke local --function #{Function Name} --stage #{Stage Name}
+* To destroy: serverless remove
+* To deploy to AWS: serverless deploy --stage #{Stage Name}
+
+# Workspace/Stage Names
 master
 staging
 prod
