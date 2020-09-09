@@ -257,7 +257,6 @@ export const generateSubsectionLabel = (str) => {
 // This function requires a single question context and the application state
 // Returns a boolean establishing if a question should display or not
 export const shouldDisplay = (state, context) => {
-  console.log("What is tHE CONTEXT", context);
   if (!context || !context.conditional_display) {
     return true;
   }
