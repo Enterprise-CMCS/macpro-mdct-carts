@@ -248,6 +248,70 @@ def report(request, year=None, state=None):
     return HttpResponse(report_template.render(context=context))
 
 
+def fake_user_data(request, username=None):
+    assert username
+    assert "-" in username
+    state = username.split("-")[1].upper()
+
+    host = request.get_host()
+    scheme = "https" if request.is_secure() else "http"
+    full_host = f"{scheme}://{host}"
+
+    fakeUserData = {
+        "AK": {
+            "name": "Alaska",
+            "abbr": "AK",
+            "programType": "medicaid_exp_chip",
+            "programName": "AK Program Name??",
+            "imageURI": f"{full_host}/img/states/ak.svg",
+            "formName": "CARTS FY",
+            "currentUser": {
+                "role": "state_user",
+                "state": {
+                    "id": "AK",
+                    "name": "Alaska"
+                },
+                "username": "dev-jane.doe@alaska.gov",
+            }
+        },
+        "AZ": {
+            "name": "Arizona",
+            "abbr": "AZ",
+            "programType": "separate_chip",
+            "programName": "AZ Program Name??",
+            "imageURI": "{full_host}/img/states/az.svg",
+            "formName": "CARTS FY",
+            "currentUser": {
+                "role": "state_user",
+                "state": {
+                    "id": "AZ",
+                    "name": "Arizona"
+                },
+                "username": "dev-john.smith@arizona.gov",
+            }
+        },
+        "MA": {
+            "name": "Massachusetts",
+            "abbr": "MA",
+            "programType": "combo",
+            "programName": "MA Program Name??",
+            "imageURI": "${full_host}/img/states/ma.svg",
+            "formName": "CARTS FY",
+            "currentUser": {
+                "role": "state_user",
+                "state": {
+                    "id": "MA",
+                    "name": "Massachusetts"
+                },
+                "username": "dev-naoise.murphy@arizona.gov",
+            }
+        }
+    }
+
+    assert state in fakeUserData
+    return HttpResponse(json.dumps(fakeUserData[state]))
+
+
 def _id_from_chunks(year, *args):
     def fill(chunk):
         chunk = str(chunk).lower()
