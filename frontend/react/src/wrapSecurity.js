@@ -19,7 +19,6 @@ const WrappedSecurity = () => {
   let VisibleFooter =
     window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
 
-  console.dir(useLocation());
   const loc = qs.parse(useLocation().search);
   const devKeys = {"dev-ak": "AK", "dev-az": "AZ", "dev-ma": "MA"}
   if (loc.dev && Object.keys(devKeys).includes(loc.dev)) {

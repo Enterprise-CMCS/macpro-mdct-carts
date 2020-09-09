@@ -5,8 +5,6 @@ const PROGRAM_INFO = "PROGRAM_INFO";
 
 //ACTION CREATORS
 export const getUserData = (userObject) => {
-  console.log("getUserData");
-  console.log(userObject);
   return {
     type: USER_INFO,
     userObject: userObject,
@@ -45,7 +43,6 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case STATE_INFO:
-      console.log(STATE_INFO);
       return {
         ...state,
         name: action.name,
@@ -53,13 +50,11 @@ export default function (state = initialState, action) {
         imageURI: action.imageURI,
       };
     case USER_INFO:
-      console.log(USER_INFO);
       return {
         ...state,
         currentUser: action.userObject,
       };
     case PROGRAM_INFO:
-      console.log(PROGRAM_INFO);
       return {
         ...state,
         programType: action.programType,
@@ -67,8 +62,6 @@ export default function (state = initialState, action) {
         formName: action.formName,
       };
     default:
-      console.log("default in state user reducer");
-      console.log(state, action);
       return state;
   }
 }

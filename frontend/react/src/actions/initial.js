@@ -6,7 +6,6 @@ export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 const temp__data = require("./initial.json");
 
 export const loadSections = () => {
-  console.log("loadSections");
   return async (dispatch) => {
     // const { data } = await axios.get(
     //   `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`
