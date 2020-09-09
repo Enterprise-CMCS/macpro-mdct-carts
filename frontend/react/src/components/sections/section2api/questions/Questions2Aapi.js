@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import FPL from "../../../layout/FPL";
 import CMSChoice from "../../../fields/CMSChoice";
-import Data from "./../backend-json-section-2.json";
 import CMSLegend from "../../../fields/CMSLegend";
 import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
 import QuestionComponent from "../../../fields/QuestionComponent";
