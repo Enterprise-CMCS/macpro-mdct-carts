@@ -5,14 +5,17 @@ export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
 const temp__data = require("./initial.json");
 
-export const loadSections = () => {
+export const loadSections = (userData) => {
   console.log("loadSections");
   return async (dispatch) => {
-    // const { data } = await axios.get(
-    //   `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`
-    // );
-    // dispatch({ type: LOAD_SECTIONS, data });
-    dispatch({ type: LOAD_SECTIONS, data: temp__data });
+    const { data } = await axios.get(
+      `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/${userData.abbr}`
+    )
+      .catch((res) => {return {data: temp__data}})
+      .then((caught) => caught);
+
+    dispatch({ type: LOAD_SECTIONS, data });
+    //dispatch({ type: LOAD_SECTIONS, data: temp__data });
   };
 };
 
