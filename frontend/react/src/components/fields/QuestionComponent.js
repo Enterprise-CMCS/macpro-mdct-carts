@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
 import CMSLegend from "./CMSLegend";
-import { TextField, ChoiceList } from "@cmsgov/design-system-core";
+import { Alert, TextField, ChoiceList } from "@cmsgov/design-system-core";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
@@ -73,8 +73,7 @@ class QuestionComponent extends Component {
           [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
         });
       }
-    }
-    else {
+    } else {
       this.props.setAnswer(evt.target.name, evt.target.value);
     }
   }
@@ -442,17 +441,26 @@ class QuestionComponent extends Component {
                 />
               ) : null}
 
-              {question.questions && question.type === "fieldset" ? (
-                <div className="cmsfieldset">
-                  {
-                    <QuestionComponent
-                      subquestion={true}
-                      setAnswer={this.props.setAnswer}
-                      data={question.questions} //Array of subquestions to map through
-                    />
-                  }
-                </div>
-              ) : null}
+              {question.questions &&
+                question.type === "fieldset" &&
+                question.context_data &&
+                (question.context_data.skip_text ? (
+                  <Alert>
+                    <p className="ds-c-alert__text">
+                      {question.context_data.skip_text}
+                    </p>
+                  </Alert>
+                ) : (
+                  <div className="cmsfieldset">
+                    {
+                      <QuestionComponent
+                        subquestion={true}
+                        setAnswer={this.props.setAnswer}
+                        data={question.questions}
+                      />
+                    }
+                  </div>
+                ))}
 
               {question.type === "fieldset" &&
               question.fieldset_type === "noninteractive_table"

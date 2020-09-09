@@ -258,25 +258,27 @@ export const generateSubsectionLabel = (str) => {
 // Returns a boolean establishing if a question should display or not
 export const shouldDisplay = (state, context) => {
   console.log("What is tHE CONTEXT", context);
-  if (!context.conditional_display) {
+  if (!context || !context.conditional_display) {
     return true;
   }
-  console.log("BBBBBBBBB");
+
   // Wil return answer from associated question (String)
   let parentAnswer = jsonpath.query(
     state,
     context.conditional_display.hide_if.target
   );
 
-  console.log("CCCCCCCCCCCC \n Whats the parent answer?", parentAnswer);
+  console.log("WHAT IS THE PARENT ANSWER??", parentAnswer);
 
   if (
-    !context.conditional_display.hide_if.values.interactive.includes(
+    context.conditional_display.hide_if.values.interactive.includes(
       parentAnswer[0]
     )
   ) {
-    return true;
-  } else {
+    console.log("the parent answer IS in the interactive array, HIDE IT");
     return false;
+  } else {
+    console.log("the parent answer IS NOT in the interactive array, SHOW IT");
+    return true;
   }
 };

@@ -50,46 +50,56 @@ export const selectQuestion = (state, id) => {
 export const selectQuestionsForPart = (state, partId) => {
   const jp = `$..[*].contents.section.subsections[*].parts[?(@.id=='${partId}')].questions[*]`;
   let unfilteredData = jsonpath.query(state, jp);
-  let data = [];
+  // let data = [];
 
-  console.log("topmost data", unfilteredData);
+  // console.log("topmost data", unfilteredData);
 
-  unfilteredData.forEach(function (element) {
-    let filteredQuestion = filterDisplay(element, state); // the result of filterDisplay
-    // console.log("Lets see the filteredQuestion", filteredQuestion);
-    if (filteredQuestion) {
-      // if the result is truthy, not 'false'
-      data.push(filteredQuestion); // add it to the array of questions
-    }
+  const filteredQuestions = unfilteredData.filter(function (question) {
+    return filterDisplay(question, state);
   });
 
-  return data;
+  // unfilteredData.forEach(function (element) {
+  //   let filteredQuestion = filterDisplay(element, state); // the result of filterDisplay
+  //   // console.log("Lets see the filteredQuestion", filteredQuestion);
+  //   if (filteredQuestion) {
+  //     // if the result is truthy, not 'false'
+  //     data.push(filteredQuestion); // add it to the array of questions
+  //   }
+  // });
+
+  return filteredQuestions;
+  // return data;
 };
 
 // This function takes in a single question to be investigated for context data & children
 // Returns the question  (if it should display) or'false' for questions that should not
 const filterDisplay = (question, state) => {
-  if (!question.context_data) {
-    // if the question contains context_data
-    if (!shouldDisplay(state, question)) {
-      // if it should not display, return false
-      return false;
-    }
+  // if (!question.context_data) {
+  //   // if the question does not contain context_data
+  if (!shouldDisplay(state, question.context_data)) {
+    // if shouldDisplay returns a false
+    return false;
   }
+  // }
 
   if (question.questions) {
     // if the current question has subquestions, filter them recursively
-    question.questions.forEach(function (questionElement, index) {
-      let filteredSubQuestion = filterDisplay(questionElement, state);
-      if (!filteredSubQuestion) {
-        // return false;
-        console.log("Are we EVER getting here??????"); // the answer is no!
-        question.questions.splice(index, 1);
-      }
-    });
-  }
 
-  return question;
+    question.questions = question.questions.filter(function (question) {
+      return filterDisplay(question, state);
+    });
+
+    // question.questions.forEach(function (questionElement, index) {
+    //   let filteredSubQuestion = filterDisplay(questionElement, state);
+    //   if (!filteredSubQuestion) {
+    //     // return false;
+    //     console.log("Are we EVER getting here??????"); // the answer is no!
+    //     question.questions.splice(index, 1);
+    //   }
+    // });
+  }
+  return true;
+  // return question;
 };
 
 //TODO: Tuesday,
