@@ -51,6 +51,7 @@ export const selectQuestionsForPart = (state, partId) => {
   const jp = `$..[*].contents.section.subsections[*].parts[?(@.id=='${partId}')].questions[*]`;
   let unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
 
+  // Filter the array of questions based on conditional logic
   const filteredQuestions = unfilteredData.filter(function (question) {
     return filterDisplay(question, state);
   });
@@ -58,20 +59,25 @@ export const selectQuestionsForPart = (state, partId) => {
   return filteredQuestions;
 };
 
-// This function takes in a single question to be investigated for context data & children
-// Returns the question  (if it should display) or'false' for questions that should not
+/**
+ * This function is a callback for the filter method in selectQuestionsForPart
+ * @function filterDisplay
+ * @param {object} question - single question from the unfilteredData array in selectQuestionsForPart.
+ * @param {object} state - the application state
+ * @returns {boolean} - to be evaluated by the filter method
+ */
 const filterDisplay = (question, state) => {
   if (!shouldDisplay(state, question.context_data)) {
     // if shouldDisplay returns a false
-    return false;
+    return false; // return false to exclude this question from filtered array
   }
 
   if (question.questions) {
     // if the current question has subquestions, filter them recursively
-
     question.questions = question.questions.filter(function (question) {
+      // reassing question.questions to be a filtered version of itself
       return filterDisplay(question, state);
     });
   }
-  return true;
+  return true; // default for any questions that pass should display
 };
