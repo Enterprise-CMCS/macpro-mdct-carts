@@ -4,10 +4,14 @@ const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
 
 //ACTION CREATORS
-export const getUserData = (userObject) => ({
-  type: USER_INFO,
-  userObject: userObject,
-});
+export const getUserData = (userObject) => {
+  console.log("getUserData");
+  console.log(userObject);
+  return {
+    type: USER_INFO,
+    userObject: userObject,
+  };
+};
 
 export const getProgramData = (programObject) => ({
   type: PROGRAM_INFO,
@@ -26,7 +30,7 @@ export const getStateData = (stateObject) => ({
 const initialState = {
   name: "New York",
   abbr: "NY",
-  programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
+  programType: "combo", //values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
   imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
   formName: "CARTS FY",
@@ -41,6 +45,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case STATE_INFO:
+      console.log(STATE_INFO);
       return {
         ...state,
         name: action.name,
@@ -48,18 +53,22 @@ export default function (state = initialState, action) {
         imageURI: action.imageURI,
       };
     case USER_INFO:
+      console.log(USER_INFO);
       return {
         ...state,
         currentUser: action.userObject,
       };
     case PROGRAM_INFO:
+      console.log(PROGRAM_INFO);
       return {
         ...state,
-        programType: action.programObject,
+        programType: action.programType,
         programName: action.programName,
         formName: action.formName,
       };
     default:
+      console.log("default in state user reducer");
+      console.log(state, action);
       return state;
   }
 }

@@ -1,24 +1,16 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import Routes from "./reactRouter";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-import InitialDataLoad from "./components/Utils/InitialDataLoad";
+import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+import WrappedSecurity from "./wrapSecurity";
+import config from './auth-config';
 
 function App() {
-  let VisibleHeader =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Header />;
-
-  let VisibleFooter =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
   return (
-    <div className="App" data-test="component-app">
-      <InitialDataLoad />
-      {VisibleHeader}
-      <Routes />
-      {VisibleFooter}
-    </div>
+    <Router>
+      <WrappedSecurity />
+    </Router>
   );
 }
 

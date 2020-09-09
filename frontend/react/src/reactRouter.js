@@ -33,7 +33,7 @@ let VisibleSidebar =
     <Sidebar />
   );
 
-const Routes = () => (
+const Routes = ({ userData }) => (
   <Router>
     <div className="ds-l-container">
       <div className="ds-l-row">
@@ -58,11 +58,11 @@ const Routes = () => (
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route
             path="/sections/:year/:sectionOrdinal/:subsectionMarker"
-            children={<InvokeSection />}
+            children={<InvokeSection userData={userData}/>}
           />
           <Route
             path="/sections/:year/:sectionOrdinal"
-            children={<InvokeSection />}
+            children={<InvokeSection userData={userData}/>}
           />
           <Route exact path="/test" component={test} />
         </Switch>
@@ -71,7 +71,7 @@ const Routes = () => (
   </Router>
 );
 
-const InvokeSection = () => {
+const InvokeSection = ( {userData} ) => {
   let { year, sectionOrdinal, subsectionMarker } = useParams();
   const filteredMarker = subsectionMarker
     ? subsectionMarker.toLowerCase()
@@ -85,7 +85,7 @@ const InvokeSection = () => {
     Number(sectionOrdinal),
     filteredMarker
   );
-  return <Section sectionId={sectionId} subsectionId={subsectionId} />;
+  return <Section userData={userData} sectionId={sectionId} subsectionId={subsectionId} />;
 };
 
 export default Routes;
