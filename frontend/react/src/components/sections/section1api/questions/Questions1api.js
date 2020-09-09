@@ -51,7 +51,7 @@ class Questions1 extends Component {
                       </div>
                     </div>
                   ) : (
-                    <div>WORKS
+                    <div>
                       <QuestionComponent
                         data={part.questions}
                         sectionContext={this.props.sectionContext} />
