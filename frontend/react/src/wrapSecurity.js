@@ -34,19 +34,15 @@ const WrappedSecurity = () => {
       </div>
     )
   } else {
-    return "hi";
+    return (
+      <Router>
+        <Security {...config.oidc}>
+          <SecureRoute path="/" component={Home} />
+          <Route path={config.callback} component={LoginCallback} />
+        </Security>
+      </Router>
+    )
   }
-  
-  /*
-  return (
-    <Router>
-      <Security {...config.oidc}>
-        <SecureRoute path="/" component={Home} />
-        <Route path={config.callback} component={LoginCallback} />
-      </Security>
-    </Router>
-  )
-  */
 }
 
 export default WrappedSecurity;

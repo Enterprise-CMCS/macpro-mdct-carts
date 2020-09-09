@@ -2,7 +2,7 @@ const fakeUserData = {
     "AK": {
         "name": "Alaska",
         "abbr": "AK",
-        "programType": "separate_chip",
+        "programType": "medicaid_exp_chip",
         "programName": "WTF AK Program Name??",
         "imageURI": `${process.env.PUBLIC_URL}/img/states/ak.svg`,
         "formName": "CARTS FY",
@@ -18,7 +18,7 @@ const fakeUserData = {
     "AZ": {
         "name": "Arizona",
         "abbr": "AZ",
-        "programType": "medicaid_exp_chip",
+        "programType": "separate_chip",
         "programName": "AZ Program Name??",
         "imageURI": `${process.env.PUBLIC_URL}/img/states/az.svg`,
         "formName": "CARTS FY",
