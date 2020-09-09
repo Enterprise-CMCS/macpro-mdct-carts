@@ -6,7 +6,7 @@ class ComingSoon extends Component {
         return (
             <div className="comingsoon ds-l-container">
                 <div className="ds-l-row ds-u-padding-left--2">
-                    <h1 className="page-title ds-u-margin-bottom--0">Coming Soon</h1>
+                    <h1 className="page-title ds-u-margin-bottom--0">CARTS is coming soon!</h1>
                     <div>
                         CARTS is in the process of moving to its new address and will be temporarily unabailable
                         while we complete our move. <br />
@@ -19,7 +19,7 @@ class ComingSoon extends Component {
                         Historical CARTS reports will be available for your reference.
                     </div>
                     <div>
-                        If you have any questions or need assistance during our move, please contact the <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>
+                        If you have any questions or need assistance during our move, please contact the <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>.
                     </div>
                 </div>
             </div>
