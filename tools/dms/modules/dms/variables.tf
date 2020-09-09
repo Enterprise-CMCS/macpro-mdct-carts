@@ -29,7 +29,11 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "source_database_name" {
+variable "source_database_name_carts" {
+  description = "Name of source database (psql -d)"
+}
+
+variable "source_database_name_seds" {
   description = "Name of source database (psql -d)"
 }
 
