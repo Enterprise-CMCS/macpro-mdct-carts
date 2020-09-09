@@ -1109,7 +1109,7 @@
               },
               {
                 "id": "2020-01-a-03-20",
-                "label": "Please explain why changes have been made.",
+                "label": "Briefly desribe why you made changes to your program.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
