@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const QUESTION_ADDED = "QUESTION ADDED";

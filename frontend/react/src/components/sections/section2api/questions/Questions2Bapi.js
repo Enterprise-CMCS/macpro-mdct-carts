@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import FPL from "../../../layout/FPL";
-import { Choice, ChoiceList, TextField } from "@cmsgov/design-system-core";
-import CMSChoice from "../../../fields/CMSChoice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";

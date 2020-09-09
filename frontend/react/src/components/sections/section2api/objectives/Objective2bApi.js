@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import Goal2bApi from "./goals/Goal2bApi";
 import { TextField } from "@cmsgov/design-system-core";
 import {
   Accordion,
@@ -11,11 +10,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
-import { sliceId } from "../../../Utils/helperFunctions";
-import FPL from "../../../layout/FPL";
-import CMSChoice from "../../../fields/CMSChoice";
-import CMSLegend from "../../../fields/CMSLegend";
-import Questions2Bapi from "../questions/Questions2Bapi";
 import { addNewGoal } from "../ObjectiveAndGoals";
 import QuestionComponent from "../../../fields/QuestionComponent";
 import { addElementToFragment } from "../../../../actions/initial";
