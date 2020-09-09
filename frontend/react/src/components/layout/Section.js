@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PageInfo from "./PageInfo";
 import { selectSectionTitle } from "../../store/selectors";
 import Subsection from "./Subsection";
-import FormNavigation from "./FormNavigation"
+import FormNavigation from "./FormNavigation";
+import FormActions from "./FormActions";
 
 const Section = ({ subsectionId, title }) => {
   console.log(`rendering section with title: ${title}`);
@@ -16,6 +17,7 @@ const Section = ({ subsectionId, title }) => {
       </div>
       <div className="form-footer">
         <FormNavigation />
+        <FormActions />
       </div>
     </div>
   );
