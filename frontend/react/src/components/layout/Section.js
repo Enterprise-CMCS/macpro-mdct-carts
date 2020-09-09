@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PageInfo from "./PageInfo";
 import { selectSectionTitle } from "../../store/selectors";
+import { getUserData } from "../../store/stateUser";
 import Subsection from "./Subsection";
 
 const Section = ({ subsectionId, title }) => {
