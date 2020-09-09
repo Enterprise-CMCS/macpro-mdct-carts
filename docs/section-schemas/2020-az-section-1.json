@@ -151,6 +151,24 @@
                           ],
                           "entry_min": 1,
                           "entry_max": 0
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-01-a-01-02-a is no or unanswered; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-01-a-01-02-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -484,6 +502,24 @@
                               ]
                             ]
                           ]
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-01-a-02-02-a is no or unanswered; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-01-a-02-02-a')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -773,6 +809,7 @@
               {
                 "id": "2020-01-a-03-06",
                 "label": "Have you made any changes to your outreach efforts?",
+                "hint": "For example: allotting more or less funding for outreach, or changing your target population.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1073,48 +1110,6 @@
               },
               {
                 "id": "2020-01-a-03-20",
-                "label": "Briefly desribe why you made changes to your program.",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                },
-                "context_data": {
-                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
-                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
-                  "conditional_display":{
-                    "type": "conditional_display",
-                    "hide_if_all":{
-                      "targets": [
-                        "$..[?(@.id=='2020-01-a-03-01)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-02)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-03)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-04)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-05)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-06)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-07)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-08)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-09)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-10)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-11)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-12)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-13)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-14)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-15)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-16)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-17)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-18)].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-19)].answer.entry"
-                      ],
-                      "values": {
-                        "interactive": ["no", null],
-                        "noninteractive": ["no"]
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "id": "2020-01-a-03-21",
                 "label": "Anything else you'd like to add that wasn't already covered?",
                 "type": "text_multiline",
                 "answer": {
@@ -1122,13 +1117,7 @@
                 }
               },
               {
-                "id": "2020-01-a-03-22",
-                "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
-                "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                },
+                "type": "fieldset",
                 "context_data": {
                   "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
                   "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
@@ -1162,7 +1151,26 @@
                       }
                     }
                   }
-                }
+                },
+                "questions": [
+                  {
+                      "id": "2020-01-a-03-21",
+                      "label": "Briefly desribe why you made changes to your program.",
+                      "type": "text_multiline",
+                      "answer": {
+                       "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-01-a-03-22",
+                    "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
+                    "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
               }
             ]
           },
@@ -1289,6 +1297,7 @@
               {
                 "id": "2020-01-a-04-06",
                 "label": "Have you made any changes to your outreach efforts?",
+                "hint": "For example: allotting more or less funding for outreach, or changing your target population.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1596,17 +1605,60 @@
                 }
               },
               {
-                "id": "2020-01-a-04-21",
-                "comment": "Display bulleted list of all 2020-01-a-04 questions 1–19 with yes answers",
-                "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": "Arizona revised the CHIP State Plan to incorporate changes and assurances as a result of mental health parity regulations."
-                },
+                "type": "fieldset",
                 "context_data": {
                   "interactive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
-                  "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise."
-                }
+                  "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
+                  "conditional_display":{
+                    "type": "conditional_display",
+                    "hide_if_all":{
+                      "targets": [
+                        "$..[?(@.id=='2020-01-a-04-01)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-02)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-03)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-04)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-05)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-06)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-07)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-08)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-09)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-10)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-11)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-12)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-13)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-14)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-15)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-16)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-17)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-18)].answer.entry",
+                        "$..[?(@.id=='2020-01-a-04-19)].answer.entry"
+                      ],
+                      "values": {
+                        "interactive": ["no", null],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
+                },
+                "questions": [
+                  {
+                      "id": "2020-01-a-04-21",
+                      "label": "Briefly desribe why you made changes to your program.",
+                      "type": "text_multiline",
+                      "answer": {
+                       "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-01-a-04-22",
+                    "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
+                    "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
               }
             ]
           }
