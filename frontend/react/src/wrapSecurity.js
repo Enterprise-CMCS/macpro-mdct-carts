@@ -14,13 +14,15 @@ import * as qs from "query-string";
 
 const WrappedSecurity = () => {
   let VisibleHeader =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Header />;
+    window.location.pathname.split("/")[1] === "reports" ||
+      window.location.pathname.split("/")[1] === "coming-soon" ? null : <Header />;
 
   let VisibleFooter =
-    window.location.pathname.split("/")[1] === "reports" ? null : <Footer />;
+    window.location.pathname.split("/")[1] === "reports" ||
+      window.location.pathname.split("/")[1] === "coming-soon" ? null : <Footer />;
 
   const loc = qs.parse(useLocation().search);
-  const devKeys = {"dev-ak": "AK", "dev-az": "AZ", "dev-ma": "MA"}
+  const devKeys = { "dev-ak": "AK", "dev-az": "AZ", "dev-ma": "MA" }
   if (loc.dev && Object.keys(devKeys).includes(loc.dev)) {
     const userData = fakeUserData[devKeys[loc.dev]];
 
