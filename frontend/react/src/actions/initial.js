@@ -29,7 +29,7 @@ export const setAnswerEntry = (fragmentId, something) => {
   };
 };
 
-export const AddElementToFragment = (fragmentId, something) => {
+export const addElementToFragment = (fragmentId, something) => {
   const value =
     something.target && something.target.value
       ? something.target.value
