@@ -19,12 +19,10 @@ export default (sdata = initialState, action) => {
       fragment.answer.entry = action.data;
       return JSON.parse(JSON.stringify(sdata));
     case QUESTION_ADDED:
-      console.log("QuestionAdded");
       const fragment2 = selectQuestion({ formData: sdata }, action.fragmentId);
       fragment2.questions.push(action.data);
       return JSON.parse(JSON.stringify(sdata));
     default:
-      console.log("default");
       return sdata;
   }
 };

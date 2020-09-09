@@ -34,7 +34,6 @@ export const AddElementToFragment = (fragmentId, something) => {
     something.target && something.target.value
       ? something.target.value
       : something;
-  console.log("something", something);
   return {
     type: QUESTION_ADDED,
     fragmentId: fragmentId,
