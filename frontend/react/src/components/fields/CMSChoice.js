@@ -89,15 +89,16 @@ class CMSChoice extends Component {
             tempQuestionHolder.push(item);
           }
         }
-        if (tempQuestionHolder.length > 0) {
-          fields.push(
-            <QuestionComponent
-              data={tempQuestionHolder}
-              setAnswer={this.props.setAnswer}
-            />
-          );
-        }
       });
+
+      if (tempQuestionHolder.length > 0) {
+        fields.push(
+          <QuestionComponent
+            data={tempQuestionHolder}
+            setAnswer={this.props.setAnswer}
+          />
+        );
+      }
 
       // Return Choice component after creating subquestion components
     }
