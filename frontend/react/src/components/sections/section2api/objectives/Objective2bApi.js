@@ -18,7 +18,7 @@ import CMSLegend from "../../../fields/CMSLegend";
 import Questions2Bapi from "../questions/Questions2Bapi";
 import { addNewGoal } from "../ObjectiveAndGoals";
 import QuestionComponent from "../../../fields/QuestionComponent";
-import { AddElementToFragment } from "../../../../actions/initial";
+import { addElementToFragment } from "../../../../actions/initial";
 
 class Objective2bApi extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class Objective2bApi extends Component {
     let newGoalId = this.props.goalCount + 1;
     const objectiveNumber = this.props.objectiveId.split("-")[5];
     //Adds a repeatable object (contains all 12 goal questions) to the repeatables object
-    this.props.AddElement(
+    this.props.addElement(
       `2020-02-b-01-01-${objectiveNumber}-02`,
       addNewGoal(newGoalId, objectiveNumber)
     );
@@ -94,7 +94,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  AddElement: AddElementToFragment,
+  addElement: addElementToFragment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Objective2bApi);

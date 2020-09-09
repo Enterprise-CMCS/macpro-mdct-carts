@@ -8,7 +8,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import Objective2bApi from "../objectives/Objective2bApi";
 import { addNewObjective } from "../ObjectiveAndGoals";
-import { AddElementToFragment } from "../../../../actions/initial";
+import { addElementToFragment } from "../../../../actions/initial";
 import {
   Accordion,
   AccordionItem,
@@ -29,7 +29,7 @@ class Questions2BApi extends Component {
   newObjective() {
     let newObjectiveId = this.props.objectiveCount + 1;
     //Adds a new objective object to the objectives object
-    this.props.AddElement(`2020-02-b-01-01`, addNewObjective(newObjectiveId));
+    this.props.addElement(`2020-02-b-01-01`, addNewObjective(newObjectiveId));
   }
 
   render() {
@@ -139,7 +139,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  AddElement: AddElementToFragment,
+  addElement: addElementToFragment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions2BApi);
