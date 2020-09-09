@@ -13,7 +13,7 @@ class FormNavigation extends Component {
     const { location, sections } = this.props;
 
     // Get all section data
-    let items = sections
+    const parentItems = sections
       .map(({ id, ordinal, subsections, title }) => ({
         id,
         items:
@@ -36,22 +36,19 @@ class FormNavigation extends Component {
         return updated;
       });
 
-    // Generate new array with only URLs
-    let newItems = [];
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].url !== undefined) {
-        newItems.push(items[i].url);
+    // Generate new array with only URLs (in order) in 1D array
+    let items = [];
+    for (let i = 0; i < parentItems.length; i++) {
+      if (parentItems[i].url !== undefined) {
+        items.push(parentItems[i].url);
       }
 
-      if (items[i].items !== null) {
-        for (let j = 0; j < items[i].items.length; j++) {
-          newItems.push(items[i].items[j].url);
+      if (parentItems[i].items !== null) {
+        for (let j = 0; j < parentItems[i].items.length; j++) {
+          items.push(parentItems[i].items[j].url);
         }
       }
     }
-
-    // Write newItems back into items
-    items = [...newItems];
 
     // Get current url
     let currentUrl = window.location.pathname;
@@ -62,7 +59,7 @@ class FormNavigation extends Component {
     // Determine previous index
     const previousUrl = items[currentIndex - 1];
 
-    // Determin next index
+    // Determine next index
     const nextUrl = items[currentIndex + 1]
 
 
