@@ -8,6 +8,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import Objective2bApi from "../objectives/Objective2bApi";
 import { addNewObjective } from "../ObjectiveAndGoals";
+import { AddElementToFragment } from "../../../../actions/initial";
 import {
   Accordion,
   AccordionItem,
@@ -21,32 +22,14 @@ class Questions2BApi extends Component {
     super(props);
     this.state = {
       subsectionB: this.props.subsectionB,
-      objectivesArray: this.props.subsectionB.parts[0].questions[0].questions,
-      objectiveCount: this.props.subsectionB.parts[0].questions[0].questions
-        .length,
+      objectivesArray: this.props.objectivesArray,
     };
-    this.previousEntry = this.props.previousEntry;
-    this.handleChange = this.handleChange.bind(this);
     this.newObjective = this.newObjective.bind(this);
   }
-  // Get state program (temporary; will be set by API)
   newObjective() {
-    let newObjectiveId = this.state.objectiveCount + 1;
-    this.props.objectivesArray.push(addNewObjective(newObjectiveId));
-    this.setState({
-      objectiveCount: newObjectiveId,
-      objectiveArray: this.state.objectivesArray.push(
-        addNewObjective(newObjectiveId)
-      ),
-    });
-  }
-
-  handleChange(evt) {
-    console.log("Handle Change occured", evt);
-    this.setState({
-      temp: "This has been changed",
-      [evt[0]]: evt[1],
-    });
+    let newObjectiveId = this.props.objectiveCount + 1;
+    //Adds a new objective object to the objectives object
+    this.props.AddElement(`2020-02-b-01-01`, addNewObjective(newObjectiveId));
   }
 
   render() {
@@ -58,7 +41,8 @@ class Questions2BApi extends Component {
             /* Begin parsing through parts */
             this.props.subsectionB.parts.map((part) => (
               <div className="part">
-                {part.id === "2020-02-b" /*this isn't right*/ ? (
+                {part.id ===
+                "2020-02-b" /*Is this handled by conditional logic?*/ ? (
                   part.programType === "medicaid_exp_chip" ||
                   part.programType === "separate_chip" ||
                   part.programType === "combo" ? (
@@ -66,64 +50,60 @@ class Questions2BApi extends Component {
                   ) : null
                 ) : (
                   <div>
-                    <h3 className="part-title">{/*not used?*/}</h3>
-                    {/* NOT USED? Determine if question should be shown */}
+                    <h3 className="part-title"></h3>
                     {part.text}
-                    {/*Looping through objectives objects?*/}
-
                     <div>
-                      {/*Actually looping through objectives */}
-                      {/*      objectives    objective   */}
                       <div className="objective">
                         <Accordion
                           multiple
                           defaultIndex={[...Array(100).keys()]}
                         >
-                          {part.questions.map((objectives) =>
-                            objectives.questions.map((objective) => (
-                              <AccordionItem key={objective.id}>
-                                {objective.questions.map(
-                                  (objectiveGoals, index) =>
-                                    index === 0 ? (
-                                      <div className="accordion-header">
-                                        <h3>
-                                          <AccordionButton>
-                                            <div className="accordion-title">
-                                              Objective:{" "}
-                                              {objectiveGoals.answer
-                                                .default_entry
-                                                ? objectiveGoals.answer
-                                                    .default_entry
-                                                : null}
-                                            </div>
-                                            <div className="arrow"></div>
-                                          </AccordionButton>
-                                          {objectiveGoals.answer
+                          {this.props.objectivesArray.map((objective) => (
+                            <AccordionItem key={objective.id}>
+                              {/*Actually looping through each objective */}
+                              {objective.questions.map(
+                                (objectiveGoals, index) =>
+                                  index === 0 ? (
+                                    <div className="accordion-header">
+                                      <h3>
+                                        <AccordionButton>
+                                          <div className="accordion-title">
+                                            Objective:{" "}
+                                            {objectiveGoals.answer.default_entry
+                                              ? objectiveGoals.answer
+                                                  .default_entry
+                                              : null}
+                                          </div>
+                                          <div className="arrow"></div>
+                                        </AccordionButton>
+                                        {
+                                          //Checks if objective's main question has been answered
+                                          objectiveGoals.answer
                                             .default_entry ? null : (
                                             <QuestionComponent
                                               data={[objectiveGoals]}
                                             />
-                                          )}
-                                        </h3>
-                                      </div>
-                                    ) : (
-                                      <h3>
-                                        <AccordionPanel>
-                                          <Objective2bApi
-                                            goalsArray={
-                                              objectiveGoals.questions
-                                            }
-                                            goalcount={
-                                              objectiveGoals.questions.length
-                                            } //gives object that contains array of goals
-                                          />
-                                        </AccordionPanel>
+                                          )
+                                        }
                                       </h3>
-                                    )
-                                )}
-                              </AccordionItem>
-                            ))
-                          )}
+                                    </div>
+                                  ) : (
+                                    <h3>
+                                      <AccordionPanel>
+                                        <Objective2bApi
+                                          //gives object that contains array of goals
+                                          goalsArray={objectiveGoals.questions}
+                                          goalCount={
+                                            objectiveGoals.questions.length
+                                          }
+                                          objectiveId={objectiveGoals.id}
+                                        />
+                                      </AccordionPanel>
+                                    </h3>
+                                  )
+                              )}
+                            </AccordionItem>
+                          ))}
                         </Accordion>
                       </div>
                     </div>
@@ -158,4 +138,8 @@ const mapStateToProps = (state) => ({
   year: state.formYear,
 });
 
-export default connect(mapStateToProps)(Questions2BApi);
+const mapDispatchToProps = {
+  AddElement: AddElementToFragment,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions2BApi);

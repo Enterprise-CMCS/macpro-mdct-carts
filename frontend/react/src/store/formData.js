@@ -1,4 +1,8 @@
-import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
+import {
+  LOAD_SECTIONS,
+  QUESTION_ANSWERED,
+  QUESTION_ADDED,
+} from "../actions/initial";
 import jsonpath from "jsonpath";
 import { _ } from "underscore";
 import { selectQuestion } from "./selectors";
@@ -6,6 +10,7 @@ import { selectQuestion } from "./selectors";
 const initialState = [];
 
 export default (sdata = initialState, action) => {
+  console.log("action", action.type);
   switch (action.type) {
     case LOAD_SECTIONS:
       return action.data;
@@ -13,7 +18,13 @@ export default (sdata = initialState, action) => {
       const fragment = selectQuestion({ formData: sdata }, action.fragmentId);
       fragment.answer.entry = action.data;
       return JSON.parse(JSON.stringify(sdata));
+    case QUESTION_ADDED:
+      console.log("QuestionAdded");
+      const fragment2 = selectQuestion({ formData: sdata }, action.fragmentId);
+      fragment2.questions.push(action.data);
+      return JSON.parse(JSON.stringify(sdata));
     default:
+      console.log("default");
       return sdata;
   }
 };

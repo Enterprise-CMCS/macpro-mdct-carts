@@ -23,20 +23,8 @@ class Section2BApi extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      objectiveCount: 1,
-      objectiveArray: [],
-      previousObjectivesArray: [],
       pageTitle: "Section 2B: State Plan Goals and Objectives",
     };
-    this.bindToParentContext = this.bindToParentContext.bind(this);
-  }
-
-  bindToParentContext(evtArr) {
-    this.setState({
-      parentHasBeenChanged: this.state.parentHasBeenChanged + 1,
-      lastChangedBy: evtArr[0],
-      [evtArr[0]]: evtArr[1],
-    });
   }
 
   render() {
@@ -61,15 +49,22 @@ class Section2BApi extends Component {
                 id="tab-form"
                 tab={`Section 2B:${subsectionData.title}`}
               >
+                {console.log("objective counte")}
                 <Questions2BApi
                   previousEntry="false"
-                  subsectionB={subsectionData} //[0].questions[0].questions
+                  subsectionB={subsectionData}
+                  objectivesArray={
+                    subsectionData.parts[0].questions[0].questions
+                  }
+                  objectiveCount={
+                    subsectionData.parts[0].questions[0].questions.length
+                  }
                 />
               </TabPanel>
 
               <TabPanel
                 id="tab-lastyear"
-                tab={`FY${this.props.year - 1} answers`}
+                tab={`FY${subsectionData.id.split("-")[0] - 1} answers`}
               >
                 <div className="print-only ly_header">
                   <PageInfo />

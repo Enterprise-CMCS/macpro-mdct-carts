@@ -446,18 +446,6 @@ class QuestionComponent extends Component {
                 />
               ) : null}
 
-              {question.questions && question.type === "fieldset" ? (
-                <div className="cmsfieldset">
-                  {
-                    <QuestionComponent
-                      subquestion={true}
-                      setAnswer={this.props.setAnswer}
-                      data={question.questions} //Array of subquestions to map through
-                    />
-                  }
-                </div>
-              ) : null}
-
               {question.type === "fieldset" &&
               question.fieldset_type === "noninteractive_table" ? (
                 <table className="ds-c-table" width="100%">
@@ -522,6 +510,18 @@ class QuestionComponent extends Component {
                     value={this.buildSynthesizedValue(question)}
                   />
                 </>
+              ) : null}
+
+              {question.questions && question.type === "fieldset" ? (
+                <div className="cmsfieldset">
+                  {
+                    <QuestionComponent
+                      subquestion={true}
+                      setAnswer={this.props.setAnswer}
+                      data={question.questions} //Array of subquestions to map through
+                    />
+                  }
+                </div>
               ) : null}
             </fieldset>
           </div>

@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
+export const QUESTION_ADDED = "QUESTION ADDED";
 
 const temp__data = require("./initial.json");
 
@@ -23,6 +24,19 @@ export const setAnswerEntry = (fragmentId, something) => {
       : something;
   return {
     type: QUESTION_ANSWERED,
+    fragmentId: fragmentId,
+    data: value,
+  };
+};
+
+export const AddElementToFragment = (fragmentId, something) => {
+  const value =
+    something.target && something.target.value
+      ? something.target.value
+      : something;
+  console.log("something", something);
+  return {
+    type: QUESTION_ADDED,
     fragmentId: fragmentId,
     data: value,
   };

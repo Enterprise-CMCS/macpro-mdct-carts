@@ -18,31 +18,22 @@ import CMSLegend from "../../../fields/CMSLegend";
 import Questions2Bapi from "../questions/Questions2Bapi";
 import { addNewGoal } from "../ObjectiveAndGoals";
 import QuestionComponent from "../../../fields/QuestionComponent";
+import { AddElementToFragment } from "../../../../actions/initial";
 
 class Objective2bApi extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      goalsArray: this.props.goalsArray,
-      goalCount: this.props.goalsArray.length,
-    };
     this.newGoal = this.newGoal.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(evt) {
-    this.setState({
-      [evt[0]]: evt[1],
-    });
   }
 
   newGoal() {
-    let newGoalId = this.state.goalCount + 1;
-    this.props.goalsArray.push(addNewGoal(newGoalId));
-    this.setState({
-      goalCount: newGoalId,
-      goalsArray: this.props.goalsArray,
-    });
+    let newGoalId = this.props.goalCount + 1;
+    const objectiveNumber = this.props.objectiveId.split("-")[5];
+    //Adds a repeatable object (contains all 12 goal questions) to the repeatables object
+    this.props.AddElement(
+      `2020-02-b-01-01-${objectiveNumber}-02`,
+      addNewGoal(newGoalId, objectiveNumber)
+    );
   }
 
   render() {
@@ -51,12 +42,6 @@ class Objective2bApi extends Component {
         <div className="objective-body">
           <div className="goals">
             {
-              /**
-               * Maps through array of Previous Goals in state
-               * If the props include previousEntry==="true", render previous year's data
-               */
-
-              //  Alternatively,  This maps through the current goals in state
               <>
                 <Accordion multiple defaultIndex={0}>
                   {this.props.goalsArray.map((goals) => (
@@ -87,7 +72,7 @@ class Objective2bApi extends Component {
 
         <div className="objective-footer">
           <h3 className="question-inner-header">
-            Do you have another goal in your State Plan for this objective?{" "}
+            Do you have another goal in your State Plan for this objective?
           </h3>
           <div className="ds-c-field__hint">Optional</div>
           <button
@@ -108,4 +93,8 @@ const mapStateToProps = (state) => ({
   year: state.global.formYear,
 });
 
-export default connect(mapStateToProps)(Objective2bApi);
+const mapDispatchToProps = {
+  AddElement: AddElementToFragment,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Objective2bApi);
