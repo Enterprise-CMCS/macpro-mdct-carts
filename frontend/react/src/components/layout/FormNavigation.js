@@ -66,16 +66,6 @@ class FormNavigation extends Component {
     return (
       <section className="nav-buttons">
         <div className="ds-l-row">
-          <div className="ds-l-col auto-save">
-            <Button
-              className="ds-c-button--transparent"
-              title="Last edited 3 minutes ago"
-              disabled
-            >
-              All changes auto-saved
-            </Button>
-          </div>
-
           <div className="ds-l-col form-buttons">
 
             {previousUrl ?
