@@ -1,22 +1,17 @@
 name: schema validation
 
 on:
-  push:
+  pull_request:
     paths:
       - 'docs/section-schemas/**.json'
 
-defaults:
-  run:
-    shell: bash
-    working-directory: ./docs/section-schemas/
-
 jobs:
-  schema validation:
-    runs-on: ubunutu-latest
+  schema_validation:
+    runs-on: ubuntu-latest
     container: python:3.8
     steps:
       - uses: actions/checkout@v1
       - name: install dependencies
-        run: pip install jsonschema
+        run: pip install jsonschema jsonpath_ng
       - name: validate all documents
-        run: ./schema.sh
+        run: ./.github/workflows/schema.sh
