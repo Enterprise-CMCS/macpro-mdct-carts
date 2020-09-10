@@ -41,7 +41,7 @@ resource "aws_service_discovery_private_dns_namespace" "frontend" {
 }
 
 resource "aws_cloudwatch_log_group" "frontend" {
-  name = "frontend-${terraform.workspace}"
+    name = "frontend-${terraform.workspace}"
   tags = {
     Workspace = terraform.workspace
   }
