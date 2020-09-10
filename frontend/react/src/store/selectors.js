@@ -75,7 +75,7 @@ const filterDisplay = (question, state) => {
   if (question.questions) {
     // if the current question has subquestions, filter them recursively
     question.questions = question.questions.filter(function (question) {
-      // reassing question.questions to be a filtered version of itself
+      // reassign question.questions to be a filtered version of itself
       return filterDisplay(question, state);
     });
   }
