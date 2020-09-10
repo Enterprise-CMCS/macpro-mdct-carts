@@ -1,5 +1,5 @@
 locals {
-  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
+  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${var.acm_certificate_domain_api_postgres}"
 }
 
 # Number of container instances to spawn per resource. Default is 1.
