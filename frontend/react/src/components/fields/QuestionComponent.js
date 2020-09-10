@@ -440,22 +440,6 @@ class QuestionComponent extends Component {
                 />
               ) : null}
 
-              {question.questions && question.type === "fieldset" ? (
-                <>
-                  <legend className="part__legend">{question.label}</legend>
-                  <span className="ds-c-field__hint">{question.hint}</span>
-                  <div className="cmsfieldset">
-                    {
-                      <QuestionComponent
-                        subquestion={true}
-                        setAnswer={this.props.setAnswer}
-                        data={question.questions}
-                      />
-                    }
-                  </div>
-                </>
-              ) : null}
-
               {question.type === "fieldset" &&
               question.fieldset_type === "noninteractive_table"
                 ? Object.entries(question.fieldset_info).map((value) => {
@@ -506,6 +490,31 @@ class QuestionComponent extends Component {
                     );
                   })
                 : null}
+
+              {question.type === "fieldset" &&
+              question.questions &&
+              question.questions.length > 0 ? (
+                <>
+                  <legend className="question__legend ds-h4">
+                    {question.label}
+                  </legend>
+                  <span className="question__hint ds-c-field__hint">
+                    {question.hint}
+                  </span>
+                  {question.questions.map((q) => {
+                    if (q.type === "fieldset") {
+                      console.log(q);
+                      return (
+                        <div className="question__fieldset">
+                          <legend className="ds-c-label">{q.label}</legend>
+                          <span className="ds-c-field__hint">{q.hint}</span>
+                          {q.questions.length}
+                        </div>
+                      );
+                    } else return <pre>other</pre>;
+                  })}
+                </>
+              ) : null}
             </fieldset>
           </div>
         ))}
