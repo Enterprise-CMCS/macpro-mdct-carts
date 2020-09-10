@@ -445,26 +445,17 @@ class QuestionComponent extends Component {
                 />
               ) : null}
 
-              {question.questions &&
-                question.type === "fieldset" &&
-                question.context_data &&
-                (question.context_data.skip_text ? (
-                  <Alert>
-                    <p className="ds-c-alert__text">
-                      {question.context_data.skip_text}
-                    </p>
-                  </Alert>
-                ) : (
-                  <div className="cmsfieldset">
-                    {
-                      <QuestionComponent
-                        subquestion={true}
-                        setAnswer={this.props.setAnswer}
-                        data={question.questions}
-                      />
-                    }
-                  </div>
-                ))}
+              {question.questions && question.type === "fieldset" ? (
+                <div className="cmsfieldset">
+                  {
+                    <QuestionComponent
+                      subquestion={true}
+                      setAnswer={this.props.setAnswer}
+                      data={question.questions}
+                    />
+                  }
+                </div>
+              ) : null}
 
               {question.type === "fieldset" &&
               question.fieldset_type === "noninteractive_table"
