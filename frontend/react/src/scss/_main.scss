@@ -349,3 +349,19 @@ div[data-state="open"] .accordion-header .arrow:before {
 .add-objective {
   margin-top: ($margin * 4);
 }
+
+.comingsoon {
+  text-align: center;
+
+  h1, h4 {
+    color: $brand-primary;
+    font-weight: $font-weight-bold;
+    text-align: center;
+    width: 100%;
+  }
+
+  div {
+    margin: 0.8rem;
+    width: 100%;
+  }
+}
