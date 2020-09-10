@@ -253,38 +253,3 @@ export const generateSubsectionLabel = (str) => {
   let sectionNumber = Number(idArray[1]);
   return `Section ${sectionNumber}${idArray[2]}`;
 };
-
-// This function requires a single question context and the application state
-// Returns a boolean establishing if a question should display or not
-
-/**
- * This function checks to see if a question should display based on an answer from a different question
- * @function shouldDisplay
- * @param {object} state - The application state from redux, the object required for jsonpath to query
- * @param {object} context - the context_data from a question
- * @returns {boolean} - determines if an element should be filtered out
- */
-export const shouldDisplay = (state, context) => {
-  if (!context || !context.conditional_display) {
-    // if there is no context_data or if there is no conditional_display in the context_data object
-    return true;
-  }
-
-  // Wil return the answer from associated question (Array)
-  let associatedAnswer = jsonpath.query(
-    state,
-    context.conditional_display.hide_if.target
-  );
-
-  if (
-    context.conditional_display.hide_if.values.interactive.includes(
-      associatedAnswer[0]
-    )
-  ) {
-    // If the associated answer IS in the interactive array, remove it
-    return false;
-  } else {
-    // If the associated answer IS NOT in the interactive array, keep it
-    return true;
-  }
-};
