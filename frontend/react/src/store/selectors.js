@@ -1,4 +1,4 @@
-import jsonpath from "jsonpath";
+import jsonpath from "../util/jsonpath";
 
 import { selectFragment, shouldDisplay } from "./formData";
 

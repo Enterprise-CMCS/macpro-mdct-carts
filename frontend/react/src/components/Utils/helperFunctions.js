@@ -1,6 +1,5 @@
 // This function extracts just the unique ID
 // from all objectives & goals, stopping at the underscore
-import jsonpath from "jsonpath";
 
 const sliceId = (id) => {
   let idString = id.toString();
