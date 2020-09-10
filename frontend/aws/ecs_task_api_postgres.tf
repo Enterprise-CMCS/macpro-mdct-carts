@@ -2,7 +2,7 @@ locals {
   endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
 }
 
-# Number of container instances to spawn per resource. Default is 1. 
+# Number of container instances to spawn per resource. Default is 1.
 locals {
   dev_postgres     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
   master_postgres  = terraform.workspace == "master" ? 1 : 0
@@ -52,7 +52,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_user            = data.aws_ssm_parameter.postgres_user.value,
     postgres_password        = data.aws_ssm_parameter.postgres_password.value,
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
-    cloudwatch_stream_prefix = "api_postgres"
+    cloudwatch_stream_prefix = "api_postgres",
+    postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres
   })
 }
 
