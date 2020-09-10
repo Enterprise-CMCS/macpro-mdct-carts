@@ -446,15 +446,19 @@ class QuestionComponent extends Component {
               ) : null}
 
               {question.questions && question.type === "fieldset" ? (
-                <div className="cmsfieldset">
-                  {
-                    <QuestionComponent
-                      subquestion={true}
-                      setAnswer={this.props.setAnswer}
-                      data={question.questions}
-                    />
-                  }
-                </div>
+                <>
+                  <legend className="part__legend">{question.label}</legend>
+                  <span className="ds-c-field__hint">{question.hint}</span>
+                  <div className="cmsfieldset">
+                    {
+                      <QuestionComponent
+                        subquestion={true}
+                        setAnswer={this.props.setAnswer}
+                        data={question.questions}
+                      />
+                    }
+                  </div>
+                </>
               ) : null}
 
               {question.type === "fieldset" &&
