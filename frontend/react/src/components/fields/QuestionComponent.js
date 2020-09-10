@@ -503,12 +503,63 @@ class QuestionComponent extends Component {
                   </span>
                   {question.questions.map((q) => {
                     if (q.type === "fieldset") {
-                      console.log(q);
                       return (
-                        <div className="question__fieldset">
+                        <div className="question__grid">
                           <legend className="ds-c-label">{q.label}</legend>
                           <span className="ds-c-field__hint">{q.hint}</span>
-                          {q.questions.length}
+                          {q.questions.map((field) => {
+                            // unmarked descendants only have one array item
+                            if (
+                              field.fieldset_type === "unmarked_descendants"
+                            ) {
+                              return (
+                                <Choice
+                                  name={field.questions[0].id}
+                                  type="checkbox"
+                                  value={field.questions[0].answer.entry}
+                                  onChange={this.handleCheckboxFlag}
+                                  {...this.props}
+                                >
+                                  {field.questions[0].label}
+                                </Choice>
+                              );
+                            } else if (
+                              field.fieldset_type === "datagrid_with_total"
+                            ) {
+                              return (
+                                <div className="input-grid">
+                                  <div className="ds-l-row input-grid__groups ds-u-margin-top--0">
+                                    {console.log(field)}
+                                    {field.questions.map((f) => {
+                                      return (
+                                        <div className="ds-l-col">
+                                          {console.log(f)}
+                                          <TextField
+                                            className="ds-c-input"
+                                            errorMessage={
+                                              this.state[f.id + "Err"] === false
+                                                ? "Please enter numbers only"
+                                                : false
+                                            }
+                                            label=""
+                                            name={f.id}
+                                            numeric
+                                            onChange={this.handleIntegerChange}
+                                            value={
+                                              (f.answer && f.answer.entry) || ""
+                                            }
+                                          />
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            } else {
+                              console.log(field);
+                              return null;
+                            }
+                          })}
                         </div>
                       );
                     } else return <pre>other</pre>;
