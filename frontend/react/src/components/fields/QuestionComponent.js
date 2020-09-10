@@ -151,9 +151,9 @@ class QuestionComponent extends Component {
     });
   }
 
-  handleFileUpload = (event) => {
+  handleFileUpload(event) {
     this.props.setAnswer(event.target.name, event.target.files);
-  };
+  }
 
   render() {
     return (
