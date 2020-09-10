@@ -30,6 +30,15 @@ const getExactPath = (data, path) => {
       // we get back above are in array form, but we want to cache the string
       // form, so stringify it first.
       exact = jsonpath.stringify(paths[0]);
+
+      // If the incoming path ends with [*], the jsonpath.paths method will
+      // return an array with all of the matching paths, and the first one will
+      // end with [0]. But that's not what is being requested: the [*] at the
+      // end means the request is for ALL of the things, not the first, so in
+      // that case, replace [0] at the end of the exact path with [*].
+      if(path.endsWith('[*]')) {
+        exact = exact.replace(/\[0\]$/, '[*]');
+      }
     } else {
       // If there is NOT a matching path, cache the inexact path so we don't
       // bother doing the path lookup again in the future.
