@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CMSChoice from "./CMSChoice";
 import CMSLegend from "./CMSLegend";
-import { Alert, TextField, ChoiceList } from "@cmsgov/design-system-core";
+import { Alert, TextField, Choice } from "@cmsgov/design-system-core";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
@@ -417,22 +417,17 @@ class QuestionComponent extends Component {
               ) : null}
 
               {question.type === "checkbox_flag" ? (
-                <ChoiceList
-                  choices={[
-                    {
-                      label: "Select",
-                      defaultChecked: question.answer.entry,
-                      value: "",
-                    },
-                  ]}
-                  label=""
-                  hint={question.hint}
+                <Choice
                   name={question.id}
-                  onChange={this.handleCheckboxFlag}
                   type="checkbox"
-                  value={question.answer.entry || ""}
-                />
+                  value={question.answer.entry}
+                  onChange={this.handleCheckboxFlag}
+                  {...this.props}
+                >
+                  {question.label}
+                </Choice>
               ) : null}
+
               {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
               {question.questions &&
               question.type !== "fieldset" &&
