@@ -22,6 +22,9 @@ data "aws_subnet_ids" "public" {
   }
   filter {
     name   = "tag:aws:cloudformation:logical-id"
-    values = ["DmzSubnetAz2", "DmzSubnetAz3"]
+    # The tags are named slightly differently between environments.
+    # Dev/Val1 - DmzSubnetAz2/3
+    # Prod/Test/CM - DmzSubnet2/3
+    values = ["DmzSubnetAz2", "DmzSubnetAz3", "DmzSubnet2", "DmzSubnet3"]
   }
 }
