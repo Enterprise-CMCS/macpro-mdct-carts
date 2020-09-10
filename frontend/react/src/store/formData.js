@@ -10,7 +10,6 @@ import { selectQuestion } from "./selectors";
 const initialState = [];
 
 export default (sdata = initialState, action) => {
-  console.log("action", action.type);
   switch (action.type) {
     case LOAD_SECTIONS:
       return action.data;

@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
-import { addNewGoal } from "../ObjectiveAndGoals";
+import ObjectiveAndGoals from "../ObjectiveAndGoals";
 import QuestionComponent from "../../../fields/QuestionComponent";
 import { addElementToFragment } from "../../../../actions/initial";
 
@@ -23,10 +23,11 @@ class Objective2bApi extends Component {
   newGoal() {
     let newGoalId = this.props.goalCount + 1;
     const objectiveNumber = this.props.objectiveId.split("-")[5];
+    const year = this.props.objectiveId.split("-")[0];
     //Adds a repeatable object (contains all 12 goal questions) to the repeatables object
     this.props.addElement(
       `2020-02-b-01-01-${objectiveNumber}-02`,
-      addNewGoal(newGoalId, objectiveNumber)
+      ObjectiveAndGoals.addNewGoal(newGoalId, objectiveNumber, year)
     );
   }
 

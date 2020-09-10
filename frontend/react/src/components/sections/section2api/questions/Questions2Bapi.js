@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import Objective2bApi from "../objectives/Objective2bApi";
-import { addNewObjective } from "../ObjectiveAndGoals";
+import ObjectiveAndGoals from "../ObjectiveAndGoals";
 import { addElementToFragment } from "../../../../actions/initial";
 import {
   Accordion,
@@ -24,9 +24,13 @@ class Questions2BApi extends Component {
     this.newObjective = this.newObjective.bind(this);
   }
   newObjective() {
-    let newObjectiveId = this.props.objectiveCount + 1;
+    const newObjectiveId = this.props.objectiveCount + 1;
+    const year = this.props.subsectionB.id.split("-")[0];
     //Adds a new objective object to the objectives object
-    this.props.addElement(`2020-02-b-01-01`, addNewObjective(newObjectiveId));
+    this.props.addElement(
+      `2020-02-b-01-01`,
+      ObjectiveAndGoals.addNewObjective(newObjectiveId, year)
+    );
   }
 
   render() {
