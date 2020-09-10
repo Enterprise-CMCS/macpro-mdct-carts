@@ -24,7 +24,11 @@
       {
         "name": "DATABASE",
         "value": "postgres"
-      }
+      },
+      {
+        "name": "POSTGRES_API_URL",
+        "value": "${postgres_api_url}"
+      },
     ],
     "logConfiguration": {
         "logDriver": "awslogs",
