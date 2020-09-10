@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     'localhost'
     '127.0.0.1',
     '[::1]',
-    '10.*',
+    '*',
     os.environ.get('POSTGRES_API_URL')]
 
 # Application definition
