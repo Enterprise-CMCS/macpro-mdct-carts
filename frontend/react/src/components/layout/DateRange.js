@@ -170,7 +170,7 @@ class DateRange extends Component {
     // Determine column
     let index;
     if (input === "monthStart" || input === "monthEnd") {
-      index = 2;
+      index = 1;
     } else {
       index = 0;
     }
@@ -180,10 +180,12 @@ class DateRange extends Component {
       return this.state[{ input }]
     } else {
       if (this.props.question.answer.entry) {
+        if (this.props.question.answer.entry[ordinal] === null) {
+          return null
+        }
         return this.props.question.answer.entry[ordinal].split("-")[index]
-      } else {
-        return null;
       }
+      return null;
     }
   }
 
