@@ -49,7 +49,6 @@ class Section2BApi extends Component {
                 id="tab-form"
                 tab={`Section 2B:${subsectionData.title}`}
               >
-                {console.log("objective counte")}
                 <Questions2BApi
                   previousEntry="false"
                   subsectionB={subsectionData}

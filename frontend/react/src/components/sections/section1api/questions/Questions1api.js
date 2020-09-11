@@ -52,7 +52,6 @@ class Questions1 extends Component {
                   </div>
                 ) : (
                   <div>
-                    WORKS
                     <QuestionComponent
                       data={part.questions}
                       sectionContext={this.props.sectionContext}
@@ -68,12 +67,10 @@ class Questions1 extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    name: state.name,
-    programType: state.programType,
-    year: state.formYear,
-  };
-};
+const mapStateToProps = (state) => ({
+  name: state.name,
+  programType: state.programType,
+  year: state.formYear,
+});
 
 export default connect(mapStateToProps)(Questions1);

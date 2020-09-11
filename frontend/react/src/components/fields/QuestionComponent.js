@@ -372,6 +372,7 @@ class QuestionComponent extends Component {
               ) : null}
 
               {/* If Date range */}
+
               {question.type === "daterange" ? (
                 <DateRange
                   question={question}
@@ -513,7 +514,18 @@ class QuestionComponent extends Component {
                   data={question.questions} //Array of subquestions to map through
                 />
               ) : null}
-
+              {/*Below is required for 2b #3-6 */}
+              {question.questions && question.type === "fieldset" ? (
+                <div className="cmsfieldset">
+                  {
+                    <QuestionComponent
+                      subquestion={true}
+                      setAnswer={this.props.setAnswer}
+                      data={question.questions} //Array of subquestions to map through
+                    />
+                  }
+                </div>
+              ) : null}
               {question.questions &&
                 question.type === "fieldset" &&
                 question.context_data &&
