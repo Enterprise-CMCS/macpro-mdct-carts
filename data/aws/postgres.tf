@@ -6,6 +6,7 @@ module "db" {
   engine                  = "postgres"
   engine_version          = "9.6"
   instance_class          = "db.t3.small"
+  parameter_group_name    = "db-param-group.name"
   allocated_storage       = 50
   storage_encrypted       = true
   name                    = var.postgres_db
@@ -28,6 +29,16 @@ module "db" {
 
 resource "aws_security_group" "db" {
   vpc_id = data.aws_vpc.app.id
+}
+
+resource "aws_db_parameter_group" "db-param-group" {
+  name   = "rds-pg-${terraform.workspace}"
+  family = "postgres9.6"
+
+  parameter {
+    name  = "pgaudit.role"
+    value = "rds_pgaudit"
+  }
 }
 
 resource "random_password" "postgres" {
