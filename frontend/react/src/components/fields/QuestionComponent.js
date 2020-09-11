@@ -482,22 +482,7 @@ class QuestionComponent extends Component {
                   <TextField
                     name={question.id}
                     className="ds-c-input"
-                    label={
-                      "Calculated Value" +
-                      "( #" +
-                      parseInt(
-                        question.fieldset_info.targets[0]
-                          .split("'")[1]
-                          .split("-")[8]
-                      ) +
-                      "/ #" +
-                      parseInt(
-                        question.fieldset_info.targets[1]
-                          .split("'")[1]
-                          .split("-")[8]
-                      ) +
-                      ")"
-                    }
+                    label={"Rate (Auto-calculated)"}
                     value={this.buildSynthesizedValue(question)}
                   />
                 </>
@@ -517,6 +502,7 @@ class QuestionComponent extends Component {
               {/*Below is required for 2b #3-6 */}
               {question.questions && question.type === "fieldset" ? (
                 <div className="cmsfieldset">
+                  {question.label ? <h3>{question.label}</h3> : null}
                   {
                     <QuestionComponent
                       subquestion={true}
