@@ -42,14 +42,22 @@
     font-style: italic;
     padding-top: 0.1rem;
     text-align: center;
+    width: auto;
 
     @media only screen and (min-width: 768px) {
       border-right: 2px solid $white;
+      float: right;
       text-align: right;
     }
   }
 
   .nav-user {
+    text-align: center;
+    float: right;
+    padding: 0 1.2rem;
+    margin: 0 auto;
+    width: auto;
+
     &.open ul:after {
       transform: rotate(0deg);
     }

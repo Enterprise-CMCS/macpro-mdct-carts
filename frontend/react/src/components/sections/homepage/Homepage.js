@@ -26,7 +26,7 @@ class Homepage extends Component {
                 <div className="report-header ds-l-row">
                   <div className="name ds-l-col--1">Year</div>
                   <div className="status ds-l-col--2">Status</div>
-                  <div className="last-edited ds-l-col--6">Last Edited</div>
+                  {/* <div className="last-edited ds-l-col--6">Last Edited</div> */}
                   <div className="actions ds-l-col--3">Actions</div>
                 </div>
 
@@ -37,49 +37,13 @@ class Homepage extends Component {
                   link1URL="/sections/2020/00"
                   link1Text="Edit"
                   link2URL="#"
-                  link2Text="View only"
-                  statusText="Overdue"
+                  link2Text={null}
+                  statusText="In Progress"
                   editor="karen.dalton@state.gov"
-                />
-
-                <ReportItem
-                  name="2019"
-                  lastEditedTime="7:32am"
-                  lastEditedDate="3/20/20"
-                  link1URL="/reports/ny/2019"
-                  link2URL="#"
-                  statusText="Submitted"
-                  editor="karen.dalton@state.gov"
-                />
-
-                <ReportItem
-                  name="2018"
-                  lastEditedTime="5:43pm"
-                  lastEditedDate="1/26/19"
-                  link1URL="/reports/ny/2018"
-                  editor="lucy.santos@state.gov"
-                />
-
-                <ReportItem
-                  name="2017"
-                  lastEditedTime="5:00am"
-                  lastEditedDate="2/13/18"
-                  link1URL="/reports/ny/2017"
-                  link2URL="#"
-                  editor="amos.mac@state.gov"
-                />
-
-                <ReportItem
-                  name="2016"
-                  lastEditedTime="9:13pm"
-                  lastEditedDate="3/20/17"
-                  link1URL="/reports/ny/2016"
-                  link2URL="#"
-                  editor="jaminina.rosanthorapple@state.gov"
                 />
               </div>
             </div>
-            <div className="ds-l-row reports-footer">
+            {/* <div className="ds-l-row reports-footer">
               <div className="displaying ds-l-col--6">
                 Showing <span className="count">1</span> to{" "}
                 <span className="count">5</span> of{" "}
@@ -89,7 +53,7 @@ class Homepage extends Component {
                 Page <span className="number-primary">1</span> ...{" "}
                 <span className="number-outline">2</span>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="ds-l-row">
             <div className="omb-info ds-l-col--12">
