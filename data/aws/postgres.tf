@@ -39,6 +39,11 @@ resource "aws_db_parameter_group" "db_param_group" {
     name  = "pgaudit.role"
     value = "rds_pgaudit"
   }
+
+  parameter {
+    name  = "pgaudit.log"
+    value = "all"
+  }
 }
 
 resource "random_password" "postgres" {
