@@ -33,7 +33,12 @@ DEBUG = True
 #     'api-postgres-master-2052493048.us-east-1.elb.amazonaws.com'
 # ]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost'
+    '127.0.0.1',
+    '[::1]',
+    '*',
+    os.environ.get('POSTGRES_API_URL')]
 
 # Application definition
 

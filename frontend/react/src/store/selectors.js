@@ -1,6 +1,7 @@
 import jsonpath from "../util/jsonpath";
 
-import { selectFragment, shouldDisplay } from "./formData";
+import { selectFragment } from "./formData";
+import { shouldDisplay } from '../util/shouldDisplay'
 
 export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
