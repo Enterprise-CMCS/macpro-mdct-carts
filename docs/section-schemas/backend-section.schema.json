@@ -527,12 +527,84 @@
             "target",
             "values"
           ]
+        },
+        "hide_if_all": {
+          "type": "object",
+          "properties": {
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "comment": {
+              "type": "string"
+            },
+            "values": {
+              "type": "object",
+              "properties": {
+                "interactive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                },
+                "noninteractive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "interactive",
+                "noninteractive"
+              ]
+            }
+          },
+          "required": [
+            "targets",
+            "values"
+          ]
         }
       },
       "additionalProperties": false,
       "required": [
-        "type",
-        "hide_if"
+        "type"
+      ],
+      "oneOf": [
+        {
+          "required": ["hide_if"]
+        },
+        {
+          "required": ["hide_if_all"]
+        }
       ]
     },
     "answer": {

@@ -43,20 +43,22 @@ class Questions1 extends Component {
                 {!part.context_data.show_if_state_program_type_in.includes(
                   stateProgram
                 ) ? (
-                    <div class="ds-c-alert ds-c-alert--hide-icon">
-                      <div class="ds-c-alert__body">
-                        <h3 class="ds-c-alert__heading">
-                          {part.context_data.skip_text}
-                        </h3>
-                      </div>
+                  <div class="ds-c-alert ds-c-alert--hide-icon">
+                    <div class="ds-c-alert__body">
+                      <h3 class="ds-c-alert__heading">
+                        {part.context_data.skip_text}
+                      </h3>
                     </div>
-                  ) : (
-                    <div>WORKS
-                      <QuestionComponent
-                        data={part.questions}
-                        sectionContext={this.props.sectionContext} />
-                    </div>
-                  )}
+                  </div>
+                ) : (
+                  <div>
+                    WORKS
+                    <QuestionComponent
+                      data={part.questions}
+                      sectionContext={this.props.sectionContext}
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -66,10 +68,12 @@ class Questions1 extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.name,
-  programType: state.programType,
-  year: state.formYear,
-});
+const mapStateToProps = (state) => {
+  return {
+    name: state.name,
+    programType: state.programType,
+    year: state.formYear,
+  };
+};
 
 export default connect(mapStateToProps)(Questions1);

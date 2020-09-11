@@ -9,6 +9,7 @@ import { constructIdFromYearSectionAndSubsection } from "./store/formData";
 import Homepage from "./components/sections/homepage/Homepage";
 import BasicInfo from "./components/sections/basicInfo/BasicInfo";
 import BasicInfoApi from "./components/sections/basicinfoapi/BasicInfo";
+import ComingSoon from "./components/sections/comingsoon/ComingSoon";
 import Section1 from "./components/sections/section1/Section1";
 import Section1Api from "./components/sections/section1api/Section1";
 import Section2BApi from "./components/sections/section2api/Section2BApi";
@@ -29,9 +30,10 @@ import Section3AApi from "./components/sections/section3Aapi/Section3A";
 
 let VisibleSidebar =
   window.location.pathname === "/" ||
-  window.location.pathname.split("/")[1] === "reports" ? null : (
-    <Sidebar />
-  );
+    window.location.pathname.split("/")[1] === "reports" ||
+    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
+      <Sidebar />
+    );
 
 const Routes = ({ userData }) => (
   <Router>
@@ -42,6 +44,7 @@ const Routes = ({ userData }) => (
           <Route exact path="/" component={Homepage} />
           <Route exact path="/basic-info" component={BasicInfo} />
           <Route exact path="/basic-info-api" component={BasicInfoApi} />
+          <Route exact path="/coming-soon" component={ComingSoon} />
           <Route exact path="/section1" component={Section1} />
           <Route exact path="/section1-api" component={Section1Api} />
           <Route exact path="/section2B-api" component={Section2BApi} />
@@ -58,11 +61,11 @@ const Routes = ({ userData }) => (
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route
             path="/sections/:year/:sectionOrdinal/:subsectionMarker"
-            children={<InvokeSection userData={userData}/>}
+            children={<InvokeSection userData={userData} />}
           />
           <Route
             path="/sections/:year/:sectionOrdinal"
-            children={<InvokeSection userData={userData}/>}
+            children={<InvokeSection userData={userData} />}
           />
           <Route exact path="/test" component={test} />
         </Switch>
@@ -71,7 +74,7 @@ const Routes = ({ userData }) => (
   </Router>
 );
 
-const InvokeSection = ( {userData} ) => {
+const InvokeSection = ({ userData }) => {
   let { year, sectionOrdinal, subsectionMarker } = useParams();
   const filteredMarker = subsectionMarker
     ? subsectionMarker.toLowerCase()

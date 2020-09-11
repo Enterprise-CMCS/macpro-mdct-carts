@@ -25,13 +25,20 @@ SECRET_KEY = 'uilqxg&r93npq*zt3^h+f4te8#%jh^noc7_r3@&t_ad(8lsr7n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Need to provide the url from terraform before we get specific here... * until then
+# ALLOWED_HOSTS = [
+#     'localhost',
+#     '127.0.0.1',
+#     '[::1]',
+#     'api-postgres-master-2052493048.us-east-1.elb.amazonaws.com'
+# ]
+
 ALLOWED_HOSTS = [
-    'localhost',
+    'localhost'
     '127.0.0.1',
     '[::1]',
-    'api-postgres-master-2052493048.us-east-1.elb.amazonaws.com'
-]
-
+    '*',
+    os.environ.get('POSTGRES_API_URL')]
 
 # Application definition
 
