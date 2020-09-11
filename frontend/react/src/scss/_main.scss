@@ -3,6 +3,7 @@
 **********************/
 .main {
   padding: ($padding * 2) 0;
+  margin-bottom: ($margin * 2);
 }
 
 .page-info {
@@ -48,6 +49,8 @@
 .reports {
   color: $color-hint;
   width: 100%;
+  overflow: scroll;
+  width: calc(100% - 70px);
 
   h3 {
     color: $black;
@@ -118,6 +121,11 @@
   .page-title {
     margin-top: ($margin * 4);
     margin-bottom: $margin;
+    text-align: center;
+
+    @media only screen and (min-width: 768px) {
+      text-align: left;
+    }
   }
 
   .report-section-title {
@@ -125,6 +133,12 @@
   }
 
   .updates {
+    text-align: center;
+
+    @media only screen and (min-width: 768px) {
+      text-align: left;
+    }
+
     h3 {
       color: $black;
       font-weight: $font-weight-normal;
@@ -145,14 +159,15 @@
       border-right: none;
       color: $color-hint;
       padding: ($padding * 4) 0;
-      text-align: center;
-
-      @media only screen and (min-width: 768px) {
-        text-align: left;
-      }
 
       h3 {
         margin-bottom: 0;
+      }
+
+      .update-contents {
+        @media only screen and (min-width: 768px) {
+          padding-left: ($padding * 5);
+        }
       }
 
       .icon {

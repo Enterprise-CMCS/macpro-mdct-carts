@@ -1,0 +1,94 @@
+/**********************
+  FORM
+**********************/
+.form-options {
+  margin: ($padding * 3) 0;
+
+  button {
+    margin-right: ($padding * 3);
+  }
+}
+
+.question-container {
+  margin-bottom: ($padding * 4);
+  position: relative;
+
+  .fill-form.active,
+  .clear-form {
+    float: right;
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+    right: 0;
+    top: 28px;
+    width: 30px;
+
+    a {
+      display: block;
+      height: 100%;
+      pointer-events: all;
+      width: 100%;
+
+      &:after,
+      &:after {
+        content: "\f019";
+        color: $black;
+        font-family: "FontAwesome";
+        height: 20px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20px;
+      }
+    }
+  }
+
+  .fill-form {
+    display: none;
+  }
+
+  .fill-form.active {
+    display: block;
+  }
+
+  .clear-form {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+
+    a:after {
+      content: "\f0e2";
+    }
+  }
+
+  .date-range fieldset > div div,
+  .date-range fieldset > div span {
+    @media only screen and (max-width: 767px) {
+      display: inline-block;
+      vertical-align: top;
+      min-width: 20%;
+      width: auto;
+      flex: none;
+    }
+  }
+
+  .date-range fieldset > div div:nth-of-type(2),
+  .date-range fieldset > div span:first-of-type {
+    display: none;
+  }
+}
+
+.sub-questions {
+  margin-left: 16px;
+}
+/* Conditionals */
+.hide {
+  display: none;
+}
+.conditional {
+  border-left: $border-width solid $brand-primary;
+  margin-left: ($margin * 2);
+  padding-left: ($padding * 2);
+}
