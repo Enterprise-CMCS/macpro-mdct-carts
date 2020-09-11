@@ -1,0 +1,7 @@
+DO $$
+BEGIN
+  CREATE USER ${PG_USER WITH PASSWORD '${PG_PASS}';
+  EXCEPTION WHEN DUPLICATE_OBJECT THEN
+  RAISE NOTICE 'not creating user ${PG_USER} -- it already exists';
+END
+$$;

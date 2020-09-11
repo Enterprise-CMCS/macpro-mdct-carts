@@ -1,7 +1,10 @@
 version: "3.4"
 services:
   postgres:
-    image: postgres:9.6.9
+    build:
+      context: ./postgres_deployer
+      dockerfile: Dockerfile
+      target: deployer
     ports:
       - "5432:5432"
     networks:
@@ -10,6 +13,13 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - PG_DATABASES=postgres
+      - PG_SCHEMAS=public,schip,schipannualreports
+      - PG_RO_ROLE=readonly
+      - PG_RW_ROLE=readwrite
+      - PG_USERS=mpdct_app/@p9P@5s,mpdct_ro/R09P@5s
+      - PG_RO_USERS=mpdct_ro
+      - PG_RW_USERS=mpdct_app
   postgres_deployer:
     build:
       context: ./postgres_deployer
@@ -18,11 +28,11 @@ services:
     networks:
       - net
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
-      - DATABASE=postgres
+      - PGDATABASE=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGHOST=postgres # The api can address the db by its service name over the docker bridge network
+      - PGPORT=5432
     depends_on:
       - postgres
 networks:
