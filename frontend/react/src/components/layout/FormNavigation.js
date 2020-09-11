@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { selectSectionsForNav } from "../../store/selectors";
 
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
@@ -96,38 +97,6 @@ class FormNavigation extends Component {
     );
   }
 }
-
-const selectSectionsForNav = (state) => {
-  if (state.formData) {
-    const sections = state.formData.sort(sortByOrdinal);
-    return sections.map(
-      ({
-        contents: {
-          section: { id, ordinal, subsections, title },
-        },
-      }) => ({
-        id,
-        ordinal,
-        title,
-        subsections: subsections.map(({ id, title }) => ({ id, title })),
-      })
-    );
-  }
-  return [];
-};
-
-const sortByOrdinal = (sectionA, sectionB) => {
-  const a = sectionA.contents.section.ordinal;
-  const b = sectionB.contents.section.ordinal;
-
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
-};
 
 const mapStateToProps = (state) => ({ sections: selectSectionsForNav(state) });
 
