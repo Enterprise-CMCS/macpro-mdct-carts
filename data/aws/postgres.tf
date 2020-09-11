@@ -42,7 +42,7 @@ resource "aws_db_parameter_group" "db_param_group" {
 
   parameter {
     name  = "pgaudit.log"
-    value = "all"
+    value = "ALL"
   }
 }
 
