@@ -149,8 +149,11 @@ class DateRange extends Component {
 
   // This method takes all user input and sets it to state
   handleInput(evt) {
+
+    let tempValue = evt.target.value ? evt.target.value : [];
+
     this.setState({
-      [evt.target.name]: evt.target.value,
+      [evt.target.name]: tempValue,
     });
   }
 
@@ -189,9 +192,7 @@ class DateRange extends Component {
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
                 value={
-                  this.props.previousEntry === true
-                    ? this.state.dummyDigit - 5
-                    : this.state.monthStart
+                  this.state["monthStart"] ? this.state["monthStart"] : this.props.question.answer.entry[0].split("-")[2]
                 }
               />
               <div className="ds-c-datefield__separator">/</div>
@@ -204,9 +205,7 @@ class DateRange extends Component {
                 onBlur={this.validateStartInput}
                 numeric
                 value={
-                  this.props.previousEntry === true
-                    ? this.state.dummyDigit * 202 - 1
-                    : this.state.yearStart
+                  this.state["yearStart"] ? this.state["yearStart"] : this.props.question.answer.entry[0].split("-")[0]
                 }
               />
             </div>
@@ -238,9 +237,7 @@ class DateRange extends Component {
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 value={
-                  this.props.previousEntry === true
-                    ? this.state.dummyDigit
-                    : this.state.monthEnd
+                  this.state["monthEnd"] ? this.state["monthEnd"] : this.props.question.answer.entry[1].split("-")[2]
                 }
               />
               <div className="ds-c-datefield__separator">/</div>
@@ -254,9 +251,7 @@ class DateRange extends Component {
                 onBlur={this.validateEndInput}
                 numeric
                 value={
-                  this.props.previousEntry === true
-                    ? this.state.dummyDigit * 202
-                    : this.state.yearEnd
+                  this.state["yearEnd"] ? this.state["yearEnd"] : this.props.question.answer.entry[1].split("-")[0]
                 }
               />
             </div>

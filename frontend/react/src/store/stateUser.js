@@ -4,10 +4,12 @@ const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
 
 //ACTION CREATORS
-export const getUserData = (userObject) => ({
-  type: USER_INFO,
-  userObject: userObject,
-});
+export const getUserData = (userObject) => {
+  return {
+    type: USER_INFO,
+    userObject: userObject,
+  };
+};
 
 export const getProgramData = (programObject) => ({
   type: PROGRAM_INFO,
@@ -26,7 +28,7 @@ export const getStateData = (stateObject) => ({
 const initialState = {
   name: "New York",
   abbr: "NY",
-  programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
+  programType: "combo", //values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
   imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
   formName: "CARTS FY",
@@ -55,7 +57,7 @@ export default function (state = initialState, action) {
     case PROGRAM_INFO:
       return {
         ...state,
-        programType: action.programObject,
+        programType: action.programType,
         programName: action.programName,
         formName: action.formName,
       };

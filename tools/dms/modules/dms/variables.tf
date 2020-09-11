@@ -29,7 +29,11 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "source_database_name" {
+variable "source_database_name_carts" {
+  description = "Name of source database (psql -d)"
+}
+
+variable "source_database_name_seds" {
   description = "Name of source database (psql -d)"
 }
 
@@ -71,4 +75,8 @@ variable "subnet_ids" {
 
 variable "vpc_id" {
   description = "VPC ID for replication instance security group"
+}
+
+variable "security_group_ids" {
+  description = "Security Group IDs for replication instance"
 }

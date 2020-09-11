@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Autosave from './Autosave'
+import Logout from './Logout'
 
 class Header extends Component {
   constructor() {
@@ -55,7 +56,6 @@ class Header extends Component {
                       <a href="javascript:void(0)">Manage account</a>
                     </li>
                     <li className="logout">
-                      <a href="javascript:void(0)">Log out</a>
                     </li>
                   </ul>
                 </div>
