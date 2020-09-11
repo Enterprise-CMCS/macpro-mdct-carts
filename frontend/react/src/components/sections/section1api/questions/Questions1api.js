@@ -54,22 +54,25 @@ class Questions1 extends Component {
                     <div>
                       <QuestionComponent
                         data={part.questions}
-                        sectionContext={this.props.sectionContext} />
+                        sectionContext={this.props.sectionContext}
+                      />
                     </div>
                   )}
               </div>
             ))}
-          </div>
+          </div >
         ))}
-      </form>
+      </form >
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.name,
-  programType: state.programType,
-  year: state.formYear,
-});
+const mapStateToProps = (state) => {
+  return {
+    name: state.name,
+    programType: state.programType,
+    year: state.formYear,
+  };
+};
 
 export default connect(mapStateToProps)(Questions1);
