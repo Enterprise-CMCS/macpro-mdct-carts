@@ -47,11 +47,13 @@ class UploadComponent extends Component {
         const uint = new Uint8Array(evt.target.result);
 
         let bytes = [];
+
         uint.forEach((byte) => {
           bytes.push(byte.toString(16));
         });
 
         const hex = bytes.join("").toUpperCase();
+
         justToConsole.push({
           name: singleFile.name,
           type: mediaType ? mediaType : "Unknown file type",
@@ -72,6 +74,11 @@ class UploadComponent extends Component {
     // this.setState({
     //   selectedFiles: event.target.files,
     // });
+
+    // TODO:
+    // See issue with microsoft docs, very similar numbers but the zeros are being parsed out
+    // add more numbers to the list
+    // fix that weird parsing bug
 
     //"application/pdf"
     // "image/jpeg"

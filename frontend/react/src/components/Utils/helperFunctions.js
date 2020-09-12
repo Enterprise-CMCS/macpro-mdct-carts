@@ -7,6 +7,7 @@ const sliceId = (id) => {
   return num;
 };
 
+// This helper function takes ina  file signature and returns the file type
 const mimeTypes = (fileSignature) => {
   switch (fileSignature) {
     case "89504E47":
@@ -19,9 +20,20 @@ const mimeTypes = (fileSignature) => {
     case "FFD8FFE3":
     case "FFD8FFE1":
       return "image/jpeg";
+    case "D0CF11E0A1B11AE1":
+    case "DBA52D00":
+    case "504B0304":
+    case "504B34":
+      return "DOC/DOCX";
     default:
       return "Unknown filetype";
   }
 };
 
 export { sliceId, mimeTypes };
+
+// Files must be in one of these formats:
+// PDF, DONE
+// Word,
+// Excel,
+// or a valid image (jpg or png)
