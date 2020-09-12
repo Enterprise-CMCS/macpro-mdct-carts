@@ -7,6 +7,7 @@ import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
 import { selectQuestionsForPart } from "../../store/selectors";
+import UploadComponent from "../layout/UploadComponent";
 
 class QuestionComponent extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class QuestionComponent extends Component {
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeArray = this.handleChangeArray.bind(this);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
+
     this.validatePercentage = this.validatePercentage.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.handleCheckboxFlag = this.handleCheckboxFlag.bind(this);
@@ -149,10 +150,6 @@ class QuestionComponent extends Component {
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
       [evtArray[0] + "Mod"]: true,
     });
-  }
-
-  handleFileUpload(event) {
-    this.props.setAnswer(event.target.name, event.target.files);
   }
 
   render() {
@@ -315,22 +312,23 @@ class QuestionComponent extends Component {
 
               {/* If file upload */}
               {question.type === "file_upload" ? (
-                <div>
-                  <TextField
-                    className="file_upload"
-                    label=""
-                    multiple
-                    name={question.id}
-                    onChange={this.handleFileUpload}
-                    type="file"
-                    value={
-                      this.state[question.id] || this.state[question.id + "Mod"]
-                        ? this.state[question.id]
-                        : question.answer.entry
-                    }
-                  />
-                </div>
-              ) : null}
+                <UploadComponent question={question} />
+              ) : // <div>
+              //   <TextField
+              //     className="file_upload"
+              //     label=""
+              //     multiple
+              //     name={question.id}
+              //     onChange={this.handleFileUpload}
+              //     type="file"
+              //     value={
+              //       this.state[question.id] || this.state[question.id + "Mod"]
+              //         ? this.state[question.id]
+              //         : question.answer.entry
+              //     }
+              //   />
+              // </div>
+              null}
 
               {/* If money */}
               {question.type === "money" ? (
