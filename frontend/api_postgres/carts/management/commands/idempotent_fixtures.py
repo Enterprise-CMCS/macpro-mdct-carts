@@ -43,7 +43,7 @@ class Command(BaseCommand):
             if fixture["model"] == "carts_api.sectionschema":
                 year = fixture["fields"]["year"]
                 try:
-                    existing = SectionSchema.objects.get(year=year)
+                    existing = SectionSchema.objects.filter(year=year)
                     if overwrite:
                         existing.delete()
                         is_new = True
@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 ordinal = fixture["fields"]["contents"]["section"].get(
                     "ordinal")
                 try:
-                    existing = SectionBase.objects.get(
+                    existing = SectionBase.objects.filter(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal)
                     if overwrite:
@@ -74,7 +74,7 @@ class Command(BaseCommand):
                     "ordinal")
                 state = fixture["fields"]["contents"]["section"].get("state")
                 try:
-                    existing = Section.objects.get(
+                    existing = Section.objects.filter(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal,
                         contents__section__state=state)

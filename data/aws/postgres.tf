@@ -24,6 +24,7 @@ module "db" {
   major_engine_version      = "9.6"
   final_snapshot_identifier = "postgres-${terraform.workspace}"
   deletion_protection       = false
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
 
 resource "aws_security_group" "db" {
