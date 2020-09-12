@@ -8,12 +8,12 @@ def main() -> None:
     there = Path("..", "..", "frontend", "api_postgres", "fixtures")
 
     def etl(fpath, modelname, schema):
-        orig = json.loads(fpath.read_text())
+        orig = json.loads(fpath.read_text(encoding='utf8'))
         jsonschema.validate(schema=schema, instance=orig)
         output = transform(modelname, orig)
         Path(there, f.name).write_text(json.dumps(output))
 
-    schema = json.loads(Path(here, "backend-section.schema.json").read_text())
+    schema = json.loads(Path(here, "backend-section.schema.json").read_text(encoding='utf8'))
     schemafixture = transform("carts_api.sectionschema", schema)
     schemapath = Path(there, "backend-section.schema.json")
     schemapath.write_text(json.dumps(schemafixture))
