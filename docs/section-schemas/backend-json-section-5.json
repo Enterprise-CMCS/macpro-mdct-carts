@@ -1,0 +1,70 @@
+{
+  "section": {
+    "year": 2020,
+    "state": null,
+    "valid": null,
+    "ordinal": 5,
+    "id": "2020-05",
+    "type": "section",
+    "title": "Program Financing",
+    "subsections": [
+      {
+        "type": "subsection",
+        "id": "2020-05-a",
+        "description": "Let’s take a look at your program costs for FFY 2020.",
+        "parts": [
+          {
+              "id": "2020-05-a-01",
+              "type": "part",
+              "description": "Tell us how much you spent on your CHIP program over the last federal fiscal year.",
+              "title": "Benefit Costs for FFY 2020",
+              "questions": [
+                {
+                  "type": "fieldset",
+                  "fieldset_type": "synthesized_value",
+                  "label": "Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
+                  "context_data": {
+                    "comment": "Only show this message to states with a combination program",
+                    "show_if_state_program_type_in": ["combo"]
+                  },
+                  "questions": []
+                },
+                {
+                  "id": "2020-05-a-01-01",
+                  "label": "How much did you spend on Managed Care?",
+                  "type": "money",
+                  "answer": {
+                    "entry": null
+                  }
+                },
+                {
+                  "id": "2020-05-a-01-02",
+                  "label": "How much did you spend on Fee for Service?",
+                  "type": "money",
+                  "answer": {
+                    "entry": null
+                  }
+                },
+                {
+                  "id": "2020-05-a-01-03",
+                  "label": "How much did you spend on anything else related to benefit costs?",
+                  "type": "money",
+                  "answer": {
+                    "entry": null
+                  }
+                },
+                {
+                  "id": "2020-05-a-01-04",
+                  "label": "How much did you receive in cost sharing (out-of-pocket) payments from beneficiaries to offset your costs?",
+                  "type": "money",
+                  "answer": {
+                    "entry": null
+                  }
+                }
+              ]
+          }
+        ]
+      }
+     ]
+  }
+}
