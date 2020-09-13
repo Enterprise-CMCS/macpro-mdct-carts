@@ -32,7 +32,7 @@ class SectionSchemaSerializer(serializers.HyperlinkedModelSerializer):
         model = SectionSchema
         fields = ['year', 'contents']
 
-class FMAPSerializer(serializers.ModelSerializer):
+class FMAPSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FMAP
         fields = ['fiscal_year', 'state', 'enhanced_FMAP']
