@@ -24,6 +24,7 @@ router.register(r'groups', views.GroupViewSet)
 router.register(r'sections', views.SectionViewSet)
 router.register(r'sectionbases', views.SectionBaseViewSet)
 router.register(r'sectionschemas', views.SectionSchemaViewSet)
+router.register(r'fmap', views.FMAPViewSet)
 
 api_patterns = [
     path("sections/<int:year>/<str:state>",
@@ -58,4 +59,3 @@ urlpatterns = [
     #  namespace='rest_framework'))
     path("api/v1/", include(api_patterns)),
 ]
-

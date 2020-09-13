@@ -1,4 +1,5 @@
 import json
+import csv
 import jsonschema  # type: ignore
 from pathlib import Path
 
@@ -24,6 +25,26 @@ def main() -> None:
     for f in here.glob("2020-*.json"):
         etl(f, "carts_api.section", schema)
 
+    for f in here.glob("2020-fmap-data.csv"):
+        # probably won't need to update to enter arbitrary years because there
+        # will be an admin interface for CMS users to enter this data.
+        csvf = open(f, 'r')
+        #fields = ("State abbreviation", "State", "FMAP", "enhanced FMAP")
+        reader = csv.DictReader(csvf, delimiter=",")
+        fields = reader.fieldnames
+        fmaps = []
+        for row in reader:
+            obj = {
+                "model": "carts_api.FMAP",
+                "fields": {
+                    "fiscal_year": 2020,
+                    "state": row["State abbreviation"],
+                    "enhanced_FMAP": row["enhanced FMAP"]
+                }
+            }
+            fmaps.append(obj)
+        outputpath = Path(there, "2020-fmap.json")
+        outputpath.write_text(json.dumps(fmaps))
 
 def transform(model, orig):
     models = {

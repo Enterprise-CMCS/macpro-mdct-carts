@@ -23,11 +23,13 @@ from carts.carts_api.serializers import (
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
+    FMAPSerializer,
 )
 from carts.carts_api.models import (
     Section,
     SectionBase,
     SectionSchema,
+    FMAP,
 )
 
 
@@ -63,6 +65,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+class FMAPViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that returns FMAP percentages for each state.
+    """
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = FMAP.objects.all()
+    serializer_class = FMAPSerializer
 
 class SectionViewSet(viewsets.ModelViewSet):
     """
