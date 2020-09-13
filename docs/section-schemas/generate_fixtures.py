@@ -29,7 +29,6 @@ def main() -> None:
         # probably won't need to update to enter arbitrary years because there
         # will be an admin interface for CMS users to enter this data.
         csvf = open(f, 'r')
-        #fields = ("State abbreviation", "State", "FMAP", "enhanced FMAP")
         reader = csv.DictReader(csvf, delimiter=",")
         fields = reader.fieldnames
         fmaps = []
