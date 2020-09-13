@@ -55,6 +55,7 @@ urlpatterns = [
          views.section_by_year_and_state),
     path("structure/<int:year>/<int:section>",
          views.sectionbase_by_year_and_section),
+    path("fmap/<str:state>", views.fmap_by_state),
     # path('api-auth/', include('rest_framework.urls',
     #  namespace='rest_framework'))
     path("api/v1/", include(api_patterns)),

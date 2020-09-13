@@ -73,6 +73,17 @@ class FMAPViewSet(viewsets.ModelViewSet):
     queryset = FMAP.objects.all()
     serializer_class = FMAPSerializer
 
+    #def list(self, request):
+    #    return Response(self.serializer_class(self.queryset).data)
+@api_view(["GET"])
+def fmap_by_state(request, state):
+    """
+    API endpoint that retrieves the FMAP for a single state
+    """
+    fmapdata = FMAP.objects.filter(state=state)
+    serializer = FMAPSerializer(fmapdata, many=True)
+    return Response(serializer.data)
+
 class SectionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
