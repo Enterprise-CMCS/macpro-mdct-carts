@@ -1,23 +1,23 @@
 {
   "section": {
     "year": 2020,
-    "state": null,
+    "state": "AK",
     "valid": null,
-    "ordinal": 5,
-    "id": "2020-05",
+    "ordinal": 6,
+    "id": "2020-06",
     "type": "section",
     "title": "Challenges and Accomplishments",
     "subsections": [
       {
         "type": "subsection",
-        "id": "2020-05-a",
+        "id": "2020-06-a",
         "parts": [
           {
-            "id": "2020-05-a-01",
+            "id": "2020-06-a-01",
             "type": "part",
             "questions": [
               {
-                "id": "2020-05-a-01-01",
+                "id": "2020-06-a-01-01",
                 "label": "How has your state’s political and fiscal environment affected your ability to provide healthcare to low-income children and families?",
                 "type": "text_multiline",
                 "answer": {
@@ -25,23 +25,23 @@
                 }
               },
               {
-                "id": "2020-05-a-01-02",
-                "label": "What’s the greatest challenge your CHIP program has experienced in the past federal fiscal year (FFY)?",
+                "id": "2020-06-a-01-02",
+                "label": "What’s the greatest challenge your CHIP program has experienced in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
               },
               {
-                "id": "2020-05-a-01-03",
-                "label": "What are some of the greatest accomplishments your CHIP program has experienced in the past FFY?",
+                "id": "2020-06-a-01-03",
+                "label": "What are some of the greatest accomplishments your CHIP program has experienced in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
               },
               {
-                "id": "2020-05-a-01-04",
+                "id": "2020-06-a-01-04",
                 "label": "Anything else you’d like to add about your state’s challenges and accomplishments?",
                 "type": "text_multiline",
                 "answer": {
