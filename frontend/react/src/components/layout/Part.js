@@ -16,11 +16,13 @@ const showPart = (context_data, programType) => {
 
 const Part = ({ partId, text, title, context_data, programType }) => {
   if (showPart(context_data, programType)) {
+    let partNum = Number(partId.split("-").pop());
     return (
       <div id={partId}>
-        {title ? <h2>{title}</h2> : <></>}
+
+        <h2>Part {partNum}{title ? ": " + title : <></>}</h2>
         {text ? <p>{text}</p> : <></>}
-  
+
         <QuestionComponent partId={partId} />
       </div>
     );
