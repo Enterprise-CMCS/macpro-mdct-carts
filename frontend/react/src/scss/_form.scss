@@ -193,14 +193,12 @@
 }
 
 .nav-buttons {
+  float: right;
   margin: ($margin * 8) 0 ($margin * 2);
   text-align: center;
+  width: 48%;
 
-  @media only screen and (min-width: 767px) {
-    .auto-save {
-      text-align: left;
-    }
-  }
+ 
   .form-buttons {
     @media only screen and (min-width: 767px) {
       text-align: right;
@@ -213,6 +211,23 @@
         margin: $margin;
       }
     }
+  }
+}
+
+.action-buttons {
+  clear: both;
+}
+
+.autosave {
+  float: left;
+  margin: 64px 0 16px;
+  text-align: center;  
+  width: 48%;
+}
+
+@media only screen and (min-width: 767px) {
+  .autosave {
+    text-align: left;
   }
 }
 
@@ -263,6 +278,7 @@
   .action-buttons {
     display: none;
   }
+  
   .unanswered-text {
     margin-bottom: 70px;
   }

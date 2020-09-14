@@ -64,6 +64,9 @@
         "text": {
           "type": "string"
         },
+        "description": {
+          "type": "string"
+        },
         "parts": {
           "type": "array",
           "items": {
@@ -90,6 +93,9 @@
           "type": "string"
         },
         "text": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         },
         "comment": {
