@@ -27,7 +27,15 @@ Serverless architecture adapted from https://serverless-stack.com/
 * To deploy to AWS: serverless deploy --stage #{Stage Name}
 
 ## Email notifications
-Email recipients for error notifications must be configured through the AWS SNS console
+Email recipients for error notifications must be configured through the AWS SNS console:
+* Navigate to the AWS console
+* Navigate to the SNS dashboard: https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/dashboard
+* Select "Topics" from the left-hand navigational menu
+* Select the Topic for the environment you wish to configure (e.g. topic-cartsseds-master-seds)
+* Click "Create subscription"
+* In the "Protocol" dropdown, select "Email"
+* Provide the email address to receive notifications and click "Create subscription"
+* Once the Subscription to this Topic is created, you will need to navigate to the email address inbox. You will have received a confirmation email from AWS. Clicking the link in the email will validate the email address and begin receiving notifications.
 
 # Workspace/Stage Names
 * master
