@@ -5,6 +5,7 @@ import CMSLegend from "./CMSLegend";
 import { Alert, TextField, Choice } from "@cmsgov/design-system-core";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
+import InputGrid from "./InputGrid";
 import { setAnswerEntry } from "../../actions/initial";
 import { selectQuestionsForPart } from "../../store/selectors";
 
@@ -529,36 +530,11 @@ class QuestionComponent extends Component {
                               field.fieldset_type === "datagrid_with_total"
                             ) {
                               return (
-                                <div className="input-grid">
-                                  <div className="ds-l-row input-grid__groups ds-u-margin-top--0">
-                                    {console.log(field)}
-                                    {field.questions.map((f) => {
-                                      return (
-                                        <div className="ds-l-col">
-                                          {console.log(f)}
-                                          <TextField
-                                            className="ds-c-input"
-                                            errorMessage={
-                                              this.state[f.id + "Err"] === false
-                                                ? "Please enter numbers only"
-                                                : false
-                                            }
-                                            label={f.label}
-                                            name={f.id}
-                                            numeric
-                                            onChange={this.handleIntegerChange}
-                                            value={
-                                              (f.answer && f.answer.entry) || ""
-                                            }
-                                          />
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
+                                <InputGrid
+                                  questions={field}
+                                  changeFunc={this.handleIntegerChange}
+                                />
                               );
-                            } else {
-                              console.log(field);
                               return null;
                             }
                           })}
