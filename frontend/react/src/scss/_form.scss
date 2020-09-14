@@ -1,7 +1,8 @@
 /**********************
   FORM
 **********************/
-.errors, .error {
+.errors,
+.error {
   color: #e31c3d;
 }
 
@@ -123,6 +124,12 @@
 .sub-questions {
   margin-left: 16px;
 }
+
+.question__legend {
+  margin-top: 0;
+  color: $brand-primary;
+}
+
 /* Conditionals */
 .hide {
   display: none;
@@ -140,7 +147,6 @@
 }
 
 .cmsranges {
-
   h3 {
     margin: 2.2rem 0 0 0;
   }

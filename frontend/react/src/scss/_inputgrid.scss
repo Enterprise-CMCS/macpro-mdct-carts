@@ -1,5 +1,13 @@
+.input-grid__total {
+  max-width: 190px;
+}
+
 .question__grid .subquestion {
   border-left: 4px solid $brand-primary;
   margin-left: ($padding * 4);
   padding: 0 ($padding * 2);
+
+  &.input-grid__total {
+    max-width: 200px;
+  }
 }
