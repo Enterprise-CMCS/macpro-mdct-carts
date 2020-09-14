@@ -313,22 +313,7 @@ class QuestionComponent extends Component {
               {/* If file upload */}
               {question.type === "file_upload" ? (
                 <UploadComponent question={question} />
-              ) : // <div>
-              //   <TextField
-              //     className="file_upload"
-              //     label=""
-              //     multiple
-              //     name={question.id}
-              //     onChange={this.handleFileUpload}
-              //     type="file"
-              //     value={
-              //       this.state[question.id] || this.state[question.id + "Mod"]
-              //         ? this.state[question.id]
-              //         : question.answer.entry
-              //     }
-              //   />
-              // </div>
-              null}
+              ) : null}
 
               {/* If money */}
               {question.type === "money" ? (
