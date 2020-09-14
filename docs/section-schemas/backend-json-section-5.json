@@ -546,20 +546,18 @@
                     {"label": "Other", "value": "other"}
                   ],
                   "entry": null
-                },
-                "questions":[
-                  {
-                    "id": "2020-05-a-04-09-a",
-                    "type": "text_multiline",
-                    "label": "If you answered \"other\", what other type of funding did you receive?",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ]
+                }
               },
               {
                 "id": "2020-05-a-04-10",
+                "type": "text_multiline",
+                "label": "If you answered \"other\", what other type of funding did you receive?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-05-a-04-11",
                 "label": "Did your total program costs exceed your federal and state funding?",
                 "type": "radio",
                 "answer": {
@@ -571,7 +569,7 @@
                 },
                 "questions":[
                   {
-                    "id": "2020-05-a-04-10-a",
+                    "id": "2020-05-a-04-11-a",
                     "label": "Briefly explain why your state didn’t have enough funding to cover your program costs.",
                     "type": "text_multiline",
                     "answer": {
@@ -580,9 +578,9 @@
                     "context_data":{
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-05-a-04-10 is no or unanswered; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-05-a-04-11 is no or unanswered; noninteractive: hide if that's no.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-05-a-04-10')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-05-a-04-11')].answer.entry",
                           "values": {
                             "interactive": [null, "no"],
                             "noninteractive": ["no"]
