@@ -11,15 +11,15 @@ module.exports.main = event => {
     dms.startReplicationTask(params, function(error, data) {
         if (error) {
             console.log('AN ERROR OCCURRED')
-            console.log(error, error.stack);
+            console.log(error);
 
             // Set region
             AWS.config.update({region: 'us-east-1'});
 
             // Create publish parameters
             var paramsSns = {
-                Message: 'MESSAGE_TEXT',
-                TopicArn: 'TOPIC_ARN'
+                Message: 'An error occurred while starting the SEDS nightly DMS job: ' + error,
+                TopicArn: process.env.SNS_TOPIC_ARN
             };
 
             // Create promise and SNS service object

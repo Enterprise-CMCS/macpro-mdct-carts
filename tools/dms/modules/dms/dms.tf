@@ -214,16 +214,35 @@ resource "aws_sns_topic" "seds-topic" {
   }
 }
 
-resource "aws_dms_event_subscription" "seds-notification" {
+resource "aws_dms_event_subscription" "seds-notification-task" {
   enabled          = true
+  # All options: ["failure", "configuration change", "deletion", "state change", "creation"]
   event_categories = ["failure"]
-  name             = "dms-event-${var.application}-${terraform.workspace}-seds"
+  name             = "dms-event-task-${var.application}-${terraform.workspace}-seds"
   sns_topic_arn    = aws_sns_topic.seds-topic.arn
   source_ids       = [aws_dms_replication_task.replication-task-seds.replication_task_id]
   source_type      = "replication-task"
 
   tags = {
-    Name        = "${var.team_name} Replication Task"
+    Name        = "${var.team_name} Replication Task Notifications"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+
+resource "aws_dms_event_subscription" "notification-instance" {
+  enabled          = true
+  # All options: ["failure", "configuration change", "low storage", "failover", "deletion", "creation", "maintenance"]
+  event_categories = ["failure"]
+  name             = "dms-event-instance-${var.application}-${terraform.workspace}"
+  sns_topic_arn    = aws_sns_topic.seds-topic.arn
+  source_ids       = [aws_dms_replication_instance.replication-instance.replication_instance_id]
+  source_type      = "replication-instance"
+
+  tags = {
+    Name        = "${var.team_name} Replication Instance Notifications"
     Owner       = var.team_name
     Application = var.application
     Description = "Managed by Terraform"
