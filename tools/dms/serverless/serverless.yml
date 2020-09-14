@@ -32,10 +32,10 @@ provider:
         - ${self:custom.replicationTaskArn.${opt:stage, 'master'}}
 
 # https://www.serverless.com/framework/docs/providers/aws/events/schedule/
-# Runs daily at midnight - cron(0 0 * * ? *)
+# Runs daily at 9am GMT (5am EST) - cron(0 9 * * ? *)
 functions:
   seds-nightly-dms:
     name: cartsseds-run-dms-task-seds-${opt:stage, 'master'}
     handler: runDmsTask.main
     events:
-      - schedule: cron(0 0 * * ? *)
+      - schedule: cron(0 9 * * ? *)
