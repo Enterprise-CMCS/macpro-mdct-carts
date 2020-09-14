@@ -7,7 +7,7 @@ const sliceId = (id) => {
   return num;
 };
 
-// This helper function takes ina  file signature and returns the file type
+// This helper function takes in a  file signature and returns the file type
 const mimeTypes = (fileSignature) => {
   switch (fileSignature) {
     case "89504E47":
@@ -30,7 +30,26 @@ const mimeTypes = (fileSignature) => {
   }
 };
 
-export { sliceId, mimeTypes };
+const fileExtensions = (ext) => {
+  switch (ext) {
+    case "jpg":
+    case "jpeg":
+    case "png":
+    case "document":
+    case "sheet":
+    case "pdf":
+    case "docx":
+    case "doc":
+    case "xltx":
+    case "xlsx":
+    case "xls":
+      return true;
+  }
+
+  return false;
+};
+
+export { sliceId, mimeTypes, fileExtensions };
 
 // Files must be in one of these formats:
 // PDF, DONE
