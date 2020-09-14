@@ -12,6 +12,29 @@ module.exports.main = event => {
         if (error) {
             console.log('AN ERROR OCCURRED')
             console.log(error, error.stack);
+
+            // Set region
+            AWS.config.update({region: 'us-east-1'});
+
+            // Create publish parameters
+            var paramsSns = {
+                Message: 'MESSAGE_TEXT',
+                TopicArn: 'TOPIC_ARN'
+            };
+
+            // Create promise and SNS service object
+            var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(paramsSns).promise();
+
+            // Handle promise's fulfilled/rejected states
+            publishTextPromise.then(
+            function(data) {
+                console.log(`Message ${paramsSns.Message} send sent to the topic ${paramsSns.TopicArn}`);
+                console.log("MessageID is " + data.MessageId);
+            }).catch(
+                function(err) {
+                console.error(err, err.stack);
+            });
+
             return
         }
         else {
