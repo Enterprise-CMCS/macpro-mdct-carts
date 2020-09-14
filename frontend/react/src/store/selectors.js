@@ -86,3 +86,35 @@ const filterDisplay = (question, state) => {
   }
   return true; // default for any questions that pass should display
 };
+
+export const selectSectionsForNav = (state) => {
+  if (state.formData) {
+    const sections = state.formData.sort(sortByOrdinal);
+    return sections.map(
+      ({
+        contents: {
+          section: { id, ordinal, subsections, title },
+        },
+      }) => ({
+        id,
+        ordinal,
+        title,
+        subsections: subsections.map(({ id, title }) => ({ id, title })),
+      })
+    );
+  }
+  return [];
+};
+
+const sortByOrdinal = (sectionA, sectionB) => {
+  const a = sectionA.contents.section.ordinal;
+  const b = sectionB.contents.section.ordinal;
+
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+};
