@@ -44,7 +44,7 @@ const fakeUserData = {
                 "id": "MA",
                 "name": "Massachusetts"
             },
-            "username": "dev-naoise.murphy@arizona.gov",
+            "username": "dev-naoise.murphy@massachusetts.gov",
         }
     }
 };

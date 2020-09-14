@@ -41,7 +41,11 @@ resource "aws_service_discovery_private_dns_namespace" "frontend" {
 }
 
 resource "aws_cloudwatch_log_group" "frontend" {
+<<<<<<< HEAD
     name = "frontend-${terraform.workspace}"
+=======
+  name = "/aws/fargate/${terraform.workspace}"
+>>>>>>> master
   tags = {
     Workspace = terraform.workspace
   }

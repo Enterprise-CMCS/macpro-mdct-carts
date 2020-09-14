@@ -105,7 +105,7 @@ Notes on ``id``
 ++++++++++++++++
 Every construct with an ``id`` has the ``id`` of the nearest parent with an ``id`` plus a hyphen and its own representation, which for most constructs is a two-digit number with a leading zero, starting at "01". Subsections and questions whose parent elements are questions use letter representations, starting with ``a``.
 
-If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as parts, not as questions, which explains the ``id`` values found in Section 2B.
+If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as structues similar to parts (and thus don't use letter markers), not as questions, which explains the ``id`` values found in Section 2B.
 
 Not yet covered
 +++++++++++++++
@@ -166,7 +166,7 @@ The top-level construct is a section. Sections have the following properties:
     The title for the section, for example “Program Fees and Policy Changes”.
 ``subsections``
     Array of ``subsection`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the section.
@@ -199,7 +199,7 @@ Subsections, like subquestions, are represented by letters rather than numbers.
     Section 2 has subsections, for example Section 2b would have an ``id`` of ``2020-02-b``
 ``parts``
     Array of ``part`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the subsection.
@@ -228,7 +228,7 @@ Parts are contained by subsections.
     Presumably always ``part``.
 ``questions``
     Array of ``question`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the part.
@@ -366,6 +366,17 @@ The default for all questions, in both interactive and noninteractive views, is 
         String.
 
         This is a `JSON Path`_ expression that points to the location in the JSON to find the value to be evaluated. Normally this will be the value of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
+    ``values``
+        This object has two properties, ``interactive`` and ``noninteractive``, both of which are an array of values. The values should be integers, strings, or ``null``, where ``null`` represents the absence of an answer.
+``hide_if_all``
+    This construct describes the conditions under which the question should be hidden from view. It has two properties, ``targets`` and ``values``, and the frontend will evaluate the current value of the JSON elements specified by ``targets`` and hide it from view if all values are in the array of values specified for the current view type (``interactive`` or ``noninteractive``).
+
+    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.o
+
+    ``targets``
+        Array[String].
+
+        This is an array of `JSON Path`_ expressions that points to the locations in the JSON to find the values to be evaluated. Normally this will be the values of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
     ``values``
         This object has two properties, ``interactive`` and ``noninteractive``, both of which are an array of values. The values should be integers, strings, or ``null``, where ``null`` represents the absence of an answer.
 
@@ -1042,3 +1053,16 @@ A child construct of the ``objective`` construct or the ``part`` construct. This
 ``repeatable``
 ++++++++++++++
 A child construct of the ``repeatables`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``repeatables``, or ``repeatable`` here we won't be happy and suspect you won't be either.
+
+Practical Editing Considerations
+--------------------------------
+JSON Schema can be somewhat fragile, and this one is relatively complicated. In addition, there are some practical steps for getting changes made to files in this directory (``docs/section-schemas``) through to the database. The process for handling this is:
+
++   Add a file for the new section if there isn't one already, with the same naming scheme as the others, in ``/docs/section-schemas``.
++   Install the Python ``jsonschema`` module locally.
++   Run ``jsonschema -i [one of the existing schemas] backend-section.schema.json`` to cover the bases and make sure there are no problems with either your jsonschema command or the existing ones in your local tree. Note that that command-line ``jsonschema`` interface requires you to add ``-i`` before the name of every file you want to validate against the schema.
++   As you edit the new schema, run ``jsonchema`` against it more or less every time you make a change, because the error reporting can be unhelpful if you're trying to track things down after having made a lot of changes.
++   The ``id`` properties are both finicky and important—see `Notes on id`_—and there's currently no process for automating their generation. When you're done with it otherwise, and it's validating, run the ``validate_id.py`` Python script against your new section. It should flag some errors if they're there. This script is very hacky and very fallible, however.
++   If you want the section to be visible for as specific state, such as Alaska, you will need to copy it and name it the same way the other state-specific files have been named, e.g. ``2020-ak-section-3.json``. Files named this way will get picked up by the script in the next step. These files can be more or less straight copies of the generic section files, but do need to have their top-level ``state`` property set to the two-letter state code (e.g. ``AK``). At time of writing, it only makes sense to create files specific to ``AK``, ``AZ``, and ``MA``.
++   Once done, run the ``generate_fixtures.py`` script in that directory. It will wrap the JSON in a Django-friendly object and copy it (and the rest of the relevant files) to the ``/frontend/api_postgres/fixtures`` directory.
++   Kill your running docker-compose process and run ``docker-compose -f docker-compose.dev.yml down && docker-compose -f docker-compose.dev.yml up --build`` to bring it back up. During startup the new fixtures will be loaded, and once API and UI are up you should be able to see the changes you made. If the new fixture is a generic one not associated with any state, it should be visible at <http://localhost:8000/api/v1/sections/2020/[n]/> where `[n]` is the section number. If it's associated with a state, it should be visible as just data at <http://localhost:8000/api/v1/sections/2020/[state_abbr]/[n]/>  and in the app itself <http://localhost:81/sections/2020/[n]/?dev=dev-[lowercase_state_abbr]> should do it. Note that currently the mock dev users as specified in the URL's ``dev`` param are limited to ``ak``, ``az``, and ``ma``.
