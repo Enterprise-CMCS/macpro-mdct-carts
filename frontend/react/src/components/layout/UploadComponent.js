@@ -8,79 +8,62 @@ class UploadComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.validateFileSignature = this.validateFileSignature.bind(this);
-    this.validateFileExtension = this.validateFileExtension.bind(this);
+    // this.validateFileSignature = this.validateFileSignature.bind(this);
+    this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
   }
 
-  validateFileSignature(event) {
-    // console.log("Lets see inside", event.target.value);
-    if (event.target.files.length !== 0) {
-      console.log("Files", event.target.files);
-      let filesArray = event.target.files;
+  // This approach uses the FileReader to check a file signature in order to validate
 
-      let justToConsole = [];
+  // validateFileSignature(event) {
+  //   if (event.target.files.length !== 0) {
+  //
+  //     let filesArray = event.target.files;
 
-      for (let i = 0; i < filesArray.length; i++) {
-        let err;
-        let singleFile = filesArray[i];
-        // let singleFile = event.target.files[0];
-        let uploadName = singleFile.name;
-        let mediaType = singleFile.type;
-        let mediaSize = singleFile.size / 1024 / 1024; // Converting bytes to MB, roughly
-        let blob = singleFile.slice(0, 4);
+  //     let filePayload = [];
 
-        let filereader = new FileReader();
+  //     for (let i = 0; i < filesArray.length; i++) {
+  //       let err;
+  //       let singleFile = filesArray[i];
 
-        filereader.onloadend = function (evt) {
-          if (evt.target.readyState === FileReader.DONE) {
-            const uint = new Uint8Array(evt.target.result);
+  //       let uploadName = singleFile.name;
+  //       let mediaType = singleFile.type;
+  //       let mediaSize = singleFile.size / 1024 / 1024; // Converting bytes to MB, roughly
+  //       let blob = singleFile.slice(0, 4);
 
-            let bytes = [];
+  //       let filereader = new FileReader();
 
-            uint.forEach((byte) => {
-              bytes.push(byte.toString(16));
-            });
+  //       filereader.onloadend = function (evt) {
+  //         if (evt.target.readyState === FileReader.DONE) {
+  //           const uint = new Uint8Array(evt.target.result);
 
-            const hex = bytes.join("").toUpperCase();
+  //           let bytes = [];
 
-            justToConsole.push({
-              name: uploadName,
-              type: mediaType ? mediaType : "Unknown file type",
-              binaryFileType: mimeTypes(hex),
-              hex: hex,
-            });
-          }
-        };
+  //           uint.forEach((byte) => {
+  //             bytes.push(byte.toString(16));
+  //           });
 
-        filereader.readAsArrayBuffer(blob);
-        // filereader.readAsArrayBuffer(blob);
-      }
-      console.log("show me formatted", justToConsole);
-      // Using the FileReader to read the first four byes and determine the mime of the type of file
-      // More secure than the browser File API which really only reads the file extension (Which can be wrong or missing)
-      // Will use 'Magic numbers'/file signatures to identify a file format or protocol
+  //           const hex = bytes.join("").toUpperCase();
 
-      // this.setState({
-      //   selectedFiles: event.target.files,
-      // });
+  //           filePayload.push({
+  //             name: uploadName,
+  //             type: mediaType ? mediaType : "Unknown file type",
+  //             binaryFileType: mimeTypes(hex),
+  //             hex: hex,
+  //           });
+  //         }
+  //       };
 
-      // TODO:
-      // See issue with microsoft docs, very similar numbers but the zeros are being parsed out
-      // add more numbers to the list
-      // fix that weird parsing bug
+  //       filereader.readAsArrayBuffer(blob);
+  //     }
 
-      //"application/pdf"
-      // "image/jpeg"
-      // "image/png"
-      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-    }
-  }
+  //     // Using the FileReader to read the first four byes and determine the mime of the type of file
+  //     // More secure than the browser File API which really only reads the file extension (Which can be wrong or missing)
+  //     // Will use 'Magic numbers'/file signatures to identify a file format or protocol
+  //   }
+  // }
 
-  // TODO: when one file errors, the others are loaded but the error stays
-  // to duplicate: try loading all 9
-
+  // Removes a file, but just from local state. Should include an HTTP request as well/ instead
   removeFile(evt) {
     // find it in state
     let filesInLocalState = this.state.loadedFiles;
@@ -96,7 +79,10 @@ class UploadComponent extends Component {
     // Will need some form of put/delete request to remove the deleted files
   }
 
-  validateFileExtension(event) {
+  // TODO: when one file errors, the others are loaded but the error stays
+  // to duplicate: try loading all 9
+
+  validateFileByExtension(event) {
     if (event.target.files.length !== 0) {
       let filesArray = event.target.files;
       let filePayload = [];
@@ -111,11 +97,14 @@ class UploadComponent extends Component {
         let included = fileExtensions(mediaExtension); // Check if it is included in the list of acceptable file extensions
 
         if (included && mediaSize < 25) {
+          // Some HTTP Request or middleware
+
           filePayload.push({
             name: uploadName,
             rawMediaType: singleFile.type,
             type: included ? mediaExtension : "Unknown file type",
             size: mediaSize,
+            UUID: "999", // this should be some unique identifier returned from S3
           });
         }
 
@@ -129,7 +118,6 @@ class UploadComponent extends Component {
           errorString = errorString.concat(
             `${uploadName} exceeds 25MB file size maximum`
           );
-          event.target.files[i].value = "";
         }
       }
 
@@ -142,6 +130,9 @@ class UploadComponent extends Component {
 
       console.log("Formatted payload:", filePayload);
 
+      if (errorString === "") {
+        this.props.setAnswer(event.target.name, filePayload);
+      }
       // Results from file.type
       //PDF: "application/pdf"
       // JPEG: "image/jpeg"
@@ -153,20 +144,22 @@ class UploadComponent extends Component {
   render() {
     return (
       <div>
-        <TextField
-          accept=".jpg, .png, .docx, .doc, .pdf, .xltx, .xlsx, .xls" // AC: which excel filetypes are OK?
-          className="file_upload"
-          errorMessage={this.state.inputErrors}
-          hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
-          label=""
-          multiple
-          name={this.props.question.id}
-          //   onChange={this.validateFileSignature}
-          onChange={this.validateFileExtension}
-          type="file"
-          //   value={this.props.question.answer.entry || null}
-        />
-        {this.state.loadedFiles
+        <div>
+          <TextField
+            accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm" // AC: which excel filetypes are OK?
+            className="file_upload"
+            errorMessage={this.state.inputErrors}
+            hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
+            label=""
+            multiple
+            name={this.props.question.id}
+            //   onChange={this.validateFileSignature} // Validation by file signature
+            onChange={this.validateFileByExtension}
+            type="file"
+          />
+        </div>
+
+        {this.state.loadedFiles // Display the files that have been uploaded
           ? this.state.loadedFiles.map((element) => (
               <div>
                 <a href={element.name} download>
@@ -178,7 +171,7 @@ class UploadComponent extends Component {
                   onClick={this.removeFile}
                   size="small"
                 >
-                  Remove file
+                  x
                 </Button>
               </div>
             ))
