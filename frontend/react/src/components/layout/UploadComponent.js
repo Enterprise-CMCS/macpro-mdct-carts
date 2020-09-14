@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TextField } from "@cmsgov/design-system-core";
+import { TextField, Button } from "@cmsgov/design-system-core";
 import { mimeTypes, fileExtensions } from "../Utils/helperFunctions";
 import { setAnswerEntry } from "../../actions/initial";
 
 class UploadComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      //   inputErrors: "",
-    };
+    this.state = {};
     this.validateFileSignature = this.validateFileSignature.bind(this);
     this.validateFileExtension = this.validateFileExtension.bind(this);
+    this.removeFile = this.removeFile.bind(this);
   }
 
   validateFileSignature(event) {
@@ -79,6 +78,24 @@ class UploadComponent extends Component {
     }
   }
 
+  // TODO: when one file errors, the others are loaded but the error stays
+  // to duplicate: try loading all 9
+
+  removeFile(evt) {
+    // find it in state
+    let filesInLocalState = this.state.loadedFiles;
+
+    let filteredStateFiles = filesInLocalState.filter(
+      (e) => e.name !== evt.target.name
+    );
+
+    this.setState({
+      loadedFiles: filteredStateFiles,
+    });
+
+    // Will need some form of put/delete request to remove the deleted files
+  }
+
   validateFileExtension(event) {
     if (event.target.files.length !== 0) {
       let filesArray = event.target.files;
@@ -90,30 +107,37 @@ class UploadComponent extends Component {
         let uploadName = singleFile.name;
         let mediaSize = singleFile.size / 1024 / 1024; // Converting bytes to MB, roughly
 
-        console.log("size??", mediaSize);
-
         let mediaExtension = uploadName.split(".").slice(-1)[0]; // Grab file type from extension name
         let included = fileExtensions(mediaExtension); // Check if it is included in the list of acceptable file extensions
 
-        if (included) {
+        if (included && mediaSize < 25) {
           filePayload.push({
             name: uploadName,
             rawMediaType: singleFile.type,
             type: included ? mediaExtension : "Unknown file type",
             size: mediaSize,
           });
-        } else {
-          errorString.concat(`${uploadName} is not an approved file type`);
+        }
+
+        if (!included) {
+          errorString = errorString.concat(
+            `${uploadName} is not an approved file type`
+          );
         }
 
         if (mediaSize > 25) {
-          errorString.concat(`${uploadName} exceeds 25MB file size maximum`);
+          errorString = errorString.concat(
+            `${uploadName} exceeds 25MB file size maximum`
+          );
+          event.target.files[i].value = "";
         }
       }
 
       this.setState({
         inputErrors: errorString || null,
-        loadedFiles: [...filePayload],
+        loadedFiles: this.state.loadedFiles
+          ? [...this.state.loadedFiles, ...filePayload]
+          : [...filePayload],
       });
 
       console.log("Formatted payload:", filePayload);
@@ -130,16 +154,17 @@ class UploadComponent extends Component {
     return (
       <div>
         <TextField
-          errorMessage={this.state.inputErrors}
           accept=".jpg, .png, .docx, .doc, .pdf, .xltx, .xlsx, .xls" // AC: which excel filetypes are OK?
           className="file_upload"
+          errorMessage={this.state.inputErrors}
+          hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
           label=""
           multiple
           name={this.props.question.id}
           //   onChange={this.validateFileSignature}
           onChange={this.validateFileExtension}
           type="file"
-          value={this.props.question.answer.entry || null}
+          //   value={this.props.question.answer.entry || null}
         />
         {this.state.loadedFiles
           ? this.state.loadedFiles.map((element) => (
@@ -148,6 +173,13 @@ class UploadComponent extends Component {
                   {" "}
                   {element.name}{" "}
                 </a>
+                <Button
+                  name={element.name}
+                  onClick={this.removeFile}
+                  size="small"
+                >
+                  Remove file
+                </Button>
               </div>
             ))
           : null}
