@@ -43,7 +43,7 @@ class FormNavigation extends Component {
                 <Button
                   type="submit"
                   className="ds-c-button"
-                  href={previousUrl}
+                  onClick={() => { history.push(previousUrl); }}
                 >
                   <FontAwesomeIcon icon={faAngleLeft} /> Previous
                 </Button>
@@ -54,7 +54,7 @@ class FormNavigation extends Component {
                 <Button
                   type="submit"
                   className="ds-c-button ds-c-button--primary"
-                  href={nextUrl}
+                  onClick={() => { history.push(nextUrl); }}
                 >
                   Next <FontAwesomeIcon icon={faAngleRight} />
                 </Button>
