@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from carts.carts_api.models import Section, SectionBase, SectionSchema
+from carts.carts_api.models import Section, SectionBase, SectionSchema, FMAP
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -31,3 +31,8 @@ class SectionSchemaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SectionSchema
         fields = ['year', 'contents']
+
+class FMAPSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = FMAP
+        fields = ['fiscal_year', 'state', 'enhanced_FMAP']
