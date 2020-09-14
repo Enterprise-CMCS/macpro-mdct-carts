@@ -65,11 +65,10 @@ resource "aws_dms_replication_instance" "replication-instance" {
     Owner       = var.team_name
   }
 
-  vpc_security_group_ids = [
-    aws_security_group.replication_instance.id,
-    "sg-d67ae9ac",
-    "sg-94c3c7ef"
-  ]
+  vpc_security_group_ids = concat(
+    [aws_security_group.replication_instance.id],
+    var.security_group_ids
+  )
 }
 
 # Create new source endpoints

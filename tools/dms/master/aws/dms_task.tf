@@ -19,4 +19,5 @@ module "dms_master" {
   target_database_host     = "postgres-rf-master.ccjaiigdw7dc.us-east-1.rds.amazonaws.com"
   subnet_ids               = ["subnet-0cf8cc26", "subnet-4db58215", "subnet-2fc12566"]
   vpc_id                   = "vpc-3f3daa58"
+  security_group_ids       = ["sg-d67ae9ac", "sg-94c3c7ef"]
 }

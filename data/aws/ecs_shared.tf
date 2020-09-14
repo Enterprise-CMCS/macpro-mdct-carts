@@ -32,7 +32,7 @@ resource "aws_ecs_cluster" "database" {
 }
 
 resource "aws_cloudwatch_log_group" "database" {
-  name = "database-${terraform.workspace}"
+  name = "/aws/rds/${terraform.workspace}"
   tags = {
     Workspace = terraform.workspace
   }
