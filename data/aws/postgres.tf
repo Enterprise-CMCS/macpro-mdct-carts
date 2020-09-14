@@ -6,6 +6,7 @@ module "db" {
   engine                  = "postgres"
   engine_version          = "9.6"
   instance_class          = "db.t3.small"
+  parameter_group_name    = aws_db_parameter_group.db_param_group.id
   allocated_storage       = 50
   storage_encrypted       = true
   name                    = var.postgres_db
@@ -24,10 +25,26 @@ module "db" {
   major_engine_version      = "9.6"
   final_snapshot_identifier = "postgres-${terraform.workspace}"
   deletion_protection       = false
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
 
 resource "aws_security_group" "db" {
   vpc_id = data.aws_vpc.app.id
+}
+
+resource "aws_db_parameter_group" "db_param_group" {
+  name   = "rds-pg-${terraform.workspace}"
+  family = "postgres9.6"
+
+  parameter {
+    name  = "pgaudit.role"
+    value = "rds_pgaudit"
+  }
+
+  parameter {
+    name  = "pgaudit.log"
+    value = "ALL"
+  }
 }
 
 resource "random_password" "postgres" {

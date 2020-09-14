@@ -20,6 +20,7 @@ export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
     return {
       parts: subsection.parts.map((part) => part.id),
       title: subsection.title,
+      text: subsection.text,
     };
   }
   return null;
