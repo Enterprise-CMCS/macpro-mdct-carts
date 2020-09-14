@@ -11,45 +11,14 @@ const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 class FormNavigation extends Component {
 
   render() {
-    const { location, sections } = this.props;
+    const { history, location, sections } = this.props;
 
-    // Get all section data
-    const parentItems = sections
-      .map(({ id, ordinal, subsections, title }) => ({
-        id,
-        items:
-          subsections.length < 2
-            ? null
-            : subsections.map(({ id, title }, i) => ({
-              onClick: this.click,
-              selected: location.pathname.startsWith(idToUrl(id)),
-              url: idToUrl(id),
-            })),
-        label: ordinal > 0 ? `Section ${ordinal}: ${title}` : title,
-        onClick: this.click,
-        selected: location.pathname.startsWith(idToUrl(id)),
-      }))
-      .map(({ id, items, ...rest }) => {
-        const updated = { id, items, ...rest };
-        if (items == null) {
-          updated.url = idToUrl(id);
-        }
-        return updated;
+    const items = [];
+    sections.forEach(section => {
+      section.subsections.forEach(subsection => {
+        items.push(idToUrl(subsection.id));
       });
-
-    // Generate new array with only URLs (in order) in 1D array
-    let items = [];
-    for (let i = 0; i < parentItems.length; i++) {
-      if (parentItems[i].url !== undefined) {
-        items.push(parentItems[i].url);
-      }
-
-      if (parentItems[i].items !== null) {
-        for (let j = 0; j < parentItems[i].items.length; j++) {
-          items.push(parentItems[i].items[j].url);
-        }
-      }
-    }
+    });
 
     // Get current url
     let currentUrl = window.location.pathname;
