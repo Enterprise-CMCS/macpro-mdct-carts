@@ -3750,7 +3750,6 @@
           {
             "id": "2020-03-h-01",
             "type": "part",
-            "title": "Part 1",
             "questions": [
               {
                 "id": "2020-03-h-01-01",
@@ -3813,7 +3812,6 @@
           {
             "id": "2020-03-h-02",
             "type": "part",
-            "title": "Part 2",
             "text": "If you’ve collected CAHPS survey results, complete Part 2. If you’ve already submitted CAHPS raw data to the AHRQ CAHPS database, Part 2 is optional.",
             "context_data": {
               "skip_text": "Part 2 omitted because you indicated that have no collected CAHPS survey results",
@@ -4098,7 +4096,6 @@
           {
             "id": "2020-03-h-03",
             "type": "part",
-            "title": "Part 3",
             "text": "If you haven’t collected CAHPS survey results, complete Part 3. ",
             "context_data": {
               "skip_text": "Part 3 omitted because you indicated that have collected CAHPS survey results",
