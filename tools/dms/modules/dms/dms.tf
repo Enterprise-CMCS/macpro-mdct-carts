@@ -200,3 +200,34 @@ resource "aws_security_group_rule" "postgres_ingress_from_api_postgres" {
   source_security_group_id = aws_security_group.replication_instance.id
   security_group_id        = data.aws_ssm_parameter.postgres_security_group.value
 }
+
+# Setup notifications for the SEDS nightly DMS job
+# TO email addresses must be configured through the AWS SNS console
+resource "aws_sns_topic" "seds-topic" {
+  name = "topic-${var.application}-${terraform.workspace}-seds"
+
+  tags = {
+    Name        = "${var.team_name} Replication Task"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+
+resource "aws_dms_event_subscription" "seds-notification" {
+  enabled          = true
+  event_categories = ["failure"]
+  name             = "dms-event-${var.application}-${terraform.workspace}-seds"
+  sns_topic_arn    = aws_sns_topic.seds-topic.arn
+  source_ids       = [aws_dms_replication_task.replication-task-seds.replication_task_id]
+  source_type      = "replication-task"
+
+  tags = {
+    Name        = "${var.team_name} Replication Task"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
