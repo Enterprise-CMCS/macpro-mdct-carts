@@ -420,7 +420,7 @@ class QuestionComponent extends Component {
                 <Choice
                   name={question.id}
                   type="checkbox"
-                  value={question.answer.entry}
+                  value={question.answer.entry || "false"}
                   onChange={this.handleCheckboxFlag}
                   {...this.props}
                 >
@@ -516,7 +516,9 @@ class QuestionComponent extends Component {
                                 <Choice
                                   name={field.questions[0].id}
                                   type="checkbox"
-                                  value={field.questions[0].answer.entry}
+                                  value={
+                                    field.questions[0].answer.entry || "false"
+                                  }
                                   onChange={this.handleCheckboxFlag}
                                   {...this.props}
                                 >
@@ -541,7 +543,7 @@ class QuestionComponent extends Component {
                                                 ? "Please enter numbers only"
                                                 : false
                                             }
-                                            label=""
+                                            label={f.label}
                                             name={f.id}
                                             numeric
                                             onChange={this.handleIntegerChange}
