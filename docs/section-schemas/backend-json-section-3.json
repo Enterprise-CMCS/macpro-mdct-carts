@@ -4205,7 +4205,7 @@
                     {
                       "value": "yes",
                       "label": "Yes"
-                    }
+                    },
                     {
                       "value": "no",
                       "label": "No"
@@ -4247,10 +4247,61 @@
               {
                 "id": "2020-03-i-02-04",
                 "label": "How many children in the HSI program are below your state's FPL threshold?",
-                "hint": "",
+                "hint": "Skip this question if you are already reporting this information elsewhere to CMS.",
                 "type": "integer",
                 "answer": {
                   "entry": null
+                }
+              },
+              {
+                "id": "2020-03-i-02-05",
+                "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact.",
+                "hint": "Skip this question if you are already reporting this information elsewhere to CMS.",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-i-02-06",
+                "label": "What outcomes have you found in measuring the impact?",
+                "hint": "Skip this question if you are already reporting this information elsewhere to CMS.",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          },
+          {
+            "id": "2020-03-i-03",
+            "type": "part",
+            "questions": [
+              {
+                "id": "2020-03-i-03-01",
+                "label": "",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                },
+                "context_data": {
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2020-03-i-01-01 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
+                    "skip_text": "This section only applies to states with Health Service Initiatives. Skip to the next section.",
+                    "hide_if": {
+                      "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
+                      "values": {
+                        "interactive": [
+                          null,
+                          "no"
+                        ],
+                        "noninteractive": [
+                          "no"
+                        ]
+                      }
+                    }
+                  }
                 }
               }
             ]
