@@ -35,10 +35,11 @@ A PR must be reviewed and approved by someone other than the submitter. When the
    1. `cd cms-carts-seds`
 2. Navigate to the 'frontend' subfolder
    1. `cd frontend`
+   2.  `docker create network data_net` (should only be necessary on first build)`
 3. Run `docker-compose -f docker-compose.dev.yml down`
 4. Run `docker-compose -f docker-compose.dev.yml up --build`
 5. In another terminal window:
-   1. For Linux: run `local-additional.sh`
+   1. ~~(Should no longer be necessary For Linux: run `local-additional.sh`)~~
    2. For Windows: run `docker-compose -f docker-compose.dev.yml run api_postgres sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py generate_fixtures"`
 6. Available Endpoints:
     - `/api/v1/sections/<int:year>/<str:state>`: all the sections for a year and state, e.g. `/api/v1/sections/2020/ak`.
