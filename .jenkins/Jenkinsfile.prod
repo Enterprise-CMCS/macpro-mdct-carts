@@ -40,11 +40,9 @@ pipeline {
           jenkinsUtils.triggerEcrScan("postgres_deployer", env.VERSION)
           jenkinsUtils.triggerEcrScan("postgres_django", env.VERSION)
           jenkinsUtils.triggerEcrScan("sqlserver_django", env.VERSION)
-          jenkinsUtils.triggerEcrScan("react", env.VERSION)
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.VERSION)
           jenkinsUtils.fetchEcrScanResult("postgres_django", env.VERSION)
           jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.VERSION)
-          jenkinsUtils.fetchEcrScanResult("react", env.VERSION)
         }
       }
       post {
