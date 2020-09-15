@@ -606,14 +606,10 @@
       ],
       "oneOf": [
         {
-          "required": [
-            "hide_if"
-          ]
+          "required": ["hide_if"]
         },
         {
-          "required": [
-            "hide_if_all"
-          ]
+          "required": ["hide_if_all"]
         }
       ]
     },
@@ -723,10 +719,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "label",
-          "value"
-        ]
+        "required": ["label", "value"]
       }
     }
   },
