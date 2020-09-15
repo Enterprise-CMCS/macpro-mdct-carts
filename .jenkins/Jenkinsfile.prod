@@ -109,7 +109,7 @@ pipeline {
             aws s3 sync build s3://${S3_BUCKET_NAME}
             # Cloudfront cache invalidation
             aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
-             '''
+          '''
         }
       }
       post {
