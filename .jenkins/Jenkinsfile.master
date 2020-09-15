@@ -26,9 +26,6 @@ pipeline {
       }
     }
     stage("Build and Push Artifacts") {
-      when {
-        expression { env.DEPLOY == "true"}
-      }
       steps {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
