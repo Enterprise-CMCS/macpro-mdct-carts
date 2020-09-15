@@ -65,7 +65,7 @@
   "prettier": {},
   "husky": {
     "hooks": {
-      "pre-commit": "npx prettier $(git diff --cached --name-only --relative | xargs) --check"
+      "pre-commit": "npx prettier $(git diff --cached --name-only --relative | xargs) --check || true"
     }
   }
 }
