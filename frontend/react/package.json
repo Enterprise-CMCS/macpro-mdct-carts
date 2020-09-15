@@ -35,7 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier $(git diff --name-only --relative | grep '.js$' | xargs) -w"
+    "prettier": "npx prettier $(git diff --name-only --relative | xargs) -w"
   },
   "eslintConfig": {
     "extends": "react-app"
