@@ -40,7 +40,7 @@ pipeline {
         }
         dir('frontend/react') {
           sh '''
-            docker run --rm -w /app -v $(pwd):/app node:14.4.0 npm ci && cp env.sh .env build/
+            docker run --rm -w /app -v $(pwd):/app node:14.4.0 npm ci && npm run build && cp env.sh .env build/
             tar -zcvf cartsbuild.tar.gz build
             aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
             rm -rf build cartsbuild.tar.gz
