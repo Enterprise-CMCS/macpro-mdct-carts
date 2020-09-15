@@ -3822,7 +3822,6 @@
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
                     "interactive": [
-                      null,
                       "no"
                     ],
                     "noninteractive": [
