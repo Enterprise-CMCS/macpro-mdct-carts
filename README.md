@@ -35,7 +35,7 @@ A PR must be reviewed and approved by someone other than the submitter. When the
    1. `cd cms-carts-seds`
 2. Navigate to the 'frontend' subfolder
    1. `cd frontend`
-   2.  `docker create network data_net` (should only be necessary on first build)`
+   2.  `docker network create data_net` (should only be necessary on first build)`
 3. Run `docker-compose -f docker-compose.dev.yml down`
 4. Run `docker-compose -f docker-compose.dev.yml up --build`
 5. In another terminal window:
