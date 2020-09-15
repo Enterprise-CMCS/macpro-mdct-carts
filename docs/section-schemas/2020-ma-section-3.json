@@ -3772,8 +3772,7 @@
                   {
                     "id": "2020-03-h-01-01-a",
                     "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database?",
-                    "type": "checkbox",
-                    "hint": "Select all that apply.",
+                    "type": "radio",
                     "answer": {
                       "entry": null,
                       "options": [
