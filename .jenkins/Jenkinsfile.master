@@ -30,9 +30,9 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           lock('docker_socket') {
-            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_BASE_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.JOB_BASE_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.JOB_BASE_NAME])
           }
         }
         dir('frontend/react') {
@@ -106,10 +106,10 @@ pipeline {
             )
           }
           dir('frontend/aws') {
-            env.CLOUDFRONT_DISTRIBUTION_ID = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "cloudfront_distribution_id")
-            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "s3_bucket_name")
-            env.API_POSTGRES_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "api_postgres_endpoint")
-            env.API_SQLSERVER_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "api_sqlserver_endpoint")
+            env.CLOUDFRONT_DISTRIBUTION_ID = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "cloudfront_distribution_id")
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "s3_bucket_name")
+            env.API_POSTGRES_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "api_postgres_endpoint")
+            env.API_SQLSERVER_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "api_sqlserver_endpoint")
           }
           sh '''
             aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz cartsbuild.tar.gz
