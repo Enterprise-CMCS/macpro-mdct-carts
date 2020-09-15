@@ -4028,7 +4028,8 @@
               {
                 "id": "2020-03-h-02-05",
                 "label": "Which administrative protocol did you use to administer the survey?",
-                "type": "radio",
+                "type": "checkbox",
+                "hint": "Select all that apply.",
                 "answer": {
                   "entry": null,
                   "options": [
