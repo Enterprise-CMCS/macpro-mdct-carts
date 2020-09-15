@@ -4197,7 +4197,7 @@
             "questions": [
               {
                 "id": "2020-03-i-01-01",
-                "label": "Does your state operate Health Services Initiatives using CHIP (Title XXI) funds?",
+                "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds? Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
                 "type": "radio",
                 "answer": {
                   "entry": null,
