@@ -95,6 +95,21 @@ pipeline {
               ]
             )
           }
+          dir('frontend/aws') {
+            env.CLOUDFRONT_DISTRIBUTION_ID = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "cloudfront_distribution_id")
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "s3_bucket_name")
+            env.API_POSTGRES_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "api_postgres_endpoint")
+            env.API_SQLSERVER_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "api_sqlserver_endpoint")
+          }
+          sh '''
+            aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$VERSION/cartsbuild.tar.gz cartsbuild.tar.gz
+            tar -xvzf cartsbuild.tar.gz
+            #Populate the static archive with the API_POSTGRES_URL and the API_SQLSERVER_URL before you sync it to the host bucket
+            cd build  && ./env.sh  && cd ..
+            aws s3 sync build s3://${S3_BUCKET_NAME}
+            # Cloudfront cache invalidation
+            aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+             '''
         }
       }
       post {

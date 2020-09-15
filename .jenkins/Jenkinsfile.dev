@@ -22,7 +22,6 @@ pipeline {
           currentBuild.displayName = env.BUILD_TAG
 
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
-
           jenkinsUtils.installAwsCli()
           jenkinsUtils.installEcsCli()
           jenkinsUtils.installTerraform("0.12.24")
@@ -34,6 +33,7 @@ pipeline {
         }
       }
     }
+
     stage("Destroy at the start") {
       when {
         expression { env.DESTROY_AT_THE_START == "true"}
@@ -60,7 +60,27 @@ pipeline {
         }
       }
     }
-    stage("Build/Push Images") {
+
+
+  stage('static build') {
+      agent {
+            docker {
+                image 'node:14.4.0'
+                args '-v ${PWD}/frontend/react:/app '
+                reuseNode true
+            }
+        }
+        steps {
+            dir('frontend/react') {
+            sh '''
+            npm install && ./env.sh && cp ./env-config.js ./public/ && npm run start
+            npm ci && npm run build
+              '''
+          }
+        }
+    }
+
+    stage("Build and Push Artifacts") {
       when {
         expression { env.DEPLOY == "true"}
       }
@@ -71,11 +91,26 @@ pipeline {
             jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.BRANCH_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.BRANCH_NAME])
+
           }
-        }
-      }
+       }
+       dir('frontend/react'){
+
+        sh '''
+        # copy .env and env.sh into the archive so we can use them after we unzip
+        cp env.sh build/env.sh
+        cp .env build/.env
+
+        tar -zcvf cartsbuild.tar.gz build
+        aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
+        rm -rf build
+        rm cartsbuild.tar.gz
+
+            '''
+           }
+       }
     }
+
     stage("Scan Images") {
       when {
         expression { env.DEPLOY == "true"}
@@ -86,7 +121,7 @@ pipeline {
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
+
         }
       }
       post {
@@ -97,6 +132,7 @@ pipeline {
         }
       }
     }
+
     stage("Deploy Data Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -122,6 +158,7 @@ pipeline {
         }
       }
     }
+
     stage("Deploy Frontend Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -137,6 +174,27 @@ pipeline {
               ]
             )
           }
+
+          dir('frontend/aws') {
+            env.CLOUDFRONT_DISTRIBUTION_ID = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "cloudfront_distribution_id")
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "s3_bucket_name")
+            env.API_POSTGRES_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "api_postgres_endpoint")
+            env.API_SQLSERVER_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "api_sqlserver_endpoint")
+          }
+            sh '''
+               aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz cartsbuild.tar.gz
+               tar -xvzf cartsbuild.tar.gz
+
+               #Populate the static archive with the API_POSTGRES_URL and the API_SQLSERVER_URL before you sync it to the host bucket
+
+              cd build  && ./env.sh  && cd ..
+
+               aws s3 sync build s3://${S3_BUCKET_NAME}
+
+               # Cloudfront cache invalidation
+
+               aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+             '''
         }
       }
       post {
@@ -147,6 +205,7 @@ pipeline {
         }
       }
     }
+
     stage("Test") {
       when {
         expression { env.RUN_TESTS == "true"}
@@ -166,6 +225,7 @@ pipeline {
         }
       }
     }
+
     stage("Run Inspec Scans") {
       when {
         expression { env.DEPLOY == "true"}
@@ -201,6 +261,7 @@ pipeline {
         }
       }
     }
+
     stage("Destroy at the end") {
       when {
         expression { env.DESTROY_AT_THE_END == "true"}
