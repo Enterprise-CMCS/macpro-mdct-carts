@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import StateHeader from "./StateHeader";
-import TOC from "./TOC-dynamic";
+import TOC from "./TOC";
 
 class Sidebar extends Component {
   render() {
