@@ -33,8 +33,20 @@ export const shouldDisplay = (state, context) => {
     return true;
   }
 
+
   if (context.conditional_display.hide_if) {
-    return !hideIf(state, context.conditional_display.hide_if);
+    let hide_1 = !hideIf(state, context.conditional_display.hide_if);
+
+    // If hide_if is false return it
+    if (hide_1) {
+      return hide_1;
+    }
+
+    // If hide_if is true, check hide_if_2 (which takes precendence)
+    if (context.conditional_display.hide_if_2) {
+      return !hideIf(state, context.conditional_display.hide_if_2);
+    }
+
   }
 
   if (context.conditional_display.hide_if_all) {

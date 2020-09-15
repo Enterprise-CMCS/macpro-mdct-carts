@@ -534,6 +534,68 @@
             "values"
           ]
         },
+        "hide_if_2": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string"
+            },
+            "comment": {
+              "type": "string"
+            },
+            "values": {
+              "type": "object",
+              "properties": {
+                "interactive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                },
+                "noninteractive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "interactive",
+                "noninteractive"
+              ]
+            }
+          },
+          "required": [
+            "target",
+            "values"
+          ]
+        },
         "hide_if_all": {
           "type": "object",
           "properties": {
@@ -606,10 +668,14 @@
       ],
       "oneOf": [
         {
-          "required": ["hide_if"]
+          "required": [
+            "hide_if"
+          ]
         },
         {
-          "required": ["hide_if_all"]
+          "required": [
+            "hide_if_all"
+          ]
         }
       ]
     },
@@ -719,7 +785,10 @@
             "type": "string"
           }
         },
-        "required": ["label", "value"]
+        "required": [
+          "label",
+          "value"
+        ]
       }
     }
   },

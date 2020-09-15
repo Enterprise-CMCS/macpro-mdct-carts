@@ -4103,6 +4103,17 @@
                 "type": "conditional_display",
                 "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
                 "hide_if": {
+                  "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                  "values": {
+                    "interactive": [
+                      "yes"
+                    ],
+                    "noninteractive": [
+                      "yes"
+                    ]
+                  }
+                },
+                "hide_if_2": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01-a')].answer.entry",
                   "values": {
                     "interactive": [
