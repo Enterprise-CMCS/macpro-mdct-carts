@@ -43,13 +43,12 @@ class CMSChoice extends Component {
     if (this.props.type === "checkbox") {
       if (Array.isArray(this.props.answer)) {
         // if value is in the answers array
-        isChecked = this.props.answer.includes(
-          this.state[this.props.name]
-            ? this.state[this.props.name]
-            : this.props.value
-        )
+        isChecked = this.props.answer.includes(this.props.value)
           ? "checked"
           : null;
+        console.log("answer array", this.props.answer);
+        console.log("value", this.props.value);
+        console.log("is checked???", this.props.name, isChecked);
       }
     } else {
       isChecked = this.props.value === currentValue ? "checked" : null;

@@ -116,6 +116,7 @@ class QuestionComponent extends Component {
 
   handleCheckboxInput(evtArr) {
     // An array of the checkbox items already selected, or an empty array
+
     let selections = this.state[evtArr[0]] ?? [];
 
     // If the current choice is already in state, find it's index in that array
@@ -195,7 +196,7 @@ class QuestionComponent extends Component {
                         value={value}
                         label={label}
                         type={question.type}
-                        answer={question.answer.entry}
+                        answer={[question.answer.entry]}
                         conditional={question.conditional}
                         children={question.questions}
                         valueFromParent={this.state[question.id]}
