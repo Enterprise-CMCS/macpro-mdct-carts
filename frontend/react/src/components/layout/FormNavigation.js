@@ -13,12 +13,19 @@ class FormNavigation extends Component {
   render() {
     const { history, location, sections } = this.props;
 
+    console.log("items-sections", sections);
     const items = [];
     sections.forEach(section => {
-      section.subsections.forEach(subsection => {
-        items.push(idToUrl(subsection.id));
-      });
+      if (section.subsections.length < 2) {
+        items.push(idToUrl(section.id))
+      } else {
+        section.subsections.forEach(subsection => {
+          items.push(idToUrl(subsection.id));
+        });
+      }
     });
+
+    console.log("items", items);
 
     // Get current url
     let currentUrl = window.location.pathname;
