@@ -7,7 +7,7 @@ const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
     <div id={subsectionId}>
       <h2>{title}</h2>
-      {text ? <div className="helper-text">{text}</div> : <></>}
+      {text ? <div className="helper-text">{text}</div> : null}
       {partIds.map((partId) => (
         <Part key={partId} partId={partId} />
       ))}
