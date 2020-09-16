@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { selectFragment } from "../../store/formData";
 import { _ } from "underscore";
 import QuestionComponent from "../fields/QuestionComponent";
+import { Alert } from "@cmsgov/design-system-core";
 
 const showPart = (context_data, programType) => {
   if (context_data &&
@@ -14,23 +15,27 @@ const showPart = (context_data, programType) => {
   return true;
 }
 
-const Part = ({ partId, text, title, context_data, programType }) => {
-  if (showPart(context_data, programType)) {
-    // Determine Part Number from partId
-    let partNum = Number(partId.split("-").pop());
+const Part = ({ partId, text, title, context_data, programType, state }) => {
+  // Determine Part Number from partId
+  let partNum = Number(partId.split("-").pop());
+
+  if (showPart(context_data, programType, state)) {
     return (
       <div id={partId}>
-        <h2>Part {partNum}{title ? ": " + title : <></>}</h2>
-        {text ? <p>{text}</p> : <></>}
+        <h2>Part {partNum}{title ? ": " + title : null}</h2>
+        {text ? <p>{text}</p> : null}
         <QuestionComponent partId={partId} />
       </div>
     );
   } else {
     return (
       <div id={partId}>
-        {title ? <h2>{title}</h2> : <></>}
-        {context_data.skip_text ? <p>{context_data.skip_text}</p> : <></>}
-
+        <h2>Part {partNum}{title ? ": " + title : null}</h2>
+        <Alert>
+          <p className="ds-c-alert__text">
+            {context_data.skip_text ? <p>{context_data.skip_text}</p> : null}
+          </p>
+        </Alert>
       </div>
     );
 
