@@ -1,8 +1,9 @@
 
 resource "aws_s3_bucket" "www" {
 
-  bucket = "cartsfrontendbucket-${terraform.workspace}"
-  acl    = "private"
+  bucket        = "cartsfrontendbucket-${terraform.workspace}"
+  acl           = "private"
+  force_destroy = true
 }
 
 data "aws_iam_policy_document" "s3_policy" {
