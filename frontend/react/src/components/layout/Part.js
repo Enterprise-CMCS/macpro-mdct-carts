@@ -4,6 +4,7 @@ import { selectFragment } from "../../store/formData";
 import { _ } from "underscore";
 import QuestionComponent from "../fields/QuestionComponent";
 import { shouldDisplay } from "../../util/shouldDisplay";
+import { Alert } from "@cmsgov/design-system-core";
 
 const showPart = (context_data, programType, state) => {
   if (context_data &&
@@ -26,17 +27,20 @@ const Part = ({ partId, text, title, context_data, programType, state }) => {
   if (showPart(context_data, programType, state)) {
     return (
       <div id={partId}>
-        <h2>Part {partNum}{title ? ": " + title : <></>}</h2>
-        {text ? <p>{text}</p> : <></>}
+        <h2>Part {partNum}{title ? ": " + title : null}</h2>
+        {text ? <p>{text}</p> : null}
         <QuestionComponent partId={partId} />
       </div>
     );
   } else {
     return (
       <div id={partId}>
-        <h2>Part {partNum}{title ? ": " + title : <></>}</h2>
-        {title ? <h2>{title}</h2> : <></>}
-        {context_data.skip_text ? <p>{context_data.skip_text}</p> : <></>}
+        <h2>Part {partNum}{title ? ": " + title : null}</h2>
+        <Alert>
+          <p className="ds-c-alert__text">
+            {context_data.skip_text ? <p>{context_data.skip_text}</p> : null}
+          </p>
+        </Alert>
       </div>
     );
 
