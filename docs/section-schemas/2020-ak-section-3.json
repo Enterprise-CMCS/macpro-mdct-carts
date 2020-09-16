@@ -4256,27 +4256,119 @@
                       },
                       {
                         "id": "2020-03-i-02-01-01-02",
-                        "label": "Which populations are served by your HSI program?",
-                        "type": "text_multiline",
+                        "label": "Are you currently operating the HSI program, or plan to in the future?",
+                        "type": "radio",
                         "answer": {
+                          "options": [
+                            {
+                              "value": "yes",
+                              "label": "Yes"
+                            },
+                            {
+                              "value": "no",
+                              "label": "No"
+                            }
+                          ],
                           "entry": null
                         }
                       },
                       {
+                        "type": "fieldset",
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-01-a-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "skip_text": "Since you're no longer operating this HSI program, go ahead and remove any references to it from your CHIP state plan.",
+                            "hide_if": {
+                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "yes"
+                                ],
+                                "noninteractive": [
+                                  null,
+                                  "yes"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": []
+                      },
+                      {
                         "id": "2020-03-i-02-01-01-03",
-                        "label": "How many children do you estimate are served by your HSI program?",
+                        "label": "Which populations does the HSI program serve?",
                         "type": "text",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
                         "id": "2020-03-i-02-01-01-04",
-                        "label": "How many children in the HSI program are below your state's FPL threshold? ",
-                        "hint": "Skip this question if you are already reporting this information elsewhere to CMS.",
-                        "type": "text",
+                        "label": "How many children do you estimate are being served by the HSI program?",
+                        "type": "integer",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-05",
+                        "label": "How many children in the HSI program are below your state's FPL threshold? ",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -4284,8 +4376,8 @@
                         "fieldset_type": "synthesized_value",
                         "fieldset_info": {
                           "targets": [
-                            "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry",
-                            "$..*[?(@.id=='2020-03-i-02-01-01-03')].answer.entry"
+                            "$..*[?(@.id=='2020-03-i-02-01-01-05')].answer.entry",
+                            "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry"
                           ],
                           "actions": [
                             "percentage"
@@ -4294,21 +4386,53 @@
                         "questions": []
                       },
                       {
-                        "id": "2020-03-i-02-01-01-05",
+                        "id": "2020-03-i-02-01-01-06",
                         "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact. ",
-                        "hint": "Skip this question if you are already reporting this information elsewhere to CMS.",
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       },
                       {
-                        "id": "2020-03-i-02-01-01-06",
-                        "label": "What outcomes have you found in measuring the impact?",
-                        "hint": "Skip this question if you are already reporting this information elsewhere to CMS.",
+                        "id": "2020-03-i-02-01-01-07",
+                        "label": "What outcomes have you found when measuring the impact?",
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         }
                       }
                     ]
