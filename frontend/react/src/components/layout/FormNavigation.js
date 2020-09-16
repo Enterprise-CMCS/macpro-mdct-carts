@@ -13,7 +13,6 @@ class FormNavigation extends Component {
   render() {
     const { history, location, sections } = this.props;
 
-    console.log("items-sections", sections);
     const items = [];
     sections.forEach(section => {
       if (section.subsections.length < 2) {
@@ -24,8 +23,6 @@ class FormNavigation extends Component {
         });
       }
     });
-
-    console.log("items", items);
 
     // Get current url
     let currentUrl = window.location.pathname;
