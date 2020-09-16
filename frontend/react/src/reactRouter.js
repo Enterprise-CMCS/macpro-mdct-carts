@@ -25,6 +25,7 @@ import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
 import test from "./components/test";
+import ScrollToTop from "./components/Utils/ScrollToTop";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
 
@@ -40,35 +41,37 @@ const Routes = ({ userData }) => (
     <div className="ds-l-container">
       <div className="ds-l-row">
         {VisibleSidebar}
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/basic-info" component={BasicInfo} />
-          <Route exact path="/basic-info-api" component={BasicInfoApi} />
-          <Route exact path="/coming-soon" component={ComingSoon} />
-          <Route exact path="/section1" component={Section1} />
-          <Route exact path="/section1-api" component={Section1Api} />
-          <Route exact path="/section2B-api" component={Section2BApi} />
-          <Route exact path="/section2A-api" component={Section2AApi} />
-          <Route exact path="/section3A-api" component={Section3AApi} />
-          <Route exact path="/section2/2a" component={Section2a} />
-          <Route exact path="/section2/2b" component={Section2b} />
-          <Route exact path="/section3/3a" component={Section3a} />
-          <Route exact path="/section3/3c" component={Section3c} />
-          <Route exact path="/section3/3d" component={Section3dapi} />
-          <Route exact path="/section3/3d-api" component={Section3dapi} />
-          <Route exact path="/section3F-api" component={Section3FApi} />
-          <Route exact path="/section3E-api" component={Section3EApi} />
-          <Route path="/reports/:stateAbbrev/:year" component={Review} />
-          <Route
-            path="/sections/:year/:sectionOrdinal/:subsectionMarker"
-            children={<InvokeSection userData={userData} />}
-          />
-          <Route
-            path="/sections/:year/:sectionOrdinal"
-            children={<InvokeSection userData={userData} />}
-          />
-          <Route exact path="/test" component={test} />
-        </Switch>
+        <ScrollToTop>
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/basic-info" component={BasicInfo} />
+            <Route exact path="/basic-info-api" component={BasicInfoApi} />
+            <Route exact path="/coming-soon" component={ComingSoon} />
+            <Route exact path="/section1" component={Section1} />
+            <Route exact path="/section1-api" component={Section1Api} />
+            <Route exact path="/section2B-api" component={Section2BApi} />
+            <Route exact path="/section2A-api" component={Section2AApi} />
+            <Route exact path="/section3A-api" component={Section3AApi} />
+            <Route exact path="/section2/2a" component={Section2a} />
+            <Route exact path="/section2/2b" component={Section2b} />
+            <Route exact path="/section3/3a" component={Section3a} />
+            <Route exact path="/section3/3c" component={Section3c} />
+            <Route exact path="/section3/3d" component={Section3dapi} />
+            <Route exact path="/section3/3d-api" component={Section3dapi} />
+            <Route exact path="/section3F-api" component={Section3FApi} />
+            <Route exact path="/section3E-api" component={Section3EApi} />
+            <Route path="/reports/:stateAbbrev/:year" component={Review} />
+            <Route
+              path="/sections/:year/:sectionOrdinal/:subsectionMarker"
+              children={<InvokeSection userData={userData} />}
+            />
+            <Route
+              path="/sections/:year/:sectionOrdinal"
+              children={<InvokeSection userData={userData} />}
+            />
+            <Route exact path="/test" component={test} />
+          </Switch>
+        </ScrollToTop>
       </div>
     </div>
   </Router>
