@@ -1,6 +1,8 @@
 
 variable "application_version" {}
+
 variable "vpc_name" {}
+
 variable "acm_certificate_domain_ui" {
   default = ""
 }

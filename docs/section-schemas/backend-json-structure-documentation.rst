@@ -166,7 +166,7 @@ The top-level construct is a section. Sections have the following properties:
     The title for the section, for example “Program Fees and Policy Changes”.
 ``subsections``
     Array of ``subsection`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the section.
@@ -199,7 +199,7 @@ Subsections, like subquestions, are represented by letters rather than numbers.
     Section 2 has subsections, for example Section 2b would have an ``id`` of ``2020-02-b``
 ``parts``
     Array of ``part`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the subsection.
@@ -228,7 +228,7 @@ Parts are contained by subsections.
     Presumably always ``part``.
 ``questions``
     Array of ``question`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the part.
