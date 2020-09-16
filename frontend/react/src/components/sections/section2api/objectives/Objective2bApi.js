@@ -10,9 +10,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
-import { addNewGoal } from "../ObjectiveAndGoals";
+import { addNewGoal } from "../../../../actions/initial";
 import QuestionComponent from "../../../fields/QuestionComponent";
-import { addElementToFragment } from "../../../../actions/initial";
 
 class Objective2bApi extends Component {
   constructor(props) {
@@ -21,14 +20,15 @@ class Objective2bApi extends Component {
   }
 
   newGoal() {
-    let newGoalId = this.props.goalCount + 1;
-    const objectiveNumber = this.props.objectiveId.split("-")[5];
-    const year = this.props.objectiveId.split("-")[0];
+    let newGoalId = this.props.goalsArray.length + 1;
+    const tempObjectiveId = this.props.objectiveId.split("-");
+
     //Adds a repeatable object (contains all 12 goal questions) to the repeatables object
 
-    this.props.addElement(
-      `2020-02-b-01-01-${objectiveNumber}-02`,
-      addNewGoal(newGoalId, objectiveNumber, year, this.props.state)
+    this.props.addNewGoal(
+      newGoalId,
+      tempObjectiveId[5],
+      this.props.objectiveId
     );
   }
 
@@ -48,7 +48,9 @@ class Objective2bApi extends Component {
                             <div className="accordion-title">
                               Goal{" "}
                               {parseInt(
-                                goals.id.substring(goals.id.length - 2)
+                                goals.id.split("-")[
+                                  goals.id.split("-").length - 1
+                                ]
                               )}
                               :
                             </div>
@@ -87,11 +89,10 @@ class Objective2bApi extends Component {
 
 const mapStateToProps = (state) => ({
   year: state.global.formYear,
-  state: state,
 });
 
 const mapDispatchToProps = {
-  addElement: addElementToFragment,
+  addNewGoal: addNewGoal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Objective2bApi);

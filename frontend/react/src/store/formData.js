@@ -10,16 +10,17 @@ import { selectQuestion } from "./selectors";
 const initialState = [];
 
 export default (sdata = initialState, action) => {
+  let fragment = {};
   switch (action.type) {
     case LOAD_SECTIONS:
       return action.data;
     case QUESTION_ANSWERED:
-      const fragment = selectQuestion({ formData: sdata }, action.fragmentId);
+      fragment = selectQuestion({ formData: sdata }, action.fragmentId);
       fragment.answer.entry = action.data;
       return JSON.parse(JSON.stringify(sdata));
     case QUESTION_ADDED:
-      const fragment2 = selectQuestion({ formData: sdata }, action.fragmentId);
-      fragment2.questions.push(action.data);
+      fragment = selectQuestion({ formData: sdata }, action.parentId);
+      fragment.questions.push(action.data);
       return JSON.parse(JSON.stringify(sdata));
     default:
       return sdata;

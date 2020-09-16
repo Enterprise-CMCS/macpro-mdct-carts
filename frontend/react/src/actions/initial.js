@@ -1,6 +1,8 @@
 import axios from "axios";
 import fakeUserData from "../store/fakeUserData";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
+import { selectQuestion } from "../store/selectors";
+import { buildGoal } from "../components/sections/section2api/ObjectiveAndGoals";
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const QUESTION_ADDED = "QUESTION ADDED";
@@ -68,14 +70,54 @@ export const setAnswerEntry = (fragmentId, something) => {
   };
 };
 
-export const addElementToFragment = (fragmentId, something) => {
+export const addElement = (parentId, element) => {
   const value =
-    something.target && something.target.value
-      ? something.target.value
-      : something;
+    element.target && element.target.value ? element.target.value : element;
   return {
     type: QUESTION_ADDED,
-    fragmentId: fragmentId,
+    parentId: parentId,
     data: value,
   };
+};
+
+export const addNewObjective = (parentID, newObjectiveId, firstObjectiveId) => (
+  dispatch,
+  getState
+) => {
+  const state = getState();
+  let objectiveIdString = newObjectiveId;
+  if (newObjectiveId < 10) {
+    objectiveIdString = "0" + newObjectiveId;
+  }
+  const newGoalId = 1; //It was throwing an error when I just put 1 for newGoalId
+  const tempFirstObjectiveId = firstObjectiveId.split("-");
+  //Create copy of Objective #1
+  let newObjective = JSON.parse(
+    JSON.stringify(
+      selectQuestion(
+        state,
+        `${tempFirstObjectiveId[0]}-${tempFirstObjectiveId[1]}-${tempFirstObjectiveId[2]}-${tempFirstObjectiveId[3]}-${tempFirstObjectiveId[4]}-${tempFirstObjectiveId[5]}`
+      )
+    )
+  );
+  const tempNewObjectiveId = newObjective.id.split("-");
+  //update newObjectives traits so that it is objective n+1
+  newObjective.id = `${tempFirstObjectiveId[0]}-${tempNewObjectiveId[1]}-${tempNewObjectiveId[2]}-${tempNewObjectiveId[3]}-${tempNewObjectiveId[4]}-${objectiveIdString}`;
+  newObjective.questions[0].answer.entry = null;
+  newObjective.questions[0].answer.default_entry = null;
+  newObjective.questions[0].answer.readonly = false;
+  newObjective.questions[0].id = `${tempFirstObjectiveId[0]}-${tempNewObjectiveId[1]}-${tempNewObjectiveId[2]}-${tempNewObjectiveId[3]}-${tempNewObjectiveId[4]}-${objectiveIdString}-01`;
+  newObjective.questions[1].id = `${tempFirstObjectiveId[0]}-${tempNewObjectiveId[1]}-${tempNewObjectiveId[2]}-${tempNewObjectiveId[3]}-${tempNewObjectiveId[5]}-${objectiveIdString}-02`;
+  newObjective.questions[1].questions = [
+    buildGoal(newGoalId, objectiveIdString, newObjective.id, state),
+  ];
+  dispatch(addElement(parentID, newObjective));
+};
+export const addNewGoal = (newGoalId, objectiveId, parentObjectiveId) => (
+  dispatch,
+  getState
+) => {
+  const state = getState();
+  const newGoal = buildGoal(newGoalId, objectiveId, parentObjectiveId, state);
+  dispatch(addElement(parentObjectiveId, newGoal));
 };
