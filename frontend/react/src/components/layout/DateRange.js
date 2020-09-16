@@ -168,9 +168,10 @@ class DateRange extends Component {
         <div className="date-range" data-test="component-date-range">
           <div className="date-range-start">
             <h3 className="question-inner-header">
+              {" "}
               {this.props.question.answer.labels[0]
                 ? this.props.question.answer.labels[0]
-                : "Start"}
+                : "Start"}{" "}
             </h3>
             <div className="ds-c-field__hint"> mm/yyyy</div>
             <div className="errors">
@@ -191,7 +192,7 @@ class DateRange extends Component {
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
                 value={
-                  this.state["monthStart"] ? this.state["monthStart"] : this.props.question.answer.entry ? this.props.question.answer.entry[0].split("-")[2] : null
+                  this.state["monthStart"] ? this.state["monthStart"] : this.props.question.answer.entry[0].split("-")[2]
                 }
               />
               <div className="ds-c-datefield__separator">/</div>
@@ -204,7 +205,7 @@ class DateRange extends Component {
                 onBlur={this.validateStartInput}
                 numeric
                 value={
-                  this.state["yearStart"] ? this.state["yearStart"] : this.props.question.answer.entry ? this.props.question.answer.entry[0].split("-")[0] : null
+                  this.state["yearStart"] ? this.state["yearStart"] : this.props.question.answer.entry[0].split("-")[0]
                 }
               />
             </div>
@@ -236,7 +237,7 @@ class DateRange extends Component {
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 value={
-                  this.state["monthEnd"] ? this.state["monthEnd"] : this.props.question.answer.entry ? this.props.question.answer.entry[1].split("-")[2] : null
+                  this.state["monthEnd"] ? this.state["monthEnd"] : this.props.question.answer.entry[1].split("-")[2]
                 }
               />
               <div className="ds-c-datefield__separator">/</div>
@@ -250,7 +251,7 @@ class DateRange extends Component {
                 onBlur={this.validateEndInput}
                 numeric
                 value={
-                  this.state["yearEnd"] ? this.state["yearEnd"] : this.props.question.answer.entry ? this.props.question.answer.entry[1].split("-")[0] : null
+                  this.state["yearEnd"] ? this.state["yearEnd"] : this.props.question.answer.entry[1].split("-")[0]
                 }
               />
             </div>
