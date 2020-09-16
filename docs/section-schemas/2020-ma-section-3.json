@@ -3753,7 +3753,7 @@
             "questions": [
               {
                 "id": "2020-03-h-01-01",
-                "label": "Did you collect CAHPS survey results?",
+                "label": "Did you collect the CAHPS survey?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -3812,9 +3812,9 @@
           {
             "id": "2020-03-h-02",
             "type": "part",
-            "text": "If you’ve collected CAHPS survey results, complete Part 2. If you’ve already submitted CAHPS raw data to the AHRQ CAHPS database, Part 2 is optional.",
+            "text": "Since you collected the CAHPS survey, go ahead and complete this section. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
             "context_data": {
-              "skip_text": "Part 2 omitted because you indicated that have no collected CAHPS survey results",
+              "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
               "conditional_display": {
                 "type": "conditional_display",
                 "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
@@ -3858,7 +3858,7 @@
                     },
                     {
                       "value": "combination chip",
-                      "label": "Combination CHIP"
+                      "label": "Both Separate CHIP and Medicaid Expansion CHIP"
                     },
                     {
                       "value": "other",
@@ -4095,9 +4095,9 @@
           {
             "id": "2020-03-h-03",
             "type": "part",
-            "text": "If you haven’t collected CAHPS survey results, complete Part 3. ",
+            "text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
             "context_data": {
-              "skip_text": "Part 3 omitted because you indicated that have collected CAHPS survey results",
+              "skip_text": "Since you didn’t collect the CAHPS survey, go ahead and complete this section.",
               "conditional_display": {
                 "type": "conditional_display",
                 "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
@@ -4117,7 +4117,7 @@
             "questions": [
               {
                 "id": "2020-03-h-03-01",
-                "label": "Why didn't you collect CAHPS survey results?",
+                "label": "Why didn't you collect the CAHPS survey?",
                 "hint": "Check all that apply.",
                 "type": "checkbox",
                 "answer": {
@@ -4172,7 +4172,7 @@
               },
               {
                 "id": "2020-03-h-03-02",
-                "label": "Explain in more detail why you weren't able to collect specific survey results.",
+                "label": "Explain in more detail why you weren’t able to collect the CAHPS survey.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
