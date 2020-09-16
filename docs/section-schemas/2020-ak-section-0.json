@@ -19,7 +19,7 @@
             "questions": [
               {
                 "id": "2020-00-a-01-01",
-                "label": "State or territory name [DEMO]:",
+                "label": "State or territory name:",
                 "type": "text_multiline",
                 "answer": {
                   "prepopulated": true,
