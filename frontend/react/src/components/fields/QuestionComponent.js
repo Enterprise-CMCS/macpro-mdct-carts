@@ -6,6 +6,7 @@ import { Alert, TextField, Choice } from "@cmsgov/design-system-core";
 import DateRange from "../layout/DateRange";
 import CMSRanges from "./CMSRanges";
 import InputGrid from "./InputGrid";
+import SynthesizedTable from "./SynthesizedTable";
 import { setAnswerEntry } from "../../actions/initial";
 import { selectQuestionsForPart } from "../../store/selectors";
 
@@ -541,10 +542,22 @@ class QuestionComponent extends Component {
                           })}
                         </div>
                       );
-                    } else return <pre>other</pre>;
+                    } else
+                      return (
+                        <QuestionComponent
+                          subquestion={true}
+                          setAnswer={this.props.setAnswer}
+                          data={question.questions} //Array of subquestions to map through
+                        />
+                      );
                   })}
                 </>
               ) : null}
+
+              {question.type === "fieldset" &&
+                question.fieldset_type === "synthesized_table" && (
+                  <SynthesizedTable data={question} />
+                )}
             </fieldset>
           </div>
         ))}
