@@ -530,13 +530,11 @@ class QuestionComponent extends Component {
                               field.fieldset_type === "datagrid_with_total"
                             ) {
                               return (
-                                <>
-                                  <InputGrid
-                                    questions={field}
-                                    changeFunc={this.handleIntegerChange}
-                                    withTotal={true}
-                                  />
-                                </>
+                                <InputGrid
+                                  questions={field}
+                                  changeFunc={this.handleIntegerChange}
+                                  withTotal={true}
+                                />
                               );
                               return null;
                             }
