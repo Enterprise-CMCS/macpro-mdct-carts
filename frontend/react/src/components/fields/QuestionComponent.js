@@ -201,7 +201,6 @@ class QuestionComponent extends Component {
                         answer={question.answer.entry}
                         conditional={question.conditional}
                         children={question.questions}
-                        // valueFromParent={this.state[question.id]}
                         onChange={this.handleCheckboxInput}
                         key={index}
                         setAnswer={this.props.setAnswer}
