@@ -3974,7 +3974,8 @@
               {
                 "id": "2020-03-h-02-04",
                 "label": "Which supplemental item sets did you include in your survey?",
-                "type": "radio",
+                "type": "checkbox",
+                "hint": "Select all that apply.",
                 "answer": {
                   "entry": null,
                   "options": [
@@ -4095,9 +4096,9 @@
           {
             "id": "2020-03-h-03",
             "type": "part",
-            "text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
+            "text": "Since you didn’t collect the CAHPS survey, go ahead and complete this section.",
             "context_data": {
-              "skip_text": "Since you didn’t collect the CAHPS survey, go ahead and complete this section.",
+              "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
               "conditional_display": {
                 "type": "conditional_display",
                 "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
@@ -4276,7 +4277,7 @@
                           "skip_text": "Since you're no longer operating this HSI program, go ahead and remove any references to it from your CHIP state plan.",
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-01-a-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {
                               "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
@@ -4380,6 +4381,28 @@
                           "actions": [
                             "percentage"
                           ]
+                        },
+                        "questions": []
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "Skip to Part 3 if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "hide_if": {
+                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
                         },
                         "questions": []
                       },
