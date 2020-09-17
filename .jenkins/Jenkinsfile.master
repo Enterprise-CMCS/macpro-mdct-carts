@@ -18,14 +18,14 @@ pipeline {
 
           jenkinsUtils.installAwsCli()
           jenkinsUtils.installEcsCli()
-          jenkinsUtils.installTerraform("0.12.24")
+          jenkinsUtils.installTerraform("0.12.28")
 
           env.DEPLOY_DATA = jenkinsUtils.pathHasChanges("data") || jenkinsUtils.pathHasChanges(".jenkins")
           env.DEPLOY_FRONTEND = jenkinsUtils.pathHasChanges("frontend") || env.DEPLOY_DATA
         }
       }
     }
-    stage("Build/Push Images") {
+    stage("Build and Push Artifacts") {
       steps {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
@@ -33,8 +33,15 @@ pipeline {
             jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.JOB_BASE_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.JOB_BASE_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_sqlserver", "sqlserver_django", [env.BUILD_TAG, env.JOB_BASE_NAME])
-            jenkinsUtils.buildAndPushImageToEcr("frontend/react", "react", [env.BUILD_TAG, env.JOB_BASE_NAME])
           }
+        }
+        dir('frontend/react') {
+          sh '''
+            docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+            tar -zcvf cartsbuild.tar.gz build
+            aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
+            rm -rf cartsbuild.tar.gz
+          '''
         }
       }
     }
@@ -48,7 +55,6 @@ pipeline {
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("react", env.BUILD_TAG)
         }
       }
       post {
@@ -99,6 +105,21 @@ pipeline {
               ]
             )
           }
+          dir('frontend/aws') {
+            env.CLOUDFRONT_DISTRIBUTION_ID = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "cloudfront_distribution_id")
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "s3_bucket_name")
+            env.API_POSTGRES_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "api_postgres_endpoint")
+            env.API_SQLSERVER_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.JOB_BASE_NAME, "api_sqlserver_endpoint")
+          }
+          sh '''
+            aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz cartsbuild.tar.gz
+            tar -xvzf cartsbuild.tar.gz
+            #Populate the static archive with the API_POSTGRES_URL and the API_SQLSERVER_URL before you sync it to the host bucket
+            cd build  && ./env.sh  && cd ..
+            aws s3 sync build s3://${S3_BUCKET_NAME}
+            # Cloudfront cache invalidation
+            aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+          '''
         }
       }
       post {
@@ -126,6 +147,7 @@ pipeline {
         }
       }
     }
+    /*
     stage("Run Inspec Scans") {
       when {
         expression { env.SKIP_SCANS != "true" }
@@ -161,6 +183,7 @@ pipeline {
         }
       }
     }
+    */
   }
 
   post {

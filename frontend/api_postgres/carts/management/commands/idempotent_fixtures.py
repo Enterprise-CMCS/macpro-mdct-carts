@@ -1,6 +1,6 @@
 from django.core import management  # type: ignore
 from django.core.management.base import BaseCommand  # type: ignore
-from carts.carts_api.models import Section, SectionBase, SectionSchema
+from carts.carts_api.models import Section, SectionBase, SectionSchema, FMAP
 from json import loads
 import jsonschema  # type: ignore
 from pathlib import Path
@@ -88,6 +88,11 @@ class Command(BaseCommand):
                     validating = True
                 except jsonschema.exceptions.ValidationError:
                     print(path, "failed validation")
+            elif fixture["model"] == "carts_api.FMAP":
+                # these are reference objects so we should be safe dumping all
+                FMAP.objects.all().delete()
+                paths_to_load.append(path)
+                continue
             else:
                 print("No match on model")
             if validating and is_new:
