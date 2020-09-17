@@ -4,13 +4,15 @@ const hideIf = (state, hideIf) => {
   // Wil return the answer from associated question (Array)
   let associatedAnswer = jsonpath.query(state, hideIf.target);
 
-  if (hideIf.values.interactive.includes(associatedAnswer[0])) {
-    // If the associated answer IS in the interactive array, remove it
-    return true;
-  } else {
-    // If the associated answer IS NOT in the interactive array, keep it
-    return false;
-  }
+  return false;
+
+  // if (hideIf.values.interactive.includes(associatedAnswer[0])) {
+  //   // If the associated answer IS in the interactive array, remove it
+  //   return true;
+  // } else {
+  //   // If the associated answer IS NOT in the interactive array, keep it
+  //   return false;
+  // }
 };
 
 const hideIfAll = (state, hideIfAll) => {

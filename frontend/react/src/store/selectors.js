@@ -1,7 +1,7 @@
 import jsonpath from "../util/jsonpath";
 
 import { selectFragment } from "./formData";
-import { shouldDisplay } from '../util/shouldDisplay'
+import { shouldDisplay } from "../util/shouldDisplay";
 
 export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
@@ -114,4 +114,12 @@ const sortByOrdinal = (sectionA, sectionB) => {
     return 1;
   }
   return 0;
+};
+
+export const selectTarget = (state, jp) => {
+  const target = jsonpath.query(state, jp);
+  if (target.length) {
+    return target[0];
+  }
+  return null;
 };

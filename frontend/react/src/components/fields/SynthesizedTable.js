@@ -1,9 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
+import { selectTarget } from "./../../store/selectors";
+import jsonpath from "../../util/jsonpath";
+
 /**
  *
  * @param {*} data Fragment from api.
  */
-const SynthesizedTable = ({ data }) => {
+const SynthesizedTable = ({ data, state }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <legend className="table__legend ds-h4" for="synthesized-table-1">
@@ -30,7 +34,12 @@ const SynthesizedTable = ({ data }) => {
                     );
                   }
                   if (cell.targets && !cell.actions) {
-                    return <td>{cell.targets[0]}</td>;
+                    // return <td>{jsonpath.query(state, cell.targets[0])}</td>;
+                    return (
+                      <td>
+                        <pre>{cell.targets[0]}</pre>
+                      </td>
+                    );
                   }
                   if (cell.targets && cell.actions) {
                     return (
@@ -49,4 +58,8 @@ const SynthesizedTable = ({ data }) => {
   );
 };
 
-export default SynthesizedTable;
+const mapStateToProps = (state, { target }) => ({
+  // text: selectTarget(state, target) || null,
+});
+
+export default connect(mapStateToProps)(SynthesizedTable);
