@@ -55,7 +55,8 @@ class Questions2BApi extends Component {
                               <h3>
                                 <AccordionButton>
                                   <div className="accordion-title">
-                                    Objective:{" "}
+                                    Objective{" "}
+                                    {parseInt(objective.id.split("-")[5])}:{" "}
                                     {objectiveGoals.answer.default_entry
                                       ? objectiveGoals.answer.default_entry
                                       : objectiveGoals.answer.entry}
