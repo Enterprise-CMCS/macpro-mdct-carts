@@ -6,10 +6,7 @@ class CMSChoice extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    // Bind functions for use throughout controller
     this.sendData = this.sendData.bind(this);
-    this.handleChangeArray = this.handleChangeArray.bind(this);
   }
 
   sendData = (evt) => {
@@ -18,54 +15,39 @@ class CMSChoice extends Component {
     selections.push(evt.target.value);
 
     // Set checkbox array of selected items
-    this.setState({ [evt.target.name]: selections });
+    // this.setState({ [evt.target.name]: selections });
     // Send event information back to parent component
-    this.props.onChange([evt.target.name, evt.target.value]);
+    this.props.onChange([evt.target.name, evt.target.value], this.props.answer);
   };
 
-  handleChangeArray(evtArray) {
-    this.props.sectionContext([evtArray[0], evtArray[1]]);
-    this.setState({
-      [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
-      [evtArray[0] + "Mod"]: true,
-    });
-  }
-
   render() {
-    // Get Current Value from state(passed from parent) or fall back to DB answer
-    const currentValue = this.props.valueFromParent
-      ? this.props.valueFromParent
-      : this.props.answer;
+    const currentlySelected = this.props.answer; // question.answer.entry
+
     // Determine if choice is checked
     let isChecked = null;
-
-    // Checkboxes manage their own checks, skip
     if (this.props.type === "checkbox") {
-      if (Array.isArray(this.props.answer)) {
-        // if value is in the answers array
-        isChecked = this.props.answer.includes(this.props.value)
+      if (Array.isArray(currentlySelected)) {
+        // Is the current </Choice> already in the redux answer array
+        isChecked = currentlySelected.includes(this.props.value)
           ? "checked"
           : null;
-        console.log("answer array", this.props.answer);
-        console.log("value", this.props.value);
-        console.log("is checked???", this.props.name, isChecked);
+      } else {
+        // Temporary, DELETE this once all checkbox entries are FOR SURE arrays
+        isChecked = this.props.value === currentlySelected ? "checked" : null;
       }
     } else {
-      isChecked = this.props.value === currentValue ? "checked" : null;
+      // this.props.type is NOT checkbox (radio)
+      isChecked = this.props.value === currentlySelected ? "checked" : null;
     }
 
     // Create children based on field type
     let fields = [];
     let tempQuestionHolder = [];
 
-    // If children are specified
+    // If there are children (question.questions)
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
-        // Set parent value to state, fallback to entered answer
-        let parentValue = this.props.valueFromParent
-          ? this.props.valueFromParent
-          : this.props.answer;
         if (item.type === "fieldset") {
           item.questions.map((question) => {
             fields.push(
