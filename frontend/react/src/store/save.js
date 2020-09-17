@@ -19,7 +19,7 @@ export default (state = initial, action) => {
       return {
         error: action.error,
         errorMessage: action.errorMessage,
-        lastSave: action.error ? state.lastSave : Date.now(),
+        lastSave: action.error ? state.lastSave : new Date(),
         saving: false,
       };
 

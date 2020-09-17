@@ -41,8 +41,10 @@ const saveMiddleware = (store) => {
       try {
         store.dispatch({ type: SAVE_STARTED });
         await axios.post(
-          `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`,
-          pending
+          `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK/temp`,
+          // In a future world, we might save only the pending changes, but for
+          // now, we save by posting the whole document in its current state.
+          store.getState().formData
         );
 
         // If the save is successful, we can clear out the list of pending
