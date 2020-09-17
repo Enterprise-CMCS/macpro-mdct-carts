@@ -43,21 +43,20 @@ class Questions1 extends Component {
                 {!part.context_data.show_if_state_program_type_in.includes(
                   stateProgram
                 ) ? (
-                  <div class="ds-c-alert ds-c-alert--hide-icon">
-                    <div class="ds-c-alert__body">
-                      <h3 class="ds-c-alert__heading">
-                        {part.context_data.skip_text}
-                      </h3>
+                    <div class="ds-c-alert ds-c-alert--hide-icon">
+                      <div class="ds-c-alert__body">
+                        <h3 class="ds-c-alert__heading">
+                          {part.context_data.skip_text}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div>
-                    <QuestionComponent
-                      data={part.questions}
-                      sectionContext={this.props.sectionContext}
-                    />
-                  </div>
-                )}
+                  ) : (
+                    <div>WORKS
+                      <QuestionComponent
+                        data={part.questions}
+                        sectionContext={this.props.sectionContext} />
+                    </div>
+                  )}
               </div>
             ))}
           </div>

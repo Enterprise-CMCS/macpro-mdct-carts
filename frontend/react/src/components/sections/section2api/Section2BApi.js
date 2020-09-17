@@ -49,16 +49,7 @@ class Section2BApi extends Component {
                 id="tab-form"
                 tab={`Section 2B:${subsectionData.title}`}
               >
-                <Questions2BApi
-                  previousEntry="false"
-                  subsectionB={subsectionData}
-                  objectivesArray={
-                    subsectionData.parts[0].questions[0].questions
-                  }
-                  objectiveCount={
-                    subsectionData.parts[0].questions[0].questions.length
-                  }
-                />
+                <Questions2BApi subsectionB={subsectionData} />
               </TabPanel>
 
               <TabPanel
