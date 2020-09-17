@@ -4,13 +4,37 @@ const hideIf = (state, hideIf) => {
   // Wil return the answer from associated question (Array)
   let associatedAnswer = jsonpath.query(state, hideIf.target);
 
-  if (hideIf.values.interactive.includes(associatedAnswer[0])) {
+  let interactiveArray = hideIf.values.interactive;
+  // DELETE: associatedAnswer for 2020-03-h-02-04 will be , ["none", "other"]
+  //DELETE: associatedAnswer for any other question will be ["someEntry"]
+  // So for any other question we could consistently just call the thing at the zeroth index
+
+  // // Approach 1:
+  // const ifIncluded = (element) => {
+  //   hideIf.values.interactive.includes(element);
+  // };
+  // let includedBoolean = associatedAnswer.some(ifIncluded);
+
+  //Approach 2:
+  const ifIncluded2 = associatedAnswer.some(
+    (val) => interactiveArray.indexOf(val) !== -1
+  );
+
+  console.log("what is ifincluded", ifIncluded2);
+  if (ifIncluded2) {
     // If the associated answer IS in the interactive array, remove it
     return true;
   } else {
     // If the associated answer IS NOT in the interactive array, keep it
     return false;
   }
+  // if (hideIf.values.interactive.includes(associatedAnswer[0])) {
+  //   // If the associated answer IS in the interactive array, remove it
+  //   return true;
+  // } else {
+  //   // If the associated answer IS NOT in the interactive array, keep it
+  //   return false;
+  // }
 };
 
 const hideIfAll = (state, hideIfAll) => {
@@ -33,10 +57,12 @@ export const shouldDisplay = (state, context) => {
     return true;
   }
 
+  // hide_if, there is just one target (question) that a single question's display relies on
   if (context.conditional_display.hide_if) {
     return !hideIf(state, context.conditional_display.hide_if);
   }
 
+  // hide_if_all, there is an array of targets (questions) that a single question's display relies on
   if (context.conditional_display.hide_if_all) {
     return !hideIfAll(state, context.conditional_display.hide_if_all);
   }
