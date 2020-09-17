@@ -113,6 +113,7 @@ export const addNewObjective = (parentID, newObjectiveId, firstObjectiveId) => (
   ];
   dispatch(addElement(parentID, newObjective));
 };
+
 export const addNewGoal = (newGoalId, objectiveId, parentObjectiveId) => (
   dispatch,
   getState

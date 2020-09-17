@@ -40,7 +40,6 @@ export const selectPartTitle = (state, partId) => {
 
 export const selectQuestion = (state, id) => {
   let jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@.id=='${id}')]`;
-
   const questions = jsonpath.query(state, jp);
   if (questions.length) {
     return questions[0];
