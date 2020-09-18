@@ -21,7 +21,6 @@ export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
       parts: subsection.parts.map((part) => part.id),
       title: subsection.title,
       text: subsection.text,
-      text_2: subsection.text_2,
     };
   }
   return null;
