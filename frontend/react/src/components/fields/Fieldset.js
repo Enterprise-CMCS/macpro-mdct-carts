@@ -1,9 +1,12 @@
 import React from "react";
 import Question from "../layout/Question";
-import { SynthesizedValue } from './SynthesizedValue';
+import { SynthesizedTable } from "./SynthesizedTable";
+import { SynthesizedValue } from "./SynthesizedValue";
 
 const Fieldset = ({ question, ...props }) => {
-  switch(question.fieldset_type) {
+  switch (question.fieldset_type) {
+    case "synthesized_table":
+      return <SynthesizedTable question={question} {...props} />;
     case "synthesized_value":
       return <SynthesizedValue question={question} {...props} />;
   }

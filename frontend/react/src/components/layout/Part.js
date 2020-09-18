@@ -43,9 +43,9 @@ const Part = ({
   } else {
     innards = (
       <Alert>
-        <p className="ds-c-alert__text">
+        <div className="ds-c-alert__text">
           {context_data.skip_text ? <p>{context_data.skip_text}</p> : null}
-        </p>
+        </div>
       </Alert>
     );
   }
