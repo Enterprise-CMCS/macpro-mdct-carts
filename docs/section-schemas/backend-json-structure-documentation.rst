@@ -202,7 +202,7 @@ Subsections, like subquestions, are represented by letters rather than numbers.
 ``text`` (optional)
     String.
 
-    Additional text that should be presented at the beginning of the subsection.
+    Additional text that should be presented at the beginning of the subsection. This text can be made into multiple paragraphs by using the newline character ``\n``.
 ``comment`` (optional)
     String.
 
