@@ -11,7 +11,7 @@ module "dms_prod" {
   source_database_name_seds  = "SCHIP"
   source_database_username = "mbescbes"
   source_database_password = "${var.source_database_password}"
-  source_database_host     = "source_database_host"
+  source_database_host     = "192.168.174.25"
   source_database_port     = "1515"
   target_database_name     = "postgres"
   target_database_username = "pguser"
