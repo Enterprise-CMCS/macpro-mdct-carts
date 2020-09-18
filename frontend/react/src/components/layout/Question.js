@@ -60,6 +60,13 @@ const questionTypes = new Map([
   ["text_small", TextSmall],
 ]);
 
+const Container = ({ question, children }) =>
+  question.type === "fieldset" ? (
+    <>{children}</>
+  ) : (
+    <fieldset className="ds-c-fieldset">{children}</fieldset>
+  );
+
 const Question = ({ question, setAnswer }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
@@ -73,13 +80,9 @@ const Question = ({ question, setAnswer }) => {
     setAnswer(id, value);
   };
 
-  const Container = question.type === 'fieldset' ?
-    ({ children }) => <>{children}</> :
-    ({ children }) => <fieldset className="ds-c-fieldset">{children}</fieldset>
-
   return (
     <div className="question">
-      <Container>
+      <Container question={question}>
         {question.label && (
           <legend className="ds-c-label">
             <CMSLegend id={question.id} label={question.label} />
@@ -88,11 +91,12 @@ const Question = ({ question, setAnswer }) => {
 
         <Component question={question} name={question.id} onChange={onChange} />
 
-        { /* If there are subquestions, wrap them so they are indented with the
+        {/* If there are subquestions, wrap them so they are indented with the
              blue line. But don't do it for the subquestions of a fieldset. If
              the fieldset is a subchild, it will already be indented; if it's
-             not, then its children shouldn't be indented either. */ }
-        {question.type !== "fieldset" && question.type !== 'radio' &&
+             not, then its children shouldn't be indented either. */}
+        {question.type !== "fieldset" &&
+          question.type !== "radio" &&
           question.questions &&
           question.questions.length > 0 && (
             <div className="ds-c-choice__checkedChild">
