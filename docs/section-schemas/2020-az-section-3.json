@@ -4182,6 +4182,336 @@
             ]
           }
         ]
+      },
+      {
+        "id": "2020-03-i",
+        "title": "Health Services Initiative (HSI) Programs",
+        "type": "subsection",
+        "text": "States can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10. \nAll states with approved HSI program(s) should complete this section.",
+        "parts": [
+          {
+            "id": "2020-03-i-01",
+            "type": "part",
+            "questions": [
+              {
+                "id": "2020-03-i-01-01",
+                "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds? Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "2020-03-i-02",
+            "type": "part",
+            "text": "Tell us about each of your HSI program(s).",
+            "context_data": {
+              "skip_text": "This part only applies to states with Health Service Initiatives. Skip to the next part.",
+              "conditional_display": {
+                "type": "conditional_display",
+                "comment": "Interactive: Hide if 2020-03-i-01-01 is no; noninteractive: hide if that's no.",
+                "hide_if": {
+                  "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
+                  "values": {
+                    "interactive": [
+                      "no"
+                    ],
+                    "noninteractive": [
+                      "no"
+                    ]
+                  }
+                }
+              }
+            },
+            "questions": [
+              {
+                "id": "2020-03-i-02-01",
+                "type": "repeatables",
+                "questions": [
+                  {
+                    "id": "2020-03-i-02-01-01",
+                    "type": "repeatable",
+                    "questions": [
+                      {
+                        "id": "2020-03-i-02-01-01-01",
+                        "label": "What is the name of your HSI program?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-02",
+                        "label": "Are you currently operating the HSI program, or plan to in the future?",
+                        "type": "radio",
+                        "answer": {
+                          "options": [
+                            {
+                              "value": "yes",
+                              "label": "Yes"
+                            },
+                            {
+                              "value": "no",
+                              "label": "No"
+                            }
+                          ],
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "Since you're no longer operating this HSI program, go ahead and remove any references to it from your CHIP state plan.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "hide_if": {
+                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "yes"
+                                ],
+                                "noninteractive": [
+                                  null,
+                                  "yes"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": []
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-03",
+                        "label": "Which populations does the HSI program serve?",
+                        "type": "text",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-04",
+                        "label": "How many children do you estimate are being served by the HSI program?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-05",
+                        "label": "How many children in the HSI program are below your state's FPL threshold? ",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "fieldset",
+                        "fieldset_type": "synthesized_value",
+                        "fieldset_info": {
+                          "targets": [
+                            "$..*[?(@.id=='2020-03-i-02-01-01-05')].answer.entry",
+                            "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry"
+                          ],
+                          "actions": [
+                            "percentage"
+                          ]
+                        },
+                        "questions": []
+                      },
+                      {
+                        "type": "fieldset",
+                        "context_data": {
+                          "skip_text": "Skip to Part 3 if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "hide_if": {
+                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": []
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-06",
+                        "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact. ",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-07",
+                        "label": "What outcomes have you found when measuring the impact?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-08",
+                        "label": "Anything else you'd like to add about this HSI program?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "id": "2020-03-i-02-01-01-09",
+                        "label": "Optional: Attach any additional documents.",
+                        "type": "file_upload",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }
