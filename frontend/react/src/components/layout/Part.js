@@ -21,11 +21,11 @@ const showPart = (context_data, programType, state) => {
   return true;
 }
 
-const Part = ({ partId, text, title, context_data, programType, state }) => {
+const Part = ({ partId, text, title, context_data, show }) => {
   // Determine Part Number from partId
   let partNum = Number(partId.split("-").pop());
 
-  if (showPart(context_data, programType, state)) {
+  if (show) {
     return (
       <div id={partId}>
         <h2>Part {partNum}{title ? ": " + title : null}</h2>
@@ -50,12 +50,14 @@ const Part = ({ partId, text, title, context_data, programType, state }) => {
 
 const mapStateToProps = (state, { partId }) => {
   const part = selectFragment(state, partId);
+  const contextData = _.has(part, "context_data") ? part.context_data : null;
+
   return {
     text: part ? part.text : null,
     title: part ? part.title : null,
     context_data: _.has(part, "context_data") ? part.context_data : null,
     programType: state.stateUser.programType,
-    state: state,
+    show: showPart(contextData, state.stateUser.programType, state),
   };
 };
 
