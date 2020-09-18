@@ -18,7 +18,7 @@ pipeline {
 
           jenkinsUtils.installAwsCli()
           jenkinsUtils.installEcsCli()
-          jenkinsUtils.installTerraform("0.12.24")
+          jenkinsUtils.installTerraform("0.12.28")
         }
       }
     }

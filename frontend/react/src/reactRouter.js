@@ -25,21 +25,25 @@ import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
 import test from "./components/test";
+import ScrollToTop from "./components/Utils/ScrollToTop";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
+import SaveError from "./components/layout/SaveError";
 
 let VisibleSidebar =
   window.location.pathname === "/" ||
-    window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-      <Sidebar />
-    );
+  window.location.pathname.split("/")[1] === "reports" ||
+  window.location.pathname.split("/")[1] === "coming-soon" ? null : (
+    <Sidebar />
+  );
 
 const Routes = ({ userData }) => (
   <Router>
     <div className="ds-l-container">
       <div className="ds-l-row">
         {VisibleSidebar}
+        <SaveError />
+        <ScrollToTop />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/basic-info" component={BasicInfo} />
@@ -88,7 +92,13 @@ const InvokeSection = ({ userData }) => {
     Number(sectionOrdinal),
     filteredMarker
   );
-  return <Section userData={userData} sectionId={sectionId} subsectionId={subsectionId} />;
+  return (
+    <Section
+      userData={userData}
+      sectionId={sectionId}
+      subsectionId={subsectionId}
+    />
+  );
 };
 
 export default Routes;
