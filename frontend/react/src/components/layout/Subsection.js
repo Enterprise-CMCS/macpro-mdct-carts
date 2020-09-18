@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 import Part from "./Part";
 
-const Subsection = ({ partIds, subsectionId, title, text, text_2 }) => {
+const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
     <div id={subsectionId}>
       <h2>{title}</h2>
@@ -24,7 +24,6 @@ const mapStateToProps = (state, ownProps) => {
     partIds: subsection ? subsection.parts : [],
     title: subsection ? subsection.title : null,
     text: subsection ? subsection.text : null,
-    text_2: subsection ? subsection.text_2 : null,
   };
 };
 
