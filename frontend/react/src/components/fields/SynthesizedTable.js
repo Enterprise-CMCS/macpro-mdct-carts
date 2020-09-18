@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { selectTarget } from "./../../store/selectors";
-import jsonpath from "../../util/jsonpath";
+import { synthesizeValue } from "../../util/synthesize";
 
 /**
  *
  * @param {*} data Fragment from api.
  */
-const SynthesizedTable = ({ data, state }) => {
+const SynthesizedTable = ({ data, rows }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <legend className="table__legend ds-h4" for="synthesized-table-1">
@@ -17,38 +17,18 @@ const SynthesizedTable = ({ data, state }) => {
         <caption class="ds-c-table__caption">{data.hint}</caption>
         <thead>
           <tr>
-            {/* headers={fragment.fieldset_info.headers} rows={fragment.fieldset_info.rows} */}
-            {data.fieldset_info.headers.map((header) => {
-              return <th scope="col">{header.contents}</th>;
-            })}
+            {data.fieldset_info.headers.map((header) => (
+              <th scope="col">{header.contents}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {data.fieldset_info.rows.map((row) => {
+          {rows.map((row) => {
             return (
               <tr>
-                {row.map((cell) => {
-                  if (cell.contents) {
-                    return (
-                      cell.contents && <td scope="col">{cell.contents}</td>
-                    );
-                  }
-                  if (cell.targets && !cell.actions) {
-                    // return <td>{jsonpath.query(state, cell.targets[0])}</td>;
-                    return (
-                      <td>
-                        <pre>{cell.targets[0]}</pre>
-                      </td>
-                    );
-                  }
-                  if (cell.targets && cell.actions) {
-                    return (
-                      <td>
-                        <pre>calculate {cell.actions[0]}</pre>
-                      </td>
-                    );
-                  } else return null;
-                })}
+                {row.map((cell) => (
+                  <td scope="col">{cell.contents}</td>
+                ))}
               </tr>
             );
           })}
@@ -58,8 +38,12 @@ const SynthesizedTable = ({ data, state }) => {
   );
 };
 
-const mapStateToProps = (state, { target }) => ({
-  // text: selectTarget(state, target) || null,
-});
+const mapStateToProps = (state, { data }) => {
+  const rows = data.fieldset_info.rows.map((row) =>
+    row.map((cell) => synthesizeValue(cell, state))
+  );
+
+  return { rows };
+};
 
 export default connect(mapStateToProps)(SynthesizedTable);
