@@ -2,24 +2,44 @@ import jsonpath from "./jsonpath";
 
 const hideIf = (state, hideIf) => {
   // Wil return the answer from associated question (Array)
-  let associatedAnswer = jsonpath.query(state, hideIf.target);
+  let targetAnswer = jsonpath.query(state, hideIf.target);
   let answersArray = hideIf.values.interactive;
 
-  // DELETE: associatedAnswer for 2020-03-h-02-04 will be , ["none", "other"]
-  //DELETE: associatedAnswer for any other question will be ["someEntry"]
+  // DELETE: targetAnswer for 2020-03-h-02-04 will be , ["none", "other"]
+  //DELETE: targetAnswer for any other question will be ["someEntry"]
   // So for any other question we could consistently just call the thing at the zeroth index
 
-  const includedBoolean = associatedAnswer.some(
-    (val) => answersArray.indexOf(val) !== -1
-  );
+  // Short version
+  // let includedBoolean = targetAnswer.some(
+  //   (val) => answersArray.indexOf(val) !== -1
+  // );
 
-  if (includedBoolean) {
-    // If the associated answer IS in the interactive array, remove it
-    return true;
-  } else {
-    // If the associated answer IS NOT in the interactive array, keep it
-    return false;
+  let includedBoolean = false;
+
+  for (let i = 0; i < targetAnswer.length; i++) {
+    let singleAnswer = targetAnswer[i];
+    if (answersArray.includes(singleAnswer)) {
+      includedBoolean = true;
+      break;
+    }
   }
+  return includedBoolean;
+
+  // if (includedBoolean === true) {
+  //   // If the target answer IS in the interactive array, remove it
+  //   return includedBoolean
+  // } else {
+  //   // If the target answer IS NOT in the interactive array, keep it
+  //   return false;
+  // }
+
+  // if (hideIf.values.interactive.includes(targetAnswer[0])) {
+  //   // If the associated answer IS in the interactive array, remove it
+  //   return true;
+  // } else {docker
+  //   // If the associated answer IS NOT in the interactive array, keep it
+  //   return false;
+  // }
 };
 
 const hideIfAll = (state, hideIfAll) => {

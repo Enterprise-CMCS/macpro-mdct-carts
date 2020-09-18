@@ -27,7 +27,6 @@ class CMSChoice extends Component {
     let isChecked = null;
     if (this.props.type === "checkbox") {
       if (Array.isArray(currentlySelected)) {
-        // Is the current </Choice> already in the redux answer array
         isChecked = currentlySelected.includes(this.props.value)
           ? "checked"
           : null;
@@ -73,6 +72,7 @@ class CMSChoice extends Component {
 
       // Return Choice component after creating subquestion components
     }
+
     return (
       <>
         <Choice
