@@ -64,9 +64,6 @@
         "text": {
           "type": "string"
         },
-        "text_2": {
-          "type": "string"
-        },
         "description": {
           "type": "string"
         },
