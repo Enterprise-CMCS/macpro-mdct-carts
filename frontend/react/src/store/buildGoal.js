@@ -1,8 +1,4 @@
-import { selectQuestion } from "../../../store/selectors";
-import { setAnswer } from "../../../actions/initial";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addElement } from "../../../actions/initial";
+import { selectQuestion } from "./selectors";
 
 export const buildGoal = (newGoalId, objectiveId, parentObjectiveId, state) => {
   let goalIdString = newGoalId;

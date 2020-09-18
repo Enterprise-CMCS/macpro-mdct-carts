@@ -2,7 +2,7 @@ import axios from "axios";
 import fakeUserData from "../store/fakeUserData";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 import { selectQuestion } from "../store/selectors";
-import { buildGoal } from "../components/sections/section2api/ObjectiveAndGoals";
+import { buildGoal } from "../store/buildGoal";
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const QUESTION_ADDED = "QUESTION ADDED";
@@ -113,6 +113,7 @@ export const addNewObjective = (parentID, newObjectiveId, firstObjectiveId) => (
   ];
   dispatch(addElement(parentID, newObjective));
 };
+
 export const addNewGoal = (newGoalId, objectiveId, parentObjectiveId) => (
   dispatch,
   getState

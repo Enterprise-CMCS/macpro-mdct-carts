@@ -38,32 +38,30 @@ class Objective2bApi extends Component {
         <div className="objective-body">
           <div className="goals">
             {
-              <>
-                <Accordion multiple defaultIndex={0}>
-                  {this.props.goalsArray.map((goals) => (
-                    <AccordionItem key={goals.id}>
-                      <div className="accordion-header">
-                        <h3>
-                          <AccordionButton>
-                            <div className="accordion-title">
-                              Goal{" "}
-                              {parseInt(
-                                goals.id.split("-")[
-                                  goals.id.split("-").length - 1
-                                ]
-                              )}
-                              :
-                            </div>
-                          </AccordionButton>
-                        </h3>
-                      </div>
-                      <AccordionPanel>
-                        <QuestionComponent data={goals.questions} />
-                      </AccordionPanel>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </>
+              <Accordion multiple defaultIndex={0}>
+                {this.props.goalsArray.map((goals) => (
+                  <AccordionItem key={goals.id}>
+                    <div className="accordion-header">
+                      <h3>
+                        <AccordionButton>
+                          <div className="accordion-title">
+                            Goal{" "}
+                            {parseInt(
+                              goals.id.split("-")[
+                                goals.id.split("-").length - 1
+                              ]
+                            )}
+                            :
+                          </div>
+                        </AccordionButton>
+                      </h3>
+                    </div>
+                    <AccordionPanel>
+                      <QuestionComponent data={goals.questions} />
+                    </AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             }
           </div>
         </div>

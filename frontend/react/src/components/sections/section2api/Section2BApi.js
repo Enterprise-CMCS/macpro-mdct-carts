@@ -60,11 +60,6 @@ class Section2BApi extends Component {
                   <PageInfo />
                   <h3>{sectionTitle}</h3>
                 </div>
-                <div disabled>
-                  {
-                    //<Questions2BApi previousEntry="true" />
-                  }
-                </div>
               </TabPanel>
             </Tabs>
 

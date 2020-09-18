@@ -49,13 +49,14 @@ class Questions2BApi extends Component {
                     {part.questions[0].questions.map((objective) => (
                       <AccordionItem key={objective.id}>
                         {/*Actually looping through each objective */}
-                        {objective.questions.map((objectiveGoals, index) =>
-                          index === 0 ? (
+                        {objective.questions.map((objectiveGoals) =>
+                          objectiveGoals.type !== "repeatables" ? (
                             <div className="accordion-header">
                               <h3>
                                 <AccordionButton>
                                   <div className="accordion-title">
-                                    Objective:{" "}
+                                    Objective{" "}
+                                    {parseInt(objective.id.split("-")[5])}:{" "}
                                     {objectiveGoals.answer.default_entry
                                       ? objectiveGoals.answer.default_entry
                                       : objectiveGoals.answer.entry}
