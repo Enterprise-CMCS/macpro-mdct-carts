@@ -25,6 +25,7 @@ import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
 import test from "./components/test";
+import ScrollToTop from "./components/Utils/ScrollToTop";
 
 import Section3AApi from "./components/sections/section3Aapi/Section3A";
 
@@ -40,6 +41,7 @@ const Routes = ({ userData }) => (
     <div className="ds-l-container">
       <div className="ds-l-row">
         {VisibleSidebar}
+        <ScrollToTop />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/basic-info" component={BasicInfo} />
