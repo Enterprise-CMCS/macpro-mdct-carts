@@ -175,6 +175,7 @@ class QuestionComponent extends Component {
                         name={question.id}
                         value={value}
                         label={label}
+                        hint={question.hint}
                         type={question.type}
                         answer={question.answer.entry}
                         conditional={question.conditional}
@@ -197,6 +198,7 @@ class QuestionComponent extends Component {
                         name={question.id}
                         value={value}
                         label={label}
+                        hint={question.hint}
                         type={question.type}
                         answer={question.answer.entry}
                         conditional={question.conditional}
@@ -219,6 +221,7 @@ class QuestionComponent extends Component {
                   type="text"
                   onChange={this.handleChange}
                   label=""
+                  hint={question.hint}
                   disabled={question.answer.readonly}
                 />
               ) : null}
@@ -234,6 +237,7 @@ class QuestionComponent extends Component {
                   }
                   type="text"
                   label=""
+                  hint={question.hint}
                   onBlur={this.validateEmail}
                   onChange={this.updateLocalStateOnly}
                   errorMessage={
@@ -250,6 +254,7 @@ class QuestionComponent extends Component {
                 <TextField
                   className="ds-c-input"
                   label=""
+                  hint={question.hint}
                   name={question.id}
                   onChange={this.handleChange}
                   type="text"
@@ -264,6 +269,7 @@ class QuestionComponent extends Component {
                   <TextField
                     className="ds-c-input"
                     label=""
+                    hint={question.hint}
                     multiline
                     name={question.id}
                     onChange={this.handleChange}
@@ -282,6 +288,7 @@ class QuestionComponent extends Component {
                   <TextField
                     className="ds-c-input"
                     label=""
+                    hint={question.hint}
                     multiline
                     name={question.id}
                     onChange={this.handleChange}
@@ -308,6 +315,7 @@ class QuestionComponent extends Component {
                       : false
                   }
                   label=""
+                  hint={question.hint}
                   name={question.id}
                   numeric
                   onChange={this.handleIntegerChange}
@@ -321,6 +329,7 @@ class QuestionComponent extends Component {
                   <TextField
                     className="file_upload"
                     label=""
+                    hint={question.hint}
                     multiple
                     name={question.id}
                     onChange={this.handleFileUpload}
@@ -346,6 +355,7 @@ class QuestionComponent extends Component {
                     }
                     inputMode="currency"
                     label=""
+                    hint={question.hint}
                     mask="currency"
                     name={question.id}
                     numeric
@@ -374,6 +384,7 @@ class QuestionComponent extends Component {
                       : null
                   }
                   label=""
+                  hint={question.hint}
                   mask="phone"
                   name={question.id}
                   numeric={true}
@@ -395,6 +406,7 @@ class QuestionComponent extends Component {
                     }
                     inputMode="percentage"
                     label=""
+                    hint={question.hint}
                     name={question.id}
                     numeric={true}
                     onChange={this.validatePercentage}
@@ -416,6 +428,7 @@ class QuestionComponent extends Component {
                     },
                   ]}
                   label=""
+                  hint={question.hint}
                   name={question.id}
                   onChange={this.handleCheckboxFlag}
                   type="checkbox"
