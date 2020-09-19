@@ -862,27 +862,6 @@
               },
               {
                 "id": "2020-01-a-03-10",
-                "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
-                "type": "radio",
-                "answer": {
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ],
-                  "entry": null
-                },
-                "context_data": {
-                  "bullet_text": "Enrollment freeze and/or enrollment cap"
-                }
-              },
-              {
-                "id": "2020-01-a-03-11",
                 "label": "Have you made any changes to the enrollment process for health plan selection?",
                 "type": "radio",
                 "answer": {
@@ -903,9 +882,9 @@
                 }
               },
               {
-                "id": "2020-01-a-03-12",
+                "id": "2020-01-a-03-11",
                 "label": "Have you made any changes to the protections for applicants and enrollees?",
-                "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
+                "hint": "For example: changing from the Medicaid Fair Hearing process to the review process used by all health insurance issuers statewide.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -925,7 +904,7 @@
                 }
               },
               {
-                "id": "2020-01-a-03-13",
+                "id": "2020-01-a-03-12",
                 "label": "Have you made any changes to premium assistance?",
                 "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
                 "type": "radio",
@@ -947,7 +926,7 @@
                 }
               },
               {
-                "id": "2020-01-a-03-14",
+                "id": "2020-01-a-03-13",
                 "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                 "type": "radio",
                 "answer": {
@@ -968,51 +947,7 @@
                 }
               },
               {
-                "id": "2020-01-a-03-15",
-                "label": "Have you made any changes to your prenatal care eligibility?",
-                "hint": "For example: expanding eligibility to pregnant enrollees.",
-                "type": "radio",
-                "answer": {
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ],
-                  "entry": null
-                },
-                "context_data": {
-                  "bullet_text": "Prenatal care eligibility"
-                }
-              },
-              {
-                "id": "2020-01-a-03-16",
-                "label": "Have you made any changes to your Pregnant Woman State Plan expansion?",
-                "hint": "For example: extending coverage to pregnant enrollees.",
-                "type": "radio",
-                "answer": {
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ],
-                  "entry": null
-                },
-                "context_data": {
-                  "bullet_text": "Pregnant Woman State Plan expansion"
-                }
-              },
-              {
-                "id": "2020-01-a-03-17",
+                "id": "2020-01-a-03-14",
                 "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
                 "type": "radio",
                 "answer": {
@@ -1033,7 +968,7 @@
                 }
               },
               {
-                "id": "2020-01-a-03-18",
+                "id": "2020-01-a-03-15",
                 "label": "Have you made any changes to eligibility for “lawfully residing children”?",
                 "type": "radio",
                 "answer": {
@@ -1054,8 +989,8 @@
                 }
               },
               {
-                "id": "2020-01-a-03-19",
-                "label": "Have you made any changes to any other program areas?",
+                "id": "2020-01-a-03-16",
+                "label": "Have you made changes to any other policy or program areas?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1075,18 +1010,10 @@
                 }
               },
               {
-                "id": "2020-01-a-03-20",
-                "label": "Anything else you'd like to add that wasn't already covered?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
                 "type": "fieldset",
                 "context_data": {
-                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
-                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–19 has a yes answer, hide otherwise.",
+                  "interactive_conditional": "Show if any 2020-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
+                  "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
                   "conditional_display":{
                     "type": "conditional_display",
                     "hide_if_all":{
@@ -1121,7 +1048,7 @@
                 "questions": [
                   {
                       "id": "2020-01-a-03-21",
-                      "label": "Briefly desribe why you made changes to your program.",
+                      "label": "Briefly describe why you made these changes to your Medicaid Expansion CHIP program.",
                       "type": "text_multiline",
                       "answer": {
                        "entry": null
@@ -1130,7 +1057,7 @@
                   {
                     "id": "2020-01-a-03-22",
                     "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
-                    "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
+                    "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -1143,15 +1070,15 @@
           {
             "id": "2020-01-a-04",
             "type": "part",
-            "title": "Changes in Separate CHIP Programs and Policies",
+            "title": "Changes in Separate CHIP Program and Policies",
             "context_data": {
-              "skip_text": "Part 4 only applies to states with a separate CHIP program.",
+              "skip_text": "Part 4 only applies to states with a Separate CHIP program. Skip to Section 2.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
               ]
             },
-            "text": "Indicate any changes you’ve made to your separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+            "text": "Indicate any changes you’ve made to your Separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
             "questions": [
               {
                 "id": "2020-01-a-04-01",
