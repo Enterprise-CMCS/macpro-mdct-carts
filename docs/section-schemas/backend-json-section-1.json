@@ -655,7 +655,7 @@
           {
             "id": "2020-01-a-03",
             "type": "part",
-            "title": "Changes in Medicaid Expansion CHIP Policies",
+            "title": "Medicaid Expansion CHIP Program and Policy Changes",
             "context_data": {
               "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Skip to Part 4.",
               "show_if_state_program_type_in": [
@@ -1070,15 +1070,15 @@
           {
             "id": "2020-01-a-04",
             "type": "part",
-            "title": "Changes in Separate CHIP Program and Policies",
+            "title": "Separate CHIP Program and Policy Changes",
             "context_data": {
-              "skip_text": "Part 4 only applies to states with a Separate CHIP program. Skip to Section 2.",
+              "skip_text": "Part 4 only applies to states with a Separate CHIP program. Skip to the next section.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
               ]
             },
-            "text": "Indicate any changes you’ve made to your Separate CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+            "text": "Indicate any changes you’ve made to your Separate CHIP program and policies in the past federal fiscal year. All changes listed in this section require a State Plan Amendment (SPA) if you haven’t submitted one already.",
             "questions": [
               {
                 "id": "2020-01-a-04-01",
@@ -1125,7 +1125,7 @@
               {
                 "id": "2020-01-a-04-03",
                 "label": "Have you made any changes to the eligibility levels or target populations?",
-                "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
+                "hint": "For example: increasing income eligibility levels.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1147,7 +1147,7 @@
               {
                 "id": "2020-01-a-04-04",
                 "label": "Have you made any changes to the benefits available to enrolees?",
-                "hint": "For example: adding or removing different types of coverage.",
+                "hint": "For example: adding benefits or removing benefit limits.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1212,7 +1212,7 @@
               {
                 "id": "2020-01-a-04-07",
                 "label": "Have you made any changes to the delivery system(s)?",
-                "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
+                "hint": "For example: transitioning from Fee for Service to Managed Care for different Separate CHIP populations.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1255,8 +1255,8 @@
               },
               {
                 "id": "2020-01-a-04-09",
-                "label": "Have you made any changes to the crowd-out policies?",
-                "hint": "For example: changing substitutions or the waiting periods.",
+                "label": "Have you made any changes to substitution of coverage policies?",
+                "hint": "For example: removing a waiting period.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1320,7 +1320,7 @@
               {
                 "id": "2020-01-a-04-12",
                 "label": "Have you made any changes to the protections for applicants and enrollees?",
-                "hint": "For example: changing from the Medicaid Fair Hearing Process to state law.",
+                "hint": "For example: changing from the Medicaid Fair Hearing process to the review process used by all health insurance issuers statewide.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1384,8 +1384,8 @@
               },
               {
                 "id": "2020-01-a-04-15",
-                "label": "Have you made any changes to your prenatal care eligibility?",
-                "hint": "For example: expanding eligibility to pregnant enrollees.",
+                "label": "Have you made any changes to your conception to birth expansion (as described in the October 2, 2002 final rule)?",
+                "hint": "For example: expanding eligibility to pregnant enrollees or changing their benefit package.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1406,8 +1406,8 @@
               },
               {
                 "id": "2020-01-a-04-16",
-                "label": "Have you made any changes to your Pregnant Woman State Plan expansion?",
-                "hint": "For example: extending coverage to pregnant enrollees.",
+                "label": "Have you made any changes to your Pregnant Women state plan expansion?",
+                "hint": "For example: expanding eligibility or changing this population’s benefit package.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1470,7 +1470,7 @@
               },
               {
                 "id": "2020-01-a-04-19",
-                "label": "Have you made any changes to any other program areas?",
+                "label": "Have you made changes to any other policy or program areas?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1487,14 +1487,6 @@
                 },
                 "context_data": {
                   "bullet_text": "Other program areas"
-                }
-              },
-              {
-                "id": "2020-01-a-04-20",
-                "label": "Anything else you'd like to add that wasn't already covered?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
                 }
               },
               {
@@ -1536,7 +1528,7 @@
                 "questions": [
                   {
                       "id": "2020-01-a-04-21",
-                      "label": "Briefly desribe why you made changes to your program.",
+                      "label": "Briefly describe why you made these changes to your Separate CHIP program.",
                       "type": "text_multiline",
                       "answer": {
                        "entry": null
@@ -1545,7 +1537,7 @@
                   {
                     "id": "2020-01-a-04-22",
                     "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
-                    "label": "Do you plan to submit a SPA to reflect changes to your programs or policies if you haven’t done so already?",
+                    "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
