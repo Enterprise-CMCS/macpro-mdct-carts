@@ -1,20 +1,28 @@
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
+import { SET_FRAGMENT } from "../actions/repeatables";
 import jsonpath from "../util/jsonpath";
 import { _ } from "underscore";
 import { selectQuestion } from "./selectors";
 
 const initialState = [];
 
-export default (sdata = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       return action.data;
     case QUESTION_ANSWERED:
-      const fragment = selectQuestion({ formData: sdata }, action.fragmentId);
+      const fragment = selectQuestion({ formData: state }, action.fragmentId);
       fragment.answer.entry = action.data;
-      return JSON.parse(JSON.stringify(sdata));
+      return JSON.parse(JSON.stringify(state));
+    case SET_FRAGMENT:
+      console.log(action.id);
+      jsonpath.apply(state, `$..*[?(@.id==='${action.id}')]`, () => {
+        console.log("# # # # # # # # # setted a thang");
+        return action.value;
+      });
+      return JSON.parse(JSON.stringify(state));
     default:
-      return sdata;
+      return state;
   }
 };
 

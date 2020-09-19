@@ -3,6 +3,16 @@ import jsonpath from "../util/jsonpath";
 import { selectFragment } from "./formData";
 import { shouldDisplay } from "../util/shouldDisplay";
 
+export const selectById = (state, id) => {
+  const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
+  const item = jsonpath.query(state, jspath);
+
+  if (item.length) {
+    return item[0];
+  }
+  return null;
+};
+
 export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
   const sectionTitles = jsonpath.query(state, jspath);
