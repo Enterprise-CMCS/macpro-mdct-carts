@@ -15,13 +15,13 @@
           {
             "id": "2020-01-a-01",
             "type": "part",
-            "title": "Medicaid Expansion CHIP Enrollment and Premium Fees",
+            "title": "Medicaid Expansion CHIP Enrollment Fees, Premiums, and Delivery Systems",
             "context_data": {
               "show_if_state_program_type_in": [
                 "medicaid_exp_chip",
                 "combo"
               ],
-              "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program. Skip to Part 2."
+              "skip_text": "Part 1 only applies to states with a Medicaid Expansion CHIP program. Skip to Part 2."
             },
             "questions": [
               {
@@ -72,7 +72,7 @@
               },
               {
                 "id": "2020-01-a-01-02",
-                "label": "Does your program charge a premium fee?",
+                "label": "Does your program charge premiums?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -112,7 +112,7 @@
                     "questions": [
                       {
                         "id": "2020-01-a-01-02-a",
-                        "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
+                        "label": "Are your premiums tiered by Federal Poverty Level (FPL) for one child?",
                         "type": "radio",
                         "answer": {
                           "entry": null,
@@ -130,19 +130,19 @@
                       },
                       {
                         "id": "2020-01-a-01-02-b",
-                        "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                        "label": "Indicate the range for premiums and corresponding FPL for one child.",
                         "type": "ranges",
                         "answer": {
                           "entry": null,
-                          "header": "Premium fees",
+                          "header": "Premiums for one child, tiered by FPL",
                           "range_categories": [
                             [
                               "FPL starts at",
                               "FPL ends at"
                             ],
                             [
-                              "Premium fee starts at",
-                              "Premium fee ends at"
+                              "Premium starts at",
+                              "Premium ends at"
                             ]
                           ],
                           "range_type": [
@@ -173,7 +173,7 @@
                       },
                       {
                         "id": "2020-01-a-01-02-c",
-                        "label": "How much is your premium fee?",
+                        "label": "How much is the premium for one child?",
                         "type": "money",
                         "answer": {
                           "entry": null
@@ -203,7 +203,7 @@
               },
               {
                 "id": "2020-01-a-01-03",
-                "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
+                "label": "Is the maximum premium a family would be charged each year tiered by FPL?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -221,19 +221,19 @@
                 "questions": [
                   {
                     "id": "2020-01-a-01-03-a",
-                    "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                    "label": "Indicate the range for premiums and corresponding FPL for a family.",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
-                      "header": "Premium fees",
+                      "header": "Maximum premiums for a family, tiered by FPL",
                       "range_categories": [
                         [
                           "FPL starts at",
                           "FPL ends at"
                         ],
                         [
-                          "Premium fee starts at",
-                          "Premium fee ends at"
+                          "Premium starts at",
+                          "Premium ends at"
                         ]
                       ],
                       "range_type": [
@@ -265,7 +265,7 @@
                   },
                   {
                     "id": "2020-01-a-01-03-b",
-                    "label": "What's the maximum premium fee a family would be charged each year?",
+                    "label": "What's the maximum premium a family would be charged each year?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -293,7 +293,7 @@
               },
               {
                 "id": "2020-01-a-01-04",
-                "label": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
+                "label": "Do premiums differ for different Medicaid Expansion CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -309,22 +309,22 @@
                   "options": [
                     {
                       "value": "mco",
-                      "label": "Managed Care Organization (MCO)"
+                      "label": "Managed Care"
                     },
                     {
                       "value": "pccm",
-                      "label": "Primary Care Case Management (PCCM)"
+                      "label": "Primary Care Case Management"
                     },
                     {
                       "value": "ffs",
-                      "label": "Fee for Service (FFS)"
+                      "label": "Fee for Service"
                     }
                   ]
                 }
               },
               {
                 "id": "2020-01-a-01-06",
-                "label": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                "label": "Which delivery system(s) are available to which Medicaid Expansion CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -335,9 +335,9 @@
           {
             "id": "2020-01-a-02",
             "type": "part",
-            "title": "Separate CHIP Enrollment and Premium Fees",
+            "title": "Separate CHIP Enrollment Fees, Premiums, and Delivery Systems",
             "context_data": {
-              "skip_text": "Part 2 only applies to states with a separate CHIP program. Skip to Part 3.",
+              "skip_text": "Part 2 only applies to states with a Separate CHIP program. Skip to Part 3.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
@@ -392,7 +392,7 @@
               },
               {
                 "id": "2020-01-a-02-02",
-                "label": "Does your program charge a premium fee?",
+                "label": "Does your program charge premiums?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -432,7 +432,7 @@
                     "questions": [
                       {
                         "id": "2020-01-a-02-02-a",
-                        "label": "Are your premium fees tiered by Federal Poverty Level (FPL)?",
+                        "label": "Are your premiums tiered by Federal Poverty Level (FPL) for one child?",
                         "type": "radio",
                         "answer": {
                           "entry": null,
@@ -450,19 +450,19 @@
                       },
                       {
                         "id": "2020-01-a-02-02-b",
-                        "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                        "label": "Indicate the range of premiums and corresponding FPL ranges for one child.",
                         "type": "ranges",
                         "answer": {
                           "entry": null,
-                          "header": "Premium fees",
+                          "header": "Premiums for one child, tiered by FPL",
                           "range_categories": [
                             [
                               "FPL starts at",
                               "FPL ends at"
                             ],
                             [
-                              "Premium fee starts at",
-                              "Premium fee ends at"
+                              "Premium starts at",
+                              "Premium ends at"
                             ]
                           ],
                           "range_type": [
@@ -493,7 +493,7 @@
                       },
                       {
                         "id": "2020-01-a-02-02-c",
-                        "label": "How much is your premium fee?",
+                        "label": "How much is the premium for one child?",
                         "type": "money",
                         "answer": {
                           "entry": null
@@ -523,7 +523,7 @@
               },
               {
                 "id": "2020-01-a-02-03",
-                "label": "Is the maximum premium fee a family would be charged each year tiered by FPL?",
+                "label": "Is the maximum premium a family would be charged each year tiered by FPL?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -541,19 +541,19 @@
                 "questions": [
                   {
                     "id": "2020-01-a-02-03-a",
-                    "label": "Indicate the premium fee ranges and corresponding FPL ranges.",
+                    "label": "Indicate the range of premiums and corresponding FPL for a family.",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
-                      "header": "Premium fees",
+                      "header": "Maximum premiums for a family, tiered by FPL",
                       "range_categories": [
                         [
                           "FPL starts at",
                           "FPL ends at"
                         ],
                         [
-                          "Premium fee starts at",
-                          "Premium fee ends at"
+                          "Premium starts at",
+                          "Premium ends at"
                         ]
                       ],
                       "range_type": [
@@ -613,7 +613,7 @@
               },
               {
                 "id": "2020-01-a-02-04",
-                "label": "Do your premium fees differ for different CHIP populations beyond FPL (for example, by age)? If so, briefly explain the fee structure breakdown.",
+                "label": "Do your premiums differ for different CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -629,15 +629,15 @@
                   "options": [
                     {
                       "value": "mco",
-                      "label": "Managed Care Organization (MCO)"
+                      "label": "Managed Care"
                     },
                     {
                       "value": "pccm",
-                      "label": "Primary Care Case Management (PCCM)"
+                      "label": "Primary Care Case Management"
                     },
                     {
                       "value": "ffs",
-                      "label": "Fee for Service (FFS)"
+                      "label": "Fee for Service"
                     }
                   ]
                 }
@@ -655,15 +655,15 @@
           {
             "id": "2020-01-a-03",
             "type": "part",
-            "title": "Changes in Medicaid Expansion CHIP Programs and Policies",
+            "title": "Changes in Medicaid Expansion CHIP Policies",
             "context_data": {
-              "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program. Skip to Part 4.",
+              "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Skip to Part 4.",
               "show_if_state_program_type_in": [
                 "medicaid_exp_chip",
                 "combo"
               ]
             },
-            "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP programs/policies in the past federal fiscal year. All changes require a State Plan Amendment (SPA).",
+            "text": "Indicate any changes you’ve made to your Medicaid Expansion CHIP program policies in the past federal fiscal year. All changes listed in this section require a State Plan Amendment (SPA) if you haven’t submitted one already.",
             "questions": [
               {
                 "id": "2020-01-a-03-01",
@@ -710,7 +710,7 @@
               {
                 "id": "2020-01-a-03-03",
                 "label": "Have you made any changes to the eligibility levels or target populations?",
-                "hint": "For example: increasing the FPL or income levels, or other eligibility criteria.",
+                "hint": "For example: increasing income eligibility levels.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -732,7 +732,7 @@
               {
                 "id": "2020-01-a-03-04",
                 "label": "Have you made any changes to the benefits available to enrolees?",
-                "hint": "For example: adding or removing different types of coverage.",
+                "hint": "For example: adding benefits or removing benefit limits.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -797,7 +797,7 @@
               {
                 "id": "2020-01-a-03-07",
                 "label": "Have you made any changes to the delivery system(s)?",
-                "hint": "For example: transitioning from Fee for Service to Managed Care for different CHIP populations.",
+                "hint": "For example: transitioning from Fee for Service to Managed Care for different Medicaid Expansion CHIP populations.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -840,8 +840,8 @@
               },
               {
                 "id": "2020-01-a-03-09",
-                "label": "Have you made any changes to the crowd-out policies?",
-                "hint": "For example: changing substitutions or the waiting periods.",
+                "label": "Have you made any changes to the substitution of coverage policies?",
+                "hint": "For example: removing a waiting period.",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -857,7 +857,7 @@
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Crowd-out policies"
+                  "bullet_text": "Subsitution of coverage policies"
                 }
               },
               {
