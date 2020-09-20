@@ -13,7 +13,6 @@ import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
 import test from "./components/test";
 import ScrollToTop from "./components/Utils/ScrollToTop";
-import Section3AApi from "./components/sections/section3Aapi/Section3A";
 import SaveError from "./components/layout/SaveError";
 
 let VisibleSidebar =
