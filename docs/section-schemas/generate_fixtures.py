@@ -45,6 +45,8 @@ def main() -> None:
         outputpath = Path(there, "2020-fmap.json")
         outputpath.write_text(json.dumps(fmaps))
 
+    load_acs_data(here, there)
+
 def transform(model, orig):
     models = {
         "carts_api.sectionschema": {
@@ -66,16 +68,17 @@ def transform(model, orig):
     entry["fields"]["contents"] = orig
     return [entry]
 
-def load_acs_data():
+def load_acs_data(here, there):
     here = Path(".")
     state_to_abbrev = json.loads(Path(here, "state_to_abbrev.json").read_text(encoding='utf8'))
     years = ['2015', '2016', '2017', '2018', '2019']
+    acs_data = []
     for y in years:
         csvf = open(Path(here, "hi10-acs-%s.csv" % y), 'r')
         reader = csv.reader(csvf, delimiter=",")
         next(reader) #skip header
         next(reader) #skip US totals
-        acs_data = []
+        #ACS data uses 'Z' to mean 0 or rounds to 0
         for row in reader:
             obj = {
                 "model": "carts_api.ACS",
@@ -88,8 +91,9 @@ def load_acs_data():
                     "percent_uninsured_moe": row[4]
                 }
             }
-
-            print(obj)
+            acs_data.append(obj)
+    outputpath = Path(there, "acs.json")
+    outputpath.write_text(json.dumps(acs_data))
 
 if __name__ == '__main__':
     main()
