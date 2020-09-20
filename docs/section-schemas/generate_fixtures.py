@@ -66,6 +66,30 @@ def transform(model, orig):
     entry["fields"]["contents"] = orig
     return [entry]
 
+def load_acs_data():
+    here = Path(".")
+    state_to_abbrev = json.loads(Path(here, "state_to_abbrev.json").read_text(encoding='utf8'))
+    years = ['2015', '2016', '2017', '2018', '2019']
+    for y in years:
+        csvf = open(Path(here, "hi10-acs-%s.csv" % y), 'r')
+        reader = csv.reader(csvf, delimiter=",")
+        next(reader) #skip header
+        next(reader) #skip US totals
+        acs_data = []
+        for row in reader:
+            obj = {
+                "model": "carts_api.ACS",
+                "fields":{
+                    "year": y,
+                    "state": state_to_abbrev[row[0].upper()],
+                    "number_uninsured": 0 if row[1].lower() == 'z' else int(row[1]) * 1000, #numbers measured in thousands
+                    "number_uninsured_moe": 0 if row[2].lower() == 'z' else int(row[2]) * 1000,
+                    "percent_uninsured": row[3],
+                    "percent_uninsured_moe": row[4]
+                }
+            }
+
+            print(obj)
 
 if __name__ == '__main__':
     main()
