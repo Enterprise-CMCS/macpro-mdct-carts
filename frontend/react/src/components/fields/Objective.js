@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { AccordionButton, AccordionPanel } from "@reach/accordion";
-import Question from "../layout/Question";
+
+import Question from "./Question"; // eslint-disable-line import/no-cycle
 
 const Objective = ({ objective, objectiveNumber }) => {
-  const first = objective.questions[0].answer.readonly == true;
+  const first = objective.questions[0].answer.readonly === true;
   const name = first
     ? objective.questions[0].answer.default_entry
     : objective.questions[0].answer.entry;
@@ -32,5 +34,10 @@ const Objective = ({ objective, objectiveNumber }) => {
     </>
   );
 };
+Objective.propTypes = {
+  objective: PropTypes.object.isRequired,
+  objectiveNumber: PropTypes.number.isRequired,
+};
 
 export { Objective };
+export default Objective;

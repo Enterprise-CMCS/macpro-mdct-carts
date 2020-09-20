@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { ChoiceList } from "@cmsgov/design-system-core";
 
 const Checkbox = ({ onChange, question, ...props }) => {
@@ -33,5 +34,10 @@ const Checkbox = ({ onChange, question, ...props }) => {
     />
   );
 };
+Checkbox.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
+};
 
 export { Checkbox };
+export default Checkbox;

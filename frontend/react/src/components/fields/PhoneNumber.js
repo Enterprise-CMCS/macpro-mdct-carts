@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Text } from "./Text";
 
 const PhoneNumber = ({ onChange, question, ...props }) => {
@@ -31,5 +32,10 @@ const PhoneNumber = ({ onChange, question, ...props }) => {
     />
   );
 };
+PhoneNumber.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
+};
 
 export { PhoneNumber };
+export default PhoneNumber;

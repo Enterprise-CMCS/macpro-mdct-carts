@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
 
 const Integer = ({ onChange, question, ...props }) => {
@@ -8,7 +9,7 @@ const Integer = ({ onChange, question, ...props }) => {
     const numeric = +value;
     const parsed = parseInt(numeric, 10);
 
-    if (numeric === parsed && !isNaN(parsed)) {
+    if (numeric === parsed && !Number.isNaN(parsed)) {
       onChange({ target: { name, value } });
       setError(false);
     } else {
@@ -29,5 +30,10 @@ const Integer = ({ onChange, question, ...props }) => {
     />
   );
 };
+Integer.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
+};
 
 export { Integer };
+export default Integer;

@@ -1,5 +1,5 @@
-import CMSRanges from "./CMSRanges";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -56,7 +56,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
             />
           </div>
           <div className="cmsrange-arrow">
-            <i className="fa fa-arrow-right" aria-hidden="true"></i>
+            <i className="fa fa-arrow-right" aria-hidden="true" />
           </div>
           <div className="cmsrange-container cmsrange-end">
             <Input
@@ -72,43 +72,48 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     </div>
   );
 };
+Range.propTypes = {
+  category: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  row: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  values: PropTypes.array.isRequired,
+};
 
 const Ranges = ({ onChange, question }) => {
   const {
     answer: {
       entry,
-      entry_max,
-      entry_min,
+      entry_max: max,
+      entry_min: min,
       header,
-      range_categories,
-      range_type,
+      range_categories: categories,
+      range_type: types,
     },
   } = question;
 
   const [values, setValues] = useState(() => {
-    console.log(": : : : : : creating ranges state");
     if (Array.isArray(entry)) {
       return entry;
     }
 
-    const numberToCreate = entry_min > 0 ? entry_min : 1;
+    const numberToCreate = min > 0 ? min : 1;
     return [...Array(numberToCreate)].map(() =>
-      range_categories.map(() => [null, null])
+      categories.map(() => [null, null])
     );
   });
 
   const rowChange = (row, category, index, value) => {
     values[row][category][index] = value;
-    console.log(
-      `setting values for row ${index}\n to ${JSON.stringify(values)}`
-    );
     setValues(values);
     onChange({ target: { name: question.id, value: values } });
   };
 
   const addRow = () => {
-    if (values.length < entry_max || entry_max == 0) {
-      setValues([...values, range_categories.map(() => [null, null])]);
+    if (values.length < max || max === 0) {
+      setValues([...values, categories.map(() => [null, null])]);
     }
   };
 
@@ -126,29 +131,33 @@ const Ranges = ({ onChange, question }) => {
         rowValues.map((categoryValues, index) => (
           <Range
             key={`${row}.${index}`}
-            category={range_categories[index]}
+            category={categories[index]}
             id={question.id}
             index={index}
             onChange={rowChange}
             row={row}
-            type={range_type[index]}
+            type={types[index]}
             values={categoryValues}
           />
         ))
       )}
 
-      {values.length < entry_max || entry_max == 0 ? (
+      {values.length < max || max === 0 ? (
         <Button onClick={addRow} type="button" variation="primary">
           Add another? <FontAwesomeIcon icon={faPlus} />
         </Button>
       ) : null}
-      {values.length > entry_min || entry_min == 0 ? (
+      {values.length > min || min === 0 ? (
         <Button onClick={removeRow} type="button" variation="primary">
           Remove Last Entry <FontAwesomeIcon icon={faMinusCircle} />
         </Button>
       ) : null}
     </div>
   );
+};
+Ranges.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
 };
 
 export { Range, Ranges };

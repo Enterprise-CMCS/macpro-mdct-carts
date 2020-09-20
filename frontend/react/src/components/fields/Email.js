@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Text } from "./Text";
 
 const validEmailRegex = RegExp(
@@ -34,5 +35,10 @@ const Email = ({ onChange, question, ...props }) => {
     />
   );
 };
+Email.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
+};
 
 export { Email };
+export default Email;

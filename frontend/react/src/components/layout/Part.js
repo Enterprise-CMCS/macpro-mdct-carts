@@ -1,27 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Alert } from "@cmsgov/design-system-core";
+
 import { selectFragment } from "../../store/formData";
-import { _ } from "underscore";
-import Question from "./Question";
+import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 
-const showPart = (context_data, programType, state) => {
+const showPart = (contextData, programType, state) => {
   if (
-    context_data &&
+    contextData &&
     programType &&
-    context_data.show_if_state_program_type_in &&
-    !context_data.show_if_state_program_type_in.includes(programType)
+    contextData.show_if_state_program_type_in &&
+    !contextData.show_if_state_program_type_in.includes(programType)
   ) {
     return false;
   }
 
-  return shouldDisplay(state, context_data);
+  return shouldDisplay(state, contextData);
 };
 
 const Part = ({
-  context_data,
+  context_data: contextData,
   partId,
   partNumber,
   questions,
@@ -44,7 +45,7 @@ const Part = ({
     innards = (
       <Alert>
         <div className="ds-c-alert__text">
-          {context_data.skip_text ? <p>{context_data.skip_text}</p> : null}
+          {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
         </div>
       </Alert>
     );
@@ -54,11 +55,25 @@ const Part = ({
     <div id={partId}>
       <h2>
         Part {partNumber}
-        {title ? ": " + title : null}
+        {title ? `: ${title}` : null}
       </h2>
       {innards}
     </div>
   );
+};
+Part.propTypes = {
+  context_data: PropTypes.object,
+  partId: PropTypes.string.isRequired,
+  partNumber: PropTypes.number.isRequired,
+  questions: PropTypes.array.isRequired,
+  show: PropTypes.bool.isRequired,
+  text: PropTypes.string,
+  title: PropTypes.string,
+};
+Part.defaultProps = {
+  context_data: null,
+  text: "",
+  title: "",
 };
 
 const mapStateToProps = (state, { partId }) => {

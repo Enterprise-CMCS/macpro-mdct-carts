@@ -1,30 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  Checkbox,
-  CheckboxFlag,
-  DateRange,
-  Email,
-  Fieldset,
-  FileUpload,
-  Integer,
-  MailingAddress,
-  Money,
-  Objectives,
-  Percentage,
-  PhoneNumber,
-  Radio,
-  Ranges,
-  Repeatables,
-  SkipText,
-  Text,
-  TextMedium,
-  TextMultiline,
-  TextSmall,
-} from "../fields";
+/* eslint-disable import/no-cycle */
+import { Checkbox } from "./Checkbox";
+import { CheckboxFlag } from "./CheckboxFlag";
+import { CMSLegend } from "./CMSLegend";
+import { DateRange } from "./DateRange";
+import { Email } from "./Email";
+import { Fieldset } from "./Fieldset";
+import { FileUpload } from "./FileUpload";
+import { Integer } from "./Integer";
+import { MailingAddress } from "./MailingAddress";
+import { Money } from "./Money";
+import { Objectives } from "./Objectives";
+import { Percentage } from "./Percentage";
+import { PhoneNumber } from "./PhoneNumber";
+import { Radio } from "./Radio";
+import { Ranges } from "./Ranges";
+import { Repeatables } from "./Repeatables";
+import { SkipText } from "./SkipText";
+import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
+/* eslint-enable */
 
-import CMSLegend from "../fields/CMSLegend";
 import { setAnswerEntry } from "../../actions/initial";
 
 const questionTypes = new Map([
@@ -56,6 +54,10 @@ const Container = ({ question, children }) =>
   ) : (
     <fieldset className="ds-c-fieldset">{children}</fieldset>
   );
+Container.propTypes = {
+  question: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 const Question = ({ question, setAnswer, ...props }) => {
   let Component = Text;
@@ -63,10 +65,7 @@ const Question = ({ question, setAnswer, ...props }) => {
     Component = questionTypes.get(question.type);
   }
 
-  const onChange = (e) => {
-    const id = e.target.name;
-    const value = e.target.value;
-
+  const onChange = ({ target: { name: id, value } }) => {
     setAnswer(id, value);
   };
 
@@ -108,6 +107,10 @@ const Question = ({ question, setAnswer, ...props }) => {
       </Container>
     </div>
   );
+};
+Question.propTypes = {
+  question: PropTypes.object.isRequired,
+  setAnswer: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

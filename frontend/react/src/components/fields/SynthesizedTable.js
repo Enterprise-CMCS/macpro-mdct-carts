@@ -1,19 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { synthesizeValue } from "../../util/synthesize";
 
-/**
- *
- * @param {*} data Fragment from api.
- */
 const SynthesizedTable = ({ question, rows }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
-      <legend className="table__legend ds-h4" for="synthesized-table-1">
+      <legend className="table__legend ds-h4" htmlFor="synthesized-table-1">
         {question.label}
       </legend>
-      <table class="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
-        <caption class="ds-c-table__caption">{question.hint}</caption>
+      <table className="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
+        <caption className="ds-c-table__caption">{question.hint}</caption>
         <thead>
           <tr>
             {question.fieldset_info.headers.map((header) => (
@@ -26,7 +23,7 @@ const SynthesizedTable = ({ question, rows }) => {
             return (
               <tr>
                 {row.map((cell) => (
-                  <td scope="col">{cell.contents}</td>
+                  <td>{cell.contents}</td>
                 ))}
               </tr>
             );
@@ -35,6 +32,10 @@ const SynthesizedTable = ({ question, rows }) => {
       </table>
     </div>
   );
+};
+SynthesizedTable.propTypes = {
+  question: PropTypes.object.isRequired,
+  rows: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state, { question }) => {
@@ -48,3 +49,4 @@ const mapStateToProps = (state, { question }) => {
 const ConnectedSynthesizedTable = connect(mapStateToProps)(SynthesizedTable);
 
 export { ConnectedSynthesizedTable as SynthesizedTable };
+export default ConnectedSynthesizedTable;

@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { AccordionButton, AccordionPanel } from "@reach/accordion";
-import Question from "../layout/Question";
+
+import Question from "./Question"; // eslint-disable-line import/no-cycle
 
 const Repeatable = ({ number, question, type }) => {
   const children = question.questions ? question.questions : [];
@@ -24,5 +26,15 @@ const Repeatable = ({ number, question, type }) => {
     </>
   );
 };
+Repeatable.propTypes = {
+  number: PropTypes.number.isRequired,
+  question: PropTypes.object.isRequired,
+  type: PropTypes.oneOf([PropTypes.string, null]),
+};
+
+Repeatable.defaultProps = {
+  type: null,
+};
 
 export { Repeatable };
+export default Repeatable;

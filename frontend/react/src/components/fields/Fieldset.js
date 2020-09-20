@@ -1,5 +1,7 @@
 import React from "react";
-import Question from "../layout/Question";
+import PropTypes from "prop-types";
+
+import Question from "./Question"; // eslint-disable-line import/no-cycle
 import { SynthesizedTable } from "./SynthesizedTable";
 import { SynthesizedValue } from "./SynthesizedValue";
 
@@ -16,11 +18,15 @@ const Fieldset = ({ question, ...props }) => {
       return <SynthesizedTable question={question} {...props} />;
     case "synthesized_value":
       return <SynthesizedValue question={question} {...props} />;
+    default:
+      return question.questions.map((q) => (
+        <Question key={q.id} question={q} {...props} />
+      ));
   }
-
-  return question.questions.map((q) => (
-    <Question key={q.id} question={q} {...props} />
-  ));
+};
+Fieldset.propTypes = {
+  question: PropTypes.object.isRequired,
 };
 
 export { Fieldset };
+export default Fieldset;

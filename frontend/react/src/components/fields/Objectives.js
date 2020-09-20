@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
-import { Objective } from "./Objective";
+import { Objective } from "./Objective"; // eslint-disable-line import/no-cycle
 import { createNewObjective } from "../../actions/repeatables";
 
 const Objectives = ({ addObjectiveTo, question }) => {
@@ -44,9 +45,14 @@ const Objectives = ({ addObjectiveTo, question }) => {
     </>
   );
 };
+Objectives.propTypes = {
+  addObjectiveTo: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
+};
 
 const mapDispatchToProps = { addObjectiveTo: createNewObjective };
 
 const ConnectedObjectives = connect(null, mapDispatchToProps)(Objectives);
 
 export { ConnectedObjectives as Objectives };
+export default ConnectedObjectives;

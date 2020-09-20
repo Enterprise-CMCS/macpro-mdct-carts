@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Choice } from "@cmsgov/design-system-core";
-import Question from "../layout/Question";
+
+import Question from "./Question"; // eslint-disable-line import/no-cycle
 
 const Radio = ({ onChange, question, ...props }) => {
   const [checked, setChecked] = useState(question.answer.entry);
@@ -35,5 +37,10 @@ const Radio = ({ onChange, question, ...props }) => {
     </Choice>
   ));
 };
+Radio.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired,
+};
 
 export { Radio };
+export default Radio;
