@@ -360,7 +360,7 @@ The default for all questions, in both interactive and noninteractive views, is 
 ``hide_if``
     This construct describes the conditions under which the question should be hidden from view. It has two properties, ``target`` and ``values``, and the frontend will evaluate the current value of the JSON element specified by ``target`` and hide it from view if that value is in the array of values specified for the current view type (``interactive`` or ``noninteractive``).
 
-    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.o
+    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.
 
     ``target``
         String.
@@ -371,7 +371,7 @@ The default for all questions, in both interactive and noninteractive views, is 
 ``hide_if_all``
     This construct describes the conditions under which the question should be hidden from view. It has two properties, ``targets`` and ``values``, and the frontend will evaluate the current value of the JSON elements specified by ``targets`` and hide it from view if all values are in the array of values specified for the current view type (``interactive`` or ``noninteractive``).
 
-    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.o
+    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.
 
     ``targets``
         Array[String].
@@ -379,6 +379,21 @@ The default for all questions, in both interactive and noninteractive views, is 
         This is an array of `JSON Path`_ expressions that points to the locations in the JSON to find the values to be evaluated. Normally this will be the values of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
     ``values``
         This object has two properties, ``interactive`` and ``noninteractive``, both of which are an array of values. The values should be integers, strings, or ``null``, where ``null`` represents the absence of an answer.
+
+``hide_if_not``
+    This construct describes the conditions under which the question should be hidden from view. It has two properties, ``target`` and ``values``, and the frontend will evaluate the current value of the JSON elements specified by ``target`` and hide it from view if the target array does NOT include one of the values or values specified for the current view type(``interactive`` or ``noninteractive``). This performs opposite logic from hide_if and was designed with checkboxes with conditional children in mind. 
+
+    No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.
+
+  ``target``
+        String.
+
+        This is a `JSON Path`_ expression that points to the location in the JSON to find the value to be evaluated. Normally this will be the value of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
+
+    ``values``
+        This object has two properties, ``interactive`` and ``noninteractive``, both of which are an array of values. The values should be integers, strings, or ``null``, where ``null`` represents the absence of an answer.
+
+
 
 Section 1 has the question “Does your program charge an enrollment fee?”, with the sub-question “How much is your enrollment fee?”. In the interactive view, the sub-question should only be displayed if the user has answered ``yes`` to the parent question, and hidden in the other cases.
 
