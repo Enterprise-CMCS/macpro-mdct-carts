@@ -1033,10 +1033,7 @@
                         "$..[?(@.id=='2020-01-a-03-13')].answer.entry",
                         "$..[?(@.id=='2020-01-a-03-14')].answer.entry",
                         "$..[?(@.id=='2020-01-a-03-15')].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-16')].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-17')].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-18')].answer.entry",
-                        "$..[?(@.id=='2020-01-a-03-19')].answer.entry"
+                        "$..[?(@.id=='2020-01-a-03-16')].answer.entry"
                       ],
                       "values": {
                         "interactive": ["no", null],
@@ -1047,7 +1044,7 @@
                 },
                 "questions": [
                   {
-                      "id": "2020-01-a-03-21",
+                      "id": "2020-01-a-03-17",
                       "label": "Briefly describe why you made these changes to your Medicaid Expansion CHIP program.",
                       "type": "text_multiline",
                       "answer": {
@@ -1055,8 +1052,7 @@
                     }
                   },
                   {
-                    "id": "2020-01-a-03-22",
-                    "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
+                    "id": "2020-01-a-03-18",
                     "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section?",
                     "type": "text_multiline",
                     "answer": {
@@ -1527,7 +1523,7 @@
                 },
                 "questions": [
                   {
-                      "id": "2020-01-a-04-21",
+                      "id": "2020-01-a-04-20",
                       "label": "Briefly describe why you made these changes to your Separate CHIP program.",
                       "type": "text_multiline",
                       "answer": {
@@ -1535,8 +1531,7 @@
                     }
                   },
                   {
-                    "id": "2020-01-a-04-22",
-                    "comment": "Display bulleted list of all 2020-01-a-03 questions 1–19 with yes answers",
+                    "id": "2020-01-a-04-21",
                     "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section?",
                     "type": "text_multiline",
                     "answer": {
