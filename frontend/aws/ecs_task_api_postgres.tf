@@ -261,6 +261,6 @@ resource "aws_wafv2_web_acl" "apiwaf" {
 }
 
 resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
-  resource_arn = aws_alb.api_postgres.arn
+  resource_arn = aws_alb.api_postgres.id
   web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
 }
