@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   enabled             = true
   default_root_object = "index.html"
-  web_acl_id = aws_wafv2_web_acl.ui-waf.id
+  web_acl_id = aws_wafv2_web_acl.uiwaf.id
 
   custom_error_response {
     error_caching_min_ttl = 3000
@@ -92,8 +92,8 @@ data "aws_acm_certificate" "ui" {
   statuses = ["ISSUED"]
 }
 
-resource "aws_wafv2_web_acl" "ui-waf" {
-  name        = "ui-waf-${terraform.workspace}"
+resource "aws_wafv2_web_acl" "uiwaf" {
+  name        = "uiwaf-${terraform.workspace}"
   description = "WAF for cloudfront distro"
   scope       = "CLOUDFRONT"
 
