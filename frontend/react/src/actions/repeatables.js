@@ -12,7 +12,7 @@ const incrementId = (id) => {
   return idParts.join("-");
 };
 
-export const createNewRepeatable = (parentId) => (dispatch, getState) => {
+const createNewRepeatableItem = (parentId, getState) => {
   const state = getState();
   const parent = selectById(state, parentId);
 
@@ -34,6 +34,12 @@ export const createNewRepeatable = (parentId) => (dispatch, getState) => {
     () => null
   );
 
+  return { parent, newItem };
+};
+
+export const createNewRepeatable = (parentId) => (dispatch, getState) => {
+  const { parent, newItem } = createNewRepeatableItem(parentId, getState);
+
   dispatch({
     type: SET_FRAGMENT,
     id: parentId,
@@ -42,36 +48,16 @@ export const createNewRepeatable = (parentId) => (dispatch, getState) => {
 };
 
 export const createNewObjective = (parentId) => (dispatch, getState) => {
-  const state = getState();
-  const parent = selectById(state, parentId);
+  const { parent, newItem } = createNewRepeatableItem(parentId, getState);
 
-  const previousId = parent.questions[parent.questions.length - 1].id;
-
-  let newObjective = JSON.stringify(
-    parent.questions[parent.questions.length - 1]
-  );
-
-  const newObjectiveId = incrementId(previousId);
-
-  newObjective = newObjective.replace(
-    new RegExp(`"${previousId}("|-)`, "g"),
-    `"${newObjectiveId}$1`
-  );
-
-  newObjective = JSON.parse(newObjective);
-
-  delete newObjective.questions[0].answer.default_entry;
-  delete newObjective.questions[0].answer.readonly;
-
-  jsonpath.apply(
-    newObjective,
-    "$..questions[?(@.answer.entry)].answer.entry",
-    () => null
-  );
+  delete newItem.questions[0].answer.default_entry;
+  delete newItem.questions[0].answer.readonly;
+  // Truncate the goals down to just one
+  newItem.questions[1].questions.length = 1;
 
   dispatch({
     type: SET_FRAGMENT,
     id: parentId,
-    value: { ...parent, questions: [...parent.questions, newObjective] },
+    value: { ...parent, questions: [...parent.questions, newItem] },
   });
 };
