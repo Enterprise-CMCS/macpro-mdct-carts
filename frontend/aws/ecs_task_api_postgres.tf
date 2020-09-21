@@ -223,3 +223,44 @@ resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
     }
   }
 }
+
+resource "aws_wafv2_web_acl" "apiwaf" {
+  name        = "apiwaf-${terraform.workspace}"
+  description = "WAF for postgres api alb"
+  scope       = "REGIONAL"
+
+  default_action {
+    block {}
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${terraform.workspace}-webacl"
+    sampled_requests_enabled   = true
+  }
+
+  rule{
+    name = "${terraform.workspace}-allow-usa-plus-territories"
+    priority = 0
+    action{
+      allow{}
+    }
+
+    statement {
+      geo_match_statement{
+        country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-geo-rule"
+      sampled_requests_enabled   = true
+    }
+  }
+}
+
+resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
+  resource_arn = aws_alb.api_postgres.arn
+  web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
+}
