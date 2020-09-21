@@ -42,6 +42,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   enabled             = true
   default_root_object = "index.html"
+  web_acl_id = aws_wafv2_web_acl.ui-waf.id
 
   custom_error_response {
     error_caching_min_ttl = 3000
@@ -89,4 +90,34 @@ data "aws_acm_certificate" "ui" {
   count    = var.acm_certificate_domain_ui == "" ? 0 : 1
   domain   = var.acm_certificate_domain_ui
   statuses = ["ISSUED"]
+}
+
+resource "aws_wafv2_web_acl" "ui-waf" {
+  name        = "ui-waf-${terraform.workspace}"
+  description = "WAF for cloudfront distro"
+  scope       = "CLOUDFRONT"
+
+  default_action {
+    block {}
+  }
+
+  rule{
+    name = "${terraform.workspace}-allow-usa-plus-territories"
+    priority = 0
+    action{
+      allow{}
+    }
+
+    statement {
+      geo_match_statement{
+        country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-webacl"
+      sampled_requests_enabled   = true
+    }
+  }
 }
