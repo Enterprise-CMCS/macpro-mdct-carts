@@ -42,7 +42,8 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   enabled             = true
   default_root_object = "index.html"
-  web_acl_id = aws_wafv2_web_acl.uiwaf.id
+  //web_acl_id = aws_wafv2_web_acl.uiwaf.id
+  web_acl_id = aws_wafv2_web_acl.uiwaf.arn
 
   custom_error_response {
     error_caching_min_ttl = 3000
