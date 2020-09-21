@@ -21,13 +21,20 @@ const createNewRepeatableItem = (parentId, getState) => {
   let newItem = JSON.stringify(parent.questions[parent.questions.length - 1]);
   const newId = incrementId(previousId);
 
+  // When referenced, the previous ID should be enclosed in quotes, but it
+  // could be either single or double quotes, and the previous ID may be
+  // followed by a dash, to reference something deeper in the tree. We need
+  // to account for those scenarios, so replace the previous ID when it preceded
+  // by a single or double quote and followed by a single or double quote or
+  // a dash.
   newItem = newItem.replace(
-    new RegExp(`"${previousId}("|-)`, "g"),
-    `"${newId}$1`
+    new RegExp(`("|')${previousId}("|'|-)`, "g"),
+    `$1${newId}$2`
   );
 
   newItem = JSON.parse(newItem);
 
+  // Set all the answers throughout the new item to null.
   jsonpath.apply(
     newItem,
     "$..questions[?(@.answer.entry)].answer.entry",
