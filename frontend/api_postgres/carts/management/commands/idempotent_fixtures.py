@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fd = Path("fixtures")
-        globs = ("backend-j*.json", "2020-*.json", "acs.json")
+        globs = ("states.json", "backend-j*.json", "2020-*.json", "acs.json")
         paths = []
         for glob in globs:
             paths = paths + [_ for _ in fd.glob(glob)]
@@ -88,6 +88,9 @@ class Command(BaseCommand):
                     validating = True
                 except jsonschema.exceptions.ValidationError:
                     print(path, "failed validation")
+            elif fixture["model"] == "carts_api.State":
+                paths_to_load.append(path)
+                continue
             elif fixture["model"] == "carts_api.FMAP":
                 # these are reference objects so we should be safe dumping all
                 FMAP.objects.all().delete()
