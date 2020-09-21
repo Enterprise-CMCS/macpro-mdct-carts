@@ -1,27 +1,20 @@
 from django.test import TestCase
-from carts.carts_api.models import FMAP, ACS
-from rest_framework.test import APIRequestFactory
+from carts.carts_api.models import State, FMAP, ACS
+from rest_framework import status
+from rest_framework.test import APIRequestFactory, APITestCase
 
 
-class FMAPTestCase(TestCase):
+class StateTestCase(APITestCase):
     def setUp(self):
-        FMAP.objects.create(state="AK", fiscal_year=2020, enhanced_FMAP=63.4)
+        State.objects.create(code="AK", name="Alaska")
+        FMAP.objects.create(state_id="AK", fiscal_year=2020, enhanced_FMAP=65.7)
+        ACS.objects.create(state_id="AK", year=2019, number_uninsured=2000,
+                            number_uninsured_moe=500, percent_uninsured=4.3,
+                            percent_uninsured_moe=.4 )
 
-    def test_filter_by_state(self):
+    def test_state_retrieval(self):
         #test that  API endpoint properly  filters by state
-        pass
-
-class ACSTestCase(TestCase):
-    def setUp(self):
-        ACS.objects.create(state="AK",
-                                   year=2019,
-                                   number_uninsured=4000,
-                                   number_uninsured_moe=1000,
-                                   percent_uninsured=2.1,
-                                   percent_uninsured_moe=0.5)
-
-    def test_filter_by_state(self):
-        pass
-
-    def test_filter_by_year(self):
-        pass
+        response  = self.client.get('/state/AK/', format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['acs_set']), 1)
+        self.assertEqual(len(response.data['fmap_set']), 1)
