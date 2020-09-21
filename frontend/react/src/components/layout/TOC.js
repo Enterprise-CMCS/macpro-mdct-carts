@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { VerticalNav } from "@cmsgov/design-system-core";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
+const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
+const subsection = (index) => String.fromCharCode("A".charCodeAt(0) + index);
 
 class TOC extends Component {
   constructor(props) {
@@ -8,153 +12,83 @@ class TOC extends Component {
     this.click = this.click.bind(this);
   }
 
-  click = (e, id, url) => {
+  click = (e, _, url) => {
     e.preventDefault();
     e.stopPropagation();
     if (!url.startsWith("javascript:")) {
       this.props.history.push(url);
     }
-  }
+  };
 
   render() {
-    // Get array of current url path
-    let paths = window.location.pathname.split("/");
+    const { location, sections } = this.props;
+
+    const items = sections
+      .map(({ id, ordinal, subsections, title }) => ({
+        id,
+        items:
+          subsections.length < 2
+            ? null
+            : subsections.map(({ id, title }, i) => ({
+                label: `Section ${ordinal}${subsection(i)}: ${title}`,
+                onClick: this.click,
+                selected: location.pathname.toLowerCase().startsWith(idToUrl(id)),
+                url: idToUrl(id),
+              })),
+        label: ordinal > 0 ? `Section ${ordinal}: ${title}` : title,
+        onClick: this.click,
+        selected: location.pathname.toLowerCase().startsWith(idToUrl(id)),
+      }))
+      .map(({ id, items, ...rest }) => {
+        const updated = { id, items, ...rest };
+        if (items == null) {
+          updated.url = idToUrl(id);
+        }
+        return updated;
+      });
 
     return (
-      <div className="toc" data-test="component-TOC">
-        <VerticalNav
-          data-test="component-TOC-arr"
-          selectedId="toc"
-          items={[
-            {
-              label: "Basic Information",
-              url: "/basic-info",
-              id: "basic-info",
-              selected: paths[1] === "basic-info" ? true : false,
-              onClick: this.click,
-            },
-            {
-              label: "Section 1: Program Fees and Policy Changes",
-              url: "/section1",
-              selected: paths[1] === "section1" ? true : false,
-              onClick: this.click,
-            },
-            {
-              label: "Section 2: Eligibility and Enrollment",
-              selected: paths[1] === "section2" ? true : false,
-              onClick: this.click,
-              items: [
-                {
-                  label: "Section 2A: Enrollment and Uninsured Data",
-                  url: "/section2/2a",
-                  selected:
-                    paths[1] === "section2" && paths[2] === "2a" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label:
-                    "Section 2B: State Strategic Objectives and Performance Goals",
-                  url: "/section2/2b",
-                  selected:
-                    paths[1] === "section2" && paths[2] === "2b" ? true : false,
-                  onClick: this.click,
-                },
-              ],
-            },
-            {
-              label: "Section 3: Program Operations",
-              selected: paths[1] === "section3" ? true : false,
-              onClick: this.click,
-              items: [
-                {
-                  label: "Section 3A: Outreach",
-                  url: "/section3/3a",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3a" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3B: Substitution of Coverage (Crowd-out)",
-                  url: "javascript:void(0);",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3b" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3C: Eligibility",
-                  url: "/section3/3c",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3c" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3D: Cost Sharing",
-                  url: "/section3/3d",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3d" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3E: Employer Sponsored Insurance Program",
-                  url: "javascript:void(0);",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3e" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3F: Program Integrity",
-                  url: "javascript:void(0);",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3f" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3G: Dental Benefits",
-                  url: "javascript:void(0);",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3g" ? true : false,
-                  onClick: this.click,
-                },
-                {
-                  label: "Section 3H: CHIPRA CAHPS Requirement",
-                  url: "javascript:void(0);",
-                  selected:
-                    paths[1] === "section3" && paths[2] === "3h" ? true : false,
-                  onClick: this.click,
-                },
-              ],
-            },
-            {
-              label: "Section 4: State Plan Goals and Objectives",
-              url: "javascript:void(0);",
-              selected: paths[1] === "section4" ? true : false,
-              onClick: this.click,
-            },
-            {
-              label: "Section 5: Budget and Finances",
-              url: "javascript:void(0);",
-              selected: paths[1] === "section5" ? true : false,
-              onClick: this.click,
-            },
-            {
-              label: "Section 6: Challenges and Accomplishments",
-              url: "javascript:void(0);",
-              selected: paths[1] === "section6" ? true : false,
-              onClick: this.click,
-            },
-            {
-              label: "Certify and Submit",
-              url: "javascript:void(0);",
-              selected: paths[1] === "certify" ? true : false,
-              onClick: this.click,
-            },
-          ]}
-        />
+      <div className="toc">
+        <VerticalNav selectedId="toc" items={items} />
       </div>
     );
   }
 }
 
-export default withRouter(TOC);
+const sortByOrdinal = (sectionA, sectionB) => {
+  const a = sectionA.contents.section.ordinal;
+  const b = sectionB.contents.section.ordinal;
+
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+};
+
+const selectSectionsForNav = (state) => {
+  if (state.formData) {
+    const sections = state.formData.sort(sortByOrdinal);
+    return sections.map(
+      ({
+        contents: {
+          section: { id, ordinal, subsections, title },
+        },
+      }) => ({
+        id,
+        ordinal,
+        title,
+        subsections: subsections.map(({ id, title }) => ({ id, title })),
+      })
+    );
+  }
+  return [];
+};
+
+const mapStateToProps = (state) => ({ sections: selectSectionsForNav(state) });
+
+export default connect(mapStateToProps)(withRouter(TOC));
 
 export { TOC };
