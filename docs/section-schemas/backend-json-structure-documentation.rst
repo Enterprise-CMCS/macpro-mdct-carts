@@ -381,7 +381,7 @@ The default for all questions, in both interactive and noninteractive views, is 
         This object has two properties, ``interactive`` and ``noninteractive``, both of which are an array of values. The values should be integers, strings, or ``null``, where ``null`` represents the absence of an answer.
 
 ``hide_if_not``
-    This construct describes the conditions under which the question should be hidden from view. It has two properties, ``target`` and ``values``, and the frontend will evaluate the current value of the JSON elements specified by ``target`` and hide it from view if the target array does NOT include one of the values or values specified for the current view type(``interactive`` or ``noninteractive``). This performs opposite logic from hide_if and was designed with checkboxes with conditional children in mind. 
+    This construct describes the conditions under which the question should be hidden from view. It has two properties, ``target`` and ``values``, and the frontend will evaluate the current value of the JSON elements specified by ``target`` and hide it from view if the target array does NOT include the value specified for the current view type(``interactive`` or ``noninteractive``). This performs opposite logic from hide_if and was designed with checkboxes with conditional children in mind. 
 
     No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.
 

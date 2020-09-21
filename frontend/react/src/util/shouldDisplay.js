@@ -49,6 +49,47 @@ const hideIfAll = (state, hideIfAll) => {
     .every((answer) => answers.includes(answer));
 };
 
+const hideIfNot = (state, hideIfNot) => {
+  let targetAnswer = jsonpath.query(state, hideIfNot.target);
+  let interactiveValues = hideIfNot.values.interactive;
+
+  // TargetAnswer, [‘other’] OR [null] OR [‘other’, ‘ccc’]
+  // Values, interactive: [‘other’] HIDE IF NOT FOUND IN TARGET.
+  // Values, noninteractive: [‘other’]
+  // Hide if interactive values NOT found in target
+
+  // before we would say, hide if IV includes TA
+  // Now we want to say, hide if TA (array) does NOT include IV
+  //                also, hide if TA is null
+  // Return TRUE and it will be REMOVED
+
+  // Short version
+  // let includedBoolean = targetAnswer.some(
+  //   (val) => answersArray.indexOf(val) !== -1
+  // );
+
+  let includedBoolean =
+    targetAnswer === null
+      ? false
+      : interactiveValues.some((val) => targetAnswer.indexOf(val) !== -1);
+
+  // let includedBoolean = false;
+
+  // if (targetAnswer === null) {
+  //   return includedBoolean;
+  // } else {
+  //   for (let i = 0; i < interactiveValues.length; i++) {
+  //     let singleAnswer = interactiveValues[i];
+  //     if (targetAnswer.includes(singleAnswer)) {
+  //       includedBoolean = true;
+  //       break;
+  //     }
+  //   }
+  // }
+
+  return includedBoolean;
+};
+
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
@@ -70,5 +111,11 @@ export const shouldDisplay = (state, context) => {
   // hide_if_all, there is an array of targets (questions) that a single question's display relies on
   if (context.conditional_display.hide_if_all) {
     return !hideIfAll(state, context.conditional_display.hide_if_all);
+  }
+
+  // hide_if_not, there is just one target (question) that may have multiple answers (usually a checkbox)
+  // displaying relies on one of those answers
+  if (context.conditional_display.hide_if_not) {
+    return !hideIfNot(state, context.conditional_display.hide_if_not);
   }
 };
