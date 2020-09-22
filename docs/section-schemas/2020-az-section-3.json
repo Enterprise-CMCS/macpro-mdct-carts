@@ -2512,7 +2512,7 @@
         "id": "2020-03-d",
         "title": "Cost Sharing (Out-of-Pocket Costs)",
         "type": "subsection",
-        "text": "Cost sharing is the share of costs that CHIP enrollees pay out of pocket. Cost sharing can include enrollment fees, premium fees, deductibles, coinsurance, copayments, and any other out-of-pocket costs. States can choose to require cost sharing or not.",
+        "text": "States can choose whether or not to require cost sharing in their CHIP program. Cost sharing includes payments such as enrollment fees, premiums, deductibles, coinsurance, and copayments.",
         "parts": [
           {
             "id": "2020-03-d-01",
