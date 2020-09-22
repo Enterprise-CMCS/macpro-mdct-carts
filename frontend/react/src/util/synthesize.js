@@ -1,4 +1,3 @@
-// import jsonpath from "./jsonpath";
 import jsonpath from "./jsonpath";
 
 // For the identity case, just return the first target value.

@@ -480,7 +480,7 @@ Other ``fieldset`` instances nested below it do not inherit its ``marked`` natur
 
 ``synthesized_value``
 #####################
-Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result.
+Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result. For ``rpn`` actions, there is also an ``rpn`` property that defines the RPN string to be applied with the target values.
 
 Both ``targets`` and ``actions`` expect arrays.
 
@@ -496,6 +496,8 @@ Supported actions are:
     Add all of the values and return the result. This probably implies casting them to number types first.
 ``percentage``
     Divide the contents of the first target by the contents of the second target, multiply by 100. This probably implies casting them to number types first. The default is to round to two decimal places, but if a ``precision`` property is also present, its integer value will be used to determing how many digits of precision are required (``0`` would mean round to the nearest integer, ``2`` would mean round to the second decimal place, etc.),
+``rpn``
+    Given the list of targets, apply the RPN string provided in the ``rpn`` property. ``@`` characters in the RPN string will be replaced sequentially target values. The RPN string should be space delimited, with operators and operands being separated by a single space character. This string can include numeric constants, e.g., ``@ @ @ 9 + + /`` is equivalent to ``(@ + @ + @) /9``, where the ``@`` values are replaced with target values.
 
 
 The property is called ``actions``, but hopefully we'll only ever need to have one action listed, and thus won't have to define what happens in what order if there are multiple values.
@@ -621,6 +623,28 @@ Example of using ``contents``:
     }
 
 The above would display ``The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998`` and ``12.2``.
+
+Example of using ``rpn``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Total number of loosely-defined tales of the fantastical",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='q1')].answer.entry",
+          "$..*[?(@.id=='q2')].answer.entry"
+          "$..*[?(@.id=='q3')].answer.entry"
+          "$..*[?(@.id=='q4')].answer.entry"
+        ],
+        "actions": ["rpn"],
+        "rpn": "@ @ @ @ 3 + - / *"
+      }
+    }
+
+The above would display a value equal to ``(((q1 + q2) - q3) / q4) * 3``
 
 ``synthesized_table``
 ########################
