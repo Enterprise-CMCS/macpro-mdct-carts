@@ -327,28 +327,6 @@ resource "aws_wafv2_web_acl" "apiwaf" {
   }
 
   rule{
-    name = "${terraform.workspace}-api-RegAWSManagedRulesKnownBadInputsRuleSet"
-    priority = 4
-
-    override_action{
-      count{}
-    }
-
-    statement {
-      managed_rule_group_statement{
-        vendor_name = "AWS"
-        name = "AWSManagedRulesKnownBadInputsRuleSet"
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesKnownBadInputsRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule{
     name = "${terraform.workspace}-api-allow-usa-plus-territories"
     priority = 5
     action{
