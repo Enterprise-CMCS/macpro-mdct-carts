@@ -1,106 +1,140 @@
 import { selectQuestion } from "./selectors";
-
+/************************************************************************************
+ * Function: buildGoal()
+ *
+ *
+ * @param newGoalId           -- (string) -- id of the new goal
+ * @param objectiveId         -- (string) -- id of the current objective
+ * @param parentObjectiveId   -- (string) -- id of the parent objective
+ * @param state               -- (string) -- current state
+ *
+ * @returns                   -- (jSON)   -- generated goal
+ ************************************************************************************/
 export const buildGoal = (newGoalId, objectiveId, parentObjectiveId, state) => {
-  let goalIdString = newGoalId;
-  if (newGoalId < 10) {
-    goalIdString = "0" + newGoalId;
-  }
-  const tempParentObjectiveId = parentObjectiveId.split("-");
-  //["2020", "02", "b", "01", "01", "01", "02"] new goal for obj 1
-  //["2020", "02", "b", "01", "01", "02"] new objective
-  //["2020", "02", "b", "01", "01", "02", "02"] new goal obj 2
-
+  // *** make sure goal is zero padded to 2 digits if less than 10
+  newGoalId = newGoalId.toString().padStart(2, "0");
+  // *** string to append to generated objective id
   const firstObjectiveAndGoal = "01-02-01";
+  // *** length of substring to be pulled out of parent objective id
+  const parentIdCutoffSubscript = 5;
+  // *** repeatables id needed for building goal ids
+  const repeatablesId = "02";
+  // *** generate new objective id
   let newGoal = JSON.parse(
     JSON.stringify(
       selectQuestion(
-        state, //Hard coded the 01 so that when adding a new objective or new goal, you get the first goal from the first objective
-        `${tempParentObjectiveId[0]}-${tempParentObjectiveId[1]}-${tempParentObjectiveId[2]}-${tempParentObjectiveId[3]}-${tempParentObjectiveId[4]}-` +
-          firstObjectiveAndGoal
+        state,
+        `${parentObjectiveId
+          .split("-")
+          .slice(0, parentIdCutoffSubscript)
+          .join("-")}-${firstObjectiveAndGoal}`
       )
     )
   );
-  const tempGoalId = newGoal.id.split("-");
-  newGoal.id = `${tempGoalId[0]}-${tempGoalId[1]}-${tempGoalId[2]}-${tempGoalId[3]}-${tempGoalId[4]}-${objectiveId}-${tempGoalId[6]}-${goalIdString}`;
+  // *** generate goal id
+  const goalIdPartsArray = newGoal.id.split("-");
+  newGoal.id = `${goalIdPartsArray
+    .slice(0, parentIdCutoffSubscript)
+    .join("-")}-${objectiveId}-${goalIdPartsArray[6]}-${newGoalId}`;
+  // *** initialize counters
   let count = 1;
   let subCount = 0;
-  let countGoalId = "";
   newGoal.questions.forEach((goal) => {
-    if (count < 10) {
-      countGoalId = "0" + count;
-    } else {
-      countGoalId = count;
-    }
-
+    const countGoalId = count.toString().padStart(2, "0");
+    // *** if a goal is a fieldset ...
     if (goal.type === "fieldset") {
+      // *** if goal.fieldset_info is missing, quit current iteration (continue loop)
+      /*if (!goal.fieldset_info) {
+        //this skips all fieldsets with sub questions
+        return;
+      }*/
+      // *** ... reset sub-count
       subCount = 0;
-      //handles synthesized values
-      if (goal.fieldset_info && goal.fieldset_type === "synthesized_value") {
-        let tempTarget = goal.fieldset_info.targets[0].split("-");
-
-        goal.fieldset_info.targets[0] = buildId(
-          tempTarget,
-          objectiveId,
-          goalIdString
-        );
-        //`${tempTarget[0]}-${tempTarget[1]}-${tempTarget[2]}-${tempTarget[3]}-${tempTarget[4]}-${objectiveId}-${tempTarget[6]}-${goalIdString}-${tempTarget[8]}`;
-        tempTarget = goal.fieldset_info.targets[1].split("-");
-        goal.fieldset_info.targets[1] = buildId(
-          tempTarget,
-          objectiveId,
-          goalIdString
-        );
-        //`${tempTarget[0]}-${tempTarget[1]}-${tempTarget[2]}-${tempTarget[3]}-${tempTarget[4]}-${objectiveId}-${tempTarget[6]}-${goalIdString}-${tempTarget[8]}`;
+      // *** handles synthesized values (only if fieldset info is present)
+      if (goal.fieldset_type === "synthesized_value") {
+        const amountOfGoalsToGenerate = 2;
+        // ** generate initial amount of goals according to the value specified above
+        for (let i = 0; i < amountOfGoalsToGenerate; i++) {
+          goal.fieldset_info.targets[i] = generateId(
+            goal.fieldset_info.targets[i].split("-"),
+            objectiveId,
+            newGoalId
+          );
+        }
       }
-      //Handles fieldset with sub questions
+      // *** handles fieldset with sub questions
       goal.questions.forEach((subquestion) => {
-        let tempSubquestion = subquestion.id.split("-");
-        subquestion.id = buildId(tempSubquestion, objectiveId, goalIdString);
-        // `${tempSubquestion[0]}-${tempSubquestion[1]}-${tempSubquestion[2]}-${tempSubquestion[3]}-${tempSubquestion[4]}-${objectiveId}-${tempSubquestion[6]}-${goalIdString}-${tempSubquestion[8]}`;
+        const generatedSubquestionId = subquestion.id.split("-");
+        subquestion.id = generateId(
+          generatedSubquestionId,
+          objectiveId,
+          newGoalId
+        );
         subquestion.answer.entry = null;
         if (subquestion.context_data) {
-          let tempTarget = subquestion.context_data.hide_if.target
-            .split("-")[8]
-            .subString(0, 2);
-          subquestion.context_data.hide_if.target = buildId(
-            tempTarget,
+          subquestion.context_data.hide_if.target = generateId(
+            subquestion.context_data.hide_if.target.split("-")[8].substr(0, 2),
             objectiveId,
-            goalIdString
+            newGoalId
           );
-          //`${tempTarget[0]}-${tempTarget[1]}-${tempTarget[2]}-${tempTarget[3]}-${tempTarget[4]}-${objectiveId}-${tempTarget[6]}-${goalIdString}-${tempTarget[8]}`;
         }
-        subCount = subCount + 1;
-        count = count + 1;
+        subCount++;
+        count++;
       });
     } else {
-      goal.id = `${tempParentObjectiveId[0]}-${tempParentObjectiveId[1]}-${tempParentObjectiveId[2]}-${tempParentObjectiveId[3]}-${tempParentObjectiveId[4]}-${objectiveId}-02-${goalIdString}-${countGoalId}`;
+      goal.id = `${parentObjectiveId
+        .split("-")
+        .slice(0, parentIdCutoffSubscript)
+        .join(
+          "-"
+        )}-${objectiveId}-${repeatablesId}-${newGoalId}-${countGoalId}`;
       goal.answer.entry = null;
+      // *** if goal has questions associated with it ...
       if (goal.questions) {
+        // *** ...reset sub-count
         subCount = 0;
+        // *** traverse questions
         goal.questions.forEach((subquestion) => {
-          let tempSubquestion = subquestion.id.split("-");
-          subquestion.id = `${tempSubquestion[0]}-${tempSubquestion[1]}-${tempSubquestion[2]}-${tempSubquestion[3]}-${tempSubquestion[4]}-${objectiveId}-${tempSubquestion[6]}-${goalIdString}-${countGoalId}-${tempSubquestion[9]}`;
+          let generatedSubquestionId = subquestion.id.split("-");
+          subquestion.id = `${generatedSubquestionId
+            .slice(0, parentIdCutoffSubscript)
+            .join("-")}-${objectiveId}-${
+            generatedSubquestionId[6]
+          }-${newGoalId}-${countGoalId}-${generatedSubquestionId[9]}`;
+
           subquestion.answer.entry = null;
           if (subquestion.context_data.conditional_display.hide_if.target) {
-            let tempTarget = subquestion.context_data.conditional_display.hide_if.target.split(
-              "-"
-            );
-            subquestion.context_data.conditional_display.hide_if.target = buildId(
-              tempTarget,
+            subquestion.context_data.conditional_display.hide_if.target = generateId(
+              subquestion.context_data.conditional_display.hide_if.target.split(
+                "-"
+              ),
               objectiveId,
-              goalIdString
+              newGoalId
             );
-            //`${tempTarget[0]}-${tempTarget[1]}-${tempTarget[2]}-${tempTarget[3]}-${tempTarget[4]}-${objectiveId}-${tempTarget[6]}-${goalIdString}-${tempTarget[8]}`;
           }
-
-          subCount = subCount + 1;
+          subCount++;
         });
       }
-      count = count + 1;
+      count++;
     }
   });
   return newGoal;
 };
-
-export const buildId = (currentItemArray, objectiveId, goalId) =>
-  `${currentItemArray[0]}-${currentItemArray[1]}-${currentItemArray[2]}-${currentItemArray[3]}-${currentItemArray[4]}-${objectiveId}-${currentItemArray[6]}-${goalId}-${currentItemArray[8]}`;
+/************************************************************************************
+ * Function: generateId()
+ *
+ *
+ * @param parentIdPartsArray  -- (string[]) -- array with parent id broken into individual members
+ * @param objectiveId         -- (string)   -- id of the current objective
+ * @param goalId              -- (string)   -- id of the goal
+ *
+ * @returns                   -- (jSON)     -- generated id
+ ************************************************************************************/
+export const generateId = (parentIdPartsArray, objectiveId, goalId) => {
+  const parentIdCutoffSubscript = 5;
+  return `${parentIdPartsArray
+    .slice(0, parentIdCutoffSubscript)
+    .join("-")}-${objectiveId}-${parentIdPartsArray[6]}-${goalId}-${
+    parentIdPartsArray[8]
+  }`;
+};
