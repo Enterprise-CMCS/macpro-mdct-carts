@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ChoiceList } from "@cmsgov/design-system-core";
+import { Choice } from "@cmsgov/design-system-core";
 
 const Checkbox = ({ onChange, question, ...props }) => {
   const value = Array.isArray(question.answer.entry)
@@ -17,22 +17,18 @@ const Checkbox = ({ onChange, question, ...props }) => {
     }
   };
 
-  const choices = question.answer.options.map((option) => ({
-    checked: value.indexOf(option.value) >= 0,
-    label: option.label,
-    value: option.value,
-  }));
-
-  return (
-    <ChoiceList
-      label=""
+  return question.answer.options.map(({ label, value: checkboxValue }) => (
+    <Choice
+      key={label}
       type="checkbox"
-      choices={choices}
-      value={value}
+      checked={value.indexOf(checkboxValue) >= 0}
+      value={checkboxValue}
       onChange={change}
       {...props}
-    />
-  );
+    >
+      {label}
+    </Choice>
+  ));
 };
 Checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,
