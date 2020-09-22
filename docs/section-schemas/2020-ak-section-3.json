@@ -143,7 +143,7 @@
             "questions": [
               {
                 "id": "2020-03-b-01-01",
-                "label": "Do you track the number of children who have access to private insurance?",
+                "label": "Do you track the number of CHIP enrollees who have access to private insurance?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
