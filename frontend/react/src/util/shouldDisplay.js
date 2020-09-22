@@ -2,44 +2,16 @@ import jsonpath from "./jsonpath";
 
 const hideIf = (state, hideIf) => {
   // Wil return the answer from associated question (Array)
-  let targetAnswer = jsonpath.query(state, hideIf.target);
+  let targetAnswer = jsonpath.query(state, hideIf.target)[0];
   let answersArray = hideIf.values.interactive;
 
-  // DELETE: targetAnswer for 2020-03-h-02-04 will be , ["none", "other"]
-  //DELETE: targetAnswer for any other question will be ["someEntry"]
-  // So for any other question we could consistently just call the thing at the zeroth index
-
-  // Short version
-  // let includedBoolean = targetAnswer.some(
-  //   (val) => answersArray.indexOf(val) !== -1
-  // );
-
-  let includedBoolean = false;
-
-  for (let i = 0; i < targetAnswer.length; i++) {
-    let singleAnswer = targetAnswer[i];
-    if (answersArray.includes(singleAnswer)) {
-      includedBoolean = true;
-      break;
-    }
+  if (answersArray.includes(targetAnswer)) {
+    // If the associated answer IS in the interactive array, remove it
+    return true;
+  } else {
+    // If the associated answer IS NOT in the interactive array, keep it
+    return false;
   }
-  return includedBoolean;
-
-  // if (includedBoolean === true) {
-  //   // If the target answer IS in the interactive array, remove it
-  //   return includedBoolean
-  // } else {
-  //   // If the target answer IS NOT in the interactive array, keep it
-  //   return false;
-  // }
-
-  // if (hideIf.values.interactive.includes(targetAnswer[0])) {
-  //   // If the associated answer IS in the interactive array, remove it
-  //   return true;
-  // } else {docker
-  //   // If the associated answer IS NOT in the interactive array, keep it
-  //   return false;
-  // }
 };
 
 const hideIfAll = (state, hideIfAll) => {
@@ -50,51 +22,28 @@ const hideIfAll = (state, hideIfAll) => {
 };
 
 const hideIfNot = (state, hideIfNot) => {
-  let targetAnswer = jsonpath.query(state, hideIfNot.target);
+  let targetAnswer = jsonpath.query(state, hideIfNot.target)[0];
   let interactiveValues = hideIfNot.values.interactive;
 
-  console.log("What are the interactive values??", interactiveValues);
-  console.log("what is the targets answers??", targetAnswer);
   // TargetAnswer, [‘other’] OR [null] OR [‘other’, ‘ccc’]
-  // Values, interactive: [‘other’] HIDE IF NOT FOUND IN TARGET.
-  // Values, noninteractive: [‘other’]
-  // Hide if interactive values NOT found in target
+  // Values, interactive: [‘other’]
 
-  // before we would say, hide if IV includes TA
-  // Now we want to say, hide if TA (array) does NOT include IV
-  //                also, hide if TA is null
-  // Return TRUE and it will be REMOVED
+  const someHelperFunction = () => {
+    let anyMatches = targetAnswer.some(
+      (val) => interactiveValues.indexOf(val) !== -1 //Returns true if any targetAnswer is present in the interactiveValues array
+    );
+    if (anyMatches === true) {
+      return false; // returning false means the question will not be removed from rendering
+    }
+    return true; // returning true means the question will be removed from rendering
+  };
 
-  // Short version
-  // let includedBoolean = targetAnswer.some(
-  //   (val) => answersArray.indexOf(val) !== -1
-  // );
+  let includedBoolean = targetAnswer === null ? true : someHelperFunction();
 
-  console.log(
-    "WHAT is the returned boolean??",
-    interactiveValues.some((val) => targetAnswer.indexOf(val) !== -1)
-  );
-  let includedBoolean =
-    targetAnswer === null
-      ? true
-      : interactiveValues.some((val) => targetAnswer.indexOf(val) !== -1);
+  // WANT, if targetAnswer includes val, return FALSE
 
-  // let includedBoolean = false;
-
-  // if (targetAnswer === null) {
-  //   return includedBoolean;
-  // } else {
-  //   for (let i = 0; i < interactiveValues.length; i++) {
-  //     let singleAnswer = interactiveValues[i];
-  //     if (targetAnswer.includes(singleAnswer)) {
-  //       includedBoolean = true;
-  //       break;
-  //     }
-  //   }
-  // }
-
-  // This function should return TRUE to...
-  // This function shoudl return FALSE to...
+  // This function should return TRUE to... remove
+  // This function should return FALSE to... keep
   return includedBoolean;
 };
 
