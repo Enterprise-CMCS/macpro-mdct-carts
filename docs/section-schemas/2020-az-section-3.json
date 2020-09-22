@@ -64,7 +64,7 @@
                 ]
               },
               {
-                "id": "2020-03-a-01-02",
+                "id": "2020-03-a-01-03",
                 "label": "Are you targeting specific populations in your outreach efforts?",
                 "hint": "For example: minorities, immigrants, or children living in rural areas.",
                 "type": "radio",
@@ -83,7 +83,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-03-a-01-02-a",
+                    "id": "2020-03-a-01-03-a",
                     "label": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
                     "type": "text_multiline",
                     "answer": {
@@ -111,8 +111,8 @@
                 ]
               },
               {
-                "id": "2020-03-a-01-03",
-                "label": "What methods have been most effective in reaching low-income, uninsured children?",
+                "id": "2020-03-a-01-02",
+                "label": "What methods have been most effective in reaching uninsured, low-income children? How have you measured the effectiveness of your outreach efforts?",
                 "hint": "For example: TV, school outreach, or word of mouth.",
                 "type": "text_multiline",
                 "answer": {
@@ -121,7 +121,7 @@
               },
               {
                 "id": "2020-03-a-01-04",
-                "label": "Anything else you’d like to add about your outreach efforts?",
+                "label": "Is there anything else you’d like to add about your outreach efforts?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -133,7 +133,7 @@
       },
       {
         "id": "2020-03-b",
-        "title": "Substitution of Coverage (Crowd-out)",
+        "title": "Substitution of Coverage",
         "type": "subsection",
         "text": "Substitution of coverage (also known as crowd-out) occurs when someone with private insurance drops their private coverage and substitutes it with publicly funded insurance such as CHIP.",
         "parts": [
@@ -143,7 +143,7 @@
             "questions": [
               {
                 "id": "2020-03-b-01-01",
-                "label": "Do you track the number of children who have access to private insurance?",
+                "label": "Do you track the number of CHIP enrollees who have access to private insurance?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -165,7 +165,7 @@
                 "questions": [
                   {
                     "id": "2020-03-b-01-01-a",
-                    "label": "What percent of children who enrolled in CHIP had access to private health insurance at the time of application?",
+                    "label": "What percent of CHIP enrollees had access to private insurance at the time of application?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -195,7 +195,7 @@
               },
               {
                 "id": "2020-03-b-01-02",
-                "label": "Do you use a database to match children to their private insurance status? ",
+                "label": "Do you match prospective enrollees to a database that details private insurance status? ",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -250,7 +250,7 @@
                 "questions": [
                   {
                     "id": "2020-03-b-01-03",
-                    "label": "Does your S-CHIP program require a child to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
+                    "label": "If you have a Separate CHIP program, do you require individuals to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
                     "type": "radio",
                     "answer": {
                       "entry": null,
@@ -299,7 +299,7 @@
                           },
                           {
                             "id": "2020-03-b-01-03-d",
-                            "label": "What percent of children subject to the waiting period meet an exemption?",
+                            "label": "What percent of individuals subject to the waiting period meet an exemption?",
                             "type": "text_multiline",
                             "answer": {
                               "entry": null
@@ -311,7 +311,7 @@
                   },
                   {
                     "id": "2020-03-b-01-04",
-                    "label": "What percent of children screened for S-CHIP eligibility cannot be enrolled because they have group health plan coverage?",
+                    "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -319,7 +319,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Some questions omitted because they do not apply to your program.",
+                  "skip_text": "Some questions have been skipped because they don't apply to your program.",
                   "show_if_state_program_type_in": [
                     "separate_chip",
                     "combo"
@@ -328,7 +328,7 @@
               },
               {
                 "id": "2020-03-b-01-05",
-                "label": "Anything else you’d like to add about crowd-out that wasn’t already covered? Did you run into any limitations when collecting data?",
+                "label": "Is there anything else you’d like to add about crowd-out that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
