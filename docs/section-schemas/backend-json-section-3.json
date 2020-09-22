@@ -3227,7 +3227,7 @@
             "id": "2020-03-f-01",
             "type": "part",
             "context_data": {
-              "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+              "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
@@ -3299,7 +3299,7 @@
               },
               {
                 "id": "2020-03-f-01-05",
-                "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
+                "label": "Do the Managed Care plans contracted by your Separate CHIP program have written plans with safeguards and procedures in place?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -3433,18 +3433,18 @@
               },
               {
                 "id": "2020-03-f-01-14",
-                "label": "Does your data for Questions 8–13 include cases for separate CHIP only or for Medicaid and CHIP combined? ",
+                "label": "Does your data for Questions 8–13 include cases for CHIP only or for Medicaid and CHIP combined? ",
                 "type": "radio",
                 "answer": {
                   "entry": null,
                   "options": [
                     {
                       "value": "separate_chip_only",
-                      "label": "Separate CHIP only"
+                      "label": "CHIP only"
                     },
                     {
                       "value": "medicaid_separate_chip_combined",
-                      "label": "Medicaid and separate CHIP combined"
+                      "label": "Medicaid and CHIP combined"
                     }
                   ]
                 }
@@ -3515,7 +3515,7 @@
                 "questions": [
                   {
                     "id": "2020-03-f-01-16-a",
-                    "label": "What specifically are they responsible for in terms of oversight?",
+                    "label": "What specifically are the contractors responsible for in terms of oversight?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -3543,7 +3543,7 @@
               },
               {
                 "id": "2020-03-f-01-17",
-                "label": "Anything else you’d like to add that wasn’t already covered?",
+                "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
