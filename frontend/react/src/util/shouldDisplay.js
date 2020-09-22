@@ -53,6 +53,8 @@ const hideIfNot = (state, hideIfNot) => {
   let targetAnswer = jsonpath.query(state, hideIfNot.target);
   let interactiveValues = hideIfNot.values.interactive;
 
+  console.log("What are the interactive values??", interactiveValues);
+  console.log("what is the targets answers??", targetAnswer);
   // TargetAnswer, [‘other’] OR [null] OR [‘other’, ‘ccc’]
   // Values, interactive: [‘other’] HIDE IF NOT FOUND IN TARGET.
   // Values, noninteractive: [‘other’]
@@ -68,9 +70,13 @@ const hideIfNot = (state, hideIfNot) => {
   //   (val) => answersArray.indexOf(val) !== -1
   // );
 
+  console.log(
+    "WHAT is the returned boolean??",
+    interactiveValues.some((val) => targetAnswer.indexOf(val) !== -1)
+  );
   let includedBoolean =
     targetAnswer === null
-      ? false
+      ? true
       : interactiveValues.some((val) => targetAnswer.indexOf(val) !== -1);
 
   // let includedBoolean = false;
@@ -87,6 +93,8 @@ const hideIfNot = (state, hideIfNot) => {
   //   }
   // }
 
+  // This function should return TRUE to...
+  // This function shoudl return FALSE to...
   return includedBoolean;
 };
 
