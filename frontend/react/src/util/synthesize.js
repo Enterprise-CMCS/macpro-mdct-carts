@@ -1,3 +1,4 @@
+// import jsonpath from "./jsonpath";
 import jsonpath from "./jsonpath";
 
 // For the identity case, just return the first target value.
@@ -7,7 +8,10 @@ const percent = ([numerator, denominator], precision = 2) => {
   if (+denominator !== 0) {
     // Exponent. Because Math.round always rounds off all decimals, preemptively
     // multiply by some number of tens to get the right precision.
-    const exp = precision > 0 ? Math.pow(10, precision) : 1;
+    const exp = precision > 0 ? Math.pow(10, precision) : 1; // eslint-disable-line no-restricted-properties
+    // Disable the eslint rule above. Math.pow is restricted, but the
+    // exponentiation operator (**) is not supported in IE.
+
     const pct = (+numerator * exp * 100) / +denominator;
 
     if (!Number.isNaN(pct)) {
@@ -33,10 +37,62 @@ const percent = ([numerator, denominator], precision = 2) => {
   return null;
 };
 
+const rpn = (targets, rpnString) => {
+  if (rpnString) {
+    const operands = [];
+    const operators = [];
+
+    rpnString.split(" ").forEach((token) => {
+      if (token === "@") {
+        operands.push(+targets.shift());
+      } else if (!Number.isNaN(+token)) {
+        operands.push(+token);
+      } else {
+        operators.push(token);
+      }
+    });
+
+    if (operands.length === operators.length + 1) {
+      let computed = +operands.shift();
+
+      while (operands.length > 0) {
+        const newOperand = +operands.shift();
+        const operator = operators.shift();
+
+        switch (operator) {
+          case "+":
+            computed += newOperand;
+            break;
+
+          case "-":
+            computed -= newOperand;
+            break;
+
+          case "/":
+            computed /= newOperand;
+            break;
+
+          case "*":
+            computed *= newOperand;
+            break;
+
+          default:
+            computed = NaN;
+            break;
+        }
+      }
+
+      return computed;
+    }
+  }
+
+  return NaN;
+};
+
 // Maaaaaaaath.
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
-export const synthesizeValue = (value, state) => {
+const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
   }
@@ -56,6 +112,8 @@ export const synthesizeValue = (value, state) => {
           return { contents: identity(targets) };
         case "percentage":
           return { contents: percent(targets, value.precision) };
+        case "rpn":
+          return { contents: rpn(targets, value.rpn) };
         case "sum":
           return { contents: sum(targets) };
 
@@ -72,3 +130,5 @@ export const synthesizeValue = (value, state) => {
   // We don't know how to handle this value, so return it unchanged.
   return value;
 };
+
+export default synthesizeValue;
