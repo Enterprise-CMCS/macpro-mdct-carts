@@ -245,11 +245,20 @@
                   }
                 ]
               },
-              {
+                  {
+                    "id": "2020-03-b-01-03",
+                    "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+              },
+                {
                 "type": "fieldset",
                 "questions": [
                   {
-                    "id": "2020-03-b-01-03",
+                    "id": "2020-03-b-01-04",
                     "label": "If you have a Separate CHIP program, do you require individuals to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
                     "type": "radio",
                     "answer": {
@@ -274,23 +283,31 @@
                         "type": "fieldset",
                         "questions": [
                           {
-                            "id": "2020-03-b-01-03-a",
+                            "id": "2020-03-b-01-04-a",
                             "label": "How long is the waiting period?",
                             "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
+               ],
+                "context_data": {
+                  "skip_text": "Some questions were skipped because they don't apply to your program.",
+                  "show_if_state_program_type_in": [
+                    "separate_chip",
+                    "combo"
+                  ]
+                }
                           },
                           {
-                            "id": "2020-03-b-01-03-b",
-                            "label": "Which populations does the waiting period apply to?  (Include FPL for each group.)",
+                            "id": "2020-03-b-01-04-b",
+                            "label": "Which populations does the waiting period apply to? (Include the FPL for each group.)",
                             "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
                           },
                           {
-                            "id": "2020-03-b-01-03-c",
+                            "id": "2020-03-b-01-04-c",
                             "label": "What exemptions apply to the waiting period?",
                             "type": "text_multiline",
                             "answer": {
@@ -298,7 +315,7 @@
                             }
                           },
                           {
-                            "id": "2020-03-b-01-03-d",
+                            "id": "2020-03-b-01-04-d",
                             "label": "What percent of individuals subject to the waiting period meet a state or federal exemption?",
                             "type": "text_multiline",
                             "answer": {
@@ -310,25 +327,8 @@
                     ]
                   },
                   {
-                    "id": "2020-03-b-01-04",
-                    "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ],
-                "context_data": {
-                  "skip_text": "Some questions omitted because they do not apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
-                }
-              },
-              {
                 "id": "2020-03-b-01-05",
-                "label": "Anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
+                "label": "Is there anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
