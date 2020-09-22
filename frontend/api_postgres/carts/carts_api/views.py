@@ -276,17 +276,13 @@ def fake_user_data(request, username=None):
     assert "-" in username
     state = username.split("-")[1].upper()
 
-    host = request.get_host()
-    scheme = "https" if request.is_secure() else "http"
-    full_host = f"{scheme}://{host}"
-
     fakeUserData = {
         "AK": {
             "name": "Alaska",
             "abbr": "AK",
             "programType": "medicaid_exp_chip",
             "programName": "AK Program Name??",
-            "imageURI": f"{full_host}/img/states/ak.svg",
+            "imageURI": "/img/states/ak.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
@@ -302,7 +298,7 @@ def fake_user_data(request, username=None):
             "abbr": "AZ",
             "programType": "separate_chip",
             "programName": "AZ Program Name??",
-            "imageURI": "{full_host}/img/states/az.svg",
+            "imageURI": "/img/states/az.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
@@ -318,7 +314,7 @@ def fake_user_data(request, username=None):
             "abbr": "MA",
             "programType": "combo",
             "programName": "MA Program Name??",
-            "imageURI": "${full_host}/img/states/ma.svg",
+            "imageURI": "/img/states/ma.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
