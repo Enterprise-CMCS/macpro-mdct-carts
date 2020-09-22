@@ -3090,42 +3090,6 @@
                         ]
                       ]
                     },
-                    "questions": []
-                  },
-                  {
-                    "type": "fieldset",
-                    "fieldset_type": "synthesized_table",
-                    "label": "Parent",
-                    "fieldset_info": {
-                      "headers": [
-                        {
-                          "contents": "State"
-                        },
-                        {
-                          "contents": "Employer"
-                        },
-                        {
-                          "contents": "Employee"
-                        }
-                      ],
-                      "rows": [
-                        [
-                          {
-                            "target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"
-                          },
-                          {
-                            "target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"
-                          },
-                          {
-                            "target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"
-                          }
-                        ]
-                      ]
-                    },
-                    "questions": []
-                  }
-                ]
-              },
               {
                 "type": "fieldset",
                 "label": "Range in monthly contributions paid by state",
