@@ -3675,12 +3675,12 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-04 selection does not include 'other'; noninteractive: hide if unanswerd or 'other'",
+                        "comment": "Interactive: Hide if 2020-03-h-02-04 selection does not include 'other'; noninteractive: hide if NOT 'other'",
                         "hide_if_not": {
                           "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
                           "values": {
                             "interactive": ["other"],
-                            "noninteractive": [null, "other"]
+                            "noninteractive": ["other"]
                           }
                         }
                       }
