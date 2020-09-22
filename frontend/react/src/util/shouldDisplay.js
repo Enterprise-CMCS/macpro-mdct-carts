@@ -103,18 +103,19 @@ export const shouldDisplay = (state, context) => {
     return true;
   }
 
-  // hide_if, there is just one target (question) that a single question's display relies on
+  // hide_if: there is just one target (question) with a single answer
+  // displaying relies on that answer being incldued in the hide_if.values.interactive array
   if (context.conditional_display.hide_if) {
     return !hideIf(state, context.conditional_display.hide_if);
   }
 
-  // hide_if_all, there is an array of targets (questions) that a single question's display relies on
+  // hide_if_all, there is an array of targets (questions) that another question's display relies on
   if (context.conditional_display.hide_if_all) {
     return !hideIfAll(state, context.conditional_display.hide_if_all);
   }
 
-  // hide_if_not, there is just one target (question) that may have multiple answers (usually a checkbox)
-  // displaying relies on one of those answers
+  // hide_if_not, there is just one target (question) that may have multiple answers (checkbox)
+  // displaying relies on that array of answers including any of the values from the hide_if_not.values.interactive array
   if (context.conditional_display.hide_if_not) {
     return !hideIfNot(state, context.conditional_display.hide_if_not);
   }
