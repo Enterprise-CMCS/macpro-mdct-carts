@@ -3563,7 +3563,7 @@
         "type": "subsection",
         "id": "2020-03-h",
         "title": "CAHPS Survey Results",
-        "text": "Children's Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
+        "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
         "parts": [
           {
             "id": "2020-03-h-01",
@@ -3630,7 +3630,7 @@
           {
             "id": "2020-03-h-02",
             "type": "part",
-            "text": "Since you collected the CAHPS survey, go ahead and complete this section. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
+            "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
             "context_data": {
               "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
               "conditional_display": {
@@ -3914,7 +3914,7 @@
           {
             "id": "2020-03-h-03",
             "type": "part",
-            "text": "Since you didn’t collect the CAHPS survey, go ahead and complete this section.",
+            "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
             "context_data": {
               "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
               "conditional_display": {
