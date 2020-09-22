@@ -204,7 +204,7 @@ resource "aws_wafv2_web_acl" "uiwaf" {
 
     statement {
       managed_rule_group_statement{
-        vendor_name = "AWS
+        vendor_name = "AWS"
         "Name": "${terraform.workspace}-AWSManagedRulesKnownBadInputsRuleSet"
       }
     }
