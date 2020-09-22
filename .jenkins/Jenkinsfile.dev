@@ -193,6 +193,7 @@ pipeline {
       }
     }
 
+    /*
     stage("Run Inspec Scans") {
       when {
         expression { env.DEPLOY == "true"}
@@ -228,6 +229,7 @@ pipeline {
         }
       }
     }
+    */
 
     stage("Destroy at the end") {
       when {
