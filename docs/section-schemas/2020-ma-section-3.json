@@ -49,13 +49,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -96,13 +91,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -177,15 +167,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -229,15 +212,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -320,10 +296,7 @@
                 ],
                 "context_data": {
                   "skip_text": "Some questions omitted because they do not apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
+                  "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               },
               {
@@ -380,15 +353,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-c-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              "no",
-                              "na",
-                              null
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": ["no", "na", null],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -459,13 +425,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-c-01-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              "no",
-                              null
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": ["no", null],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -629,9 +590,7 @@
                           "$..*[?(@.id=='2020-03-c-02-02')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -648,9 +607,7 @@
                           "$..*[?(@.id=='2020-03-c-02-03')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -667,9 +624,7 @@
                           "$..*[?(@.id=='2020-03-c-02-04')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ]
                   ]
@@ -728,9 +683,7 @@
                         "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
                         "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
                       ],
-                      "actions": [
-                        "sum"
-                      ]
+                      "actions": ["sum"]
                     },
                     "questions": []
                   },
@@ -815,9 +768,7 @@
                           "$..*[?(@.id=='2020-03-c-03-03')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -834,9 +785,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ]
                   ]
@@ -888,9 +837,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -907,9 +854,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -926,9 +871,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ]
                   ]
@@ -983,12 +926,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1010,14 +949,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1085,12 +1018,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1111,14 +1040,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1179,12 +1102,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1205,14 +1124,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1269,12 +1182,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1295,14 +1204,8 @@
                                         "hide_if": {
                                           "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                           "values": {
-                                            "interactive": [
-                                              false,
-                                              null
-                                            ],
-                                            "noninteractive": [
-                                              false,
-                                              null
-                                            ]
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
                                           }
                                         }
                                       }
@@ -1368,12 +1271,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1394,14 +1293,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1458,12 +1351,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1484,14 +1373,8 @@
                                         "hide_if": {
                                           "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                           "values": {
-                                            "interactive": [
-                                              false,
-                                              null
-                                            ],
-                                            "noninteractive": [
-                                              false,
-                                              null
-                                            ]
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
                                           }
                                         }
                                       }
@@ -1572,12 +1455,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1598,14 +1477,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1666,12 +1539,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1692,14 +1561,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1756,12 +1619,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1782,14 +1641,8 @@
                                         "hide_if": {
                                           "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                           "values": {
-                                            "interactive": [
-                                              false,
-                                              null
-                                            ],
-                                            "noninteractive": [
-                                              false,
-                                              null
-                                            ]
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
                                           }
                                         }
                                       }
@@ -1855,12 +1708,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -1881,14 +1730,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -1945,12 +1788,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -1971,14 +1810,8 @@
                                         "hide_if": {
                                           "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                           "values": {
-                                            "interactive": [
-                                              false,
-                                              null
-                                            ],
-                                            "noninteractive": [
-                                              false,
-                                              null
-                                            ]
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
                                           }
                                         }
                                       }
@@ -2050,12 +1883,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -2076,14 +1905,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -2144,12 +1967,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -2170,14 +1989,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -2234,12 +2047,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -2260,14 +2069,8 @@
                                         "hide_if": {
                                           "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                           "values": {
-                                            "interactive": [
-                                              false,
-                                              null
-                                            ],
-                                            "noninteractive": [
-                                              false,
-                                              null
-                                            ]
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
                                           }
                                         }
                                       }
@@ -2333,12 +2136,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  true
-                                ],
-                                "noninteractive": [
-                                  true
-                                ]
+                                "interactive": [true],
+                                "noninteractive": [true]
                               }
                             }
                           }
@@ -2359,14 +2158,8 @@
                                 "hide_if": {
                                   "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                   "values": {
-                                    "interactive": [
-                                      false,
-                                      null
-                                    ],
-                                    "noninteractive": [
-                                      false,
-                                      null
-                                    ]
+                                    "interactive": [false, null],
+                                    "noninteractive": [false, null]
                                   }
                                 }
                               }
@@ -2423,12 +2216,8 @@
                                     "hide_if": {
                                       "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                       "values": {
-                                        "interactive": [
-                                          true
-                                        ],
-                                        "noninteractive": [
-                                          true
-                                        ]
+                                        "interactive": [true],
+                                        "noninteractive": [true]
                                       }
                                     }
                                   }
@@ -2449,14 +2238,8 @@
                                         "hide_if": {
                                           "target": "$..*[?(@.id=='2020-03-c-04-01-a')].answer.entry",
                                           "values": {
-                                            "interactive": [
-                                              false,
-                                              null
-                                            ],
-                                            "noninteractive": [
-                                              false,
-                                              null
-                                            ]
+                                            "interactive": [false, null],
+                                            "noninteractive": [false, null]
                                           }
                                         }
                                       }
@@ -2638,12 +2421,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2663,12 +2442,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2688,12 +2463,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2731,13 +2502,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2751,12 +2517,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2794,13 +2556,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2814,12 +2571,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2842,12 +2595,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2867,12 +2616,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2965,13 +2710,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3103,13 +2843,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-09')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3275,15 +3010,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3295,15 +3023,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3321,15 +3042,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3341,15 +3055,8 @@
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -3410,10 +3117,7 @@
             "type": "part",
             "context_data": {
               "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
             "questions": [
@@ -3515,15 +3219,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -3663,13 +3360,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3709,13 +3401,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3793,13 +3480,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3821,12 +3503,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
+                    "interactive": ["no"],
+                    "noninteractive": ["no"]
                   }
                 }
               }
@@ -3945,15 +3623,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "5.0",
-                              "5.0H"
-                            ],
-                            "noninteractive": [
-                              "5.0",
-                              "5.0H"
-                            ]
+                            "interactive": [null, "5.0", "5.0H"],
+                            "noninteractive": ["5.0", "5.0H"]
                           }
                         }
                       }
@@ -4004,19 +3675,12 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-04 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
+                        "comment": "Interactive: Hide if 2020-03-h-02-04 selection does not include 'other'; noninteractive: hide if unanswerd or 'other'",
+                        "hide_if_not": {
                           "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "none",
-                              "chronic"
-                            ],
-                            "noninteractive": [
-                              "none",
-                              "chronic"
-                            ]
+                            "interactive": ["other"],
+                            "noninteractive": [null, "other"]
                           }
                         }
                       }
@@ -4105,12 +3769,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      "yes"
-                    ],
-                    "noninteractive": [
-                      "yes"
-                    ]
+                    "interactive": ["yes"],
+                    "noninteractive": ["yes"]
                   }
                 }
               }
@@ -4225,12 +3885,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
+                    "interactive": ["no"],
+                    "noninteractive": ["no"]
                   }
                 }
               }
@@ -4278,16 +3934,10 @@
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {
-                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  null,
-                                  "yes"
-                                ],
-                                "noninteractive": [
-                                  null,
-                                  "yes"
-                                ]
+                                "interactive": [null, "yes"],
+                                "noninteractive": [null, "yes"]
                               }
                             }
                           }
@@ -4308,12 +3958,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4333,12 +3979,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4358,12 +4000,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4377,9 +4015,7 @@
                             "$..*[?(@.id=='2020-03-i-02-01-01-05')].answer.entry",
                             "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry"
                           ],
-                          "actions": [
-                            "percentage"
-                          ]
+                          "actions": ["percentage"]
                         },
                         "questions": []
                       },
@@ -4391,14 +4027,10 @@
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {
-                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4419,12 +4051,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4444,12 +4072,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4469,12 +4093,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4494,12 +4114,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
