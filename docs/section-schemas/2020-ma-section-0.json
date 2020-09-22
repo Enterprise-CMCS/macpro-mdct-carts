@@ -6,7 +6,7 @@
     "ordinal": 0,
     "id": "2020-00",
     "type": "section",
-    "title": "Carts Basic Info",
+    "title": "Basic State Info",
     "subsections": [
       {
         "type": "subsection",
@@ -38,7 +38,7 @@
                   "options": [
                     {
                       "value": "combo",
-                      "label": "Combination (Medicaid Expansion CHIP and Separate CHIP)"
+                      "label": "Both Medicaid Expansion CHIP and Separate CHIP"
                     },
                     {
                       "value": "medicaid_exp_chip",
