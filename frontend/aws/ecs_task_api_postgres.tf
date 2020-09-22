@@ -271,7 +271,7 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     statement {
       managed_rule_group_statement{
         vendor_name = "AWS"
-        name = "${terraform.workspace}-api-AWSManagedRulesCommonRuleSet"
+        name = "AWSManagedRulesCommonRuleSet"
       }
     }
 
@@ -293,7 +293,7 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     statement {
       managed_rule_group_statement{
         vendor_name = "AWS"
-        name = "${terraform.workspace}-api-AWSManagedRulesAmazonIpReputationList"
+        name = "AWSManagedRulesAmazonIpReputationList"
       }
     }
 
@@ -315,7 +315,7 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     statement {
       managed_rule_group_statement{
         vendor_name = "AWS"
-        name = "${terraform.workspace}-api-AWSManagedRulesKnownBadInputsRuleSet"
+        name = "AWSManagedRulesKnownBadInputsRuleSet"
       }
     }
 
