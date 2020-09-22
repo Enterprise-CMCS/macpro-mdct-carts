@@ -12,7 +12,7 @@ const CMSLegend = ({ id, label }) => {
               id.substring(id.length - 4, id.length - 2),
               10
             )}${id.substring(id.length - 1)}. ${label}`
-          : `${lastHunk}.${label}`}
+          : `${lastHunk}. ${label}`}
       </legend>
     );
   }
