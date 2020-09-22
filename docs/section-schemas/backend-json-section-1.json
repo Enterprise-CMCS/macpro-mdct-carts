@@ -21,7 +21,7 @@
                 "medicaid_exp_chip",
                 "combo"
               ],
-              "skip_text": "Part 1 only applies to states with a Medicaid Expansion CHIP program. Skip to Part 2."
+              "skip_text": "Part 1 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 2."
             },
             "questions": [
               {
@@ -337,7 +337,7 @@
             "type": "part",
             "title": "Separate CHIP Enrollment Fees, Premiums, and Delivery Systems",
             "context_data": {
-              "skip_text": "Part 2 only applies to states with a Separate CHIP program. Skip to Part 3.",
+              "skip_text": "Part 2 only applies to states with a Separate CHIP program. Please skip to Part 3.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
@@ -657,7 +657,7 @@
             "type": "part",
             "title": "Medicaid Expansion CHIP Program and Policy Changes",
             "context_data": {
-              "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Skip to Part 4.",
+              "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 4.",
               "show_if_state_program_type_in": [
                 "medicaid_exp_chip",
                 "combo"
@@ -1053,7 +1053,7 @@
                   },
                   {
                     "id": "2020-01-a-03-18",
-                    "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section?",
+                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any of the changes addressed in this section?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -1068,7 +1068,7 @@
             "type": "part",
             "title": "Separate CHIP Program and Policy Changes",
             "context_data": {
-              "skip_text": "Part 4 only applies to states with a Separate CHIP program. Skip to the next section.",
+              "skip_text": "Part 4 only applies to states with a Separate CHIP program. Please skip to the next section.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
@@ -1532,7 +1532,7 @@
                   },
                   {
                     "id": "2020-01-a-04-21",
-                    "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section?",
+                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any of the changes addressed in this section?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
