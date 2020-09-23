@@ -42,6 +42,8 @@ api_patterns = [
          views.sectionbase_by_year_section_subsection),
     path("generic-questions/<slug:id>",
          views.generic_fragment_by_id),
+    path("appusers/auth",
+         views.authenticate_user),
     path("appusers/<slug:username>",
          views.fake_user_data),
 ]
@@ -58,4 +60,3 @@ urlpatterns = [
     #  namespace='rest_framework'))
     path("api/v1/", include(api_patterns)),
 ]
-

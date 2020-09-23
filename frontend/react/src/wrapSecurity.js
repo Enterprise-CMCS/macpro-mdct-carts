@@ -1,13 +1,15 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useLocation, useParams } from 'react-router-dom';
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import InitialDataLoad from "./components/Utils/InitialDataLoad";
+import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Home from "./Home";
+import Profile from "./Profile";
 import config from './auth-config';
 import * as qs from "query-string";
 
@@ -32,11 +34,14 @@ const WrappedSecurity = () => {
       </div>
     )
   } else {
+
     return (
       <Router>
         <Security {...config.oidc}>
+          <SecureInitialDataLoad />
           <SecureRoute path="/" component={Home} />
           <Route path={config.callback} component={LoginCallback} />
+          <SecureRoute path="/profile" component={Profile} />
         </Security>
       </Router>
     )
@@ -44,4 +49,3 @@ const WrappedSecurity = () => {
 }
 
 export default WrappedSecurity;
-
