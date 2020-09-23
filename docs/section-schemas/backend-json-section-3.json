@@ -4106,7 +4106,8 @@
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
                     "interactive": [
-                      "yes"
+                      null,
+                      "no"
                     ],
                     "noninteractive": [
                       "yes"
@@ -4182,6 +4183,7 @@
             ]
           }
         ]
+<<<<<<< HEAD
       },
       {
         "id": "2020-03-i",
@@ -4512,6 +4514,8 @@
             ]
           }
         ]
+=======
+>>>>>>> 6a471771b32150c1ae3e8ef6a5f6e6cbdd9e07a2
       }
     ]
   }
