@@ -81,9 +81,11 @@ const Question = ({ question, setAnswer, ...props }) => {
     <div className="question">
       <Container question={question}>
         {question.label && (
-          <legend className="ds-c-label">
-            <CMSLegend id={question.id} label={question.label} />
-          </legend>
+          <CMSLegend
+            hint={question.hint}
+            id={question.id}
+            label={question.label}
+          />
         )}
 
         <Component
