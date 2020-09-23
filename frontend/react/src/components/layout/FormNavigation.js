@@ -15,13 +15,9 @@ class FormNavigation extends Component {
 
     const items = [];
     sections.forEach(section => {
-      if (section.subsections.length < 2) {
-        items.push(idToUrl(section.id))
-      } else {
-        section.subsections.forEach(subsection => {
-          items.push(idToUrl(subsection.id));
-        });
-      }
+      section.subsections.forEach(subsection => {
+        items.push(idToUrl(subsection.id));
+      });
     });
 
     // Get current url

@@ -93,20 +93,21 @@ export const addNewObjective = (parentID, newObjectiveId, firstObjectiveId) => (
   const tempFirstObjectiveId = firstObjectiveId.split("-");
   //Create copy of Objective #1
   let newObjective = JSON.parse(
-    JSON.stringify(selectQuestion(state, firstObjectiveId))
+    JSON.stringify(
+      selectQuestion(
+        state,
+        `${tempFirstObjectiveId[0]}-${tempFirstObjectiveId[1]}-${tempFirstObjectiveId[2]}-${tempFirstObjectiveId[3]}-${tempFirstObjectiveId[4]}-${tempFirstObjectiveId[5]}`
+      )
+    )
   );
   const tempNewObjectiveId = newObjective.id.split("-");
   //update newObjectives traits so that it is objective n+1
-  newObjective.id = buildObjectiveId(tempFirstObjectiveId, objectiveIdString);
-  newObjective.questions[0].answer = {
-    entry: null,
-    default_entry: null,
-    readonly: false,
-  };
-  newObjective.questions[0].id =
-    buildObjectiveId(tempFirstObjectiveId, objectiveIdString) + `-01`;
-  newObjective.questions[1].id =
-    buildObjectiveId(tempFirstObjectiveId, objectiveIdString) + `-02`;
+  newObjective.id = `${tempFirstObjectiveId[0]}-${tempNewObjectiveId[1]}-${tempNewObjectiveId[2]}-${tempNewObjectiveId[3]}-${tempNewObjectiveId[4]}-${objectiveIdString}`;
+  newObjective.questions[0].answer.entry = null;
+  newObjective.questions[0].answer.default_entry = null;
+  newObjective.questions[0].answer.readonly = false;
+  newObjective.questions[0].id = `${tempFirstObjectiveId[0]}-${tempNewObjectiveId[1]}-${tempNewObjectiveId[2]}-${tempNewObjectiveId[3]}-${tempNewObjectiveId[4]}-${objectiveIdString}-01`;
+  newObjective.questions[1].id = `${tempFirstObjectiveId[0]}-${tempNewObjectiveId[1]}-${tempNewObjectiveId[2]}-${tempNewObjectiveId[3]}-${tempNewObjectiveId[5]}-${objectiveIdString}-02`;
   newObjective.questions[1].questions = [
     buildGoal(newGoalId, objectiveIdString, newObjective.id, state),
   ];
@@ -121,6 +122,3 @@ export const addNewGoal = (newGoalId, objectiveId, parentObjectiveId) => (
   const newGoal = buildGoal(newGoalId, objectiveId, parentObjectiveId, state);
   dispatch(addElement(parentObjectiveId, newGoal));
 };
-
-export const buildObjectiveId = (firstObjectiveId, objectiveCount) =>
-  `${firstObjectiveId[0]}-${firstObjectiveId[1]}-${firstObjectiveId[2]}-${firstObjectiveId[3]}-${firstObjectiveId[4]}-${objectiveCount}`;
