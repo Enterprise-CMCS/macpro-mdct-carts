@@ -2,13 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { Text } from "./Text";
+import Question from "./Question"; // eslint-disable-line import/no-cycle
 import { synthesizeValue } from "../../util/synthesize";
 
 const SynthesizedValue = ({ question, value, ...props }) => {
-  const clonedQuestion = JSON.parse(JSON.stringify(question));
-  clonedQuestion.answer = { entry: value };
-  return <Text question={clonedQuestion} {...props} disabled />;
+  return (
+    <div>
+      <strong>Computed:</strong> {value}
+      {question.questions &&
+        question.questions.map((q) => (
+          <Question key={q.id} question={q} {...props} />
+        ))}
+    </div>
+  );
 };
 SynthesizedValue.propTypes = {
   question: PropTypes.object.isRequired,
