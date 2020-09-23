@@ -26,7 +26,6 @@ export default (sdata = initialState, action) => {
       return sdata;
   }
 };
-
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
   const section = state.formData.filter(

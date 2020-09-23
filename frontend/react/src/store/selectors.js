@@ -1,7 +1,7 @@
 import jsonpath from "../util/jsonpath";
 
 import { selectFragment } from "./formData";
-import { shouldDisplay } from "../util/shouldDisplay";
+import { shouldDisplay } from '../util/shouldDisplay'
 
 export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
@@ -39,7 +39,7 @@ export const selectPartTitle = (state, partId) => {
 };
 
 export const selectQuestion = (state, id) => {
-  let jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@.id=='${id}')]`;
+  const jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@.id=='${id}')]`;
   const questions = jsonpath.query(state, jp);
   if (questions.length) {
     return questions[0];

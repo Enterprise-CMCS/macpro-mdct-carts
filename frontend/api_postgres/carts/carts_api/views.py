@@ -112,6 +112,9 @@ def sections_by_year_and_state(request, year, state):
                                        context={"request": request})
         return Response(serializer.data)
 
+@api_view(["POST"])
+def temp_post_endpoint(request, year, state):
+    return HttpResponse(status=204)
 
 @api_view(["GET"])
 def section_by_year_and_state(request, year, state, section):

@@ -30,11 +30,11 @@ class Section2BApi extends Component {
   render() {
     // This variable narrows it down to a subsection
     const subsectionData = this.props.Data
-      ? this.props.Data.subsections[1] // 2B JSON Data
+      ? this.props.Data.subsections[0] // 4A JSON Data
       : null;
 
     const sectionTitle = this.props.Data
-      ? generateSubsectionLabel(subsectionData.id) // Section 2b title
+      ? generateSubsectionLabel(subsectionData.id) // Section 4a title
       : null;
     return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
@@ -47,7 +47,7 @@ class Section2BApi extends Component {
             <Tabs>
               <TabPanel
                 id="tab-form"
-                tab={`Section 2B:${subsectionData.title}`}
+                tab={`Section 4A:${subsectionData.title}`}
               >
                 <Questions2BApi subsectionB={subsectionData} />
               </TabPanel>
@@ -74,7 +74,7 @@ class Section2BApi extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  Data: selectSectionByOrdinal(state, 2),
+  Data: selectSectionByOrdinal(state, 4),
   name: state.stateUser.name,
   programType: state.stateUser.programType,
   year: state.global.formYear,
