@@ -47,6 +47,8 @@ class CMSChoice extends Component {
     if (this.props.children) {
       // Loop through subquestions
       this.props.children.map((item) => {
+        // If the id/value of the child does not match the current choice, dont show it?
+
         if (item.type === "fieldset") {
           item.questions.map((question) => {
             fields.push(
@@ -69,9 +71,16 @@ class CMSChoice extends Component {
           />
         );
       }
-
       // Return Choice component after creating subquestion components
     }
+
+    // WHERE TO PICK UP 9/23:
+    // Make <CHOICE/> only show children ONCE, can we enforce that?
+    // look at console components to see that the data looks the way it should
+    // it is just rendering for every option
+
+    // if this.props.
+    // if (this.props.value === )
 
     return (
       <>
