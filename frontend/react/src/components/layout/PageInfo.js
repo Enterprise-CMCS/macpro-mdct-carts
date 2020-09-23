@@ -1,18 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-class PageInfo extends Component {
-  render() {
-    return (
-      <div className="page-info">
-        <div className="edit-info">Draft | Last Edit: 4/3/20</div>
-        <h1>
-          {this.props.name} CARTS{} FY2020
-        </h1>
-      </div>
-    );
-  }
-}
+const PageInfo = ({ name }) => (
+  <div className="page-info">
+    <div className="edit-info">Draft | Last Edit: 4/3/20</div>
+    <h1>
+      {name} CARTS{} FY2020
+    </h1>
+  </div>
+);
+PageInfo.propTypes = { name: PropTypes.string.isRequired };
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
