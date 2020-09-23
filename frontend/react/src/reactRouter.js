@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { constructIdFromYearSectionAndSubsection } from "./store/formData";
 import Homepage from "./components/sections/homepage/Homepage";
-import Section2BApi from "./components/sections/section2api/Section2BApi";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
@@ -32,7 +31,6 @@ const Routes = ({ userData }) => (
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
-          <Route path="/sections/:year/02/b" component={Section2BApi} />
           <Route
             path="/sections/:year/:sectionOrdinal/:subsectionMarker"
             children={<InvokeSection userData={userData} />}
