@@ -39,7 +39,7 @@ const WrappedSecurity = () => {
 
     return (
       <Router>
-        <Security {...config.oidc}>
+        <Security {...config.oidc} tokenManager={{ secure: true, storage: "cookie" }}>
           <SecureInitialDataLoad />
           <SecureRoute path="/" component={Home} />
           <Route path={config.callback} component={LoginCallback} />
