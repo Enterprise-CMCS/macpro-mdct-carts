@@ -1,6 +1,6 @@
 from django.core import management  # type: ignore
 from django.core.management.base import BaseCommand  # type: ignore
-from carts.carts_api.models import Section, SectionBase, SectionSchema
+from carts.carts_api.models import Section, SectionBase, SectionSchema, FMAP
 from json import loads
 import jsonschema  # type: ignore
 from pathlib import Path
@@ -43,7 +43,7 @@ class Command(BaseCommand):
             if fixture["model"] == "carts_api.sectionschema":
                 year = fixture["fields"]["year"]
                 try:
-                    existing = SectionSchema.objects.get(year=year)
+                    existing = SectionSchema.objects.filter(year=year)
                     if overwrite:
                         existing.delete()
                         is_new = True
@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 ordinal = fixture["fields"]["contents"]["section"].get(
                     "ordinal")
                 try:
-                    existing = SectionBase.objects.get(
+                    existing = SectionBase.objects.filter(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal)
                     if overwrite:
@@ -74,7 +74,7 @@ class Command(BaseCommand):
                     "ordinal")
                 state = fixture["fields"]["contents"]["section"].get("state")
                 try:
-                    existing = Section.objects.get(
+                    existing = Section.objects.filter(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal,
                         contents__section__state=state)
@@ -88,6 +88,11 @@ class Command(BaseCommand):
                     validating = True
                 except jsonschema.exceptions.ValidationError:
                     print(path, "failed validation")
+            elif fixture["model"] == "carts_api.FMAP":
+                # these are reference objects so we should be safe dumping all
+                FMAP.objects.all().delete()
+                paths_to_load.append(path)
+                continue
             else:
                 print("No match on model")
             if validating and is_new:

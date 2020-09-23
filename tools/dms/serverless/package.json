@@ -1,0 +1,15 @@
+{
+  "name": "serverless-dms",
+  "version": "1.0.0",
+  "description": "Serverless Framework for DMS automation",
+  "main": "handler.js",
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/18F/cms-carts-seds.git"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.655.0"
+  }
+}

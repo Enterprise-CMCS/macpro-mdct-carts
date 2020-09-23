@@ -32,13 +32,13 @@ class Header extends Component {
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
           <div className="ds-l-row header-row">
-            <div className="site-title ds-l-col--6 ds-u-padding--2">
+            <div className="site-title ds-l-col--4 ds-u-padding--2">
               <a href="/">Carts</a>
             </div>
-            <div className="user-details ds-l-col--6 ds-u-padding--2">
+            <div className="user-details ds-l-col--8 ds-u-padding--2">
               <div className="ds-l-row">
                 <Autosave />
-                <div className="nav-user ds-l-col--6" id="nav-user">
+                <div className="nav-user" id="nav-user">
                   <ul className="user-email-button">
                     <li>
                       <a

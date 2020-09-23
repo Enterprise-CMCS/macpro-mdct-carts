@@ -1,8 +1,8 @@
 locals {
-  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${aws_alb.api_postgres.dns_name}"
+  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${var.acm_certificate_domain_api_postgres}"
 }
 
-# Number of container instances to spawn per resource. Default is 1. 
+# Number of container instances to spawn per resource. Default is 1.
 locals {
   dev_postgres     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
   master_postgres  = terraform.workspace == "master" ? 1 : 0
@@ -52,7 +52,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_user            = data.aws_ssm_parameter.postgres_user.value,
     postgres_password        = data.aws_ssm_parameter.postgres_password.value,
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
-    cloudwatch_stream_prefix = "api_postgres"
+    cloudwatch_stream_prefix = "api_postgres",
+    postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres
   })
 }
 
@@ -221,4 +222,45 @@ resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
       status_code = "HTTP_302"
     }
   }
+}
+
+resource "aws_wafv2_web_acl" "apiwaf" {
+  name        = "apiwaf-${terraform.workspace}"
+  description = "WAF for postgres api alb"
+  scope       = "REGIONAL"
+
+  default_action {
+    block {}
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${terraform.workspace}-webacl"
+    sampled_requests_enabled   = true
+  }
+
+  rule{
+    name = "${terraform.workspace}-allow-usa-plus-territories"
+    priority = 0
+    action{
+      allow{}
+    }
+
+    statement {
+      geo_match_statement{
+        country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-geo-rule"
+      sampled_requests_enabled   = true
+    }
+  }
+}
+
+resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
+  resource_arn = aws_alb.api_postgres.id
+  web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
 }

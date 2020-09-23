@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import { Choice, TextField } from "@cmsgov/design-system-core";
-import FPL from "../layout/FPL";
-import CMSLegend from "../fields/CMSLegend";
-import { shouldDisplay } from "../Utils/helperFunctions";
-import CMSRanges from "./CMSRanges";
+import { Choice } from "@cmsgov/design-system-core";
 import QuestionComponent from "../fields/QuestionComponent";
-import { setAnswerEntry } from "../../actions/initial";
-import { connect } from "react-redux";
 
 class CMSChoice extends Component {
   constructor(props) {
@@ -75,29 +69,26 @@ class CMSChoice extends Component {
           : this.props.answer;
         if (item.type === "fieldset") {
           item.questions.map((question) => {
-            if (shouldDisplay(parentValue, item.context_data)) {
-              fields.push(
-                <QuestionComponent
-                  data={[question]}
-                  setAnswer={this.props.setAnswer}
-                />
-              );
-            }
+            fields.push(
+              <QuestionComponent
+                data={[question]}
+                setAnswer={this.props.setAnswer}
+              />
+            );
           });
         } else {
-          if (shouldDisplay(parentValue, item.context_data)) {
-            tempQuestionHolder.push(item);
-          }
-        }
-        if (tempQuestionHolder.length > 0) {
-          fields.push(
-            <QuestionComponent
-              data={tempQuestionHolder}
-              setAnswer={this.props.setAnswer}
-            />
-          );
+          tempQuestionHolder.push(item);
         }
       });
+
+      if (tempQuestionHolder.length > 0) {
+        fields.push(
+          <QuestionComponent
+            data={tempQuestionHolder}
+            setAnswer={this.props.setAnswer}
+          />
+        );
+      }
 
       // Return Choice component after creating subquestion components
     }

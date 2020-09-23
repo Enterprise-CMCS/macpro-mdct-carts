@@ -1,22 +1,23 @@
 variable source_database_password {}
 variable target_database_password {}
 
-module "dms_master" {
+module "dms_staging" {
   source                   = "../../modules/dms"
   team_name                = "MACPRO"
   business-unit            = "DevOps"
-  application              = "cartseds"
+  application              = "cartsseds"
   environment-name         = "staging"
   source_database_name_carts  = "SCHIPAnnualReports"
   source_database_name_seds  = "SCHIP"
   source_database_username = "mbescbes"
   source_database_password = "${var.source_database_password}"
-  source_database_host     = "source_database_host"
-  source_database_port     = "source_database_port"
+  source_database_host     = "192.168.164.40"
+  source_database_port     = "1515"
   target_database_name     = "postgres"
   target_database_username = "pguser"
   target_database_password = "${var.target_database_password}"
-  target_database_host     = "target_database_host"
-  subnet_ids               = ["subnet_ids"]
-  vpc_id                   = "vpc_id"
+  target_database_host     = "postgres-rf-staging.ccjaiigdw7dc.us-east-1.rds.amazonaws.com"
+  subnet_ids               = ["subnet-4a4e6212", "subnet-b14f6d9b", "subnet-8aa4b7fc"]
+  vpc_id                   = "vpc-76ef6c11"
+  security_group_ids       = ["sg-62052519", "sg-4391623f"]
 }
