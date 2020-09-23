@@ -2,7 +2,10 @@ import axios from "axios";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
 
-const saveMiddleware = () => {
+export const SAVE_STARTED = "automatic save has started";
+export const SAVE_FINISHED = "automated save has finished";
+
+const saveMiddleware = (store) => {
   let isSaving = false;
   const pending = [];
   const queued = [];
@@ -36,22 +39,36 @@ const saveMiddleware = () => {
       isSaving = true;
 
       try {
-        await axios.post(`${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK`, pending);
+        store.dispatch({ type: SAVE_STARTED });
+        await axios.post(
+          `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK/temp`,
+          // In a future world, we might save only the pending changes, but for
+          // now, we save by posting the whole document in its current state.
+          store.getState().formData
+        );
 
         // If the save is successful, we can clear out the list of pending
         // saves, because they have been persisted on the server.
         pending.length = 0;
+
+        store.dispatch({ type: SAVE_FINISHED, error: false });
       } catch (error) {
         // In the event of an error, we might dispatch some other action here
         // to set a global error state and update the autosave header. TBD.
 
+        let errorMessage = "An unknown error occurred";
+
         if (error.response && error.response.status === 401) {
+          errorMessage = "You are not currently logged in";
           // User is not logged in.
         } else if (error.response && error.response.status === 403) {
           // User does not have permission.
+          errorMessage = "You do not have permission to save";
         } else {
           // Some other server-side error.
         }
+
+        store.dispatch({ type: SAVE_FINISHED, error: true, errorMessage });
       }
 
       // When the save is finished, we can clear that flag.
