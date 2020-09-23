@@ -91,6 +91,7 @@ const Question = ({ question, setAnswer, ...props }) => {
           question={question}
           name={question.id}
           onChange={onChange}
+          disabled={(question.answer && question.answer.readonly) || false}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the

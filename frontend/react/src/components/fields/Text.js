@@ -7,7 +7,6 @@ const Text = ({ question, ...props }) => (
     value={(question.answer && question.answer.entry) || ""}
     type="text"
     label=""
-    disabled={(question.answer && question.answer.readonly) || false}
     {...props}
   />
 );
