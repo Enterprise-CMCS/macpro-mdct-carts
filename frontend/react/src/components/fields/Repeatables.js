@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +9,19 @@ import { Repeatable } from "./Repeatable"; // eslint-disable-line import/no-cycl
 import { createNewRepeatable } from "../../actions/repeatables";
 
 const Repeatables = ({ addRepeatableTo, question, type }) => {
+  const ref = useRef();
+
   const add = () => {
     addRepeatableTo(question.id);
+
+    // Do the focus+scroll on the next UI tick so the DOM will have updated
+    // before we try to grab DOM elements.
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.focus();
+        ref.current.scrollIntoView();
+      }
+    }, 10);
   };
 
   return (
@@ -22,7 +33,12 @@ const Repeatables = ({ addRepeatableTo, question, type }) => {
       >
         {question.questions.map((q, i) => (
           <AccordionItem key={q.id}>
-            <Repeatable number={i + 1} question={q} type={type} />
+            <Repeatable
+              headerRef={ref}
+              number={i + 1}
+              question={q}
+              type={type}
+            />
           </AccordionItem>
         ))}
       </Accordion>

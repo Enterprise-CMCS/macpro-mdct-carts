@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,10 +9,20 @@ import { Objective } from "./Objective"; // eslint-disable-line import/no-cycle
 import { createNewObjective } from "../../actions/repeatables";
 
 const Objectives = ({ addObjectiveTo, question }) => {
+  const ref = useRef();
+
   const add = () => {
     addObjectiveTo(question.id);
-  };
 
+    // Do the focus+scroll on the next UI tick so the DOM will have updated
+    // before we try to grab DOM elements.
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.focus();
+        ref.current.scrollIntoView();
+      }
+    }, 10);
+  };
   return (
     <>
       <Accordion
@@ -22,7 +32,7 @@ const Objectives = ({ addObjectiveTo, question }) => {
       >
         {question.questions.map((q, i) => (
           <AccordionItem key={q.id}>
-            <Objective objective={q} objectiveNumber={i + 1} />
+            <Objective headerRef={ref} objective={q} objectiveNumber={i + 1} />
           </AccordionItem>
         ))}
       </Accordion>

@@ -4,14 +4,14 @@ import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
 import Question from "./Question"; // eslint-disable-line import/no-cycle
 
-const Repeatable = ({ number, question, type }) => {
+const Repeatable = ({ headerRef, number, question, type }) => {
   const children = question.questions ? question.questions : [];
 
   const title = type ? `${type} ${number}` : `${number}`;
 
   return (
     <>
-      <div className="accordion-header">
+      <div className="accordion-header" ref={headerRef}>
         <h3>
           <AccordionButton>
             <div className="accordion-title">{title}</div>
@@ -27,6 +27,7 @@ const Repeatable = ({ number, question, type }) => {
   );
 };
 Repeatable.propTypes = {
+  headerRef: PropTypes.func.isRequired,
   number: PropTypes.number.isRequired,
   question: PropTypes.object.isRequired,
   type: PropTypes.oneOf([PropTypes.string, null]),
