@@ -13,7 +13,7 @@ import "@reach/accordion/styles.css";
 import { addNewGoal } from "../../../../actions/initial";
 import QuestionComponent from "../../../fields/QuestionComponent";
 
-class Objective2bApi extends Component {
+class Objective4AApi extends Component {
   constructor(props) {
     super(props);
     this.newGoal = this.newGoal.bind(this);
@@ -48,7 +48,7 @@ class Objective2bApi extends Component {
                             Goal{" "}
                             {parseInt(
                               goals.id.split("-")[
-                                goals.id.split("-").length - 1
+                              goals.id.split("-").length - 1
                               ]
                             )}
                             :
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
   addNewGoal: addNewGoal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Objective2bApi);
+export default connect(mapStateToProps, mapDispatchToProps)(Objective4AApi);

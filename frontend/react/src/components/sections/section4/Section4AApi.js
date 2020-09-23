@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Questions2BApi from "./questions/Questions2Bapi";
+import Questions4AApi from "./questions/Questions4AApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../../layout/PageInfo";
@@ -19,12 +19,9 @@ import {
   TextField,
 } from "@cmsgov/design-system-core";
 
-class Section2BApi extends Component {
+class Section4AApi extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      pageTitle: "Section 2B: State Plan Goals and Objectives",
-    };
   }
 
   render() {
@@ -34,7 +31,7 @@ class Section2BApi extends Component {
       : null;
 
     const sectionTitle = this.props.Data
-      ? generateSubsectionLabel(subsectionData.id) // Section 4a title
+      ? generateSubsectionLabel(subsectionData.id) // Section 2b title
       : null;
     return subsectionData ? (
       <div className="section-1 ds-l-col--9 content">
@@ -49,7 +46,7 @@ class Section2BApi extends Component {
                 id="tab-form"
                 tab={`Section 4A:${subsectionData.title}`}
               >
-                <Questions2BApi subsectionB={subsectionData} />
+                <Questions4AApi subsectionA={subsectionData} />
               </TabPanel>
 
               <TabPanel
@@ -63,7 +60,7 @@ class Section2BApi extends Component {
               </TabPanel>
             </Tabs>
 
-            <FormNavigation nextUrl="/section3/3a" previousUrl="/section2/2a" />
+            <FormNavigation />
 
             <FormActions />
           </div>
@@ -80,4 +77,4 @@ const mapStateToProps = (state) => ({
   year: state.global.formYear,
 });
 
-export default connect(mapStateToProps)(Section2BApi);
+export default connect(mapStateToProps)(Section4AApi);

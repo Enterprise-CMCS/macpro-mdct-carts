@@ -13,18 +13,18 @@ import {
 } from "@reach/accordion";
 import QuestionComponent from "../../../fields/QuestionComponent";
 
-class Questions2BApi extends Component {
+class Questions4AApi extends Component {
   constructor(props) {
     super(props);
     this.addObjective = this.addObjective.bind(this);
   }
   addObjective() {
     const newObjectiveId =
-      this.props.subsectionB.parts[0].questions[0].questions.length + 1;
-    const tempObjectivesId = this.props.subsectionB.parts[0].questions[0].id.split(
+      this.props.subsectionA.parts[0].questions[0].questions.length + 1;
+    const tempObjectivesId = this.props.subsectionA.parts[0].questions[0].id.split(
       "-"
     );
-    const firstObjective = this.props.subsectionB.parts[0].questions[0]
+    const firstObjective = this.props.subsectionA.parts[0].questions[0]
       .questions[0];
     //Adds a new objective object to the objectives object
     this.props.addNewObjective(
@@ -39,7 +39,7 @@ class Questions2BApi extends Component {
       <div className="section">
         {
           /* Begin parsing through parts */
-          this.props.subsectionB.parts.map((part) => (
+          this.props.subsectionA.parts.map((part) => (
             <div className="part">
               <h3 className="part-title"></h3>
               {part.text}
@@ -74,16 +74,16 @@ class Questions2BApi extends Component {
                               </h3>
                             </div>
                           ) : (
-                            <h3>
-                              <AccordionPanel>
-                                <Objective2bApi
-                                  //gives object that contains array of goals
-                                  goalsArray={objectiveGoals.questions}
-                                  objectiveId={objectiveGoals.id}
-                                />
-                              </AccordionPanel>
-                            </h3>
-                          )
+                              <h3>
+                                <AccordionPanel>
+                                  <Objective2bApi
+                                    //gives object that contains array of goals
+                                    goalsArray={objectiveGoals.questions}
+                                    objectiveId={objectiveGoals.id}
+                                  />
+                                </AccordionPanel>
+                              </h3>
+                            )
                         )}
                       </AccordionItem>
                     ))}
@@ -122,4 +122,4 @@ const mapDispatchToProps = {
   addNewObjective: addNewObjective,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Questions2BApi);
+export default connect(mapStateToProps, mapDispatchToProps)(Questions4AApi);

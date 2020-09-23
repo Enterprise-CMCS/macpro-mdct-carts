@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { constructIdFromYearSectionAndSubsection } from "./store/formData";
 import Homepage from "./components/sections/homepage/Homepage";
-import Section2BApi from "./components/sections/section2api/Section2BApi";
+import Section4AApi from "./components/sections/section4/Section4AApi";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
@@ -17,10 +17,10 @@ import SaveError from "./components/layout/SaveError";
 
 let VisibleSidebar =
   window.location.pathname === "/" ||
-  window.location.pathname.split("/")[1] === "reports" ||
-  window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-    <Sidebar />
-  );
+    window.location.pathname.split("/")[1] === "reports" ||
+    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
+      <Sidebar />
+    );
 
 const Routes = ({ userData }) => (
   <Router>
@@ -32,7 +32,7 @@ const Routes = ({ userData }) => (
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
-          <Route path="/sections/:year/04/a" component={Section2BApi} />
+          <Route path="/sections/:year/04/a" component={Section4AApi} />
           <Route
             path="/sections/:year/:sectionOrdinal/:subsectionMarker"
             children={<InvokeSection userData={userData} />}
