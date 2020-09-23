@@ -240,8 +240,95 @@ resource "aws_wafv2_web_acl" "apiwaf" {
   }
 
   rule{
-    name = "${terraform.workspace}-allow-usa-plus-territories"
+    name = "${terraform.workspace}-api-DDOSRateLimitRule"
     priority = 0
+    action{
+      count{}
+    }
+
+    statement {
+      rate_based_statement{
+        limit = 5000
+        aggregate_key_type = "IP"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-DDOSRateLimitRuleMetric"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-api-RegAWSCommonRule"
+    priority = 1
+
+    override_action{
+      count{}
+    }
+
+    statement {
+      managed_rule_group_statement{
+        vendor_name = "AWS"
+        name = "AWSManagedRulesCommonRuleSet"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-RegAWSCommonRuleMetric"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-api-AWSManagedRulesAmazonIpReputationList"
+    priority = 2
+
+    override_action{
+      none{}
+    }
+
+    statement {
+      managed_rule_group_statement{
+        vendor_name = "AWS"
+        name = "AWSManagedRulesAmazonIpReputationList"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesAmazonIpReputationList"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-api-RegAWSManagedRulesKnownBadInputsRuleSet"
+    priority = 3
+
+    override_action{
+      count{}
+    }
+
+    statement {
+      managed_rule_group_statement{
+        vendor_name = "AWS"
+        name = "AWSManagedRulesKnownBadInputsRuleSet"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesKnownBadInputsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-api-allow-usa-plus-territories"
+    priority = 5
     action{
       allow{}
     }
@@ -254,7 +341,7 @@ resource "aws_wafv2_web_acl" "apiwaf" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-geo-rule"
+      metric_name                = "${terraform.workspace}-api-geo-rule"
       sampled_requests_enabled   = true
     }
   }
