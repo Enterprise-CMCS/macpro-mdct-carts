@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
+import { SET_FRAGMENT } from "../actions/repeatables";
 
 export const SAVE_STARTED = "automatic save has started";
 export const SAVE_FINISHED = "automated save has finished";
@@ -88,6 +89,7 @@ const saveMiddleware = (store) => {
     const result = next(action);
     switch (action.type) {
       case QUESTION_ANSWERED:
+      case SET_FRAGMENT:
         runSave(action);
         break;
       default:
