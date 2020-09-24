@@ -81,6 +81,16 @@ resource "aws_db_parameter_group" "db_param_group" {
     name  = "pgaudit.log"
     value = "ALL"
   }
+
+  parameter {
+    name  = "shared_preload_libraries"
+    value = ["pg_stat_statements", "pgaudit"]
+  }
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "10000"
+  }
 }
 
 resource "random_password" "postgres" {
