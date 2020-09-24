@@ -10,7 +10,7 @@ const temp__data = require("./initial.json");
 export const loadUserThenSections = ({userData}) => {
   const userToken = userData.userToken;
   return async (dispatch) => {
-    const userFromServer = await axios.get(
+    await axios.get(
       `${window._env_.API_POSTGRES_URL}/api/v1/appusers/${userToken}`
     )
       .then((res) => {
@@ -27,10 +27,40 @@ export const loadUserThenSections = ({userData}) => {
            */
           const stateAbbr = userToken.split("-")[1].toUpperCase();
           const userData = fakeUserData[stateAbbr];
+
           dispatch(loadSections({userData: userData}))
           dispatch(getProgramData(userData));
           dispatch(getStateData(userData));
           dispatch(getUserData(userData.currentUser));
+      })
+      
+
+  }
+
+};
+
+export const secureLoadUserThenSections = ({userData, authState}) => {
+  const xhrURL = `${window._env_.API_POSTGRES_URL}/api/v1/appusers/auth`;
+  const xhrHeaders = {
+      "Authorization" : `Bearer ${authState.accessToken}`
+  };
+
+  return async (dispatch) => {
+    await axios({method: "POST", url: xhrURL, headers: xhrHeaders})
+      .then((res) => {
+          dispatch(loadSections({userData: res.data}));
+          dispatch(getProgramData(res.data));
+          dispatch(getStateData(res.data));
+          dispatch(getUserData(res.data.currentUser));
+      })
+      .catch((res) => {
+          /*
+           * Error-handling would go here, but for now, since the anticipated
+           * error is trying to run on cartsdemo, we just use the fake data.
+           * This fake user data has AK/AZ/MA, just like the fake data on the server.
+           */
+          console.log("error", res);
+          console.dir(res);
       })
       
 

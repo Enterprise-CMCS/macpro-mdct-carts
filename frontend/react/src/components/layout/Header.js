@@ -56,6 +56,7 @@ class Header extends Component {
                       <a href="javascript:void(0)">Manage account</a>
                     </li>
                     <li className="logout">
+                      <Logout />
                     </li>
                   </ul>
                 </div>

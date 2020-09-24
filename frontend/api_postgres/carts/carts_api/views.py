@@ -5,8 +5,12 @@ from typing import (
     List,
     Union,
 )
+from jwcrypto.jwk import JWK  # type: ignore
+import python_jwt as jwt  # type: ignore
+import requests
+
 from django.contrib.auth.models import User, Group  # type: ignore
-from django.http import HttpResponse  # type: ignore
+from django.http import HttpResponse, HttpResponseForbidden  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
@@ -322,6 +326,123 @@ def fake_user_data(request, username=None):
 
     assert state in fakeUserData
     return HttpResponse(json.dumps(fakeUserData[state]))
+
+
+@api_view(["POST"])
+def authenticate_user(request):
+    # Extract token from header
+    token_string = request.META.get("HTTP_AUTHORIZATION")
+    token = token_string.split("Bearer ")[1]
+
+    okta_host = "https://test.idp.idm.cms.gov"
+    okta_root = "oauth2/aus4itu0feyg3RJTK297/v1"
+
+    # Verify that this token really came from the Okta server.
+    # TODO: Add error handling and pulling the URL from config.
+    # u = "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/v1/keys"
+    is_valid_token = False
+    pk_url = "/".join([okta_host, okta_root, "keys"])
+    okta_auth_res = requests.get(pk_url)
+    outer = okta_auth_res.json()
+    keys = outer.get("keys")
+    processed_jwt = jwt.process_jwt(token)
+
+    # We should probably end up with only one key here, leaving as list for now
+    fkeys = filter(lambda x: x["kid"] == processed_jwt[0]["kid"], keys)
+
+    try:
+        for key in fkeys:
+            jwk = JWK.from_json(json.dumps(key))
+            result = jwt.verify_jwt(
+                token,
+                jwk,
+                ['RS256'],
+                checks_optional=True,
+            )
+            if result:
+                is_valid_token = True
+            break
+    except Exception:
+        # TODO: better exception handling here
+        return HttpResponseForbidden()
+
+    if not is_valid_token:
+        return HttpResponseForbidden()
+
+    info_url = "/".join([okta_host, okta_root, "userinfo"])
+    res = requests.get(info_url, headers={"Authorization": f"Bearer {token}"})
+    userinfo = res.json()
+    eua_id = userinfo.get("preferred_username")
+    if not eua_id:
+        return HttpResponseForbidden()
+
+    email = userinfo.get("email", "no-eua-email@example.com")
+    host = request.get_host()
+    scheme = "https" if request.is_secure() else "http"
+    full_host = f"{scheme}://{host}"
+
+    # Instead of a DB lookup, here we're just assigning one of the fake users
+    # according to EUA ID.
+    # TODO: add these to the DB via fixtures instead of doing it here
+    eua_ord = ord(eua_id[0]) % 3
+    fake_user_map = {
+        0: "AK",
+        1: "AZ",
+        2: "MA",
+    }
+    fake_user_key = fake_user_map[eua_ord]
+
+    fake_user_data = {
+        "AK": {
+            "name": "Alaska",
+            "abbr": "AK",
+            "programType": "medicaid_exp_chip",
+            "programName": "AK Program Name??",
+            "imageURI": f"{full_host}/img/states/ak.svg",
+            "formName": "CARTS FY",
+            "currentUser": {
+                "role": "state_user",
+                "state": {
+                    "id": "AK",
+                    "name": "Alaska"
+                },
+                "username": email,
+            }
+        },
+        "AZ": {
+            "name": "Arizona",
+            "abbr": "AZ",
+            "programType": "separate_chip",
+            "programName": "AZ Program Name??",
+            "imageURI": "{full_host}/img/states/az.svg",
+            "formName": "CARTS FY",
+            "currentUser": {
+                "role": "state_user",
+                "state": {
+                    "id": "AZ",
+                    "name": "Arizona"
+                },
+                "username": email,
+            }
+        },
+        "MA": {
+            "name": "Massachusetts",
+            "abbr": "MA",
+            "programType": "combo",
+            "programName": "MA Program Name??",
+            "imageURI": "${full_host}/img/states/ma.svg",
+            "formName": "CARTS FY",
+            "currentUser": {
+                "role": "state_user",
+                "state": {
+                    "id": "MA",
+                    "name": "Massachusetts"
+                },
+                "username": email,
+            }
+        }
+    }
+    return HttpResponse(json.dumps(fake_user_data[fake_user_key]))
 
 
 def _id_from_chunks(year, *args):
