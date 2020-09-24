@@ -245,16 +245,15 @@
                   }
                 ]
               },
-                  {
-                    "id": "2020-03-b-01-03",
-                    "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
+              {
+                "id": "2020-03-b-01-03",
+                "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
               },
-                {
+              {
                 "type": "fieldset",
                 "questions": [
                   {
@@ -289,44 +288,45 @@
                             "answer": {
                               "entry": null
                             }
-               ],
-                "context_data": {
-                  "skip_text": "Some questions were skipped because they don't apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
-                }
-                          },
-                          {
-                            "id": "2020-03-b-01-04-b",
-                            "label": "Which populations does the waiting period apply to? (Include the FPL for each group.)",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
-                          },
-                          {
-                            "id": "2020-03-b-01-04-c",
-                            "label": "What exemptions apply to the waiting period?",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
-                          },
-                          {
-                            "id": "2020-03-b-01-04-d",
-                            "label": "What percent of individuals subject to the waiting period meet a state or federal exemption?",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
                           }
-                        ]
+                        ],
+                        "context_data": {
+                          "skip_text": "Some questions were skipped because they don't apply to your program.",
+                          "show_if_state_program_type_in": [
+                            "separate_chip",
+                            "combo"
+                          ]
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-b",
+                        "label": "Which populations does the waiting period apply to? (Include the FPL for each group.)",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-c",
+                        "label": "What exemptions apply to the waiting period?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-d",
+                        "label": "What percent of individuals subject to the waiting period meet a state or federal exemption?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
                       }
                     ]
-                  },
-                  {
+                  }
+                ]
+              },
+              {
                 "id": "2020-03-b-01-05",
                 "label": "Is there anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
@@ -2921,7 +2921,7 @@
               {
                 "id": "2020-03-e-01-02",
                 "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
-                 "hint": "This only applies to states operating an 1115 demo.",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2930,7 +2930,7 @@
               {
                 "id": "2020-03-e-01-03",
                 "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
-                 "hint": "This only applies to states operating an 1115 demo.",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -3088,507 +3088,370 @@
                           }
                         ]
                       ]
-                    },
-              {
-                "type": "fieldset",
-                "label": "Range in monthly contributions paid by state",
-                "questions": [
-                  {
-                    "id": "2020-03-e-01-10",
-                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
-                    "type": "ranges",
-                    "answer": {
-                      "entry": null,
-                      "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
-                      "entry_min": 1,
-                      "entry_max": 1
                     }
                   },
                   {
-                    "id": "2020-03-e-01-11",
-                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
-                    "type": "ranges",
-                    "answer": {
-                      "entry": null,
-                      "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
-                      "entry_min": 1,
-                      "entry_max": 1
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "fieldset",
-                "label": "Range in family income levels",
-                "questions": [
+                    "type": "fieldset",
+                    "label": "Range in monthly contributions paid by state",
+                    "questions": [
+                      {
+                        "id": "2020-03-e-01-10",
+                        "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
+                        "type": "ranges",
+                        "answer": {
+                          "entry": null,
+                          "header": "Average Monthly Contribution",
+                          "range_categories": [
+                            [
+                              "Starts at",
+                              "Ends at"
+                            ]
+                          ],
+                          "range_type": [
+                            "money"
+                          ],
+                          "entry_min": 1,
+                          "entry_max": 1
+                        }
+                      },
+                      {
+                        "id": "2020-03-e-01-11",
+                        "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
+                        "type": "ranges",
+                        "answer": {
+                          "entry": null,
+                          "header": "Average Monthly Contribution",
+                          "range_categories": [
+                            [
+                              "Starts at",
+                              "Ends at"
+                            ]
+                          ],
+                          "range_type": [
+                            "money"
+                          ],
+                          "entry_min": 1,
+                          "entry_max": 1
+                        }
+                      }
+                    ]
+                  },
                   {
-                    "id": "2020-03-e-01-12",
-                    "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
-                    "type": "ranges",
+                    "type": "fieldset",
+                    "label": "Range in family income levels",
+                    "questions": [
+                      {
+                        "id": "2020-03-e-01-12",
+                        "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
+                        "type": "ranges",
+                        "answer": {
+                          "entry": null,
+                          "header": "Federal Poverty Levels",
+                          "range_categories": [
+                            [
+                              "Starts at",
+                              "Ends at"
+                            ]
+                          ],
+                          "range_type": [
+                            "percentage"
+                          ],
+                          "entry_min": 1,
+                          "entry_max": 1
+                        }
+                      },
+                      {
+                        "id": "2020-03-e-01-13",
+                        "label": "What’s the range in income levels for children who receive premium assistance?",
+                        "type": "ranges",
+                        "answer": {
+                          "entry": null,
+                          "header": "Federal Poverty Levels",
+                          "range_categories": [
+                            [
+                              "Starts at",
+                              "Ends at"
+                            ]
+                          ],
+                          "range_type": [
+                            "percentage"
+                          ],
+                          "entry_min": 1,
+                          "entry_max": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-e-01-14",
+                    "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
+                    "type": "text_multiline",
                     "answer": {
-                      "entry": null,
-                      "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
-                      "entry_min": 1,
-                      "entry_max": 1
+                      "entry": null
                     }
                   },
                   {
-                    "id": "2020-03-e-01-13",
-                    "label": "What’s the range in income levels for children who receive premium assistance?",
-                    "type": "ranges",
+                    "id": "2020-03-e-01-15",
+                    "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
+                    "type": "text_multiline",
                     "answer": {
-                      "entry": null,
-                      "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
-                      "entry_min": 1,
-                      "entry_max": 1
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-25",
+                    "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-26",
+                    "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
                     }
                   }
                 ]
-              },
-              {
-                "id": "2020-03-e-01-14",
-                "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-e-01-15",
-                "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-e-01-25",
-                "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-e-01-26",
-                "label": "Is there anything else you’d like to add that wasn’t already covered?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "subsection",
-        "id": "2020-03-f",
-        "title": "Program Integrity",
-        "parts": [
+          },
           {
-            "id": "2020-03-f-01",
-            "type": "part",
-            "context_data": {
-              "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
-            },
-            "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
-            "questions": [
+            "type": "subsection",
+            "id": "2020-03-f",
+            "title": "Program Integrity",
+            "parts": [
               {
-                "id": "2020-03-f-01-01",
-                "label": "Do you have a written plan with safeguards and procedures in place for the prevention of fraud and abuse cases?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-f-01-02",
-                "label": "Do you have a written plan with safeguards and procedures in place for the investigation of fraud and abuse cases? ",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-f-01-03",
-                "label": "Do you have a written plan with safeguards and procedures in place for the referral of fraud and abuse cases?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-f-01-04",
-                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
-                "type": "file_upload",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-f-01-05",
-                "label": "Do the Managed Care plans contracted by your Separate CHIP program have written plans with safeguards and procedures in place?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    },
-                    {
-                      "value": "na",
-                      "label": "N/A"
-                    }
+                "id": "2020-03-f-01",
+                "type": "part",
+                "context_data": {
+                  "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
+                  "show_if_state_program_type_in": [
+                    "separate_chip",
+                    "combo"
                   ]
                 },
+                "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
                 "questions": [
                   {
-                    "id": "2020-03-f-01-05-a",
-                    "label": "What safeguards and procedures do the Managed Care plans have in place? Attach any relevant documents.",
+                    "id": "2020-03-f-01-01",
+                    "label": "Do you have a written plan with safeguards and procedures in place for the prevention of fraud and abuse cases?",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2020-03-f-01-02",
+                    "label": "Do you have a written plan with safeguards and procedures in place for the investigation of fraud and abuse cases? ",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2020-03-f-01-03",
+                    "label": "Do you have a written plan with safeguards and procedures in place for the referral of fraud and abuse cases?",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2020-03-f-01-04",
+                    "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
                     "type": "file_upload",
                     "answer": {
                       "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-f-01-05",
+                    "label": "Do the Managed Care plans contracted by your Separate CHIP program have written plans with safeguards and procedures in place?",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        },
+                        {
+                          "value": "na",
+                          "label": "N/A"
+                        }
+                      ]
                     },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "hide_if": {
-                          "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
-                          "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                    "questions": [
+                      {
+                        "id": "2020-03-f-01-05-a",
+                        "label": "What safeguards and procedures do the Managed Care plans have in place? Attach any relevant documents.",
+                        "type": "file_upload",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "hide_if": {
+                              "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                              "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no",
+                                  "na"
+                                ],
+                                "noninteractive": [
+                                  "no",
+                                  "na"
+                                ]
+                              }
+                            }
                           }
                         }
                       }
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-f-01-06",
-                "label": "How many eligibility denials have been appealed in a fair hearing in the last federal fiscal year (FFY)?",
-                "type": "integer",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-f-01-07",
-                "label": "How many cases have been found in favor of the beneficiary in the last FFY?",
-                "type": "integer",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "type": "fieldset",
-                "label": "Provider Credentialing",
-                "questions": [
+                    ]
+                  },
                   {
-                    "id": "2020-03-f-01-08",
-                    "label": "How many cases related to provider credentialing were investigated in the last FFY?",
+                    "id": "2020-03-f-01-06",
+                    "label": "How many eligibility denials have been appealed in a fair hearing in the last federal fiscal year (FFY)?",
                     "type": "integer",
                     "answer": {
                       "entry": null
                     }
                   },
                   {
-                    "id": "2020-03-f-01-09",
-                    "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in the last FFY?",
-                    "type": "integer",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "fieldset",
-                "label": "Provider Billing",
-                "questions": [
-                  {
-                    "id": "2020-03-f-01-10",
-                    "label": "How many cases related to provider billing were investigated in the last FFY?",
+                    "id": "2020-03-f-01-07",
+                    "label": "How many cases have been found in favor of the beneficiary in the last FFY?",
                     "type": "integer",
                     "answer": {
                       "entry": null
                     }
                   },
                   {
-                    "id": "2020-03-f-01-11",
-                    "label": "How many cases were referred to appropriate law enforcement officials in the last FFY?",
-                    "type": "integer",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "fieldset",
-                "label": "Beneficiary Eligibility",
-                "questions": [
+                    "type": "fieldset",
+                    "label": "Provider Credentialing",
+                    "questions": [
+                      {
+                        "id": "2020-03-f-01-08",
+                        "label": "How many cases related to provider credentialing were investigated in the last FFY?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-f-01-09",
+                        "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in the last FFY?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  },
                   {
-                    "id": "2020-03-f-01-12",
-                    "label": "How many cases related to beneficiary eligibility were investigated in the last FFY?",
-                    "type": "integer",
+                    "type": "fieldset",
+                    "label": "Provider Billing",
+                    "questions": [
+                      {
+                        "id": "2020-03-f-01-10",
+                        "label": "How many cases related to provider billing were investigated in the last FFY?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-f-01-11",
+                        "label": "How many cases were referred to appropriate law enforcement officials in the last FFY?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "fieldset",
+                    "label": "Beneficiary Eligibility",
+                    "questions": [
+                      {
+                        "id": "2020-03-f-01-12",
+                        "label": "How many cases related to beneficiary eligibility were investigated in the last FFY?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-f-01-13",
+                        "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in the last FFY?",
+                        "type": "integer",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-f-01-14",
+                    "label": "Does your data for Questions 8–13 include cases for CHIP only or for Medicaid and CHIP combined? ",
+                    "type": "radio",
                     "answer": {
-                      "entry": null
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "separate_chip_only",
+                          "label": "CHIP only"
+                        },
+                        {
+                          "value": "medicaid_separate_chip_combined",
+                          "label": "Medicaid and CHIP combined"
+                        }
+                      ]
                     }
                   },
                   {
-                    "id": "2020-03-f-01-13",
-                    "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in the last FFY?",
-                    "type": "integer",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-f-01-14",
-                "label": "Does your data for Questions 8–13 include cases for CHIP only or for Medicaid and CHIP combined? ",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "separate_chip_only",
-                      "label": "CHIP only"
-                    },
-                    {
-                      "value": "medicaid_separate_chip_combined",
-                      "label": "Medicaid and CHIP combined"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-f-01-15",
-                "label": "Do you rely on contractors for the prevention, investigation, and  referral of fraud and abuse cases? ",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                },
-                "questions": [
-                  {
-                    "id": "2020-03-f-01-15-a",
-                    "label": "How do you provide oversight of the contractors? ",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "hide_if": {
-                          "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
-                          "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-f-01-16",
-                "label": "Do you contract with Managed Care health plans and/or a third party contractor to provide this oversight? ",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                },
-                "questions": [
-                  {
-                    "id": "2020-03-f-01-16-a",
-                    "label": "What specifically are the contractors responsible for in terms of oversight?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "hide_if": {
-                          "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
-                          "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-f-01-17",
-                "label": "Is there anything else you’d like to add that wasn’t already covered?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "subsection",
-        "id": "2020-03-g",
-        "title": "NOT IMPLEMENTED",
-        "parts": []
-      },
-      {
-        "type": "subsection",
-        "id": "2020-03-h",
-        "title": "CAHPS Survey Results",
-        "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
-        "parts": [
-          {
-            "id": "2020-03-h-01",
-            "type": "part",
-            "questions": [
-              {
-                "id": "2020-03-h-01-01",
-                "label": "Did you collect the CAHPS survey?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                },
-                "questions": [
-                  {
-                    "id": "2020-03-h-01-01-a",
-                    "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database?",
+                    "id": "2020-03-f-01-15",
+                    "label": "Do you rely on contractors for the prevention, investigation, and  referral of fraud and abuse cases? ",
                     "type": "radio",
                     "answer": {
                       "entry": null,
@@ -3603,478 +3466,133 @@
                         }
                       ]
                     },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                    "questions": [
+                      {
+                        "id": "2020-03-f-01-15-a",
+                        "label": "How do you provide oversight of the contractors? ",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "hide_if": {
+                              "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                              "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
                           }
                         }
                       }
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "2020-03-h-02",
-            "type": "part",
-            "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
-            "context_data": {
-              "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
-              "conditional_display": {
-                "type": "conditional_display",
-                "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
-                "hide_if": {
-                  "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
-                  "values": {
-                    "interactive": [
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
                     ]
-                  }
-                }
-              }
-            },
-            "questions": [
-              {
-                "id": "2020-03-h-02-01",
-                "label": "Upload a summary report of your CAHPS survey results.",
-                "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
-                "type": "file_upload",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-h-02-02",
-                "label": "Which CHIP population did you survey?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "medicaid expansion chip",
-                      "label": "Medicaid Expansion CHIP"
-                    },
-                    {
-                      "value": "separate chip",
-                      "label": "Separate CHIP"
-                    },
-                    {
-                      "value": "combination chip",
-                      "label": "Both Separate CHIP and Medicaid Expansion CHIP"
-                    },
-                    {
-                      "value": "other",
-                      "label": "Other"
-                    }
-                  ]
-                },
-                "questions": [
+                  },
                   {
-                    "type": "fieldset",
-                    "label": "",
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-02 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-h-02-02')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "medicaid expansion chip",
-                              "separate chip",
-                              "combination chip"
-                            ],
-                            "noninteractive": [
-                              "medicaid expansion chip",
-                              "separate chip",
-                              "combination chip"
-                            ]
-                          }
+                    "id": "2020-03-f-01-16",
+                    "label": "Do you contract with Managed Care health plans and/or a third party contractor to provide this oversight? ",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
                         }
-                      }
+                      ]
                     },
                     "questions": [
                       {
-                        "id": "2020-03-h-02-02-a",
-                        "label": "Which population did you survey?",
-                        "type": "text",
+                        "id": "2020-03-f-01-16-a",
+                        "label": "What specifically are the contractors responsible for in terms of oversight?",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
-                        }
-                      },
-                      {
-                        "id": "2020-03-h-02-02-b",
-                        "label": "How many children were included in the survey?",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-h-02-03",
-                "label": "Which version of the CAHPS survey did you use?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "5.0",
-                      "label": "CAHPS 5.0"
-                    },
-                    {
-                      "value": "5.0H",
-                      "label": "CAHPS 5.0H"
-                    },
-                    {
-                      "value": "other",
-                      "label": "Other"
-                    }
-                  ]
-                },
-                "questions": [
-                  {
-                    "type": "fieldset",
-                    "label": "",
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-03 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "5.0",
-                              "5.0H"
-                            ],
-                            "noninteractive": [
-                              "5.0",
-                              "5.0H"
-                            ]
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "hide_if": {
+                              "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
+                              "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
                           }
                         }
                       }
-                    },
-                    "questions": [
-                      {
-                        "id": "2020-03-h-02-03-a",
-                        "label": "Which CAHPS survey did you use?",
-                        "type": "text",
-                        "answer": {
-                          "entry": null
-                        }
-                      }
                     ]
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-h-02-04",
-                "label": "Which supplemental item sets did you include in your survey?",
-                "type": "checkbox",
-                "hint": "Select all that apply.",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "none",
-                      "label": "None"
-                    },
-                    {
-                      "value": "chronic",
-                      "label": "Children with Chronic Conditions"
-                    },
-                    {
-                      "value": "other",
-                      "label": "Other"
-                    }
-                  ]
-                },
-                "questions": [
+                  },
                   {
-                    "id": "2020-03-h-02-04-a",
-                    "label": "Which supplemental item sets did you include?",
-                    "type": "text",
+                    "id": "2020-03-f-01-17",
+                    "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-04 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "none",
-                              "chronic"
-                            ],
-                            "noninteractive": [
-                              "none",
-                              "chronic"
-                            ]
-                          }
-                        }
-                      }
                     }
                   }
                 ]
-              },
-              {
-                "id": "2020-03-h-02-05",
-                "label": "Which administrative protocol did you use to administer the survey?",
-                "type": "checkbox",
-                "hint": "Select all that apply.",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "ncqa hedis cahps 5.0h",
-                      "label": "NCQA HEDIS CAHPS 5.0H"
-                    },
-                    {
-                      "value": "hrq cahps",
-                      "label": "HRQ CAHPS"
-                    },
-                    {
-                      "value": "other",
-                      "label": "Other"
-                    }
-                  ]
-                },
-                "questions": [
-                  {
-                    "type": "fieldset",
-                    "label": "",
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-05 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "ncqa hedis cahps 5.0h",
-                              "hrq cahps"
-                            ],
-                            "noninteractive": [
-                              "ncqa hedis cahps 5.0h",
-                              "hrq cahps"
-                            ]
-                          }
-                        }
-                      }
-                    },
-                    "questions": [
-                      {
-                        "id": "2020-03-h-02-05-a",
-                        "label": "Which administrative protocol did you use?",
-                        "type": "text",
-                        "answer": {
-                          "entry": null
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-h-02-06",
-                "label": "Is there anything else you'd like to add about your CAHPS survey results?",
-                "type": "text",
-                "answer": {
-                  "entry": null
-                }
               }
             ]
           },
           {
-            "id": "2020-03-h-03",
-            "type": "part",
-            "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
-            "context_data": {
-              "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
-              "conditional_display": {
-                "type": "conditional_display",
-                "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
-                "hide_if": {
-                  "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
-                  "values": {
-                    "interactive": [
-                      "yes"
-                    ],
-                    "noninteractive": [
-                      "yes"
-                    ]
-                  }
-                }
-              }
-            },
-            "questions": [
-              {
-                "id": "2020-03-h-03-01",
-                "label": "Why didn't you collect the CAHPS survey?",
-                "hint": "Check all that apply.",
-                "type": "checkbox",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "Entire population wasn't included in the survey",
-                      "label": "Entire population wasn't included in the survey"
-                    },
-                    {
-                      "value": "Part of the population wasn't included in the survey",
-                      "label": "Part of the population wasn't included in the survey"
-                    },
-                    {
-                      "value": "Data wasn't available due to budget constraints",
-                      "label": "Data wasn't available due to budget constraints"
-                    },
-                    {
-                      "value": "Data wasn't available due to staff constraints",
-                      "label": "Data wasn't available due to staff constraints"
-                    },
-                    {
-                      "value": "Data wasn't consistent or accurate",
-                      "label": "Data wasn't consistent or accurate"
-                    },
-                    {
-                      "value": "Data source wasn't easily accessible",
-                      "label": "Data source wasn't easily accessible"
-                    },
-                    {
-                      "value": "Data source wasn't easily accessible: requires medical records",
-                      "label": "Data source wasn't easily accessible: requires medical records"
-                    },
-                    {
-                      "value": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
-                      "label": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist"
-                    },
-                    {
-                      "value": "Data wasn't collected by a provider",
-                      "label": "Data wasn't collected by a provider"
-                    },
-                    {
-                      "value": "Sample size was too small (fewer than 30)",
-                      "label": "Sample size was too small (fewer than 30)"
-                    },
-                    {
-                      "value": "other",
-                      "label": "Other"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-h-03-02",
-                "label": "Explain in more detail why you weren’t able to collect the CAHPS survey.",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "2020-03-i",
-        "title": "Health Services Initiative (HSI) Programs",
-        "type": "subsection",
-        "text": "States can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10. \nAll states with approved HSI program(s) should complete this section.",
-        "parts": [
-          {
-            "id": "2020-03-i-01",
-            "type": "part",
-            "questions": [
-              {
-                "id": "2020-03-i-01-01",
-                "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds?",
-                "hint": "Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              }
-            ]
+            "type": "subsection",
+            "id": "2020-03-g",
+            "title": "NOT IMPLEMENTED",
+            "parts": []
           },
           {
-            "id": "2020-03-i-02",
-            "type": "part",
-            "text": "Tell us about your HSI program(s).",
-            "context_data": {
-              "skip_text": "This part only applies to states with Health Service Initiatives.",
-              "conditional_display": {
-                "type": "conditional_display",
-                "comment": "Interactive: Hide if 2020-03-i-01-01 is no; noninteractive: hide if that's no.",
-                "hide_if": {
-                  "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
-                  "values": {
-                    "interactive": [
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
-                  }
-                }
-              }
-            },
-            "questions": [
+            "type": "subsection",
+            "id": "2020-03-h",
+            "title": "CAHPS Survey Results",
+            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
+            "parts": [
               {
-                "id": "2020-03-i-02-01",
-                "type": "repeatables",
+                "id": "2020-03-h-01",
+                "type": "part",
                 "questions": [
                   {
-                    "id": "2020-03-i-02-01-01",
-                    "type": "repeatable",
+                    "id": "2020-03-h-01-01",
+                    "label": "Did you collect the CAHPS survey?",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
+                    },
                     "questions": [
                       {
-                        "id": "2020-03-i-02-01-01-01",
-                        "label": "What is the name of your HSI program?",
-                        "type": "text",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-02",
-                        "label": "Are you currently operating the HSI program, or plan to in the future?",
+                        "id": "2020-03-h-01-01-a",
+                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database?",
                         "type": "radio",
                         "answer": {
+                          "entry": null,
                           "options": [
                             {
                               "value": "yes",
@@ -4084,37 +3602,219 @@
                               "value": "no",
                               "label": "No"
                             }
-                          ],
-                          "entry": null
-                        }
-                      },
-                      {
-                        "type": "fieldset",
+                          ]
+                        },
                         "context_data": {
-                          "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP state plan.",
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
                             "hide_if": {
-                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                               "values": {
                                 "interactive": [
                                   null,
-                                  "yes"
+                                  "no"
                                 ],
                                 "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-h-02",
+                "type": "part",
+                "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
+                "context_data": {
+                  "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
+                    "hide_if": {
+                      "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                      "values": {
+                        "interactive": [
+                          "no"
+                        ],
+                        "noninteractive": [
+                          "no"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "questions": [
+                  {
+                    "id": "2020-03-h-02-01",
+                    "label": "Upload a summary report of your CAHPS survey results.",
+                    "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                    "type": "file_upload",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-h-02-02",
+                    "label": "Which CHIP population did you survey?",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "medicaid expansion chip",
+                          "label": "Medicaid Expansion CHIP"
+                        },
+                        {
+                          "value": "separate chip",
+                          "label": "Separate CHIP"
+                        },
+                        {
+                          "value": "combination chip",
+                          "label": "Both Separate CHIP and Medicaid Expansion CHIP"
+                        },
+                        {
+                          "value": "other",
+                          "label": "Other"
+                        }
+                      ]
+                    },
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "label": "",
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-h-02-02 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-h-02-02')].answer.entry",
+                              "values": {
+                                "interactive": [
                                   null,
-                                  "yes"
+                                  "medicaid expansion chip",
+                                  "separate chip",
+                                  "combination chip"
+                                ],
+                                "noninteractive": [
+                                  "medicaid expansion chip",
+                                  "separate chip",
+                                  "combination chip"
                                 ]
                               }
                             }
                           }
                         },
-                        "questions": []
-                      },
+                        "questions": [
+                          {
+                            "id": "2020-03-h-02-02-a",
+                            "label": "Which population did you survey?",
+                            "type": "text",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "id": "2020-03-h-02-02-b",
+                            "label": "How many children were included in the survey?",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-03",
+                    "label": "Which version of the CAHPS survey did you use?",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "5.0",
+                          "label": "CAHPS 5.0"
+                        },
+                        {
+                          "value": "5.0H",
+                          "label": "CAHPS 5.0H"
+                        },
+                        {
+                          "value": "other",
+                          "label": "Other"
+                        }
+                      ]
+                    },
+                    "questions": [
                       {
-                        "id": "2020-03-i-02-01-01-03",
-                        "label": "Which populations does the HSI program serve?",
+                        "type": "fieldset",
+                        "label": "",
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-h-02-03 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  null,
+                                  "5.0",
+                                  "5.0H"
+                                ],
+                                "noninteractive": [
+                                  "5.0",
+                                  "5.0H"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "questions": [
+                          {
+                            "id": "2020-03-h-02-03-a",
+                            "label": "Which CAHPS survey did you use?",
+                            "type": "text",
+                            "answer": {
+                              "entry": null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-04",
+                    "label": "Which supplemental item sets did you include in your survey?",
+                    "type": "checkbox",
+                    "hint": "Select all that apply.",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "none",
+                          "label": "None"
+                        },
+                        {
+                          "value": "chronic",
+                          "label": "Children with Chronic Conditions"
+                        },
+                        {
+                          "value": "other",
+                          "label": "Other"
+                        }
+                      ]
+                    },
+                    "questions": [
+                      {
+                        "id": "2020-03-h-02-04-a",
+                        "label": "Which supplemental item sets did you include?",
                         "type": "text",
                         "answer": {
                           "entry": null
@@ -4122,206 +3822,509 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2020-03-h-02-04 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
                             "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
                               "values": {
                                 "interactive": [
-                                  "no"
+                                  null,
+                                  "none",
+                                  "chronic"
                                 ],
                                 "noninteractive": [
-                                  "no"
+                                  "none",
+                                  "chronic"
                                 ]
                               }
                             }
                           }
                         }
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-04",
-                        "label": "How many children do you estimate are being served by the HSI program?",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-05",
+                    "label": "Which administrative protocol did you use to administer the survey?",
+                    "type": "checkbox",
+                    "hint": "Select all that apply.",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "ncqa hedis cahps 5.0h",
+                          "label": "NCQA HEDIS CAHPS 5.0H"
                         },
-                        "context_data": {
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
-                              "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-05",
-                        "label": "How many children in the HSI program are below your state's FPL threshold? ",
-                        "type": "integer",
-                        "answer": {
-                          "entry": null
+                        {
+                          "value": "hrq cahps",
+                          "label": "HRQ CAHPS"
                         },
-                        "context_data": {
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
-                              "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
-                              }
-                            }
-                          }
+                        {
+                          "value": "other",
+                          "label": "Other"
                         }
-                      },
+                      ]
+                    },
+                    "questions": [
                       {
                         "type": "fieldset",
-                        "fieldset_type": "synthesized_value",
-                        "fieldset_info": {
-                          "targets": [
-                            "$..*[?(@.id=='2020-03-i-02-01-01-05')].answer.entry",
-                            "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry"
-                          ],
-                          "actions": [
-                            "percentage"
-                          ]
-                        },
-                        "questions": []
-                      },
-                      {
-                        "type": "fieldset",
+                        "label": "",
                         "context_data": {
-                          "skip_text": "Skip to the next section if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                            "comment": "Interactive: Hide if 2020-03-h-02-05 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
                             "hide_if": {
-                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
                               "values": {
                                 "interactive": [
-                                  "no"
+                                  null,
+                                  "ncqa hedis cahps 5.0h",
+                                  "hrq cahps"
                                 ],
                                 "noninteractive": [
-                                  "no"
+                                  "ncqa hedis cahps 5.0h",
+                                  "hrq cahps"
                                 ]
                               }
                             }
                           }
                         },
-                        "questions": []
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-06",
-                        "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact. ",
-                        "type": "text_multiline",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
-                              "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
-                              }
+                        "questions": [
+                          {
+                            "id": "2020-03-h-02-05-a",
+                            "label": "Which administrative protocol did you use?",
+                            "type": "text",
+                            "answer": {
+                              "entry": null
                             }
                           }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2020-03-h-02-06",
+                    "label": "Is there anything else you'd like to add about your CAHPS survey results?",
+                    "type": "text",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-h-03",
+                "type": "part",
+                "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
+                "context_data": {
+                  "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2020-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
+                    "hide_if": {
+                      "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
+                      "values": {
+                        "interactive": [
+                          "yes"
+                        ],
+                        "noninteractive": [
+                          "yes"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "questions": [
+                  {
+                    "id": "2020-03-h-03-01",
+                    "label": "Why didn't you collect the CAHPS survey?",
+                    "hint": "Check all that apply.",
+                    "type": "checkbox",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "Entire population wasn't included in the survey",
+                          "label": "Entire population wasn't included in the survey"
+                        },
+                        {
+                          "value": "Part of the population wasn't included in the survey",
+                          "label": "Part of the population wasn't included in the survey"
+                        },
+                        {
+                          "value": "Data wasn't available due to budget constraints",
+                          "label": "Data wasn't available due to budget constraints"
+                        },
+                        {
+                          "value": "Data wasn't available due to staff constraints",
+                          "label": "Data wasn't available due to staff constraints"
+                        },
+                        {
+                          "value": "Data wasn't consistent or accurate",
+                          "label": "Data wasn't consistent or accurate"
+                        },
+                        {
+                          "value": "Data source wasn't easily accessible",
+                          "label": "Data source wasn't easily accessible"
+                        },
+                        {
+                          "value": "Data source wasn't easily accessible: requires medical records",
+                          "label": "Data source wasn't easily accessible: requires medical records"
+                        },
+                        {
+                          "value": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist",
+                          "label": "Data source wasn't easily accessible: requires data linkage that doesn't currently exist"
+                        },
+                        {
+                          "value": "Data wasn't collected by a provider",
+                          "label": "Data wasn't collected by a provider"
+                        },
+                        {
+                          "value": "Sample size was too small (fewer than 30)",
+                          "label": "Sample size was too small (fewer than 30)"
+                        },
+                        {
+                          "value": "other",
+                          "label": "Other"
                         }
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-07",
-                        "label": "What outcomes have you found when measuring the impact?",
-                        "type": "text_multiline",
-                        "answer": {
-                          "entry": null
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2020-03-h-03-02",
+                    "label": "Explain in more detail why you weren’t able to collect the CAHPS survey.",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "2020-03-i",
+            "title": "Health Services Initiative (HSI) Programs",
+            "type": "subsection",
+            "text": "States can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10. \nAll states with approved HSI program(s) should complete this section.",
+            "parts": [
+              {
+                "id": "2020-03-i-01",
+                "type": "part",
+                "questions": [
+                  {
+                    "id": "2020-03-i-01-01",
+                    "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds?",
+                    "hint": "Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
+                    "type": "radio",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
                         },
-                        "context_data": {
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
-                              "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-i-02",
+                "type": "part",
+                "text": "Tell us about your HSI program(s).",
+                "context_data": {
+                  "skip_text": "This part only applies to states with Health Service Initiatives.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2020-03-i-01-01 is no; noninteractive: hide if that's no.",
+                    "hide_if": {
+                      "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
+                      "values": {
+                        "interactive": [
+                          "no"
+                        ],
+                        "noninteractive": [
+                          "no"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "questions": [
+                  {
+                    "id": "2020-03-i-02-01",
+                    "type": "repeatables",
+                    "questions": [
+                      {
+                        "id": "2020-03-i-02-01-01",
+                        "type": "repeatable",
+                        "questions": [
+                          {
+                            "id": "2020-03-i-02-01-01-01",
+                            "label": "What is the name of your HSI program?",
+                            "type": "text",
+                            "answer": {
+                              "entry": null
+                            }
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-02",
+                            "label": "Are you currently operating the HSI program, or plan to in the future?",
+                            "type": "radio",
+                            "answer": {
+                              "options": [
+                                {
+                                  "value": "yes",
+                                  "label": "Yes"
+                                },
+                                {
+                                  "value": "no",
+                                  "label": "No"
+                                }
+                              ],
+                              "entry": null
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "context_data": {
+                              "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP state plan.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      null,
+                                      "yes"
+                                    ],
+                                    "noninteractive": [
+                                      null,
+                                      "yes"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "questions": []
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-03",
+                            "label": "Which populations does the HSI program serve?",
+                            "type": "text",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-04",
+                            "label": "How many children do you estimate are being served by the HSI program?",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-05",
+                            "label": "How many children in the HSI program are below your state's FPL threshold? ",
+                            "type": "integer",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "fieldset",
+                            "fieldset_type": "synthesized_value",
+                            "fieldset_info": {
+                              "targets": [
+                                "$..*[?(@.id=='2020-03-i-02-01-01-05')].answer.entry",
+                                "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry"
+                              ],
+                              "actions": [
+                                "percentage"
+                              ]
+                            },
+                            "questions": []
+                          },
+                          {
+                            "type": "fieldset",
+                            "context_data": {
+                              "skip_text": "Skip to the next section if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "questions": []
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-06",
+                            "label": "How do you measure the HSI program’s impact on the health of low-income children in your state? Define a metric to measure the impact. ",
+                            "type": "text_multiline",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-07",
+                            "label": "What outcomes have you found when measuring the impact?",
+                            "type": "text_multiline",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-08",
+                            "label": "Is there anything else you'd like to add about this HSI program?",
+                            "type": "text_multiline",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "id": "2020-03-i-02-01-01-09",
+                            "label": "Optional: Attach any additional documents.",
+                            "type": "file_upload",
+                            "answer": {
+                              "entry": null
+                            },
+                            "context_data": {
+                              "conditional_display": {
+                                "type": "conditional_display",
+                                "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "hide_if": {
+                                  "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                                  "values": {
+                                    "interactive": [
+                                      "no"
+                                    ],
+                                    "noninteractive": [
+                                      "no"
+                                    ]
+                                  }
+                                }
                               }
                             }
                           }
-                        }
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-08",
-                        "label": "Is there anything else you'd like to add about this HSI program?",
-                        "type": "text_multiline",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
-                              "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "id": "2020-03-i-02-01-01-09",
-                        "label": "Optional: Attach any additional documents.",
-                        "type": "file_upload",
-                        "answer": {
-                          "entry": null
-                        },
-                        "context_data": {
-                          "conditional_display": {
-                            "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
-                            "hide_if": {
-                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
-                              "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
-                              }
-                            }
-                          }
-                        }
+                        ]
                       }
                     ]
                   }
