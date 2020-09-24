@@ -1,14 +1,25 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
+<<<<<<< HEAD
 import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
+=======
+import { BrowserRouter as Router, Route, useLocation, useParams } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+>>>>>>> d43ff804bd981c6354e20bc1d2d089bb16790601
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import InitialDataLoad from "./components/Utils/InitialDataLoad";
+import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Home from "./Home";
+<<<<<<< HEAD
 import config from "./auth-config";
+=======
+import Profile from "./Profile";
+import config from './auth-config';
+>>>>>>> d43ff804bd981c6354e20bc1d2d089bb16790601
 import * as qs from "query-string";
 const WrappedSecurity = () => {
   let VisibleHeader =
@@ -50,11 +61,14 @@ const WrappedSecurity = () => {
       </div>
     );
   } else {
+
     return (
       <Router>
-        <Security {...config.oidc}>
+        <Security {...config.oidc} tokenManager={{ secure: true, storage: "cookie" }}>
+          <SecureInitialDataLoad />
           <SecureRoute path="/" component={Home} />
           <Route path={config.callback} component={LoginCallback} />
+          <SecureRoute path="/profile" component={Profile} />
         </Security>
       </Router>
     );

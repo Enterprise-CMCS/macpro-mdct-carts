@@ -6,7 +6,7 @@
     "ordinal": 3,
     "id": "2020-03",
     "type": "section",
-    "title": null,
+    "title": "Eligibility, Enrollment, and Operations",
     "subsections": [
       {
         "id": "2020-03-a",
@@ -3425,8 +3425,501 @@
       {
         "type": "subsection",
         "id": "2020-03-g",
-        "title": "NOT IMPLEMENTED",
-        "parts": []
+        "title": "Section 3G: Dental Benefits",
+        "parts": [
+          {
+            "id": "2020-03-g-01",
+            "type": "part",
+            "text": "Tell us about the children receiving dental benefits in your Separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+            "context_data": {
+              "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
+              "show_if_state_program_type_in": [
+                "separate_chip",
+                "combo"
+              ]
+            },
+            "questions": [
+              {
+                "type": "fieldset",
+                "label": "Note on age groups",
+                "hint": "Children should be in age groups based on their age on September 30th, the end of the federal fiscal year (FFY). For example, if a child turns three years old on September 15th, the child should be included in the “ages 3-5'' group. Even if the child received dental services on September 1st while they were still two years old, all dental services should be counted as their age at the end of the FFY.",
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "marked",
+                "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2020?",
+                "fieldset_info": {
+                  "id": "2020-03-g-01-01"
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-a",
+                        "label": "All ages 0-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-b",
+                        "label": "Ages 0-1",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-c",
+                        "label": "Ages 1-2",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-d",
+                        "label": "Ages 3-5",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-e",
+                        "label": "Ages 6-9",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-f",
+                        "label": "Ages 10-14",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-01-g",
+                        "label": "Ages 15-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "marked",
+                "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one dental care service during FFY 2020?",
+                "fieldset_info": {
+                  "id": "2020-03-g-01-02"
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-a",
+                        "label": "All ages 0-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-b",
+                        "label": "Ages 0-1",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-c",
+                        "label": "Ages 1-2",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-d",
+                        "label": "Ages 3-5",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-e",
+                        "label": "Ages 6-9",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-f",
+                        "label": "Ages 10-14",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-02-g",
+                        "label": "Ages 15-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "label": "Dental codes and definitions",
+                "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "marked",
+                "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one preventative dental care service during FFY 2020?",
+                "fieldset_info": {
+                  "id": "2020-03-g-01-03"
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-a",
+                        "label": "All ages 0-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-b",
+                        "label": "Ages 0-1",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-c",
+                        "label": "Ages 1-2",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-d",
+                        "label": "Ages 3-5",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-e",
+                        "label": "Ages 6-9",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-f",
+                        "label": "Ages 10-14",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-03-g",
+                        "label": "Ages 15-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "marked",
+                "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received dental treatment services during FFY 2020?",
+                "hint": "This includes orthodontics, periodontics, implants, oral and maxillofacial surgery, and other treatments.",
+                "fieldset_info": {
+                  "id": "2020-03-g-01-04"
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-a",
+                        "label": "All ages 0-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-b",
+                        "label": "Ages 0-1",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-c",
+                        "label": "Ages 1-2",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-d",
+                        "label": "Ages 3-5",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-e",
+                        "label": "Ages 6-9",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-f",
+                        "label": "Ages 10-14",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "integer",
+                        "id": "2020-03-g-01-04-g",
+                        "label": "Ages 15-18",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "label": "Dental codes and definitions",
+                "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D2000 - D9999 (or equivalent CDT codes D2000 - D9999 or equivalent CPT codes that involve periodontics, maxillofacial prosthetics, implants, oral and maxillofacial surgery, orthodontics, adjunctive general services) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                "questions": []
+              },
+              {
+                "type": "integer",
+                "id": "2020-03-g-01-05",
+                "label": "How many children in the “ages 6-9” group received a sealant on at least one permanent molar tooth during FFY 2020?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "type": "fieldset",
+                "label": "Dental codes and definitions",
+                "hint": "The sealant on a permanent molar tooth is provided by a dental professional for whom placing a sealant is within their scope of practice. It’s defined by HCPCS code D1351 (or equivalent CDT code D1351) based on an unduplicated paid, unpaid, or denied claim. Permanent molars are teeth numbered 2, 3, 14, 15, 18, 19, 30, and 31, and additionally—for states covering sealants on third molars (“wisdom teeth”)—teeth numbered 1, 16, 17, and 32. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                "questions": []
+              },
+              {
+                "id": "2020-03-g-01-06",
+                "label": "Do you provide supplemental dental coverage?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
+                },
+                "questions": [
+                  {
+                    "id": "2020-03-g-01-06-a",
+                    "label": "How many children were enrolled in supplemental dental coverage during FFY 2020?",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    },
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-g-01-06 is null, or no; noninteractive: hide if that's no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-g-01-06')].answer.entry",
+                          "values": {
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "id": "2020-03-g-01-06-b",
+                    "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2020?",
+                    "hint": "This is the total number for all children between 0-18 years from question 1.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    },
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-g-01-06 is null, or no; noninteractive: hide if that's no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-g-01-06')].answer.entry",
+                          "values": {
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "fieldset",
+                    "fieldset_type": "synthesized_table",
+                    "fieldset_info": {
+                      "headers": [
+                        {
+                          "contents": "Children enrolled in supplemental dental coverage"
+                        },
+                        {
+                          "contents": "Children enrolled in Separate CHIP"
+                        },
+                        {
+                          "contents": "Percentage"
+                        }
+                      ],
+                      "rows": [
+                        [
+                          {
+                            "targets": [
+                              "$..*[?(@.id=='2020-03-g-01-06-a')].answer.entry"
+                            ]
+                          },
+                          {
+                            "targets": [
+                              "$..*[?(@.id=='2020-03-g-01-06-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "targets": [
+                              "$..*[?(@.id=='2020-03-g-01-06-a')].answer.entry",
+                              "$..*[?(@.id=='2020-03-g-01-06-b')].answer.entry"
+                            ],
+                            "actions": [
+                              "percentage"
+                            ]
+                          }
+                        ]
+                      ]
+                    },
+                    "questions": [],
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-g-01-06 is null, or no; noninteractive: hide if that's no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-g-01-06')].answer.entry",
+                          "values": {
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-g-01-07",
+                "label": "Is there anything else you’d like to add about your dental benefits? If you weren’t able to provide data, let us know why.",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-g-01-08",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "type": "subsection",
@@ -4010,12 +4503,29 @@
                           ],
                           "actions": ["percentage"]
                         },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "values": {
+                                "interactive": [
+                                  "no"
+                                ],
+                                "noninteractive": [
+                                  "no"
+                                ]
+                              }
+                            }
+                          }
+                        },
                         "questions": []
                       },
                       {
                         "type": "fieldset",
+                        "label": "Skip to the next section if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
                         "context_data": {
-                          "skip_text": "Skip to the next section if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
                           "conditional_display": {
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
