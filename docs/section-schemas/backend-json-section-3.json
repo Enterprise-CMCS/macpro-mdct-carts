@@ -2917,7 +2917,7 @@
                     }
                   ]
                 }
-              },             
+              },
               {
                 "id": "2020-03-e-01-02",
                 "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
@@ -2926,7 +2926,7 @@
                 "answer": {
                   "entry": null
                 }
-              },    
+              },
               {
                 "id": "2020-03-e-01-03",
                 "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",

@@ -42,6 +42,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   enabled             = true
   default_root_object = "index.html"
+  web_acl_id = aws_wafv2_web_acl.uiwaf.arn
 
   custom_error_response {
     error_caching_min_ttl = 3000
@@ -89,4 +90,127 @@ data "aws_acm_certificate" "ui" {
   count    = var.acm_certificate_domain_ui == "" ? 0 : 1
   domain   = var.acm_certificate_domain_ui
   statuses = ["ISSUED"]
+}
+
+resource "aws_wafv2_web_acl" "uiwaf" {
+  name        = "uiwaf-${terraform.workspace}"
+  description = "WAF for cloudfront distro"
+  scope       = "CLOUDFRONT"
+
+  default_action {
+    block {}
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${terraform.workspace}-webacl"
+    sampled_requests_enabled   = true
+  }
+
+  rule{
+    name = "${terraform.workspace}-DDOSRateLimitRule"
+    priority = 0
+    action{
+      count{}
+    }
+
+    statement {
+      rate_based_statement{
+        limit = 5000
+        aggregate_key_type = "IP"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-DDOSRateLimitRuleMetric"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-RegAWSCommonRule"
+    priority = 1
+
+    override_action{
+      count{}
+    }
+
+    statement {
+      managed_rule_group_statement{
+        vendor_name = "AWS"
+        name = "AWSManagedRulesCommonRuleSet"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-RegAWSCommonRuleMetric"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-AWSManagedRulesAmazonIpReputationList"
+    priority = 2
+
+    override_action{
+      none{}
+    }
+
+    statement {
+      managed_rule_group_statement{
+        vendor_name = "AWS"
+        name = "AWSManagedRulesAmazonIpReputationList"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-RegAWS-AWSManagedRulesAmazonIpReputationList"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-RegAWSManagedRulesKnownBadInputsRuleSet"
+    priority = 3
+
+    override_action{
+      count{}
+    }
+
+    statement {
+      managed_rule_group_statement{
+        vendor_name = "AWS"
+        name = "AWSManagedRulesKnownBadInputsRuleSet"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-RegAWS-AWSManagedRulesKnownBadInputsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule{
+    name = "${terraform.workspace}-allow-usa-plus-territories"
+    priority = 5
+    action{
+      allow{}
+    }
+
+    statement {
+      geo_match_statement{
+        country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-geo-rule"
+      sampled_requests_enabled   = true
+    }
+  }
 }

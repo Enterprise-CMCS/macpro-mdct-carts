@@ -1,18 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-class StateHeader extends Component {
-  render() {
-    return (
-      <div className="state-header">
-        <div className="state-image">
-          <img src={this.props.imageURI} alt={this.props.name} />
-        </div>
-        <div className="state-name">{this.props.name}</div>
-      </div>
-    );
-  }
-}
+const StateHeader = ({ imageURI, name }) => (
+  <div className="state-header">
+    <div className="state-image">
+      <img src={imageURI} alt={name} />
+    </div>
+    <div className="state-name">{name}</div>
+  </div>
+);
+StateHeader.propTypes = {
+  imageURI: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
