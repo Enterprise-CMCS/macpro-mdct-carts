@@ -245,16 +245,15 @@
                   }
                 ]
               },
-                  {
-                    "id": "2020-03-b-01-03",
-                    "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
+              {
+                "id": "2020-03-b-01-03",
+                "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
               },
-                {
+              {
                 "type": "fieldset",
                 "questions": [
                   {
@@ -289,44 +288,45 @@
                             "answer": {
                               "entry": null
                             }
-               ],
-                "context_data": {
-                  "skip_text": "Some questions were skipped because they don't apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
-                }
-                          },
-                          {
-                            "id": "2020-03-b-01-04-b",
-                            "label": "Which populations does the waiting period apply to? (Include the FPL for each group.)",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
-                          },
-                          {
-                            "id": "2020-03-b-01-04-c",
-                            "label": "What exemptions apply to the waiting period?",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
-                          },
-                          {
-                            "id": "2020-03-b-01-04-d",
-                            "label": "What percent of individuals subject to the waiting period meet a state or federal exemption?",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
                           }
-                        ]
+                        ],
+                        "context_data": {
+                          "skip_text": "Some questions were skipped because they don't apply to your program.",
+                          "show_if_state_program_type_in": [
+                            "separate_chip",
+                            "combo"
+                          ]
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-b",
+                        "label": "Which populations does the waiting period apply to? (Include the FPL for each group.)",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-c",
+                        "label": "What exemptions apply to the waiting period?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-d",
+                        "label": "What percent of individuals subject to the waiting period meet a state or federal exemption?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
                       }
                     ]
-                  },
-                  {
+                  }
+                ]
+              },
+              {
                 "id": "2020-03-b-01-05",
                 "label": "Is there anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
@@ -2921,7 +2921,7 @@
               {
                 "id": "2020-03-e-01-02",
                 "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
-                 "hint": "This only applies to states operating an 1115 demo.",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2930,7 +2930,7 @@
               {
                 "id": "2020-03-e-01-03",
                 "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
-                 "hint": "This only applies to states operating an 1115 demo.",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -3089,6 +3089,10 @@
                         ]
                       ]
                     },
+                    "questions": []
+                  }
+                ]
+              },
               {
                 "type": "fieldset",
                 "label": "Range in monthly contributions paid by state",
@@ -3198,7 +3202,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-25",
+                "id": "2020-03-e-01-16",
                 "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
                 "type": "text_multiline",
                 "answer": {
@@ -3206,7 +3210,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-26",
+                "id": "2020-03-e-01-17",
                 "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
@@ -4096,7 +4100,7 @@
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {
-                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
                                 "interactive": [
                                   null,
@@ -4209,7 +4213,7 @@
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {
-                              "target":"$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
+                              "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
                                 "interactive": [
                                   "no"
