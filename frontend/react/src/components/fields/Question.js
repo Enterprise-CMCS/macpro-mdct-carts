@@ -59,7 +59,7 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ question, setAnswer, ...props }) => {
+const Question = ({ hideNumber, question, setAnswer, ...props }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -77,13 +77,21 @@ const Question = ({ question, setAnswer, ...props }) => {
     question.questions &&
     question.questions.length > 0;
 
+  let fieldsetId = false;
+  if (question.type === "fieldset") {
+    if (question.fieldset_info) {
+      fieldsetId = question.fieldset_info.id;
+    }
+  }
+
   return (
     <div className="question">
       <Container question={question}>
         {question.label && (
           <CMSLegend
+            hideNumber={hideNumber}
             hint={question.hint}
-            id={question.id}
+            id={fieldsetId || question.id}
             label={question.label}
           />
         )}
@@ -112,8 +120,12 @@ const Question = ({ question, setAnswer, ...props }) => {
   );
 };
 Question.propTypes = {
+  hideNumber: PropTypes.bool,
   question: PropTypes.object.isRequired,
   setAnswer: PropTypes.func.isRequired,
+};
+Question.defaultProps = {
+  hideNumber: false,
 };
 
 const mapDispatchToProps = {
