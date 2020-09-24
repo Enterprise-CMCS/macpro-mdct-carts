@@ -86,13 +86,7 @@ resource "aws_db_parameter_group" "db_param_group" {
 
   parameter {
     name  = "shared_preload_libraries"
-    value = "pg_stat_statements"
-    apply_method = "pending-reboot"
-  }
-
-  parameter {
-    name  = "shared_preload_libraries"
-    value = "pgaudit"
+    value = "pg_stat_statements, pgaudit"
     apply_method = "pending-reboot"
   }
 
