@@ -3088,133 +3088,134 @@
                           }
                         ]
                       ]
+                    },
+                    "questions": []
+                  }
+                ]
+              },
+              {
+                "type": "fieldset",
+                "label": "Range in monthly contributions paid by state",
+                "questions": [
+                  {
+                    "id": "2020-03-e-01-10",
+                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
+                    "type": "ranges",
+                    "answer": {
+                      "entry": null,
+                      "header": "Average Monthly Contribution",
+                      "range_categories": [
+                        [
+                          "Starts at",
+                          "Ends at"
+                        ]
+                      ],
+                      "range_type": [
+                        "money"
+                      ],
+                      "entry_min": 1,
+                      "entry_max": 1
                     }
                   },
                   {
-                    "type": "fieldset",
-                    "label": "Range in monthly contributions paid by state",
-                    "questions": [
-                      {
-                        "id": "2020-03-e-01-10",
-                        "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
-                        "type": "ranges",
-                        "answer": {
-                          "entry": null,
-                          "header": "Average Monthly Contribution",
-                          "range_categories": [
-                            [
-                              "Starts at",
-                              "Ends at"
-                            ]
-                          ],
-                          "range_type": [
-                            "money"
-                          ],
-                          "entry_min": 1,
-                          "entry_max": 1
-                        }
-                      },
-                      {
-                        "id": "2020-03-e-01-11",
-                        "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
-                        "type": "ranges",
-                        "answer": {
-                          "entry": null,
-                          "header": "Average Monthly Contribution",
-                          "range_categories": [
-                            [
-                              "Starts at",
-                              "Ends at"
-                            ]
-                          ],
-                          "range_type": [
-                            "money"
-                          ],
-                          "entry_min": 1,
-                          "entry_max": 1
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "fieldset",
-                    "label": "Range in family income levels",
-                    "questions": [
-                      {
-                        "id": "2020-03-e-01-12",
-                        "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
-                        "type": "ranges",
-                        "answer": {
-                          "entry": null,
-                          "header": "Federal Poverty Levels",
-                          "range_categories": [
-                            [
-                              "Starts at",
-                              "Ends at"
-                            ]
-                          ],
-                          "range_type": [
-                            "percentage"
-                          ],
-                          "entry_min": 1,
-                          "entry_max": 1
-                        }
-                      },
-                      {
-                        "id": "2020-03-e-01-13",
-                        "label": "What’s the range in income levels for children who receive premium assistance?",
-                        "type": "ranges",
-                        "answer": {
-                          "entry": null,
-                          "header": "Federal Poverty Levels",
-                          "range_categories": [
-                            [
-                              "Starts at",
-                              "Ends at"
-                            ]
-                          ],
-                          "range_type": [
-                            "percentage"
-                          ],
-                          "entry_min": 1,
-                          "entry_max": 1
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "2020-03-e-01-14",
-                    "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
-                    "type": "text_multiline",
+                    "id": "2020-03-e-01-11",
+                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
+                    "type": "ranges",
                     "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "id": "2020-03-e-01-15",
-                    "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "id": "2020-03-e-01-25",
-                    "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "id": "2020-03-e-01-26",
-                    "label": "Is there anything else you’d like to add that wasn’t already covered?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
+                      "entry": null,
+                      "header": "Average Monthly Contribution",
+                      "range_categories": [
+                        [
+                          "Starts at",
+                          "Ends at"
+                        ]
+                      ],
+                      "range_type": [
+                        "money"
+                      ],
+                      "entry_min": 1,
+                      "entry_max": 1
                     }
                   }
                 ]
+              },
+              {
+                "type": "fieldset",
+                "label": "Range in family income levels",
+                "questions": [
+                  {
+                    "id": "2020-03-e-01-12",
+                    "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
+                    "type": "ranges",
+                    "answer": {
+                      "entry": null,
+                      "header": "Federal Poverty Levels",
+                      "range_categories": [
+                        [
+                          "Starts at",
+                          "Ends at"
+                        ]
+                      ],
+                      "range_type": [
+                        "percentage"
+                      ],
+                      "entry_min": 1,
+                      "entry_max": 1
+                    }
+                  },
+                  {
+                    "id": "2020-03-e-01-13",
+                    "label": "What’s the range in income levels for children who receive premium assistance?",
+                    "type": "ranges",
+                    "answer": {
+                      "entry": null,
+                      "header": "Federal Poverty Levels",
+                      "range_categories": [
+                        [
+                          "Starts at",
+                          "Ends at"
+                        ]
+                      ],
+                      "range_type": [
+                        "percentage"
+                      ],
+                      "entry_min": 1,
+                      "entry_max": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-e-01-14",
+                "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-e-01-15",
+                "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-e-01-25",
+                "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-e-01-26",
+                "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
               }
             ]
           }
