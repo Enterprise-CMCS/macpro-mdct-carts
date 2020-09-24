@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { VerticalNav } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -15,33 +16,43 @@ class TOC extends Component {
   click = (e, _, url) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!url.startsWith("javascript:")) {
-      this.props.history.push(url);
-    }
+
+    const { history } = this.props;
+
+    history.push(url);
   };
 
   render() {
     const { location, sections } = this.props;
 
     const items = sections
-      .map(({ id, ordinal, subsections, title }) => ({
-        id,
+      .map(({ id: sectionId, ordinal, subsections, title: sectionTitle }) => ({
+        id: sectionId,
         items:
           subsections.length < 2
             ? null
-            : subsections.map(({ id, title }, i) => ({
-                label: `Section ${ordinal}${subsection(i)}: ${title}`,
-                onClick: this.click,
-                selected: location.pathname.toLowerCase().startsWith(idToUrl(id)),
-                url: idToUrl(id),
-              })),
-        label: ordinal > 0 ? `Section ${ordinal}: ${title}` : title,
+            : subsections.map(
+                ({ id: subsectionId, title: subsectionTitle }, i) => ({
+                  label: `Section ${ordinal}${subsection(
+                    i
+                  )}: ${subsectionTitle}`,
+                  onClick: this.click,
+                  selected: location.pathname
+                    .toLowerCase()
+                    .startsWith(idToUrl(subsectionId)),
+                  url: idToUrl(subsectionId),
+                })
+              ),
+        label:
+          ordinal > 0 ? `Section ${ordinal}: ${sectionTitle}` : sectionTitle,
         onClick: this.click,
-        selected: location.pathname.toLowerCase().startsWith(idToUrl(id)),
+        selected: location.pathname
+          .toLowerCase()
+          .startsWith(idToUrl(sectionId)),
       }))
-      .map(({ id, items, ...rest }) => {
-        const updated = { id, items, ...rest };
-        if (items == null) {
+      .map(({ id, items: childItems, ...rest }) => {
+        const updated = { id, items: childItems, ...rest };
+        if (childItems == null) {
           updated.url = idToUrl(id);
         }
         return updated;
@@ -54,6 +65,11 @@ class TOC extends Component {
     );
   }
 }
+TOC.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  sections: PropTypes.array.isRequired,
+};
 
 const sortByOrdinal = (sectionA, sectionB) => {
   const a = sectionA.contents.section.ordinal;
@@ -74,13 +90,18 @@ const selectSectionsForNav = (state) => {
     return sections.map(
       ({
         contents: {
-          section: { id, ordinal, subsections, title },
+          section: { id: sectionId, ordinal, subsections, title: sectionTitle },
         },
       }) => ({
-        id,
+        id: sectionId,
         ordinal,
-        title,
-        subsections: subsections.map(({ id, title }) => ({ id, title })),
+        title: sectionTitle,
+        subsections: subsections.map(
+          ({ id: subsectionId, title: subsectionTitle }) => ({
+            id: subsectionId,
+            title: subsectionTitle,
+          })
+        ),
       })
     );
   }
@@ -90,5 +111,3 @@ const selectSectionsForNav = (state) => {
 const mapStateToProps = (state) => ({ sections: selectSectionsForNav(state) });
 
 export default connect(mapStateToProps)(withRouter(TOC));
-
-export { TOC };
