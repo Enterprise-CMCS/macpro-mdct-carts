@@ -414,7 +414,7 @@ def authenticate_user(request):
             "abbr": "AZ",
             "programType": "separate_chip",
             "programName": "AZ Program Name??",
-            "imageURI": "{full_host}/img/states/az.svg",
+            "imageURI": f"{full_host}/img/states/az.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
@@ -430,7 +430,7 @@ def authenticate_user(request):
             "abbr": "MA",
             "programType": "combo",
             "programName": "MA Program Name??",
-            "imageURI": "${full_host}/img/states/ma.svg",
+            "imageURI": f"{full_host}/img/states/ma.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
