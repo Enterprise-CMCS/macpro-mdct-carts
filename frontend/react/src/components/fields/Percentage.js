@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
 
@@ -25,19 +25,24 @@ const Percentage = ({ onChange, question, ...props }) => {
     }
   };
 
-  // The CMS design system uses refs in a weird way - they are supposed to be
-  // functions instead of ref objects. 🤷🏼‍♂️
-  const setRef = (inputComponent) => {
-    if (inputComponent) {
+  let ref;
+  useEffect(() => {
+    if (ref) {
       // Wrap the inner input element with a div. That wrapper div will get
       // an :after pseudo-style. We can't apply it to the input element directly
       // because input elements can't have :before or :after pseudo-elements.
       // HTML is funky.
       const wrapper = document.createElement("div");
       wrapper.setAttribute("class", "input-holder__percent");
-      inputComponent.parentNode.appendChild(wrapper);
-      wrapper.appendChild(inputComponent);
+      ref.parentNode.appendChild(wrapper);
+      wrapper.appendChild(ref);
     }
+  }, []);
+
+  // The CMS design system uses refs in a weird way - they are supposed to be
+  // functions instead of ref objects. 🤷🏼‍♂️
+  const setRef = (inputComponent) => {
+    ref = inputComponent;
   };
 
   return (
