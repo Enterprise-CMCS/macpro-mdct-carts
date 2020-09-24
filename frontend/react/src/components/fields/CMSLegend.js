@@ -10,7 +10,7 @@ const CMSLegend = ({ hint, id, label }) => {
         id.substring(id.length - 4, id.length - 2),
         10
       );
-      labelBits = `${numberBit}${lastHunk} `;
+      labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
     } else {
       labelBits = `${lastHunk}. `;
     }
