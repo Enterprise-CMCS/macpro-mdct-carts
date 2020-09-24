@@ -3717,19 +3717,12 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-05 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
+                        "comment": "Interactive: Hide if 2020-03-h-02-05 selection does not include 'other'; noninteractive: hide if NOT 'other'",
+                        "hide_if_not": {
                           "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "ncqa hedis cahps 5.0h",
-                              "hrq cahps"
-                            ],
-                            "noninteractive": [
-                              "ncqa hedis cahps 5.0h",
-                              "hrq cahps"
-                            ]
+                            "interactive": ["other"],
+                            "noninteractive": ["other"]
                           }
                         }
                       }
