@@ -379,7 +379,6 @@ def authenticate_user(request):
     email = userinfo.get("email", "no-eua-email@example.com")
     host = request.get_host()
     scheme = "https" if request.is_secure() else "http"
-    full_host = f"{scheme}://{host}"
 
     # Instead of a DB lookup, here we're just assigning one of the fake users
     # according to EUA ID.
