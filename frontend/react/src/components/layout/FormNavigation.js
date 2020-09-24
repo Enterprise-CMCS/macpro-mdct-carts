@@ -9,15 +9,18 @@ import { selectSectionsForNav } from "../../store/selectors";
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
 class FormNavigation extends Component {
-
   render() {
     const { history, location, sections } = this.props;
 
     const items = [];
-    sections.forEach(section => {
-      section.subsections.forEach(subsection => {
-        items.push(idToUrl(subsection.id));
-      });
+    sections.forEach((section) => {
+      if (section.subsections.length < 2) {
+        items.push(idToUrl(section.id));
+      } else {
+        section.subsections.forEach((subsection) => {
+          items.push(idToUrl(subsection.id));
+        });
+      }
     });
 
     // Get current url
@@ -30,36 +33,39 @@ class FormNavigation extends Component {
     const previousUrl = items[currentIndex - 1];
 
     // Determine next index
-    const nextUrl = items[currentIndex + 1]
-
+    const nextUrl = items[currentIndex + 1];
 
     return (
       <section className="nav-buttons">
         <div className="ds-l-row">
           <div className="ds-l-col form-buttons">
-
-            {previousUrl ?
+            {previousUrl ? (
               <div className="form-button previous">
                 <Button
                   type="submit"
                   className="ds-c-button"
-                  onClick={() => { history.push(previousUrl); }}
+                  onClick={() => {
+                    history.push(previousUrl);
+                  }}
                 >
                   <FontAwesomeIcon icon={faAngleLeft} /> Previous
                 </Button>
-              </div> : null}
+              </div>
+            ) : null}
 
-            {nextUrl ?
+            {nextUrl ? (
               <div className="form-button next">
                 <Button
                   type="submit"
                   className="ds-c-button ds-c-button--primary"
-                  onClick={() => { history.push(nextUrl); }}
+                  onClick={() => {
+                    history.push(nextUrl);
+                  }}
                 >
                   Next <FontAwesomeIcon icon={faAngleRight} />
                 </Button>
-              </div> : null}
-
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -70,5 +76,3 @@ class FormNavigation extends Component {
 const mapStateToProps = (state) => ({ sections: selectSectionsForNav(state) });
 
 export default connect(mapStateToProps)(withRouter(FormNavigation));
-
-export { FormNavigation };

@@ -6,10 +6,6 @@ import Section2AReview from "./Section2AReview";
 import Section2BReview from "./Section2BReview";
 import Section3AReview from "./Section3AReview";
 import Section3CReview from "./Section3CReview";
-import Section2B from "../sections/section2b/Section2B";
-import Section3A from "../sections/section3a/Section3A";
-import Section3c from "../sections/section3c/Section3C";
-import Objective2b from "../sections/section2b/objectives/Objective2b";
 
 class Review extends Component {
   constructor(props) {

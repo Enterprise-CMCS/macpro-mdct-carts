@@ -1,3 +1,24 @@
+locals {
+  vpn_cidr_blocks = {
+    "master" = [
+      "10.251.0.0/16",
+      "10.252.0.0/16",
+      "10.232.32.0/19"
+    ]
+
+    "staging" = [
+      "10.251.0.0/16",
+      "10.252.0.0/16",
+      "10.232.32.0/19"
+    ]
+
+    "prod" = [
+      "10.251.0.0/16",
+      "10.252.0.0/16",
+      "10.232.32.0/19"
+    ]
+  }
+}
 
 module "db" {
   source                  = "terraform-aws-modules/rds/aws"
@@ -20,16 +41,31 @@ module "db" {
   tags = {
     Environment = terraform.workspace
   }
-  subnet_ids                = data.aws_subnet_ids.private.ids
-  family                    = "postgres9.6"
-  major_engine_version      = "9.6"
-  final_snapshot_identifier = "postgres-${terraform.workspace}"
-  deletion_protection       = false
+  subnet_ids                      = data.aws_subnet_ids.private.ids
+  family                          = "postgres9.6"
+  major_engine_version            = "9.6"
+  final_snapshot_identifier       = "postgres-${terraform.workspace}"
+  deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
 
 resource "aws_security_group" "db" {
   vpc_id = data.aws_vpc.app.id
+}
+
+# Models the VPN Private Security Group (aws:cloudformation:logical-id = PrivateVpnSg)
+resource "aws_security_group_rule" "vpn" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.db.id
+
+  cidr_blocks = lookup(local.vpn_cidr_blocks, terraform.workspace, [
+    "10.251.0.0/16",
+    "10.252.0.0/16",
+    "10.232.32.0/19"
+  ])
 }
 
 resource "aws_db_parameter_group" "db_param_group" {
