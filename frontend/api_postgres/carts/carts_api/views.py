@@ -398,7 +398,7 @@ def authenticate_user(request):
             "abbr": "AK",
             "programType": "medicaid_exp_chip",
             "programName": "AK Program Name??",
-            "imageURI": f"{full_host}/img/states/ak.svg",
+            "imageURI": "/img/states/ak.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
@@ -414,7 +414,7 @@ def authenticate_user(request):
             "abbr": "AZ",
             "programType": "separate_chip",
             "programName": "AZ Program Name??",
-            "imageURI": f"{full_host}/img/states/az.svg",
+            "imageURI": "/img/states/az.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
@@ -430,7 +430,7 @@ def authenticate_user(request):
             "abbr": "MA",
             "programType": "combo",
             "programName": "MA Program Name??",
-            "imageURI": f"{full_host}/img/states/ma.svg",
+            "imageURI": "/img/states/ma.svg",
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
