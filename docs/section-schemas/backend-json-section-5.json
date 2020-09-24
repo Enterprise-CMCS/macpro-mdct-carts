@@ -45,7 +45,7 @@
               },
               {
                 "id": "2020-05-a-01-04",
-                "label": "How much did you receive in cost sharing (out-of-pocket) payments from beneficiaries to offset your costs?",
+                "label": "How much did you receive in cost sharing from beneficiaries to offset your costs?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -71,7 +71,7 @@
                       {"targets": ["$..*[?(@.id=='2020-05-a-01-03')].answer.entry"], "actions": ["identity"]}
                     ],
                     [
-                      {"contents": "Cost sharing payments from beneficiaries"},
+                      {"contents": "Cost sharing from beneficiaries"},
                       {"targets": ["$..*[?(@.id=='2020-05-a-01-04')].answer.entry"], "actions": ["identity"]}
                     ],
                     [
@@ -110,7 +110,6 @@
               {
                 "id": "2020-05-a-02-02",
                 "label": "How much did you spend on general administration?",
-                "hint": "This includes overhead costs such as utilities, equipment, and any repairs.",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -118,7 +117,7 @@
               },
               {
                 "id": "2020-05-a-02-03",
-                "label": "How much did you spend on contractors and brokers, such as enrollment contractors (if you worked with any)?",
+                "label": "How much did you spend on contractors and brokers, such as enrollment contractors?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -142,7 +141,7 @@
               },
               {
                 "id": "2020-05-a-02-06",
-                "label": "How much did you spend on your Health Services Initiatives (HSI) (if you have any)?",
+                "label": "How much did you spend on your Health Services Initiatives (HSI) if you have any?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -159,7 +158,7 @@
               {
                 "type": "fieldset",
                 "label": "Table 2: Administrative Costs for FFY 2020",
-                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). That means your total benefit costs cannot be less than 90% of your total program costs. The 10% administrative cap is calculated by dividing the total benefit costs (90% of your program costs) by 9, or the max you can spend on the remaining 10% for your total administrative costs.",
+                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). The 10% administrative cap is calculated by dividing the total benefit costs by 9.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "rows":[
@@ -220,12 +219,12 @@
           {
             "id": "2020-05-a-03",
             "type": "part",
-            "title": "Projected Benefit Costs for FFY 2021",
-            "text": "Let’s take a look at your projected costs for FFY 2021. Tell us how much you anticipate spending on your CHIP program in the upcoming federal fiscal year. Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
+            "title": "Projected Benefit Costs for FFY 2021 and 2022",
+            "text": "Tell us how much you anticipate spending on your CHIP program in the upcoming two federal fiscal years.",
             "questions": [
               {
                 "id": "2020-05-a-03-01",
-                "label": "How much do you anticipate spending on Managed Care programs?",
+                "label": "How much do you anticipate spending on Managed Care?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -233,7 +232,7 @@
               },
               {
                 "id": "2020-05-a-03-02",
-                "label": "How much do you anticipate spending on Fee for Service programs?",
+                "label": "How much do you anticipate spending on Fee for Service?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -249,7 +248,7 @@
               },
               {
                 "id": "2020-05-a-03-04",
-                "label": "How much do you anticipate receiving in cost sharing (out-of-pocket) payments from beneficiaries?",
+                "label": "How much do you anticipate receiving in cost sharing from beneficiaries?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -257,7 +256,7 @@
               },
               {
                 "type": "fieldset",
-                "label": "Table 3: Benefits Costs for FFY 2020 and 2021",
+                "label": "Table 3: Benefit Costs for FFY 2020 and 2021",
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
@@ -330,7 +329,6 @@
               {
                 "id": "2020-05-a-04-02",
                 "label": "How much do you anticipate spending on general administration?",
-                "hint": "This includes overhead costs such as utilities, equipment, and any repairs.",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -379,7 +377,7 @@
               {
                 "type": "fieldset",
                 "label": "Table 4: Administrative Costs for FFY 2020 and 2021",
-                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). That means your total benefit costs cannot be less than 90% of your total program costs. The 10% administrative cap is calculated by dividing the total benefit costs (90% of your program costs) by 9, or the max you can spend on the remaining 10% for your total administrative costs.",
+                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). The 10% administrative cap is calculated by dividing the total benefit costs by 9.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
@@ -460,7 +458,7 @@
               {
                 "id": "2020-05-a-04-08",
                 "label": "Did you base any of your projected costs on any assumptions?",
-                "hint": "For example: estimated enrollment numbers, new programs, and funding sources.",
+                "hint": "For example: estimated enrollment numbers, new programs, or funding sources.",
                 "type": "text_medium",
                 "answer": {
                   "entry": null
@@ -570,7 +568,7 @@
                 "questions":[
                   {
                     "id": "2020-05-a-04-11-a",
-                    "label": "Briefly explain why your state didn’t have enough funding to cover your program costs.",
+                    "label": "Briefly explain why your state didn’t have enough funding to cover your CHIP program costs.",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -620,7 +618,7 @@
               {
                 "id": "2020-05-a-05-03",
                 "type": "integer",
-                "label": "How many children do you anticipate will be eligible for Managed Care in FFY 2021?",
+                "label": "How many children do you anticipate will be eligible for Managed Care in FFY 2021 and 2022?",
                 "answer": {
                   "entry": null
                 }
@@ -628,7 +626,7 @@
               {
                 "id": "2020-05-a-05-04",
                 "type": "money",
-                "label": "What is your projected PMPM cost for FFY 2021 based on the anticipated number of children eligible for a Managed Care program?",
+                "label": "What is your projected PMPM cost for FFY 2021 based on the anticipated number of children eligible for Managed Care?",
                 "hint": "Round to the nearest whole number.",
                 "answer": {
                   "entry": null
@@ -685,7 +683,7 @@
               {
                 "id": "2020-05-a-06-03",
                 "type": "integer",
-                "label": "How many children do you anticipate will be eligible for Fee for Service in FFY 2021?",
+                "label": "How many children do you anticipate will be eligible for Fee for Service in FFY 2021 and 2022?",
                 "answer": {
                   "entry": null
                 }
@@ -693,7 +691,7 @@
               {
                 "id": "2020-05-a-06-04",
                 "type": "money",
-                "label": "What is your projected PMPM cost for FFY 2021 based on the anticipated number of children eligible for Fee for Service?",
+                "label": "What is your projected PMPM cost for FFY 2021 and 2022 based on the anticipated number of children eligible for Fee for Service?",
                 "hint": "Round to the nearest whole number.",
                 "answer": {
                   "entry": null
