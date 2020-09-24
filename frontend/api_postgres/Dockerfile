@@ -12,6 +12,9 @@ ENV PYTHONUNBUFFERED 1
 # install psycopg2 dependencies
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
+RUN apk add libffi-dev
+RUN apk add --update openssl && \
+    rm -rf /var/cache/apk/*
 
 # lint
 RUN pip install --upgrade pip
