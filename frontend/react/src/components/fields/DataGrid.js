@@ -8,10 +8,6 @@ export const DataGrid = ({ question }) => {
       ? `subquestion ds-u-padding-left--2`
       : `ds-u-margin-top--0`;
 
-  const total = question.questions
-    .filter((q) => q.answer)
-    .reduce((sum, { answer: { entry } }) => sum + +entry, 0);
-
   return (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {question.questions.map((input) => (
@@ -21,8 +17,6 @@ export const DataGrid = ({ question }) => {
       ))}
     </div>
   );
-
-  // return <pre>{JSON.stringify(question, null, 2)}</pre>;
 };
 
 DataGrid.propTypes = {

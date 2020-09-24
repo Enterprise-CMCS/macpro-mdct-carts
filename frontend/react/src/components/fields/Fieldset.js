@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Question from "./Question"; // eslint-disable-line import/no-cycle
-import { DataGrid } from "./DataGrid";
+import { DataGrid } from "./DataGrid"; // eslint-disable-line import/no-cycle
 import { SynthesizedTable } from "./SynthesizedTable";
 import { SynthesizedValue } from "./SynthesizedValue"; // eslint-disable-line import/no-cycle
 
