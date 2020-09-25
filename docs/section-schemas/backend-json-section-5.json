@@ -256,7 +256,7 @@
               },
               {
                 "type": "fieldset",
-                "label": "Table 3: Benefit Costs for FFY 2020 and 2021",
+                "label": "Table 3: Benefit Costs for FFY 2020, 2021, and 2022",
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
@@ -314,7 +314,7 @@
           {
             "id": "2020-05-a-04",
             "type": "part",
-            "title": "Projected Administrative Costs for FFY 2021",
+            "title": "Projected Administrative Costs for FFY 2021 and 2022",
             "questions":
             [
               {
@@ -376,7 +376,7 @@
               },
               {
                 "type": "fieldset",
-                "label": "Table 4: Administrative Costs for FFY 2020 and 2021",
+                "label": "Table 4: Administrative Costs for FFY 2020, 2021, and 2022",
                 "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). The 10% administrative cap is calculated by dividing the total benefit costs by 9.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
@@ -467,7 +467,7 @@
               {
                 "type": "fieldset",
                 "label": "Table 5: Federal and State Shares",
-                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (FMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. This table is auto-calculated using the data you entered above.",
+                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (FMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the FMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
@@ -626,7 +626,7 @@
               {
                 "id": "2020-05-a-05-04",
                 "type": "money",
-                "label": "What is your projected PMPM cost for FFY 2021 based on the anticipated number of children eligible for Managed Care?",
+                "label": "What is your projected PMPM cost for FFY 2021 and 2022 based on the anticipated number of children eligible for Managed Care?",
                 "hint": "Round to the nearest whole number.",
                 "answer": {
                   "entry": null
@@ -722,7 +722,7 @@
               {
                 "id": "2020-05-a-06-05",
                 "type": "text_multiline",
-                "label": "Anything else you’d like to add about your program finances that wasn’t already covered?",
+                "label": "Is there anything else you’d like to add about your program finances that wasn’t already covered?",
                 "answer": {
                   "entry": null
                 }
