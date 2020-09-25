@@ -1,7 +1,7 @@
 import jsonpath from "./jsonpath";
 
 /**
- * This function determines whether a radio's conditional subquestion should display
+ * This function determines whether a radio's conditional subquestion should hide
  * @function hideIf
  * @param {object} state - The application state from redux, the object required for jsonpath to query
  * @param {object} hideIf - the hide_if object from a question's context_data
@@ -28,7 +28,7 @@ const hideIfAll = (state, hideIfAll) => {
 };
 
 /**
- * This function determines whether a checkbox conditional subquestion should display
+ * This function determines whether a checkbox conditional subquestion should hide
  * @function hideIfNot
  * @param {object} state - The application state from redux, the object required for jsonpath to query
  * @param {object} hideIfNot - the hide_if_not object from a question's context_data
