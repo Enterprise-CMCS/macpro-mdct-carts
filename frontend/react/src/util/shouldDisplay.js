@@ -41,21 +41,11 @@ const hideIfNot = (state, hideIfNot) => {
   let includedBoolean =
     targetAnswer === null
       ? true
-      : !targetAnswer.some((val) => interactiveValues.indexOf(val) !== -1);
+      : !targetAnswer.some((val) => interactiveValues.indexOf(val) !== -1); // Returns false if any targetAnswer is present in the interactiveValues array
 
   return includedBoolean;
 };
 
-// This helper function returns FALSE when a match between the targetAnswer & interactiveValues array is found
-// const targetMatches = () => {
-//   let anyMatches = targetAnswer.some(
-//     (val) => interactiveValues.indexOf(val) !== -1 //Returns true if any targetAnswer is present in the interactiveValues array
-//   );
-//   if (anyMatches === true) {
-//     return false; // returning false means the question will NOT be removed from rendering
-//   }
-//   return true; // returning true means the question will be removed from rendering
-// };
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
