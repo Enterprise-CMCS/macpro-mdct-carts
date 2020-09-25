@@ -52,8 +52,8 @@ const Container = ({ question, children }) =>
   question.type === "fieldset" ? (
     <>{children}</>
   ) : (
-    <fieldset className="ds-c-fieldset">{children}</fieldset>
-  );
+      <fieldset className="ds-c-fieldset">{children}</fieldset>
+    );
 Container.propTypes = {
   question: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
@@ -70,7 +70,9 @@ const Question = ({ hideNumber, question, setAnswer, ...props }) => {
   };
 
   const shouldRenderChildren =
-    question.type !== "fieldset" &&
+    (question.type !== "fieldset" ||
+      (question.type === "fieldset" &&
+        question.fieldset_type === "noninteractive_table")) &&
     question.type !== "objectives" &&
     question.type !== "radio" &&
     question.type !== "repeatables" &&
