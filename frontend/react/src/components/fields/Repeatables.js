@@ -6,9 +6,17 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
 import { Repeatable } from "./Repeatable"; // eslint-disable-line import/no-cycle
-import { createNewRepeatable } from "../../actions/repeatables";
+import {
+  createNewRepeatable,
+  removeRepeatable,
+} from "../../actions/repeatables";
 
-const Repeatables = ({ addRepeatableTo, question, type }) => {
+const Repeatables = ({
+  addRepeatableTo,
+  question,
+  removeRepeatableFrom,
+  type,
+}) => {
   const ref = useRef();
 
   const add = () => {
@@ -22,6 +30,10 @@ const Repeatables = ({ addRepeatableTo, question, type }) => {
         ref.current.scrollIntoView();
       }
     }, 10);
+  };
+
+  const remove = () => {
+    removeRepeatableFrom(question.id);
   };
 
   return (
@@ -41,6 +53,16 @@ const Repeatables = ({ addRepeatableTo, question, type }) => {
             />
           </AccordionItem>
         ))}
+
+        {question.questions.length > 1 && (
+          <button
+            onClick={remove}
+            type="button"
+            className="add-objective ds-c-button ds-c-button--danger"
+          >
+            Delete last {type || "item"}
+          </button>
+        )}
       </Accordion>
 
       <div className="section-footer">
@@ -64,13 +86,17 @@ const Repeatables = ({ addRepeatableTo, question, type }) => {
 Repeatables.propTypes = {
   addRepeatableTo: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
+  removeRepeatableFrom: PropTypes.func.isRequired,
   type: PropTypes.oneOf([PropTypes.string, null]),
 };
 Repeatables.defaultProps = {
   type: null,
 };
 
-const mapDispatchToProps = { addRepeatableTo: createNewRepeatable };
+const mapDispatchToProps = {
+  addRepeatableTo: createNewRepeatable,
+  removeRepeatableFrom: removeRepeatable,
+};
 
 const ConnectedRepeatables = connect(null, mapDispatchToProps)(Repeatables);
 

@@ -6,9 +6,12 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
 import { Objective } from "./Objective"; // eslint-disable-line import/no-cycle
-import { createNewObjective } from "../../actions/repeatables";
+import {
+  createNewObjective,
+  removeRepeatable,
+} from "../../actions/repeatables";
 
-const Objectives = ({ addObjectiveTo, question }) => {
+const Objectives = ({ addObjectiveTo, question, removeObjectiveFrom }) => {
   const ref = useRef();
 
   const add = () => {
@@ -23,6 +26,11 @@ const Objectives = ({ addObjectiveTo, question }) => {
       }
     }, 10);
   };
+
+  const remove = () => {
+    removeObjectiveFrom(question.id);
+  };
+
   return (
     <>
       <Accordion
@@ -35,6 +43,16 @@ const Objectives = ({ addObjectiveTo, question }) => {
             <Objective headerRef={ref} objective={q} objectiveNumber={i + 1} />
           </AccordionItem>
         ))}
+
+        {question.questions.length > 1 && (
+          <button
+            onClick={remove}
+            type="button"
+            className="add-objective ds-c-button ds-c-button--danger"
+          >
+            Delete last objective
+          </button>
+        )}
       </Accordion>
 
       <div className="section-footer">
@@ -58,9 +76,13 @@ const Objectives = ({ addObjectiveTo, question }) => {
 Objectives.propTypes = {
   addObjectiveTo: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
+  removeObjectiveFrom: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = { addObjectiveTo: createNewObjective };
+const mapDispatchToProps = {
+  addObjectiveTo: createNewObjective,
+  removeObjectiveFrom: removeRepeatable,
+};
 
 const ConnectedObjectives = connect(null, mapDispatchToProps)(Objectives);
 
