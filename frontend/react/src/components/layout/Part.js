@@ -31,6 +31,9 @@ const Part = ({
   title,
 }) => {
   let innards = null;
+
+  const [_, section] = partId.split("-");
+
   if (show) {
     innards = (
       <>
@@ -54,8 +57,8 @@ const Part = ({
   return (
     <div id={partId}>
       <h2>
-        {partNumber && `Part ${partNumber}`}
-        {title ? `: ${title}` : null}
+        {+section !== 0 && partNumber && `Part ${partNumber}: `}
+        {title ? `${title}` : null}
       </h2>
       {innards}
     </div>
