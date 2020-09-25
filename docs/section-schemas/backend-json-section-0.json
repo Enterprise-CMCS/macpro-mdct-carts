@@ -6,7 +6,7 @@
     "ordinal": 0,
     "id": "2020-00",
     "type": "section",
-    "title": "Carts Basic Info",
+    "title": "Basic State Information",
     "subsections": [
       {
         "type": "subsection",
@@ -113,7 +113,7 @@
               {
                 "type": "fieldset",
                 "questions": [],
-                "label": "If any of the above information is incorrect, contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>."
+                "label": "If any of the above information is incorrect, please contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>."
               }
             ]
           }
