@@ -38,22 +38,24 @@ const hideIfNot = (state, hideIfNot) => {
   let targetAnswer = jsonpath.query(state, hideIfNot.target)[0]; // Array of user selections from associated question
   let interactiveValues = hideIfNot.values.interactive; // Array of values which if present in a user's selections, should hide a question
 
-  // This helper function returns FALSE when a match between the targetAnswer & interactiveValues array is found
-  const targetMatches = () => {
-    let anyMatches = targetAnswer.some(
-      (val) => interactiveValues.indexOf(val) !== -1 //Returns true if any targetAnswer is present in the interactiveValues array
-    );
-    if (anyMatches === true) {
-      return false; // returning false means the question will NOT be removed from rendering
-    }
-    return true; // returning true means the question will be removed from rendering
-  };
-
-  let includedBoolean = targetAnswer === null ? true : targetMatches();
+  let includedBoolean =
+    targetAnswer === null
+      ? true
+      : !targetAnswer.some((val) => interactiveValues.indexOf(val) !== -1);
 
   return includedBoolean;
 };
 
+// This helper function returns FALSE when a match between the targetAnswer & interactiveValues array is found
+// const targetMatches = () => {
+//   let anyMatches = targetAnswer.some(
+//     (val) => interactiveValues.indexOf(val) !== -1 //Returns true if any targetAnswer is present in the interactiveValues array
+//   );
+//   if (anyMatches === true) {
+//     return false; // returning false means the question will NOT be removed from rendering
+//   }
+//   return true; // returning true means the question will be removed from rendering
+// };
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
