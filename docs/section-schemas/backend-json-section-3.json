@@ -121,7 +121,7 @@
               },
               {
                 "id": "2020-03-a-01-04",
-                "label": "Anything else you’d like to add about your outreach efforts?",
+                "label": "Is there anything else you’d like to add about your outreach efforts?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -133,7 +133,7 @@
       },
       {
         "id": "2020-03-b",
-        "title": "Substitution of Coverage (Crowd-out)",
+        "title": "Substitution of Coverage",
         "type": "subsection",
         "text": "Substitution of coverage (also known as crowd-out) occurs when someone with private insurance drops their private coverage and substitutes it with publicly funded insurance such as CHIP.",
         "parts": [
@@ -143,7 +143,7 @@
             "questions": [
               {
                 "id": "2020-03-b-01-01",
-                "label": "Do you track the number of children who have access to private insurance?",
+                "label": "Do you track the number of CHIP enrollees who have access to private insurance?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -165,7 +165,7 @@
                 "questions": [
                   {
                     "id": "2020-03-b-01-01-a",
-                    "label": "What percent of children who enrolled in CHIP had access to private health insurance at the time of application?",
+                    "label": "What percent of CHIP enrollees had access to private insurance at the time of application?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -195,7 +195,7 @@
               },
               {
                 "id": "2020-03-b-01-02",
-                "label": "Do you use a database to match children to their private insurance status? ",
+                "label": "Do you match prospective CHIP enrollees to a database that details private insurance status?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -246,11 +246,19 @@
                 ]
               },
               {
+                "id": "2020-03-b-01-03",
+                "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
                 "type": "fieldset",
                 "questions": [
                   {
-                    "id": "2020-03-b-01-03",
-                    "label": "Does your S-CHIP program require a child to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
+                    "id": "2020-03-b-01-04",
+                    "label": "If you have a Separate CHIP program, do you require individuals to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
                     "type": "radio",
                     "answer": {
                       "entry": null,
@@ -274,61 +282,53 @@
                         "type": "fieldset",
                         "questions": [
                           {
-                            "id": "2020-03-b-01-03-a",
+                            "id": "2020-03-b-01-04-a",
                             "label": "How long is the waiting period?",
                             "type": "text_multiline",
                             "answer": {
                               "entry": null
                             }
-                          },
-                          {
-                            "id": "2020-03-b-01-03-b",
-                            "label": "Which populations does the waiting period apply to?  (Include FPLs for each group.)",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
-                          },
-                          {
-                            "id": "2020-03-b-01-03-c",
-                            "label": "What exemptions apply to the waiting period?",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
-                          },
-                          {
-                            "id": "2020-03-b-01-03-d",
-                            "label": "What percent of children subject to the waiting period meet an exemption?",
-                            "type": "text_multiline",
-                            "answer": {
-                              "entry": null
-                            }
                           }
-                        ]
+                        ],
+                        "context_data": {
+                          "skip_text": "Some questions were skipped because they don't apply to your program.",
+                          "show_if_state_program_type_in": [
+                            "separate_chip",
+                            "combo"
+                          ]
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-b",
+                        "label": "Which populations does the waiting period apply to? (Include the FPL for each group.)",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-c",
+                        "label": "What exemptions apply to the waiting period?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-03-b-01-04-d",
+                        "label": "What percent of individuals subject to the waiting period meet a state or federal exemption?",
+                        "type": "text_multiline",
+                        "answer": {
+                          "entry": null
+                        }
                       }
                     ]
-                  },
-                  {
-                    "id": "2020-03-b-01-04",
-                    "label": "What percent of children screened for S-CHIP eligibility cannot be enrolled because they have group health plan coverage?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
                   }
-                ],
-                "context_data": {
-                  "skip_text": "Some questions omitted because they do not apply to your program.",
-                  "show_if_state_program_type_in": [
-                    "separate_chip",
-                    "combo"
-                  ]
-                }
+                ]
               },
               {
                 "id": "2020-03-b-01-05",
-                "label": "Anything else you’d like to add about crowd-out that wasn’t already covered? Did you run into any limitations when collecting data?",
+                "label": "Is there anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -404,7 +404,7 @@
                       },
                       {
                         "id": "2020-03-c-01-01-b",
-                        "label": "Of the children who are presumptively enrolled, what percent are determined fully eligible and enrolled in the program?",
+                        "label": "Of the children who are presumptively enrolled, what percent are determined fully eligible and enrolled in the program (upon completion of the full eligibility determination)?",
                         "type": "percentage",
                         "answer": {
                           "entry": null
@@ -416,7 +416,7 @@
               },
               {
                 "id": "2020-03-c-01-02",
-                "label": "In an effort to retain more children in CHIP, do you conduct follow-up communication with families through caseworkers and outreach workers?",
+                "label": "In an effort to retain children in CHIP, do you conduct follow-up communication with families through caseworkers and outreach workers?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -493,7 +493,7 @@
               },
               {
                 "id": "2020-03-c-01-04",
-                "label": "What else have you done to simplify the eligibility renewal process for families in order to increase retention?",
+                "label": "What else have you done to simplify the eligibility renewal process for families?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -517,7 +517,7 @@
               },
               {
                 "id": "2020-03-c-01-07",
-                "label": "Anything else you’d like to add that wasn’t already covered?",
+                "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -528,12 +528,12 @@
           {
             "id": "2020-03-c-02",
             "type": "part",
-            "title": "Eligibility Denials for First-time Applicants (Not Redetermination)",
+            "title": "CHIP Eligibility Denials (Not Redetermination)",
             "questions": [
               {
                 "id": "2020-03-c-02-01",
-                "label": "How many first-time applicants were denied CHIP coverage in the last federal fiscal year?",
-                "hint": "This only applies to denials for first-time CHIP applicants—don’t include applicants being considered for redetermination.",
+                "label": "How many applicants were denied CHIP coverage in FFY 2020?",
+                "hint": "Don’t include applicants being considered for redetermination — this data will be collected in Part 3.",
                 "type": "integer",
                 "answer": {
                   "entry": null
@@ -541,7 +541,7 @@
               },
               {
                 "id": "2020-03-c-02-02",
-                "label": "How many first-time applicants were denied CHIP coverage for procedural reasons?",
+                "label": "How many applicants were denied CHIP coverage for procedural reasons?",
                 "hint": "For example: They were denied because of an incomplete application, missing documentation, or a missing enrollment fee.",
                 "type": "integer",
                 "answer": {
@@ -550,7 +550,7 @@
               },
               {
                 "id": "2020-03-c-02-03",
-                "label": "How many first-time applicants were denied CHIP coverage for eligibility reasons?",
+                "label": "How many applicants were denied CHIP coverage for eligibility reasons?",
                 "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
                 "type": "integer",
                 "answer": {
@@ -559,8 +559,7 @@
                 "questions": [
                   {
                     "id": "2020-03-c-02-03-a",
-                    "label": "How many first-time applicants were denied CHIP coverage for eligibility reasons?",
-                    "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
+                    "label": "How many applicants were denied CHIP (Title XXI) coverage and determined eligible for Medicaid (Title XIX) instead?",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -587,7 +586,7 @@
               {
                 "type": "fieldset",
                 "fieldset_type": "synthesized_table",
-                "label": "Table: Denials for First-Time Applicants",
+                "label": "Table: CHIP Eligibility Denials (Not Redetermination)",
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_info": {
                   "headers": [
@@ -681,12 +680,12 @@
           {
             "id": "2020-03-c-03",
             "type": "part",
-            "title": "Eligibility for Redetermination in CHIP",
-            "text": "Redetermination is the process of redetermining whether a child is eligible to renew in CHIP every 12 months, assuming children haven’t already aged out of the program. Families must resubmit their income each year to determine if they still qualify for the program.",
+            "title": "Redetermination in CHIP",
+            "text": "Redetermination is the process of redetermining whether a child is eligible to renew in CHIP (Title XXI) every 12 months. This section doesn’t apply to any mid-year changes in circumstances that may affect eligibility (for example: income, relocation, or aging out of the program).",
             "questions": [
               {
                 "id": "2020-03-c-03-01",
-                "label": "How many children were eligible for redetermination in CHIP in the last federal fiscal year?",
+                "label": "How many children were eligible for redetermination in CHIP in FFY 2020?",
                 "type": "integer",
                 "answer": {
                   "entry": null
@@ -702,7 +701,7 @@
               },
               {
                 "id": "2020-03-c-03-03",
-                "label": "How many children were retained in CHIP after the redetermination process?",
+                "label": "How many children were retained in CHIP after redetermination?",
                 "type": "integer",
                 "answer": {
                   "entry": null
@@ -736,7 +735,7 @@
                   {
                     "id": "2020-03-c-03-04-a",
                     "label": "How many children were disenrolled for procedural reasons?",
-                    "hint": "For example: They were denied because of an incomplete application, missing documentation, or a missing enrollment fee.",
+                    "hint": "For example: They were disenrolled due to an incomplete application, missing documentation, or a missing enrollment fee.",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -745,7 +744,7 @@
                   {
                     "id": "2020-03-c-03-04-b",
                     "label": "How many children were disenrolled for eligibility reasons?",
-                    "hint": "For example: They were denied because their income was too high or too low, they were determined eligible for Medicaid instead, or they had other coverage available.",
+                    "hint": "For example: They were disenrolled because their income was too high or too low, they were eligible for Medicaid (Title XIX) instead, or they had access to private coverage.",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -772,7 +771,7 @@
               {
                 "type": "fieldset",
                 "fieldset_type": "synthesized_table",
-                "label": "Table: Enrollment Data for CHIP Redetermination",
+                "label": "Table: Redetermination in CHIP ",
                 "hint": "These tables are auto-populated with the data you entered above.",
                 "fieldset_info": {
                   "headers": [
@@ -844,7 +843,7 @@
               },
               {
                 "type": "fieldset",
-                "label": "Table: Disenrollment Data for CHIP Redetermination",
+                "label": "Table: Disenrollment in CHIP after Redetermination",
                 "comment": "This is assuming that we make the user manually enter the answer to question 4; otherwise we don't currently have a way to support this functionality; see the comment on question 4 above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
@@ -940,7 +939,7 @@
             "id": "2020-03-c-04",
             "type": "part",
             "title": "Tracking a CHIP cohort over 18 months",
-            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will measure how long a specific group stays enrolled over a 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 17 years who are newly enrolled in CHIP (Medicaid Expansion CHIP, Separate CHIP, or both) as of the first three months (Jan-Mar) of the last federal fiscal year.\n\nChildren must be 16.5 years or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period.\n\nIf your eligibility system doesn’t have the ability to track a cohort, you may need to use a unique identifier or flag to track each child over the 18-month period.",
+            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 17years who are newly enrolled in CHIP (Medicaid Expansion CHIP, Separate CHIP, or both) as of the first three months (Jan-Mar) of the last federal fiscal year.\n\nChildren must be 16.5 years or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period.\n\nIf your eligibility system doesn’t have the ability to track a cohort, you may need to use a unique identifier or flag to track each child over the 18-month period.",
             "questions": [
               {
                 "type": "fieldset",
@@ -1888,7 +1887,7 @@
         "id": "2020-03-d",
         "title": "Cost Sharing (Out-of-Pocket Costs)",
         "type": "subsection",
-        "text": "Cost sharing is the share of costs that CHIP enrollees pay out of pocket. Cost sharing can include enrollment fees, premium fees, deductibles, coinsurance, copayments, and any other out-of-pocket costs. States can choose to require cost sharing or not.",
+        "text": "States can choose whether or not to require cost sharing in their CHIP program. Cost sharing includes payments such as enrollment fees, premiums, deductibles, coinsurance, and copayments.",
         "parts": [
           {
             "id": "2020-03-d-01",
@@ -1953,7 +1952,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-03-d-01-02 is anything except families; noninteractive: same.",
-                        "skip_text": "2a not shown due to your answer to 2.",
+                        "skip_text": "Question 2a was skipped due to your answer to question 2.",
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-02')].answer.entry",
                           "values": {
@@ -2010,7 +2009,7 @@
                   "conditional_display": {
                     "type": "conditional_display",
                     "comment": "Interactive: Hide if 2020-03-d-01-01 is no; noninteractive: hide if that's no.",
-                    "skip_text": "This section doesn’t apply to your state. Skip to the next section.",
+                    "skip_text": "This section doesn’t apply to your state. Please skip to the next section.",
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
@@ -2140,7 +2139,7 @@
               },
               {
                 "id": "2020-03-d-01-06",
-                "label": "Have you assessed the effects of charging co-payments and other out-of-pocket fees on whether enrolled families use CHIP services?",
+                "label": "Have you assessed the effects of charging copayments and other out-of-pocket fees on whether enrolled families use CHIP services?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -2231,7 +2230,7 @@
               },
               {
                 "id": "2020-03-d-01-08",
-                "label": "Anything else you’d like to add that wasn’t already covered?",
+                "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2267,10 +2266,10 @@
             "id": "2020-03-e-01",
             "type": "part",
             "context_data": {
-              "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this means six states: MA, NJ, OK, RI, VA, WI.",
-              "skip_text": "This section only applies to states with a premium assistance program. Skip to the next section."
+              "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this was six states: MA, NJ, OK, RI, VA, WI.",
+              "skip_text": "This section only applies to states with a premium assistance program."
             },
-            "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
+            "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents. ",
             "questions": [
               {
                 "id": "2020-03-e-01-01",
@@ -2297,7 +2296,17 @@
               },
               {
                 "id": "2020-03-e-01-02",
-                "label": "Does your premium assistance program include coverage for adults",
+                "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
+                "hint": "This only applies to states operating an 1115 demo.",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-e-01-03",
+                "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -2311,123 +2320,12 @@
                       "label": "No"
                     }
                   ]
-                },
-                "questions": [
-                  {
-                    "id": "2020-03-e-01-02-a",
-                    "label": "Who do you cover?",
-                    "type": "checkbox",
-                    "answer": {
-                      "entry": null,
-                      "options": [
-                        {
-                          "value": "parents",
-                          "label": "Parents"
-                        },
-                        {
-                          "value": "caretaker_relatives",
-                          "label": "Caretaker relatives"
-                        },
-                        {
-                          "value": "pregnant_women",
-                          "label": "Pregnant women"
-                        }
-                      ]
-                    },
-                    "context_data": {
-                      "conditional_display": {
-                        "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-e-01-02 is unanswered or no; noninteractive: hide if that's no.",
-                        "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-e-01-02')].answer.entry",
-                          "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "2020-03-e-01-03",
-                "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
                 }
               },
               {
                 "id": "2020-03-e-01-04",
-                "label": "Which benefit package is offered as part of your premium assistance program?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-e-01-05",
-                "label": "Are there any minimum coverage requirements as part of the benefit package?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-e-01-06",
-                "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-e-01-07",
-                "label": "Are there limits on cost sharing for children in your premium assistance program?",
-                "type": "radio",
-                "answer": {
-                  "entry": null,
-                  "options": [
-                    {
-                      "value": "yes",
-                      "label": "Yes"
-                    },
-                    {
-                      "value": "no",
-                      "label": "No"
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "2020-03-e-01-08",
-                "label": "Are there limits on cost sharing for adults in your premium assistance program?",
+                "label": "Does your premium assistance program meet the same cost sharing requirements as that of the CHIP program?",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -2448,8 +2346,9 @@
                 }
               },
               {
-                "id": "2020-03-e-01-09",
+                "id": "2020-03-e-01-05",
                 "label": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
+                "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -2466,7 +2365,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-03-e-01-09-a",
+                    "id": "2020-03-e-01-05-a",
                     "label": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
                     "type": "text_multiline",
                     "answer": {
@@ -2494,16 +2393,8 @@
                 ]
               },
               {
-                "id": "2020-03-e-01-10",
-                "label": "How many children were enrolled monthly in the premium assistance program on average each month in the last FFY?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-e-01-11",
-                "label": "What’s the average monthly enrollment of adults ever enrolled in the premium assistance program in the last FFY?",
+                "id": "2020-03-e-01-06",
+                "label": "How many children were enrolled in the premium assistance program on average each month in the last FFY?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2515,7 +2406,7 @@
                 "hint": "Your answers will auto-populate the table below.",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-12",
+                    "id": "2020-03-e-01-07",
                     "label": "What’s the average monthly contribution the state pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -2523,7 +2414,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-13",
+                    "id": "2020-03-e-01-08",
                     "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -2531,38 +2422,8 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-14",
+                    "id": "2020-03-e-01-09",
                     "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
-                    "type": "money",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "fieldset",
-                "label": "Coverage breakdown for parents",
-                "questions": [
-                  {
-                    "id": "2020-03-e-01-15",
-                    "label": "What’s the average monthly contribution the state pays towards coverage of the eligible parent?",
-                    "type": "money",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "id": "2020-03-e-01-16",
-                    "label": "What’s the average monthly contribution the employer pays towards coverage of the eligible parent?",
-                    "type": "money",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "id": "2020-03-e-01-17",
-                    "label": "What’s the average monthly contribution the employee pays towards coverage of the eligible parent?",
                     "type": "money",
                     "answer": {
                       "entry": null
@@ -2605,38 +2466,6 @@
                       ]
                     },
                     "questions": []
-                  },
-                  {
-                    "type": "fieldset",
-                    "fieldset_type": "synthesized_table",
-                    "label": "Parent",
-                    "fieldset_info": {
-                      "headers": [
-                        {
-                          "contents": "State"
-                        },
-                        {
-                          "contents": "Employer"
-                        },
-                        {
-                          "contents": "Employee"
-                        }
-                      ],
-                      "rows": [
-                        [
-                          {
-                            "target": "$..*[?(@.id=='2020-03-e-01-15')].answer.entry"
-                          },
-                          {
-                            "target": "$..*[?(@.id=='2020-03-e-01-16')].answer.entry"
-                          },
-                          {
-                            "target": "$..*[?(@.id=='2020-03-e-01-17')].answer.entry"
-                          }
-                        ]
-                      ]
-                    },
-                    "questions": []
                   }
                 ]
               },
@@ -2645,7 +2474,7 @@
                 "label": "Range in monthly contributions paid by state",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-18",
+                    "id": "2020-03-e-01-10",
                     "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
                     "type": "ranges",
                     "answer": {
@@ -2665,8 +2494,8 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-19",
-                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent?",
+                    "id": "2020-03-e-01-11",
+                    "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -2691,8 +2520,8 @@
                 "label": "Range in family income levels",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-20",
-                    "label": "What’s the range in income levels for children who receive premium assistance?",
+                    "id": "2020-03-e-01-12",
+                    "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -2711,7 +2540,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-21",
+                    "id": "2020-03-e-01-13",
                     "label": "What’s the range in income levels for children who receive premium assistance?",
                     "type": "ranges",
                     "answer": {
@@ -2733,7 +2562,7 @@
                 ]
               },
               {
-                "id": "2020-03-e-01-22",
+                "id": "2020-03-e-01-14",
                 "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
                 "type": "text_multiline",
                 "answer": {
@@ -2741,15 +2570,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-23",
-                "label": "What impact do you estimate your premium assistance program has on enrollment and retention rates? If you’ve measured this impact, how have you done so?",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-03-e-01-24",
+                "id": "2020-03-e-01-15",
                 "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
                 "type": "text_multiline",
                 "answer": {
@@ -2757,7 +2578,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-25",
+                "id": "2020-03-e-01-16",
                 "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
                 "type": "text_multiline",
                 "answer": {
@@ -2765,8 +2586,8 @@
                 }
               },
               {
-                "id": "2020-03-e-01-26",
-                "label": "Anything else you’d like to add that wasn’t already covered?",
+                "id": "2020-03-e-01-17",
+                "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2785,7 +2606,7 @@
             "id": "2020-03-f-01",
             "type": "part",
             "context_data": {
-              "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+              "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
@@ -2857,7 +2678,7 @@
               },
               {
                 "id": "2020-03-f-01-05",
-                "label": "Do the Managed Care plans with which your separate CHIP program contracts have written plans?",
+                "label": "Do the Managed Care plans contracted by your Separate CHIP program have written plans with safeguards and procedures in place?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -2991,18 +2812,18 @@
               },
               {
                 "id": "2020-03-f-01-14",
-                "label": "Does your data for Questions 8–13 include cases for separate CHIP only or for Medicaid and CHIP combined? ",
+                "label": "Does your data for Questions 8–13 include cases for CHIP only or for Medicaid and CHIP combined? ",
                 "type": "radio",
                 "answer": {
                   "entry": null,
                   "options": [
                     {
                       "value": "separate_chip_only",
-                      "label": "Separate CHIP only"
+                      "label": "CHIP only"
                     },
                     {
                       "value": "medicaid_separate_chip_combined",
-                      "label": "Medicaid and separate CHIP combined"
+                      "label": "Medicaid and CHIP combined"
                     }
                   ]
                 }
@@ -3073,7 +2894,7 @@
                 "questions": [
                   {
                     "id": "2020-03-f-01-16-a",
-                    "label": "What specifically are they responsible for in terms of oversight?",
+                    "label": "What specifically are the contractors responsible for in terms of oversight?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -3101,7 +2922,7 @@
               },
               {
                 "id": "2020-03-f-01-17",
-                "label": "Anything else you’d like to add that wasn’t already covered?",
+                "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -3614,7 +3435,7 @@
         "type": "subsection",
         "id": "2020-03-h",
         "title": "CAHPS Survey Results",
-        "text": "Children's Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
+        "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction.",
         "parts": [
           {
             "id": "2020-03-h-01",
@@ -3681,7 +3502,7 @@
           {
             "id": "2020-03-h-02",
             "type": "part",
-            "text": "Since you collected the CAHPS survey, go ahead and complete this section. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
+            "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
             "context_data": {
               "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
               "conditional_display": {
@@ -3965,7 +3786,7 @@
           {
             "id": "2020-03-h-03",
             "type": "part",
-            "text": "Since you didn’t collect the CAHPS survey, go ahead and complete this section.",
+            "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
             "context_data": {
               "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
               "conditional_display": {
@@ -4064,7 +3885,8 @@
             "questions": [
               {
                 "id": "2020-03-i-01-01",
-                "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds? Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
+                "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds?",
+                "hint": "Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -4085,9 +3907,9 @@
           {
             "id": "2020-03-i-02",
             "type": "part",
-            "text": "Tell us about each of your HSI program(s).",
+            "text": "Tell us about your HSI program(s).",
             "context_data": {
-              "skip_text": "This part only applies to states with Health Service Initiatives. Skip to the next section.",
+              "skip_text": "This part only applies to states with Health Service Initiatives.",
               "conditional_display": {
                 "type": "conditional_display",
                 "comment": "Interactive: Hide if 2020-03-i-01-01 is no; noninteractive: hide if that's no.",
@@ -4142,7 +3964,7 @@
                       {
                         "type": "fieldset",
                         "context_data": {
-                          "skip_text": "Since you're no longer operating this HSI program, go ahead and remove any references to it from your CHIP state plan.",
+                          "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP state plan.",
                           "conditional_display": {
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
@@ -4343,7 +4165,7 @@
                       },
                       {
                         "id": "2020-03-i-02-01-01-08",
-                        "label": "Anything else you'd like to add about this HSI program?",
+                        "label": "Is there anything else you'd like to add about this HSI program?",
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
