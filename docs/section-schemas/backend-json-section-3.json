@@ -711,10 +711,9 @@
               {
                 "id": "2020-03-c-03-04",
                 "label": "How many children were disenrolled in CHIP after the redetermination process?",
-                "comment": "This is very tricky; having 4 apparently be a question the user can enter but also be the total of its subquestions presents issues. Which value takes precedence is one of them. Another is that in addition to being something that apparently can be entered by the user, it is both the output for a synthesized_value operation (sum 4a, 4b, and 4c) and the source for another synthesized_value operation (in the two tables below, where it's one of the inputs to the percentage action). My suggestion is to have 4 be a normal field of its own and have a hint next to it that sums the subquestion answers and tells the user the value they enter for 4 should equal that value. Not ideal, but otherwise we seem to have to either use custom frontend code or support way more nonsense in the data structure spec than we do already.",
+                "hint": "This number should be equal to the total of 4a, 4b, and 4c below.",
                 "type": "integer",
                 "answer": {
-                  "readonly": true,
                   "entry": null
                 },
                 "questions": [
@@ -957,21 +956,6 @@
                       "id": "2020-03-c-04-01"
                     },
                     "questions": [
-                      {
-                        "comment": "Yes, this is a marked fieldset, i.e. a fieldset mainly pretending to be a question for the purposes of the list markers, immediately followed by an unmarked_descendants fieldset used so that the age range breakdown question gets to pretend to not be a question for the purposes of the list markers.",
-                        "type": "fieldset",
-                        "fieldset_type": "unmarked_descendants",
-                        "questions": [
-                          {
-                            "id": "2020-03-c-04-01-unmarked_descendants",
-                            "label": "I don’t have data for the individual age groups. I’ll report data for the total number for all age groups (0-18 years) instead.",
-                            "type": "checkbox_flag",
-                            "answer": {
-                              "entry": null
-                            }
-                          }
-                        ]
-                      },
                       {
                         "type": "fieldset",
                         "fieldset_type": "datagrid",

@@ -21,7 +21,13 @@ const CMSLegend = ({ hideNumber, hint, id, label }) => {
     <legend className="ds-c-label">
       {!hideNumber && labelBits}
       {label}
-      {hint && <div className="ds-c-field__hint">{hint}</div>}
+      {hint && (
+        <div className="ds-c-field__hint">
+          {hint.split("\n").map((line) => (
+            <div>{line}</div>
+          ))}
+        </div>
+      )}
     </legend>
   );
 };
