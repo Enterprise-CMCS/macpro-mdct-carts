@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "www" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET", "PUT", "POST"]
-    allowed_origins = ["*"]
+    allowed_origins = [local.endpoint_api_postgres]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
   }
