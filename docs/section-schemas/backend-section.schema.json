@@ -10,30 +10,19 @@
           "const": "section"
         },
         "title": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "ordinal": {
           "type": "integer"
         },
         "valid": {
-          "type": [
-            "boolean",
-            "null"
-          ]
+          "type": ["boolean", "null"]
         },
         "state": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "year": {
-          "type": [
-            "integer"
-          ]
+          "type": ["integer"]
         },
         "subsections": {
           "type": "array",
@@ -43,11 +32,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "year",
-        "subsections"
-      ]
+      "required": ["id", "year", "subsections"]
     },
     "subsection": {
       "type": "object",
@@ -75,10 +60,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "parts"
-      ]
+      "required": ["id", "parts"]
     },
     "part": {
       "type": "object",
@@ -125,10 +107,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "type"
-      ]
+      "required": ["id", "type"]
     },
     "context_data": {
       "type": "object",
@@ -167,11 +146,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": [
-          "medicaid_exp_chip",
-          "separate_chip",
-          "combo"
-        ]
+        "enum": ["medicaid_exp_chip", "separate_chip", "combo"]
       }
     },
     "objectives": {
@@ -194,10 +169,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "type"
-      ]
+      "required": ["id", "type"]
     },
     "objective": {
       "type": "object",
@@ -227,10 +199,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "type"
-      ]
+      "required": ["id", "type"]
     },
     "repeatables": {
       "type": "object",
@@ -252,10 +221,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "type"
-      ]
+      "required": ["id", "type"]
     },
     "repeatable": {
       "type": "object",
@@ -284,10 +250,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "type"
-      ]
+      "required": ["id", "type"]
     },
     "question": {
       "type": "object",
@@ -401,11 +364,7 @@
         },
         "additionalProperties": false
       },
-      "required": [
-        "id",
-        "type",
-        "answer"
-      ]
+      "required": ["id", "type", "answer"]
     },
     "fieldset": {
       "type": "object",
@@ -454,10 +413,7 @@
           }
         }
       },
-      "required": [
-        "type",
-        "questions"
-      ],
+      "required": ["type", "questions"],
       "additionalProperties": false
     },
     "conditional_display": {
@@ -523,16 +479,10 @@
                   }
                 }
               },
-              "required": [
-                "interactive",
-                "noninteractive"
-              ]
+              "required": ["interactive", "noninteractive"]
             }
           },
-          "required": [
-            "target",
-            "values"
-          ]
+          "required": ["target", "values"]
         },
         "hide_if_all": {
           "type": "object",
@@ -588,28 +538,79 @@
                   }
                 }
               },
-              "required": [
-                "interactive",
-                "noninteractive"
-              ]
+              "required": ["interactive", "noninteractive"]
             }
           },
-          "required": [
-            "targets",
-            "values"
-          ]
+          "required": ["targets", "values"]
+        },
+        "hide_if_not": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string"
+            },
+            "comment": {
+              "type": "string"
+            },
+            "values": {
+              "type": "object",
+              "properties": {
+                "interactive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                },
+                "noninteractive": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": ["interactive", "noninteractive"]
+            }
+          },
+          "required": ["target", "values"]
         }
       },
       "additionalProperties": false,
-      "required": [
-        "type"
-      ],
+      "required": ["type"],
       "oneOf": [
         {
           "required": ["hide_if"]
         },
         {
           "required": ["hide_if_all"]
+        },
+        {
+          "required": ["hide_if_not"]
         }
       ]
     },
@@ -617,21 +618,10 @@
       "type": "object",
       "properties": {
         "entry": {
-          "type": [
-            "array",
-            "integer",
-            "null",
-            "number",
-            "string",
-            "object"
-          ]
+          "type": ["array", "integer", "null", "number", "string", "object"]
         },
         "default_entry": {
-          "type": [
-            "null",
-            "string",
-            "number"
-          ]
+          "type": ["null", "string", "number"]
         },
         "labels": {
           "type": "array",
@@ -653,29 +643,16 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "entry"
-      ]
+      "required": ["entry"]
     },
     "answer_ranges": {
       "type": "object",
       "properties": {
         "entry": {
-          "type": [
-            "array",
-            "integer",
-            "null",
-            "number",
-            "string",
-            "object"
-          ]
+          "type": ["array", "integer", "null", "number", "string", "object"]
         },
         "default_entry": {
-          "type": [
-            "null",
-            "string",
-            "number"
-          ]
+          "type": ["null", "string", "number"]
         },
         "labels": {
           "type": "array",
@@ -703,9 +680,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "entry"
-      ]
+      "required": ["entry"]
     },
     "options": {
       "type": "array",
