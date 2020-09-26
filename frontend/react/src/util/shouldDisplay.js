@@ -35,10 +35,10 @@ const hideIfAll = (state, hideIfAll) => {
  * @returns {boolean} - determines if an element should be filtered out, returning true hides a question
  */
 const hideIfNot = (state, hideIfNot) => {
-  let targetAnswer = jsonpath.query(state, hideIfNot.target)[0]; // Array of user selections from associated question
-  let interactiveValues = hideIfNot.values.interactive; // Array of values which if present in a user's selections, should hide a question
+  const targetAnswer = jsonpath.query(state, hideIfNot.target)[0]; // Array of user selections from associated question
+  const interactiveValues = hideIfNot.values.interactive; // Array of values which if present in a user's selections, should hide a question
 
-  let includedBoolean =
+  const includedBoolean =
     targetAnswer === null
       ? true
       : !targetAnswer.some((val) => interactiveValues.indexOf(val) !== -1); // Returns false if any targetAnswer is present in the interactiveValues array
