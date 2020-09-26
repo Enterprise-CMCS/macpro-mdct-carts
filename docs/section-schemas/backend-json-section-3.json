@@ -2204,7 +2204,6 @@
               },
               {
                 "id": "2020-03-e-01-02",
-<<<<<<< HEAD
                 "label": "Does your premium assistance program include coverage for adults",
                 "type": "radio",
                 "answer": {
@@ -2261,10 +2260,6 @@
               {
                 "id": "2020-03-e-01-03",
                 "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)?",
-=======
-                "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
-                "hint": "This only applies to states operating an 1115 demo.",
->>>>>>> origin/master
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2540,16 +2535,11 @@
             "id": "2020-03-f-01",
             "type": "part",
             "context_data": {
-<<<<<<< HEAD
-              "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
-              "show_if_state_program_type_in": ["separate_chip", "combo"]
-=======
               "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
               "show_if_state_program_type_in": [
                 "separate_chip",
                 "combo"
               ]
->>>>>>> origin/master
             },
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
             "questions": [
