@@ -1,4 +1,12 @@
 
+locals {
+  # This should be revisited.  Rules should be defined so we can make assumptions to reduce logic.
+  # In short though, if we haven't specified a certificate for the API, then we're assuming we're
+  #   reaching the API over http... and to hit the API over http, we must not hit the UI over
+  #   https.  This avoids the Mixed Content errors seen in the console with section G.
+  endpoint_ui = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_cloudfront_distribution.www_distribution.domain_name}" : "https://${aws_cloudfront_distribution.www_distribution.domain_name}"
+}
+
 resource "aws_s3_bucket" "www" {
 
   bucket        = "cartsfrontendbucket-${terraform.workspace}"
@@ -61,7 +69,11 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   // All values are defaults from the AWS console.
   default_cache_behavior {
-    viewer_protocol_policy = "allow-all"
+    # If the API is http, we will accept all traffic (including http) on cloudfront
+    # This swerves the 'Mixed Content:' errors that occur when reaching the UI over
+    #   https but asking the browser to hit the api over http
+    # This allows the end user to hit the UI over http
+    viewer_protocol_policy = var.acm_certificate_domain_api_postgres == "" ? "allow-all" : "redirect-to-https"
     compress               = true
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
