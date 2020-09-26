@@ -8,8 +8,8 @@ import jsonpath from "./jsonpath";
  * @returns {boolean} - determines if an element should be filtered out, returning true hides a question
  */
 const hideIf = (state, hideIf) => {
-  let targetAnswer = jsonpath.query(state, hideIf.target)[0]; //User's selection from associated question
-  let interactiveValues = hideIf.values.interactive; // Array of values which if selected, should hide a question
+  const targetAnswer = jsonpath.query(state, hideIf.target)[0]; // User's selection from associated question
+  const interactiveValues = hideIf.values.interactive; // Array of values which if selected, should hide a question
 
   if (interactiveValues.includes(targetAnswer)) {
     // If the associated answer IS in the interactive array, remove it
