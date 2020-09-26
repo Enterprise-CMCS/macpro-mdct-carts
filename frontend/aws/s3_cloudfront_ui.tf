@@ -4,6 +4,13 @@ resource "aws_s3_bucket" "www" {
   bucket        = "cartsfrontendbucket-${terraform.workspace}"
   acl           = "private"
   force_destroy = true
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "PUT", "POST"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3000
+  }
 }
 
 data "aws_iam_policy_document" "s3_policy" {
