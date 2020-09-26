@@ -123,7 +123,6 @@ void terraformApply(String stateBucket, String workspace, String action, Map tfv
   tfvars.each { k, v -> varString += " -var " + k + "=" + v }
   sh """
     PATH=~/.local/bin:$PATH
-    terraform plan ${varString} > log_tfplan.txt
     terraform $action ${varString} -input=false -auto-approve
   """
 }
