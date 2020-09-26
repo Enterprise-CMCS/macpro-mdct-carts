@@ -1,0 +1,14 @@
+name: style checks
+
+on: [pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - name: diff from master
+        run: git diff origin/master --
+      - name: check that modified files are prettier
+        run: npx prettier $(git diff --cached --name-only --relative origin/master -- | xargs) -c -u
