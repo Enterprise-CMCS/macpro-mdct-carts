@@ -385,7 +385,7 @@ The default for all questions, in both interactive and noninteractive views, is 
 
     No other forms of logic are supported by the construct, and must be described using the ``interactive_conditional`` and ``noninteractive_conditional`` properties and then implemented manually on the frontend.
 
-  ``target``
+    ``target``
         String.
 
         This is a `JSON Path`_ expression that points to the location in the JSON to find the value to be evaluated. Normally this will be the value of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
