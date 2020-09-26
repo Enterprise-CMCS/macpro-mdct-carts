@@ -4,11 +4,22 @@ on: [pull_request]
 
 jobs:
   prettier:
+    name: prettier has been run on compatible files
     runs-on: ubuntu-latest
     container: node:14
     steps:
       - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - name: diff from master
-        run: git diff origin/master --
       - name: check that modified files are prettier
-        run: npx prettier $(git diff --cached --name-only --relative origin/master -- | xargs) -c -u
+        run: npx prettier $(git diff --name-only --relative origin/master -- | xargs) -c -u
+  eslint:
+    name: frontend linting
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - name: install dependencies
+        working-directory: frontend/react
+        run: npm install
+      - name: run eslint
+        working-directory: frontend/react
+        run: npx eslint $(git diff --name-only --relative origin/master -- . | grep .js$ | xargs)
