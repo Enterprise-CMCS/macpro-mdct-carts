@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
 
   enabled             = true
   default_root_object = "index.html"
-  web_acl_id = aws_wafv2_web_acl.uiwaf.arn
+  web_acl_id          = aws_wafv2_web_acl.uiwaf.arn
 
   custom_error_response {
     error_caching_min_ttl = 3000
@@ -107,16 +107,16 @@ resource "aws_wafv2_web_acl" "uiwaf" {
     sampled_requests_enabled   = true
   }
 
-  rule{
-    name = "${terraform.workspace}-DDOSRateLimitRule"
+  rule {
+    name     = "${terraform.workspace}-DDOSRateLimitRule"
     priority = 0
-    action{
-      count{}
+    action {
+      count {}
     }
 
     statement {
-      rate_based_statement{
-        limit = 5000
+      rate_based_statement {
+        limit              = 5000
         aggregate_key_type = "IP"
       }
     }
@@ -128,18 +128,18 @@ resource "aws_wafv2_web_acl" "uiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-RegAWSCommonRule"
+  rule {
+    name     = "${terraform.workspace}-RegAWSCommonRule"
     priority = 1
 
-    override_action{
-      count{}
+    override_action {
+      count {}
     }
 
     statement {
-      managed_rule_group_statement{
+      managed_rule_group_statement {
         vendor_name = "AWS"
-        name = "AWSManagedRulesCommonRuleSet"
+        name        = "AWSManagedRulesCommonRuleSet"
       }
     }
 
@@ -150,18 +150,18 @@ resource "aws_wafv2_web_acl" "uiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-AWSManagedRulesAmazonIpReputationList"
+  rule {
+    name     = "${terraform.workspace}-AWSManagedRulesAmazonIpReputationList"
     priority = 2
 
-    override_action{
-      none{}
+    override_action {
+      none {}
     }
 
     statement {
-      managed_rule_group_statement{
+      managed_rule_group_statement {
         vendor_name = "AWS"
-        name = "AWSManagedRulesAmazonIpReputationList"
+        name        = "AWSManagedRulesAmazonIpReputationList"
       }
     }
 
@@ -172,18 +172,18 @@ resource "aws_wafv2_web_acl" "uiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-RegAWSManagedRulesKnownBadInputsRuleSet"
+  rule {
+    name     = "${terraform.workspace}-RegAWSManagedRulesKnownBadInputsRuleSet"
     priority = 3
 
-    override_action{
-      count{}
+    override_action {
+      count {}
     }
 
     statement {
-      managed_rule_group_statement{
+      managed_rule_group_statement {
         vendor_name = "AWS"
-        name = "AWSManagedRulesKnownBadInputsRuleSet"
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
       }
     }
 
@@ -194,15 +194,15 @@ resource "aws_wafv2_web_acl" "uiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-allow-usa-plus-territories"
+  rule {
+    name     = "${terraform.workspace}-allow-usa-plus-territories"
     priority = 5
-    action{
-      allow{}
+    action {
+      allow {}
     }
 
     statement {
-      geo_match_statement{
+      geo_match_statement {
         country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
       }
     }
