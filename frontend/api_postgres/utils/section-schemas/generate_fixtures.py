@@ -1,24 +1,33 @@
+from typing import Union
 import json
 import csv
 import jsonschema  # type: ignore
 from pathlib import Path
 
+Json = Union[dict, list]
+
 
 def main() -> None:
-    here = Path(".")
-    there = Path("..", "..", "frontend", "api_postgres", "fixtures")
+    here = Path(__file__).parent.resolve()
+    django_root = here.parent.parent.resolve()
+    there = (django_root / "fixtures").resolve()
+
+    # Break early if anything has moved unexpectedly:
+    assert here.name == "section-schemas"
+    assert here == django_root / "utils" / "section-schemas"
+
     there.mkdir(exist_ok=True)
 
-    def etl(fpath, modelname, schema):
-        orig = json.loads(fpath.read_text())
+    def etl(fpath: Path, modelname: str, schema: Json) -> None:
+        orig = load_json(fpath)
         jsonschema.validate(schema=schema, instance=orig)
         output = transform(modelname, orig)
         Path(there, f.name).write_text(json.dumps(output))
 
-    schema = json.loads(Path(here, "backend-section.schema.json").read_text())
+    schema = load_json(here / "backend-section.schema.json")
     schemafixture = transform("carts_api.sectionschema", schema)
-    schemapath = Path(there, "backend-section.schema.json")
-    schemapath.write_text(json.dumps(schemafixture))
+    schemapath = there / "backend-section.schema.json"
+    write_json(schemapath, schemafixture)
 
     for f in here.glob("backend-json-section-*.json"):
         etl(f, "carts_api.sectionbase", schema)
@@ -65,7 +74,6 @@ def load_states(here, there):
 
 
 def load_acs_data(here, there):
-    here = Path(".")
     state_to_abbrev = json.loads(
         Path(here, "state_to_abbrev.json").read_text()
     )
@@ -120,6 +128,14 @@ def load_fmap_data(here, there):
         fmaps.append(obj)
     outputpath = Path(there, "2020-fmap.json")
     outputpath.write_text(json.dumps(fmaps))
+
+
+def load_json(path: Path) -> Json:
+    return json.loads(path.read_text())
+
+
+def write_json(path: Path, contents: Json) -> None:
+    path.write_text(json.dumps(contents))
 
 
 if __name__ == "__main__":
