@@ -8,10 +8,17 @@ from typing import Any
 
 
 def main() -> None:
+    project_root = Path("..", "..")
     here = Path(".")
-    there = Path("..", "..", "frontend", "api_postgres", "fixtures")
+
+    # Break early if anything has moved unexpectedly:
+    assert here == project_root / "docs" / "section-schemas"
+
+    there = project_root / "frontend" / "api_postgres" / "fixtures"
+
     docs = here.glob("*-section-*.json")
     fixtures = there.glob("*-section-*.json")
+
     for doc, fixture in zip(docs, fixtures):
         doc_json, fixture_json = load_json(doc), load_json(fixture)
         contents = fixture_json[0]["fields"]["contents"]
