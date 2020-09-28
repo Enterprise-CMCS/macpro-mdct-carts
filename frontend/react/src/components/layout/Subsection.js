@@ -16,7 +16,11 @@ const Subsection = ({ partIds, subsectionId, title, text }) => {
         </div>
       ) : null}
       {partIds.map((partId, index) => (
-        <Part key={partId} partId={partId} partNumber={index + 1} />
+        <Part
+          key={partId}
+          partId={partId}
+          partNumber={partIds.length > 1 ? index + 1 : null}
+        />
       ))}
     </div>
   );
