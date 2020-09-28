@@ -24,7 +24,6 @@ def main() -> None:
     fixtures = sorted(
         [*there.glob("*-section-*.json")], key=attrgetter("name")
     )
-    print(len(docs), len(fixtures), flush=True)
 
     for doc, fixture in zip(docs, fixtures):
         assert doc.name == fixture.name
