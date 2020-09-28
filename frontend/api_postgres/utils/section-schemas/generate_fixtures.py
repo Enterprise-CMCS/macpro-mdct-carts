@@ -16,7 +16,7 @@ Json = Union[dict, list]
 def main() -> None:
     here, there, states = file_setup()
 
-    write_state_json(here, there, states)
+    # write_state_json(here, there, states)
     write_fixtures(here, there, states)
     load_states(here, there)
     load_acs_data(here, there)
