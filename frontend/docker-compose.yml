@@ -10,7 +10,6 @@ services:
       - data_net
     environment:
       - API_POSTGRES_URL=http://localhost:8000 # This is how a browser would call the api
-      - API_SQLSERVER_URL=http://localhost:8001 # This is how a browser would call the api
   api_postgres:
     build:
       context: ./api_postgres
@@ -27,15 +26,6 @@ services:
       - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
-  api_sqlserver:
-    build:
-      context: ./api_sqlserver
-      dockerfile: Dockerfile
-    command: gunicorn carts.wsgi:application --bind 0.0.0.0:8000
-    ports:
-      - 8001:8000
-    networks:
-      - data_net
 networks:
   data_net:
     external: true
