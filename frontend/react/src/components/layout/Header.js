@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Autosave from './Autosave'
-import Logout from './Logout'
+import Autosave from "./Autosave";
+import Logout from "./Logout";
 
 class Header extends Component {
   constructor() {

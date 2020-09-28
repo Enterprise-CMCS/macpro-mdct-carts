@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { synthesizeValue } from "../../util/synthesize";
+import synthesizeValue from "../../util/synthesize";
 
 const SynthesizedTable = ({ question, rows }) => {
   return (
@@ -11,13 +11,15 @@ const SynthesizedTable = ({ question, rows }) => {
       </legend>
       <table className="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
         <caption className="ds-c-table__caption">{question.hint}</caption>
-        <thead>
-          <tr>
-            {question.fieldset_info.headers.map((header) => (
-              <th scope="col">{header.contents}</th>
-            ))}
-          </tr>
-        </thead>
+        {question.fieldset_info.headers && (
+          <thead>
+            <tr>
+              {question.fieldset_info.headers.map((header) => (
+                <th scope="col">{header.contents}</th>
+              ))}
+            </tr>
+          </thead>
+        )}
         <tbody>
           {rows.map((row) => {
             return (
