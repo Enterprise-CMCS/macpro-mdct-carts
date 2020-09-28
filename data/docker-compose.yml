@@ -13,13 +13,12 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - PG_DATABASES=postgres
-      - PG_SCHEMAS=public,schip,schipannualreports
+      - PG_TABLESPACE=schipdata
+      - PG_TABLESPACE_LOCATION=/app/pgdata
+      - PG_DATABASE=postgres
       - PG_RO_ROLE=readonly
       - PG_RW_ROLE=readwrite
-      - PG_USERS=mpdct_app/@p9P@5s,mpdct_ro/R09P@5s
-      - PG_RO_USERS=mpdct_ro
-      - PG_RW_USERS=mpdct_app
+      - PG_USERS='[{"username":"mdct_app","password":"@p9P@5s","roles":["readwrite","readonly"]},{"username":"mdct_ro","password":"R09P@5s","roles":["readonly"]},{"username":"schip","password":"schip","roles":["readonly"]},{"username":"schipannualreports","password":"schipannualreports","roles":["readonly"]}]'
   postgres_deployer:
     build:
       context: ./postgres_deployer
