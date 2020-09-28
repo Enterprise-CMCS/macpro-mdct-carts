@@ -1,6 +1,8 @@
 [
   {
-      "model": "carts_api.State", "fields": { "code": "AL", "name": "Alabama" } },
+    "model": "carts_api.State",
+    "fields": { "code": "AL", "name": "Alabama" }
+  },
   { "model": "carts_api.State", "fields": { "code": "AK", "name": "Alaska" } },
   {
     "model": "carts_api.State",
