@@ -26,7 +26,11 @@ def main() -> None:
     )
 
     for doc, fixture in zip(docs, fixtures):
-        assert doc.name == fixture.name
+        if doc.name != fixture.name:
+            print(
+                "doc_json/fixture mismatch", doc.name, fixture.name, flush=True
+            )
+
         doc_json, fixture_json = load_json(doc), load_json(fixture)
         contents = fixture_json[0]["fields"]["contents"]
         if doc_json != contents:

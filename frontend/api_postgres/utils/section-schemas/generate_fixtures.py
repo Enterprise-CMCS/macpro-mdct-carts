@@ -7,6 +7,7 @@ from typing import (
 import json
 import csv
 import jsonschema  # type: ignore
+import shutil  # type: ignore
 from pathlib import Path
 
 Json = Union[dict, list]
@@ -116,12 +117,20 @@ def file_setup() -> Tuple[Path, Path, Path]:
     there = (django_root / "fixtures").resolve()
     states = (here / "state-files").resolve()
 
+    # In production these directories persist; we don't want fixtures from
+    # prior runs to remain, as they may cause problems in future (and already
+    # may be confusing the compare_fixtures.py script).
+    if there.exists() and there.is_dir():
+        shutil.rmtree(there)
+    if states.exists() and states.is_dir():
+        shutil.rmtree(states)
+
     # Break early if anything has moved unexpectedly:
     assert here.name == "section-schemas"
     assert here == django_root / "utils" / "section-schemas"
 
-    there.mkdir(exist_ok=True)
-    states.mkdir(exist_ok=True)
+    there.mkdir()
+    states.mkdir()
     return here, there, states
 
 
