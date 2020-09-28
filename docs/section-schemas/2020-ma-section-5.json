@@ -1,7 +1,7 @@
 {
   "section": {
     "year": 2020,
-    "state": "MA",
+    "state": null,
     "valid": null,
     "ordinal": 5,
     "id": "2020-05",
@@ -208,7 +208,7 @@
                     [
                       {"contents": "10% administrative cap"},
                       {"contents": "I need custom code",
-                       "$comment": "This should equal the total benefit cost calculated above, then divided by 9" }
+                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9" }
                     ]
                   ]
                 },
@@ -447,7 +447,7 @@
                     [
                       {"contents": "10% administrative cap"},
                       {"contents": "I need custom code for FFY 2020",
-                       "$comment": "This should equal the total benefit cost calculated above, then divided by 9" },
+                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9" },
                       {"contents": "I need custom code for FFY 2021",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9" }
                     ]
@@ -510,7 +510,7 @@
                     [
                       {"contents": "FMAP"},
                       {"contents": "I need custom code to pull FMAP for FFY 2020",
-                       "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)" },
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)" },
                       {"contents": "I need custom code to pull FMAP for FFY 2021",
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY1)" }
                     ],
@@ -573,7 +573,7 @@
                     "answer": {
                       "entry": null
                     },
-                    "context_data":{
+                    "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-05-a-04-11 is no or unanswered; noninteractive: hide if that's no.",
@@ -731,6 +731,6 @@
           }
         ]
       }
-     ]
+    ]
   }
 }

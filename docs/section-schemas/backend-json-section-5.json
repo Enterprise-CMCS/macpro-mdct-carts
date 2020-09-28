@@ -573,7 +573,7 @@
                     "answer": {
                       "entry": null
                     },
-                    "context_data":{
+                    "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
                         "comment": "Interactive: Hide if 2020-05-a-04-11 is no or unanswered; noninteractive: hide if that's no.",
