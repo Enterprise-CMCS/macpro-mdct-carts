@@ -17,8 +17,18 @@
             "id": "2020-05-a-01",
             "type": "part",
             "title": "Benefit Costs for FFY 2020",
-            "text": "Tell us how much you spent on your CHIP program over the last federal fiscal year. Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
+            "text": "Tell us how much you spent on your CHIP program over the last federal fiscal year.",
             "questions": [
+              {
+                "type": "fieldset",
+                "label": "Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
+                "context_data": {
+                  "show_if_state_program_type_in": [
+                    "combo"
+                  ]
+                },
+                "questions": []
+              },
               {
                 "id": "2020-05-a-01-01",
                 "label": "How much did you spend on Managed Care?",
