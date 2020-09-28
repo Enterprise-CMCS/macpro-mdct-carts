@@ -13,8 +13,10 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14'
-    - run: npm install prettier
-    - run: ./.github/workflows/schema-format.sh
+    - name: install prettier
+      run: npm install prettier
+    - name: run prettier against JSON
+      run: ./.github/workflows/schema-format.sh
   schema_validation:
     runs-on: ubuntu-latest
     container: python:3.8
