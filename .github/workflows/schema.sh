@@ -2,7 +2,7 @@
 
 set -e
 
-cd docs/section-schemas
+cd frontend/api_postgres/utils/section-schemas
 
 echo "Generating fixtures."
 python generate_fixtures.py
