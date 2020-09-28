@@ -138,3 +138,7 @@ node_modules
 #
 .jenkins/infra
 .vscode
+
+# JSON generation
+fixtures/
+state-files/

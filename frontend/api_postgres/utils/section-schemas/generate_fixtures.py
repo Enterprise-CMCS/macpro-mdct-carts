@@ -1,4 +1,9 @@
-from typing import Union
+from typing import (
+    List,
+    Tuple,
+    Union,
+    cast,
+)
 import json
 import csv
 import jsonschema  # type: ignore
@@ -8,16 +13,85 @@ Json = Union[dict, list]
 
 
 def main() -> None:
-    here = Path(__file__).parent.resolve()
-    django_root = here.parent.parent.resolve()
-    there = (django_root / "fixtures").resolve()
+    here, there, states = file_setup()
 
-    # Break early if anything has moved unexpectedly:
-    assert here.name == "section-schemas"
-    assert here == django_root / "utils" / "section-schemas"
+    write_state_json(here, there, states)
+    write_fixtures(here, there, states)
+    load_states(here, there)
+    load_acs_data(here, there)
+    load_fmap_data(here, there)
 
-    there.mkdir(exist_ok=True)
 
+def write_state_json(here: Path, there: Path, states: Path) -> None:
+    state_list = load_csv(here / "state-fixture-data.csv")
+    state_data = {_["State abbreviation"]: _ for _ in state_list}
+    state_json = cast(dict, load_json(here / "state_to_abbrev.json"))
+    state_abbrevs = {v: k for k, v in state_json.items()}
+
+    generic_files = sorted(here.glob("backend-json-section-*.json"))
+    generic_sections = [cast(dict, load_json(f)) for f in generic_files]
+    for k in list(state_abbrevs.keys()):
+        first = populate_section_zero(state_data[k], generic_sections[0])
+        write_json(states / f"2020-{k.lower()}-section-0.json", first)
+        rest = [
+            populate_section(state_data[k], s) for s in generic_sections[1:]
+        ]
+        for i, section in enumerate(rest):
+            num = i + 1
+            assert section["section"]["ordinal"] == num
+            write_json(
+                states / f"2020-{k.lower()}-section-{num}.json", section
+            )
+
+
+def populate_section_zero(state_info: dict, section: dict) -> dict:
+    section["section"]["state"] = state_info["State abbreviation"]
+    updates = (
+        ("2020-00-a-01-01", "State"),
+        ("2020-00-a-01-02", "Type"),
+        ("2020-00-a-01-03", "Program Names"),
+    )
+    questions = section["section"]["subsections"][0]["parts"][0]["questions"]
+    new_qs: List[dict] = []
+    for q in questions:
+        for q_id, key in updates:
+            if q.get("id") == q_id:
+                answer = {**q["answer"], **{"entry": state_info[key]}}
+                q = {**q, **{"answer": answer}}
+        new_qs.append(q)
+
+    contact = (
+        ("2020-00-a-01-04", "Contact"),
+        ("2020-00-a-01-05", "Title"),
+        ("2020-00-a-01-06", "Email"),
+        ("2020-00-a-01-07", "Address"),
+        ("2020-00-a-01-08", "Phone"),
+    )
+    contact_element = cast(dict, new_qs[-1])
+    contact_qs = contact_element["questions"]
+    new_contact_qs = []
+    for q in contact_qs:  # fragile but not that hard to change
+        for q_id, key in contact:
+            if q.get("id") == q_id:
+                answer = {**q["answer"], **{"entry": state_info[key]}}
+                q = {**q, **{"answer": answer}}
+        new_contact_qs.append(q)
+    new_contact_fieldset: dict = {
+        **contact_element,
+        **{"questions": new_contact_qs},
+    }
+    updated = new_qs[:1] + [new_contact_fieldset]
+
+    section["section"]["subsections"][0]["parts"][0]["questions"] = updated
+    return section
+
+
+def populate_section(state_info: dict, section: dict) -> dict:
+    section["section"]["state"] = state_info["State abbreviation"]
+    return section
+
+
+def write_fixtures(here: Path, there: Path, states: Path) -> None:
     def etl(fpath: Path, modelname: str, schema: Json) -> None:
         orig = load_json(fpath)
         jsonschema.validate(schema=schema, instance=orig)
@@ -32,12 +106,23 @@ def main() -> None:
     for f in here.glob("backend-json-section-*.json"):
         etl(f, "carts_api.sectionbase", schema)
 
-    for f in here.glob("2020-*.json"):
+    for f in states.glob("2020-*.json"):
         etl(f, "carts_api.section", schema)
 
-    load_states(here, there)
-    load_acs_data(here, there)
-    load_fmap_data(here, there)
+
+def file_setup() -> Tuple[Path, Path, Path]:
+    here = Path(__file__).parent.resolve()
+    django_root = here.parent.parent.resolve()
+    there = (django_root / "fixtures").resolve()
+    states = (here / "state-files").resolve()
+
+    # Break early if anything has moved unexpectedly:
+    assert here.name == "section-schemas"
+    assert here == django_root / "utils" / "section-schemas"
+
+    there.mkdir(exist_ok=True)
+    states.mkdir(exist_ok=True)
+    return here, there, states
 
 
 def transform(model, orig):
@@ -132,6 +217,10 @@ def load_fmap_data(here, there):
 
 def load_json(path: Path) -> Json:
     return json.loads(path.read_text())
+
+
+def load_csv(path: Path) -> list:
+    return [*csv.DictReader(path.open())]
 
 
 def write_json(path: Path, contents: Json) -> None:
