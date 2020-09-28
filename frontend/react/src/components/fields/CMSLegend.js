@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CMSLegend = ({ hint, id, label }) => {
+const CMSLegend = ({ hideNumber, hint, id, label }) => {
   let labelBits = "";
+
   if (id) {
     const lastHunk = Number.parseInt(id.substring(id.length - 2), 10);
     if (Number.isNaN(lastHunk)) {
@@ -18,18 +19,28 @@ const CMSLegend = ({ hint, id, label }) => {
 
   return (
     <legend className="ds-c-label">
-      {labelBits}
+      {!hideNumber && labelBits}
       {label}
-      {hint && <div className="ds-c-field__hint">{hint}</div>}
+      {hint && (
+        <div className="ds-c-field__hint">
+          {hint.split("\n").map((line) => (
+            <div>{line}</div>
+          ))}
+        </div>
+      )}
     </legend>
   );
 };
 CMSLegend.propTypes = {
+  hideNumber: PropTypes.bool,
   hint: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
 };
-CMSLegend.defaultProps = { hint: "" };
+CMSLegend.defaultProps = {
+  hideNumber: false,
+  hint: "",
+};
 
 export { CMSLegend };
 export default CMSLegend;
