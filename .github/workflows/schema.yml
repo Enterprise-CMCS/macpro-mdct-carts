@@ -15,7 +15,7 @@ jobs:
         node-version: '14'
     - name: install prettier
       run: npm install prettier
-    - name: run prettier against JSON
+    - name: run prettier against backend JSON
       run: ./.github/workflows/schema-format.sh
   schema_validation:
     runs-on: ubuntu-latest
