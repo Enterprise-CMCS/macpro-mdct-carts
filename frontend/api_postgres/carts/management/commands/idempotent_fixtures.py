@@ -35,7 +35,7 @@ class Command(BaseCommand):
         globs = ("states.json", "backend-j*.json", "2020-*.json", "acs.json")
         paths = []
         for glob in globs:
-            paths = paths + [_ for _ in fd.glob(glob)]
+            paths = paths + [_ for _ in sorted(fd.glob(glob))]
 
         schemapath = Path(fd, "backend-section.schema.json")
         paths = paths + [schemapath]
@@ -125,5 +125,6 @@ class Command(BaseCommand):
             if validating and is_new:
                 paths_to_load.append(path)
 
-        for path in paths_to_load:
+        for i, path in enumerate(paths_to_load):
+            print(i, path, flush=True)
             management.call_command("loaddata", path)
