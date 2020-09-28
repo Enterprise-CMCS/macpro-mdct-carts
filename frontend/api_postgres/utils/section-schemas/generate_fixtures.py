@@ -26,8 +26,8 @@ def main() -> None:
 def write_state_json(here: Path, there: Path, states: Path) -> None:
     state_list = load_csv(here / "state-fixture-data.csv")
     state_data = {_["State abbreviation"]: _ for _ in state_list}
-    state_json = cast(dict, load_json(here / "state_to_abbrev.json"))
-    state_abbrevs = {v: k for k, v in state_json.items()}
+    state_codes = cast(dict, load_json(here / "state_to_abbrev.json"))
+    state_abbrevs = {v: k for k, v in state_codes.items()}
 
     generic_files = sorted(here.glob("backend-json-section-*.json"))
     generic_sections = [cast(dict, load_json(f)) for f in generic_files]
