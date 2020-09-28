@@ -1,7 +1,7 @@
+import jsonschema  # type: ignore
 from django.contrib.postgres.fields import JSONField  # type: ignore
 from django.db import models  # type: ignore
-import json
-import jsonschema  # type: ignore
+from carts.carts_api.model_utils import US_STATES, USER_ROLES
 
 
 class SectionSchema(models.Model):
@@ -26,12 +26,23 @@ class Section(models.Model):
         schema = schema_object.contents
         jsonschema.validate(instance=self.contents, schema=schema)
 
+
+class AppUser(models.Model):
+    # Eventually state will need to be a foreign key reference to the
+    # appropriate State instance.
+    state = models.CharField(max_length=2, choices=US_STATES)
+    email = models.EmailField()
+    eua_id = models.CharField(max_length=4)
+    role = models.CharField(max_length=32, choices=USER_ROLES)
+
+
 class State(models.Model):
     """
     A model to hold and reference state specific information
     """
     code = models.CharField(help_text="A unique two-character state code", max_length=2, primary_key=True)
     name = models.CharField(help_text="Full state name", max_length=100)
+
 
 class FMAP(models.Model):
     """FMAP - Federal Medical Assistance Percentage - Rates used for determining
@@ -41,6 +52,7 @@ class FMAP(models.Model):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     fiscal_year = models.IntegerField(help_text="The 4-digit fiscal year for this FMAP")
     enhanced_FMAP = models.DecimalField(help_text="Enhanced FMAP percentage", decimal_places=2, max_digits=5)
+
 
 class ACS(models.Model):
     """ACS - American Community Survey data for each state for the number and

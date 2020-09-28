@@ -1,6 +1,6 @@
 
 output "application_endpoint" {
-  value = "https://${aws_cloudfront_distribution.www_distribution.domain_name}"
+  value = local.endpoint_ui
 }
 
 output "api_postgres_endpoint" {
