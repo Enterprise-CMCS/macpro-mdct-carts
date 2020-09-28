@@ -21,6 +21,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - PG_TABLESPACE=schipdata
       - PG_TABLESPACE_LOCATION=/app/pgdata
       - PG_DATABASE=postgres
