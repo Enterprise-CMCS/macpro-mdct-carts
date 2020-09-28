@@ -16,7 +16,7 @@ Json = Union[dict, list]
 def main() -> None:
     here, there, states = file_setup()
 
-    # write_state_json(here, there, states)
+    write_state_json(here, there, states)
     write_fixtures(here, there, states)
     load_states(here, there)
     load_acs_data(here, there)
@@ -26,12 +26,14 @@ def main() -> None:
 def write_state_json(here: Path, there: Path, states: Path) -> None:
     state_list = load_csv(here / "state-fixture-data.csv")
     state_data = {_["State abbreviation"]: _ for _ in state_list}
-    state_codes = cast(dict, load_json(here / "state_to_abbrev.json"))
-    state_abbrevs = {v: k for k, v in state_codes.items()}
+    # state_codes = cast(dict, load_json(here / "state_to_abbrev.json"))
+    # state_abbrevs = {v: k for k, v in state_codes.items()}
 
     generic_files = sorted(here.glob("backend-json-section-*.json"))
     generic_sections = [cast(dict, load_json(f)) for f in generic_files]
-    for k in list(state_abbrevs.keys()):
+    short_state_list = ("AK", "AZ", "MA")
+    # for k in list(state_abbrevs.keys()):
+    for k in short_state_list:
         first = populate_section_zero(state_data[k], generic_sections[0])
         write_json(states / f"2020-{k.lower()}-section-0.json", first)
         rest = [
