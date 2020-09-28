@@ -49,13 +49,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -96,13 +91,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -177,15 +167,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -229,15 +212,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-b-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -380,15 +356,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-c-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              "no",
-                              "na",
-                              null
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": ["no", "na", null],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -459,13 +428,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-c-01-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              "no",
-                              null
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": ["no", null],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -628,9 +592,7 @@
                           "$..*[?(@.id=='2020-03-c-02-02')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -647,9 +609,7 @@
                           "$..*[?(@.id=='2020-03-c-02-03')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -666,9 +626,7 @@
                           "$..*[?(@.id=='2020-03-c-02-04')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ]
                   ]
@@ -726,9 +684,7 @@
                         "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
                         "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry"
                       ],
-                      "actions": [
-                        "sum"
-                      ]
+                      "actions": ["sum"]
                     },
                     "questions": []
                   },
@@ -813,9 +769,7 @@
                           "$..*[?(@.id=='2020-03-c-03-03')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -832,9 +786,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ]
                   ]
@@ -886,9 +838,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04-a')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -905,9 +855,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -924,9 +872,7 @@
                           "$..*[?(@.id=='2020-03-c-03-04-c')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
                         ],
-                        "actions": [
-                          "percentage"
-                        ]
+                        "actions": ["percentage"]
                       }
                     ]
                   ]
@@ -2013,12 +1959,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2038,12 +1980,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2063,12 +2001,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2106,13 +2040,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2126,12 +2055,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2169,13 +2094,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-d-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2189,12 +2109,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2217,12 +2133,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2242,12 +2154,8 @@
                     "hide_if": {
                       "target": "$..*[?(@.id=='2020-03-d-01-01')].answer.entry",
                       "values": {
-                        "interactive": [
-                          "no"
-                        ],
-                        "noninteractive": [
-                          "no"
-                        ]
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
                       }
                     }
                   }
@@ -2296,15 +2204,69 @@
               },
               {
                 "id": "2020-03-e-01-02",
-                "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
-                "hint": "This only applies to states operating an 1115 demo.",
+                "label": "Does your premium assistance program include coverage for adults",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
+                },
+                "questions": [
+                  {
+                    "id": "2020-03-e-01-02-a",
+                    "label": "Who do you cover?",
+                    "type": "checkbox",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "parents",
+                          "label": "Parents"
+                        },
+                        {
+                          "value": "caretaker_relatives",
+                          "label": "Caretaker relatives"
+                        },
+                        {
+                          "value": "pregnant_women",
+                          "label": "Pregnant women"
+                        }
+                      ]
+                    },
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "comment": "Interactive: Hide if 2020-03-e-01-02 is unanswered or no; noninteractive: hide if that's no.",
+                        "hide_if": {
+                          "target": "$..*[?(@.id=='2020-03-e-01-02')].answer.entry",
+                          "values": {
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-e-01-03",
+                "label": "How does your premium assistance program operate? How do you coordinate premium assistance with employers? Who receives the subsidy (if applicable)?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
               },
               {
-                "id": "2020-03-e-01-03",
+                "id": "2020-03-e-01-04",
                 "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
@@ -2323,7 +2285,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-04",
+                "id": "2020-03-e-01-05",
                 "label": "Does your premium assistance program meet the same cost sharing requirements as that of the CHIP program?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
@@ -2346,7 +2308,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-05",
+                "id": "2020-03-e-01-06",
                 "label": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
@@ -2365,7 +2327,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-03-e-01-05-a",
+                    "id": "2020-03-e-01-06-a",
                     "label": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
                     "type": "text_multiline",
                     "answer": {
@@ -2378,13 +2340,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-e-01-09')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2393,7 +2350,7 @@
                 ]
               },
               {
-                "id": "2020-03-e-01-06",
+                "id": "2020-03-e-01-07",
                 "label": "How many children were enrolled in the premium assistance program on average each month in the last FFY?",
                 "type": "text_multiline",
                 "answer": {
@@ -2406,7 +2363,7 @@
                 "hint": "Your answers will auto-populate the table below.",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-07",
+                    "id": "2020-03-e-01-08",
                     "label": "What’s the average monthly contribution the state pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -2414,7 +2371,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-08",
+                    "id": "2020-03-e-01-09",
                     "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -2422,7 +2379,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-09",
+                    "id": "2020-03-e-01-10",
                     "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -2474,41 +2431,27 @@
                 "label": "Range in monthly contributions paid by state",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-10",
+                    "id": "2020-03-e-01-11",
                     "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
                   },
                   {
-                    "id": "2020-03-e-01-11",
+                    "id": "2020-03-e-01-12",
                     "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
                       "header": "Average Monthly Contribution",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "money"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["money"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -2520,41 +2463,27 @@
                 "label": "Range in family income levels",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-12",
+                    "id": "2020-03-e-01-13",
                     "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
                   },
                   {
-                    "id": "2020-03-e-01-13",
+                    "id": "2020-03-e-01-14",
                     "label": "What’s the range in income levels for children who receive premium assistance?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
                       "header": "Federal Poverty Levels",
-                      "range_categories": [
-                        [
-                          "Starts at",
-                          "Ends at"
-                        ]
-                      ],
-                      "range_type": [
-                        "percentage"
-                      ],
+                      "range_categories": [["Starts at", "Ends at"]],
+                      "range_type": ["percentage"],
                       "entry_min": 1,
                       "entry_max": 1
                     }
@@ -2562,7 +2491,7 @@
                 ]
               },
               {
-                "id": "2020-03-e-01-14",
+                "id": "2020-03-e-01-15",
                 "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
                 "type": "text_multiline",
                 "answer": {
@@ -2570,7 +2499,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-15",
+                "id": "2020-03-e-01-16",
                 "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
                 "type": "text_multiline",
                 "answer": {
@@ -2578,7 +2507,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-16",
+                "id": "2020-03-e-01-17",
                 "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
                 "type": "text_multiline",
                 "answer": {
@@ -2586,7 +2515,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-17",
+                "id": "2020-03-e-01-18",
                 "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
@@ -2712,15 +2641,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no",
-                              "na"
-                            ],
-                            "noninteractive": [
-                              "no",
-                              "na"
-                            ]
+                            "interactive": [null, "no", "na"],
+                            "noninteractive": ["no", "na"]
                           }
                         }
                       }
@@ -2860,13 +2782,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-15')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -2906,13 +2823,8 @@
                           "comment": "Interactive: Hide if 2020-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no.",
                           "target": "$..*[?(@.id=='2020-03-f-01-16')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3483,13 +3395,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3511,12 +3418,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
+                    "interactive": ["no"],
+                    "noninteractive": ["no"]
                   }
                 }
               }
@@ -3635,15 +3538,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-h-02-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "5.0",
-                              "5.0H"
-                            ],
-                            "noninteractive": [
-                              "5.0",
-                              "5.0H"
-                            ]
+                            "interactive": [null, "5.0", "5.0H"],
+                            "noninteractive": ["5.0", "5.0H"]
                           }
                         }
                       }
@@ -3694,19 +3590,12 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-04 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
+                        "comment": "Interactive: Hide if 2020-03-h-02-04 selection does not include 'other'; noninteractive: hide if NOT 'other'",
+                        "hide_if_not": {
                           "target": "$..*[?(@.id=='2020-03-h-02-04')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "none",
-                              "chronic"
-                            ],
-                            "noninteractive": [
-                              "none",
-                              "chronic"
-                            ]
+                            "interactive": ["other"],
+                            "noninteractive": ["other"]
                           }
                         }
                       }
@@ -3743,19 +3632,12 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-h-02-05 is unanswered or NOT 'other'; noninteractive: hide if NOT other",
-                        "hide_if": {
+                        "comment": "Interactive: Hide if 2020-03-h-02-05 selection does not include 'other'; noninteractive: hide if NOT 'other'",
+                        "hide_if_not": {
                           "target": "$..*[?(@.id=='2020-03-h-02-05')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "ncqa hedis cahps 5.0h",
-                              "hrq cahps"
-                            ],
-                            "noninteractive": [
-                              "ncqa hedis cahps 5.0h",
-                              "hrq cahps"
-                            ]
+                            "interactive": ["other"],
+                            "noninteractive": ["other"]
                           }
                         }
                       }
@@ -3795,12 +3677,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-h-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      "yes"
-                    ],
-                    "noninteractive": [
-                      "yes"
-                    ]
+                    "interactive": ["yes"],
+                    "noninteractive": ["yes"]
                   }
                 }
               }
@@ -3916,12 +3794,8 @@
                 "hide_if": {
                   "target": "$..*[?(@.id=='2020-03-i-01-01')].answer.entry",
                   "values": {
-                    "interactive": [
-                      "no"
-                    ],
-                    "noninteractive": [
-                      "no"
-                    ]
+                    "interactive": ["no"],
+                    "noninteractive": ["no"]
                   }
                 }
               }
@@ -3971,14 +3845,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  null,
-                                  "yes"
-                                ],
-                                "noninteractive": [
-                                  null,
-                                  "yes"
-                                ]
+                                "interactive": [null, "yes"],
+                                "noninteractive": [null, "yes"]
                               }
                             }
                           }
@@ -3999,12 +3867,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4024,12 +3888,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4049,12 +3909,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4068,9 +3924,7 @@
                             "$..*[?(@.id=='2020-03-i-02-01-01-05')].answer.entry",
                             "$..*[?(@.id=='2020-03-i-02-01-01-04')].answer.entry"
                           ],
-                          "actions": [
-                            "percentage"
-                          ]
+                          "actions": ["percentage"]
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4101,12 +3955,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4127,12 +3977,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4152,12 +3998,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4177,12 +4019,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -4202,12 +4040,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
