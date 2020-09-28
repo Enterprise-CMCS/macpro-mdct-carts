@@ -45,7 +45,7 @@
               },
               {
                 "id": "2020-05-a-01-04",
-                "label": "How much did you receive in cost sharing from beneficiaries to offset your costs?",
+                "label": "How much did you receive in cost sharing (out-of-pocket) payments from beneficiaries to offset your costs?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -57,34 +57,56 @@
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "rows":[
+                  "rows": [
                     [
-                      {"contents": "Managed Care"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-01')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Managed Care" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Fee for Service"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-02')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Fee for Service" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Other benefit costs"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-03')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Other benefit costs" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Cost sharing from beneficiaries"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-04')].answer.entry"], "actions": ["identity"]}
+                      {
+                        "contents": "Cost sharing payments from beneficiaries"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Total benefit costs"},
+                      { "contents": "Total benefit costs" },
                       {
                         "targets": [
                           "$..*[?(@.id=='2020-05-a-01-01')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-01-02')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-01-03')].answer.entry",
-                          "-($..*[?(@.id=='2020-05-a-01-04')].answer.entry)"
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
                         ],
-                        "$comment": "There is a minus sign in front of the selected value for 2020-05-a-01-04 to indicate it should be subtracted",
-                        "actions": ["sum"]
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ + + -"
                       }
                     ]
                   ]
@@ -110,6 +132,7 @@
               {
                 "id": "2020-05-a-02-02",
                 "label": "How much did you spend on general administration?",
+                "hint": "This includes overhead costs such as utilities, equipment, and any repairs.",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -117,7 +140,7 @@
               },
               {
                 "id": "2020-05-a-02-03",
-                "label": "How much did you spend on contractors and brokers, such as enrollment contractors?",
+                "label": "How much did you spend on contractors and brokers, such as enrollment contractors (if you worked with any)?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -141,7 +164,7 @@
               },
               {
                 "id": "2020-05-a-02-06",
-                "label": "How much did you spend on your Health Services Initiatives (HSI) if you have any?",
+                "label": "How much did you spend on your Health Services Initiatives (HSI) (if you have any)?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -158,40 +181,75 @@
               {
                 "type": "fieldset",
                 "label": "Table 2: Administrative Costs for FFY 2020",
-                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). The 10% administrative cap is calculated by dividing the total benefit costs by 9.",
+                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). That means your total benefit costs cannot be less than 90% of your total program costs. The 10% administrative cap is calculated by dividing the total benefit costs (90% of your program costs) by 9, or the max you can spend on the remaining 10% for your total administrative costs.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "rows":[
+                  "rows": [
                     [
-                      {"contents": "Personnel"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-01')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Personnel" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "General administration"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-02')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "General administration" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Contractors and brokers"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-03')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Contractors and brokers" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Claims processing"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-04')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Claims processing" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Outreach and marketing"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-05')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Outreach and marketing" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-05')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Health Services Initiatives (HSI)"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-06')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Health Services Initiatives (HSI)" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-06')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Other administrative costs"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-07')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Other administrative costs" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-07')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Total administrative costs"},
+                      { "contents": "Total administrative costs" },
                       {
                         "targets": [
                           "$..*[?(@.id=='2020-05-a-02-01')].answer.entry",
@@ -206,9 +264,18 @@
                       }
                     ],
                     [
-                      {"contents": "10% administrative cap"},
-                      {"contents": "I need custom code",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9" }
+                      { "contents": "10% administrative cap" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-01')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-02')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-03')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
+                        ],
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ + + - / 9",
+                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                      }
                     ]
                   ]
                 },
@@ -219,12 +286,12 @@
           {
             "id": "2020-05-a-03",
             "type": "part",
-            "title": "Projected Benefit Costs for FFY 2021 and 2022",
-            "text": "Tell us how much you anticipate spending on your CHIP program in the upcoming two federal fiscal years.",
+            "title": "Projected Benefit Costs for FFY 2021",
+            "text": "Let’s take a look at your projected costs for FFY 2021. Tell us how much you anticipate spending on your CHIP program in the upcoming federal fiscal year. Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
             "questions": [
               {
                 "id": "2020-05-a-03-01",
-                "label": "How much do you anticipate spending on Managed Care?",
+                "label": "How much do you anticipate spending on Managed Care programs?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -232,7 +299,7 @@
               },
               {
                 "id": "2020-05-a-03-02",
-                "label": "How much do you anticipate spending on Fee for Service?",
+                "label": "How much do you anticipate spending on Fee for Service programs?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -248,7 +315,7 @@
               },
               {
                 "id": "2020-05-a-03-04",
-                "label": "How much do you anticipate receiving in cost sharing from beneficiaries?",
+                "label": "How much do you anticipate receiving in cost sharing (out-of-pocket) payments from beneficiaries?",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -256,53 +323,99 @@
               },
               {
                 "type": "fieldset",
-                "label": "Table 3: Benefit Costs for FFY 2020, 2021, and 2022",
+                "label": "Table 3: Benefits Costs for FFY 2020 and 2021",
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
-                  "rows":[
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "FFY 2020" },
+                    { "contents": "FFY 2021" }
+                  ],
+                  "rows": [
                     [
-                      {"contents": "Managed Care"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-01')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-03-01')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Managed Care" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-03-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Fee for Service"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-02')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-03-02')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Fee for Service" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-03-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Other benefit costs"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-03')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-03-03')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Other benefit costs" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-03-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Cost sharing payments from beneficiaries"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-01-04')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-03-04')].answer.entry"], "actions": ["identity"]}
+                      {
+                        "contents": "Cost sharing payments from beneficiaries"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-03-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Total benefit costs"},
+                      { "contents": "Total benefit costs" },
                       {
                         "targets": [
                           "$..*[?(@.id=='2020-05-a-01-01')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-01-02')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-01-03')].answer.entry",
-                          "-($..*[?(@.id=='2020-05-a-01-04')].answer.entry)"
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
                         ],
-                        "$comment": "There is a minus sign in front of the selected value for 2020-05-a-01-04 to indicate it should be subtracted",
-                        "actions": ["sum"]
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ + + -"
                       },
                       {
                         "targets": [
                           "$..*[?(@.id=='2020-05-a-03-01')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-03-02')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-03-03')].answer.entry",
-                          "-($..*[?(@.id=='2020-05-a-03-04')].answer.entry)"
+                          "$..*[?(@.id=='2020-05-a-03-04')].answer.entry"
                         ],
-                        "$comment": "There is a minus sign in front of the selected value for 2020-05-a-01-04 to indicate it should be subtracted",
-                        "actions": ["sum"]
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ + + -"
                       }
                     ]
                   ]
@@ -314,9 +427,8 @@
           {
             "id": "2020-05-a-04",
             "type": "part",
-            "title": "Projected Administrative Costs for FFY 2021 and 2022",
-            "questions":
-            [
+            "title": "Projected Administrative Costs for FFY 2021",
+            "questions": [
               {
                 "id": "2020-05-a-04-01",
                 "label": "How much do you anticipate spending on personnel?",
@@ -329,6 +441,7 @@
               {
                 "id": "2020-05-a-04-02",
                 "label": "How much do you anticipate spending on general administration?",
+                "hint": "This includes overhead costs such as utilities, equipment, and any repairs.",
                 "type": "money",
                 "answer": {
                   "entry": null
@@ -376,49 +489,123 @@
               },
               {
                 "type": "fieldset",
-                "label": "Table 4: Administrative Costs for FFY 2020, 2021, and 2022",
-                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). The 10% administrative cap is calculated by dividing the total benefit costs by 9.",
+                "label": "Table 4: Administrative Costs for FFY 2020 and 2021",
+                "hint": "This table is auto-populated with the data you entered above. Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). That means your total benefit costs cannot be less than 90% of your total program costs. The 10% administrative cap is calculated by dividing the total benefit costs (90% of your program costs) by 9, or the max you can spend on the remaining 10% for your total administrative costs.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
-                  "rows":[
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "FFY 2020" },
+                    { "contents": "FFY 2021" }
+                  ],
+                  "rows": [
                     [
-                      {"contents": "Personnel"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-01')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-01')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Personnel" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "General administration"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-02')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-02')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "General administration" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Contractors and brokers"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-03')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-03')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Contractors and brokers" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Claims processing"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-04')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-04')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Claims processing" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Outreach and marketing"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-05')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-05')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Outreach and marketing" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-05')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-05')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Health Services Initiatives (HSI)"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-06')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-06')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Health Services Initiatives (HSI)" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-06')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-06')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Other administrative costs"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-02-07')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-04-07')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Other administrative costs" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-02-07')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-04-07')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "Total administrative costs"},
+                      { "contents": "Total administrative costs" },
                       {
                         "targets": [
                           "$..*[?(@.id=='2020-05-a-02-01')].answer.entry",
@@ -445,11 +632,29 @@
                       }
                     ],
                     [
-                      {"contents": "10% administrative cap"},
-                      {"contents": "I need custom code for FFY 2020",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9" },
-                      {"contents": "I need custom code for FFY 2021",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9" }
+                      { "contents": "10% administrative cap" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-01-01')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-02')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-03')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
+                        ],
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ + + - / 9",
+                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-03-01')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-03-02')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-03-03')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-03-04')].answer.entry"
+                        ],
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ + + - / 9",
+                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                      }
                     ]
                   ]
                 },
@@ -458,7 +663,7 @@
               {
                 "id": "2020-05-a-04-08",
                 "label": "Did you base any of your projected costs on any assumptions?",
-                "hint": "For example: estimated enrollment numbers, new programs, or funding sources.",
+                "hint": "For example: estimated enrollment numbers, new programs, and funding sources.",
                 "type": "text_medium",
                 "answer": {
                   "entry": null
@@ -467,13 +672,17 @@
               {
                 "type": "fieldset",
                 "label": "Table 5: Federal and State Shares",
-                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (FMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the FMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
+                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (FMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. This table is auto-calculated using the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
-                  "rows":[
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "FFY 2020" },
+                    { "contents": "FFY 2021" }
+                  ],
+                  "rows": [
                     [
-                      {"contents": "Total program costs"},
+                      { "contents": "Total program costs" },
                       {
                         "targets": [
                           "$..*[?(@.id=='2020-05-a-02-01')].answer.entry",
@@ -486,9 +695,10 @@
                           "$..*[?(@.id=='2020-05-a-01-01')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-01-02')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-01-03')].answer.entry",
-                          "-($..*[?(@.id=='2020-05-a-01-04')].answer.entry)"
+                          "$..*[?(@.id=='2020-05-a-01-04')].answer.entry"
                         ],
-                        "actions": ["sum"]
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + + + + + + + + -"
                       },
                       {
                         "targets": [
@@ -502,27 +712,40 @@
                           "$..*[?(@.id=='2020-05-a-03-01')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-03-02')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-03-03')].answer.entry",
-                          "-($..*[?(@.id=='2020-05-a-03-04')].answer.entry)"
+                          "$..*[?(@.id=='2020-05-a-03-04')].answer.entry"
                         ],
-                        "actions": ["sum"]
+                        "actions": ["rpn"],
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + + + + + + + + -"
                       }
                     ],
                     [
-                      {"contents": "FMAP"},
-                      {"contents": "I need custom code to pull FMAP for FFY 2020",
-                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)" },
-                      {"contents": "I need custom code to pull FMAP for FFY 2021",
-                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY1)" }
+                      { "contents": "FMAP" },
+                      {
+                        "contents": "I need custom code to pull FMAP for FFY 2020",
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
+                      },
+                      {
+                        "contents": "I need custom code to pull FMAP for FFY 2021",
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY1)"
+                      }
                     ],
                     [
-                      {"contents": "Federal share"},
-                      {"contents": "I need custom code to calculate the federal share for FFY 2020"},
-                      {"contents": "I need custom code to calculate the federal share for FFY 2021"}
+                      { "contents": "Federal share" },
+                      {
+                        "contents": "I need custom code to calculate the federal share for FFY 2020"
+                      },
+                      {
+                        "contents": "I need custom code to calculate the federal share for FFY 2021"
+                      }
                     ],
                     [
-                      {"contents": "State share"},
-                      {"contents": "I need custom code to calculate the state share for FFY 2020"},
-                      {"contents": "I need custom code to calculate the state share for FFY 2021"}
+                      { "contents": "State share" },
+                      {
+                        "contents": "I need custom code to calculate the state share for FFY 2020"
+                      },
+                      {
+                        "contents": "I need custom code to calculate the state share for FFY 2021"
+                      }
                     ]
                   ]
                 },
@@ -535,13 +758,28 @@
                 "type": "checkbox",
                 "answer": {
                   "options": [
-                    {"label": "State appropriations", "value": "stateappropriations"},
-                    {"label": "County/local funds", "value": "localfunds" },
-                    {"label": "Employer contributions", "value": "employercontributions" },
-                    {"label": "Foundation grants", "value": "foundationgrants"},
-                    {"label": "Private donations", "value": "privatedonations"},
-                    {"label": "Tobacco settlement", "value": "tobaccosettlement"},
-                    {"label": "Other", "value": "other"}
+                    {
+                      "label": "State appropriations",
+                      "value": "stateappropriations"
+                    },
+                    { "label": "County/local funds", "value": "localfunds" },
+                    {
+                      "label": "Employer contributions",
+                      "value": "employercontributions"
+                    },
+                    {
+                      "label": "Foundation grants",
+                      "value": "foundationgrants"
+                    },
+                    {
+                      "label": "Private donations",
+                      "value": "privatedonations"
+                    },
+                    {
+                      "label": "Tobacco settlement",
+                      "value": "tobaccosettlement"
+                    },
+                    { "label": "Other", "value": "other" }
                   ],
                   "entry": null
                 }
@@ -560,15 +798,15 @@
                 "type": "radio",
                 "answer": {
                   "options": [
-                    {"label": "Yes", "value": "yes"},
-                    {"label": "No", "value": "no"}
+                    { "label": "Yes", "value": "yes" },
+                    { "label": "No", "value": "no" }
                   ],
                   "entry": null
                 },
-                "questions":[
+                "questions": [
                   {
                     "id": "2020-05-a-04-11-a",
-                    "label": "Briefly explain why your state didn’t have enough funding to cover your CHIP program costs.",
+                    "label": "Briefly explain why your state didn’t have enough funding to cover your program costs.",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -596,8 +834,7 @@
             "type": "part",
             "title": "Managed Care Costs",
             "text": "Complete this section only if you have a Managed Care delivery system.",
-            "questions":
-            [
+            "questions": [
               {
                 "id": "2020-05-a-05-01",
                 "type": "integer",
@@ -618,7 +855,7 @@
               {
                 "id": "2020-05-a-05-03",
                 "type": "integer",
-                "label": "How many children do you anticipate will be eligible for Managed Care in FFY 2021 and 2022?",
+                "label": "How many children do you anticipate will be eligible for Managed Care in FFY 2021?",
                 "answer": {
                   "entry": null
                 }
@@ -626,7 +863,7 @@
               {
                 "id": "2020-05-a-05-04",
                 "type": "money",
-                "label": "What is your projected PMPM cost for FFY 2021 and 2022 based on the anticipated number of children eligible for Managed Care?",
+                "label": "What is your projected PMPM cost for FFY 2021 based on the anticipated number of children eligible for a Managed Care program?",
                 "hint": "Round to the nearest whole number.",
                 "answer": {
                   "entry": null
@@ -638,17 +875,41 @@
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
-                  "rows":[
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "FFY 2020" },
+                    { "contents": "FFY 2021" }
+                  ],
+                  "rows": [
                     [
-                      {"contents": "Eligible children"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-05-01')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-05-03')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Eligible children" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-05-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-05-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "PMPM cost"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-05-02')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-05-04')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "PMPM cost" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-05-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-05-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ]
                   ]
                 },
@@ -661,8 +922,7 @@
             "type": "part",
             "title": "Fee for Service Costs",
             "text": "Complete this section only if you have a Fee for Service delivery system.",
-            "questions":
-            [
+            "questions": [
               {
                 "id": "2020-05-a-06-01",
                 "type": "integer",
@@ -683,7 +943,7 @@
               {
                 "id": "2020-05-a-06-03",
                 "type": "integer",
-                "label": "How many children do you anticipate will be eligible for Fee for Service in FFY 2021 and 2022?",
+                "label": "How many children do you anticipate will be eligible for Fee for Service in FFY 2021?",
                 "answer": {
                   "entry": null
                 }
@@ -691,7 +951,7 @@
               {
                 "id": "2020-05-a-06-04",
                 "type": "money",
-                "label": "What is your projected PMPM cost for FFY 2021 and 2022 based on the anticipated number of children eligible for Fee for Service?",
+                "label": "What is your projected PMPM cost for FFY 2021 based on the anticipated number of children eligible for Fee for Service?",
                 "hint": "Round to the nearest whole number.",
                 "answer": {
                   "entry": null
@@ -703,17 +963,41 @@
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": [{"contents": ""}, {"contents": "FFY 2020"}, {"contents": "FFY 2021"}],
-                  "rows":[
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "FFY 2020" },
+                    { "contents": "FFY 2021" }
+                  ],
+                  "rows": [
                     [
-                      {"contents": "Eligible children"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-06-01')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-06-03')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "Eligible children" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-06-01')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-06-03')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ],
                     [
-                      {"contents": "PMPM cost"},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-06-02')].answer.entry"], "actions": ["identity"]},
-                      {"targets": ["$..*[?(@.id=='2020-05-a-06-04')].answer.entry"], "actions": ["identity"]}
+                      { "contents": "PMPM cost" },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-06-02')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-05-a-06-04')].answer.entry"
+                        ],
+                        "actions": ["identity"]
+                      }
                     ]
                   ]
                 },
@@ -722,7 +1006,7 @@
               {
                 "id": "2020-05-a-06-05",
                 "type": "text_multiline",
-                "label": "Is there anything else you’d like to add about your program finances that wasn’t already covered?",
+                "label": "Anything else you’d like to add about your program finances that wasn’t already covered?",
                 "answer": {
                   "entry": null
                 }
