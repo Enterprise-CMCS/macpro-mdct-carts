@@ -1,3 +1,9 @@
+PROGRAM_TYPES = (
+    ("combo", "Combination"),
+    ("medicaid_exp_chip", "Medicaid Expansion CHIP only"),
+    ("separate_chip", "Separate CHIP only"),
+)
+
 US_STATES = (
     ("AK", "Alaska"),
     ("AL", "Alabama"),
@@ -61,6 +67,6 @@ US_TERRITORIES = (
 )
 
 USER_ROLES = (
-    ("state_user", "State User"),
     ("co_user", "Central Office User"),
+    ("state_user", "State User"),
 )

@@ -1,7 +1,10 @@
 import jsonschema  # type: ignore
-from django.contrib.postgres.fields import JSONField  # type: ignore
+from django.contrib.postgres.fields import (  # type: ignore
+    ArrayField,
+    JSONField,
+)
 from django.db import models  # type: ignore
-from carts.carts_api.model_utils import US_STATES, USER_ROLES
+from carts.carts_api.model_utils import PROGRAM_TYPES, US_STATES, USER_ROLES
 
 
 class SectionSchema(models.Model):
@@ -47,6 +50,10 @@ class State(models.Model):
         primary_key=True,
     )
     name = models.CharField(help_text="Full state name", max_length=100)
+    program_type = models.CharField(
+        max_length=32, choices=PROGRAM_TYPES, default="combo"
+    )
+    program_names = ArrayField(models.CharField(max_length=64), default=list)
 
 
 class FMAP(models.Model):

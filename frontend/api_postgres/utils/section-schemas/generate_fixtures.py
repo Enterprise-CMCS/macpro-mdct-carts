@@ -16,14 +16,14 @@ Json = Union[dict, list]
 def main() -> None:
     here, there, states = file_setup()
 
-    write_state_json(here, there, states)
     write_fixtures(here, there, states)
-    load_states(here, there)
+    write_states(here, there)
+    write_state_section_json(here, there, states)
     load_acs_data(here, there)
     load_fmap_data(here, there)
 
 
-def write_state_json(here: Path, there: Path, states: Path) -> None:
+def write_state_section_json(here: Path, there: Path, states: Path) -> None:
     state_list = load_csv(here / "state-fixture-data.csv")
     state_data = {_["State abbreviation"]: _ for _ in state_list}
     # state_codes = cast(dict, load_json(here / "state_to_abbrev.json"))
@@ -153,18 +153,21 @@ def transform(model, orig):
     return [entry]
 
 
-def load_states(here, there):
-    state_to_abbrev = json.loads(
-        Path(here, "state_to_abbrev.json").read_text()
-    )
-    states = []
-    for name, abbrev in state_to_abbrev.items():
-        obj = {
+def write_states(here, there):
+    def to_object(state_dict: dict) -> dict:
+        names = [_.strip() for _ in state_dict["Program Names"].split(",")]
+        return {
             "model": "carts_api.State",
-            "fields": {"code": abbrev, "name": name},
+            "fields": {
+                "code": state_dict["State abbreviation"],
+                "name": state_dict["State"],
+                "program_type": state_dict["Type"],
+                "program_names": names,
+            },
         }
-        states.append(obj)
 
+    state_list = load_csv(here / "state-fixture-data.csv")
+    states = [to_object(state) for state in state_list]
     output = Path(there, "states.json")
     output.write_text(json.dumps(states))
 
