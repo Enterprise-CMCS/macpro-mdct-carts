@@ -3,12 +3,13 @@ import fakeUserData from "../store/fakeUserData";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
+export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
 const temp__data = require("./initial.json");
 
 export const loadUserThenSections = ({ userData }) => {
-  const userToken = userData.userToken;
+  const {userToken} = userData;
   return async (dispatch) => {
     await axios
       .get(`${window._env_.API_POSTGRES_URL}/api/v1/appusers/${userToken}`)
@@ -17,6 +18,7 @@ export const loadUserThenSections = ({ userData }) => {
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
         dispatch(getUserData(res.data.currentUser));
+        dispatch(getAllStatesData({ userData: res.data }));
       })
       .catch((res) => {
         /*
@@ -27,7 +29,7 @@ export const loadUserThenSections = ({ userData }) => {
         const stateAbbr = userToken.split("-")[1].toUpperCase();
         const userData = fakeUserData[stateAbbr];
 
-        dispatch(loadSections({ userData: userData }));
+        dispatch(loadSections({ userData }));
         dispatch(getProgramData(userData));
         dispatch(getStateData(userData));
         dispatch(getUserData(userData.currentUser));
@@ -82,6 +84,21 @@ export const loadSections = ({ userData }) => {
   };
 };
 
+export const getAllStatesData = ({ userData }) => {
+  return async (dispatch) => {
+    const { data } = await axios
+      .get(
+        `${window._env_.API_POSTGRES_URL}/state/`
+      )
+      .catch((err) => {
+        console.log("error:", err);
+        console.dir(err);
+      })
+
+    dispatch({ type: GET_ALL_STATES_DATA, data });
+  }
+}
+
 // Move this to where actions should go when we know where that is.
 export const setAnswerEntry = (fragmentId, something) => {
   const value =
@@ -90,7 +107,7 @@ export const setAnswerEntry = (fragmentId, something) => {
       : something;
   return {
     type: QUESTION_ANSWERED,
-    fragmentId: fragmentId,
+    fragmentId,
     data: value,
   };
 };
