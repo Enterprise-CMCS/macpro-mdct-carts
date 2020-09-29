@@ -10,12 +10,14 @@ import python_jwt as jwt  # type: ignore
 import requests
 
 from django.contrib.auth.models import User, Group  # type: ignore
+from django.db import transaction  # type: ignore
 from django.http import HttpResponse, HttpResponseForbidden  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
 from rest_framework.decorators import api_view  # type: ignore
+from rest_framework.exceptions import ValidationError  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
@@ -110,8 +112,10 @@ def sections_by_year_and_state(request, year, state):
         return Response(serializer.data)
 
 @api_view(["POST"])
+@transaction.atomic
 def update_sections(request):
     try:
+        
         for entry in request.data:
             section_id = entry['contents']['section']['id']
             section_state = entry['contents']['section']['state']
@@ -122,8 +126,8 @@ def update_sections(request):
             section.contents = entry['contents']
             section.save()
 
-    except Section.DoesNotExist:
-        return HttpResponse(status=400)
+    except:
+        raise ValidationError('There is a problem with the provided data.', 400)
 
     return HttpResponse(status=204)
 
