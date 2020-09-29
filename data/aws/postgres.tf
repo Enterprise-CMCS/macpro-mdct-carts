@@ -76,11 +76,25 @@ resource "aws_db_parameter_group" "db_param_group" {
   parameter {
     name  = "pgaudit.role"
     value = "rds_pgaudit"
+    apply_method = "pending-reboot"
   }
 
   parameter {
     name  = "pgaudit.log"
     value = "ALL"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "shared_preload_libraries"
+    value = "pg_stat_statements, pgaudit"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "10000"
+    apply_method = "pending-reboot"
   }
 }
 
