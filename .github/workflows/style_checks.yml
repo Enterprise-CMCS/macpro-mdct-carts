@@ -32,4 +32,4 @@ jobs:
       - name: install black
         run: pip install black
       - name: run black
-        run: black --check --skip-string-normalization $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .py$ | xargs)
+        run: black --check --line-length 79 --skip-string-normalization $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .py$ | xargs)
