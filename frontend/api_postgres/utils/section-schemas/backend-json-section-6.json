@@ -1,7 +1,7 @@
 {
   "section": {
     "year": 2020,
-    "state": "AK",
+    "state": null,
     "valid": null,
     "ordinal": 6,
     "id": "2020-06",
@@ -11,6 +11,7 @@
       {
         "type": "subsection",
         "id": "2020-06-a",
+        "title": "Challenges and Accomplishments",
         "parts": [
           {
             "id": "2020-06-a-01",
