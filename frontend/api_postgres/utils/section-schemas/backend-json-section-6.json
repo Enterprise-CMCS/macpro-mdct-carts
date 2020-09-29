@@ -11,7 +11,6 @@
       {
         "type": "subsection",
         "id": "2020-06-a",
-        "title": "Challenges and Accomplishments",
         "parts": [
           {
             "id": "2020-06-a-01",
@@ -27,7 +26,7 @@
               },
               {
                 "id": "2020-06-a-01-02",
-                "label": "What’s the greatest challenge your CHIP program has experienced in FFY 2020?",
+                "label": "What’s the greatest challenge your CHIP program has faced in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -43,8 +42,24 @@
               },
               {
                 "id": "2020-06-a-01-04",
-                "label": "Anything else you’d like to add about your state’s challenges and accomplishments?",
+                "label": "What changes have you made to your CHIP program in FFY 2020 or plan to make in FFY 2021? Why have you decided to make these changes?",
                 "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-05",
+                "label": "Is there anything else you’d like to add about your state’s challenges and accomplishments?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-06",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
                 "answer": {
                   "entry": null
                 }
