@@ -83,7 +83,7 @@ def populate_section_zero(state_info: dict, section: dict) -> dict:
         **contact_element,
         **{"questions": new_contact_qs},
     }
-    updated = new_qs[:1] + [new_contact_fieldset]
+    updated = new_qs[:3] + [new_contact_fieldset]
 
     section["section"]["subsections"][0]["parts"][0]["questions"] = updated
     return section
