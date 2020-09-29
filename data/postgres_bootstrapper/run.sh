@@ -35,11 +35,11 @@ then
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -f ${TABLESPACE_SCRIPTS}
 
   # Download extracts from S3 bucket
-  echo "Downloading schip extract..." 2>&1
-  curl https://mdct-legacy-snapshot.s3.amazonaws.com/dev/pg_schip.dmp -o /app/pg_schip.dmp
-  
-  echo "Downloading schipannualreports extract..." 2>&1
-  curl https://mdct-legacy-snapshot.s3.amazonaws.com/dev/pg_schipannualreports.dmp -o /app/pg_schipannualreports.dmp
+  curl https://mdct-legacy-snapshot.s3.amazonaws.com/dev/pg_mdct_extracts.tgz -o /app/pg_mdct_extracts.tgz
+  # Unzip the dumps
+  if [ -f /app/pg_mdct_extracts.tgz ] then
+    tar -xzvf /app/pg_mdct_extracts.tgz
+  fi
 
   # Load seds data
   echo "Importing schip extract..." 2>&1
@@ -67,3 +67,4 @@ else
 fi
 
 rm -fr $TARGET_SQL_DIR
+rm -fr *.tgz *.dmp
