@@ -24,7 +24,7 @@ pipeline {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           jenkinsUtils.installAwsCli()
           jenkinsUtils.installEcsCli()
-          jenkinsUtils.installTerraform("0.13.3")
+          jenkinsUtils.installTerraform("0.12.28")
 
           if( env.BUILD_NUMBER == "1" ) {
             env.DEPLOY = true
