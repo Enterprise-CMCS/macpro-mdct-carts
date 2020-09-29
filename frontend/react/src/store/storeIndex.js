@@ -9,7 +9,13 @@ import saveMiddleware from "./saveMiddleware";
 import allStatesData from "./allStatesData";
 
 // Consolidate reducers
-export const reducer = combineReducers({ formData, save, stateUser, global, allStatesData });
+export const reducer = combineReducers({
+  formData,
+  save,
+  stateUser,
+  global,
+  allStatesData,
+});
 
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware, saveMiddleware];

@@ -9,7 +9,7 @@ export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 const temp__data = require("./initial.json");
 
 export const loadUserThenSections = ({ userData }) => {
-  const {userToken} = userData;
+  const { userToken } = userData;
   return async (dispatch) => {
     await axios
       .get(`${window._env_.API_POSTGRES_URL}/api/v1/appusers/${userToken}`)
@@ -87,17 +87,15 @@ export const loadSections = ({ userData }) => {
 export const getAllStatesData = ({ userData }) => {
   return async (dispatch) => {
     const { data } = await axios
-      .get(
-        `${window._env_.API_POSTGRES_URL}/state/`
-      )
+      .get(`${window._env_.API_POSTGRES_URL}/state/`)
       .catch((err) => {
         console.log("error:", err);
         console.dir(err);
-      })
+      });
 
     dispatch({ type: GET_ALL_STATES_DATA, data });
-  }
-}
+  };
+};
 
 // Move this to where actions should go when we know where that is.
 export const setAnswerEntry = (fragmentId, something) => {
