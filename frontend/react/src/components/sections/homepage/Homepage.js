@@ -1,6 +1,6 @@
 import React from "react";
 import ReportItem from "./ReportItem";
-import { DownloadDrawer } from "./DownloadDrawer";
+import {DownloadDrawer} from "./DownloadDrawer";
 
 const Homepage = () => (
   <div className="homepage">
@@ -10,7 +10,7 @@ const Homepage = () => (
           CHIP Annual Report Template System (CARTS)
         </h1>
       </div>
-      <DownloadDrawer show={false} />
+      <DownloadDrawer show={false}/>
       <div className="ds-l-row">
         <div className="reports ds-l-col--12">
           <div className="carts-report preview__grid">
@@ -51,3 +51,5 @@ const Homepage = () => (
     </div>
   </div>
 );
+
+export default Homepage;
