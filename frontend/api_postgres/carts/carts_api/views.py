@@ -110,7 +110,21 @@ def sections_by_year_and_state(request, year, state):
         return Response(serializer.data)
 
 @api_view(["POST"])
-def temp_post_endpoint(request, year, state):
+def update_sections(request):
+    try:
+        for entry in request.data:
+            section_id = entry['contents']['section']['id']
+            section_state = entry['contents']['section']['state']
+
+            section = Section.objects.get(contents__section__id=section_id,
+                                          contents__section__state=section_state.upper())
+
+            section.contents = entry['contents']
+            section.save()
+
+    except Section.DoesNotExist:
+        return HttpResponse(status=400)
+
     return HttpResponse(status=204)
 
 @api_view(["GET"])

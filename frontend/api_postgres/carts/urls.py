@@ -29,8 +29,8 @@ router.register(r'state', views.StateViewSet)
 api_patterns = [
     path("sections/<int:year>/<str:state>",
          views.sections_by_year_and_state),
-    path("sections/<int:year>/<str:state>/temp",
-         views.temp_post_endpoint),
+    path("sections",
+         views.update_sections),
     path("sections/<int:year>/<str:state>/<int:section>",
          views.section_by_year_and_state),
     path("sections/<int:year>/<str:state>/<int:section>/<str:subsection>",
