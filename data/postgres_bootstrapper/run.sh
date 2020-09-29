@@ -37,7 +37,8 @@ then
   # Download extracts from S3 bucket
   curl https://mdct-legacy-snapshot.s3.amazonaws.com/dev/pg_mdct_extracts.tgz -o /app/pg_mdct_extracts.tgz
   # Unzip the dumps
-  if [ -f /app/pg_mdct_extracts.tgz ] then
+  if [ -f /app/pg_mdct_extracts.tgz ] 
+  then
     tar -xzvf /app/pg_mdct_extracts.tgz
   fi
 
