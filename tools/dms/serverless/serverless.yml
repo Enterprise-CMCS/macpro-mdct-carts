@@ -1,0 +1,41 @@
+# We are only running the SEDS task nightly, not the CARTS task
+service: run-dms-task
+
+# Create an optimized package for our functions
+package:
+  individually: true
+
+custom:
+  replicationTaskArn: 
+    master: "arn:aws:dms:us-east-1:730373213083:task:Z6AEORQN3UIUEF2YGPDPGR7TSSWUDD2VJGEFICA"
+    staging: "arn:aws:dms:us-east-1:730373213083:task:VM4XX7TDO762RJUUDJWRUBYEHOYVNFOBFEFIHVI"
+    prod: "arn:aws:dms:us-east-1:730373213083:task:CKYGICEBD54FBYN3N72VLDA2ITCFQ7T4S4CYQLI"
+  snsTopicArn: 
+    master: "arn:aws:sns:us-east-1:730373213083:topic-cartsseds-master-seds"
+    staging: "arn:aws:sns:us-east-1:730373213083:topic-cartsseds-staging-seds"
+    prod: "arn:aws:sns:us-east-1:730373213083:topic-cartsseds-prod-seds"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'master'}
+  region: us-east-1
+  environment: 
+    REPLICATION_TASK_ARN: ${self:custom.replicationTaskArn.${opt:stage, 'master'}}
+    SNS_TOPIC_ARN: ${self:custom.snsTopicArn.${opt:stage, 'master'}}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dms:StartReplicationTask
+      Resource:
+        - ${self:custom.replicationTaskArn.${opt:stage, 'master'}}
+
+# https://www.serverless.com/framework/docs/providers/aws/events/schedule/
+# Runs daily at 9am GMT (5am EST) - cron(0 9 * * ? *)
+functions:
+  seds-nightly-dms:
+    name: cartsseds-run-dms-task-seds-${opt:stage, 'master'}
+    handler: runDmsTask.main
+    events:
+      - schedule: cron(0 9 * * ? *)

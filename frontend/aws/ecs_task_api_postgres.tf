@@ -1,5 +1,5 @@
 locals {
-  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${var.acm_certificate_domain_api_postgres}"
+  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}:8000" : "https://${var.acm_certificate_domain_api_postgres}"
 }
 
 # Number of container instances to spawn per resource. Default is 1.
@@ -222,4 +222,132 @@ resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
       status_code = "HTTP_302"
     }
   }
+}
+
+resource "aws_wafv2_web_acl" "apiwaf" {
+  name        = "apiwaf-${terraform.workspace}"
+  description = "WAF for postgres api alb"
+  scope       = "REGIONAL"
+
+  default_action {
+    block {}
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${terraform.workspace}-webacl"
+    sampled_requests_enabled   = true
+  }
+
+  rule {
+    name     = "${terraform.workspace}-api-DDOSRateLimitRule"
+    priority = 0
+    action {
+      count {}
+    }
+
+    statement {
+      rate_based_statement {
+        limit              = 5000
+        aggregate_key_type = "IP"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-DDOSRateLimitRuleMetric"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule {
+    name     = "${terraform.workspace}-api-RegAWSCommonRule"
+    priority = 1
+
+    override_action {
+      count {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        vendor_name = "AWS"
+        name        = "AWSManagedRulesCommonRuleSet"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-RegAWSCommonRuleMetric"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule {
+    name     = "${terraform.workspace}-api-AWSManagedRulesAmazonIpReputationList"
+    priority = 2
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        vendor_name = "AWS"
+        name        = "AWSManagedRulesAmazonIpReputationList"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesAmazonIpReputationList"
+      sampled_requests_enabled   = false
+    }
+  }
+
+  rule {
+    name     = "${terraform.workspace}-api-RegAWSManagedRulesKnownBadInputsRuleSet"
+    priority = 3
+
+    override_action {
+      count {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        vendor_name = "AWS"
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesKnownBadInputsRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "${terraform.workspace}-api-allow-usa-plus-territories"
+    priority = 5
+    action {
+      allow {}
+    }
+
+    statement {
+      geo_match_statement {
+        country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${terraform.workspace}-api-geo-rule"
+      sampled_requests_enabled   = true
+    }
+  }
+}
+
+resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
+  resource_arn = aws_alb.api_postgres.id
+  web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
 }

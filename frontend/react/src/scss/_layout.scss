@@ -24,3 +24,24 @@ div[hidden] {
     width: 100%;
   }
 }
+
+.ds-c-input .input-holder__percent {
+  // This max-width comes from the design system.
+  max-width: 460px;
+  position: relative;
+
+  &:after {
+    content: "%";
+    position: absolute;
+    right: 8px;
+    top: 8px;
+
+    // These values come from the design system.
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  input {
+    padding-right: 28px;
+  }
+}

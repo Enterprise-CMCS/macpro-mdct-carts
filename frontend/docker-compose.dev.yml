@@ -45,17 +45,6 @@ services:
       - POSTGRES_API_URL=localhost
     volumes:
       - ./api_postgres/:/usr/src/app/
-  api_sqlserver:
-    build:
-      context: ./api_sqlserver
-      dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
-    ports:
-      - 8001:8000
-    networks:
-      - data_net
-    volumes:
-      - ./api_sqlserver/:/usr/src/app/
 networks:
   data_net:
     external: true

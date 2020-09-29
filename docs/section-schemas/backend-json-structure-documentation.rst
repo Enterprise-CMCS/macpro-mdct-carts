@@ -105,7 +105,7 @@ Notes on ``id``
 ++++++++++++++++
 Every construct with an ``id`` has the ``id`` of the nearest parent with an ``id`` plus a hyphen and its own representation, which for most constructs is a two-digit number with a leading zero, starting at "01". Subsections and questions whose parent elements are questions use letter representations, starting with ``a``.
 
-If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as parts, not as questions, which explains the ``id`` values found in Section 2B.
+If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as structues similar to parts (and thus don't use letter markers), not as questions, which explains the ``id`` values found in Section 2B.
 
 Not yet covered
 +++++++++++++++
@@ -166,7 +166,7 @@ The top-level construct is a section. Sections have the following properties:
     The title for the section, for example “Program Fees and Policy Changes”.
 ``subsections``
     Array of ``subsection`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the section.
@@ -199,10 +199,10 @@ Subsections, like subquestions, are represented by letters rather than numbers.
     Section 2 has subsections, for example Section 2b would have an ``id`` of ``2020-02-b``
 ``parts``
     Array of ``part`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
-    Additional text that should be presented at the beginning of the subsection.
+    Additional text that should be presented at the beginning of the subsection. This text can be made into multiple paragraphs by using the newline character ``\n``.
 ``comment`` (optional)
     String.
 
@@ -228,7 +228,7 @@ Parts are contained by subsections.
     Presumably always ``part``.
 ``questions``
     Array of ``question`` constructs.
-``description`` (optional)
+``text`` (optional)
     String.
 
     Additional text that should be presented at the beginning of the part.
@@ -480,7 +480,7 @@ Other ``fieldset`` instances nested below it do not inherit its ``marked`` natur
 
 ``synthesized_value``
 #####################
-Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result.
+Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result. For ``rpn`` actions, there is also an ``rpn`` property that defines the RPN string to be applied with the target values.
 
 Both ``targets`` and ``actions`` expect arrays.
 
@@ -496,6 +496,8 @@ Supported actions are:
     Add all of the values and return the result. This probably implies casting them to number types first.
 ``percentage``
     Divide the contents of the first target by the contents of the second target, multiply by 100. This probably implies casting them to number types first. The default is to round to two decimal places, but if a ``precision`` property is also present, its integer value will be used to determing how many digits of precision are required (``0`` would mean round to the nearest integer, ``2`` would mean round to the second decimal place, etc.),
+``rpn``
+    Given the list of targets, apply the RPN string provided in the ``rpn`` property. ``@`` characters in the RPN string will be replaced sequentially target values. The RPN string should be space delimited, with operators and operands being separated by a single space character. This string can include numeric constants, e.g., ``@ @ @ 9 + + /`` is equivalent to ``(@ + @ + @) /9``, where the ``@`` values are replaced with target values.
 
 
 The property is called ``actions``, but hopefully we'll only ever need to have one action listed, and thus won't have to define what happens in what order if there are multiple values.
@@ -621,6 +623,28 @@ Example of using ``contents``:
     }
 
 The above would display ``The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998`` and ``12.2``.
+
+Example of using ``rpn``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Total number of loosely-defined tales of the fantastical",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='q1')].answer.entry",
+          "$..*[?(@.id=='q2')].answer.entry"
+          "$..*[?(@.id=='q3')].answer.entry"
+          "$..*[?(@.id=='q4')].answer.entry"
+        ],
+        "actions": ["rpn"],
+        "rpn": "@ @ @ @ 3 + - / *"
+      }
+    }
+
+The above would display a value equal to ``(((q1 + q2) - q3) / q4) * 3``
 
 ``synthesized_table``
 ########################
@@ -1053,3 +1077,16 @@ A child construct of the ``objective`` construct or the ``part`` construct. This
 ``repeatable``
 ++++++++++++++
 A child construct of the ``repeatables`` construct. This can have questions of any type in its ``questions`` property, but as suggested above, if you attempt to put questions of the types ``objectives``, ``repeatables``, or ``repeatable`` here we won't be happy and suspect you won't be either.
+
+Practical Editing Considerations
+--------------------------------
+JSON Schema can be somewhat fragile, and this one is relatively complicated. In addition, there are some practical steps for getting changes made to files in this directory (``docs/section-schemas``) through to the database. The process for handling this is:
+
++   Add a file for the new section if there isn't one already, with the same naming scheme as the others, in ``/docs/section-schemas``.
++   Install the Python ``jsonschema`` module locally.
++   Run ``jsonschema -i [one of the existing schemas] backend-section.schema.json`` to cover the bases and make sure there are no problems with either your jsonschema command or the existing ones in your local tree. Note that that command-line ``jsonschema`` interface requires you to add ``-i`` before the name of every file you want to validate against the schema.
++   As you edit the new schema, run ``jsonchema`` against it more or less every time you make a change, because the error reporting can be unhelpful if you're trying to track things down after having made a lot of changes.
++   The ``id`` properties are both finicky and important—see `Notes on id`_—and there's currently no process for automating their generation. When you're done with it otherwise, and it's validating, run the ``validate_id.py`` Python script against your new section. It should flag some errors if they're there. This script is very hacky and very fallible, however.
++   If you want the section to be visible for as specific state, such as Alaska, you will need to copy it and name it the same way the other state-specific files have been named, e.g. ``2020-ak-section-3.json``. Files named this way will get picked up by the script in the next step. These files can be more or less straight copies of the generic section files, but do need to have their top-level ``state`` property set to the two-letter state code (e.g. ``AK``). At time of writing, it only makes sense to create files specific to ``AK``, ``AZ``, and ``MA``.
++   Once done, run the ``generate_fixtures.py`` script in that directory. It will wrap the JSON in a Django-friendly object and copy it (and the rest of the relevant files) to the ``/frontend/api_postgres/fixtures`` directory.
++   Kill your running docker-compose process and run ``docker-compose -f docker-compose.dev.yml down && docker-compose -f docker-compose.dev.yml up --build`` to bring it back up. During startup the new fixtures will be loaded, and once API and UI are up you should be able to see the changes you made. If the new fixture is a generic one not associated with any state, it should be visible at <http://localhost:8000/api/v1/sections/2020/[n]/> where `[n]` is the section number. If it's associated with a state, it should be visible as just data at <http://localhost:8000/api/v1/sections/2020/[state_abbr]/[n]/>  and in the app itself <http://localhost:81/sections/2020/[n]/?dev=dev-[lowercase_state_abbr]> should do it. Note that currently the mock dev users as specified in the URL's ``dev`` param are limited to ``ak``, ``az``, and ``ma``.

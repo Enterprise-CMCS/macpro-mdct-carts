@@ -24,10 +24,13 @@ router.register(r'groups', views.GroupViewSet)
 router.register(r'sections', views.SectionViewSet)
 router.register(r'sectionbases', views.SectionBaseViewSet)
 router.register(r'sectionschemas', views.SectionSchemaViewSet)
+router.register(r'state', views.StateViewSet)
 
 api_patterns = [
     path("sections/<int:year>/<str:state>",
          views.sections_by_year_and_state),
+    path("sections/<int:year>/<str:state>/temp",
+         views.temp_post_endpoint),
     path("sections/<int:year>/<str:state>/<int:section>",
          views.section_by_year_and_state),
     path("sections/<int:year>/<str:state>/<int:section>/<str:subsection>",
@@ -42,6 +45,8 @@ api_patterns = [
          views.sectionbase_by_year_section_subsection),
     path("generic-questions/<slug:id>",
          views.generic_fragment_by_id),
+    path("appusers/auth",
+         views.authenticate_user),
     path("appusers/<slug:username>",
          views.fake_user_data),
 ]
@@ -58,4 +63,3 @@ urlpatterns = [
     #  namespace='rest_framework'))
     path("api/v1/", include(api_patterns)),
 ]
-

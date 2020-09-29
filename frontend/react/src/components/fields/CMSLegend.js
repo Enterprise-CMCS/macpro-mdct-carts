@@ -1,30 +1,46 @@
-import React, { Component } from "react";
-class CMSLegend extends Component {
-  constructor(props) {
-    super(props);
+import React from "react";
+import PropTypes from "prop-types";
+
+const CMSLegend = ({ hideNumber, hint, id, label }) => {
+  let labelBits = "";
+
+  if (id) {
+    const lastHunk = Number.parseInt(id.substring(id.length - 2), 10);
+    if (Number.isNaN(lastHunk)) {
+      const numberBit = Number.parseInt(
+        id.substring(id.length - 4, id.length - 2),
+        10
+      );
+      labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
+    } else {
+      labelBits = `${lastHunk}. `;
+    }
   }
-  render() {
-    let questionId = this.props.id;
-    let questionLabel = this.props.label;
-    return (
-      <legend className="ds-c-label">
-        {questionId
-          ? isNaN(questionId.substring(questionId.length - 2))
-            ? parseInt(
-                questionId.substring(
-                  questionId.length - 4,
-                  questionId.length - 2
-                )
-              ) +
-              questionId.substring(questionId.length - 1) +
-              ". " +
-              questionLabel
-            : parseInt(questionId.substring(questionId.length - 2)) +
-              ". " +
-              questionLabel
-          : null}
-      </legend>
-    );
-  }
-}
+
+  return (
+    <legend className="ds-c-label">
+      {!hideNumber && labelBits}
+      {label}
+      {hint && (
+        <div className="ds-c-field__hint">
+          {hint.split("\n").map((line) => (
+            <div>{line}</div>
+          ))}
+        </div>
+      )}
+    </legend>
+  );
+};
+CMSLegend.propTypes = {
+  hideNumber: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+};
+CMSLegend.defaultProps = {
+  hideNumber: false,
+  hint: "",
+};
+
+export { CMSLegend };
 export default CMSLegend;
