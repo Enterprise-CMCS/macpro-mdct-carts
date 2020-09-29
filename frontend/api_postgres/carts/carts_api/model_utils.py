@@ -67,6 +67,6 @@ US_TERRITORIES = (
 )
 
 USER_ROLES = (
-    ("co_user", "Central Office User"),
     ("state_user", "State User"),
+    ("co_user", "Central Office User"),
 )
