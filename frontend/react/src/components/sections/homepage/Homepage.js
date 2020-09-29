@@ -40,7 +40,9 @@ const Homepage = () => (
       <div className="ds-l-row">
         <div className="omb-info ds-l-col--12">
           <p>
-            The OMB control number for this information is OMB 0938-1148. The time required to complete this information collection is estimated to 40 hours per response, including the time to review instructions, search existing data resources, gather data, and review and submit the information.
+            The OMB control number for this information is OMB 0938-1148. The time required to complete this information
+            collection is estimated to 40 hours per response, including the time to review instructions, search existing
+            data resources, gather data, and review and submit the information.
           </p>
         </div>
       </div>
