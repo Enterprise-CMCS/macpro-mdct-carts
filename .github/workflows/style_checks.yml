@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
       - name: check that modified files are prettier
-        run: npx prettier $(git diff --name-only --relative origin/master -- | xargs) -c -u
+        run: npx prettier $(git diff --diff-filter=ACMR --name-only --relative origin/master -- | xargs) -c -u
   eslint:
     name: frontend linting
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
         run: npm install
       - name: run eslint
         working-directory: frontend/react
-        run: npx eslint $(git diff --name-only --relative origin/master -- . | grep .js$ | xargs)
+        run: npx eslint $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .js$ | xargs)
   black:
     name: python files have been formatted
     runs-on: ubuntu-latest
@@ -32,4 +32,4 @@ jobs:
       - name: install black
         run: pip install black
       - name: run black
-        run: black --check --skip-string-normalization $(git diff --name-only --relative origin/master -- . | grep .py$ | xargs)
+        run: black --check --skip-string-normalization $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .py$ | xargs)
