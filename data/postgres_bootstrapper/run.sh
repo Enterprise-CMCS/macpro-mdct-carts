@@ -20,36 +20,50 @@ done
 
 echo "PostgreSQL started"
 
-chk_load=$(PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -t -w -c "select current_setting('db.load', true);")
+CHK_LOAD=$(PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -t -w -c "select current_setting('db.load', true);")
 
-if [ -z $chk_load ]
+if [ "${CHK_LOAD}" != "1" ]
 then
+  echo "Fresh instance, starting installation." 2>&1
+
   # Create pg users and roles
+  echo "Creating users and roles..." 2>&1
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -f ${SCHEMA_SCRIPTS} -w
 
   # Create Tablespace
+  echo "Creating tablespace..." 2>&1
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -f ${TABLESPACE_SCRIPTS}
 
   # Download extracts from S3 bucket
+  echo "Downloading schip extract..." 2>&1
   curl https://mdct-legacy-snapshot.s3.amazonaws.com/dev/pg_schip.dmp -o /app/pg_schip.dmp
+  
+  echo "Downloading schipannualreports extract..." 2>&1
   curl https://mdct-legacy-snapshot.s3.amazonaws.com/dev/pg_schipannualreports.dmp -o /app/pg_schipannualreports.dmp
 
   # Load seds data
+  echo "Importing schip extract..." 2>&1
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -w < /app/pg_schip.dmp
 
   # Load carts data
+  echo "Importing schipannualreports extract..." 2>&1
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -w < /app/pg_schipannualreports.dmp
 
   # Grant privileges to users, roles
+  echo "Granting privileges to users, roles..." 2>&1
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -f ${GRANT_SCRIPTS}
 
   # Set global variable after data load
+  echo "Set global variable." 2>&1
   PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -h $POSTGRES_HOST -U $POSTGRES_USER -p 5432 -t -w  << EOF
     SET db.load=1;
     ALTER SYSTEM SET db.load=1;
     SELECT pg_reload_conf();
 EOF
 
+  echo "Finished." 2>&1
+else
+  echo "Existing installation present, noop." 2>&1
 fi
 
-#rm -fr $TARGET_SQL_DIR
+rm -fr $TARGET_SQL_DIR
