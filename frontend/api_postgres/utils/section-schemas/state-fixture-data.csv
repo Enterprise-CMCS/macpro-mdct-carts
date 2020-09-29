@@ -1,0 +1,57 @@
+State abbreviation,State,Type,Program Names,Contact,Title,Email,Address,Phone
+AL,Alabama,combo,All,Alabamian Name,Alabamian Contact,contact@alabama.gov,Some Alabama address,Some Alabama phone number
+AK,Alaska,medicaid_exp_chip,"All, Denali KidCare",Alaskan Name,Alaskan Deathless Functionary,contact@alaska.gov,Some Alaska address,Some Alaska phone number
+AS,American Samoa,combo,All,American Samoan Name,American Samoan Contact,contact@american-samoa.gov,Some American Samoa address,Some American Samoa phone number
+AZ,Arizona,separate_chip,"All, Arizona",Arizonan Name,Immortal Arizonan of the East Wind,contact@arizona.gov,Some Arizona address,Some Arizona phone number
+AR,Arkansas,combo,All,Arkansan Name,Arkansan Contact,contact@arkansas.gov,Some Arkansas address,Some Arkansas phone number
+CA,California,combo,All,Californian Name,Californian Contact,contact@california.gov,Some California address,Some California phone number
+CO,Colorado,combo,All,Coloradan Name,Coloradan Contact,contact@colorado.gov,Some Colorado address,Some Colorado phone number
+CT,Connecticut,combo,All,Connecticuter Name,Connecticuter Contact,contact@connecticut.gov,Some Connecticut address,Some Connecticut phone number
+DE,Delaware,combo,All,Delawarean Name,Delawarean Contact,contact@delaware.gov,Some Delaware address,Some Delaware phone number
+DC,District of Columbia,combo,All, Washingtonian Name, Washingtonian Contact,contact@district of columbia.gov,Some District of Columbia address,Some District of Columbia phone number
+FL,Florida,combo,All,Floridian Name,Floridian Contact,contact@florida.gov,Some Florida address,Some Florida phone number
+GA,Georgia,combo,All,Georgian Name,Georgian Contact,contact@georgia.gov,Some Georgia address,Some Georgia phone number
+GU,Guam,combo,All,Guamainan Name,Guamainan Contact,contact@guam.gov,Some Guam address,Some Guam phone number
+HI,Hawaii,combo,All,Hawaii resident Name,Hawaii resident Contact,contact@hawaii.gov,Some Hawaii address,Some Hawaii phone number
+ID,Idaho,combo,All,Idahoan Name,Idahoan Contact,contact@idaho.gov,Some Idaho address,Some Idaho phone number
+IL,Illinois,combo,All,Illinoisan Name,Illinoisan Contact,contact@illinois.gov,Some Illinois address,Some Illinois phone number
+IN,Indiana,combo,All,Hoosier Name,Hoosier Contact,contact@indiana.gov,Some Indiana address,Some Indiana phone number
+IA,Iowa,combo,All,Iowan Name,Iowan Contact,contact@iowa.gov,Some Iowa address,Some Iowa phone number
+KS,Kansas,combo,All,Kansan Name,Kansan Contact,contact@kansas.gov,Some Kansas address,Some Kansas phone number
+KY,Kentucky,combo,All,Kentuckian Name,Kentuckian Contact,contact@kentucky.gov,Some Kentucky address,Some Kentucky phone number
+LA,Louisiana,combo,All,Louisianian Name,Louisianian Contact,contact@louisiana.gov,Some Louisiana address,Some Louisiana phone number
+ME,Maine,combo,All,Mainer Name,Mainer Contact,contact@maine.gov,Some Maine address,Some Maine phone number
+MD,Maryland,combo,All,Marylander Name,Marylander Contact,contact@maryland.gov,Some Maryland address,Some Maryland phone number
+MA,Massachusetts,combo,"All, Massachusetts",Massachusettsan Name,Eternal Massachusettsan of Mental Objects,contact@massachusetts.gov,Some Massachusetts address,Some Massachusetts phone number
+MI,Michigan,combo,All,Michiganian Name,Michiganian Contact,contact@michigan.gov,Some Michigan address,Some Michigan phone number
+MN,Minnesota,combo,All,Minnesotan Name,Minnesotan Contact,contact@minnesota.gov,Some Minnesota address,Some Minnesota phone number
+MS,Mississippi,combo,All,Mississippian Name,Mississippian Contact,contact@mississippi.gov,Some Mississippi address,Some Mississippi phone number
+MO,Missouri,combo,All,Missourian Name,Missourian Contact,contact@missouri.gov,Some Missouri address,Some Missouri phone number
+MT,Montana,combo,All,Montanan Name,Montanan Contact,contact@montana.gov,Some Montana address,Some Montana phone number
+NE,Nebraska,combo,All,Nebraskan Name,Nebraskan Contact,contact@nebraska.gov,Some Nebraska address,Some Nebraska phone number
+NV,Nevada,combo,All,Nevadan Name,Nevadan Contact,contact@nevada.gov,Some Nevada address,Some Nevada phone number
+NH,New Hampshire,combo,All,New Hampshirite Name,New Hampshirite Contact,contact@new hampshire.gov,Some New Hampshire address,Some New Hampshire phone number
+NJ,New Jersey,combo,All,New Jerseyan Name,New Jerseyan Contact,contact@new jersey.gov,Some New Jersey address,Some New Jersey phone number
+NM,New Mexico,combo,All,New Mexican Name,New Mexican Contact,contact@new mexico.gov,Some New Mexico address,Some New Mexico phone number
+NY,New York,combo,All,New Yorker Name,New Yorker Contact,contact@new york.gov,Some New York address,Some New York phone number
+NC,North Carolina,combo,All,North Carolinian Name,North Carolinian Contact,contact@north carolina.gov,Some North Carolina address,Some North Carolina phone number
+ND,North Dakota,combo,All,North Dakotan Name,North Dakotan Contact,contact@north dakota.gov,Some North Dakota address,Some North Dakota phone number
+MP,Northern Mariana Islands,combo,All,Mariana Islander Name,Mariana Islander Contact,contact@northern mariana islands.gov,Some Northern Mariana Islands address,Some Northern Mariana Islands phone number
+OH,Ohio,combo,All,Ohioan Name,Ohioan Contact,contact@ohio.gov,Some Ohio address,Some Ohio phone number
+OK,Oklahoma,combo,All,Oklahoman Name,Oklahoman Contact,contact@oklahoma.gov,Some Oklahoma address,Some Oklahoma phone number
+OR,Oregon,combo,All,Oregonian Name,Oregonian Contact,contact@oregon.gov,Some Oregon address,Some Oregon phone number
+PA,Pennsylvania,combo,All,Pennsylvanian Name,Pennsylvanian Contact,contact@pennsylvania.gov,Some Pennsylvania address,Some Pennsylvania phone number
+PR,Puerto Rico,combo,All,Puerto Rican Name,Puerto Rican Contact,contact@puerto rico.gov,Some Puerto Rico address,Some Puerto Rico phone number
+RI,Rhode Island,combo,All,Rhode Islander Name,Rhode Islander Contact,contact@rhode island.gov,Some Rhode Island address,Some Rhode Island phone number
+SC,South Carolina,combo,All,South Carolinian Name,South Carolinian Contact,contact@south carolina.gov,Some South Carolina address,Some South Carolina phone number
+SD,South Dakota,combo,All,South Dakotan Name,South Dakotan Contact,contact@south dakota.gov,Some South Dakota address,Some South Dakota phone number
+TN,Tennessee,combo,All,Tennessean Name,Tennessean Contact,contact@tennessee.gov,Some Tennessee address,Some Tennessee phone number
+TX,Texas,combo,All,Texan Name,Texan Contact,contact@texas.gov,Some Texas address,Some Texas phone number
+UT,Utah,combo,All,Utahn Name,Utahn Contact,contact@utah.gov,Some Utah address,Some Utah phone number
+VT,Vermont,combo,All,Vermonter Name,Vermonter Contact,contact@vermont.gov,Some Vermont address,Some Vermont phone number
+VI,Virgin Islands,combo,All,Virgin Islander Name,Virgin Islander Contact,contact@virgin-islands.gov,Some Alabama address,Some Alabama phone number
+VA,Virginia,combo,All,Virginian Name,Virginian Contact,contact@virginia.gov,Some Virginia address,Some Virginia phone number
+WA,Washington,combo,All,Washingtonian Name,Washingtonian Contact,contact@washington.gov,Some Washington address,Some Washington phone number
+WV,West Virginia,combo,All,Virginian Name,Virginian Contact,contact@virginia.gov,Some Virginia address,Some Virginia phone number
+WI,Wisconsin,combo,All,Wisconsinite Name,Wisconsinite Contact,contact@wisconsin.gov,Some Wisconsin address,Some Wisconsin phone number
+WY,Wyoming,combo,All,Wyomingite Name,Wyomingite Contact,contact@wyoming.gov,Some Wyoming address,Some Wyoming phone number
