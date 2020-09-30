@@ -717,7 +717,7 @@
                     [
                       { "contents": "FMAP" },
                       {
-                        "contents": "I need custom code to pull FMAP for FFY 2020",
+                        "lookupFmapFy": "2020",
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
                       },
                       {

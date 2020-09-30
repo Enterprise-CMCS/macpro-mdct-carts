@@ -1,11 +1,24 @@
 import axios from "axios";
-import fakeUserData from "../store/fakeUserData";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
+export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-underscore-dangle, no-console */
+
+export const getAllStatesData = () => {
+  return async (dispatch) => {
+    const { data } = await axios
+      .get(`${window._env_.API_POSTGRES_URL}/state/`)
+      .catch((err) => {
+        console.log("error:", err);
+        console.dir(err);
+      });
+
+    dispatch({ type: GET_ALL_STATES_DATA, data });
+  };
+};
 
 export const loadSections = ({ userData }) => {
   return async (dispatch) => {
@@ -35,6 +48,7 @@ export const loadUserThenSections = ({ userData }) => {
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
         dispatch(getUserData(res.data.currentUser));
+        dispatch(getAllStatesData());
       })
       .catch((err) => {
         /*
@@ -46,13 +60,10 @@ export const loadUserThenSections = ({ userData }) => {
         console.log("--- ERROR LOADING USER FROM API ---");
         console.log(err);
 
-        const stateAbbr = userToken.split("-")[1].toUpperCase();
-        const fakeUser = fakeUserData[stateAbbr];
-
-        dispatch(loadSections({ userData: fakeUser }));
-        dispatch(getProgramData(fakeUser));
-        dispatch(getStateData(fakeUser));
-        dispatch(getUserData(fakeUser.currentUser));
+        dispatch(loadSections({ userData }));
+        dispatch(getProgramData(userData));
+        dispatch(getStateData(userData));
+        dispatch(getUserData(userData.currentUser));
       });
   };
 };
