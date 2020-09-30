@@ -892,9 +892,20 @@
                 "label": "January – March 2019 (start of the cohort)",
                 "questions": [
                   {
-                    "comment": "The “sum” question, that they answer if they don't have the breakdowns, can't really be a true top-level question, because then we couldn't hide it in the case where the breakdown data is available. So it has to be a subquestion, meaning that the top-level question isn't real and can't actually be answered. This introduces the need for the special fieldset used here; see the schema docs for more details.",
+                    "id": "2020-03-c-04-01-unmarked_descendants",
+                    "type": "checkbox",
+                    "answer": {
+                      "entry": [],
+                      "options": [
+                        {
+                          "label": "I don’t have data for the individual age groups. I’ll report data for the total number for all age groups (0-18 years) instead.",
+                          "value": "true"
+                        }
+                      ]
+                    }
+                  },
+                  {
                     "type": "fieldset",
-                    "fieldset_type": "marked",
                     "label": "How many children were newly enrolled in CHIP between January and March of the last federal fiscal year?",
                     "hint": "Only include children that weren’t enrolled in CHIP the previous month. (For example: Children who enrolled in January 2020 are “newly enrolled” if they weren’t enrolled in the CHIP in December 2019.)",
                     "fieldset_info": {
@@ -902,17 +913,55 @@
                     },
                     "questions": [
                       {
+                        "type": "integer",
+                        "label": "Total for all ages",
+                        "answer": {
+                          "entry": null
+                        },
+                        "id": "2020-03-c-04-01-a",
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "hide_if": {
+                              "target": "$..[?(@.id=='2020-03-c-04-01-unmarked_descendants')].answer.entry",
+                              "values": {
+                                "interactive": [],
+                                "noninteractive": []
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
                         "type": "fieldset",
                         "fieldset_type": "datagrid",
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "hide_if": {
+                              "target": "$..[?(@.id=='2020-03-c-04-01-unmarked_descendants')].answer.entry",
+                              "values": {
+                                "interactive": ["true"],
+                                "noninteractive": ["true"]
+                              }
+                            }
+                          }
+                        },
                         "questions": [
                           {
-                            "comment": "This is the first real question so far in this part…",
-                            "type": "integer",
-                            "id": "2020-03-c-04-01-a",
+                            "type": "fieldset",
+                            "fieldset_type": "synthesized_value",
                             "label": "Total for all ages",
-                            "answer": {
-                              "entry": null
-                            }
+                            "fieldset_info": {
+                              "targets": [
+                                "$..*[?(@.id=='2020-03-c-04-01-b')].answer.entry",
+                                "$..*[?(@.id=='2020-03-c-04-01-c')].answer.entry",
+                                "$..*[?(@.id=='2020-03-c-04-01-d')].answer.entry",
+                                "$..*[?(@.id=='2020-03-c-04-01-e')].answer.entry"
+                              ],
+                              "actions": ["sum"]
+                            },
+                            "questions": []
                           },
                           {
                             "type": "integer",
