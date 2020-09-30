@@ -5,10 +5,28 @@ import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
-const temp__data = require("./initial.json");
+/* eslint-disable no-underscore-dangle */
+
+export const loadSections = ({ userData }) => {
+  return async (dispatch) => {
+    const { data } = await axios
+      .get(
+        `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/${userData.abbr}`
+      )
+      .catch((err) => {
+        // Error-handling would go here. For now, just log it so we can see
+        // it in the console, at least.
+        console.log("--- ERROR LOADING SECTIONS ---");
+        console.log(err);
+        throw err;
+      });
+
+    dispatch({ type: LOAD_SECTIONS, data });
+  };
+};
 
 export const loadUserThenSections = ({ userData }) => {
-  const userToken = userData.userToken;
+  const { userToken } = userData;
   return async (dispatch) => {
     await axios
       .get(`${window._env_.API_POSTGRES_URL}/api/v1/appusers/${userToken}`)
@@ -18,24 +36,28 @@ export const loadUserThenSections = ({ userData }) => {
         dispatch(getStateData(res.data));
         dispatch(getUserData(res.data.currentUser));
       })
-      .catch((res) => {
+      .catch((err) => {
         /*
          * Error-handling would go here, but for now, since the anticipated
          * error is trying to run on cartsdemo, we just use the fake data.
-         * This fake user data has AK/AZ/MA, just like the fake data on the server.
+         * This fake user data has AK/AZ/MA, just like the fake data on the
+         * server. Log the error and proceed.
          */
-        const stateAbbr = userToken.split("-")[1].toUpperCase();
-        const userData = fakeUserData[stateAbbr];
+        console.log("--- ERROR LOADING USER FROM API ---");
+        console.log(err);
 
-        dispatch(loadSections({ userData: userData }));
-        dispatch(getProgramData(userData));
-        dispatch(getStateData(userData));
-        dispatch(getUserData(userData.currentUser));
+        const stateAbbr = userToken.split("-")[1].toUpperCase();
+        const fakeUser = fakeUserData[stateAbbr];
+
+        dispatch(loadSections({ userData: fakeUser }));
+        dispatch(getProgramData(fakeUser));
+        dispatch(getStateData(fakeUser));
+        dispatch(getUserData(fakeUser.currentUser));
       });
   };
 };
 
-export const secureLoadUserThenSections = ({ userData, authState }) => {
+export const secureLoadUserThenSections = ({ authState }) => {
   const xhrURL = `${window._env_.API_POSTGRES_URL}/api/v1/appusers/auth`;
   const xhrHeaders = {
     Authorization: `Bearer ${authState.accessToken}`,
@@ -49,36 +71,18 @@ export const secureLoadUserThenSections = ({ userData, authState }) => {
         dispatch(getStateData(res.data));
         dispatch(getUserData(res.data.currentUser));
       })
-      .catch((res) => {
+      .catch((err) => {
         /*
          * Error-handling would go here, but for now, since the anticipated
          * error is trying to run on cartsdemo, we just use the fake data.
          * This fake user data has AK/AZ/MA, just like the fake data on the server.
          */
-        console.log("error", res);
-        console.dir(res);
+        // Error-handling would go here. For now, just log it so we can see
+        // it in the console, at least.
+        console.log("--- ERROR SECURELY LOADING SECTIONS ---");
+        console.log(err);
+        throw err;
       });
-  };
-};
-
-export const loadSections = ({ userData }) => {
-  return async (dispatch) => {
-    const { data } = await axios
-      .get(
-        `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/${userData.abbr}`
-      )
-      .catch((res) => {
-        /*
-         * Error-handling would go here, but for now, since the anticipated
-         * error is trying to run on cartsdemo, we just use the fake data.
-         * This fake data is only for AK, so if we fail to load it we'll
-         * potentially see the user for a different state but the answers
-         * from the AK fake data.
-         */
-        return { data: temp__data };
-      });
-
-    dispatch({ type: LOAD_SECTIONS, data });
   };
 };
 
@@ -90,7 +94,7 @@ export const setAnswerEntry = (fragmentId, something) => {
       : something;
   return {
     type: QUESTION_ANSWERED,
-    fragmentId: fragmentId,
+    fragmentId,
     data: value,
   };
 };
