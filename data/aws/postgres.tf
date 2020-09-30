@@ -37,8 +37,7 @@ module "db" {
   vpc_security_group_ids  = [aws_security_group.db.id]
   maintenance_window      = "Mon:00:00-Mon:03:00"
   backup_window           = "03:00-06:00"
-  backup_retention_period = terraform.workspace == "dev-rds-bkup"? 21:0
-  apply_immediately       = "true"
+  backup_retention_period = terraform.workspace == "prod"? 21:0
   tags = {
     Environment = terraform.workspace
   }
