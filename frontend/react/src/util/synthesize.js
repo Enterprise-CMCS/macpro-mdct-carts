@@ -116,9 +116,27 @@ const rpn = (values, rpnString, precision) => {
 // Maaaaaaaath.
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
+const lookupFMAP = (state, fy) => {
+  if (state.allStatesData && state.stateUser) {
+    const stateAbbr = state.stateUser.abbr;
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+    const fmap = stateData?.fmap_set.filter(
+      (year) => year.fiscal_year === +fy
+    )[0].enhanced_FMAP;
+
+    return `${fmap}`;
+  }
+};
+
 const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
+  }
+
+  if (value.lookupFmapFy) {
+    return { contents: lookupFMAP(state, value.lookupFmapFy) };
   }
 
   if (value.targets) {
