@@ -23,3 +23,13 @@ jobs:
       - name: run eslint
         working-directory: frontend/react
         run: npx eslint $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .js$ | xargs)
+  black:
+    name: python files have been formatted
+    runs-on: ubuntu-latest
+    container: python:3.8
+    steps:
+      - uses: actions//checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - name: install black
+        run: pip install black
+      - name: run black
+        run: black --check --line-length 79 --skip-string-normalization $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .py$ | xargs)
