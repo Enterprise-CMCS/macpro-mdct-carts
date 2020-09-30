@@ -1,5 +1,7 @@
 import jsonpath from "./jsonpath";
 
+/* eslint-disable camelcase */
+
 // For the identity case, just return the first target value.
 const identity = ([value]) => value;
 
@@ -128,6 +130,7 @@ const lookupFMAP = (state, fy) => {
 
     return `${fmap}`;
   }
+  return "";
 };
 
 const synthesizeValue = (value, state) => {
