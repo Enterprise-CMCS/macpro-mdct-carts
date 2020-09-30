@@ -1,8 +1,5 @@
 #!/bin/bash
 
-sh destroy.sh
+sh destroyDev.sh
 
-docker-compose -f docker-compose.dev.yml build
-docker-compose -f docker-compose.dev.yml up -d
-sh local-additional.sh
-
+docker-compose -f docker-compose.dev.yml up --build

@@ -1838,6 +1838,10 @@
           {
             "id": "2020-03-d-01",
             "type": "part",
+            "context_data": {
+              "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+              "show_if_state_program_type_in": ["separate_chip"]
+            },
             "questions": [
               {
                 "id": "2020-03-d-01-01",
@@ -2536,10 +2540,7 @@
             "type": "part",
             "context_data": {
               "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
             "questions": [
@@ -2855,10 +2856,7 @@
             "text": "Tell us about the children receiving dental benefits in your Separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
             "context_data": {
               "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "questions": [
               {
@@ -3223,13 +3221,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-g-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3250,13 +3243,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-g-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3294,9 +3282,7 @@
                               "$..*[?(@.id=='2020-03-g-01-06-a')].answer.entry",
                               "$..*[?(@.id=='2020-03-g-01-06-b')].answer.entry"
                             ],
-                            "actions": [
-                              "percentage"
-                            ]
+                            "actions": ["percentage"]
                           }
                         ]
                       ]
@@ -3309,13 +3295,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-03-g-01-06')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -3933,12 +3914,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-03-i-02-01-01-02')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": ["no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
