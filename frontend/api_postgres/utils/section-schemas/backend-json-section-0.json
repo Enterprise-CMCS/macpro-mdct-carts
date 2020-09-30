@@ -16,6 +16,7 @@
             "id": "2020-00-a-01",
             "type": "part",
             "title": "Welcome!",
+            "text": "We already have some information about your state from our records.\nIf any information is incorrect, please contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>.",
             "questions": [
               {
                 "id": "2020-00-a-01-01",
@@ -110,6 +111,12 @@
                     "type": "fieldset",
                     "questions": [],
                     "label": "If any of the above information is incorrect, please contact the <a href='mailto:cartshelp@cms.hhs.gov'>CARTS Help Desk</a>."
+                  },
+                  {
+                    "type": "fieldset",
+                    "label": "PRA Disclosure Statement.",
+                    "hint": "This information is being collected to assist the Centers for Medicare & Medicaid Services (CMS) in partnership with States with the ongoing management of Medicaid and CHIP programs and policies. This mandatory information collection (42 U.S.C. 1397hh) will be used to help each state meet the statutory requirements at section 2108(a) of the Social Security Act to assess the operation of the State child health plan in each Federal fiscal year and to report the results of the assessment including the progress made in reducing the number of uncovered, low-income children. Under the Privacy Act of 1974 any personally identifying information obtained will be kept private to the extent of the law. According to the Paperwork Reduction Act of 1995, no persons are required to respond to a collection of information unless it displays a valid OMB control number. The valid OMB control number for this information collection is 0938-1148 (CMS-10398 #1). The time required to complete this information collection is estimated to average 40 hours per response, including the time to review instructions, search existing data resources, gather the data needed, and complete and review the information collection. Send comments regarding this burden estimate or any other aspect of this collection of information, including suggestions for reducing this burden, to CMS, 7500 Security Boulevard, Attn: Paperwork Reduction Act Reports Clearance Officer, Mail Stop C4-26-05, Baltimore, Maryland 21244-1850.",
+                    "questions": []
                   }
                 ]
               }

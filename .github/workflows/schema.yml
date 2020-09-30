@@ -3,7 +3,7 @@ name: schema validation
 on:
   pull_request:
     paths:
-      - 'docs/section-schemas/**.json'
+      - "frontend/api_postgres/utils/section-schemas/**.json"
 
 jobs:
   schema_validation:
