@@ -15,12 +15,13 @@ from django.template.loader import get_template  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
-from rest_framework.decorators import api_view  # type: ignore
+from rest_framework.decorators import api_view, authentication_classes, permission_classes  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
+from carts.auth import JwtAuthentication
 from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
@@ -97,8 +98,12 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 @api_view(["GET"])
+@authentication_classes([JwtAuthentication])
+@permission_classes([IsAuthenticated])
 def sections_by_year_and_state(request, year, state):
     try:
+        print(dir(request.user))
+
         data = Section.objects.filter(contents__section__year=year,
                                       contents__section__state=state.upper())
     except Section.DoesNotExist:
