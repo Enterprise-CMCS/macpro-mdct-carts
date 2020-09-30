@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import (
     List,
     Tuple,
@@ -6,9 +7,8 @@ from typing import (
 )
 import json
 import csv
-import jsonschema  # type: ignore
 import shutil  # type: ignore
-from pathlib import Path
+import jsonschema  # type: ignore
 
 Json = Union[dict, list]
 
@@ -16,14 +16,14 @@ Json = Union[dict, list]
 def main() -> None:
     here, there, states = file_setup()
 
+    write_state_section_json(here, states)
     write_fixtures(here, there, states)
     write_states(here, there)
-    write_state_section_json(here, there, states)
     load_acs_data(here, there)
     load_fmap_data(here, there)
 
 
-def write_state_section_json(here: Path, there: Path, states: Path) -> None:
+def write_state_section_json(here: Path, states: Path) -> None:
     state_list = load_csv(here / "state-fixture-data.csv")
     state_data = {_["State abbreviation"]: _ for _ in state_list}
     # state_codes = cast(dict, load_json(here / "state_to_abbrev.json"))
