@@ -99,7 +99,7 @@ def write_fixtures(here: Path, there: Path, states: Path) -> None:
         orig = load_json(fpath)
         jsonschema.validate(schema=schema, instance=orig)
         output = transform(modelname, orig)
-        Path(there, f.name).write_text(json.dumps(output))
+        write_json(there / f.name, output)
 
     schema = load_json(here / "backend-section.schema.json")
     schemafixture = transform("carts_api.sectionschema", schema)
@@ -168,8 +168,7 @@ def write_states(here, there):
 
     state_list = load_csv(here / "state-fixture-data.csv")
     states = [to_object(state) for state in state_list]
-    output = Path(there, "states.json")
-    output.write_text(json.dumps(states))
+    write_json(there / "states.json", states)
 
 
 def load_acs_data(here, there):
