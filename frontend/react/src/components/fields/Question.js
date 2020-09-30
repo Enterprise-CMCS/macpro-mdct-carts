@@ -52,8 +52,8 @@ const Container = ({ question, children }) =>
   question.type === "fieldset" ? (
     <>{children}</>
   ) : (
-      <fieldset className="ds-c-fieldset">{children}</fieldset>
-    );
+    <fieldset className="ds-c-fieldset">{children}</fieldset>
+  );
 Container.propTypes = {
   question: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,

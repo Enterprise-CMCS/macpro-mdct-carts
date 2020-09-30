@@ -480,7 +480,7 @@ Other ``fieldset`` instances nested below it do not inherit its ``marked`` natur
 
 ``synthesized_value``
 #####################
-Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result. For ``rpn`` actions, there is also an ``rpn`` property that defines the RPN string to be applied with the target values.
+Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result.
 
 Both ``targets`` and ``actions`` expect arrays.
 

@@ -2,17 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const NoninteractiveTable = ({ question }) => {
-  const columnWidth = 100 / question.fieldset_info.headers.length
+  const columnWidth = 100 / question.fieldset_info.headers.length;
   return (
     <table className="ds-c-table" width="100%">
       <thead>
         <tr>
           {question.fieldset_info.headers.map(function (header) {
             return (
-              <th
-                width={`${columnWidth}%`}
-                name={`${header}`}
-              >
+              <th width={`${columnWidth}%`} name={`${header}`}>
                 {header}
               </th>
             );
@@ -23,13 +20,7 @@ const NoninteractiveTable = ({ question }) => {
         return (
           <tr>
             {row.map((value) => {
-              return (
-                <td
-                  width={`${columnWidth}%`}
-                >
-                  {value}
-                </td>
-              );
+              return <td width={`${columnWidth}%`}>{value}</td>;
             })}
           </tr>
         );
@@ -40,5 +31,5 @@ const NoninteractiveTable = ({ question }) => {
 NoninteractiveTable.propTypes = {
   question: PropTypes.object.isRequired,
 };
-export { NoninteractiveTable }
-export default NoninteractiveTable
+export { NoninteractiveTable };
+export default NoninteractiveTable;

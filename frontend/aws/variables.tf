@@ -9,6 +9,3 @@ variable "acm_certificate_domain_ui" {
 variable "acm_certificate_domain_api_postgres" {
   default = ""
 }
-variable "acm_certificate_domain_api_sqlserver" {
-  default = ""
-}
