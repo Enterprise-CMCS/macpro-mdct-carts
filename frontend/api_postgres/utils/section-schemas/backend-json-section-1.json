@@ -17,10 +17,7 @@
             "type": "part",
             "title": "Medicaid Expansion CHIP Enrollment Fees, Premiums, and Delivery Systems",
             "context_data": {
-              "show_if_state_program_type_in": [
-                "medicaid_exp_chip",
-                "combo"
-              ],
+              "show_if_state_program_type_in": ["medicaid_exp_chip", "combo"],
               "skip_text": "Part 1 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 2."
             },
             "questions": [
@@ -56,13 +53,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -98,13 +90,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -136,19 +123,10 @@
                           "entry": null,
                           "header": "Premiums for one child, tiered by FPL",
                           "range_categories": [
-                            [
-                              "FPL starts at",
-                              "FPL ends at"
-                            ],
-                            [
-                              "Premium starts at",
-                              "Premium ends at"
-                            ]
+                            ["FPL starts at", "FPL ends at"],
+                            ["Premium starts at", "Premium ends at"]
                           ],
-                          "range_type": [
-                            "percentage",
-                            "money"
-                          ],
+                          "range_type": ["percentage", "money"],
                           "entry_min": 1,
                           "entry_max": 0
                         },
@@ -159,13 +137,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-01-a-01-02-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  null,
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": [null, "no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -185,13 +158,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-01-a-01-02-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  null,
-                                  "yes"
-                                ],
-                                "noninteractive": [
-                                  "yes"
-                                ]
+                                "interactive": [null, "yes"],
+                                "noninteractive": ["yes"]
                               }
                             }
                           }
@@ -227,19 +195,10 @@
                       "entry": null,
                       "header": "Maximum premiums for a family, tiered by FPL",
                       "range_categories": [
-                        [
-                          "FPL starts at",
-                          "FPL ends at"
-                        ],
-                        [
-                          "Premium starts at",
-                          "Premium ends at"
-                        ]
+                        ["FPL starts at", "FPL ends at"],
+                        ["Premium starts at", "Premium ends at"]
                       ],
-                      "range_type": [
-                        "percentage",
-                        "money"
-                      ],
+                      "range_type": ["percentage", "money"],
                       "entry_min": 1,
                       "entry_max": 0
                     },
@@ -251,13 +210,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -277,13 +231,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-01-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "yes"
-                            ],
-                            "noninteractive": [
-                              "yes"
-                            ]
+                            "interactive": [null, "yes"],
+                            "noninteractive": ["yes"]
                           }
                         }
                       }
@@ -338,10 +287,7 @@
             "title": "Separate CHIP Enrollment Fees, Premiums, and Delivery Systems",
             "context_data": {
               "skip_text": "Part 2 only applies to states with a Separate CHIP program. Please skip to Part 3.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "questions": [
               {
@@ -376,13 +322,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-01')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -418,13 +359,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -456,19 +392,10 @@
                           "entry": null,
                           "header": "Premiums for one child, tiered by FPL",
                           "range_categories": [
-                            [
-                              "FPL starts at",
-                              "FPL ends at"
-                            ],
-                            [
-                              "Premium starts at",
-                              "Premium ends at"
-                            ]
+                            ["FPL starts at", "FPL ends at"],
+                            ["Premium starts at", "Premium ends at"]
                           ],
-                          "range_type": [
-                            "percentage",
-                            "money"
-                          ],
+                          "range_type": ["percentage", "money"],
                           "entry_min": 1,
                           "entry_max": 0
                         },
@@ -479,13 +406,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-01-a-02-02-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  null,
-                                  "no"
-                                ],
-                                "noninteractive": [
-                                  "no"
-                                ]
+                                "interactive": [null, "no"],
+                                "noninteractive": ["no"]
                               }
                             }
                           }
@@ -505,13 +427,8 @@
                             "hide_if": {
                               "target": "$..*[?(@.id=='2020-01-a-02-02-a')].answer.entry",
                               "values": {
-                                "interactive": [
-                                  null,
-                                  "yes"
-                                ],
-                                "noninteractive": [
-                                  "yes"
-                                ]
+                                "interactive": [null, "yes"],
+                                "noninteractive": ["yes"]
                               }
                             }
                           }
@@ -547,19 +464,10 @@
                       "entry": null,
                       "header": "Maximum premiums for a family, tiered by FPL",
                       "range_categories": [
-                        [
-                          "FPL starts at",
-                          "FPL ends at"
-                        ],
-                        [
-                          "Premium starts at",
-                          "Premium ends at"
-                        ]
+                        ["FPL starts at", "FPL ends at"],
+                        ["Premium starts at", "Premium ends at"]
                       ],
-                      "range_type": [
-                        "percentage",
-                        "money"
-                      ],
+                      "range_type": ["percentage", "money"],
                       "entry_min": 1,
                       "entry_max": 0
                     },
@@ -571,13 +479,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -597,13 +500,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "yes"
-                            ],
-                            "noninteractive": [
-                              "yes"
-                            ]
+                            "interactive": [null, "yes"],
+                            "noninteractive": ["yes"]
                           }
                         }
                       }
@@ -658,10 +556,7 @@
             "title": "Medicaid Expansion CHIP Program and Policy Changes",
             "context_data": {
               "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 4.",
-              "show_if_state_program_type_in": [
-                "medicaid_exp_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["medicaid_exp_chip", "combo"]
             },
             "text": "Indicate any changes you’ve made to your Medicaid Expansion CHIP program policies in the past federal fiscal year. All changes listed in this section require a State Plan Amendment (SPA) if you haven’t submitted one already.",
             "questions": [
@@ -948,7 +843,7 @@
               },
               {
                 "id": "2020-01-a-03-14",
-                "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
+                "label": "Have you made any changes to eligibility for “lawfully residing” pregnant women?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -964,12 +859,12 @@
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for “lawfully residing pregnant women”"
+                  "bullet_text": "Eligibility for “lawfully residing” pregnant women"
                 }
               },
               {
                 "id": "2020-01-a-03-15",
-                "label": "Have you made any changes to eligibility for “lawfully residing children”?",
+                "label": "Have you made any changes to eligibility for “lawfully residing” children?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -985,7 +880,7 @@
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for “lawfully residing children”"
+                  "bullet_text": "Eligibility for “lawfully residing” children"
                 }
               },
               {
@@ -1014,9 +909,9 @@
                 "context_data": {
                   "interactive_conditional": "Show if any 2020-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
                   "noninteractive_conditional": "Show if any 2020-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
-                  "conditional_display":{
+                  "conditional_display": {
                     "type": "conditional_display",
-                    "hide_if_all":{
+                    "hide_if_all": {
                       "targets": [
                         "$..[?(@.id=='2020-01-a-03-01')].answer.entry",
                         "$..[?(@.id=='2020-01-a-03-02')].answer.entry",
@@ -1044,19 +939,29 @@
                 },
                 "questions": [
                   {
-                      "id": "2020-01-a-03-17",
-                      "label": "Briefly describe why you made these changes to your Medicaid Expansion CHIP program.",
-                      "type": "text_multiline",
-                      "answer": {
-                       "entry": null
+                    "id": "2020-01-a-03-17",
+                    "label": "Briefly describe why you made these changes to your Medicaid Expansion CHIP program.",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
                     }
                   },
                   {
                     "id": "2020-01-a-03-18",
                     "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any of the changes addressed in this section?",
-                    "type": "text_multiline",
+                    "type": "radio",
                     "answer": {
-                      "entry": null
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
                     }
                   }
                 ]
@@ -1069,10 +974,7 @@
             "title": "Separate CHIP Program and Policy Changes",
             "context_data": {
               "skip_text": "Part 4 only applies to states with a Separate CHIP program. Please skip to the next section.",
-              "show_if_state_program_type_in": [
-                "separate_chip",
-                "combo"
-              ]
+              "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
             "text": "Indicate any changes you’ve made to your Separate CHIP program and policies in the past federal fiscal year. All changes listed in this section require a State Plan Amendment (SPA) if you haven’t submitted one already.",
             "questions": [
@@ -1402,7 +1304,7 @@
               },
               {
                 "id": "2020-01-a-04-16",
-                "label": "Have you made any changes to your Pregnant Women state plan expansion?",
+                "label": "Have you made any changes to your Pregnant Women State Plan expansion?",
                 "hint": "For example: expanding eligibility or changing this population’s benefit package.",
                 "type": "radio",
                 "answer": {
@@ -1424,7 +1326,7 @@
               },
               {
                 "id": "2020-01-a-04-17",
-                "label": "Have you made any changes to eligibility for “lawfully residing pregnant women”?",
+                "label": "Have you made any changes to eligibility for “lawfully residing” pregnant women?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1440,12 +1342,12 @@
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for “lawfully residing pregnant women”"
+                  "bullet_text": "Eligibility for “lawfully residing” pregnant women"
                 }
               },
               {
                 "id": "2020-01-a-04-18",
-                "label": "Have you made any changes to eligibility for “lawfully residing children”?",
+                "label": "Have you made any changes to eligibility for “lawfully residing” children?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -1461,7 +1363,7 @@
                   "entry": null
                 },
                 "context_data": {
-                  "bullet_text": "Eligibility for “lawfully residing children”"
+                  "bullet_text": "Eligibility for “lawfully residing” children"
                 }
               },
               {
@@ -1490,9 +1392,9 @@
                 "context_data": {
                   "interactive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
                   "noninteractive_conditional": "Show if any 2020-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
-                  "conditional_display":{
+                  "conditional_display": {
                     "type": "conditional_display",
-                    "hide_if_all":{
+                    "hide_if_all": {
                       "targets": [
                         "$..[?(@.id=='2020-01-a-04-01')].answer.entry",
                         "$..[?(@.id=='2020-01-a-04-02')].answer.entry",
@@ -1523,19 +1425,29 @@
                 },
                 "questions": [
                   {
-                      "id": "2020-01-a-04-20",
-                      "label": "Briefly describe why you made these changes to your Separate CHIP program.",
-                      "type": "text_multiline",
-                      "answer": {
-                       "entry": null
+                    "id": "2020-01-a-04-20",
+                    "label": "Briefly describe why you made these changes to your Separate CHIP program.",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
                     }
                   },
                   {
                     "id": "2020-01-a-04-21",
                     "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any of the changes addressed in this section?",
-                    "type": "text_multiline",
+                    "type": "radio",
                     "answer": {
-                      "entry": null
+                      "entry": null,
+                      "options": [
+                        {
+                          "value": "yes",
+                          "label": "Yes"
+                        },
+                        {
+                          "value": "no",
+                          "label": "No"
+                        }
+                      ]
                     }
                   }
                 ]
