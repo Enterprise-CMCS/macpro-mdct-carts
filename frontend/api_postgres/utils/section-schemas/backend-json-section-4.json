@@ -115,7 +115,7 @@
                                     "id": "2020-04-a-01-01-01-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
                                     "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
-                                    "type": "integer",
+                                    "type": "text_medium",
                                     "answer": {
                                       "entry": null
                                     }
@@ -138,7 +138,7 @@
                                     "id": "2020-04-a-01-01-01-02-01-05",
                                     "label": "Which population are you measuring in the denominator?",
                                     "hint": "For example: The total number of eligible children in the last federal fiscal year.",
-                                    "type": "integer",
+                                    "type": "text_medium",
                                     "answer": {
                                       "entry": null
                                     }
