@@ -646,18 +646,6 @@ Example of using ``rpn``:
 
 The above would display a value equal to ``(((q1 + q2) - q3) / q4) * 3``
 
-One additional type of synthesized value that behaves a bit differently from those that perform calculations is the ``lookupFmapFy`` action. This pulls the enhanced FMAP for the current state. Just add the ``lookupFmapFy`` property to a synthesized table cell and specify the fiscal year as the value. This example shows one such cell in a synthesized table:
-
-..  code:: json
-
-    [
-      { "contents": "FMAP" },
-      {
-        "lookupFmapFy": "2020",
-        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
-      },
-    ],
-
 ``synthesized_table``
 ########################
 This displays a table constructed out of values either provided by or indicated in the ``fieldset_info`` property.
@@ -776,6 +764,32 @@ Assuming the answers to the two questions were ``2`` and ``3``, the above would 
              2            3                                                         5
         ======  ===========  ========================================================
 
+Most ``targets`` values will be jsonpath expressions that query the JSON tree, but occasionally it is necessary to pull data in from the Redux store. A target value containing an object with a `lookupFmapFy` key will pull in FMAP data from Redux for the fiscal year specified as the value of that object. For example, this is one row of a synthesized table that has FMAP data for FY20 and FY21:
+
+..   code:: json
+
+    [
+      { "contents": "FMAP" },
+      {
+        "targets": [
+          { "lookupFmapFy": "2020" }
+        ],
+        "actions": ["identity"],
+        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
+      },
+      {
+        "targets": [
+          { "lookupFmapFy": "2021" }
+        ],
+        "actions": ["rpn"],
+        "rpn": "@ + 100",
+        "$comment": "This should pull the FMAP data from the API for this state (FY21) and plug it in and add 100 to it"
+      }
+    ],
+
+Because the ``identity`` action is called on the FY20 data, it will be pulled in as is. The FY21 cell shows how the value can be used in further calculation.
+
+If the specified value is not available, the data used in the calculation will be a ``NaN`` and the text displayed in the cell will be "Not available".
 
 ``noninteractive_table``
 ########################
