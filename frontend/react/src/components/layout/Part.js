@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Alert } from "@cmsgov/design-system-core";
 
-import Text from "./Text";
 import { selectFragment } from "../../store/formData";
 import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
@@ -38,7 +37,7 @@ const Part = ({
   if (show) {
     innards = (
       <>
-        {text ? <Text>{text}</Text> : null}
+        {text ? <p>{text}</p> : null}
 
         {questions.map((question) => (
           <Question key={question.id} question={question} />
