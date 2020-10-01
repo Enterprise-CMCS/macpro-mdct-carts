@@ -33,7 +33,7 @@ const Part = ({
 }) => {
   let innards = null;
 
-  const [_, section] = partId.split("-");
+  const [, section] = partId.split("-");
 
   if (show) {
     innards = (
