@@ -13,4 +13,3 @@ requests
 cffi
 pycparser
 cryptography
-djangorestframework-simplejwt
