@@ -3,10 +3,22 @@ from django.contrib import admin
 from django.contrib.postgres import fields
 from django_json_widget.widgets import JSONEditorWidget
 
-from carts.carts_api.models import Section, SectionBase, SectionSchema
+from carts.carts_api.models import (
+    ACS,
+    FMAP,
+    AppUser,
+    Section,
+    SectionBase,
+    SectionSchema,
+    State,
+)
 
 # Register your models here.
 admin.site.register(SectionSchema)
+admin.site.register(ACS)
+admin.site.register(FMAP)
+admin.site.register(AppUser)
+admin.site.register(State)
 
 
 class SectionBaseAdmin(admin.ModelAdmin):
@@ -22,7 +34,7 @@ class SectionBaseAdmin(admin.ModelAdmin):
         return f'{instance.contents["section"]["title"]}'
 
     formfield_overrides = {
-        fields.JSONField: {'widget': JSONEditorWidget},
+        fields.JSONField: {"widget": JSONEditorWidget},
     }
 
 
@@ -45,7 +57,7 @@ class SectionAdmin(admin.ModelAdmin):
         return f'{instance.contents["section"]["year"]}'
 
     formfield_overrides = {
-        fields.JSONField: {'widget': JSONEditorWidget},
+        fields.JSONField: {"widget": JSONEditorWidget},
     }
 
 

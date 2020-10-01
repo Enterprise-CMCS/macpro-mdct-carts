@@ -6,14 +6,22 @@ import save from "./save";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
 import saveMiddleware from "./saveMiddleware";
+import allStatesData from "./allStatesData";
 
 // Consolidate reducers
-export const reducer = combineReducers({ formData, save, stateUser, global });
+export const reducer = combineReducers({
+  formData,
+  save,
+  stateUser,
+  global,
+  allStatesData,
+});
 
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware, saveMiddleware];
 // log redux only in dev environment
 if (process.env.NODE_ENV === "development") {
+  // eslint-disable-next-line global-require
   const { logger } = require("redux-logger");
 
   middlewareArray = [...middlewareArray, logger];

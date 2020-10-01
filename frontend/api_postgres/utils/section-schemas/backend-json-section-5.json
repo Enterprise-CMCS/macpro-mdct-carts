@@ -1010,28 +1010,18 @@
                         "contents": "FMAP"
                       },
                       {
-                        "targets": [
-                          "$..*[?(@.id=='2020-05-a-02-02-a')].answer.entry"
-                        ],
-                        "actions": [
-                          "identity"
-                        ]
+                        "lookupFmapFy": "2020",
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
                       },
+
                       {
-                        "targets": [
-                          "$..*[?(@.id=='2020-05-a-02-02-b')].answer.entry"
-                        ],
-                        "actions": [
-                          "identity"
-                        ]
+                        "lookupFmapFy": "2020",
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21)"
                       },
+
                       {
-                        "targets": [
-                          "$..*[?(@.id=='2020-05-a-02-02-c')].answer.entry"
-                        ],
-                        "actions": [
-                          "identity"
-                        ]
+                        "lookupFmapFy": "2020",
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY22)"
                       }
                     ],
                     [
