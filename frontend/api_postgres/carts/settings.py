@@ -82,6 +82,16 @@ JWT_AUTHENTICATION = {
     'OPENID_DISCOVERY_URL': 'https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration'
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'carts.oidc': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'carts.oidc'
+    }
+}
+
 ROOT_URLCONF = 'carts.urls'
 
 TEMPLATES = [   
