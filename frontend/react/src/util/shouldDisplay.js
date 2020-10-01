@@ -11,13 +11,6 @@ const hideIf = (state, hideIfInfo) => {
   const targetAnswer = jsonpath.query(state, hideIfInfo.target)[0]; // User's selection from associated question
   const interactiveValues = hideIfInfo.values.interactive; // Array of values which if selected, should hide a question
 
-  if (Array.isArray(targetAnswer)) {
-    if (interactiveValues.length === 0) {
-      return targetAnswer.length === 0;
-    }
-
-    return targetAnswer.some((target) => interactiveValues.includes(target));
-  }
   if (interactiveValues.includes(targetAnswer)) {
     // If the associated answer IS in the interactive array, remove it
     return true;
