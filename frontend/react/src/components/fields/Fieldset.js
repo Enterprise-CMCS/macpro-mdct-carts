@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import Question from "./Question"; // eslint-disable-line import/no-cycle
 import { DataGrid } from "./DataGrid"; // eslint-disable-line import/no-cycle
 import { SynthesizedTable } from "./SynthesizedTable";
+import { NoninteractiveTable } from "./NoninteractiveTable";
 import { SynthesizedValue } from "./SynthesizedValue"; // eslint-disable-line import/no-cycle
 
 // Not done:
 // ==========================
 // datagrid_with_total
 // marked
-// noninteractive_table
 // unmarked_descendants
 
 const Fieldset = ({ question, ...props }) => {
@@ -21,6 +21,8 @@ const Fieldset = ({ question, ...props }) => {
       return <SynthesizedTable question={question} {...props} />;
     case "synthesized_value":
       return <SynthesizedValue question={question} {...props} />;
+    case "noninteractive_table":
+      return <NoninteractiveTable question={question} {...props} />;
     default:
       return question.questions.map((q) => (
         <Question key={q.id} question={q} {...props} />

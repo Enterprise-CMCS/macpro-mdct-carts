@@ -1,0 +1,73 @@
+{
+  "section": {
+    "year": 2020,
+    "state": null,
+    "valid": null,
+    "ordinal": 6,
+    "id": "2020-06",
+    "type": "section",
+    "title": "Challenges and Accomplishments",
+    "subsections": [
+      {
+        "type": "subsection",
+        "id": "2020-06-a",
+        "parts": [
+          {
+            "id": "2020-06-a-01",
+            "type": "part",
+            "questions": [
+              {
+                "id": "2020-06-a-01-01",
+                "label": "How has your state’s political and fiscal environment affected your ability to provide healthcare to low-income children and families?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-02",
+                "label": "What’s the greatest challenge your CHIP program has faced in FFY 2020?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-03",
+                "label": "What are some of the greatest accomplishments your CHIP program has experienced in FFY 2020?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-04",
+                "label": "What changes have you made to your CHIP program in FFY 2020 or plan to make in FFY 2021? Why have you decided to make these changes?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-05",
+                "label": "Is there anything else you’d like to add about your state’s challenges and accomplishments?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-06-a-01-06",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
+                "answer": {
+                  "entry": null
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

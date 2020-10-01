@@ -68,3 +68,21 @@ export const createNewObjective = (parentId) => (dispatch, getState) => {
     value: { ...parent, questions: [...parent.questions, newItem] },
   });
 };
+
+export const removeRepeatable = (parentId) => (dispatch, getState) => {
+  const state = getState();
+  const parent = selectById(state, parentId);
+
+  if (parent.questions.length > 1) {
+    dispatch({
+      type: SET_FRAGMENT,
+      id: parentId,
+      value: {
+        ...parent,
+        questions: parent.questions.slice(0, parent.questions.length - 1),
+      },
+    });
+  }
+};
+
+// 287
