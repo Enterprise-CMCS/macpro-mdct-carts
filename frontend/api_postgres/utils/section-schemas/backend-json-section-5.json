@@ -717,16 +717,12 @@
                     [
                       { "contents": "FMAP" },
                       {
-                        "targets": [
-                          { "lookupFmapFy": "2020" }
-                        ],
+                        "targets": [{ "lookupFmapFy": "2020" }],
                         "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
                       },
                       {
-                        "targets": [
-                          { "lookupFmapFy": "2021" }
-                        ],
+                        "targets": [{ "lookupFmapFy": "2021" }],
                         "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21). Since those data are currently unavailable, the cell should say 'Not available'"
                       }
