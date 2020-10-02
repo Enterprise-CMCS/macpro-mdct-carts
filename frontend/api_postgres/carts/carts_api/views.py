@@ -43,16 +43,9 @@ from carts.carts_api.models import (
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
-    "AK": {
-        "program_type": "medicaid_exp_chip"
-    },
-    "AZ": {
-        "program_type": "separate_chip"
-    },
-    "MA": {
-        "program_type": "combo"
-    },
-
+    "AK": {"program_type": "medicaid_exp_chip"},
+    "AZ": {"program_type": "separate_chip"},
+    "MA": {"program_type": "combo"},
 }
 
 
@@ -60,6 +53,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
@@ -69,74 +63,92 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
 
 class StateViewSet(viewsets.ModelViewSet):
     """
     API endpoint that returns state data.
     """
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = State.objects.all()
     serializer_class = StateSerializer
 
-    #def list(self, request):
+    # def list(self, request):
     #    return Response(self.serializer_class(self.queryset).data)
+
 
 class SectionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
 
     def list(self, request):
         queryset = self.get_queryset()
-        serializer = SectionSerializer(queryset, many=True,
-                                       context={"request": request})
+        serializer = SectionSerializer(
+            queryset, many=True, context={"request": request}
+        )
         return Response(serializer.data)
+
 
 @api_view(["GET"])
 def sections_by_year_and_state(request, year, state):
     try:
-        data = Section.objects.filter(contents__section__year=year,
-                                      contents__section__state=state.upper())
+        data = Section.objects.filter(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+        )
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = SectionSerializer(data, many=True,
-                                       context={"request": request})
+        serializer = SectionSerializer(
+            data, many=True, context={"request": request}
+        )
         return Response(serializer.data)
+
 
 @api_view(["POST"])
 @transaction.atomic
 def update_sections(request):
     try:
-        
+
         for entry in request.data:
             section_id = entry['contents']['section']['id']
             section_state = entry['contents']['section']['state']
 
-            section = Section.objects.get(contents__section__id=section_id,
-                                          contents__section__state=section_state.upper())
+            section = Section.objects.get(
+                contents__section__id=section_id,
+                contents__section__state=section_state.upper(),
+            )
 
             section.contents = entry['contents']
             section.save()
 
     except:
-        raise ValidationError('There is a problem with the provided data.', 400)
+        raise ValidationError(
+            'There is a problem with the provided data.', 400
+        )
 
     return HttpResponse(status=204)
+
 
 @api_view(["GET"])
 def section_by_year_and_state(request, year, state, section):
     try:
-        data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper(),
-                                   contents__section__ordinal=section)
+        data = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -153,16 +165,18 @@ def sectionbases_by_year(request, year):
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = SectionBaseSerializer(data, many=True,
-                                           context={"request": request})
+        serializer = SectionBaseSerializer(
+            data, many=True, context={"request": request}
+        )
         return Response(serializer.data)
 
 
 @api_view(["GET"])
 def sectionbase_by_year_and_section(request, year, section):
     try:
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
     except SectionBase.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -174,8 +188,9 @@ def sectionbase_by_year_and_section(request, year, section):
 @api_view(["GET"])
 def sectionbase_by_year_section_subsection(request, year, section, subsection):
     try:
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
         subsection_id = _id_from_chunks(year, section, subsection)
         subsections = data.contents["section"]["subsections"]
         targets = [_ for _ in subsections if _["id"] == subsection_id]
@@ -192,12 +207,15 @@ def sectionbase_by_year_section_subsection(request, year, section, subsection):
 
 
 @api_view(["GET"])
-def section_subsection_by_year_and_state(request, year, state, section,
-                                         subsection):
+def section_subsection_by_year_and_state(
+    request, year, state, section, subsection
+):
     try:
-        data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper(),
-                                   contents__section__ordinal=section)
+        data = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
         subsections = data.contents["section"]["subsections"]
         subsection_id = _id_from_chunks(year, section, subsection)
         targets = [_ for _ in subsections if _["id"] == subsection_id]
@@ -217,9 +235,11 @@ def section_subsection_by_year_and_state(request, year, state, section,
 def fragment_by_year_state_id(request, state, id):
     try:
         year, section = _year_section_query_from_id(id)
-        data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper(),
-                                   contents__section__ordinal=section)
+        data = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
         targets = _get_fragment_by_id(id, data.contents.get("section"))
         if not len(targets) == 1:
             return HttpResponse(status=404)
@@ -237,8 +257,9 @@ def fragment_by_year_state_id(request, state, id):
 def generic_fragment_by_id(request, id):
     try:
         year, section = _year_section_query_from_id(id)
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
         targets = _get_fragment_by_id(id, data.contents.get("section"))
         if not len(targets) == 1:
             return HttpResponse(status=404)
@@ -256,6 +277,7 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionBase.objects.all()
     serializer_class = SectionBaseSerializer
@@ -265,6 +287,7 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionSchema.objects.all()
     serializer_class = SectionSchemaSerializer
@@ -273,14 +296,16 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
 def report(request, year=None, state=None):
     assert year
     assert state
-    sections = Section.objects.filter(contents__section__year=year,
-                                      contents__section__state=state.upper())
-    ordered = sorted([_.contents["section"] for _ in sections],
-                     key=lambda s: s["ordinal"])
+    sections = Section.objects.filter(
+        contents__section__year=year, contents__section__state=state.upper()
+    )
+    ordered = sorted(
+        [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+    )
     context = {
         "sections": ordered,
         "state": STATE_INFO[state.upper()],
-        "l": len(ordered)
+        "l": len(ordered),
     }
     report_template = get_template("report.html")
     return HttpResponse(report_template.render(context=context))
@@ -301,12 +326,9 @@ def fake_user_data(request, username=None):
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
-                "state": {
-                    "id": "AK",
-                    "name": "Alaska"
-                },
+                "state": {"id": "AK", "name": "Alaska"},
                 "username": "dev-jane.doe@alaska.gov",
-            }
+            },
         },
         "AZ": {
             "name": "Arizona",
@@ -317,12 +339,9 @@ def fake_user_data(request, username=None):
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
-                "state": {
-                    "id": "AZ",
-                    "name": "Arizona"
-                },
+                "state": {"id": "AZ", "name": "Arizona"},
                 "username": "dev-john.smith@arizona.gov",
-            }
+            },
         },
         "MA": {
             "name": "Massachusetts",
@@ -333,13 +352,10 @@ def fake_user_data(request, username=None):
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
-                "state": {
-                    "id": "MA",
-                    "name": "Massachusetts"
-                },
+                "state": {"id": "MA", "name": "Massachusetts"},
                 "username": "dev-naoise.murphy@massachusetts.gov",
-            }
-        }
+            },
+        },
     }
 
     assert state in fakeUserData
@@ -419,12 +435,9 @@ def authenticate_user(request):
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
-                "state": {
-                    "id": "AK",
-                    "name": "Alaska"
-                },
+                "state": {"id": "AK", "name": "Alaska"},
                 "username": email,
-            }
+            },
         },
         "AZ": {
             "name": "Arizona",
@@ -435,12 +448,9 @@ def authenticate_user(request):
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
-                "state": {
-                    "id": "AZ",
-                    "name": "Arizona"
-                },
+                "state": {"id": "AZ", "name": "Arizona"},
                 "username": email,
-            }
+            },
         },
         "MA": {
             "name": "Massachusetts",
@@ -451,13 +461,10 @@ def authenticate_user(request):
             "formName": "CARTS FY",
             "currentUser": {
                 "role": "state_user",
-                "state": {
-                    "id": "MA",
-                    "name": "Massachusetts"
-                },
+                "state": {"id": "MA", "name": "Massachusetts"},
                 "username": email,
-            }
-        }
+            },
+        },
     }
     return HttpResponse(json.dumps(fake_user_data[fake_user_key]))
 
@@ -468,6 +475,7 @@ def _id_from_chunks(year, *args):
         if chunk in string.ascii_lowercase:
             return chunk
         return chunk.zfill(2)
+
     chunks = [year] + [*args]
 
     return "-".join(fill(c) for c in chunks)
@@ -477,8 +485,9 @@ def _year_section_query_from_id(ident: str) -> List[int]:
     return [int(_) for _ in ident.split("-")[:2]]
 
 
-def _get_fragment_by_id(ident: str,
-                        contents: Union[Dict, List]) -> DatumInContext:
+def _get_fragment_by_id(
+    ident: str, contents: Union[Dict, List]
+) -> DatumInContext:
     pathstring = f"$..*[?(@.id=='{ident}')]"
     find_by_id = parse(pathstring)
     return find_by_id.find(contents)
