@@ -116,6 +116,14 @@
                 "answer": {
                   "entry": null
                 }
+              },
+              {
+                "id": "2020-03-a-01-05",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
+                "answer": {
+                  "entry": null
+                }
               }
             ]
           }
@@ -304,8 +312,16 @@
               },
               {
                 "id": "2020-03-b-01-05",
-                "label": "Is there anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
+                "label": "Is there anything else you’d like to add about substitution of coverage that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-b-01-06",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
                 "answer": {
                   "entry": null
                 }
@@ -2355,7 +2371,7 @@
               },
               {
                 "id": "2020-03-e-01-07",
-                "label": "How many children were enrolled in the premium assistance program on average each month in the last FFY?",
+                "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2363,8 +2379,6 @@
               },
               {
                 "type": "fieldset",
-                "label": "Coverage breakdown for children",
-                "hint": "Your answers will auto-populate the table below.",
                 "questions": [
                   {
                     "id": "2020-03-e-01-08",
@@ -2432,7 +2446,6 @@
               },
               {
                 "type": "fieldset",
-                "label": "Range in monthly contributions paid by state",
                 "questions": [
                   {
                     "id": "2020-03-e-01-11",
@@ -2464,7 +2477,6 @@
               },
               {
                 "type": "fieldset",
-                "label": "Range in family income levels",
                 "questions": [
                   {
                     "id": "2020-03-e-01-13",
@@ -2504,7 +2516,7 @@
               },
               {
                 "id": "2020-03-e-01-16",
-                "label": "What challenges did you experience with your premium assistance program in the last federal fiscal year (FFY)?",
+                "label": "What challenges did you experience with your premium assistance program in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2512,7 +2524,7 @@
               },
               {
                 "id": "2020-03-e-01-17",
-                "label": "What accomplishments did you experience with your premium assistance program in the last FFY?",
+                "label": "What accomplishments did you experience with your premium assistance program in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -2522,6 +2534,14 @@
                 "id": "2020-03-e-01-18",
                 "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-e-01-19",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
                 "answer": {
                   "entry": null
                 }
