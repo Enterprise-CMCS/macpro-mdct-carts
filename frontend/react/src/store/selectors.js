@@ -69,6 +69,7 @@ export const selectQuestionsForPart = (state, partId) => {
       return filterDisplay(question, state);
     })
     .filter((q) => q !== false);
+
   return filteredQuestions;
 };
 
