@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
             model_name="appuser",
             name="state",
             field=models.ForeignKey(
+                null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 to="carts_api.State",
             ),

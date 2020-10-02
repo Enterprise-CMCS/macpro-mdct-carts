@@ -48,7 +48,7 @@ class State(models.Model):
 
 
 class AppUser(models.Model):
-    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
     email = models.EmailField()
     username = models.CharField(max_length=4)
     role = models.CharField(max_length=32, choices=USER_ROLES)
