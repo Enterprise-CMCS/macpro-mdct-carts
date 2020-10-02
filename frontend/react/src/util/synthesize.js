@@ -119,7 +119,6 @@ const rpn = (values, rpnString, precision) => {
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
 const lookupFMAP = (state, fy) => {
-  // console.log('AllStatesData acs', state.allStatesData);
   if (state.allStatesData && state.stateUser) {
     const stateAbbr = state.stateUser.abbr;
     const stateData = state.allStatesData.filter(
