@@ -30,15 +30,6 @@ class Section(models.Model):
         jsonschema.validate(instance=self.contents, schema=schema)
 
 
-class AppUser(models.Model):
-    # Eventually state will need to be a foreign key reference to the
-    # appropriate State instance.
-    state = models.CharField(max_length=2, choices=US_STATES)
-    email = models.EmailField()
-    eua_id = models.CharField(max_length=4)
-    role = models.CharField(max_length=32, choices=USER_ROLES)
-
-
 class State(models.Model):
     """
     A model to hold and reference state specific information
@@ -54,6 +45,13 @@ class State(models.Model):
         max_length=32, choices=PROGRAM_TYPES, default="combo"
     )
     program_names = ArrayField(models.CharField(max_length=64), default=list)
+
+
+class AppUser(models.Model):
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    email = models.EmailField()
+    username = models.CharField(max_length=4)
+    role = models.CharField(max_length=32, choices=USER_ROLES)
 
 
 class FMAP(models.Model):
