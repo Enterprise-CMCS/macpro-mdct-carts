@@ -1,7 +1,6 @@
 State abbreviation,State,FMAP,enhanced FMAP
 AL,Alabama,72.58,80.81
 AK,Alaska,50,65
-AS,American Samoa,55,68.5
 AZ,Arizona,70.01,79.01
 AR,Arkansas,71.23,79.86
 CA,California,50,65
@@ -11,7 +10,6 @@ DE,Delaware,57.74,70.42
 DC,District of Columbia,70,79
 FL,Florida,61.96,73.37
 GA,Georgia,67.03,76.92
-GU,Guam,55,68.5
 HI,Hawaii,53.02,67.11
 ID,Idaho,70.41,79.29
 IL,Illinois,50.96,65.67
@@ -36,12 +34,10 @@ NM,New Mexico,73.46,81.42
 NY,New York,50,65
 NC,North Carolina,67.4,77.18
 ND,North Dakota,52.4,66.68
-MP,Northern Mariana Islands,55,68.5
 OH,Ohio,63.63,74.54
 OK,Oklahoma,67.99,77.59
 OR,Oregon,60.84,72.59
 PA,Pennsylvania,52.2,66.54
-PR,Puerto Rico,55,68.5
 RI,Rhode Island,54.09,67.86
 SC,South Carolina,70.63,79.44
 SD,South Dakota,58.28,70.8
@@ -49,7 +45,6 @@ TN,Tennessee,66.1,76.27
 TX,Texas,61.81,73.27
 UT,Utah,67.52,77.26
 VT,Vermont,54.57,68.2
-VI,Virgin Islands,55,68.5
 VA,Virginia,50,65
 WA,Washington,50,65
 WV,West Virginia,74.99,82.49
