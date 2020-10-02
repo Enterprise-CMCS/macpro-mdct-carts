@@ -253,6 +253,10 @@
                         }
                       ]
                     },
+                    "context_data": {
+                      "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
+                      "show_if_state_program_type_in": ["separate_chip"]
+                    },
                     "questions": [
                       {
                         "type": "fieldset",
@@ -267,11 +271,17 @@
                           }
                         ],
                         "context_data": {
-                          "skip_text": "Some questions were skipped because they don't apply to your program.",
-                          "show_if_state_program_type_in": [
-                            "separate_chip",
-                            "combo"
-                          ]
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if the answer to 2020-03-b-01-04 is no or N/A.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-b-01-04')].answer.entry",
+                              "values": {
+                                "interactive": ["no", "na", null],
+                                "noninteractive": ["no", "na"]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -280,6 +290,19 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if the answer to 2020-03-b-01-04 is no or N/A.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-b-01-04')].answer.entry",
+                              "values": {
+                                "interactive": ["no", "na", null],
+                                "noninteractive": ["no", "na"]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -288,6 +311,19 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if the answer to 2020-03-b-01-04 is no or N/A.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-b-01-04')].answer.entry",
+                              "values": {
+                                "interactive": ["no", "na", null],
+                                "noninteractive": ["no", "na"]
+                              }
+                            }
+                          }
                         }
                       },
                       {
@@ -296,6 +332,19 @@
                         "type": "text_multiline",
                         "answer": {
                           "entry": null
+                        },
+                        "context_data": {
+                          "conditional_display": {
+                            "type": "conditional_display",
+                            "comment": "Interactive: Hide if the answer to 2020-03-b-01-04 is no or N/A.",
+                            "hide_if": {
+                              "target": "$..*[?(@.id=='2020-03-b-01-04')].answer.entry",
+                              "values": {
+                                "interactive": ["no", "na", null],
+                                "noninteractive": ["no", "na"]
+                              }
+                            }
+                          }
                         }
                       }
                     ]
