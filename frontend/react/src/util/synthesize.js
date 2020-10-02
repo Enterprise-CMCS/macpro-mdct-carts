@@ -141,6 +141,7 @@ const lookupFMAP = (state, fy) => {
  * @returns {string}
  */
 const lookupAcs = (state, args) => {
+  let returnValue = '';
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
     // Get stateUser state
@@ -156,11 +157,10 @@ const lookupAcs = (state, args) => {
 
     // If acs exists, return the value from the object
     if (acs) {
-      return `${acs[args[1]]}`;
+      returnValue = `${acs[args[1]]}`;
     }
-    return "";
   }
-  return "";
+  return returnValue;
 };
 
 const synthesizeValue = (value, state) => {
