@@ -30,18 +30,8 @@
                     "Percent change"
                   ],
                   "rows": [
-                    [
-                      "Medicaid Expansion CHIP",
-                      284143,
-                      300579,
-                      5.78
-                    ],
-                    [
-                      "Separate CHIP",
-                      478542,
-                      511473,
-                      6.88
-                    ]
+                    ["Medicaid Expansion CHIP", 284143, 300579, 5.78],
+                    ["Separate CHIP", 478542, 511473, 6.88]
                   ]
                 },
                 "questions": [
@@ -70,77 +60,132 @@
             "questions": [
               {
                 "type": "fieldset",
-                "fieldset_type": "noninteractive_table",
+                "label": "",
+                "hint": "",
+                "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "headers": [
-                    "Year",
-                    "Number of uninsured children",
-                    "Margin of error",
-                    "Percent of children who are uninsured (of total children)",
-                    "Margin of error"
+                    {
+                      "contents": "Year"
+                    },
+                    {
+                      "contents": "Number of uninsured children"
+                    },
+                    {
+                      "contents": "Margin of error"
+                    },
+                    {
+                      "contents": "Percent of uninsured children (of total children in your state)"
+                    },
+                    {
+                      "contents": "Margin of error"
+                    }
                   ],
                   "rows": [
                     [
-                      "2014",
-                      "103",
-                      "7.0",
-                      "2.3",
-                      ".2"
+                      {
+                        "contents": "2015"
+                      },
+                      {
+                        "lookupAcs": ["2015", "number_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2015", "number_uninsured_moe"]
+                      },
+                      {
+                        "lookupAcs": ["2015", "percent_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2015", "percent_uninsured_moe"]
+                      }
                     ],
                     [
-                      "2015",
-                      "86",
-                      "7.0",
-                      "2.0",
-                      ".2"
+                      {
+                        "contents": "2016"
+                      },
+                      {
+                        "lookupAcs": ["2016", "number_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2016", "number_uninsured_moe"]
+                      },
+                      {
+                        "lookupAcs": ["2016", "percent_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2016", "percent_uninsured_moe"]
+                      }
                     ],
                     [
-                      "2016",
-                      "61",
-                      "6.0",
-                      "1.4",
-                      ".1"
+                      {
+                        "contents": "2017"
+                      },
+                      {
+                        "lookupAcs": ["2017", "number_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2017", "number_uninsured_moe"]
+                      },
+                      {
+                        "lookupAcs": ["2017", "percent_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2017", "percent_uninsured_moe"]
+                      }
                     ],
                     [
-                      "2017",
-                      "58",
-                      "7.0",
-                      "1.3",
-                      ".2"
+                      {
+                        "contents": "2018"
+                      },
+                      {
+                        "lookupAcs": ["2018", "number_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2018", "number_uninsured_moe"]
+                      },
+                      {
+                        "lookupAcs": ["2018", "percent_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2018", "percent_uninsured_moe"]
+                      }
                     ],
                     [
-                      "2018",
-                      "57",
-                      "7.0",
-                      "1.3",
-                      ".2"
+                      {
+                        "contents": "2019"
+                      },
+                      {
+                        "lookupAcs": ["2019", "number_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2019", "number_uninsured_moe"]
+                      },
+                      {
+                        "lookupAcs": ["2019", "percent_uninsured"]
+                      },
+                      {
+                        "lookupAcs": ["2019", "percent_uninsured_moe"]
+                      }
                     ]
                   ]
                 },
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "noninteractive_table",
+                "fieldset_info": {
+                  "headers": ["Percent change between 2018 and 2019"],
+                  "rows": [[-1.7]]
+                },
                 "questions": [
                   {
-                    "type": "fieldset",
-                    "fieldset_type": "noninteractive_table",
-                    "fieldset_info": {
-                      "headers": [
-                        "Percent change between 2018 and 2019"
-                      ],
-                      "rows": [
-                        [
-                          -1.7
-                        ]
-                      ]
-                    },
-                    "questions": [
-                      {
-                        "id": "2020-02-a-02-01",
-                        "label": "What are some reasons why the number and/or percent of uninsured children has changed?",
-                        "type": "text_multiline",
-                        "answer": {
-                          "entry": null
-                        }
-                      }
-                    ]
+                    "id": "2020-02-a-02-01",
+                    "label": "What are some reasons why the number and/or percent of uninsured children has changed?",
+                    "type": "text_multiline",
+                    "answer": {
+                      "entry": null
+                    }
                   }
                 ]
               },
@@ -176,13 +221,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -224,10 +264,7 @@
                         "label": "Tell us the date range for your data",
                         "type": "daterange",
                         "answer": {
-                          "labels": [
-                            "Start",
-                            "End"
-                          ],
+                          "labels": ["Start", "End"],
                           "entry": null
                         }
                       },
@@ -287,13 +324,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
