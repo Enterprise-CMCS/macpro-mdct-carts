@@ -17,7 +17,7 @@
             "id": "2020-02-a-01",
             "type": "part",
             "title": "Number of Children Enrolled in CHIP",
-            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and then refresh this page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
+            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years (FFY). If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and then refresh this page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
             "questions": [
               {
                 "type": "fieldset",
@@ -30,24 +30,14 @@
                     "Percent change"
                   ],
                   "rows": [
-                    [
-                      "Medicaid Expansion CHIP",
-                      284143,
-                      300579,
-                      5.78
-                    ],
-                    [
-                      "Separate CHIP",
-                      478542,
-                      511473,
-                      6.88
-                    ]
+                    ["Medicaid Expansion CHIP", 284143, 300579, 5.78],
+                    ["Separate CHIP", 478542, 511473, 6.88]
                   ]
                 },
                 "questions": [
                   {
                     "id": "2020-02-a-01-01",
-                    "label": "What are some possible reasons why your state had more than a 3% change in enrollment numbers?",
+                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -76,45 +66,15 @@
                     "Year",
                     "Number of uninsured children",
                     "Margin of error",
-                    "Percent of children who are uninsured (of total children)",
+                    "Percent of uninsured children (of total children in your state)",
                     "Margin of error"
                   ],
                   "rows": [
-                    [
-                      "2014",
-                      "103",
-                      "7.0",
-                      "2.3",
-                      ".2"
-                    ],
-                    [
-                      "2015",
-                      "86",
-                      "7.0",
-                      "2.0",
-                      ".2"
-                    ],
-                    [
-                      "2016",
-                      "61",
-                      "6.0",
-                      "1.4",
-                      ".1"
-                    ],
-                    [
-                      "2017",
-                      "58",
-                      "7.0",
-                      "1.3",
-                      ".2"
-                    ],
-                    [
-                      "2018",
-                      "57",
-                      "7.0",
-                      "1.3",
-                      ".2"
-                    ]
+                    ["2014", "103", "7.0", "2.3", ".2"],
+                    ["2015", "86", "7.0", "2.0", ".2"],
+                    ["2016", "61", "6.0", "1.4", ".1"],
+                    ["2017", "58", "7.0", "1.3", ".2"],
+                    ["2018", "57", "7.0", "1.3", ".2"]
                   ]
                 },
                 "questions": [
@@ -122,14 +82,8 @@
                     "type": "fieldset",
                     "fieldset_type": "noninteractive_table",
                     "fieldset_info": {
-                      "headers": [
-                        "Percent change between 2018 and 2019"
-                      ],
-                      "rows": [
-                        [
-                          -1.7
-                        ]
-                      ]
+                      "headers": ["Percent change between 2018 and 2019"],
+                      "rows": [[-1.7]]
                     },
                     "questions": [
                       {
@@ -176,13 +130,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -224,10 +173,7 @@
                         "label": "Tell us the date range for your data",
                         "type": "daterange",
                         "answer": {
-                          "labels": [
-                            "Start",
-                            "End"
-                          ],
+                          "labels": ["Start", "End"],
                           "entry": null
                         }
                       },
@@ -287,13 +233,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [
-                              null,
-                              "no"
-                            ],
-                            "noninteractive": [
-                              "no"
-                            ]
+                            "interactive": [null, "no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
@@ -303,8 +244,16 @@
               },
               {
                 "id": "2020-02-a-02-04",
-                "label": "Is there anything else you’d like to add about your data?",
+                "label": "Is there anything else you’d like to add about your enrollment and uninsured data?",
                 "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-02-a-02-05",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
                 "answer": {
                   "entry": null
                 }

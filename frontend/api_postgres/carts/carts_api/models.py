@@ -20,6 +20,10 @@ class SectionBase(models.Model):
         schema = schema_object.contents
         jsonschema.validate(instance=self.contents, schema=schema)
 
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(SectionBase, self).save(*args, **kwargs)
+
 
 class Section(models.Model):
     contents = JSONField()
@@ -29,14 +33,9 @@ class Section(models.Model):
         schema = schema_object.contents
         jsonschema.validate(instance=self.contents, schema=schema)
 
-
-class AppUser(models.Model):
-    # Eventually state will need to be a foreign key reference to the
-    # appropriate State instance.
-    state = models.CharField(max_length=2, choices=US_STATES)
-    email = models.EmailField()
-    eua_id = models.CharField(max_length=4)
-    role = models.CharField(max_length=32, choices=USER_ROLES)
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(Section, self).save(*args, **kwargs)
 
 
 class State(models.Model):
@@ -54,6 +53,13 @@ class State(models.Model):
         max_length=32, choices=PROGRAM_TYPES, default="combo"
     )
     program_names = ArrayField(models.CharField(max_length=64), default=list)
+
+
+class AppUser(models.Model):
+    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
+    email = models.EmailField()
+    username = models.CharField(max_length=4)
+    role = models.CharField(max_length=32, choices=USER_ROLES)
 
 
 class FMAP(models.Model):

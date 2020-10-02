@@ -1,13 +1,9 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import {
-  BrowserRouter as Router,
-  Route,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
+import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-dependencies
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -16,16 +12,15 @@ import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Home from "./Home";
 import Profile from "./Profile";
 import config from "./auth-config";
-import * as qs from "query-string";
 
 const WrappedSecurity = () => {
-  let VisibleHeader =
+  const VisibleHeader =
     window.location.pathname.split("/")[1] === "reports" ||
     window.location.pathname.split("/")[1] === "coming-soon" ? null : (
       <Header />
     );
 
-  let VisibleFooter =
+  const VisibleFooter =
     window.location.pathname.split("/")[1] === "reports" ||
     window.location.pathname.split("/")[1] === "coming-soon" ? null : (
       <Footer />
@@ -44,21 +39,20 @@ const WrappedSecurity = () => {
         {VisibleFooter}
       </div>
     );
-  } else {
-    return (
-      <Router>
-        <Security
-          {...config.oidc}
-          tokenManager={{ secure: true, storage: "cookie" }}
-        >
-          <SecureInitialDataLoad />
-          <SecureRoute path="/" component={Home} />
-          <Route path={config.callback} component={LoginCallback} />
-          <SecureRoute path="/profile" component={Profile} />
-        </Security>
-      </Router>
-    );
   }
+  return (
+    <Router>
+      <Security
+        {...config.oidc}
+        tokenManager={{ secure: true, storage: "cookie" }}
+      >
+        <SecureInitialDataLoad />
+        <SecureRoute path="/" component={Home} />
+        <Route path={config.callback} component={LoginCallback} />
+        <SecureRoute path="/profile" component={Profile} />
+      </Security>
+    </Router>
+  );
 };
 
 export default WrappedSecurity;
