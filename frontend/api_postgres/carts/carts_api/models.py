@@ -20,6 +20,10 @@ class SectionBase(models.Model):
         schema = schema_object.contents
         jsonschema.validate(instance=self.contents, schema=schema)
 
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(SectionBase, self).save(*args, **kwargs)
+
 
 class Section(models.Model):
     contents = JSONField()
@@ -28,6 +32,10 @@ class Section(models.Model):
         schema_object = SectionSchema.objects.first()
         schema = schema_object.contents
         jsonschema.validate(instance=self.contents, schema=schema)
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(Section, self).save(*args, **kwargs)
 
 
 class AppUser(models.Model):
