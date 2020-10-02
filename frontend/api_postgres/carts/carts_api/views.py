@@ -322,7 +322,7 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     state = State.objects.get(code=state_id)
     assert auth_group and state
     program_names = ", ".join(state.program_names)
-    program_name_text = f"{state.code.upper} {program_names}"
+    program_name_text = f"{state.code.upper()} {program_names}"
 
     user_data = {
         "name": state.name,
