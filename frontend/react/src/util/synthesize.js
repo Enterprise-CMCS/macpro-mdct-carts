@@ -119,6 +119,7 @@ const rpn = (values, rpnString, precision) => {
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
 const lookupFMAP = (state, fy) => {
+  // console.log('AllStatesData acs', state.allStatesData);
   if (state.allStatesData && state.stateUser) {
     const stateAbbr = state.stateUser.abbr;
     const stateData = state.allStatesData.filter(
@@ -133,13 +134,51 @@ const lookupFMAP = (state, fy) => {
   return "";
 };
 
+/**
+ * Retrieve acs_set from state and return for individual state.
+ *
+ * @param {string} state
+ * @param {array} args
+ * @returns {string}
+ */
+const lookupAcs = (state, args) => {
+
+  // if allStatesData and stateUser are available
+  if(state.allStatesData && state.stateUser) {
+
+    // Get stateUser state
+    const stateAbbr = state.stateUser.abbr;
+
+    // Filter for only matching state
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+
+    // Filter for matching state from JSON
+    const acs = stateData?.acs_set.filter(
+      (year) => year.year === +args[0]
+    )[0];
+
+    // If acs exists, return the value from the object
+    if(acs) {
+      return `${acs[args[1]]}`;
+    }
+    return "";
+  }
+  return "";
+}
+
 const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
   }
 
   if (value.lookupFmapFy) {
-    return { contents: lookupFMAP(state, value.lookupFmapFy) };
+    return {contents: lookupFMAP(state, value.lookupFmapFy)};
+  }
+
+  if (value.lookupAcs) {
+    return {contents: [lookupAcs(state, value.lookupAcs)]}
   }
 
   if (value.targets) {
@@ -154,16 +193,16 @@ const synthesizeValue = (value, state) => {
 
       switch (action) {
         case "identity":
-          return { contents: identity(targets) };
+          return {contents: identity(targets)};
         case "percentage":
-          return { contents: percent(targets, value.precision) };
+          return {contents: percent(targets, value.precision)};
         case "rpn":
-          return { contents: rpn(targets, value.rpn, value.precision) };
+          return {contents: rpn(targets, value.rpn, value.precision)};
         case "sum":
-          return { contents: sum(targets) };
+          return {contents: sum(targets)};
 
         default:
-          return { contents: targets[0] };
+          return {contents: targets[0]};
       }
     }
 
