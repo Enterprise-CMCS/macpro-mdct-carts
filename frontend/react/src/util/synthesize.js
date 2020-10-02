@@ -141,10 +141,8 @@ const lookupFMAP = (state, fy) => {
  * @returns {string}
  */
 const lookupAcs = (state, args) => {
-
   // if allStatesData and stateUser are available
-  if(state.allStatesData && state.stateUser) {
-
+  if (state.allStatesData && state.stateUser) {
     // Get stateUser state
     const stateAbbr = state.stateUser.abbr;
 
@@ -154,18 +152,16 @@ const lookupAcs = (state, args) => {
     )[0];
 
     // Filter for matching state from JSON
-    const acs = stateData?.acs_set.filter(
-      (year) => year.year === +args[0]
-    )[0];
+    const acs = stateData?.acs_set.filter((year) => year.year === +args[0])[0];
 
     // If acs exists, return the value from the object
-    if(acs) {
+    if (acs) {
       return `${acs[args[1]]}`;
     }
     return "";
   }
   return "";
-}
+};
 
 const synthesizeValue = (value, state) => {
   if (value.contents) {
@@ -173,11 +169,11 @@ const synthesizeValue = (value, state) => {
   }
 
   if (value.lookupFmapFy) {
-    return {contents: lookupFMAP(state, value.lookupFmapFy)};
+    return { contents: lookupFMAP(state, value.lookupFmapFy) };
   }
 
   if (value.lookupAcs) {
-    return {contents: [lookupAcs(state, value.lookupAcs)]}
+    return { contents: [lookupAcs(state, value.lookupAcs)] };
   }
 
   if (value.targets) {
@@ -192,16 +188,16 @@ const synthesizeValue = (value, state) => {
 
       switch (action) {
         case "identity":
-          return {contents: identity(targets)};
+          return { contents: identity(targets) };
         case "percentage":
-          return {contents: percent(targets, value.precision)};
+          return { contents: percent(targets, value.precision) };
         case "rpn":
-          return {contents: rpn(targets, value.rpn, value.precision)};
+          return { contents: rpn(targets, value.rpn, value.precision) };
         case "sum":
-          return {contents: sum(targets)};
+          return { contents: sum(targets) };
 
         default:
-          return {contents: targets[0]};
+          return { contents: targets[0] };
       }
     }
 
