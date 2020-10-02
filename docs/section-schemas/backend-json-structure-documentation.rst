@@ -658,6 +658,29 @@ One additional type of synthesized value that behaves a bit differently from tho
       },
     ],
 
+Another outlier is the ``lookupAcs`` action, which is used to pull American Community Survey data. Add the ``lookupAcs`` property to a synthesized table cell and specify the fiscal year and property name, as an array, for the value.
+
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
+..  code:: json
+
+    "rows": [
+        [
+            {
+                "lookupAcs": [ "2016", "number_uninsured" ]
+            },
+            {
+                "lookupAcs": [ "2016", "number_uninsured_moe" ]
+            },
+        ]
+    ]
+
+
 ``synthesized_table``
 ########################
 This displays a table constructed out of values either provided by or indicated in the ``fieldset_info`` property.
