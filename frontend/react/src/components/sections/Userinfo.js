@@ -15,7 +15,7 @@ const Userinfo = ({ currentUser }) => {
       <span>
         <strong>{key}</strong>: {value}
       </span>
-  );
+    );
   });
   return (
     <ul>
@@ -27,7 +27,7 @@ const Userinfo = ({ currentUser }) => {
 };
 
 Userinfo.propTypes = {
-    currentUser: PropTypes.object,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
