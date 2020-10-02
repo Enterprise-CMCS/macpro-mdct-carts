@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   BrowserRouter as Router,
   Route,
@@ -49,6 +50,10 @@ const Routes = ({ userData }) => (
   </Router>
 );
 
+Routes.propTypes = {
+  userData: PropTypes.object, // eslint-disable-line react/require-default-props
+};
+
 const InvokeSection = ({ userData }) => {
   const { year, sectionOrdinal, subsectionMarker } = useParams();
   const filteredMarker = subsectionMarker
@@ -70,6 +75,10 @@ const InvokeSection = ({ userData }) => {
       subsectionId={subsectionId}
     />
   );
+};
+
+InvokeSection.propTypes = {
+  userData: PropTypes.object, // eslint-disable-line react/require-default-props
 };
 
 export default Routes;
