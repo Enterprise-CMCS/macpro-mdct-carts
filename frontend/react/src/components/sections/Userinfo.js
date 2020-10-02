@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const Userinfo = ({ currentUser }) => {
@@ -9,12 +10,12 @@ const Userinfo = ({ currentUser }) => {
           <strong>state</strong>: {value.id} {value.name}
         </span>
       );
-    } else {
-      return (
-        <span>
-          <strong>{key}</strong>: {value}
-        </span>
-      );
+    }
+    return (
+      <span>
+        <strong>{key}</strong>: {value}
+      </span>
+  );
     }
   });
   return (
@@ -24,6 +25,10 @@ const Userinfo = ({ currentUser }) => {
       ))}
     </ul>
   );
+};
+
+UserInfo.propTypes = {
+    currentUser: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

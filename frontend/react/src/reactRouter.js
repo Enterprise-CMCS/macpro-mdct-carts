@@ -15,7 +15,7 @@ import test from "./components/test";
 import ScrollToTop from "./components/Utils/ScrollToTop";
 import SaveError from "./components/layout/SaveError";
 
-let VisibleSidebar =
+const VisibleSidebar =
   window.location.pathname === "/" ||
   window.location.pathname.split("/")[1] === "reports" ||
   window.location.pathname.split("/")[1] === "coming-soon" ? null : (
@@ -49,7 +49,7 @@ const Routes = ({ userData }) => (
 );
 
 const InvokeSection = ({ userData }) => {
-  let { year, sectionOrdinal, subsectionMarker } = useParams();
+  const { year, sectionOrdinal, subsectionMarker } = useParams();
   const filteredMarker = subsectionMarker
     ? subsectionMarker.toLowerCase()
     : "a";
