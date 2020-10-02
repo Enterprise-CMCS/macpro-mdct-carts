@@ -2079,7 +2079,7 @@
                       "entry": null
                     },
                     "context_data": {
-                      "interactive_conditional": "In addition to hiding this question if 2020-03-d-01-01 is no, this should also hide if 2020-01-a-04-08 is no or unanswered.",
+                      "interactive_conditional": "In addition to hiding this question if 2020-03-d-01-01 is no, this should also hide if 2020-01-a-04-08 is no",
                       "noninteractive_conditional": "See interactive conditional.",
                       "conditional_display": {
                         "skip_text": "Hidden based on your answer to the cost sharing questions in Section 1 Part 4.",
@@ -2088,8 +2088,8 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-01-a-04-08')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": [null, "no"]
+                            "interactive": ["no"],
+                            "noninteractive": ["no"]
                           }
                         }
                       }
