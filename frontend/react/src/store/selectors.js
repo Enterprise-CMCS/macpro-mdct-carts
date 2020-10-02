@@ -69,7 +69,7 @@ export const selectQuestionsForPart = (state, partId) => {
       return filterDisplay(question, state);
     })
     .filter((q) => q !== false);
-
+  console.log("filtered questions", filteredQuestions);
   return filteredQuestions;
 };
 

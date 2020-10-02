@@ -443,6 +443,8 @@ If the middle two questions were inside a fieldset, they are still at the same l
 
 Fieldsets do not have ``id`` properties, and the questions within them increment their ``id`` properties as if the fieldset container were not present.
 
+Fieldsets with ``skip_text`` based on conditional logic must have skip_text located in a ``conditional_display`` object. 
+
 ``fieldset_type`` (optional)
     String.
 
