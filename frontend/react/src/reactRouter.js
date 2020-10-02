@@ -51,7 +51,7 @@ const Routes = ({ userData }) => (
 );
 
 Routes.propTypes = {
-  userData: PropTypes.object, // eslint-disable-line react/require-default-props
+  userData: PropTypes.object.isRequired,
 };
 
 const InvokeSection = ({ userData }) => {
@@ -78,7 +78,7 @@ const InvokeSection = ({ userData }) => {
 };
 
 InvokeSection.propTypes = {
-  userData: PropTypes.object, // eslint-disable-line react/require-default-props
+  userData: PropTypes.object.isRequired,
 };
 
 export default Routes;

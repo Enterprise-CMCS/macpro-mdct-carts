@@ -27,7 +27,7 @@ const Userinfo = ({ currentUser }) => {
 };
 
 Userinfo.propTypes = {
-  currentUser: PropTypes.object, // eslint-disable-line react/require-default-props
+  currentUser: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
