@@ -11,6 +11,7 @@ import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import Userinfo from "./components/sections/Userinfo";
 import InitialDataLoad from "./components/Utils/InitialDataLoad";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Home from "./Home";

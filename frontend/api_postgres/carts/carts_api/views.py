@@ -268,64 +268,39 @@ def report(request, year=None, state=None):
     return HttpResponse(report_template.render(context=context))
 
 
-def fake_user_data(request, username=None):
+def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     assert username
     assert "-" in username
-    state = username.split("-")[1].upper()
+    state_id = username.split("-")[1].upper()
 
-    fakeUserData = {
-        "AK": {
-            "name": "Alaska",
-            "abbr": "AK",
-            "programType": "medicaid_exp_chip",
-            "programName": "AK Program Name??",
-            "imageURI": "/img/states/ak.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "AK",
-                    "name": "Alaska"
-                },
-                "username": "dev-jane.doe@alaska.gov",
-            }
-        },
-        "AZ": {
-            "name": "Arizona",
-            "abbr": "AZ",
-            "programType": "separate_chip",
-            "programName": "AZ Program Name??",
-            "imageURI": "/img/states/az.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "AZ",
-                    "name": "Arizona"
-                },
-                "username": "dev-john.smith@arizona.gov",
-            }
-        },
-        "MA": {
-            "name": "Massachusetts",
-            "abbr": "MA",
-            "programType": "combo",
-            "programName": "MA Program Name??",
-            "imageURI": "/img/states/ma.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "MA",
-                    "name": "Massachusetts"
-                },
-                "username": "dev-naoise.murphy@massachusetts.gov",
-            }
+    auth_group = Group.objects.get(
+        name=f"Users who can edit and view {state_id} sections"
+    )
+    state = State.objects.get(code=state_id)
+    assert auth_group and state
+    program_names = ", ".join(state.program_names)
+    program_name_text = f"{state.code.upper} {program_names}"
+
+    user_data = {
+        "name": state.name,
+        "abbr": state.code.upper(),
+        "programType": state.program_type,
+        "programName": program_name_text,
+        "imageURI": f"/img/states/{state.code.lower()}.svg",
+        "formName": "CARTS FY",
+        "currentUser": {
+            "role": "state_user",
+            "state": {
+                "id": state.code.upper(),
+                "name": state.name,
+            },
+            "username": f"non-Okta-{state_id}",
+            "email": f"dev-user@{state.name.lower()}.gov",
+            "group": auth_group.name,
         }
     }
 
-    assert state in fakeUserData
-    return HttpResponse(json.dumps(fakeUserData[state]))
+    return HttpResponse(json.dumps(user_data))
 
 
 @api_view(["POST"])
@@ -391,57 +366,37 @@ def authenticate_user(request):
     }
     fake_user_key = fake_user_map[eua_ord]
 
-    fake_user_data = {
-        "AK": {
-            "name": "Alaska",
-            "abbr": "AK",
-            "programType": "medicaid_exp_chip",
-            "programName": "AK Program Name??",
-            "imageURI": "/img/states/ak.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "AK",
-                    "name": "Alaska"
-                },
-                "username": email,
-            }
-        },
-        "AZ": {
-            "name": "Arizona",
-            "abbr": "AZ",
-            "programType": "separate_chip",
-            "programName": "AZ Program Name??",
-            "imageURI": "/img/states/az.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "AZ",
-                    "name": "Arizona"
-                },
-                "username": email,
-            }
-        },
-        "MA": {
-            "name": "Massachusetts",
-            "abbr": "MA",
-            "programType": "combo",
-            "programName": "MA Program Name??",
-            "imageURI": "/img/states/ma.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "MA",
-                    "name": "Massachusetts"
-                },
-                "username": email,
-            }
+    # Later we'll look up the user in the DB, but for the moment, assume
+    # they're associated with the above state and grab the group for that
+    # state's permissions:
+
+    auth_group = Group.objects.get(
+        name=f"Users who can edit and view {fake_user_key} sections"
+    )
+    state = State.objects.get(code=fake_user_key)
+    assert auth_group and state
+    program_names = ", ".join(state.program_names)
+    program_name_text = f"{state.code.upper} {program_names}"
+
+    user_data = {
+        "name": state.name,
+        "abbr": state.code.upper(),
+        "programType": state.program_type,
+        "programName": program_name_text,
+        "imageURI": f"/img/states/{state.code.lower()}.svg",
+        "formName": "CARTS FY",
+        "currentUser": {
+            "role": "state_user",
+            "state": {
+                "id": state.code.upper(),
+                "name": state.name,
+            },
+            "username": eua_id,
+            "email": email,
+            "group": auth_group.name,
         }
     }
-    return HttpResponse(json.dumps(fake_user_data[fake_user_key]))
+    return HttpResponse(json.dumps(user_data))
 
 
 def _id_from_chunks(year, *args):
