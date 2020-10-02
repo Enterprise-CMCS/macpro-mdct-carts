@@ -4,25 +4,25 @@ import jsonpath from "./jsonpath";
  * This function determines whether a radio's conditional subquestion should hide
  * @function hideIf
  * @param {object} state - The application state from redux, the object required for jsonpath to query
- * @param {object} hideIf - the hide_if object from a question's context_data
+ * @param {object} hideIfInfo - the hide_if object from a question's context_data
  * @returns {boolean} - determines if an element should be filtered out, returning true hides a question
  */
-const hideIf = (state, hideIf) => {
-  const targetAnswer = jsonpath.query(state, hideIf.target)[0]; // User's selection from associated question
-  const interactiveValues = hideIf.values.interactive; // Array of values which if selected, should hide a question
+const hideIf = (state, hideIfInfo) => {
+  const targetAnswer = jsonpath.query(state, hideIfInfo.target)[0]; // User's selection from associated question
+  const interactiveValues = hideIfInfo.values.interactive; // Array of values which if selected, should hide a question
 
   if (interactiveValues.includes(targetAnswer)) {
     // If the associated answer IS in the interactive array, remove it
     return true;
-  } else {
-    // If the associated answer IS NOT in the interactive array, keep it
-    return false;
   }
+
+  // If the associated answer IS NOT in the interactive array, keep it
+  return false;
 };
 
-const hideIfAll = (state, hideIfAll) => {
-  const answers = hideIfAll.values.interactive;
-  return hideIfAll.targets
+const hideIfAll = (state, hideIfAllInfo) => {
+  const answers = hideIfAllInfo.values.interactive;
+  return hideIfAllInfo.targets
     .map((target) => jsonpath.query(state, target)[0])
     .every((answer) => answers.includes(answer));
 };
@@ -31,12 +31,12 @@ const hideIfAll = (state, hideIfAll) => {
  * This function determines whether a checkbox conditional subquestion should hide
  * @function hideIfNot
  * @param {object} state - The application state from redux, the object required for jsonpath to query
- * @param {object} hideIfNot - the hide_if_not object from a question's context_data
+ * @param {object} hideIfNotInfo - the hide_if_not object from a question's context_data
  * @returns {boolean} - determines if an element should be filtered out, returning true hides a question
  */
-const hideIfNot = (state, hideIfNot) => {
-  const targetAnswer = jsonpath.query(state, hideIfNot.target)[0]; // Array of user selections from associated question
-  const interactiveValues = hideIfNot.values.interactive; // Array of values which if present in a user's selections, should hide a question
+const hideIfNot = (state, hideIfNotInfo) => {
+  const targetAnswer = jsonpath.query(state, hideIfNotInfo.target)[0]; // Array of user selections from associated question
+  const interactiveValues = hideIfNotInfo.values.interactive; // Array of values which if present in a user's selections, should hide a question
 
   const includedBoolean =
     targetAnswer === null
@@ -53,7 +53,7 @@ const hideIfNot = (state, hideIfNot) => {
  * @param {object} context - the context_data from a question
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
-export const shouldDisplay = (state, context) => {
+const shouldDisplay = (state, context) => {
   if (!context || !context.conditional_display) {
     // if there is no context_data or if there is no conditional_display in the context_data object
     return true;
@@ -75,4 +75,12 @@ export const shouldDisplay = (state, context) => {
   if (context.conditional_display.hide_if_not) {
     return !hideIfNot(state, context.conditional_display.hide_if_not);
   }
+
+  // If we don't know what the heck is going on, just return true. Better to
+  // display a question we shouldn't than not.
+  return true;
 };
+
+export default shouldDisplay;
+
+export { shouldDisplay };
