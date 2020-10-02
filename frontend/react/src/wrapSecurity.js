@@ -1,13 +1,9 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import {
-  BrowserRouter as Router,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import * as qs from "query-string";
+import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-dependencies
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";

@@ -32,14 +32,15 @@ const Routes = ({ userData }) => (
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
-          <Route
-            path="/sections/:year/:sectionOrdinal/:subsectionMarker"
-            children={<InvokeSection userData={userData} />}
-          />
-          <Route
-            path="/sections/:year/:sectionOrdinal"
-            children={<InvokeSection userData={userData} />}
-          />
+          <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker">
+            <InvokeSection userData={userData} />
+          </Route>
+          <Route path="/sections/:year/:sectionOrdinal">
+            <InvokeSection userData={userData} />
+          </Route>
+          <Route path="/sections/:year/:sectionOrdinal">
+            <InvokeSection userData={userData} />
+          </Route>
           <Route exact path="/test" component={test} />
           <Route exact path="/userinfo" component={Userinfo} />
         </Switch>
