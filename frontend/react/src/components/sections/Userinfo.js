@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -16,7 +16,6 @@ const Userinfo = ({ currentUser }) => {
         <strong>{key}</strong>: {value}
       </span>
   );
-    }
   });
   return (
     <ul>
@@ -27,7 +26,7 @@ const Userinfo = ({ currentUser }) => {
   );
 };
 
-UserInfo.propTypes = {
+Userinfo.propTypes = {
     currentUser: PropTypes.object,
 };
 

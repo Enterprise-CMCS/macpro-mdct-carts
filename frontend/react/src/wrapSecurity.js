@@ -57,7 +57,6 @@ const WrappedSecurity = () => {
       </Security>
     </Router>
   );
-  }
 };
 
 export default WrappedSecurity;
