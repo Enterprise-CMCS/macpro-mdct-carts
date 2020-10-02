@@ -42,7 +42,13 @@ SynthesizedTable.propTypes = {
 
 const mapStateToProps = (state, { question }) => {
   const rows = question.fieldset_info.rows.map((row) =>
-    row.map((cell) => synthesizeValue(cell, state))
+    row.map((cell) => {
+      const value = synthesizeValue(cell, state);
+
+      return typeof value.contents === "number" && Number.isNaN(value.contents)
+        ? { contents: "Not Available" }
+        : value;
+    })
   );
 
   return { rows };
