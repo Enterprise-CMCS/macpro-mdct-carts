@@ -116,6 +116,14 @@
                 "answer": {
                   "entry": null
                 }
+              },
+              {
+                "id": "2020-03-a-01-05",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
+                "answer": {
+                  "entry": null
+                }
               }
             ]
           }
@@ -304,8 +312,16 @@
               },
               {
                 "id": "2020-03-b-01-05",
-                "label": "Is there anything else you’d like to add that wasn’t already covered? Did you run into any limitations when collecting data?",
+                "label": "Is there anything else you’d like to add about substitution of coverage that wasn’t already covered? Did you run into any limitations when collecting data?",
                 "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-b-01-06",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
                 "answer": {
                   "entry": null
                 }
@@ -2335,7 +2351,6 @@
               },
               {
                 "type": "fieldset",
-                "hint": "Your answers will auto-populate the table below.",
                 "questions": [
                   {
                     "id": "2020-03-e-01-08",
