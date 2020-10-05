@@ -5149,7 +5149,7 @@
               {
                 "id": "2020-03-f-01-04",
                 "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
-                "type": "file_upload",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
