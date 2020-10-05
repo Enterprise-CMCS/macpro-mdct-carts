@@ -84,13 +84,21 @@ const filterDisplay = (question, state) => {
   if (!shouldDisplay(state, question.context_data)) {
     if (
       question.context_data &&
-      question.context_data.conditional_display &&
-      question.context_data.conditional_display.skip_text
+      ((question.context_data.conditional_display &&
+      question.context_data.conditional_display.skip_text) || question.context_data.skip_text)
     ) {
+
+      let skipText ='';
+      if(question.context_data.conditional_display && question.context_data.conditional_display.skip_text) {
+        skipText = (question.context_data.conditional_display.skip_text);
+      } else {
+        skipText = question.context_data.skip_text;
+      }
+
       return {
         id: question.id,
         type: "skip_text",
-        skip_text: question.context_data.conditional_display.skip_text,
+        skip_text: skipText,
       };
     }
     return false; // return false to exclude this question from filtered array
