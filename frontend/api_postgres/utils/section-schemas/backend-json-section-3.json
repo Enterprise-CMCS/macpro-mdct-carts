@@ -6530,7 +6530,7 @@
                         "type": "fieldset",
                         "context_data": {
                           "conditional_display": {
-                            "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP state plan.",
+                            "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP State Plan.",
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {
