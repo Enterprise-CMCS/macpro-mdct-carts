@@ -21,8 +21,7 @@ const WrappedSecurity = () => {
   const devKeys = { "dev-ak": "AK", "dev-az": "AZ", "dev-ma": "MA" }
   // *** !!!! THIS PART WAS ADDED / SLIGHTLY AUGMENTED
   // *** pull apart the url using '/' as a separating delimiter
-  const urlParts = window.location.href.trim().toLowerCase().split('/');
-  const domain = urlParts[2];
+  const domain = window.location.host;
   // *** if override dev parameters are present OR if current domain is localhost
   if ((loc.dev && Object.keys(devKeys).includes(loc.dev)) ||
       domain.indexOf('localhost') > -1                    ||
