@@ -922,7 +922,7 @@
               {
                 "type": "fieldset",
                 "label": "Table 3: Federal and State Shares",
-                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (FMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the FMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
+                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the eFMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "rows": [
@@ -1007,7 +1007,7 @@
                     ],
                     [
                       {
-                        "contents": "FMAP"
+                        "contents": "eFMAP"
                       },
                       {
                         "targets": [{ "lookupFmapFy": "2020" }],
@@ -1050,7 +1050,7 @@
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + x",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + *",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -1071,7 +1071,7 @@
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + x",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + *",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -1092,7 +1092,7 @@
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + x",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + *",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       }
                     ],
@@ -1102,11 +1102,36 @@
                       },
                       {
                         "targets": [
-                          "$..*[?(@.id=='2020-05-a-02-04-a')].answer.entry"
+                          "$..*[?(@.id=='2020-05-a-01-01-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-02-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-03-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-01-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-02-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-03-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-05-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-06-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-07-a')].answer.entry",
+
+                          "$..*[?(@.id=='2020-05-a-01-01-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-02-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-03-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-01-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-01-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-02-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-03-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-05-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-06-a')].answer.entry",
+                          "$..*[?(@.id=='2020-05-a-02-07-a')].answer.entry",
+                          {"lookupFmapFy": "2020"}
                         ],
                         "actions": [
-                          "identity"
-                        ]
+                          "rpn"
+                        ],
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ + + + + + + + + + + - ((+ + + + + + + + + +) *)",
+                        "$comment": "Total program costs - federal share"
                       },
                       {
                         "targets": [
@@ -1131,15 +1156,6 @@
               },
               {
                 "id": "2020-05-a-02-08",
-                "label": "Did you base any of your projected costs on any assumptions?",
-                "hint": "For example: estimated enrollment numbers, new programs, or sources of funding.",
-                "type": "text_multiline",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
-                "id": "2020-05-a-02-09",
                 "label": "What were your state funding sources in FFY 2020?",
                 "hint": "Select all that apply. ",
                 "type": "checkbox",
@@ -1178,7 +1194,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-05-a-02-09-a",
+                    "id": "2020-05-a-02-08",
                     "type": "text",
                     "label": "What other type of funding did you receive?",
                     "answer": {
@@ -1187,9 +1203,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-05-a-02-09 selection does not include 'other'; noninteractive: hide if NOT 'other'",
+                        "comment": "Interactive: Hide if 2020-05-a-02-08 selection does not include 'other'; noninteractive: hide if NOT 'other'",
                         "hide_if_not": {
-                          "target": "$..*[?(@.id=='2020-05-a-02-09')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-05-a-02-08')].answer.entry",
                           "values": {
                             "interactive": ["other"],
                             "noninteractive": ["other"]
@@ -1201,8 +1217,8 @@
                 ]
               },
               {
-                "id": "2020-05-a-02-10",
-                "label": "Did your total program costs exceed your federal and state funding?",
+                "id": "2020-05-a-02-09",
+                "label": "Did you experience a shortfall in federal CHIP funds this year?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -1219,8 +1235,8 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-05-a-02-10-a",
-                    "label": "Briefly explain why your state didn’t have enough funding to cover your CHIP program costs.",
+                    "id": "2020-05-a-02-09-a",
+                    "label": "Briefly explain why your state didn’t have enough federal funding to cover your CHIP program costs.",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -1228,9 +1244,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-05-a-02-10 is null or no; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-05-a-02-09 is null or no; noninteractive: hide if that's no.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-05-a-02-10')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-05-a-02-09')].answer.entry",
                           "values": {
                             "interactive": [
                               null,
