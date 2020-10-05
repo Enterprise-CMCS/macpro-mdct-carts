@@ -928,7 +928,7 @@
                 }
               },
               {
-                "id": "2020-03-c-03-04",
+                "id": "2020-03-c-04-04",
                 "label": "How many children were disenrolled in Medicaid after the redetermination process?",
                 "hint": "This number should be equal to the total of 4a, 4b, and 4c below.",
                 "type": "integer",
@@ -1010,7 +1010,7 @@
                       },
                       {
                         "targets": [
-                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
                         ]
                       },
                       {
@@ -1028,8 +1028,8 @@
                       },
                       {
                         "targets": [
-                          "$..*[?(@.id=='2020-03-c-03-03')].answer.entry",
-                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                          "$..*[?(@.id=='2020-03-c-04-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
                         ],
                         "actions": ["percentage"]
                       }
@@ -1079,7 +1079,7 @@
                       },
                       {
                         "targets": [
-                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
                         ]
                       },
                       {
@@ -1114,7 +1114,7 @@
                       },
                       {
                         "targets": [
-                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04-b')].answer.entry",
                           "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
                         ],
                         "actions": ["percentage"]
