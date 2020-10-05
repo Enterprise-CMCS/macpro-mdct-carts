@@ -707,7 +707,7 @@
                   {
                     "id": "2020-03-c-03-04-a",
                     "label": "How many children were disenrolled for procedural reasons?",
-                    "hint": "For example: They were disenrolled due to an incomplete application, missing documentation, or a missing enrollment fee.",
+                    "hint": "This could be due to an incomplete application, missing documentation, or a missing enrollment fee.",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -716,7 +716,7 @@
                   {
                     "id": "2020-03-c-03-04-b",
                     "label": "How many children were disenrolled for eligibility reasons?",
-                    "hint": "For example: They were disenrolled because their income was too high or too low, they were eligible for Medicaid (Title XIX) instead, or they had access to private coverage.",
+                    "hint": "This could be due to having income that was too high or too low, they were eligible for Medicaid (Title XIX) instead, or they had access to private coverage.",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -900,7 +900,248 @@
           {
             "id": "2020-03-c-04",
             "type": "part",
-            "title": "Redetermination in Medicaid"
+            "title": "Redetermination in Medicaid",
+            "text": "Redetermination is the process of redetermining whether a child is eligible to renew in Medicaid (Title XIX) every 12 months. This section doesn’t apply to any mid-year changes in circumstances that may affect eligibility (for example: income, relocation, or aging out of the program).",
+            "questions": [
+              {
+                "id": "2020-03-c-04-01",
+                "label": "How many children were eligible for redetermination in Medicaid in FFY 2020?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-04-02",
+                "label": "Of the eligible children, how many were then screened for redetermination?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-04-03",
+                "label": "How many children were retained in Medicaid after redetermination?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-03-04",
+                "label": "How many children were disenrolled in Medicaid after the redetermination process?",
+                "hint": "This number should be equal to the total of 4a, 4b, and 4c below.",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
+                    "fieldset_type": "synthesized_value",
+                    "fieldset_info": {
+                      "targets": [
+                        "$..*[?(@.id=='2020-03-c-04-04-a')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-04-04-b')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-04-04-c')].answer.entry"
+                      ],
+                      "actions": ["sum"]
+                    },
+                    "questions": []
+                  },
+                  {
+                    "id": "2020-03-c-04-04-a",
+                    "label": "How many children were disenrolled for procedural reasons?",
+                    "hint": "This could be due to an incomplete application, missing documentation, or a missing enrollment fee.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-c-04-04-b",
+                    "label": "How many children were disenrolled for eligibility reasons?",
+                    "hint": "This could be due to having an income that was too high and/or eligibility in CHIP instead.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-c-04-04-c",
+                    "label": "How many children were disenrolled for other reasons?",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-c-04-05",
+                "label": "Did you have any limitations in collecting this data?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "synthesized_table",
+                "label": "Table: Redetermination in Medicaid ",
+                "hint": "These tables are auto-populated with the data you entered above.",
+                "fieldset_info": {
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      {
+                        "contents": "Children screened for redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children retained after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-03')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ]
+                  ]
+                },
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "label": "Table: Disenrollment in Medicaid after Redetermination",
+                "comment": "This is assuming that we make the user manually enter the answer to question 4; otherwise we don't currently have a way to support this functionality; see the comment on question 4 above.",
+                "fieldset_type": "synthesized_table",
+                "fieldset_info": {
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled for procedural reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-a')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled for eligibility reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-b')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04-b')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled for other reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-c')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-c')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ]
+                  ]
+                },
+                "questions": []
+              }
+            ]
           },
           {
             "id": "2020-03-c-05",
@@ -1539,7 +1780,7 @@
               {
                 "type": "fieldset",
                 "label": "January - March 2021 (12 months later)",
-                "hint": "Next year you’ll submit this data about your cohort.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -2047,7 +2288,7 @@
               {
                 "type": "fieldset",
                 "label": "July - September of 2021 (18 months later)",
-                "hint": "Next year you’ll submit this data about your cohort.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -3197,7 +3438,7 @@
               {
                 "type": "fieldset",
                 "label": "January - March 2021 (12 months later)",
-                "hint": "Next year you’ll submit this data on your CARTS report.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -3705,7 +3946,7 @@
               {
                 "type": "fieldset",
                 "label": "July - September of 2021 (18 months later)",
-                "hint": "Next year you’ll submit this data on your CARTS report.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
