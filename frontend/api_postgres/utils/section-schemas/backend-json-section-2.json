@@ -17,7 +17,7 @@
             "id": "2020-02-a-01",
             "type": "part",
             "title": "Number of Children Enrolled in CHIP",
-            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years. If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and then refresh this page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
+            "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years (FFY). If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and then refresh this page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
             "questions": [
               {
                 "type": "fieldset",
@@ -37,7 +37,7 @@
                 "questions": [
                   {
                     "id": "2020-02-a-01-01",
-                    "label": "What are some possible reasons why your state had more than a 3% change in enrollment numbers?",
+                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -335,8 +335,16 @@
               },
               {
                 "id": "2020-02-a-02-04",
-                "label": "Is there anything else you’d like to add about your data?",
+                "label": "Is there anything else you’d like to add about your enrollment and uninsured data?",
                 "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-02-a-02-05",
+                "label": "Optional: Attach any additional documents here.",
+                "type": "file_upload",
                 "answer": {
                   "entry": null
                 }

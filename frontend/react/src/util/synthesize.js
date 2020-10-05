@@ -124,11 +124,11 @@ const lookupFMAP = (state, fy) => {
     const stateData = state.allStatesData.filter(
       (st) => st.code === stateAbbr
     )[0];
-    const fmap = stateData?.fmap_set.filter(
-      (year) => year.fiscal_year === +fy
-    )[0].enhanced_FMAP;
+    const fmap =
+      stateData?.fmap_set.filter((year) => year.fiscal_year === +fy)[0]
+        ?.enhanced_FMAP || NaN;
 
-    return `${fmap}`;
+    return fmap;
   }
   return "";
 };
@@ -177,9 +177,12 @@ const synthesizeValue = (value, state) => {
   }
 
   if (value.targets) {
-    const targets = value.targets.map(
-      (target) => jsonpath.query(state, target)[0]
-    );
+    const targets = value.targets.map((target) => {
+      if (typeof target === "object" && target.lookupFmapFy) {
+        return lookupFMAP(state, target.lookupFmapFy);
+      }
+      return jsonpath.query(state, target)[0];
+    });
 
     if (value.actions) {
       // For now, per the documentation, we only handle a single action, but

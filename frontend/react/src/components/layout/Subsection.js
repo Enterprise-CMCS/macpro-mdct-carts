@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 import Part from "./Part";
+import Text from "./Text";
 
 const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
@@ -10,9 +11,7 @@ const Subsection = ({ partIds, subsectionId, title, text }) => {
       <h2>{title}</h2>
       {text ? (
         <div className="helper-text">
-          {text.split("\n").map((paragraph) => (
-            <p>{paragraph}</p>
-          ))}
+          <Text>{text}</Text>
         </div>
       ) : null}
       {partIds.map((partId, index) => (
