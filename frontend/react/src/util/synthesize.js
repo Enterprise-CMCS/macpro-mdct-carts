@@ -141,7 +141,7 @@ const lookupFMAP = (state, fy) => {
  * @returns {string}
  */
 const lookupAcs = (state, args) => {
-  let returnValue = '';
+  let returnValue = "";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
     // Get stateUser state
@@ -163,6 +163,49 @@ const lookupAcs = (state, args) => {
   return returnValue;
 };
 
+/**
+ * Retrieve acs_set from state and return percentage change for 2 given years.
+ *
+ * @param {string} state
+ * @param {array} args
+ * @returns {(string|float)}
+ */
+const compareACS = (state, args) => {
+  let percentagePrecision = 2;
+  let returnValue = "Not Available";
+  // if allStatesData and stateUser are available
+  if (state.allStatesData && state.stateUser) {
+    // Get stateUser state
+    const stateAbbr = state.stateUser.abbr;
+
+    // Filter for only matching state
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+
+    // Filter for the correct year of state data
+    const startACS = stateData?.acs_set.filter(
+      (year) => year.year === parseInt(args[0])
+    )[0];
+    const endACS = stateData?.acs_set.filter(
+      (year) => year.year === parseInt(args[1])
+    )[0];
+
+    // If start year and end year of ACS exist, return the calculated value (percent change) from the objects
+    if (startACS && endACS) {
+      //Convert the selected column to a float
+      let tempStart = parseFloat(startACS[args[2]]);
+      let tempEnd = parseFloat(endACS[args[2]]);
+
+      //Calculate the percent change
+      returnValue = parseFloat(
+        ((tempEnd - tempStart) / tempStart) * 100
+      ).toFixed(percentagePrecision);
+    }
+  }
+  return returnValue;
+};
+
 const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
@@ -174,6 +217,10 @@ const synthesizeValue = (value, state) => {
 
   if (value.lookupAcs) {
     return { contents: [lookupAcs(state, value.lookupAcs)] };
+  }
+
+  if (value.compareACS) {
+    return { contents: [compareACS(state, value.compareACS)] };
   }
 
   if (value.targets) {

@@ -34,21 +34,20 @@
                     ["Separate CHIP", 478542, 511473, 6.88]
                   ]
                 },
-                "questions": [
-                  {
-                    "id": "2020-02-a-01-01",
-                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    },
-                    "context_data": {
-                      "interactive_conditional": "Hide if percent change values in parent's table are all under 3.",
-                      "noninteractive_conditional": "Hide if percent change values in parent's table are all under 3.",
-                      "skip_text": "Since your percent change didn’t exceed 3%, you can skip to Part 2."
-                    }
-                  }
-                ]
+                "questions": []
+              },
+              {
+                "id": "2020-02-a-01-01",
+                "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                },
+                "context_data": {
+                  "interactive_conditional": "Hide if percent change values in parent's table are all under 3.",
+                  "noninteractive_conditional": "Hide if percent change values in parent's table are all under 3.",
+                  "skip_text": "Since your percent change didn’t exceed 3%, you can skip to Part 2."
+                }
               }
             ]
           },
@@ -173,21 +172,24 @@
               },
               {
                 "type": "fieldset",
-                "fieldset_type": "noninteractive_table",
+                "fieldset_type": "synthesized_table",
                 "fieldset_info": {
-                  "headers": ["Percent change between 2018 and 2019"],
-                  "rows": [[-1.7]]
+                  "headers": [
+                    { "contents": "Percent change between 2018 and 2019" }
+                  ],
+                  "rows": [
+                    [{ "compareACS": ["2018", "2019", "percent_uninsured"] }]
+                  ]
                 },
-                "questions": [
-                  {
-                    "id": "2020-02-a-02-01",
-                    "label": "What are some reasons why the number and/or percent of uninsured children has changed?",
-                    "type": "text_multiline",
-                    "answer": {
-                      "entry": null
-                    }
-                  }
-                ]
+                "questions": []
+              },
+              {
+                "id": "2020-02-a-02-01",
+                "label": "What are some reasons why the number and/or percent of uninsured children has changed?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
               },
               {
                 "id": "2020-02-a-02-02",
