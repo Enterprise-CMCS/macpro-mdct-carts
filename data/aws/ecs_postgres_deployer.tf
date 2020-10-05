@@ -1,4 +1,4 @@
-# Number of container instances to spawn per resource. Default is 1. 
+# Number of container instances to spawn per resource. Default is 1.
 locals {
   dev_pgdeployer     = substr(terraform.workspace, 0, 4) == "dev-" ? 1 : 0
   master_pgdeployer  = terraform.workspace == "master" ? 1 : 0
@@ -6,7 +6,8 @@ locals {
   prod_pgdeployer    = terraform.workspace == "prod" ? 1 : 0
 
   count_pgdeployer         = local.dev_pgdeployer + local.master_pgdeployer + local.staging_pgdeployer + local.prod_pgdeployer
-  desired_count_pgdeployer = local.count_pgdeployer > 0 ? local.count_pgdeployer : 1
+ #desired_count_pgdeployer = local.count_pgdeployer > 0 ? local.count_pgdeployer : 1
+ desired_count_pgdeployer = terraform.workspace == "prod" ? 3 : 1
 }
 
 ####################################################################################################
