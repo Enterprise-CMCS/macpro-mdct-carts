@@ -1010,7 +1010,8 @@
                         "contents": "FMAP"
                       },
                       {
-                        "lookupFmapFy": "2020",
+                        "targets": [{ "lookupFmapFy": "2020" }],
+                        "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
                       },
 
@@ -1020,6 +1021,8 @@
                       },
 
                       {
+                        "targets": [{ "lookupFmapFy": "2021" }],
+                        "actions": ["identity"],
                         "lookupFmapFy": "2020",
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY22)"
                       }
