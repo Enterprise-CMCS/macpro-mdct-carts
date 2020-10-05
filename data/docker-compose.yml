@@ -1,6 +1,10 @@
 version: "3.4"
 services:
   postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+      target: postgres
     image: postgres:9.6.9
     ports:
       - "5432:5432"
@@ -10,6 +14,26 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  postgres_bootstrapper:
+    build:
+      context: ./postgres_bootstrapper
+      dockerfile: Dockerfile
+      target: bootstrapper
+    networks:
+      - net
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
+      - PG_TABLESPACE=schipdata
+      - PG_TABLESPACE_LOCATION=/app/pgdata
+      - PG_DATABASE=postgres
+      - PG_RO_ROLE=readonly
+      - PG_RW_ROLE=readwrite
+      - PG_USERS=[{"username":"mdct_app","password":"@p9P@5s","roles":["readwrite","readonly"]},{"username":"mdct_ro","password":"R09P@5s","roles":["readonly"]},{"username":"schip","password":"schip","roles":["readonly"]},{"username":"schipannualreports","password":"schipannualreports","roles":["readonly"]},{"username":"pguser","password":"pguser","roles":["readonly"]}]
+    depends_on:
+      - postgres
   postgres_deployer:
     build:
       context: ./postgres_deployer
@@ -24,7 +48,7 @@ services:
       - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
     depends_on:
-      - postgres
+      - postgres_bootstrapper
 networks:
   net:
     driver: bridge
