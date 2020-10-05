@@ -17,13 +17,17 @@ from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
 from rest_framework.decorators import api_view, authentication_classes, permission_classes  # type: ignore
-from rest_framework.exceptions import ValidationError  # type: ignore
+from rest_framework.exceptions import PermissionDenied, ValidationError  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
+from rest_framework.settings import api_settings
+from rest_framework.views import APIView
 from carts.auth import JwtAuthentication
+from carts.auth_dev import JwtDevAuthentication
+from carts.permissions import StateChangeSectionPermission, StateViewSectionPermission
 from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
@@ -88,9 +92,9 @@ class SectionViewSet(viewsets.ModelViewSet):
     API endpoint that allows groups to be viewed or edited.
     """
 
-    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
+    permission_classes = [StateViewSectionPermission, StateChangeSectionPermission]
 
     def list(self, request):
         queryset = self.get_queryset()
@@ -99,16 +103,88 @@ class SectionViewSet(viewsets.ModelViewSet):
         )
         return Response(serializer.data)
 
+    def get_sections_by_year_and_state(self, request, year, state):
+        sections = self.get_queryset().filter(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+        )
+
+        for section in sections:
+            self.check_object_permissions(request, section)
+
+        serializer = SectionSerializer(
+            sections, many=True, context={"request": request}
+        )
+        return Response(serializer.data)
+
+    def get_section_by_year_and_state(self, request, year, state, section):
+        section = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
+
+        self.check_object_permissions(request, section)
+
+        serializer = SectionSerializer(section, context={"request": request})
+        return Response(serializer.data)
+
+    @transaction.atomic
+    def update_sections(self, request, year, state):
+        try:
+
+            for entry in request.data:
+                section_id = entry["contents"]["section"]["id"]
+                section_year = entry["contents"]["section"]["year"]
+                section_state = entry["contents"]["section"]["state"]
+
+                assert section_year == year
+                assert section_state == state
+
+                section = Section.objects.get(
+                    contents__section__id=section_id,
+                    contents__section__state=section_state.upper(),
+                )
+
+                self.check_object_permissions(request, section)
+
+                section.contents = entry["contents"]
+                section.save()
+                return HttpResponse(status=204)
+
+        except PermissionDenied:
+            raise
+        except:
+            raise ValidationError(
+                "There is a problem with the provided data.", 400
+            )
+
+
+    def get_permissions(self):
+        permission_classes_by_action = {
+            'get_sections_by_year_and_state': [StateViewSectionPermission],
+            'get_section_by_year_and_state': [StateViewSectionPermission],
+            'update_sections': [StateViewSectionPermission, StateChangeSectionPermission]
+        }
+
+        try:
+            return [permission() for permission in permission_classes_by_action[self.action]]
+        except:
+            return [permission() for permission in self.permission_classes]
+
+
 
 @api_view(["GET"])
-@authentication_classes([JwtAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
+@permission_classes([IsAuthenticated, StateViewSectionPermission])
 def sections_by_year_and_state(request, year, state):
     try:
         data = Section.objects.filter(
             contents__section__year=year,
             contents__section__state=state.upper(),
         )
+
+
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 

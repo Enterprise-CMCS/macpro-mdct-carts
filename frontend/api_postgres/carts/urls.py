@@ -18,6 +18,15 @@ from django.urls import include, path  # type: ignore
 from rest_framework import routers  # type: ignore
 from carts.carts_api import views
 
+section_list = views.SectionViewSet.as_view({
+    'get': 'get_sections_by_year_and_state',
+    'put': 'update_sections'
+})
+
+section_single = views.SectionViewSet.as_view({
+    'get': 'get_section_by_year_and_state'
+})
+
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
@@ -50,6 +59,8 @@ api_patterns = [
     path("generic-questions/<slug:id>", views.generic_fragment_by_id),
     path("appusers/auth", views.authenticate_user),
     path("appusers/<slug:username>", views.fake_user_data),
+    path('vs-sections/<int:year>/<str:state>', section_list),
+    path('vs-sections/<int:year>/<str:state>/<int:section>', section_single),
 ]
 
 urlpatterns = [
