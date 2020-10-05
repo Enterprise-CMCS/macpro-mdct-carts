@@ -7,7 +7,7 @@ locals {
 
   count_pgdeployer         = local.dev_pgdeployer + local.master_pgdeployer + local.staging_pgdeployer + local.prod_pgdeployer
  #desired_count_pgdeployer = local.count_pgdeployer > 0 ? local.count_pgdeployer : 1
- desired_count_pgdeployer = terraform.workspace == "dev-pgsvc" ? 3 : 1
+ desired_count_pgdeployer = terraform.workspace == "prod" ? 3 : 1
 }
 
 ####################################################################################################
