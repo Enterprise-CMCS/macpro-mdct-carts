@@ -343,7 +343,7 @@
             "questions": [
               {
                 "id": "2020-03-c-01-01",
-                "label": "Does your state provide presumptive eligibility, allowing children who are presumed to be eligible to access CHIP services?",
+                "label": "Does your state provide presumptive eligibility, allowing children to access CHIP services pending a final determination of eligibility?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -905,8 +905,8 @@
           {
             "id": "2020-03-c-05",
             "type": "part",
-            "title": "Tracking a CHIP cohort over 18 months",
-            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be younger than 16 years when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period.\n\nYou’ll identify a new cohort every two years. This year you’ll report on the number of children at the start of the cohort (Jan - Mar 2020) and six months later (July - Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan - Mar 2021) and 18 months later (July - Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
+            "title": "Tracking a CHIP cohort (Title XXI) over 18 months",
+            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period.\n\nYou’ll identify a new cohort every two years. This year you’ll report on the number of children at the start of the cohort (Jan - Mar 2020) and six months later (July - Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan - Mar 2021) and 18 months later (July - Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
             "questions": [
               {
                 "type": "fieldset",
@@ -2564,12 +2564,12 @@
             "id": "2020-03-c-06",
             "type": "part",
             "title": "Tracking a Medicaid (Title XIX) cohort over 18 months",
-            "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be 16 years or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period.\n\nYou’ll identify a new cohort every two years. This year you’ll report the number of children identified at the start of the cohort (Jan–Mar 2020) and six months later (July–Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan–Mar 2021) and 18 months later (July–Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
+            "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. To track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. You’ll identify a new cohort every two years. This year you’ll report the number of children identified at the start of the cohort (Jan–Mar 2020) and six months later (July–Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan–Mar 2021) and 18 months later (July–Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
             "questions": [
               {
                 "type": "fieldset",
                 "label": "Helpful hints on age groups",
-                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1–5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
+                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
                 "questions": []
               },
               {
@@ -6203,7 +6203,7 @@
         "id": "2020-03-i",
         "title": "Health Services Initiative (HSI) Programs",
         "type": "subsection",
-        "text": "All states with approved HSI program(s) should complete this section. \nStates can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
+        "text": "All states with approved HSI program(s) should complete this section.\nStates can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
         "parts": [
           {
             "id": "2020-03-i-01",
@@ -6212,7 +6212,7 @@
               {
                 "id": "2020-03-i-01-01",
                 "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds?",
-                "hint": "Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
+                "hint": "Even if you’re not currently operating the HSI program, if it’s in your current approved CHIP State Plan, please answer “yes.”",
                 "type": "radio",
                 "answer": {
                   "entry": null,
