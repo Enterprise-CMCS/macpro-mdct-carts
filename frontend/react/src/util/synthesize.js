@@ -171,7 +171,7 @@ const lookupAcs = (state, args) => {
  * @returns {(string|float)}
  */
 const compareACS = (state, args) => {
-  let percentagePrecision = 2;
+  const percentagePrecision = 2;
   let returnValue = "Not Available";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
@@ -185,19 +185,19 @@ const compareACS = (state, args) => {
 
     // Filter for the correct year of state data
     const startACS = stateData?.acs_set.filter(
-      (year) => year.year === parseInt(args[0])
+      (year) => year.year === parseInt(args[0], 10)
     )[0];
     const endACS = stateData?.acs_set.filter(
-      (year) => year.year === parseInt(args[1])
+      (year) => year.year === parseInt(args[1], 10)
     )[0];
 
     // If start year and end year of ACS exist, return the calculated value (percent change) from the objects
     if (startACS && endACS) {
-      //Convert the selected column to a float
-      let tempStart = parseFloat(startACS[args[2]]);
-      let tempEnd = parseFloat(endACS[args[2]]);
+      // Convert the selected column to a float
+      const tempStart = parseFloat(startACS[args[2]]);
+      const tempEnd = parseFloat(endACS[args[2]]);
 
-      //Calculate the percent change
+      // Calculate the percent change
       returnValue = parseFloat(
         ((tempEnd - tempStart) / tempStart) * 100
       ).toFixed(percentagePrecision);
