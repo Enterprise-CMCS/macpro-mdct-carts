@@ -1016,12 +1016,13 @@
                       },
 
                       {
-                        "lookupFmapFy": "2020",
+                        "targets": [{ "lookupFmapFy": "2021" }],
+                        "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21)"
                       },
 
                       {
-                        "targets": [{ "lookupFmapFy": "2021" }],
+                        "targets": [{ "lookupFmapFy": "2022" }],
                         "actions": ["identity"],
                         "lookupFmapFy": "2020",
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY22)"
@@ -1043,12 +1044,13 @@
                           "$..*[?(@.id=='2020-05-a-02-04-a')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-02-05-a')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-02-06-a')].answer.entry",
-                          "$..*[?(@.id=='2020-05-a-02-07-a')].answer.entry"
+                          "$..*[?(@.id=='2020-05-a-02-07-a')].answer.entry",
+                          {"lookupFmapFy": "2020"}
                         ],
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + +",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + x",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -1063,12 +1065,13 @@
                           "$..*[?(@.id=='2020-05-a-02-04-b')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-02-05-b')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-02-06-b')].answer.entry",
-                          "$..*[?(@.id=='2020-05-a-02-07-b')].answer.entry"
+                          "$..*[?(@.id=='2020-05-a-02-07-b')].answer.entry",
+                          {"lookupFmapFy": "2021"}
                         ],
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + +",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + x",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -1083,12 +1086,13 @@
                           "$..*[?(@.id=='2020-05-a-02-04-c')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-02-05-c')].answer.entry",
                           "$..*[?(@.id=='2020-05-a-02-06-c')].answer.entry",
-                          "$..*[?(@.id=='2020-05-a-02-07-c')].answer.entry"
+                          "$..*[?(@.id=='2020-05-a-02-07-c')].answer.entry",
+                          {"lookupFmapFy": "2022"}
                         ],
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + +",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + x",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       }
                     ],
