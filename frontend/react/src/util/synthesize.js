@@ -137,10 +137,11 @@ const lookupFMAP = (state, fy) => {
  * Retrieve acs_set from state and return for individual state.
  *
  * @param {string} state
- * @param {array} args
+ * @param {string} ffy
+ * @param {string} acsProperty
  * @returns {string}
  */
-const lookupAcs = (state, args) => {
+const lookupAcs = (state, {ffy, acsProperty}) => {
   let returnValue = "";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
@@ -153,11 +154,11 @@ const lookupAcs = (state, args) => {
     )[0];
 
     // Filter for matching state from JSON
-    const acs = stateData?.acs_set.filter((year) => year.year === +args[0])[0];
+    const acs = stateData?.acs_set.filter((year) => year.year === +ffy)[0];
 
     // If acs exists, return the value from the object
     if (acs) {
-      returnValue = `${acs[args[1]]}`;
+      returnValue = `${acs[acsProperty]}`;
     }
   }
   return returnValue;
@@ -167,10 +168,12 @@ const lookupAcs = (state, args) => {
  * Retrieve acs_set from state and return percentage change for 2 given years.
  *
  * @param {string} state
- * @param {array} args
+ * @param {string} ffy1
+ * @param {string} ffy2
+ * @param {string} acsProperty
  * @returns {(string|float)}
  */
-const compareACS = (state, args) => {
+const compareACS = (state, {ffy1, ffy2, acsProperty}) => {
   const percentagePrecision = 2;
   let returnValue = "Not Available";
   // if allStatesData and stateUser are available
@@ -185,17 +188,17 @@ const compareACS = (state, args) => {
 
     // Filter for the correct year of state data
     const startACS = stateData?.acs_set.filter(
-      (year) => year.year === parseInt(args[0], 10)
+      (year) => year.year === parseInt(ffy1, 10)
     )[0];
     const endACS = stateData?.acs_set.filter(
-      (year) => year.year === parseInt(args[1], 10)
+      (year) => year.year === parseInt(ffy2, 10)
     )[0];
 
     // If start year and end year of ACS exist, return the calculated value (percent change) from the objects
     if (startACS && endACS) {
       // Convert the selected column to a float
-      const tempStart = parseFloat(startACS[args[2]]);
-      const tempEnd = parseFloat(endACS[args[2]]);
+      const tempStart = parseFloat(startACS[acsProperty]);
+      const tempEnd = parseFloat(endACS[acsProperty]);
 
       // Calculate the percent change
       returnValue = parseFloat(

@@ -30,8 +30,18 @@
                     "Percent change"
                   ],
                   "rows": [
-                    ["Medicaid Expansion CHIP", 284143, 300579, 5.78],
-                    ["Separate CHIP", 478542, 511473, 6.88]
+                    [
+                      "Medicaid Expansion CHIP",
+                      284143,
+                      300579,
+                      5.78
+                    ],
+                    [
+                      "Separate CHIP",
+                      478542,
+                      511473,
+                      6.88
+                    ]
                   ]
                 },
                 "questions": []
@@ -86,16 +96,28 @@
                         "contents": "2015"
                       },
                       {
-                        "lookupAcs": ["2015", "number_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured",
+                          "ffy": "2015"
+                        }
                       },
                       {
-                        "lookupAcs": ["2015", "number_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured_moe",
+                          "ffy": "2015"
+                        }
                       },
                       {
-                        "lookupAcs": ["2015", "percent_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured",
+                          "ffy": "2015"
+                        }
                       },
                       {
-                        "lookupAcs": ["2015", "percent_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured_moe",
+                          "ffy": "2015"
+                        }
                       }
                     ],
                     [
@@ -103,16 +125,28 @@
                         "contents": "2016"
                       },
                       {
-                        "lookupAcs": ["2016", "number_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured",
+                          "ffy": "2016"
+                        }
                       },
                       {
-                        "lookupAcs": ["2016", "number_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured_moe",
+                          "ffy": "2016"
+                        }
                       },
                       {
-                        "lookupAcs": ["2016", "percent_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured",
+                          "ffy": "2016"
+                        }
                       },
                       {
-                        "lookupAcs": ["2016", "percent_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured_moe",
+                          "ffy": "2016"
+                        }
                       }
                     ],
                     [
@@ -120,16 +154,28 @@
                         "contents": "2017"
                       },
                       {
-                        "lookupAcs": ["2017", "number_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured",
+                          "ffy": "2017"
+                        }
                       },
                       {
-                        "lookupAcs": ["2017", "number_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured_moe",
+                          "ffy": "2017"
+                        }
                       },
                       {
-                        "lookupAcs": ["2017", "percent_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured",
+                          "ffy": "2017"
+                        }
                       },
                       {
-                        "lookupAcs": ["2017", "percent_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured_moe",
+                          "ffy": "2017"
+                        }
                       }
                     ],
                     [
@@ -137,16 +183,28 @@
                         "contents": "2018"
                       },
                       {
-                        "lookupAcs": ["2018", "number_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured",
+                          "ffy": "2018"
+                        }
                       },
                       {
-                        "lookupAcs": ["2018", "number_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured_moe",
+                          "ffy": "2018"
+                        }
                       },
                       {
-                        "lookupAcs": ["2018", "percent_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured",
+                          "ffy": "2018"
+                        }
                       },
                       {
-                        "lookupAcs": ["2018", "percent_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured_moe",
+                          "ffy": "2018"
+                        }
                       }
                     ],
                     [
@@ -154,16 +212,28 @@
                         "contents": "2019"
                       },
                       {
-                        "lookupAcs": ["2019", "number_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured",
+                          "ffy": "2019"
+                        }
                       },
                       {
-                        "lookupAcs": ["2019", "number_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "number_uninsured_moe",
+                          "ffy": "2019"
+                        }
                       },
                       {
-                        "lookupAcs": ["2019", "percent_uninsured"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured",
+                          "ffy": "2019"
+                        }
                       },
                       {
-                        "lookupAcs": ["2019", "percent_uninsured_moe"]
+                        "lookupAcs": {
+                          "acsProperty": "percent_uninsured_moe",
+                          "ffy": "2019"
+                        }
                       }
                     ]
                   ]
@@ -175,10 +245,20 @@
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "headers": [
-                    { "contents": "Percent change between 2018 and 2019" }
+                    {
+                      "contents": "Percent change between 2018 and 2019"
+                    }
                   ],
                   "rows": [
-                    [{ "compareACS": ["2018", "2019", "percent_uninsured"] }]
+                    [
+                      {
+                        "compareACS": {
+                          "ffy1": "2018",
+                          "ffy2": "2019",
+                          "acsProperty": "percent_uninsured"
+                        }
+                      }
+                    ]
                   ]
                 },
                 "questions": []
@@ -223,8 +303,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -266,7 +351,10 @@
                         "label": "Tell us the date range for your data",
                         "type": "daterange",
                         "answer": {
-                          "labels": ["Start", "End"],
+                          "labels": [
+                            "Start",
+                            "End"
+                          ],
                           "entry": null
                         }
                       },
@@ -326,8 +414,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
