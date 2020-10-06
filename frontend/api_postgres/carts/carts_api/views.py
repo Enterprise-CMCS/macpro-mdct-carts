@@ -130,16 +130,12 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @transaction.atomic
-    def update_sections(self, request, year, state):
+    def update_sections(self, request):
         try:
 
             for entry in request.data:
                 section_id = entry["contents"]["section"]["id"]
-                section_year = entry["contents"]["section"]["year"]
                 section_state = entry["contents"]["section"]["state"]
-
-                assert section_year == year
-                assert section_state == state
 
                 section = Section.objects.get(
                     contents__section__id=section_id,
@@ -171,53 +167,6 @@ class SectionViewSet(viewsets.ModelViewSet):
             return [permission() for permission in permission_classes_by_action[self.action]]
         except:
             return [permission() for permission in self.permission_classes]
-
-
-
-@api_view(["GET"])
-@authentication_classes(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
-@permission_classes([IsAuthenticated, StateViewSectionPermission])
-def sections_by_year_and_state(request, year, state):
-    try:
-        data = Section.objects.filter(
-            contents__section__year=year,
-            contents__section__state=state.upper(),
-        )
-
-
-    except Section.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == "GET":
-        serializer = SectionSerializer(
-            data, many=True, context={"request": request}
-        )
-        return Response(serializer.data)
-
-
-@api_view(["POST"])
-@transaction.atomic
-def update_sections(request):
-    try:
-
-        for entry in request.data:
-            section_id = entry["contents"]["section"]["id"]
-            section_state = entry["contents"]["section"]["state"]
-
-            section = Section.objects.get(
-                contents__section__id=section_id,
-                contents__section__state=section_state.upper(),
-            )
-
-            section.contents = entry["contents"]
-            section.save()
-
-    except:
-        raise ValidationError(
-            "There is a problem with the provided data.", 400
-        )
-
-    return HttpResponse(status=204)
 
 
 @api_view(["GET"])
