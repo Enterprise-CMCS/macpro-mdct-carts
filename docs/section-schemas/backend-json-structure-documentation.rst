@@ -690,6 +690,13 @@ Available properties:
     ]
 
 In addition there is ``compareACS`` which allows comparing a property against two years.  Add the ``compareACS`` property to a synthesized table cell and specify a fiscal year, the second fiscal year, to compare against, and property name, as an object, for the value.
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
 ..  code:: json
 
     "rows": [
@@ -704,7 +711,6 @@ In addition there is ``compareACS`` which allows comparing a property against tw
             ...
         ]
     ]
-
 
 ``synthesized_table``
 ########################
