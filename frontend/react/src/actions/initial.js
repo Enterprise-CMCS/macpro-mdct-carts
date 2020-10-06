@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
+import { forwardedQueryString } from "../util/devQueryString";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
@@ -9,8 +10,11 @@ export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
+    
+
+
     const { data } = await axios
-      .get(`${window.env.API_POSTGRES_URL}/state/`)
+      .get(`${window.env.API_POSTGRES_URL}/state/${forwardedQueryString()}`)
       .catch((err) => {
         console.log("error:", err);
         console.dir(err);
@@ -24,7 +28,7 @@ export const loadSections = ({ userData }) => {
   return async (dispatch) => {
     const { data } = await axios
       .get(
-        `${window.env.API_POSTGRES_URL}/api/v1/sections/2020/${userData.abbr}`
+        `${window.env.API_POSTGRES_URL}/api/v1/sections/2020/${userData.abbr}${forwardedQueryString()}`
       )
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
@@ -42,7 +46,7 @@ export const loadUserThenSections = ({ userData }) => {
   const { userToken } = userData;
   return async (dispatch) => {
     await axios
-      .get(`${window.env.API_POSTGRES_URL}/api/v1/appusers/${userToken}`)
+      .get(`${window.env.API_POSTGRES_URL}/api/v1/appusers/${userToken}${forwardedQueryString()}`)
       .then((res) => {
         dispatch(loadSections({ userData: res.data }));
         dispatch(getProgramData(res.data));
@@ -69,7 +73,7 @@ export const loadUserThenSections = ({ userData }) => {
 };
 
 export const secureLoadUserThenSections = ({ authState }) => {
-  const xhrURL = `${window.env.API_POSTGRES_URL}/api/v1/appusers/auth`;
+  const xhrURL = `${window.env.API_POSTGRES_URL}/api/v1/appusers/auth${forwardedQueryString()}`;
   const xhrHeaders = {
     Authorization: `Bearer ${authState.accessToken}`,
   };
