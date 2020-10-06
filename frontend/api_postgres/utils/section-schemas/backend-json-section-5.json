@@ -962,7 +962,7 @@
                           "rpn"
                         ],
                         "rpn": "@ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + +",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                        "$comment": ""
                       },
                       {
                         "targets": [
@@ -1048,9 +1048,9 @@
                           {"lookupFmapFy": "2020"}
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + *",
+                        "formula": "(@&0 + @&1 + @&2 + @&3 - @&4 + @&5 + @&6 + @&7 + @&8 + @&9 + @&10) * (@&11 / 100)",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -1130,7 +1130,7 @@
                         "actions": [
                           "rpn"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ + + + + + + + + + + - ((+ + + + + + + + + +) *)",
+                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ + + + + + + + + + + * - - - - - - - - - - +",
                         "$comment": "Total program costs - federal share"
                       },
                       {

@@ -115,6 +115,26 @@ const rpn = (values, rpnString, precision) => {
   return NaN;
 };
 
+const formula = (values, formula, precision) => {
+  // "formula": "([0] + [1] + [2] + [3] - [4] + [5] + [6] + [7] + [8] + [9] + [10]) * ([11] / 100)",
+  // "formula": "(@&0 + @&1 + @&2 + @&3 - @&4 + @&5 + @&6 + @&7 + @&8 + @&9 + @&10) * (@&11 / 100)",
+  // "formula": "(1 + 23 + 23 + 65 - @&4 + @&5 + @&6 + @&7 + @&8 + @&9 + @&10) * (@&11 / 100)",
+
+  let computedValue = "This is a formula";
+
+  if(formula) {
+    // Get Target values
+    const targets = values.targets;
+
+    // Isolate variables into array
+    const replacementFormula =  targets[x]
+
+    // Each card (delimiting char) replace with
+
+  }
+  return computedValue;
+}
+
 // Maaaaaaaath.
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
@@ -143,6 +163,8 @@ const synthesizeValue = (value, state) => {
       if (typeof target === "object" && target.lookupFmapFy) {
         return lookupFMAP(state, target.lookupFmapFy);
       }
+      let b = jsonpath.query(state, target)[0];
+      let a=0;
       return jsonpath.query(state, target)[0];
     });
 
@@ -160,6 +182,8 @@ const synthesizeValue = (value, state) => {
           return { contents: rpn(targets, value.rpn, value.precision) };
         case "sum":
           return { contents: sum(targets) };
+        case "formula":
+          return { contents: formula(targets, value.formula, value.precision)}
 
         default:
           return { contents: targets[0] };
