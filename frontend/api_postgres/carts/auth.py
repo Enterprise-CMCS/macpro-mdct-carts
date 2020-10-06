@@ -16,9 +16,8 @@ import requests
 
 class JwtAuthentication(authentication.BaseAuthentication):
   def authenticate(self, request):
-    token_string = request.META.get("HTTP_AUTHORIZATION")
-    raw_token = token_string.split("Bearer ")[1]
-
+    raw_token = self._extract_token(request)
+    
     try:
       return self._do_authenticate(raw_token)
     except Exception:
@@ -26,6 +25,14 @@ class JwtAuthentication(authentication.BaseAuthentication):
       invalidate_cache()
 
     return self._do_authenticate(raw_token)
+
+
+  def _extract_token(self, request):
+    try:
+      token_string = request.META.get("HTTP_AUTHORIZATION")
+      return token_string.split("Bearer ")[1]
+    except:
+      raise exceptions.AuthenticationFailed('Authentication failed: Bearer token missing!')
 
 
   def _do_authenticate(self, token):
