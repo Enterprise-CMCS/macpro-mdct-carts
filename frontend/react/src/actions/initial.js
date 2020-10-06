@@ -10,9 +10,6 @@ export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
-    
-
-
     const { data } = await axios
       .get(`${window.env.API_POSTGRES_URL}/state/${forwardedQueryString()}`)
       .catch((err) => {
@@ -28,7 +25,9 @@ export const loadSections = ({ userData }) => {
   return async (dispatch) => {
     const { data } = await axios
       .get(
-        `${window.env.API_POSTGRES_URL}/api/v1/sections/2020/${userData.abbr}${forwardedQueryString()}`
+        `${window.env.API_POSTGRES_URL}/api/v1/sections/2020/${
+          userData.abbr
+        }${forwardedQueryString()}`
       )
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
@@ -46,7 +45,11 @@ export const loadUserThenSections = ({ userData }) => {
   const { userToken } = userData;
   return async (dispatch) => {
     await axios
-      .get(`${window.env.API_POSTGRES_URL}/api/v1/appusers/${userToken}${forwardedQueryString()}`)
+      .get(
+        `${
+          window.env.API_POSTGRES_URL
+        }/api/v1/appusers/${userToken}${forwardedQueryString()}`
+      )
       .then((res) => {
         dispatch(loadSections({ userData: res.data }));
         dispatch(getProgramData(res.data));
@@ -73,7 +76,9 @@ export const loadUserThenSections = ({ userData }) => {
 };
 
 export const secureLoadUserThenSections = ({ authState }) => {
-  const xhrURL = `${window.env.API_POSTGRES_URL}/api/v1/appusers/auth${forwardedQueryString()}`;
+  const xhrURL = `${
+    window.env.API_POSTGRES_URL
+  }/api/v1/appusers/auth${forwardedQueryString()}`;
   const xhrHeaders = {
     Authorization: `Bearer ${authState.accessToken}`,
   };

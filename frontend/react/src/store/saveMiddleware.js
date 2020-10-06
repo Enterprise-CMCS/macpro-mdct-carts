@@ -44,7 +44,9 @@ const saveMiddleware = (store) => {
       try {
         store.dispatch({ type: SAVE_STARTED });
         await axios.put(
-          `${window.env.API_POSTGRES_URL}/api/v1/sections${forwardedQueryString()}`,
+          `${
+            window.env.API_POSTGRES_URL
+          }/api/v1/sections${forwardedQueryString()}`,
           // In a future world, we might save only the pending changes, but for
           // now, we save by posting the whole document in its current state.
           store.getState().formData

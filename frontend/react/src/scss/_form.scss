@@ -1,7 +1,8 @@
 /**********************
   FORM
 **********************/
-.errors, .error {
+.errors,
+.error {
   color: #e31c3d;
 }
 
@@ -140,7 +141,6 @@
 }
 
 .cmsranges {
-
   h3 {
     margin: 2.2rem 0 0 0;
   }
@@ -198,7 +198,6 @@
   text-align: center;
   width: 48%;
 
- 
   .form-buttons {
     @media only screen and (min-width: 767px) {
       text-align: right;
@@ -221,7 +220,7 @@
 .autosave {
   float: left;
   margin: 64px 0 16px;
-  text-align: center;  
+  text-align: center;
   width: 48%;
 }
 
@@ -278,7 +277,7 @@
   .action-buttons {
     display: none;
   }
-  
+
   .unanswered-text {
     margin-bottom: 70px;
   }
