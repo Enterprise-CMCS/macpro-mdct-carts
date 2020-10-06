@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Text from "../layout/Text";
 
 const CMSLegend = ({ hideNumber, hint, id, label }) => {
   let labelBits = "";
@@ -23,9 +24,7 @@ const CMSLegend = ({ hideNumber, hint, id, label }) => {
       {label}
       {hint && (
         <div className="ds-c-field__hint">
-          {hint.split("\n").map((line) => (
-            <div>{line}</div>
-          ))}
+          <Text>{hint}</Text>
         </div>
       )}
     </legend>

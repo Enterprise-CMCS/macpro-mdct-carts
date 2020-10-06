@@ -11,11 +11,7 @@ export const DataGrid = ({ question }) => {
   return (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {question.questions.map((input) => (
-        <div
-          className={
-            input.type === "fieldset" ? "ds-c-choice__checkedChild" : "ds-l-col"
-          }
-        >
+        <div className="ds-l-col">
           <Question hideNumber={input.type !== "fieldset"} question={input} />
         </div>
       ))}
