@@ -25,8 +25,6 @@ from rest_framework.permissions import (  # type: ignore
 )
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
-from carts.auth import JwtAuthentication
-from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import StateChangeSectionPermission, StateViewSectionPermission
 from carts.carts_api.serializers import (
     UserSerializer,
