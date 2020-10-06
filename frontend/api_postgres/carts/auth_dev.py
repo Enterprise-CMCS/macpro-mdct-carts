@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework import authentication
 from rest_framework import exceptions
 from carts.auth import JwtAuthentication
@@ -20,7 +20,9 @@ class JwtDevAuthentication(JwtAuthentication):
         )
 
         if created:
-          dev_user.groups.add(2)
+          state = dev_username.split('dev-')[1].upper()
+          group = Group.objects.get(name__endswith=f'{state} sections')
+          dev_user.groups.add(group.id)
 
         return (dev_user, None)
       except Exception:

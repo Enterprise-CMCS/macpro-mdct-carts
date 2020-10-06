@@ -36,12 +36,8 @@ router.register(r'sectionschemas', views.SectionSchemaViewSet)
 router.register(r'state', views.StateViewSet)
 
 api_patterns = [
-    path("sections/<int:year>/<str:state>", views.sections_by_year_and_state),
-    path("sections", views.update_sections),
-    path(
-        "sections/<int:year>/<str:state>/<int:section>",
-        views.section_by_year_and_state,
-    ),
+    path("sections/<int:year>/<str:state>", section_list),
+    path("sections/<int:year>/<str:state>/<int:section>", section_single),
     path(
         "sections/<int:year>/<str:state>/<int:section>/<str:subsection>",
         views.section_subsection_by_year_and_state,
@@ -59,8 +55,6 @@ api_patterns = [
     path("generic-questions/<slug:id>", views.generic_fragment_by_id),
     path("appusers/auth", views.authenticate_user),
     path("appusers/<slug:username>", views.fake_user_data),
-    path('vs-sections/<int:year>/<str:state>', section_list),
-    path('vs-sections/<int:year>/<str:state>/<int:section>', section_single),
 ]
 
 urlpatterns = [
