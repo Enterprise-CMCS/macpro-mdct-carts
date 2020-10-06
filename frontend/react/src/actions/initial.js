@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
-import { forwardedQueryString } from "../util/devQueryString";
+import forwardedQueryString from "../util/devQueryString";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";

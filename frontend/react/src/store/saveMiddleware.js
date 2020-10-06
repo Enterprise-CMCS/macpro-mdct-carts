@@ -3,7 +3,7 @@ import axios from "axios";
 import { QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables";
 
-import { forwardedQueryString } from "../util/devQueryString";
+import forwardedQueryString from "../util/devQueryString";
 
 export const SAVE_STARTED = "automatic save has started";
 export const SAVE_FINISHED = "automated save has finished";
