@@ -34,11 +34,11 @@ DEBUG = True
 # ]
 
 ALLOWED_HOSTS = [
-    'localhost'
-    '127.0.0.1',
+    'localhost' '127.0.0.1',
     '[::1]',
     '*',
-    os.environ.get('POSTGRES_API_URL')]
+    os.environ.get('POSTGRES_API_URL'),
+]
 
 # Application definition
 
@@ -75,7 +75,7 @@ REST_FRAMEWORK = {
     'xDEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'COERCE_DECIMAL_TO_STRING': False
+    'COERCE_DECIMAL_TO_STRING': False,
 }
 
 JWT_AUTHENTICATION = {
@@ -88,13 +88,13 @@ CACHES = {
     },
     'carts.oidc': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'carts.oidc'
-    }
+        'LOCATION': 'carts.oidc',
+    },
 }
 
 ROOT_URLCONF = 'carts.urls'
 
-TEMPLATES = [   
+TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'carts', 'templates')],

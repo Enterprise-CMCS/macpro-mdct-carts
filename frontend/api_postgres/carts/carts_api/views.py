@@ -25,7 +25,10 @@ from rest_framework.permissions import (  # type: ignore
 )
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
-from carts.permissions import StateChangeSectionPermission, StateViewSectionPermission
+from carts.permissions import (
+    StateChangeSectionPermission,
+    StateViewSectionPermission,
+)
 from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
@@ -92,7 +95,10 @@ class SectionViewSet(viewsets.ModelViewSet):
 
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
-    permission_classes = [StateViewSectionPermission, StateChangeSectionPermission]
+    permission_classes = [
+        StateViewSectionPermission,
+        StateChangeSectionPermission,
+    ]
 
     def list(self, request):
         queryset = self.get_queryset()
@@ -153,16 +159,21 @@ class SectionViewSet(viewsets.ModelViewSet):
                 "There is a problem with the provided data.", 400
             )
 
-
     def get_permissions(self):
         permission_classes_by_action = {
             'get_sections_by_year_and_state': [StateViewSectionPermission],
             'get_section_by_year_and_state': [StateViewSectionPermission],
-            'update_sections': [StateViewSectionPermission, StateChangeSectionPermission]
+            'update_sections': [
+                StateViewSectionPermission,
+                StateChangeSectionPermission,
+            ],
         }
 
         try:
-            return [permission() for permission in permission_classes_by_action[self.action]]
+            return [
+                permission()
+                for permission in permission_classes_by_action[self.action]
+            ]
         except:
             return [permission() for permission in self.permission_classes]
 
