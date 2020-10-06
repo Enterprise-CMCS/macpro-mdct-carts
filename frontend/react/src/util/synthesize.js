@@ -141,7 +141,7 @@ const lookupFMAP = (state, fy) => {
  * @param {string} acsProperty
  * @returns {string}
  */
-const lookupAcs = (state, {ffy, acsProperty}) => {
+const lookupAcs = (state, { ffy, acsProperty }) => {
   let returnValue = "";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
@@ -173,7 +173,7 @@ const lookupAcs = (state, {ffy, acsProperty}) => {
  * @param {string} acsProperty
  * @returns {(string|float)}
  */
-const compareACS = (state, {ffy1, ffy2, acsProperty}) => {
+const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   const percentagePrecision = 2;
   let returnValue = "Not Available";
   // if allStatesData and stateUser are available
