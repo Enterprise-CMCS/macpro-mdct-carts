@@ -37,7 +37,7 @@
                 "questions": [
                   {
                     "id": "2020-02-a-01-01",
-                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed",
+                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
@@ -118,7 +118,7 @@
                 "questions": [
                   {
                     "id": "2020-02-a-02-02-a",
-                    "label": "What are some reasons why the American Community Survey estimates might not accurately reflect the number of uninsured children in your state?",
+                    "label": "What are some reasons why the American Community Survey estimates might not reflect the number of uninsured children in your state?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null
