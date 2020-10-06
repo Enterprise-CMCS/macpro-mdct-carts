@@ -1,4 +1,5 @@
 import jsonschema  # type: ignore
+from django.contrib.auth.models import User  # type: ignore
 from django.contrib.postgres.fields import (  # type: ignore
     ArrayField,
     JSONField,
@@ -56,9 +57,8 @@ class State(models.Model):
 
 
 class AppUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
-    email = models.EmailField()
-    username = models.CharField(max_length=4)
     role = models.CharField(max_length=32, choices=USER_ROLES)
 
 

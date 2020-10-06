@@ -39,6 +39,9 @@ from carts.carts_api.models import (
     FMAP,
     State,
 )
+from carts.carts_api.model_utils import (
+    role_from_raw_ldap_job_codes as _role_from_job_codes,
+)
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -395,6 +398,7 @@ def authenticate_user(request):
         return HttpResponseForbidden()
 
     email = userinfo.get("email", "no-eua-email@example.com")
+    role = _role_from_job_codes(userinfo.get("job_codes"))
 
     # Instead of a DB lookup, here we're just assigning one of the fake users
     # according to EUA ID.
