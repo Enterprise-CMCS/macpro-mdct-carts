@@ -34,11 +34,11 @@ DEBUG = True
 # ]
 
 ALLOWED_HOSTS = [
-    'localhost'
-    '127.0.0.1',
+    'localhost' '127.0.0.1',
     '[::1]',
     '*',
-    os.environ.get('POSTGRES_API_URL')]
+    os.environ.get('POSTGRES_API_URL'),
+]
 
 # Application definition
 
@@ -70,12 +70,26 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'carts.auth_dev.JwtDevAuthentication',
     ],
     'xDEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'COERCE_DECIMAL_TO_STRING': False
+    'COERCE_DECIMAL_TO_STRING': False,
+}
+
+JWT_AUTHENTICATION = {
+    'OPENID_DISCOVERY_URL': 'https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration'
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'carts.oidc': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'carts.oidc',
+    },
 }
 
 ROOT_URLCONF = 'carts.urls'
