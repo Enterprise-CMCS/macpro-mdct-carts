@@ -1,7 +1,7 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-dependencies
 import Routes from "./reactRouter";
@@ -61,9 +61,14 @@ const WrappedSecurity = () => {
               <ScrollToTop />
               <Route path={config.callback} component={LoginCallback} />
               <SecureRoute path="/profile" component={Profile} />
+              <Switch>
+              <SecureRoute exact path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker">
+                <InvokeSection />
+              </SecureRoute>
               <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
                 <InvokeSection />
               </SecureRoute>
+              </Switch>
               <SecureRoute exact path="/userinfo" component={Userinfo} />
       
             </Security>
