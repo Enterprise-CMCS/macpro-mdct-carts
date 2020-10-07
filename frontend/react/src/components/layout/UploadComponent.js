@@ -4,7 +4,6 @@ import { TextField, Button } from "@cmsgov/design-system-core";
 import { mimeTypes, fileExtensions } from "../Utils/helperFunctions";
 import { setAnswerEntry } from "../../actions/initial";
 
-/* eslint-enable */
 class UploadComponent extends Component {
   constructor(props) {
     super();
