@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 
 const idToUrl = (location, id) => {
   const endOfPath = id.replace(/-/g, "/");
-  if (location.pathname.startsWith("/views/section")) {
+  if (location.pathname.startsWith("/views/sections")) {
     const pathChunks = location.pathname.split("/");
     const base = pathChunks.slice(0, 4).join("/");
     return `${base}/${endOfPath}`;
