@@ -133,9 +133,97 @@ const lookupFMAP = (state, fy) => {
   return "";
 };
 
+/**
+ * Retrieve acs_set from state and return for individual state.
+ *
+ * @param {string} state
+ * @param {string} ffy
+ * @param {string} acsProperty
+ * @returns {string}
+ */
+const lookupAcs = (state, { ffy, acsProperty }) => {
+  let returnValue = "";
+  // if allStatesData and stateUser are available
+  if (state.allStatesData && state.stateUser) {
+    // Get stateUser state
+    const stateAbbr = state.stateUser.abbr;
+
+    // Filter for only matching state
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+
+    // Filter for matching state from JSON
+    const acs = stateData?.acs_set.filter((year) => year.year === +ffy)[0];
+
+    // If acs exists, return the value from the object
+    if (acs) {
+      returnValue = `${acs[acsProperty]}`;
+    }
+  }
+  return returnValue;
+};
+
+/**
+ * Retrieve acs_set from state and return percentage change for 2 given years.
+ *
+ * @param {string} state
+ * @param {string} ffy1
+ * @param {string} ffy2
+ * @param {string} acsProperty
+ * @returns {(string|float)}
+ */
+const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
+  const percentagePrecision = 2;
+  let returnValue = "Not Available";
+  // if allStatesData and stateUser are available
+  if (state.allStatesData && state.stateUser) {
+    // Get stateUser state
+    const stateAbbr = state.stateUser.abbr;
+
+    // Filter for only matching state
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+
+    // Filter for the correct year of state data
+    const startACS = stateData?.acs_set.filter(
+      (year) => year.year === parseInt(ffy1, 10)
+    )[0];
+    const endACS = stateData?.acs_set.filter(
+      (year) => year.year === parseInt(ffy2, 10)
+    )[0];
+
+    // If start year and end year of ACS exist, return the calculated value (percent change) from the objects
+    if (startACS && endACS) {
+      // Convert the selected column to a float
+      const tempStart = parseFloat(startACS[acsProperty]);
+      const tempEnd = parseFloat(endACS[acsProperty]);
+
+      // Calculate the percent change
+      returnValue = parseFloat(
+        ((tempEnd - tempStart) / tempStart) * 100
+      ).toFixed(percentagePrecision);
+    }
+  }
+  return returnValue;
+};
+
 const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
+  }
+
+  if (value.lookupFmapFy) {
+    return { contents: lookupFMAP(state, value.lookupFmapFy) };
+  }
+
+  if (value.lookupAcs) {
+    return { contents: [lookupAcs(state, value.lookupAcs)] };
+  }
+
+  if (value.compareACS) {
+    return { contents: [compareACS(state, value.compareACS)] };
   }
 
   if (value.targets) {
