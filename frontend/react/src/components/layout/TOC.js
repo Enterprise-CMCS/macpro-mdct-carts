@@ -4,7 +4,15 @@ import { VerticalNav } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
+const idToUrl = (location, id) => {
+    const endOfPath = id.replace(/-/g, "/");
+    if (location.pathname.startsWith("/views/section")) {
+        const pathChunks = location.pathname.split("/");
+        const base = pathChunks.slice(0,4).join("/");
+        return `${base}/${endOfPath}`;
+    }
+    return `/sections/${endOfPath}`;
+}
 const subsection = (index) => String.fromCharCode("A".charCodeAt(0) + index);
 
 class TOC extends Component {
@@ -39,8 +47,8 @@ class TOC extends Component {
                   onClick: this.click,
                   selected: location.pathname
                     .toLowerCase()
-                    .startsWith(idToUrl(subsectionId)),
-                  url: idToUrl(subsectionId),
+                    .startsWith(idToUrl(location, subsectionId)),
+                  url: idToUrl(location, subsectionId),
                 })
               ),
         label:
@@ -48,12 +56,12 @@ class TOC extends Component {
         onClick: this.click,
         selected: location.pathname
           .toLowerCase()
-          .startsWith(idToUrl(sectionId)),
+          .startsWith(idToUrl(location, sectionId)),
       }))
       .map(({ id, items: childItems, ...rest }) => {
         const updated = { id, items: childItems, ...rest };
         if (childItems == null) {
-          updated.url = idToUrl(id);
+          updated.url = idToUrl(location, id);
         }
         return updated;
       });
