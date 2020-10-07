@@ -51,13 +51,14 @@ class JwtAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed("Authentication failed.")
 
     def _get_or_create_user(self, user_info):
-        user, created = User.objects.get_or_create(
+        user, _ = User.objects.get_or_create(
             first_name=user_info["given_name"],
             last_name=user_info["family_name"],
             email=user_info["email"],
             username=user_info["preferred_username"],
         )
 
+        """
         eua_id = user.username
         eua_ord = ord(eua_id[0]) % 3
         fake_state_map = {
@@ -66,6 +67,7 @@ class JwtAuthentication(authentication.BaseAuthentication):
             2: "MA",
         }
         fake_state = fake_state_map[eua_ord]
+        """
         # TODO: have to switch this back and forth in dev until we get test EUA
         # users:
         # role = role_from_raw_ldap_job_codes(user_info["job_codes"])
@@ -74,21 +76,21 @@ class JwtAuthentication(authentication.BaseAuthentication):
         if role[0] in ("admin_user", "co_user"):
             state = None
         else:
-            state = State.objects.get(code=fake_state)
+            state = State.objects.get(code="MA")
 
-        app_user, app_user_created = AppUser.objects.get_or_create(
-            user=user,
-        )
+        app_user, _ = AppUser.objects.get_or_create(user=user)
         app_user.state = state
         app_user.role = role
         app_user.save()
 
         if role[0] == "state_user" and state:
             group = Group.objects.get(name__endswith=f"{state.code} sections")
-            user.groups.set([group.id])
+            user.groups.set([group])
 
         if role[0] == "admin_user":
             group = Group.objects.get(name="Admin users")
-            user.groups.set([group.id])
+            user.groups.set([group])
+
+        user.save()
 
         return user

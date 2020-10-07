@@ -1,13 +1,13 @@
-//ACTION TYPES
+// ACTION TYPES
 const STATE_INFO = "STATE_INFO";
 const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
 
-//ACTION CREATORS
+// ACTION CREATORS
 export const getUserData = (userObject) => {
   return {
     type: USER_INFO,
-    userObject: userObject,
+    userObject,
   };
 };
 
@@ -28,9 +28,9 @@ export const getStateData = (stateObject) => ({
 const initialState = {
   name: "New York",
   abbr: "NY",
-  programType: "combo", //values can be combo, medicaid_exp_chip, or separate_chip
+  programType: "combo", // values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
-  imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
+  imageURI: `${`${process.env.PUBLIC_URL  }/img/states/ny.svg`}`,
   formName: "CARTS FY",
   currentUser: {
     role: "admin",
@@ -47,7 +47,7 @@ export default function (state = initialState, action) {
         ...state,
         name: action.name,
         abbr: action.abbr,
-        imageURI: action.imageURI,
+        imageURI: `/img/states/${action.abbr.toLowerCase()}.svg`,
       };
     case USER_INFO:
       return {

@@ -5,30 +5,27 @@ from typing import (
     List,
     Union,
 )
-from jwcrypto.jwk import JWK  # type: ignore
-import python_jwt as jwt  # type: ignore
-import requests
 
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
-from django.http import HttpResponse, HttpResponseForbidden  # type: ignore
+from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
 from rest_framework.decorators import (  # type: ignore
     api_view,
-    authentication_classes,
-    permission_classes,
 )
-from rest_framework.exceptions import PermissionDenied, ValidationError  # type: ignore
+from rest_framework.exceptions import (  # type: ignore
+    PermissionDenied,
+    ValidationError,
+)
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-from rest_framework.settings import api_settings
-from rest_framework.views import APIView
+from carts.auth import JwtAuthentication
 from carts.permissions import (
     StateChangeSectionPermission,
     StateViewSectionPermission,
@@ -39,18 +36,13 @@ from carts.carts_api.serializers import (
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
-    FMAPSerializer,
     StateSerializer,
 )
 from carts.carts_api.models import (
     Section,
     SectionBase,
     SectionSchema,
-    FMAP,
     State,
-)
-from carts.carts_api.model_utils import (
-    role_from_raw_ldap_job_codes as _role_from_job_codes,
 )
 
 
@@ -396,93 +388,28 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
 @api_view(["POST"])
 def authenticate_user(request):
-    # Extract token from header
-    token_string = request.META.get("HTTP_AUTHORIZATION")
-    token = token_string.split("Bearer ")[1]
+    jwt_auth = JwtAuthentication()
+    user, _ = jwt_auth.authenticate(request)
+    state = user.appuser.state
 
-    okta_host = "https://test.idp.idm.cms.gov"
-    okta_root = "oauth2/aus4itu0feyg3RJTK297/v1"
-
-    # Verify that this token really came from the Okta server.
-    # TODO: Add error handling and pulling the URL from config.
-    # u = "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/v1/keys"
-    is_valid_token = False
-    pk_url = "/".join([okta_host, okta_root, "keys"])
-    okta_auth_res = requests.get(pk_url)
-    outer = okta_auth_res.json()
-    keys = outer.get("keys")
-    processed_jwt = jwt.process_jwt(token)
-
-    # We should probably end up with only one key here, leaving as list for now
-    fkeys = filter(lambda x: x["kid"] == processed_jwt[0]["kid"], keys)
-
-    try:
-        for key in fkeys:
-            jwk = JWK.from_json(json.dumps(key))
-            result = jwt.verify_jwt(
-                token,
-                jwk,
-                ["RS256"],
-                checks_optional=True,
-            )
-            if result:
-                is_valid_token = True
-            break
-    except Exception:
-        # TODO: better exception handling here
-        return HttpResponseForbidden()
-
-    if not is_valid_token:
-        return HttpResponseForbidden()
-
-    info_url = "/".join([okta_host, okta_root, "userinfo"])
-    res = requests.get(info_url, headers={"Authorization": f"Bearer {token}"})
-    userinfo = res.json()
-    eua_id = userinfo.get("preferred_username")
-    if not eua_id:
-        return HttpResponseForbidden()
-
-    email = userinfo.get("email", "no-eua-email@example.com")
-    role = _role_from_job_codes(userinfo.get("job_codes"))
-
-    # Instead of a DB lookup, here we're just assigning one of the fake users
-    # according to EUA ID.
-    eua_ord = ord(eua_id[0]) % 3
-    fake_user_map = {
-        0: "AK",
-        1: "AZ",
-        2: "MA",
-    }
-    fake_user_key = fake_user_map[eua_ord]
-
-    # Later we'll look up the user in the DB, but for the moment, assume
-    # they're associated with the above state and grab the group for that
-    # state's permissions:
-
-    auth_group = Group.objects.get(
-        name=f"Users who can edit and view {fake_user_key} sections"
-    )
-    state = State.objects.get(code=fake_user_key)
-    assert auth_group and state
-    program_names = ", ".join(state.program_names)
-    program_name_text = f"{state.code.upper} {program_names}"
+    program_names = ", ".join(state.program_names) if state else None
+    program_text = f"{state.code.upper} {program_names}" if state else None
 
     user_data = {
-        "name": state.name,
-        "abbr": state.code.upper(),
-        "programType": state.program_type,
-        "programName": program_name_text,
-        "imageURI": f"/img/states/{state.code.lower()}.svg",
+        "name": state.name if state else None,
+        "abbr": state.code.upper() if state else None,
+        "programType": state.program_type if state else None,
+        "programName": program_text,
         "formName": "CARTS FY",
         "currentUser": {
-            "role": "state_user",
+            "role": user.appuser.role,
             "state": {
-                "id": state.code.upper(),
-                "name": state.name,
+                "id": state.code.upper() if state else None,
+                "name": state.name if state else None,
             },
-            "username": eua_id,
-            "email": email,
-            "group": auth_group.name,
+            "username": user.username,
+            "email": user.email,
+            # "group": auth_groubp.name,
         },
     }
     return HttpResponse(json.dumps(user_data))

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { secureLoadUserThenSections } from "../../actions/initial";
 import { useOktaAuth } from "@okta/okta-react";
+import { secureLoadUserThenSections } from "../../actions/initial";
 
 const SecureInitialDataLoad = () => {
   const { authState, authService } = useOktaAuth();
@@ -13,11 +13,11 @@ const SecureInitialDataLoad = () => {
     } else {
       authService.getUser().then((info) => {
         dispatch(
-          secureLoadUserThenSections({ userData: info, authState: authState })
+          secureLoadUserThenSections({ userData: info, authState })
         );
       });
     }
-  }, [authState, authService]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [authState, authService]); 
 
   return null;
 };
