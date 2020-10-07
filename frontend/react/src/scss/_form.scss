@@ -1,12 +1,17 @@
 /**********************
   FORM
 **********************/
-.errors, .error {
+.errors,
+.error {
   color: #e31c3d;
 }
 
 .ds-c-label {
   max-width: 100%;
+}
+
+.ds-c-table {
+  margin: 1.2rem 0;
 }
 
 .form-options {
@@ -15,6 +20,10 @@
   button {
     margin-right: ($padding * 3);
   }
+}
+
+[role="region"]:active:focus {
+  outline: none;
 }
 
 .accordion-title {
@@ -140,7 +149,6 @@
 }
 
 .cmsranges {
-
   h3 {
     margin: 2.2rem 0 0 0;
   }
@@ -198,7 +206,6 @@
   text-align: center;
   width: 48%;
 
- 
   .form-buttons {
     @media only screen and (min-width: 767px) {
       text-align: right;
@@ -221,7 +228,7 @@
 .autosave {
   float: left;
   margin: 64px 0 16px;
-  text-align: center;  
+  text-align: center;
   width: 48%;
 }
 
@@ -278,7 +285,7 @@
   .action-buttons {
     display: none;
   }
-  
+
   .unanswered-text {
     margin-bottom: 70px;
   }

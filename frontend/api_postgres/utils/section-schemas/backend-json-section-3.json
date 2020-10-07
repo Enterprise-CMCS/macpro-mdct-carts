@@ -343,7 +343,7 @@
             "questions": [
               {
                 "id": "2020-03-c-01-01",
-                "label": "Does your state provide presumptive eligibility, allowing children who are presumed to be eligible to access CHIP services?",
+                "label": "Does your state provide presumptive eligibility, allowing children to access CHIP services pending a final determination of eligibility?",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -707,7 +707,7 @@
                   {
                     "id": "2020-03-c-03-04-a",
                     "label": "How many children were disenrolled for procedural reasons?",
-                    "hint": "For example: They were disenrolled due to an incomplete application, missing documentation, or a missing enrollment fee.",
+                    "hint": "This could be due to an incomplete application, missing documentation, or a missing enrollment fee.",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -716,7 +716,7 @@
                   {
                     "id": "2020-03-c-03-04-b",
                     "label": "How many children were disenrolled for eligibility reasons?",
-                    "hint": "For example: They were disenrolled because their income was too high or too low, they were eligible for Medicaid (Title XIX) instead, or they had access to private coverage.",
+                    "hint": "This could be due to income that was too high or too low, eligibility in Medicaid (Title XIX) instead, or access to private coverage.",
                     "type": "integer",
                     "answer": {
                       "entry": null
@@ -900,13 +900,254 @@
           {
             "id": "2020-03-c-04",
             "type": "part",
-            "title": "Redetermination in Medicaid"
+            "title": "Redetermination in Medicaid",
+            "text": "Redetermination is the process of redetermining whether a child is eligible to renew in Medicaid (Title XIX) every 12 months. This section doesn’t apply to any mid-year changes in circumstances that may affect eligibility (for example: income, relocation, or aging out of the program).",
+            "questions": [
+              {
+                "id": "2020-03-c-04-01",
+                "label": "How many children were eligible for redetermination in Medicaid in FFY 2020?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-04-02",
+                "label": "Of the eligible children, how many were then screened for redetermination?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-04-03",
+                "label": "How many children were retained in Medicaid after redetermination?",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-03-c-04-04",
+                "label": "How many children were disenrolled in Medicaid after the redetermination process?",
+                "hint": "This number should be equal to the total of 4a, 4b, and 4c below.",
+                "type": "integer",
+                "answer": {
+                  "entry": null
+                },
+                "questions": [
+                  {
+                    "type": "fieldset",
+                    "hint": "The answer to 4 should be equal to the sum of a, b, and c below: ",
+                    "fieldset_type": "synthesized_value",
+                    "fieldset_info": {
+                      "targets": [
+                        "$..*[?(@.id=='2020-03-c-04-04-a')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-04-04-b')].answer.entry",
+                        "$..*[?(@.id=='2020-03-c-04-04-c')].answer.entry"
+                      ],
+                      "actions": ["sum"]
+                    },
+                    "questions": []
+                  },
+                  {
+                    "id": "2020-03-c-04-04-a",
+                    "label": "How many children were disenrolled for procedural reasons?",
+                    "hint": "This could be due to an incomplete application, missing documentation, or a missing enrollment fee.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-c-04-04-b",
+                    "label": "How many children were disenrolled for eligibility reasons?",
+                    "hint": "This could be due to an income that was too high and/or eligibility in CHIP instead.",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-03-c-04-04-c",
+                    "label": "How many children were disenrolled for other reasons?",
+                    "type": "integer",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "2020-03-c-04-05",
+                "label": "Did you have any limitations in collecting this data?",
+                "type": "text_multiline",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "type": "fieldset",
+                "fieldset_type": "synthesized_table",
+                "label": "Table: Redetermination in Medicaid ",
+                "hint": "These tables are auto-populated with the data you entered above.",
+                "fieldset_info": {
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      {
+                        "contents": "Children screened for redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children retained after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-03')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-03')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ]
+                  ]
+                },
+                "questions": []
+              },
+              {
+                "type": "fieldset",
+                "label": "Table: Disenrollment in Medicaid after Redetermination",
+                "comment": "This is assuming that we make the user manually enter the answer to question 4; otherwise we don't currently have a way to support this functionality; see the comment on question 4 above.",
+                "fieldset_type": "synthesized_table",
+                "fieldset_info": {
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "Number"
+                    },
+                    {
+                      "contents": "Percent"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      {
+                        "contents": "Children disenrolled after redetermination"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ]
+                      },
+                      {
+                        "contents": "100%"
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled for procedural reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-a')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-a')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled for eligibility reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-b')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-b')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ],
+                    [
+                      {
+                        "contents": "Children disenrolled for other reasons"
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-c')].answer.entry"
+                        ]
+                      },
+                      {
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04-c')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
+                      }
+                    ]
+                  ]
+                },
+                "questions": []
+              }
+            ]
           },
           {
             "id": "2020-03-c-05",
             "type": "part",
-            "title": "Tracking a CHIP cohort over 18 months",
-            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be younger than 16 years when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period.\n\nYou’ll identify a new cohort every two years. This year you’ll report on the number of children at the start of the cohort (Jan - Mar 2020) and six months later (July - Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan - Mar 2021) and 18 months later (July - Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
+            "title": "Tracking a CHIP cohort (Title XXI) over 18 months",
+            "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. This year you’ll report on the number of children at the start of the cohort (Jan - Mar 2020) and six months later (July - Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan - Mar 2021) and 18 months later (July - Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
             "questions": [
               {
                 "type": "fieldset",
@@ -1539,7 +1780,7 @@
               {
                 "type": "fieldset",
                 "label": "January - March 2021 (12 months later)",
-                "hint": "Next year you’ll submit this data about your cohort.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -2047,7 +2288,7 @@
               {
                 "type": "fieldset",
                 "label": "July - September of 2021 (18 months later)",
-                "hint": "Next year you’ll submit this data about your cohort.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -2564,12 +2805,12 @@
             "id": "2020-03-c-06",
             "type": "part",
             "title": "Tracking a Medicaid (Title XIX) cohort over 18 months",
-            "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA.\n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be 16 years or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period.\n\nYou’ll identify a new cohort every two years. This year you’ll report the number of children identified at the start of the cohort (Jan–Mar 2020) and six months later (July–Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan–Mar 2021) and 18 months later (July–Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
+            "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2020 (the second quarter of FFY 2020). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. This year you’ll report the number of children identified at the start of the cohort (Jan–Mar 2020) and six months later (July–Sept 2020). Next year you’ll report numbers for the same cohort at 12 months (Jan–Mar 2021) and 18 months later (July–Sept 2021). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
             "questions": [
               {
                 "type": "fieldset",
                 "label": "Helpful hints on age groups",
-                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1–5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
+                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
                 "questions": []
               },
               {
@@ -2580,8 +2821,8 @@
                   "entry": null,
                   "options": [
                     {
-                      "label": "Newly enrolled in CHIP: Children in this cohort weren’t enrolled in CHIP (Title XXI) during the previous month. For example: Newly enrolled children in January 2020 weren’t enrolled in CHIP in December 2019.",
-                      "value": "new_in_chip"
+                      "label": "Newly enrolled in Medicaid: Children in this cohort weren’t enrolled in Medicaid (Title XIX) during the previous month. For example: Newly enrolled children in January 2020 weren’t enrolled in Medicaid in December 2019.",
+                      "value": "new_in_medicaid"
                     },
                     {
                       "label": "Newly enrolled in CHIP and Medicaid: Children in this cohort weren’t enrolled in CHIP (Title XXI) or Medicaid (Title XIX) during the previous month. For example: Newly enrolled children in January 2020 weren’t enrolled in CHIP or Medicaid in December 2019.",
@@ -3197,7 +3438,7 @@
               {
                 "type": "fieldset",
                 "label": "January - March 2021 (12 months later)",
-                "hint": "Next year you’ll submit this data on your CARTS report.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -3705,7 +3946,7 @@
               {
                 "type": "fieldset",
                 "label": "July - September of 2021 (18 months later)",
-                "hint": "Next year you’ll submit this data on your CARTS report.",
+                "hint": "Next year you’ll report this data. Leave it blank in the meantime.",
                 "questions": []
               },
               {
@@ -4908,7 +5149,7 @@
               {
                 "id": "2020-03-f-01-04",
                 "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
-                "type": "file_upload",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -5857,6 +6098,7 @@
           {
             "id": "2020-03-h-02",
             "type": "part",
+            "title": "You collected the CAHPS survey",
             "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
             "context_data": {
               "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
@@ -6116,6 +6358,7 @@
           {
             "id": "2020-03-h-03",
             "type": "part",
+            "title": "You didn't collect the CAHPS survey",
             "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
             "context_data": {
               "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
@@ -6203,7 +6446,7 @@
         "id": "2020-03-i",
         "title": "Health Services Initiative (HSI) Programs",
         "type": "subsection",
-        "text": "All states with approved HSI program(s) should complete this section. \nStates can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
+        "text": "All states with approved HSI program(s) should complete this section.\nStates can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
         "parts": [
           {
             "id": "2020-03-i-01",
@@ -6212,7 +6455,7 @@
               {
                 "id": "2020-03-i-01-01",
                 "label": "Does your state operate Health Service Initiatives using CHIP (Title XXI) funds?",
-                "hint": "Even if you’re not currently operating the HSI program, if it’s been approved in your CHIP state plan, answer “yes.”",
+                "hint": "Even if you’re not currently operating the HSI program, if it’s in your current approved CHIP State Plan, please answer “yes.”",
                 "type": "radio",
                 "answer": {
                   "entry": null,
@@ -6287,7 +6530,7 @@
                         "type": "fieldset",
                         "context_data": {
                           "conditional_display": {
-                            "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP state plan.",
+                            "skip_text": "Since you're no longer operating this HSI program, please remove any references to it from your CHIP State Plan.",
                             "type": "conditional_display",
                             "comment": "Interactive: Hide if 2020-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                             "hide_if": {

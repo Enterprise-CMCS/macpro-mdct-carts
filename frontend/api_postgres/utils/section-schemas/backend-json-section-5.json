@@ -174,21 +174,21 @@
                 "hint": "This table is auto-populated with the data you entered above.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "FFY 2020"
+                    },
+                    {
+                      "contents": "FFY 2021"
+                    },
+                    {
+                      "contents": "FFY 2022"
+                    }
+                  ],
                   "rows": [
-                    [
-                      {
-                        "contents": ""
-                      },
-                      {
-                        "contents": "FFY 2020"
-                      },
-                      {
-                        "contents": "FFY 2021"
-                      },
-                      {
-                        "contents": "FFY 2022"
-                      }
-                    ],
                     [
                       {
                         "contents": "Managed Care"
@@ -606,21 +606,13 @@
                 "hint": "This table is auto-populated with the data you entered above. \n Your total administrative costs cannot be more than 10% of your total CHIP program costs (the sum of your benefit and administrative costs). The 10% administrative cap is calculated by dividing the total benefit costs by 9.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
+                  "headers": [
+                    { "contents": "" },
+                    { "contents": "FFY 2020" },
+                    { "contents": "FFY 2021" },
+                    {"contents": "FFY 2022" }
+                  ],
                   "rows": [
-                    [
-                      {
-                        "contents": ""
-                      },
-                      {
-                        "contents": "FFY 2020"
-                      },
-                      {
-                        "contents": "FFY 2021"
-                      },
-                      {
-                        "contents": "FFY 2022"
-                      }
-                    ],
                     [
                       {
                         "contents": "Personnel"
@@ -925,21 +917,21 @@
                 "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the eFMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
+                  "headers": [
+                    {
+                      "contents": ""
+                    },
+                    {
+                      "contents": "FFY 2020"
+                    },
+                    {
+                      "contents": "FFY 2021"
+                    },
+                    {
+                      "contents": "FFY 2022"
+                    }
+                  ],
                   "rows": [
-                    [
-                      {
-                        "contents": ""
-                      },
-                      {
-                        "contents": "FFY 2020"
-                      },
-                      {
-                        "contents": "FFY 2021"
-                      },
-                      {
-                        "contents": "FFY 2022"
-                      }
-                    ],
                     [
                       {
                         "contents": "Total program costs "
@@ -1014,13 +1006,11 @@
                         "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
                       },
-
                       {
                         "targets": [{ "lookupFmapFy": "2021" }],
                         "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21)"
                       },
-
                       {
                         "targets": [{ "lookupFmapFy": "2022" }],
                         "actions": ["identity"],
