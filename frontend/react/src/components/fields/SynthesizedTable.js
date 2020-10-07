@@ -6,11 +6,7 @@ import synthesizeValue from "../../util/synthesize";
 const SynthesizedTable = ({ question, rows }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
-      <legend className="table__legend ds-h4" htmlFor="synthesized-table-1">
-        {question.label}
-      </legend>
       <table className="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
-        <caption className="ds-c-table__caption">{question.hint}</caption>
         {question.fieldset_info.headers && (
           <thead>
             <tr>
