@@ -51,14 +51,14 @@ const WrappedSecurity = () => {
   }
   return (
     <div className="App" data-test="component-app">
-      {VisibleHeader}
-      <Router>
-        <div className="ds-l-container">
-          <div className="ds-l-row">
-            <Security
-              {...config.oidc}
-              tokenManager={{ secure: true, storage: "cookie" }}
-            >
+      <Security
+        {...config.oidc}
+        tokenManager={{ secure: true, storage: "cookie" }}
+      >
+        {VisibleHeader}
+        <Router>
+          <div className="ds-l-container">
+            <div className="ds-l-row">
               <SecureInitialDataLoad />
               <SecureRoute path="/" />
               <Sidebar />
@@ -78,11 +78,11 @@ const WrappedSecurity = () => {
                 </SecureRoute>
               </Switch>
               <SecureRoute exact path="/userinfo" component={Userinfo} />
-            </Security>
+            </div>
           </div>
-        </div>
-      </Router>
-      {VisibleFooter}
+        </Router>
+        {VisibleFooter}
+      </Security>
     </div>
   );
 };
