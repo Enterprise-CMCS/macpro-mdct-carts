@@ -14,32 +14,32 @@ class UserProfile extends Component {
           <div className="main">
             If any information is incorrect, please contact the{" "}
             <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>.
-            <div className="profile-information ds-l-container">
-              <div clasName="ds-l-row">
-                <div className="ds-l-col--4">EUA Id: </div>
-                <div className="ds-l-col--8">
+            <div className="profile-information">
+              <div>
+                <div>EUA Id: </div>
+                <div>
                   {this.props.currentUser.username}
                 </div>
               </div>
-              <div clasName="ds-l-row">
-                <div className="ds-l-col--4">Name: </div>
-                <div className="ds-l-col--8">Full name here</div>
+              <div>
+                <div>Name: </div>
+                <div>Full name here</div>
               </div>
               <div>
-                <div className="ds-l-col--4">Email: </div>
-                <div className="ds-l-col--8">
+                <div>Email: </div>
+                <div>
                   {this.props.currentUser.email}
                 </div>
               </div>
               <div>
-                <div className="ds-l-col--4">State: </div>
-                <div className="ds-l-col--8">
+                <div>State: </div>
+                <div>
                   {this.props.currentUser.state.name}
                 </div>
               </div>
               <div>
-                <div className="ds-l-col--4">Role: </div>
-                <div className="ds-l-col--8">{this.props.currentUser.role}</div>
+                <div>Role: </div>
+                <div>{this.props.currentUser.role}</div>
               </div>
             </div>
           </div>

@@ -368,7 +368,21 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 
 .profile-information {
+  margin-top: 1.2rem;
+
   & > div:nth-child(even) {
-    background-color: #ddd;
+    background-color: #efefef;
+  }
+
+  &>div {
+    div:first-of-type {
+      display: inline-block;
+      margin: .4rem .6rem .4rem .4rem;
+      min-width: 55px;
+    }
+
+    div:last-of-type {
+      display: inline-block;
+    }
   }
 }
