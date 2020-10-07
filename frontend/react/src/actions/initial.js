@@ -21,13 +21,20 @@ export const getAllStatesData = () => {
   };
 };
 
-export const loadSections = ({ userData }) => {
+export const loadSections = ({ userData, headers }) => {
+  const xhrHeaders = headers || {};
+  const apiHost = window.env.API_POSTGRES_URL;
+  const apiPath = "/api/v1/sections/2020/";
+  const state = userData.abbr;
+  const queryString = forwardedQueryString();
+  const apiURL = [apiHost, apiPath, state, queryString].join("");
   return async (dispatch) => {
-    const { data } = await axios
-      .get(
-        `${window.env.API_POSTGRES_URL}/api/v1/sections/2020/${
-          userData.abbr
-        }${forwardedQueryString()}`
+    const { data } = await axios(
+        {
+          "method": "GET",
+          "url": apiURL,
+          "headers": xhrHeaders,
+        }
       )
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
@@ -86,7 +93,7 @@ export const secureLoadUserThenSections = ({ authState }) => {
   return async (dispatch) => {
     await axios({ method: "POST", url: xhrURL, headers: xhrHeaders })
       .then((res) => {
-        dispatch(loadSections({ userData: res.data }));
+        dispatch(loadSections({ userData: res.data, headers: xhrHeaders }));
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
         dispatch(getUserData(res.data.currentUser));

@@ -16,7 +16,11 @@ from django.template.loader import get_template  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
-from rest_framework.decorators import api_view, authentication_classes, permission_classes  # type: ignore
+from rest_framework.decorators import (  # type: ignore
+    api_view,
+    authentication_classes,
+    permission_classes,
+)
 from rest_framework.exceptions import PermissionDenied, ValidationError  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
@@ -111,12 +115,16 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def get_sections_by_year_and_state(self, request, year, state):
+        print("sections by year and state", flush=True)
         sections = self.get_queryset().filter(
             contents__section__year=year,
             contents__section__state=state.upper(),
         )
 
         for section in sections:
+            # TODO: streamline this so if users have access to all of the
+            # objects (e.g. if they're admins) the check occurs ony once.
+            print("about to check object permissions", flush=True)
             self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
@@ -164,9 +172,9 @@ class SectionViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         permission_classes_by_action = {
-            'get_sections_by_year_and_state': [StateViewSectionPermission],
-            'get_section_by_year_and_state': [StateViewSectionPermission],
-            'update_sections': [
+            "get_sections_by_year_and_state": [StateViewSectionPermission],
+            "get_section_by_year_and_state": [StateViewSectionPermission],
+            "update_sections": [
                 StateViewSectionPermission,
                 StateChangeSectionPermission,
             ],
