@@ -4,64 +4,14 @@ import { TextField, Button } from "@cmsgov/design-system-core";
 import { mimeTypes, fileExtensions } from "../Utils/helperFunctions";
 import { setAnswerEntry } from "../../actions/initial";
 
+/* eslint-enable */
 class UploadComponent extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {};
-    // this.validateFileSignature = this.validateFileSignature.bind(this);
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
   }
-
-  // This approach uses the FileReader to check a file signature in order to validate
-
-  // validateFileSignature(event) {
-  //   if (event.target.files.length !== 0) {
-  //
-  //     let filesArray = event.target.files;
-
-  //     let filePayload = [];
-
-  //     for (let i = 0; i < filesArray.length; i++) {
-  //       let err;
-  //       let singleFile = filesArray[i];
-
-  //       let uploadName = singleFile.name;
-  //       let mediaType = singleFile.type;
-  //       let mediaSize = singleFile.size / 1024 / 1024; // Converting bytes to MB, roughly
-  //       let blob = singleFile.slice(0, 4);
-
-  //       let filereader = new FileReader();
-
-  //       filereader.onloadend = function (evt) {
-  //         if (evt.target.readyState === FileReader.DONE) {
-  //           const uint = new Uint8Array(evt.target.result);
-
-  //           let bytes = [];
-
-  //           uint.forEach((byte) => {
-  //             bytes.push(byte.toString(16));
-  //           });
-
-  //           const hex = bytes.join("").toUpperCase();
-
-  //           filePayload.push({
-  //             name: uploadName,
-  //             type: mediaType ? mediaType : "Unknown file type",
-  //             binaryFileType: mimeTypes(hex),
-  //             hex: hex,
-  //           });
-  //         }
-  //       };
-
-  //       filereader.readAsArrayBuffer(blob);
-  //     }
-
-  //     // Using the FileReader to read the first four byes and determine the mime of the type of file
-  //     // More secure than the browser File API which really only reads the file extension (Which can be wrong or missing)
-  //     // Will use 'Magic numbers'/file signatures to identify a file format or protocol
-  //   }
-  // }
 
   // Removes a file, but just from local state. Should include an HTTP request as well/ instead
   removeFile(evt) {
@@ -84,7 +34,7 @@ class UploadComponent extends Component {
 
   validateFileByExtension(event) {
     if (event.target.files.length !== 0) {
-      let filesArray = event.target.files;
+      let filesArray = event.target.files; // All files selected by a user
       let filePayload = [];
       let errorString = "";
 
@@ -133,6 +83,10 @@ class UploadComponent extends Component {
       if (errorString === "") {
         this.props.setAnswer(event.target.name, filePayload);
       }
+
+      // !! The reason we're  not using file.type, the results are inconsistent and irregular.
+      // slicing off the extension name is more succinct
+
       // Results from file.type
       //PDF: "application/pdf"
       // JPEG: "image/jpeg"
@@ -146,14 +100,13 @@ class UploadComponent extends Component {
       <div>
         <div>
           <TextField
-            accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm" // AC: which excel filetypes are OK?
+            accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
             className="file_upload"
             errorMessage={this.state.inputErrors}
             hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
             label=""
             multiple
             name={this.props.question.id}
-            //   onChange={this.validateFileSignature} // Validation by file signature
             onChange={this.validateFileByExtension}
             type="file"
           />
@@ -182,7 +135,7 @@ class UploadComponent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  USState: state.stateUser.abbr,
+  USState: state.stateUser.abbr, // Currently this is meaningless dummy data
 });
 
 const mapDispatchToProps = {
