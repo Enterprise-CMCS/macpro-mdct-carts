@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { constructIdFromYearSectionAndSubsection } from "./store/formData";
 import Homepage from "./components/sections/homepage/Homepage";
+import ProfileInformation from "./components/sections/ProfileInformation";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Section from "./components/layout/Section";
@@ -30,6 +31,7 @@ const Routes = ({ userData }) => (
         <ScrollToTop />
         <Switch>
           <Route exact path="/" component={Homepage} />
+          <Route path="/profileInformation" component={ProfileInformation} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route
             path="/sections/:year/:sectionOrdinal/:subsectionMarker"

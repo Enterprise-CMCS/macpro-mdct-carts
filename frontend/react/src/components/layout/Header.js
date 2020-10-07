@@ -53,7 +53,7 @@ class Header extends Component {
                   </ul>
                   <ul className="menu-block" id="menu-block">
                     <li className="manage-account">
-                      <a href="javascript:void(0)">Manage account</a>
+                      <a href="../../profileInformation">Manage account</a>
                     </li>
                     <li className="logout">
                       <Logout />
