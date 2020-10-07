@@ -97,6 +97,13 @@ export const secureLoadUserThenSections = ({
   return async (dispatch) => {
     await axios({ method: "POST", url: xhrURL, headers: xhrHeaders })
       .then((res) => {
+        /* The order here is important because in the cases where there's
+         * no state info (e.g. admin users) the current loadSections code
+         * will error out, which we need to change once we're completely
+         * away from using various kinds of fake users.
+         * The same applies to needing to eliminate the mostly-redundant
+         * functions in this file that apply to non-secure loading.
+         */
         dispatch(getUserData(res.data.currentUser));
         dispatch(
           loadSections({ userData: res.data, headers: xhrHeaders, stateCode })
