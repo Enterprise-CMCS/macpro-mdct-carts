@@ -657,18 +657,9 @@
                 "questions": []
               },
               {
-                "id": "2020-05-a-04-08",
-                "label": "Did you base any of your projected costs on any assumptions?",
-                "hint": "For example: estimated enrollment numbers, new programs, or funding sources.",
-                "type": "text_medium",
-                "answer": {
-                  "entry": null
-                }
-              },
-              {
                 "type": "fieldset",
                 "label": "Table 5: Federal and State Shares",
-                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (FMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the FMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
+                "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s enhanced Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \nThis table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the eFMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
                 "fieldset_type": "synthesized_table",
                 "fieldset_info": {
                   "headers": [
@@ -715,14 +706,16 @@
                       }
                     ],
                     [
-                      { "contents": "FMAP" },
+                      { "contents": "eFMAP" },
                       {
-                        "contents": "I need custom code to pull FMAP for FFY 2020",
+                        "targets": [{ "lookupFmapFy": "2020" }],
+                        "actions": ["identity"],
                         "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
                       },
                       {
-                        "contents": "I need custom code to pull FMAP for FFY 2021",
-                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY1)"
+                        "targets": [{ "lookupFmapFy": "2021" }],
+                        "actions": ["identity"],
+                        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21). Since those data are currently unavailable, the cell should say 'Not yet available'"
                       }
                     ],
                     [
@@ -748,7 +741,7 @@
                 "questions": []
               },
               {
-                "id": "2020-05-a-04-09",
+                "id": "2020-05-a-04-08",
                 "label": "What were your state funding sources in FFY 2020?",
                 "hint": "Select all that apply.",
                 "type": "checkbox",
@@ -781,7 +774,7 @@
                 }
               },
               {
-                "id": "2020-05-a-04-10",
+                "id": "2020-05-a-04-09",
                 "type": "text_multiline",
                 "label": "If you answered \"other\", what other type of funding did you receive?",
                 "answer": {
@@ -789,8 +782,8 @@
                 }
               },
               {
-                "id": "2020-05-a-04-11",
-                "label": "Did your total program costs exceed your federal and state funding?",
+                "id": "2020-05-a-04-10",
+                "label": "Did you experience a shortfall in federal CHIP funds this year?",
                 "type": "radio",
                 "answer": {
                   "options": [
@@ -801,8 +794,8 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-05-a-04-11-a",
-                    "label": "Briefly explain why your state didn’t have enough funding to cover your CHIP program costs.",
+                    "id": "2020-05-a-04-10-a",
+                    "label": "Briefly explain why your state didn’t have enough federal funding to cover your CHIP program costs.",
                     "type": "text_multiline",
                     "answer": {
                       "entry": null

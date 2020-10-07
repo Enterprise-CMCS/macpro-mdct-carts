@@ -71,8 +71,7 @@ const Question = ({ hideNumber, question, setAnswer, ...props }) => {
 
   const shouldRenderChildren =
     (question.type !== "fieldset" ||
-      (question.type === "fieldset" &&
-        question.fieldset_type === "noninteractive_table")) &&
+      question.fieldset_type === "noninteractive_table") &&
     question.type !== "objectives" &&
     question.type !== "radio" &&
     question.type !== "repeatables" &&
