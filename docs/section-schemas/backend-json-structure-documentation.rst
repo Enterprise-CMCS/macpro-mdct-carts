@@ -660,7 +660,7 @@ One additional type of synthesized value that behaves a bit differently from tho
       },
     ],
 
-Another outlier is the ``lookupAcs`` action, which is used to pull American Community Survey data. Add the ``lookupAcs`` property to a synthesized table cell and specify the fiscal year and property name, as an array, for the value.
+Another outlier is the ``lookupAcs`` action, which is used to pull American Community Survey data. Add the ``lookupAcs`` property to a synthesized table cell and specify the fiscal year and property name, as an object, for the value.
 
 Available properties:
 *  number_uninsured
@@ -674,14 +674,43 @@ Available properties:
     "rows": [
         [
             {
-                "lookupAcs": [ "2016", "number_uninsured" ]
+                "lookupAcs": {
+                    "acsProperty": "percent_uninsured",
+                    "ffy": "2015"
+                }
             },
             {
-                "lookupAcs": [ "2016", "number_uninsured_moe" ]
+                "lookupAcs": {
+                    "acsProperty": "number_uninsured_moe",
+                    "ffy": "2016"
+                }
             },
+            ...
         ]
     ]
 
+In addition there is ``compareACS`` which allows comparing a property against two years.  Add the ``compareACS`` property to a synthesized table cell and specify a fiscal year, the second fiscal year, to compare against, and property name, as an object, for the value.
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
+..  code:: json
+
+    "rows": [
+        [
+            {
+                "compareACS": {
+                    "ffy1": "2018",
+                    "ffy2": "2019",
+                    "acsProperty": "percent_uninsured"
+                }
+            },
+            ...
+        ]
+    ]
 
 ``synthesized_table``
 ########################
