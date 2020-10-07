@@ -54,22 +54,19 @@ const hideIfNot = (state, hideIfNotInfo) => {
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
 const shouldDisplay = (state, context) => {
-  if(!context) {
+  if (
+    !context ||
+    (!context.conditional_display && !context.show_if_state_program_type_in)
+  ) {
     return true;
   }
 
-  if (!context.conditional_display && !context.show_if_state_program_type_in) {
-    let b =state.stateUser.programType;
-    let c = context.show_if_state_program_type_in;
-    let a=0;
-    // if there is no context_data or if there is no conditional_display in the context_data object
-    return true;
-  }
-  if(context.show_if_state_program_type_in) {
-    let b = !context.show_if_state_program_type_in.includes(state.stateUser.programType);
-    let a=0;
-    return false;
-    return !context.show_if_state_program_type_in.includes(state.stateUser.programType);
+  // show_if_state_program_type_in: there is an array of acceptable values
+  // displaying relies on that answer being included in the show_if_state_program_type_in array
+  if (context.show_if_state_program_type_in) {
+    return context.show_if_state_program_type_in.includes(
+      state.stateUser.programType
+    );
   }
 
   // hide_if: there is just one target (question) with a single answer

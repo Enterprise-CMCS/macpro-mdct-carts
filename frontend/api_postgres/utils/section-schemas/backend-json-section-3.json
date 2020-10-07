@@ -262,8 +262,11 @@
                       ]
                     },
                     "context_data": {
-                      "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
-                      "show_if_state_program_type_in": ["separate_chip"]
+                      "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next question.",
+                      "show_if_state_program_type_in": [
+                        "separate_chip",
+                        "combo"
+                      ]
                     },
                     "questions": [
                       {
