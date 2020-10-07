@@ -1040,8 +1040,8 @@
                         "actions": [
                           "formula"
                         ],
-                        "formula": "(@&0 + @&1 + @&2 + @&3 - @&4 + @&5 + @&6 + @&7 + @&8 + @&9 + @&10) * (@&11 / 100)",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                        "formula": "(<0> + <1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10>) * (<11> / 100)",
+                        "$comment": "Add series of values then multiply by the eFMAP percentage"
                       },
                       {
                         "targets": [
@@ -1059,10 +1059,10 @@
                           {"lookupFmapFy": "2021"}
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + *",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                        "formula": "(<0> + <1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10>) * (<11> / 100)",
+                        "$comment": "Add series of values then multiply by the eFMAP percentage"
                       },
                       {
                         "targets": [
@@ -1080,10 +1080,10 @@
                           {"lookupFmapFy": "2022"}
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ + + - + + + + + + + *",
-                        "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
+                        "formula": "(<0> + <1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10>) * (<11> / 100)",
+                        "$comment": "Add series of values then multiply by the eFMAP percentage"
                       }
                     ],
                     [
@@ -1118,9 +1118,9 @@
                           {"lookupFmapFy": "2020"}
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ + + + + + + + + + + * - - - - - - - - - - +",
+                        "rpn": "<0> + <1> + <2> + <3> + <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11> + <12> + <13> - <14> - <15> - <16> - <17> - <18> - <19> - <20> - <21> - <22>",
                         "$comment": "Total program costs - federal share"
                       },
                       {
