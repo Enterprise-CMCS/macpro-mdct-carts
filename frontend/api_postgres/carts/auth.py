@@ -70,12 +70,14 @@ class JwtAuthentication(authentication.BaseAuthentication):
         """
         # TODO: have to switch this back and forth in dev until we get test EUA
         # users:
-        # role = role_from_raw_ldap_job_codes(user_info["job_codes"])
-        role = ("state_user", "State User")
+        role = role_from_raw_ldap_job_codes(user_info["job_codes"])
+        # role = "state_user"
 
-        if role[0] in ("admin_user", "co_user"):
+        if role in ("admin_user", "co_user"):
             state = None
         else:
+            # This is where we would load their state from the table that
+            # associates EUA IDs to states, but instead just go with MA:
             state = State.objects.get(code="MA")
 
         app_user, _ = AppUser.objects.get_or_create(user=user)
@@ -83,11 +85,11 @@ class JwtAuthentication(authentication.BaseAuthentication):
         app_user.role = role
         app_user.save()
 
-        if role[0] == "state_user" and state:
+        if role == "state_user" and state:
             group = Group.objects.get(name__endswith=f"{state.code} sections")
             user.groups.set([group])
 
-        if role[0] == "admin_user":
+        if role == "admin_user":
             group = Group.objects.get(name="Admin users")
             user.groups.set([group])
 

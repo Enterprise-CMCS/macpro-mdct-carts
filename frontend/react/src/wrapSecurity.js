@@ -7,9 +7,13 @@ import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import Userinfo from "./components/sections/Userinfo";
 import InitialDataLoad from "./components/Utils/InitialDataLoad";
+import InvokeSection from "./components/Utils/InvokeSection";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
-import Home from "./Home";
+import Sidebar from "./components/layout/Sidebar";
+import ScrollToTop from "./components/Utils/ScrollToTop";
+import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
 
@@ -41,17 +45,33 @@ const WrappedSecurity = () => {
     );
   }
   return (
-    <Router>
-      <Security
-        {...config.oidc}
-        tokenManager={{ secure: true, storage: "cookie" }}
-      >
-        <SecureInitialDataLoad />
-        <SecureRoute path="/" component={Home} />
-        <Route path={config.callback} component={LoginCallback} />
-        <SecureRoute path="/profile" component={Profile} />
-      </Security>
-    </Router>
+    <div className="App" data-test="component-app">
+      {VisibleHeader}
+      <Router>
+        <div className="ds-l-container">
+          <div className="ds-l-row">
+            <Security
+              {...config.oidc}
+              tokenManager={{ secure: true, storage: "cookie" }}
+            >
+              <SecureInitialDataLoad />
+              <SecureRoute path="/" />
+              <Sidebar />
+              <SaveError />
+              <ScrollToTop />
+              <Route path={config.callback} component={LoginCallback} />
+              <SecureRoute path="/profile" component={Profile} />
+              <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
+                <InvokeSection />
+              </SecureRoute>
+              <SecureRoute exact path="/userinfo" component={Userinfo} />
+      
+            </Security>
+          </div>
+        </div>
+      </Router>
+      {VisibleFooter}
+    </div>
   );
 };
 

@@ -30,7 +30,7 @@ const initialState = {
   abbr: "NY",
   programType: "combo", // values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
-  imageURI: `${`${process.env.PUBLIC_URL  }/img/states/ny.svg`}`,
+  imageURI: `${process.env.PUBLIC_URL}/img/states/ny.svg`,
   formName: "CARTS FY",
   currentUser: {
     role: "admin",
@@ -40,14 +40,14 @@ const initialState = {
 };
 
 // STATE USER REDUCER
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case STATE_INFO:
       return {
         ...state,
         name: action.name,
         abbr: action.abbr,
-        imageURI: `/img/states/${action.abbr.toLowerCase()}.svg`,
+        imageURI: action.abbr ? `/img/states/${action.abbr.toLowerCase()}.svg` : null,
       };
     case USER_INFO:
       return {

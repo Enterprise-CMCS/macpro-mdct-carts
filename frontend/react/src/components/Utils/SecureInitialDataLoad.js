@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useOktaAuth } from "@okta/okta-react";
 import { secureLoadUserThenSections } from "../../actions/initial";
 
-const SecureInitialDataLoad = () => {
+const SecureInitialDataLoad = ({stateCode}) => {
   const { authState, authService } = useOktaAuth();
   const dispatch = useDispatch();
 
@@ -13,7 +13,7 @@ const SecureInitialDataLoad = () => {
     } else {
       authService.getUser().then((info) => {
         dispatch(
-          secureLoadUserThenSections({ userData: info, authState })
+          secureLoadUserThenSections({ userData: info, authState, authService, stateCode })
         );
       });
     }

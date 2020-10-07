@@ -149,7 +149,7 @@ def get_role_from_job_codes(
     for role_name, role_code in roles:
         for code in codes:
             if role_code_map.get(code) == role_name:
-                return (role_name, role_code)
+                return role_name
 
     return False
 

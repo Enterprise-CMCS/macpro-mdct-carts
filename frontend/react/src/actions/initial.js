@@ -21,11 +21,11 @@ export const getAllStatesData = () => {
   };
 };
 
-export const loadSections = ({ userData, headers }) => {
+export const loadSections = ({ userData, headers, stateCode }) => {
   const xhrHeaders = headers || {};
   const apiHost = window.env.API_POSTGRES_URL;
   const apiPath = "/api/v1/sections/2020/";
-  const state = userData.abbr;
+  const state = stateCode || userData.abbr;
   const queryString = forwardedQueryString();
   const apiURL = [apiHost, apiPath, state, queryString].join("");
   return async (dispatch) => {
@@ -41,6 +41,9 @@ export const loadSections = ({ userData, headers }) => {
         // it in the console, at least.
         console.log("--- ERROR LOADING SECTIONS ---");
         console.log(err);
+        // Without the following too many things break, because the
+        // entire app is too dependent on section data being present.
+        dispatch({ type: LOAD_SECTIONS, data: [] });
         throw err;
       });
 
@@ -48,17 +51,17 @@ export const loadSections = ({ userData, headers }) => {
   };
 };
 
-export const loadUserThenSections = ({ userData }) => {
+export const loadUserThenSections = ({ userData, stateCode }) => {
   const { userToken } = userData;
+  const apiHost = window.env.API_POSTGRES_URL;
+  const apiPath = "/api/v1/appusers/";
+  const queryString = forwardedQueryString();
+  const apiURL = [apiHost, apiPath, userToken, queryString].join("");
   return async (dispatch) => {
     await axios
-      .get(
-        `${
-          window.env.API_POSTGRES_URL
-        }/api/v1/appusers/${userToken}${forwardedQueryString()}`
-      )
+      .get(apiURL)
       .then((res) => {
-        dispatch(loadSections({ userData: res.data }));
+        dispatch(loadSections({ userData: res.data, stateCode }));
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
         dispatch(getUserData(res.data.currentUser));
@@ -82,7 +85,7 @@ export const loadUserThenSections = ({ userData }) => {
   };
 };
 
-export const secureLoadUserThenSections = ({ authState }) => {
+export const secureLoadUserThenSections = ({ authState, authService, stateCode }) => {
   const xhrURL = `${
     window.env.API_POSTGRES_URL
   }/api/v1/appusers/auth${forwardedQueryString()}`;
@@ -93,10 +96,10 @@ export const secureLoadUserThenSections = ({ authState }) => {
   return async (dispatch) => {
     await axios({ method: "POST", url: xhrURL, headers: xhrHeaders })
       .then((res) => {
-        dispatch(loadSections({ userData: res.data, headers: xhrHeaders }));
+        dispatch(getUserData(res.data.currentUser));
+        dispatch(loadSections({ userData: res.data, headers: xhrHeaders, stateCode }));
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
-        dispatch(getUserData(res.data.currentUser));
       })
       .catch((err) => {
         /*
@@ -108,6 +111,14 @@ export const secureLoadUserThenSections = ({ authState }) => {
         // it in the console, at least.
         console.log("--- ERROR SECURELY LOADING SECTIONS ---");
         console.log(err);
+        /* 
+         * TODO: fix the issue underlying the following--without it, we end up
+         * in a weird state where the frontend thinks we're logged in, but the
+         * backend auth fails, so that the logout button isn't available but we
+         * can't get backend authorization. This crude fix forces logout if the
+         * backend calls fail, which is fragile in other ways.
+         */
+        authService.logout("/");
         throw err;
       });
   };

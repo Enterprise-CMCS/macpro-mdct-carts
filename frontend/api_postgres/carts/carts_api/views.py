@@ -391,6 +391,7 @@ def authenticate_user(request):
     jwt_auth = JwtAuthentication()
     user, _ = jwt_auth.authenticate(request)
     state = user.appuser.state
+    groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
     program_names = ", ".join(state.program_names) if state else None
     program_text = f"{state.code.upper} {program_names}" if state else None
@@ -403,13 +404,15 @@ def authenticate_user(request):
         "formName": "CARTS FY",
         "currentUser": {
             "role": user.appuser.role,
+            "firstname": user.first_name,
+            "lastname": user.last_name,
             "state": {
                 "id": state.code.upper() if state else None,
                 "name": state.name if state else None,
             },
             "username": user.username,
             "email": user.email,
-            # "group": auth_groubp.name,
+            "group": groups,
         },
     }
     return HttpResponse(json.dumps(user_data))
