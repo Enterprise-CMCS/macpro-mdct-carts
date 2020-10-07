@@ -1,4 +1,5 @@
 import jsonpath from "./jsonpath";
+import { evaluate } from "mathjs";
 
 /* eslint-disable camelcase */
 
@@ -115,22 +116,30 @@ const rpn = (values, rpnString, precision) => {
   return NaN;
 };
 
-const formula = (values, formula, precision) => {
-  // "formula": "([0] + [1] + [2] + [3] - [4] + [5] + [6] + [7] + [8] + [9] + [10]) * ([11] / 100)",
-  // "formula": "(@&0 + @&1 + @&2 + @&3 - @&4 + @&5 + @&6 + @&7 + @&8 + @&9 + @&10) * (@&11 / 100)",
+/**
+ * Calculate formulas from JSON using human-readable algorithms.
+ *
+ * @param {array} targets
+ * @param {string} formula
+ * @param {int} precision
+ * @returns {string}
+ */
+const formula = (targets, formula, precision) => {
 
-  let computedValue = "This is a formula";
+  let computedValue = "Not Available";
 
-  if(formula) {
-    // Get Target values
-    const targets = values.targets;
+  if(formula && targets) {
 
-    // Isolate variables into array
-    // const replacementFormula =  targets[x]
+    // Loop through targets and replace in formula string
+    for (let i in targets) {
+      let replaceValue = new RegExp('<' + i + '>', "g");
+      formula = formula.replace(replaceValue, (targets[i] != null ? targets[i] : 0));
+    }
 
-    // Each card (delimiting char) replace with
-
+    // Evaluate the formula (string) and round to precision
+    computedValue = round(evaluate(formula), precision);
   }
+
   return computedValue;
 }
 
