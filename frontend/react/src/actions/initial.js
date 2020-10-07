@@ -29,23 +29,20 @@ export const loadSections = ({ userData, headers, stateCode }) => {
   const queryString = forwardedQueryString();
   const apiURL = [apiHost, apiPath, state, queryString].join("");
   return async (dispatch) => {
-    const { data } = await axios(
-        {
-          "method": "GET",
-          "url": apiURL,
-          "headers": xhrHeaders,
-        }
-      )
-      .catch((err) => {
-        // Error-handling would go here. For now, just log it so we can see
-        // it in the console, at least.
-        console.log("--- ERROR LOADING SECTIONS ---");
-        console.log(err);
-        // Without the following too many things break, because the
-        // entire app is too dependent on section data being present.
-        dispatch({ type: LOAD_SECTIONS, data: [] });
-        throw err;
-      });
+    const { data } = await axios({
+      method: "GET",
+      url: apiURL,
+      headers: xhrHeaders,
+    }).catch((err) => {
+      // Error-handling would go here. For now, just log it so we can see
+      // it in the console, at least.
+      console.log("--- ERROR LOADING SECTIONS ---");
+      console.log(err);
+      // Without the following too many things break, because the
+      // entire app is too dependent on section data being present.
+      dispatch({ type: LOAD_SECTIONS, data: [] });
+      throw err;
+    });
 
     dispatch({ type: LOAD_SECTIONS, data });
   };
@@ -85,7 +82,11 @@ export const loadUserThenSections = ({ userData, stateCode }) => {
   };
 };
 
-export const secureLoadUserThenSections = ({ authState, authService, stateCode }) => {
+export const secureLoadUserThenSections = ({
+  authState,
+  authService,
+  stateCode,
+}) => {
   const xhrURL = `${
     window.env.API_POSTGRES_URL
   }/api/v1/appusers/auth${forwardedQueryString()}`;
@@ -97,7 +98,9 @@ export const secureLoadUserThenSections = ({ authState, authService, stateCode }
     await axios({ method: "POST", url: xhrURL, headers: xhrHeaders })
       .then((res) => {
         dispatch(getUserData(res.data.currentUser));
-        dispatch(loadSections({ userData: res.data, headers: xhrHeaders, stateCode }));
+        dispatch(
+          loadSections({ userData: res.data, headers: xhrHeaders, stateCode })
+        );
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
       })
@@ -111,7 +114,7 @@ export const secureLoadUserThenSections = ({ authState, authService, stateCode }
         // it in the console, at least.
         console.log("--- ERROR SECURELY LOADING SECTIONS ---");
         console.log(err);
-        /* 
+        /*
          * TODO: fix the issue underlying the following--without it, we end up
          * in a weird state where the frontend thinks we're logged in, but the
          * backend auth fails, so that the logout button isn't available but we

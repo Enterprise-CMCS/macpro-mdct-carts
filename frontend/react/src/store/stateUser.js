@@ -47,7 +47,9 @@ export default (state = initialState, action) => {
         ...state,
         name: action.name,
         abbr: action.abbr,
-        imageURI: action.abbr ? `/img/states/${action.abbr.toLowerCase()}.svg` : null,
+        imageURI: action.abbr
+          ? `/img/states/${action.abbr.toLowerCase()}.svg`
+          : null,
       };
     case USER_INFO:
       return {
@@ -64,4 +66,4 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
-}
+};

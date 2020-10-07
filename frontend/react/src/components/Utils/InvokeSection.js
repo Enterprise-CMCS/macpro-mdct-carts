@@ -9,7 +9,7 @@ const InvokeSection = ({ userData }) => {
   const { state, year, sectionOrdinal, subsectionMarker } = useParams();
   console.log("state in InvokeSection", state);
   if (state) {
-      SecureInitialDataLoad({stateCode: state});
+    SecureInitialDataLoad({ stateCode: state });
   }
   const filteredMarker = subsectionMarker
     ? subsectionMarker.toLowerCase()

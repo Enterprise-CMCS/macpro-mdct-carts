@@ -1,10 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./components/sections/homepage/Homepage";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
@@ -51,6 +47,5 @@ const Routes = ({ userData }) => (
 Routes.propTypes = {
   userData: PropTypes.object.isRequired,
 };
-
 
 export default Routes;

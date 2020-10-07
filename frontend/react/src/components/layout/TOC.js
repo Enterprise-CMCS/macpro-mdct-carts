@@ -5,14 +5,14 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 const idToUrl = (location, id) => {
-    const endOfPath = id.replace(/-/g, "/");
-    if (location.pathname.startsWith("/views/section")) {
-        const pathChunks = location.pathname.split("/");
-        const base = pathChunks.slice(0,4).join("/");
-        return `${base}/${endOfPath}`;
-    }
-    return `/sections/${endOfPath}`;
-}
+  const endOfPath = id.replace(/-/g, "/");
+  if (location.pathname.startsWith("/views/section")) {
+    const pathChunks = location.pathname.split("/");
+    const base = pathChunks.slice(0, 4).join("/");
+    return `${base}/${endOfPath}`;
+  }
+  return `/sections/${endOfPath}`;
+};
 const subsection = (index) => String.fromCharCode("A".charCodeAt(0) + index);
 
 class TOC extends Component {

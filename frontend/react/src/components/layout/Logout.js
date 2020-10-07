@@ -12,7 +12,7 @@ const Logout = () => {
 
     const logout = async () => {
       // Read idToken before local session is cleared
-      const {idToken} = authState;
+      const { idToken } = authState;
       await authService.logout("/");
 
       // Clear remote session
@@ -20,9 +20,8 @@ const Logout = () => {
     };
 
     return <a onClick={logout}>Log out</a>;
-  } 
-    return <span>Not Okta User</span>;
-  
+  }
+  return <span>Not Okta User</span>;
 };
 
 export default Logout;
