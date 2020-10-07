@@ -52,11 +52,11 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _get_or_create_user(self, user_info):
         user, _ = User.objects.get_or_create(
-            first_name=user_info["given_name"],
-            last_name=user_info["family_name"],
-            email=user_info["email"],
             username=user_info["preferred_username"],
         )
+        user.first_name = user_info["given_name"]
+        user.last_name = user_info["family_name"]
+        user.email = user_info["email"]
 
         """
         eua_id = user.username
