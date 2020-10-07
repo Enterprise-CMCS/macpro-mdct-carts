@@ -82,15 +82,20 @@ export const selectQuestionsForPart = (state, partId) => {
  */
 const filterDisplay = (question, state) => {
   if (!shouldDisplay(state, question.context_data)) {
+    // If context data and a variation of skip text exists
     if (
       question.context_data &&
       ((question.context_data.conditional_display &&
-      question.context_data.conditional_display.skip_text) || question.context_data.skip_text)
+        question.context_data.conditional_display.skip_text) ||
+        question.context_data.skip_text)
     ) {
-
-      let skipText ='';
-      if(question.context_data.conditional_display && question.context_data.conditional_display.skip_text) {
-        skipText = (question.context_data.conditional_display.skip_text);
+      // Set skip_text based on location in JSON
+      let skipText = "";
+      if (
+        question.context_data.conditional_display &&
+        question.context_data.conditional_display.skip_text
+      ) {
+        skipText = question.context_data.conditional_display.skip_text;
       } else {
         skipText = question.context_data.skip_text;
       }
