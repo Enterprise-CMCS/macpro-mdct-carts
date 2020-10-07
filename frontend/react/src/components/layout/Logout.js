@@ -1,5 +1,6 @@
 import React from "react";
 import { useOktaAuth } from "@okta/okta-react";
+import { Button } from "@cmsgov/design-system-core";
 import config from "../../auth-config";
 
 const redirectUri = `${window.location.origin}`;
@@ -19,7 +20,11 @@ const Logout = () => {
       window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
     };
 
-    return <a onClick={logout}>Log out</a>;
+    return (
+      <Button type="button" inversed variation="transparent" onClick={logout}>
+        Log out
+      </Button>
+    );
   }
   return <span>Not Okta User</span>;
 };
