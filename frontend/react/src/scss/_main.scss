@@ -353,7 +353,8 @@ div[data-state="open"] .accordion-header .arrow:before {
 .comingsoon {
   text-align: center;
 
-  h1, h4 {
+  h1,
+  h4 {
     color: $brand-primary;
     font-weight: $font-weight-bold;
     text-align: center;
@@ -363,5 +364,11 @@ div[data-state="open"] .accordion-header .arrow:before {
   div {
     margin: 0.8rem;
     width: 100%;
+  }
+}
+
+.profile-information {
+  & > div:nth-child(even) {
+    background-color: #ddd;
   }
 }
