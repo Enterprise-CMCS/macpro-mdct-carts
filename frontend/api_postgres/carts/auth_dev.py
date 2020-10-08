@@ -1,37 +1,73 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import authentication
-from rest_framework import exceptions
+from django.contrib.auth.models import User, Group  # type: ignore
+from rest_framework import exceptions  # type: ignore
 from carts.auth import JwtAuthentication
-from carts.carts_api.models import AppUser
+from carts.carts_api.models import AppUser, State
 
 
 class JwtDevAuthentication(JwtAuthentication):
-    def authenticate(self, request):
+    def authenticate(self, request, username=None):
+        dev_username = username
 
-        # try to pull a username out of the query params
-        if 'dev' in request.query_params:
-            try:
-                dev_username = request.query_params['dev']
+        try:
+            if not dev_username:
+                if "dev" in request.query_params:
+                    try:
+                        dev_username = request.query_params["dev"]
+                    except Exception as e:
+                        raise exceptions.AuthenticationFailed(
+                            "dev authentication failed"
+                        ) from e
+        except Exception as e:
+            raise exceptions.AuthenticationFailed(
+                "dev authentication failed"
+            ) from e
 
-                dev_user, created = User.objects.get_or_create(
-                    first_name='DevFirst',
-                    last_name='DevLast',
-                    email=f'dev@{dev_username}.gov',
-                    username=dev_username,
+        if dev_username:
+            _, suffix = dev_username.split("-")
+
+            roles = {
+                "admin": "admin_user",
+                "co_user": "co_user",
+                "ak": "state_user",
+                "az": "state_user",
+                "ma": "state_user",
+            }
+
+            role = roles[suffix]
+
+            if role == "state_user":
+                state_code = suffix.upper()
+                state = State.objects.get(code=state_code)
+                email = f"{dev_username}@{state.name.lower()}.gov"
+            else:
+                state = None
+                email = f"{dev_username}@example.com"
+
+            dev_user, _ = User.objects.get_or_create(
+                username=dev_username,
+            )
+            dev_user.first_name = "DevFirst"
+            dev_user.last_name = f"Dev{role}"
+            dev_user.email = email
+
+            if role == "admin_user":
+                group = Group.objects.get(name="Admin users")
+                dev_user.groups.set([group])
+            # Once we have different permissions for co_users, add here.
+            elif role == "state_user":
+                group = Group.objects.get(
+                    name__endswith=f"{state_code} sections"
                 )
+                dev_user.groups.set([group.id])
 
-                if created:
-                    state = dev_username.split('dev-')[1].upper()
-                    group = Group.objects.get(
-                        name__endswith=f'{state} sections'
-                    )
-                    dev_user.groups.add(group.id)
+            app_user, _ = AppUser.objects.get_or_create(user=dev_user)
+            app_user.state = state
+            app_user.role = role
+            app_user.save()
 
-                return (dev_user, None)
-            except Exception:
-                raise exceptions.AuthenticationFailed(
-                    'dev authentication failed'
-                )
+            dev_user.save()
+
+            return (dev_user, None)
 
         # no username specified in query params, fall back to jwt auth
-        return super(JwtDevAuthentication, self).authenticate(request)
+        return super().authenticate(request)

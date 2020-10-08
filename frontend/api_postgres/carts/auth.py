@@ -8,7 +8,7 @@ from carts.oidc import (
     invalidate_cache,
     verify_token,
 )
-from carts.carts_api.models import AppUser, State
+from carts.carts_api.models import AppUser, State, StateFromUsername
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 
 
@@ -52,11 +52,11 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _get_or_create_user(self, user_info):
         user, _ = User.objects.get_or_create(
-            first_name=user_info["given_name"],
-            last_name=user_info["family_name"],
-            email=user_info["email"],
             username=user_info["preferred_username"],
         )
+        user.first_name = user_info["given_name"]
+        user.last_name = user_info["family_name"]
+        user.email = user_info["email"]
 
         """
         eua_id = user.username
@@ -72,13 +72,22 @@ class JwtAuthentication(authentication.BaseAuthentication):
         # users:
         role = role_from_raw_ldap_job_codes(user_info["job_codes"])
         # role = "state_user"
+        state = None
 
-        if role in ("admin_user", "co_user"):
-            state = None
-        else:
-            # This is where we would load their state from the table that
-            # associates EUA IDs to states, but instead just go with MA:
+        if role not in ("admin_user", "co_user"):
+            # This is where we load their state from the table that
+            # associates EUA IDs to states, but here we default to MA,
+            # which we'll need to change once we have proper test users.
             state = State.objects.get(code="MA")
+            try:
+                state_relationship = StateFromUsername.objects.get(
+                    username=user.username
+                )
+                if state_relationship:
+                    state_code = state_relationship.state_code
+                    state = State.objects.get(code=state_code)
+            except StateFromUsername.DoesNotExist:
+                pass
 
         app_user, _ = AppUser.objects.get_or_create(user=user)
         app_user.state = state

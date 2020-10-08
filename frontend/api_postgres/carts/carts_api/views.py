@@ -22,11 +22,14 @@ from rest_framework.exceptions import (  # type: ignore
 )
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
+    DjangoModelPermissions,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
 from carts.auth import JwtAuthentication
+from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
+    AdminHideStateFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
 )
@@ -37,12 +40,16 @@ from carts.carts_api.serializers import (
     SectionBaseSerializer,
     SectionSchemaSerializer,
     StateSerializer,
+    StateStatusSerializer,
+    StateFromUsernameSerializer,
 )
 from carts.carts_api.models import (
     Section,
     SectionBase,
     SectionSchema,
     State,
+    StateStatus,
+    StateFromUsername,
 )
 
 
@@ -87,6 +94,29 @@ class StateViewSet(viewsets.ModelViewSet):
     #    return Response(self.serializer_class(self.queryset).data)
 
 
+class StateFromUsernameViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideStateFromUsername]
+    queryset = StateFromUsername.objects.all()
+    serializer_class = StateFromUsernameSerializer
+
+
+class StateStatusViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for state status.
+    """
+
+    permission_classes = [
+        StateViewSectionPermission,
+        StateChangeSectionPermission,
+    ]
+    queryset = StateStatus.objects.all()
+    serializer_class = StateStatusSerializer
+
+
 class SectionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -107,7 +137,6 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def get_sections_by_year_and_state(self, request, year, state):
-        print("sections by year and state", flush=True)
         sections = self.get_queryset().filter(
             contents__section__year=year,
             contents__section__state=state.upper(),
@@ -352,34 +381,31 @@ def report(request, year=None, state=None):
 
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
-    assert username
-    assert "-" in username
-    state_id = username.split("-")[1].upper()
+    jwt_auth = JwtDevAuthentication()
+    user, _ = jwt_auth.authenticate(request, username=username)
+    state = user.appuser.state
+    groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
-    auth_group = Group.objects.get(
-        name=f"Users who can edit and view {state_id} sections"
-    )
-    state = State.objects.get(code=state_id)
-    assert auth_group and state
-    program_names = ", ".join(state.program_names)
-    program_name_text = f"{state.code.upper()} {program_names}"
+    program_names = ", ".join(state.program_names) if state else None
+    program_text = f"{state.code.upper} {program_names}" if state else None
 
     user_data = {
-        "name": state.name,
-        "abbr": state.code.upper(),
-        "programType": state.program_type,
-        "programName": program_name_text,
-        "imageURI": f"/img/states/{state.code.lower()}.svg",
+        "name": state.name if state else None,
+        "abbr": state.code.upper() if state else None,
+        "programType": state.program_type if state else None,
+        "programName": program_text,
         "formName": "CARTS FY",
         "currentUser": {
-            "role": "state_user",
+            "role": user.appuser.role,
+            "firstname": user.first_name,
+            "lastname": user.last_name,
             "state": {
-                "id": state.code.upper(),
-                "name": state.name,
+                "id": state.code.upper() if state else None,
+                "name": state.name if state else None,
             },
-            "username": f"non-Okta-{state_id}",
-            "email": f"dev-user@{state.name.lower()}.gov",
-            "group": auth_group.name,
+            "username": user.username,
+            "email": user.email,
+            "group": groups,
         },
     }
 

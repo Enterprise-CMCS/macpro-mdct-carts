@@ -83,6 +83,17 @@ JOB_CODES_TO_ROLES = {
     "CARTS_Group_Dev": "admin_user",
 }
 
+# Provisional; these need to be updated with the final list of statuses.
+STATUSES = (
+    ("not_started", "Not started"),
+    ("started", "Started"),
+    ("certified", "Certified"),
+    ("uncertified", "Uncertified"),
+    ("approved", "Approved"),
+    ("submitted", "Submitted"),
+    ("published", "Published"),
+)
+
 
 def parse_raw_ldap_job_codes(entry: str) -> List[dict]:
     """
@@ -147,10 +158,10 @@ def get_role_from_job_codes(
 ) -> Union[bool, Tuple[str, str]]:
     # roles ordered by auth descending, so we want first match below:
     codes = [entry["job_code"] for entry in entries]
-    for role_name, role_code in roles:
+    for role_code, _ in roles:
         for code in codes:
-            if role_code_map.get(code) == role_name:
-                return role_name
+            if role_code_map.get(code) == role_code:
+                return role_code
 
     return False
 

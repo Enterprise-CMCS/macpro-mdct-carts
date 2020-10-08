@@ -22,7 +22,6 @@ const Profile = () => {
       // When user isn't authenticated, forget any user info
       setUserInfo(null);
     } else {
-      console.log("bet this works in code I didn't write");
       authService.getUser().then((info) => {
         setUserInfo(info);
       });
