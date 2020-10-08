@@ -125,15 +125,16 @@ const rpn = (values, rpnString, precision) => {
  * @returns {string}
  */
 const formula = (targets, formula, precision) => {
-
   let computedValue = "Not Available";
 
-  if(formula && targets) {
-
+  if (formula && targets) {
     // Loop through targets and replace in formula string
     for (let i in targets) {
-      let replaceValue = new RegExp('<' + i + '>', "g");
-      formula = formula.replace(replaceValue, (targets[i] != null ? targets[i] : 0));
+      let replaceValue = new RegExp("<" + i + ">", "g");
+      formula = formula.replace(
+        replaceValue,
+        targets[i] != null ? targets[i] : 0
+      );
     }
 
     // Evaluate the formula (string) and round to precision
@@ -141,7 +142,7 @@ const formula = (targets, formula, precision) => {
   }
 
   return computedValue;
-}
+};
 
 // Maaaaaaaath.
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
@@ -277,7 +278,7 @@ const synthesizeValue = (value, state) => {
         case "sum":
           return { contents: sum(targets) };
         case "formula":
-          return { contents: formula(targets, value.formula, value.precision)}
+          return { contents: formula(targets, value.formula, value.precision) };
 
         default:
           return { contents: targets[0] };
