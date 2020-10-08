@@ -62,6 +62,9 @@ class UploadComponent extends Component {
             rawMediaType: singleFile.type,
             type: included ? mediaExtension : "Unknown file type",
             size: mediaSize,
+            associatedUser: this.props.user.username,
+            associatedState: this.props.user.state,
+            associatedEmail: this.props.user.email,
             UUID: "999", // this should be some unique identifier returned from S3
           });
         }
@@ -153,6 +156,7 @@ class UploadComponent extends Component {
 
 const mapStateToProps = (state) => ({
   USState: state.stateUser.abbr, // Currently this is meaningless dummy data
+  user: state.stateUser.currentUser,
 });
 
 const mapDispatchToProps = {
