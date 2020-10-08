@@ -7,9 +7,19 @@ import { setAnswerEntry } from "../../actions/initial";
 class UploadComponent extends Component {
   constructor(props) {
     super();
-    this.state = {};
+    this.state = {
+      blockFileSubmission: true,
+    };
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
+    this.submitUpload = this.submitUpload.bind(this);
+  }
+
+  submitUpload() {
+    const { loadedFiles } = this.state;
+    // Some HTTP Request or middleware
+
+    // WHERE THE ACTUAL UPLOAD WILL TAKE PLACE
   }
 
   // Removes a file, but just from local state. Should include an HTTP request as well/ instead
@@ -34,6 +44,7 @@ class UploadComponent extends Component {
   validateFileByExtension(event) {
     if (event.target.files.length !== 0) {
       let filesArray = event.target.files; // All files selected by a user
+
       let filePayload = [];
       let errorString = "";
 
@@ -46,8 +57,6 @@ class UploadComponent extends Component {
         let included = fileExtensions(mediaExtension); // Check if it is included in the list of acceptable file extensions
 
         if (included && mediaSize < 25) {
-          // Some HTTP Request or middleware
-
           filePayload.push({
             name: uploadName,
             rawMediaType: singleFile.type,
@@ -75,6 +84,7 @@ class UploadComponent extends Component {
         loadedFiles: this.state.loadedFiles
           ? [...this.state.loadedFiles, ...filePayload]
           : [...filePayload],
+        blockFileSubmission: false,
       });
 
       console.log("Formatted payload:", filePayload);
@@ -128,6 +138,14 @@ class UploadComponent extends Component {
               </div>
             ))
           : null}
+
+        <Button
+          onClick={this.submitUpload}
+          size="small"
+          disabled={this.state.blockFileSubmission}
+        >
+          Upload
+        </Button>
       </div>
     );
   }
