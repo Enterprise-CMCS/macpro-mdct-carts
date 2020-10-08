@@ -40,6 +40,7 @@ from carts.carts_api.serializers import (
     SectionBaseSerializer,
     SectionSchemaSerializer,
     StateSerializer,
+    StateStatusSerializer,
     StateFromUsernameSerializer,
 )
 from carts.carts_api.models import (
@@ -47,6 +48,7 @@ from carts.carts_api.models import (
     SectionBase,
     SectionSchema,
     State,
+    StateStatus,
     StateFromUsername,
 )
 
@@ -100,6 +102,19 @@ class StateFromUsernameViewSet(viewsets.ModelViewSet):
     permission_classes = [AdminHideStateFromUsername]
     queryset = StateFromUsername.objects.all()
     serializer_class = StateFromUsernameSerializer
+
+
+class StateStatusViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for state status.
+    """
+
+    permission_classes = [
+        StateViewSectionPermission,
+        StateChangeSectionPermission,
+    ]
+    queryset = StateStatus.objects.all()
+    serializer_class = StateStatusSerializer
 
 
 class SectionViewSet(viewsets.ModelViewSet):

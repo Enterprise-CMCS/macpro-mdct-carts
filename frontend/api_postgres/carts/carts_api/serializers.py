@@ -6,6 +6,7 @@ from carts.carts_api.models import (
     SectionSchema,
     State,
     StateFromUsername,
+    StateStatus,
     FMAP,
     ACS,
 )
@@ -72,3 +73,9 @@ class StateFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = StateFromUsername
         fields = ["username", "state_code"]
+
+
+class StateStatusSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = StateStatus
+        fields = ["state", "year", "status", "last_changed"]

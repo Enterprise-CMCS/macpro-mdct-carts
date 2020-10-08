@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import (  # type: ignore
     JSONField,
 )
 from django.db import models  # type: ignore
-from carts.carts_api.model_utils import PROGRAM_TYPES, USER_ROLES
+from carts.carts_api.model_utils import PROGRAM_TYPES, USER_ROLES, STATUSES
 
 
 class SectionSchema(models.Model):
@@ -127,3 +127,16 @@ class StateFromUsername(models.Model):
 
     username = models.CharField(max_length=64)
     state_code = models.CharField(max_length=2)
+
+
+class StateStatus(models.Model):
+    """
+    Represents the status of the state's CARTS report for a given year.
+    """
+
+    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
+    year = models.IntegerField(null=True)
+    status = models.CharField(
+        max_length=32, choices=STATUSES, default="not_started"
+    )
+    last_changed = models.DateTimeField(null=True)

@@ -35,7 +35,8 @@ router.register(r"sections", views.SectionViewSet)
 router.register(r"sectionbases", views.SectionBaseViewSet)
 router.register(r"sectionschemas", views.SectionSchemaViewSet)
 router.register(r"state", views.StateViewSet)
-router.register(r"state_assoc", views.StateFromUsernameViewSet),
+router.register(r"state_assoc", views.StateFromUsernameViewSet)
+router.register(r"state_status", views.StateStatusViewSet)
 
 api_patterns = [
     path("sections/<int:year>/<str:state>", section_list),
