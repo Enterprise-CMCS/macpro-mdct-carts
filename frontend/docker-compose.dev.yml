@@ -23,6 +23,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=3000
       - API_POSTGRES_URL=http://localhost:8000
+      - S3_UPLOADS_BUCKET_NAME=placeholder # I don't know how you want to handle this for local dev.  placeholder for now
     stdin_open: true
     volumes:
       - ./react:/app

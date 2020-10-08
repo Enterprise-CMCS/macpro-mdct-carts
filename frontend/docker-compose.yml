@@ -10,6 +10,7 @@ services:
       - data_net
     environment:
       - API_POSTGRES_URL=http://localhost:8000 # This is how a browser would call the api
+      - S3_UPLOADS_BUCKET_NAME=placeholder # I don't know how you want to handle this for local dev.  placeholder for now
   api_postgres:
     build:
       context: ./api_postgres
