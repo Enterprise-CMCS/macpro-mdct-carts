@@ -8,6 +8,7 @@ const redirectUri = `${window.location.origin}`;
 // Basic component with logout button
 const Logout = () => {
   const isOktaAuth = useOktaAuth();
+  
   if (isOktaAuth) {
     const { authState, authService } = isOktaAuth;
 
