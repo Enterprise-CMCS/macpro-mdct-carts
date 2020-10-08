@@ -443,7 +443,7 @@ If the middle two questions were inside a fieldset, they are still at the same l
 
 Fieldsets do not have ``id`` properties, and the questions within them increment their ``id`` properties as if the fieldset container were not present.
 
-Fieldsets with ``skip_text`` based on conditional logic must have skip_text located in a ``conditional_display`` object. 
+Fieldsets with ``skip_text`` based on conditional logic must have skip_text located in a ``conditional_display`` object.
 
 ``fieldset_type`` (optional)
     String.
@@ -647,6 +647,70 @@ Example of using ``rpn``:
     }
 
 The above would display a value equal to ``(((q1 + q2) - q3) / q4) * 3``
+
+One additional type of synthesized value that behaves a bit differently from those that perform calculations is the ``lookupFmapFy`` action. This pulls the enhanced FMAP for the current state. Just add the ``lookupFmapFy`` property to a synthesized table cell and specify the fiscal year as the value. This example shows one such cell in a synthesized table:
+
+..  code:: json
+
+    [
+      { "contents": "FMAP" },
+      {
+        "lookupFmapFy": "2020",
+        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
+      },
+    ],
+
+Another outlier is the ``lookupAcs`` action, which is used to pull American Community Survey data. Add the ``lookupAcs`` property to a synthesized table cell and specify the fiscal year and property name, as an object, for the value.
+
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
+..  code:: json
+
+    "rows": [
+        [
+            {
+                "lookupAcs": {
+                    "acsProperty": "percent_uninsured",
+                    "ffy": "2015"
+                }
+            },
+            {
+                "lookupAcs": {
+                    "acsProperty": "number_uninsured_moe",
+                    "ffy": "2016"
+                }
+            },
+            ...
+        ]
+    ]
+
+In addition there is ``compareACS`` which allows comparing a property against two years.  Add the ``compareACS`` property to a synthesized table cell and specify a fiscal year, the second fiscal year, to compare against, and property name, as an object, for the value.
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
+..  code:: json
+
+    "rows": [
+        [
+            {
+                "compareACS": {
+                    "ffy1": "2018",
+                    "ffy2": "2019",
+                    "acsProperty": "percent_uninsured"
+                }
+            },
+            ...
+        ]
+    ]
 
 ``synthesized_table``
 ########################

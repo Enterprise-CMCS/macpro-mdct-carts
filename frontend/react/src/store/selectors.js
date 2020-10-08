@@ -1,6 +1,6 @@
 import jsonpath from "../util/jsonpath";
 
-import { selectFragment } from "./formData";
+import { selectFragment } from "./formData"; // eslint-disable-line import/no-cycle
 import { shouldDisplay } from "../util/shouldDisplay";
 
 export const selectById = (state, id) => {
@@ -58,21 +58,6 @@ export const selectQuestion = (state, id) => {
   return null;
 };
 
-// Returns an array of questions for the QuestionComponent to map through
-export const selectQuestionsForPart = (state, partId) => {
-  const jp = `$..[*].contents.section.subsections[*].parts[?(@.id=='${partId}')].questions[*]`;
-  let unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
-
-  // Filter the array of questions based on conditional logic
-  const filteredQuestions = unfilteredData
-    .map(function (question) {
-      return filterDisplay(question, state);
-    })
-    .filter((q) => q !== false);
-
-  return filteredQuestions;
-};
-
 /**
  * This function is a callback for the filter method in selectQuestionsForPart
  * @function filterDisplay
@@ -82,15 +67,28 @@ export const selectQuestionsForPart = (state, partId) => {
  */
 const filterDisplay = (question, state) => {
   if (!shouldDisplay(state, question.context_data)) {
+    // If context data and a variation of skip text exists
     if (
       question.context_data &&
-      question.context_data.conditional_display &&
-      question.context_data.conditional_display.skip_text
+      ((question.context_data.conditional_display &&
+        question.context_data.conditional_display.skip_text) ||
+        question.context_data.skip_text)
     ) {
+      // Set skip_text based on location in JSON
+      let skipText = "";
+      if (
+        question.context_data.conditional_display &&
+        question.context_data.conditional_display.skip_text
+      ) {
+        skipText = question.context_data.conditional_display.skip_text;
+      } else {
+        skipText = question.context_data.skip_text;
+      }
+
       return {
         id: question.id,
         type: "skip_text",
-        skip_text: question.context_data.conditional_display.skip_text,
+        skip_text: skipText,
       };
     }
     return false; // return false to exclude this question from filtered array
@@ -99,13 +97,41 @@ const filterDisplay = (question, state) => {
   if (question.questions) {
     // if the current question has subquestions, filter them recursively
     question.questions = question.questions
-      .map(function (question) {
+      .map((singleQuestion) => {
         // reassign question.questions to be a filtered version of itself
-        return filterDisplay(question, state);
+        return filterDisplay(singleQuestion, state);
       })
       .filter((q) => q !== false);
   }
   return question; // default for any questions that pass should display
+};
+
+// Returns an array of questions for the QuestionComponent to map through
+export const selectQuestionsForPart = (state, partId) => {
+  const jp = `$..[*].contents.section.subsections[*].parts[?(@.id=='${partId}')].questions[*]`;
+  const unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
+
+  // Filter the array of questions based on conditional logic
+  const filteredQuestions = unfilteredData
+    .map((question) => {
+      return filterDisplay(question, state);
+    })
+    .filter((q) => q !== false);
+
+  return filteredQuestions;
+};
+
+const sortByOrdinal = (sectionA, sectionB) => {
+  const a = sectionA.contents.section.ordinal;
+  const b = sectionB.contents.section.ordinal;
+
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
 };
 
 export const selectSectionsForNav = (state) => {
@@ -120,22 +146,9 @@ export const selectSectionsForNav = (state) => {
         id,
         ordinal,
         title,
-        subsections: subsections.map(({ id, title }) => ({ id, title })),
+        subsections: subsections.map(({ id, title }) => ({ id, title })), // eslint-disable-line no-shadow
       })
     );
   }
   return [];
-};
-
-const sortByOrdinal = (sectionA, sectionB) => {
-  const a = sectionA.contents.section.ordinal;
-  const b = sectionB.contents.section.ordinal;
-
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
 };
