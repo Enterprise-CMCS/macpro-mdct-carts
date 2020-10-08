@@ -883,9 +883,9 @@
                           "$..*[?(@.id=='2020-05-a-01-04-a')].answer.entry"
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ + + - / 9",
+                        "formula": "(<0> + <1> + <2>) - (<3> / 9)",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -896,9 +896,9 @@
                           "$..*[?(@.id=='2020-05-a-01-04-b')].answer.entry"
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ + + - / 9",
+                        "formula": "(<0> + <1> + <2>) - (<3> / 9)",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -909,9 +909,9 @@
                           "$..*[?(@.id=='2020-05-a-01-04-c')].answer.entry"
                         ],
                         "actions": [
-                          "rpn"
+                          "formula"
                         ],
-                        "rpn": "@ @ @ @ + + - / 9",
+                        "formula": "(<0> + <1> + <2>) - (<3> / 9)",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       }
                     ]
