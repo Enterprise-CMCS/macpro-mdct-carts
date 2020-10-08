@@ -988,6 +988,8 @@ Questions of the type ``objective`` have a ``questions`` property, and the immed
 
 Questions of the type ``repeatables`` have a ``questions`` property, and the immediate children in that array must be questions of the type ``repeatable``.
 
+Questions of the type ``repeatables`` have a ``typeLabel`` property, and this property is what is displayed on the front end as the label for the immediate children questions of type repeatable.
+
 Questions of the type ``repeatable`` have a ``questions`` property, and these questions aren't constrained in terms of their types.
 
 The term “goal” below means a ``repeatable`` construct that's being used to represent a goal that is part of an objective's set of goals. HSI programs in Section 2B are handled similarly, except that there's only one level of repeatable there so it's simpler.
