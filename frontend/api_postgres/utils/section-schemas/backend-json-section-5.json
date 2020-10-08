@@ -885,7 +885,7 @@
                         "actions": [
                           "formula"
                         ],
-                        "formula": "(<0> + <1> + <2>) - (<3> / 9)",
+                        "formula": "(<0> + <1> + <2> - <3>) / 9",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -898,7 +898,7 @@
                         "actions": [
                           "formula"
                         ],
-                        "formula": "(<0> + <1> + <2>) - (<3> / 9)",
+                        "formula": "(<0> + <1> + <2> - <3>) / 9",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       },
                       {
@@ -911,7 +911,7 @@
                         "actions": [
                           "formula"
                         ],
-                        "formula": "(<0> + <1> + <2>) - (<3> / 9)",
+                        "formula": "(<0> + <1> + <2> - <3>) / 9",
                         "$comment": "This should equal the total benefit cost calculated above, then divided by 9"
                       }
                     ]
