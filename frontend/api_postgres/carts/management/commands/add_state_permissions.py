@@ -42,6 +42,8 @@ class Command(BaseCommand):
         for code in codes:
             _create_change_view_group_for_state(code)
 
+        _create_permissions_for_admins()
+
 
 def _create_permissions_for_state(
     code: str, start_id: int, content_type: int
@@ -75,6 +77,31 @@ def _create_change_view_group_for_state(code: str) -> None:
 
     new_group = Group.objects.create(name=name)
     new_group.permissions.set([change_perm, view_perm])
+    new_group.save()
+
+
+def _create_permissions_for_admins() -> None:
+    name = "Admin users"
+    if Group.objects.filter(name=name).exists():
+        return
+
+    verbs = ("add", "change", "delete", "view")
+    models = (
+        "fmap",
+        "section",
+        "sectionbase",
+        "sectionschema",
+        "state",
+    )
+    group_permissions = []
+
+    for model in models:
+        for verb in verbs:
+            codename = f"{verb}_{model}"
+            group_permissions.append(Permission.objects.get(codename=codename))
+
+    new_group = Group.objects.create(name=name)
+    new_group.permissions.set(group_permissions)
     new_group.save()
 
 

@@ -1,15 +1,24 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-dependencies
 import Routes from "./reactRouter";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import Userinfo from "./components/sections/Userinfo";
 import InitialDataLoad from "./components/Utils/InitialDataLoad";
+import InvokeSection from "./components/Utils/InvokeSection";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
-import Home from "./Home";
+import Sidebar from "./components/layout/Sidebar";
+import ScrollToTop from "./components/Utils/ScrollToTop";
+import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
 
@@ -41,17 +50,40 @@ const WrappedSecurity = () => {
     );
   }
   return (
-    <Router>
+    <div className="App" data-test="component-app">
       <Security
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}
       >
-        <SecureInitialDataLoad />
-        <SecureRoute path="/" component={Home} />
-        <Route path={config.callback} component={LoginCallback} />
-        <SecureRoute path="/profile" component={Profile} />
+        {VisibleHeader}
+        <Router>
+          <div className="ds-l-container">
+            <div className="ds-l-row">
+              <SecureInitialDataLoad />
+              <SecureRoute path="/" />
+              <Sidebar />
+              <SaveError />
+              <ScrollToTop />
+              <Route path={config.callback} component={LoginCallback} />
+              <SecureRoute path="/profile" component={Profile} />
+              <Switch>
+                <SecureRoute
+                  exact
+                  path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
+                >
+                  <InvokeSection />
+                </SecureRoute>
+                <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
+                  <InvokeSection />
+                </SecureRoute>
+              </Switch>
+              <SecureRoute exact path="/userinfo" component={Userinfo} />
+            </div>
+          </div>
+        </Router>
+        {VisibleFooter}
       </Security>
-    </Router>
+    </div>
   );
 };
 
