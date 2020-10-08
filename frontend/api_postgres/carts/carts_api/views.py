@@ -137,7 +137,6 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def get_sections_by_year_and_state(self, request, year, state):
-        print("sections by year and state", flush=True)
         sections = self.get_queryset().filter(
             contents__section__year=year,
             contents__section__state=state.upper(),
@@ -415,7 +414,6 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
 @api_view(["POST"])
 def authenticate_user(request):
-    print(request, flush=True)
     jwt_auth = JwtAuthentication()
     user, _ = jwt_auth.authenticate(request)
     state = user.appuser.state
