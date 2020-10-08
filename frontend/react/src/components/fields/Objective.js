@@ -27,7 +27,7 @@ const Objective = ({ headerRef, objective, objectiveNumber }) => {
       <AccordionPanel>
         {children.map((q) => (
           <div className="ds-c-choice__checkedChild">
-            <Question key={q.id} question={q} type="Goal" />
+            <Question key={q.id} question={q} />
           </div>
         ))}
       </AccordionPanel>
