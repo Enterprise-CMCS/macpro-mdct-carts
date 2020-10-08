@@ -8,13 +8,15 @@ from carts.oidc import (
     invalidate_cache,
     verify_token,
 )
-from carts.carts_api.models import AppUser, State
+from carts.carts_api.models import AppUser, State, StateFromUsername
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 
 
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
+        print(request, flush=True)
         raw_token = self._extract_token(request)
+        print(raw_token, flush=True)
 
         try:
             return self._do_authenticate(raw_token)
@@ -72,13 +74,22 @@ class JwtAuthentication(authentication.BaseAuthentication):
         # users:
         role = role_from_raw_ldap_job_codes(user_info["job_codes"])
         # role = "state_user"
+        state = None
 
-        if role in ("admin_user", "co_user"):
-            state = None
-        else:
-            # This is where we would load their state from the table that
-            # associates EUA IDs to states, but instead just go with MA:
+        if role not in ("admin_user", "co_user"):
+            # This is where we load their state from the table that
+            # associates EUA IDs to states, but here we default to MA,
+            # which we'll need to change once we have proper test users.
             state = State.objects.get(code="MA")
+            try:
+                state_relationship = StateFromUsername.objects.get(
+                    username=user.username
+                )
+                if state_relationship:
+                    state_code = state_relationship.state_code
+                    state = State.objects.get(code=state_code)
+            except StateFromUsername.DoesNotExist:
+                pass
 
         app_user, _ = AppUser.objects.get_or_create(user=user)
         app_user.state = state

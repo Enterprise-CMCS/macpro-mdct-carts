@@ -22,12 +22,14 @@ from rest_framework.exceptions import (  # type: ignore
 )
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
+    DjangoModelPermissions,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
 from carts.auth import JwtAuthentication
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
+    AdminHideStateFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
 )
@@ -38,12 +40,14 @@ from carts.carts_api.serializers import (
     SectionBaseSerializer,
     SectionSchemaSerializer,
     StateSerializer,
+    StateFromUsernameSerializer,
 )
 from carts.carts_api.models import (
     Section,
     SectionBase,
     SectionSchema,
     State,
+    StateFromUsername,
 )
 
 
@@ -86,6 +90,16 @@ class StateViewSet(viewsets.ModelViewSet):
 
     # def list(self, request):
     #    return Response(self.serializer_class(self.queryset).data)
+
+
+class StateFromUsernameViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideStateFromUsername]
+    queryset = StateFromUsername.objects.all()
+    serializer_class = StateFromUsernameSerializer
 
 
 class SectionViewSet(viewsets.ModelViewSet):
@@ -386,6 +400,7 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
 @api_view(["POST"])
 def authenticate_user(request):
+    print(request, flush=True)
     jwt_auth = JwtAuthentication()
     user, _ = jwt_auth.authenticate(request)
     state = user.appuser.state

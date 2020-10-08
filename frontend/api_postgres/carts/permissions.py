@@ -25,3 +25,8 @@ class StateChangeSectionPermission(permissions.BasePermission):
         required_permission = f"carts_api.change_state_{obj_state}".lower()
         print(f"POST checking {user} for {required_permission}", flush=True)
         return request.user.has_perm(required_permission)
+
+
+class AdminHideStateFromUsername(permissions.DjangoModelPermissions):
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_statefromusername"]

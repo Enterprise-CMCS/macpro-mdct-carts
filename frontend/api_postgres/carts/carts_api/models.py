@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import (  # type: ignore
     JSONField,
 )
 from django.db import models  # type: ignore
-from carts.carts_api.model_utils import PROGRAM_TYPES, US_STATES, USER_ROLES
+from carts.carts_api.model_utils import PROGRAM_TYPES, USER_ROLES
 
 
 class SectionSchema(models.Model):
@@ -110,3 +110,20 @@ class ACS(models.Model):
         decimal_places=1,
         max_digits=5,
     )
+
+
+class StateFromUsername(models.Model):
+    """
+    Associate a state with a user.
+    Keyed off their CMS identifier, which is initially EUA ID but may become a
+    different id in future.
+    Every time a user logs in, their username is checked against the contents
+    of this table, and their state is set to whatever is in this table.
+    Note that this checks the string of the username and not the user instance;
+    the contents of this table exists prior to any of the users logging in.
+    Similarly, this uses the two-character state code, not the state instance,
+    as state.
+    """
+
+    username = models.CharField(max_length=64)
+    state_code = models.CharField(max_length=2)

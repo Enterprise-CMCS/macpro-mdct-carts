@@ -19,22 +19,23 @@ from rest_framework import routers  # type: ignore
 from carts.carts_api import views
 
 section_list = views.SectionViewSet.as_view(
-    {'get': 'get_sections_by_year_and_state'}
+    {"get": "get_sections_by_year_and_state"}
 )
 
 section_single = views.SectionViewSet.as_view(
-    {'get': 'get_section_by_year_and_state'}
+    {"get": "get_section_by_year_and_state"}
 )
 
-section_update = views.SectionViewSet.as_view({'put': 'update_sections'})
+section_update = views.SectionViewSet.as_view({"put": "update_sections"})
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'sections', views.SectionViewSet)
-router.register(r'sectionbases', views.SectionBaseViewSet)
-router.register(r'sectionschemas', views.SectionSchemaViewSet)
-router.register(r'state', views.StateViewSet)
+router.register(r"users", views.UserViewSet)
+router.register(r"groups", views.GroupViewSet)
+router.register(r"sections", views.SectionViewSet)
+router.register(r"sectionbases", views.SectionBaseViewSet)
+router.register(r"sectionschemas", views.SectionSchemaViewSet)
+router.register(r"state", views.StateViewSet)
+router.register(r"state_assoc", views.StateFromUsernameViewSet),
 
 api_patterns = [
     path("sections/<int:year>/<str:state>", section_list),
@@ -60,8 +61,8 @@ api_patterns = [
 ]
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path("admin/", admin.site.urls),
+    path("", include(router.urls)),
     path("report/<int:year>/<str:state>/", views.report),
     path(
         "data/<int:year>/<str:state>/<int:section>",

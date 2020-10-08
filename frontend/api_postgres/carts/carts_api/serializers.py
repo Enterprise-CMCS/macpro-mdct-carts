@@ -1,47 +1,63 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import serializers
-from carts.carts_api.models import Section, SectionBase, SectionSchema, State, FMAP, ACS
+from django.contrib.auth.models import User, Group  # type: ignore
+from rest_framework import serializers  # type: ignore
+from carts.carts_api.models import (
+    Section,
+    SectionBase,
+    SectionSchema,
+    State,
+    StateFromUsername,
+    FMAP,
+    ACS,
+)
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ["url", "username", "email", "groups"]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ["url", "name"]
 
 
 class SectionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Section
-        fields = ['contents']
+        fields = ["contents"]
 
 
 class SectionBaseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SectionBase
-        fields = ['contents']
+        fields = ["contents"]
 
 
 class SectionSchemaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SectionSchema
-        fields = ['year', 'contents']
+        fields = ["year", "contents"]
+
 
 class FMAPSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FMAP
-        fields = ['fiscal_year', 'enhanced_FMAP']
+        fields = ["fiscal_year", "enhanced_FMAP"]
+
 
 class ACSSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ACS
-        fields = ['year', 'number_uninsured', 'number_uninsured_moe',
-                 'percent_uninsured', 'percent_uninsured_moe']
+        fields = [
+            "year",
+            "number_uninsured",
+            "number_uninsured_moe",
+            "percent_uninsured",
+            "percent_uninsured_moe",
+        ]
+
 
 class StateSerializer(serializers.HyperlinkedModelSerializer):
     fmap_set = FMAPSerializer(many=True, read_only=True)
@@ -49,4 +65,10 @@ class StateSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = State
-        fields = ['code', 'name', 'fmap_set', 'acs_set']
+        fields = ["code", "name", "fmap_set", "acs_set"]
+
+
+class StateFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = StateFromUsername
+        fields = ["username", "state_code"]
