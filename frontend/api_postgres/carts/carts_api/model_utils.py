@@ -77,6 +77,7 @@ USER_ROLES = (  # Descending permissions order; alphabetical by coincidence
     ("temp_user", "Temporary User"),
 )
 
+# Once we have a more complete list of job codes, this should move to the db.
 JOB_CODES_TO_ROLES = {
     "IDM_OKTA_TEST": "state_user",
     "CARTS_Group_Dev": "admin_user",

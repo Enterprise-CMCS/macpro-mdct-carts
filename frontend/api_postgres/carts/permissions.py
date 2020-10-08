@@ -5,7 +5,7 @@ class StateViewSectionPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         user, view_name = request.user, view.get_view_name()
         if request.user.has_perm("carts_api.view_section"):
-            print(f"User {user} has admin permissions for {view_name}.")
+            print(f"User {user} has view permissions for {view_name}.")
             return True
 
         obj_state = obj.contents["section"]["state"]
