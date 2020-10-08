@@ -37,12 +37,11 @@ const WrappedSecurity = () => {
 
   const loc = qs.parse(useLocation().search);
   const devKeys = {
-      "dev-ak": "AK",
-      "dev-az": "AZ",
-      "dev-ma": "MA",
-      "dev-admin": "admin_user",
-      "dev-co_user": "co_user",
-
+    "dev-ak": "AK",
+    "dev-az": "AZ",
+    "dev-ma": "MA",
+    "dev-admin": "admin_user",
+    "dev-co_user": "co_user",
   };
   if (loc.dev && Object.keys(devKeys).includes(loc.dev)) {
     const userData = { userToken: loc.dev };
