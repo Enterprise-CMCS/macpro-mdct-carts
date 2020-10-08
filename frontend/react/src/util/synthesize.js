@@ -1,5 +1,5 @@
-import jsonpath from "./jsonpath";
 import { evaluate } from "mathjs";
+import jsonpath from "./jsonpath";
 
 /* eslint-disable camelcase */
 
@@ -124,21 +124,21 @@ const rpn = (values, rpnString, precision) => {
  * @param {int} precision
  * @returns {string}
  */
-const formula = (targets, formula, precision) => {
+const formula = (targets, providedFormula, precision) => {
   let computedValue = "Not Available";
+  let manipulatedFormula = providedFormula;
 
-  if (formula && targets) {
-    // Loop through targets and replace in formula string
-    for (let i in targets) {
-      let replaceValue = new RegExp("<" + i + ">", "g");
-      formula = formula.replace(
+  if (manipulatedFormula && targets) {
+    for (let i = 0; i < targets.length; i += 1) {
+      const replaceValue = new RegExp(`<${i}>`, "g");
+      manipulatedFormula = manipulatedFormula.replace(
         replaceValue,
         targets[i] != null ? targets[i] : 0
       );
     }
 
     // Evaluate the formula (string) and round to precision
-    computedValue = round(evaluate(formula), precision);
+    computedValue = round(evaluate(manipulatedFormula), precision);
   }
 
   return computedValue;
