@@ -1,6 +1,6 @@
 import jsonpath from "../util/jsonpath";
 
-import { selectFragment } from "./formData"; // eslint-disable-line
+import { selectFragment } from "./formData"; // eslint-disable-line import/no-cycle
 import { shouldDisplay } from "../util/shouldDisplay";
 
 export const selectById = (state, id) => {
@@ -146,7 +146,7 @@ export const selectSectionsForNav = (state) => {
         id,
         ordinal,
         title,
-        subsections: subsections.map(({ id, title }) => ({ id, title })), // eslint-disable-line
+        subsections: subsections.map(({ id, title }) => ({ id, title })), // eslint-disable-line no-shadow
       })
     );
   }
