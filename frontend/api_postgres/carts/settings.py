@@ -68,6 +68,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# TODO: change carts.auth_dev.JwtDevAuthentication to
+# carts.auth.JewAuthentication once we no longer need fake users to bypass
+# authentication, and before deploying to production.
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'carts.auth_dev.JwtDevAuthentication',
