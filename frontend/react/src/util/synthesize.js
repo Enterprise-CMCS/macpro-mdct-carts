@@ -259,8 +259,6 @@ const synthesizeValue = (value, state) => {
       if (typeof target === "object" && target.lookupFmapFy) {
         return lookupFMAP(state, target.lookupFmapFy);
       }
-      let b = jsonpath.query(state, target)[0];
-      let a=0;
       return jsonpath.query(state, target)[0];
     });
 
