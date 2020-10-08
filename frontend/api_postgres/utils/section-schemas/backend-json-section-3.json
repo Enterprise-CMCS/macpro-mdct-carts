@@ -6553,6 +6553,7 @@
               {
                 "id": "2020-03-i-02-01",
                 "type": "repeatables",
+                "typeLabel": "HSI Program",
                 "questions": [
                   {
                     "id": "2020-03-i-02-01-01",
