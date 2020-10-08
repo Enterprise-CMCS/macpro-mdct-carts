@@ -128,7 +128,7 @@ export const secureLoadUserThenSections = ({
          * can't get backend authorization. This crude fix forces logout if the
          * backend calls fail, which is fragile in other ways.
          */
-        // authService.logout("/");
+        authService.logout("/");
         throw err;
       });
   };
