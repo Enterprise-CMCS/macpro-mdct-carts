@@ -14,9 +14,7 @@ from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
-        print(request, flush=True)
         raw_token = self._extract_token(request)
-        print(raw_token, flush=True)
 
         try:
             return self._do_authenticate(raw_token)
