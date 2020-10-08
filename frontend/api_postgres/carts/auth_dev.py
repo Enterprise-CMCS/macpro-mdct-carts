@@ -6,20 +6,23 @@ from carts.carts_api.models import AppUser, State
 
 class JwtDevAuthentication(JwtAuthentication):
     def authenticate(self, request, username=None):
-
-        # try to pull a username out of the query params
-        if not username:
-            if "dev" in request.query_params:
-                try:
-                    dev_username = request.query_params["dev"]
-                except Exception as e:
-                    raise exceptions.AuthenticationFailed(
-                        "dev authentication failed"
-                    ) from e
-        else:
-            dev_username = username
+        dev_username = username
 
         try:
+            if not dev_username:
+                if "dev" in request.query_params:
+                    try:
+                        dev_username = request.query_params["dev"]
+                    except Exception as e:
+                        raise exceptions.AuthenticationFailed(
+                            "dev authentication failed"
+                        ) from e
+        except Exception as e:
+            raise exceptions.AuthenticationFailed(
+                "dev authentication failed"
+            ) from e
+
+        if dev_username:
             _, suffix = dev_username.split("-")
 
             roles = {
@@ -65,11 +68,6 @@ class JwtDevAuthentication(JwtAuthentication):
             dev_user.save()
 
             return (dev_user, None)
-
-        except Exception as e:
-            raise exceptions.AuthenticationFailed(
-                "dev authentication failed"
-            ) from e
 
         # no username specified in query params, fall back to jwt auth
         return super().authenticate(request)
