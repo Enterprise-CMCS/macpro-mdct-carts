@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Profile from "../../Profile";
 
 class UserProfile extends Component {
@@ -12,7 +13,6 @@ class UserProfile extends Component {
       <div className="page-info">
         <div className="ds-l-col--12 content ds-u-padding-left--4 ">
           <h1>User Profile</h1>
-          {console.log("test", this.props.currentUser)}
           <div className="main">
             If any information is incorrect, please contact the{" "}
             <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>.
@@ -23,7 +23,11 @@ class UserProfile extends Component {
               </div>
               <div>
                 <div>Name: </div>
-                <div>Full name here</div>
+                <div>
+                  {this.props.currentUser.firstname +
+                    " " +
+                    this.props.currentUser.lastname}
+                </div>
               </div>
               <div>
                 <div>Email: </div>
@@ -31,11 +35,32 @@ class UserProfile extends Component {
               </div>
               <div>
                 <div>State: </div>
-                <div>{this.props.currentUser.state.name}</div>
+                <div>
+                  {
+                    // Check if state is an array. If so display all of them else display state object
+                    this.props.currentUser.state ? (
+                      Array.isArray(this.props.currentUser.state) ? (
+                        <ul>
+                          {this.props.currentUser.state.map((state) => (
+                            <li>{state.name}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        this.props.currentUser.state.name
+                      )
+                    ) : (
+                      "No state available"
+                    )
+                  }
+                </div>
               </div>
               <div>
                 <div>Role: </div>
-                <div>{this.props.currentUser.role}</div>
+                <div>
+                  {this.props.currentUser.role
+                    ? this.props.currentUser.role
+                    : "No role available"}
+                </div>
               </div>
             </div>
           </div>
@@ -44,6 +69,10 @@ class UserProfile extends Component {
     );
   }
 }
+
+UserProfile.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
