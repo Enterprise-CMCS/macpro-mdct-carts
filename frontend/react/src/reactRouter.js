@@ -9,6 +9,7 @@ import Userinfo from "./components/sections/Userinfo";
 import test from "./components/test";
 import InvokeSection from "./components/Utils/InvokeSection";
 import ScrollToTop from "./components/Utils/ScrollToTop";
+import CertifyAndSubmit from "./components/layout/CertifyAndSubmit";
 import SaveError from "./components/layout/SaveError";
 
 const VisibleSidebar =
@@ -35,8 +36,8 @@ const Routes = ({ userData }) => (
           <Route path="/sections/:year/:sectionOrdinal">
             <InvokeSection userData={userData} />
           </Route>
-          <Route path="/sections/:year/:sectionOrdinal">
-            <InvokeSection userData={userData} />
+          <Route path="/sections/certify-and-submit">
+            <CertifyAndSubmit />
           </Route>
           <Route exact path="/test" component={test} />
           <Route exact path="/userinfo" component={Userinfo} />
