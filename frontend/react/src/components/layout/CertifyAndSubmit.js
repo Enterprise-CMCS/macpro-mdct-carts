@@ -8,12 +8,6 @@ import PageInfo from "./PageInfo";
 
 const Submit = ({ certify }) => (
   <>
-    <h3>Review your report before submitting</h3>
-    <p>
-      Once you submit your CARTS report, you won‘t be able to make any edits
-      unless you send a request to CMS. Double check that everything looks good.
-    </p>
-    <Button disabled>Review</Button>
     <h3>Ready to certify and submit?</h3>
     <p>
       Now that you‘ve reviewd your CARTS FFY 2020 report, certify that it‘s
@@ -36,7 +30,6 @@ const Thanks = ({ done: doneDispatch }) => (
     <Button onClick={doneDispatch} variation="primary">
       Done
     </Button>{" "}
-    <Button disabled>Download a copy</Button>
   </>
 );
 Thanks.propTypes = { done: PropTypes.func.isRequired };
