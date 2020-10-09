@@ -8,7 +8,7 @@ from carts.oidc import (
     invalidate_cache,
     verify_token,
 )
-from carts.carts_api.models import AppUser, State, StateFromUsername
+from carts.carts_api.models import AppUser, State, StatesFromUsername
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 
 
@@ -72,31 +72,41 @@ class JwtAuthentication(authentication.BaseAuthentication):
         # users:
         role = role_from_raw_ldap_job_codes(user_info["job_codes"])
         # role = "state_user"
-        state = None
+        states = None
 
-        if role not in ("admin_user", "co_user"):
+        if role in ("state_user", "co_user"):
             # This is where we load their state from the table that
             # associates EUA IDs to states, but here we default to MA,
             # which we'll need to change once we have proper test users.
-            state = State.objects.get(code="MA")
+            states = [State.objects.get(code="MA")]
             try:
-                state_relationship = StateFromUsername.objects.get(
+                state_relationship = StatesFromUsername.objects.get(
                     username=user.username
                 )
                 if state_relationship:
-                    state_code = state_relationship.state_code
-                    state = State.objects.get(code=state_code)
-            except StateFromUsername.DoesNotExist:
+                    state_codes = state_relationship.state_codes
+                    states = State.objects.filter(code__in=state_codes)
+            except StatesFromUsername.DoesNotExist:
                 pass
 
         app_user, _ = AppUser.objects.get_or_create(user=user)
-        app_user.state = state
+        app_user.states = states
         app_user.role = role
         app_user.save()
 
-        if role == "state_user" and state:
-            group = Group.objects.get(name__endswith=f"{state.code} sections")
+        if role == "state_user" and states:
+            group = Group.objects.get(
+                name__endswith=f"{states[0].code} sections"
+            )
             user.groups.set([group])
+
+        if role == "co_user" and states:
+            groups = []
+            for state in states:
+                for group in Group.objects.filter(name__endswith=" sections"):
+                    if group.name.endswith(f"{state.code} sections"):
+                        groups.append(group)
+            user.groups.set(groups)
 
         if role == "admin_user":
             group = Group.objects.get(name="Admin users")

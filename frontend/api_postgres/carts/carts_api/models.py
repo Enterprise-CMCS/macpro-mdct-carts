@@ -58,7 +58,10 @@ class State(models.Model):
 
 class AppUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
+    state = models.ForeignKey(
+        State, on_delete=models.CASCADE, null=True, related_name="appusers"
+    )
+    states = models.ManyToManyField(State)
     role = models.CharField(max_length=32, choices=USER_ROLES)
 
 
@@ -112,13 +115,13 @@ class ACS(models.Model):
     )
 
 
-class StateFromUsername(models.Model):
+class StatesFromUsername(models.Model):
     """
-    Associate a state with a user.
+    Associate states with a user.
     Keyed off their CMS identifier, which is initially EUA ID but may become a
     different id in future.
     Every time a user logs in, their username is checked against the contents
-    of this table, and their state is set to whatever is in this table.
+    of this table, and their states are set to whatever is in this table.
     Note that this checks the string of the username and not the user instance;
     the contents of this table exists prior to any of the users logging in.
     Similarly, this uses the two-character state code, not the state instance,
@@ -126,7 +129,7 @@ class StateFromUsername(models.Model):
     """
 
     username = models.CharField(max_length=64)
-    state_code = models.CharField(max_length=2)
+    state_codes = ArrayField(models.CharField(max_length=2))
 
 
 class StateStatus(models.Model):

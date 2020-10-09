@@ -32,7 +32,7 @@ class Command(BaseCommand):
             )
             for perm in new_perms:
                 try:
-                    new_perm = Permission.objects.create(**perm)
+                    new_perm, _ = Permission.objects.get_or_create(**perm)
                     new_perm.save()
                 except IntegrityError:
                     # This may get run multiple times, and if the permissions
@@ -82,8 +82,7 @@ def _create_change_view_group_for_state(code: str) -> None:
 
 def _create_permissions_for_admins() -> None:
     name = "Admin users"
-    if Group.objects.filter(name=name).exists():
-        return
+    group, _ = Group.objects.get_or_create(name=name)
 
     verbs = ("add", "change", "delete", "view")
     models = (
@@ -92,7 +91,7 @@ def _create_permissions_for_admins() -> None:
         "sectionbase",
         "sectionschema",
         "state",
-        "statefromusername",
+        "statesfromusername",
     )
     group_permissions = []
 
@@ -101,9 +100,8 @@ def _create_permissions_for_admins() -> None:
             codename = f"{verb}_{model}"
             group_permissions.append(Permission.objects.get(codename=codename))
 
-    new_group = Group.objects.create(name=name)
-    new_group.permissions.set(group_permissions)
-    new_group.save()
+    group.permissions.set(group_permissions)
+    group.save()
 
 
 def _load_json(path: Path) -> Json:

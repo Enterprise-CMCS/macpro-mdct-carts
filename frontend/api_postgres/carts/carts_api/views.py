@@ -29,7 +29,7 @@ from rest_framework.permissions import (  # type: ignore
 from carts.auth import JwtAuthentication
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
-    AdminHideStateFromUsername,
+    AdminHideStatesFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
 )
@@ -41,7 +41,7 @@ from carts.carts_api.serializers import (
     SectionSchemaSerializer,
     StateSerializer,
     StateStatusSerializer,
-    StateFromUsernameSerializer,
+    StatesFromUsernameSerializer,
 )
 from carts.carts_api.models import (
     Section,
@@ -49,7 +49,7 @@ from carts.carts_api.models import (
     SectionSchema,
     State,
     StateStatus,
-    StateFromUsername,
+    StatesFromUsername,
 )
 
 
@@ -94,14 +94,14 @@ class StateViewSet(viewsets.ModelViewSet):
     #    return Response(self.serializer_class(self.queryset).data)
 
 
-class StateFromUsernameViewSet(viewsets.ModelViewSet):
+class StatesFromUsernameViewSet(viewsets.ModelViewSet):
     """
     API endpoint for username–state associations.
     """
 
-    permission_classes = [AdminHideStateFromUsername]
-    queryset = StateFromUsername.objects.all()
-    serializer_class = StateFromUsernameSerializer
+    permission_classes = [AdminHideStatesFromUsername]
+    queryset = StatesFromUsername.objects.all()
+    serializer_class = StatesFromUsernameSerializer
 
 
 class StateStatusViewSet(viewsets.ModelViewSet):
