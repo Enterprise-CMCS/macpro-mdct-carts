@@ -66,6 +66,15 @@ class TOC extends Component {
         return updated;
       });
 
+    // If the user can certify and submit AND the form is not yet submitted...
+    items.push({
+      id: "certify-and-submit",
+      label: "Certify and Submit",
+      onClick: this.click,
+      selected: location.pathname === "/sections/certify-and-submit",
+      url: "/sections/certify-and-submit",
+    });
+
     return (
       <div className="toc">
         <VerticalNav selectedId="toc" items={items} />
