@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Profile from "../../Profile";
 
 class UserProfile extends Component {
   constructor() {
@@ -9,6 +8,13 @@ class UserProfile extends Component {
   }
 
   render() {
+    const fullName =
+      this.props.currentUser.firstname + " " + this.props.currentUser.lastname;
+    const email = this.props.currentUser.email;
+    const username = this.props.currentUser.username;
+    const state = this.props.currentUser.state;
+    const role = this.props.currentUser.role;
+
     return (
       <div className="page-info">
         <div className="ds-l-col--12 content ds-u-padding-left--4 ">
@@ -19,48 +25,37 @@ class UserProfile extends Component {
             <div className="profile-information">
               <div>
                 <div>EUA Id: </div>
-                <div>{this.props.currentUser.username}</div>
+                <div>{username}</div>
               </div>
               <div>
                 <div>Name: </div>
-                <div>
-                  {this.props.currentUser.firstname +
-                    " " +
-                    this.props.currentUser.lastname}
-                </div>
+                <div>{fullName}</div>
               </div>
               <div>
                 <div>Email: </div>
-                <div>{this.props.currentUser.email}</div>
+                <div>{email}</div>
               </div>
               <div>
                 <div>State: </div>
                 <div>
                   {
                     // Check if state is an array. If so display all of them else display state object
-                    this.props.currentUser.state ? (
-                      Array.isArray(this.props.currentUser.state) ? (
-                        <ul>
-                          {this.props.currentUser.state.map((state) => (
-                            <li>{state.name}</li>
-                          ))}
-                        </ul>
-                      ) : (
-                        this.props.currentUser.state.name
-                      )
+
+                    Array.isArray(state) ? (
+                      <ul>
+                        {state.map((object) => (
+                          <li>{object.name}</li>
+                        ))}
+                      </ul>
                     ) : (
-                      "No state available"
+                      state.name
                     )
                   }
                 </div>
               </div>
               <div>
                 <div>Role: </div>
-                <div>
-                  {this.props.currentUser.role
-                    ? this.props.currentUser.role
-                    : "No role available"}
-                </div>
+                <div>{role ? role : "No role available"}</div>
               </div>
             </div>
           </div>
