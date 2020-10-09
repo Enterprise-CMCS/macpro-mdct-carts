@@ -1,6 +1,3 @@
-locals {
-  deployment_minimum_healthy_percent = terraform.workspace == "prod" ? 100 : 0
-}
 
 ####################################################################################################
 # Create some base IAM objects for ECS tasks and services, often shared
