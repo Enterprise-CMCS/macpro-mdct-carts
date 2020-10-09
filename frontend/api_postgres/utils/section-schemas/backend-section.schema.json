@@ -210,6 +210,9 @@
         "type": {
           "const": "repeatables"
         },
+        "typeLabel": {
+          "type": "string"
+        },
         "comment": {
           "type": "string"
         },

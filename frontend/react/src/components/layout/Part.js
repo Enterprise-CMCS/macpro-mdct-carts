@@ -7,6 +7,7 @@ import { selectFragment } from "../../store/formData";
 import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
+import Text from "./Text";
 
 const showPart = (contextData, programType, state) => {
   if (
@@ -37,7 +38,7 @@ const Part = ({
   if (show) {
     innards = (
       <>
-        {text ? <p>{text}</p> : null}
+        {text ? <Text>{text}</Text> : null}
 
         {questions.map((question) => (
           <Question key={question.id} question={question} />
