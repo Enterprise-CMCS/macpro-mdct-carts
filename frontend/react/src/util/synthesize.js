@@ -129,13 +129,13 @@ const formula = (targets, providedFormula, precision) => {
   let manipulatedFormula = providedFormula;
 
   if (manipulatedFormula && targets) {
-    for (let i = 0; i < targets.length; i += 1) {
+    Object.keys(manipulatedFormula).forEach((i) => {
       const replaceValue = new RegExp(`<${i}>`, "g");
       manipulatedFormula = manipulatedFormula.replace(
         replaceValue,
         targets[i] != null ? targets[i] : 0
       );
-    }
+    });
 
     // Evaluate the formula (string) and round to precision
     computedValue = round(evaluate(manipulatedFormula), precision);
