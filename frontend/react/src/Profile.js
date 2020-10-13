@@ -1,83 +1,74 @@
-/*
- * Copyright (c) 2018, Okta, Inc. and/or its affiliates. All rights reserved.
- * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
- *
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and limitations under the License.
- */
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import React, { useState, useEffect } from "react";
-import { useOktaAuth } from "@okta/okta-react";
+class UserProfile extends Component {
+  constructor() {
+    super();
+  }
 
-const Profile = () => {
-  const { authState, authService } = useOktaAuth();
-  const [userInfo, setUserInfo] = useState(null);
+  render() {
+    const fullName =
+      `${this.props.currentUser.firstname  } ${  this.props.currentUser.lastname}`;
+    const {email, username, state, role} = this.props.currentUser;
 
-  useEffect(() => {
-    if (!authState.isAuthenticated) {
-      // When user isn't authenticated, forget any user info
-      setUserInfo(null);
-    } else {
-      console.log("bet this works in code I didn't write");
-      authService.getUser().then((info) => {
-        setUserInfo(info);
-      });
-    }
-  }, [authState, authService]); // Update if authState changes
 
-  if (!userInfo) {
     return (
-      <div>
-        <p>Fetching user profile...</p>
+      <div className="page-info">
+        <div className="ds-l-col--12 content ds-u-padding-left--4 ">
+          <h1>User Profile</h1>
+          <div className="main">
+            If any information is incorrect, please contact the{" "}
+            <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>.
+            <div className="profile-information">
+              <div>
+                <div>EUA Id: </div>
+                <div>{username}</div>
+              </div>
+              <div>
+                <div>Name: </div>
+                <div>{fullName}</div>
+              </div>
+              <div>
+                <div>Email: </div>
+                <div>{email}</div>
+              </div>
+              <div>
+                <div>State: </div>
+                <div>
+                  {
+                    // Check if state is an array. If so display all of them else display state object
+
+                    Array.isArray(state) ? (
+                      <ul>
+                        {state.map((object) => (
+                          <li>{object.name}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      state.name
+                    )
+                  }
+                </div>
+              </div>
+              <div>
+                <div>Role: </div>
+                <div>{role || "No role available"}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
+}
 
-  return (
-    <div>
-      <div>
-        My User Profile (ID Token Claims)
-        <p>
-          Below is the information from your ID token which was obtained during
-          the &nbsp;
-          <a href="https://developer.okta.com/docs/guides/implement-auth-code-pkce">
-            PKCE Flow
-          </a>{" "}
-          and is now stored in local storage.
-        </p>
-        <p>
-          This route is protected with the
-          <code>&lt;SecureRoute&gt;</code> component, which will ensure that
-          this page cannot be accessed until you have authenticated.
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(userInfo).map((claimEntry) => {
-              const claimName = claimEntry[0];
-              const claimValue = claimEntry[1];
-              const claimId = `claim-${claimName}`;
-              return (
-                <tr key={claimName}>
-                  <td>{claimName}</td>
-                  <td id={claimId}>{claimValue}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+UserProfile.propTypes = {
+  currentUser: PropTypes.object.isRequired,
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({
+  currentUser: state.stateUser.currentUser,
+});
+
+export default connect(mapStateToProps)(UserProfile);

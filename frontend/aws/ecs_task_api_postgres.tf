@@ -37,6 +37,17 @@ data "aws_ecr_repository" "postgres_django" {
   name = "postgres_django"
 }
 
+resource "aws_iam_policy" "uploads_bucket_policy" {
+  policy = templatefile("templates/api_policy_for_uploads_bucket.json.tpl", {
+    uploads_bucket_arn = aws_s3_bucket.uploads.arn
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "uploads_bucket_policy_attachment" {
+  role       = aws_iam_role.ecs_task.id
+  policy_arn = aws_iam_policy.uploads_bucket_policy.arn
+}
+
 resource "aws_ecs_task_definition" "api_postgres" {
   family                   = "api_postgres-${terraform.workspace}"
   network_mode             = "awsvpc"
@@ -53,7 +64,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_password        = data.aws_ssm_parameter.postgres_password.value,
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
     cloudwatch_stream_prefix = "api_postgres",
-    postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres
+    postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
+    s3_uploads_bucket_name   = aws_s3_bucket.uploads.id
   })
 }
 
