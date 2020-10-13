@@ -64,7 +64,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_password        = data.aws_ssm_parameter.postgres_password.value,
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
     cloudwatch_stream_prefix = "api_postgres",
-    postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres
+    postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
+    s3_uploads_bucket_name   = aws_s3_bucket.uploads.id
   })
 }
 

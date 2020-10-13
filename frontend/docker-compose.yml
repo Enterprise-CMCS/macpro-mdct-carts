@@ -10,7 +10,6 @@ services:
       - data_net
     environment:
       - API_POSTGRES_URL=http://localhost:8000 # This is how a browser would call the api
-      - S3_UPLOADS_BUCKET_NAME=placeholder # I don't know how you want to handle this for local dev.  placeholder for now
   api_postgres:
     build:
       context: ./api_postgres
@@ -27,6 +26,7 @@ services:
       - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
+      - S3_UPLOADS_BUCKET_NAME=placeholder # I don't know how you want to handle this for local dev.  placeholder for now
 networks:
   data_net:
     external: true
