@@ -102,7 +102,7 @@ export const secureLoadUserThenSections = () => {
   return async (dispatch) => {
     await axios
       .post("/api/v1/appusers/auth")
-      .then((res) => {
+      .then(({ data }) => {
         /* The order here is important because in the cases where there's
          * no state info (e.g. admin users) the current loadSections code
          * will error out, which we need to change once we're completely
@@ -110,13 +110,13 @@ export const secureLoadUserThenSections = () => {
          * The same applies to needing to eliminate the mostly-redundant
          * functions in this file that apply to non-secure loading.
          */
-        const stateCode = res.data.currentUser.state.id;
+        const stateCode = data.currentUser.state.id;
 
-        dispatch(getUserData(res.data.currentUser));
-        dispatch(loadSections({ userData: res.data, stateCode }));
+        dispatch(getUserData(data.currentUser));
+        dispatch(loadSections({ userData: data, stateCode }));
         dispatch(getStateStatus({ stateCode }));
-        dispatch(getProgramData(res.data));
-        dispatch(getStateData(res.data));
+        dispatch(getProgramData(data));
+        dispatch(getStateData(data));
       })
       .catch((err) => {
         /*
