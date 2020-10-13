@@ -66,18 +66,21 @@ export const loadSections = ({ userData, stateCode }) => {
   };
 };
 
-export const loadUserThenSections = ({ userData, stateCode }) => {
-  const { userToken } = userData;
+export const loadUserThenSections = (userToken) => {
+  const getUser = async () =>
+    userToken
+      ? axios.get(`/api/v1/appusers/${userToken}`)
+      : axios.post(`/api/v1/appusers/auth`);
 
   return async (dispatch) => {
-    await axios
-      .get(`/api/v1/appusers/${userToken}`)
-      .then((res) => {
-        dispatch(loadSections({ userData: res.data, stateCode }));
-        dispatch(getProgramData(res.data));
-        dispatch(getStateData(res.data));
+    await getUser()
+      .then(({ data }) => {
+        const stateCode = data.currentUser.state.id;
+        dispatch(loadSections({ userData: data, stateCode }));
+        dispatch(getProgramData(data));
+        dispatch(getStateData(data));
         dispatch(getStateStatus({ stateCode }));
-        dispatch(getUserData(res.data.currentUser));
+        dispatch(getUserData(data.currentUser));
         dispatch(getAllStatesData());
       })
       .catch((err) => {
@@ -89,54 +92,6 @@ export const loadUserThenSections = ({ userData, stateCode }) => {
          */
         console.log("--- ERROR LOADING USER FROM API ---");
         console.log(err);
-
-        dispatch(loadSections({ userData }));
-        dispatch(getProgramData(userData));
-        dispatch(getStateData(userData));
-        dispatch(getUserData(userData.currentUser));
-      });
-  };
-};
-
-export const secureLoadUserThenSections = () => {
-  return async (dispatch) => {
-    await axios
-      .post("/api/v1/appusers/auth")
-      .then(({ data }) => {
-        /* The order here is important because in the cases where there's
-         * no state info (e.g. admin users) the current loadSections code
-         * will error out, which we need to change once we're completely
-         * away from using various kinds of fake users.
-         * The same applies to needing to eliminate the mostly-redundant
-         * functions in this file that apply to non-secure loading.
-         */
-        const stateCode = data.currentUser.state.id;
-
-        dispatch(getUserData(data.currentUser));
-        dispatch(loadSections({ userData: data, stateCode }));
-        dispatch(getStateStatus({ stateCode }));
-        dispatch(getProgramData(data));
-        dispatch(getStateData(data));
-      })
-      .catch((err) => {
-        /*
-         * Error-handling would go here, but for now, since the anticipated
-         * error is trying to run on cartsdemo, we just use the fake data.
-         * This fake user data has AK/AZ/MA, just like the fake data on the server.
-         */
-        // Error-handling would go here. For now, just log it so we can see
-        // it in the console, at least.
-        console.log("--- ERROR SECURELY LOADING SECTIONS ---");
-        console.log(err);
-        /*
-         * TODO: fix the issue underlying the following--without it, we end up
-         * in a weird state where the frontend thinks we're logged in, but the
-         * backend auth fails, so that the logout button isn't available but we
-         * can't get backend authorization. This crude fix forces logout if the
-         * backend calls fail, which is fragile in other ways.
-         */
-        // authService.logout("/");
-        throw err;
       });
   };
 };

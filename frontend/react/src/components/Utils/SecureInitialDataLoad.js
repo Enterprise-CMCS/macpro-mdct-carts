@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useOktaAuth } from "@okta/okta-react";
-import {
-  loadUserThenSections,
-  secureLoadUserThenSections,
-} from "../../actions/initial";
+import { loadUserThenSections } from "../../actions/initial";
 import { setToken } from "../../axios";
 
-const SecureInitialDataLoad = ({ stateCode, userData }) => {
+const SecureInitialDataLoad = ({ userData }) => {
   // If userData is false, then we're logging in with Okta. Otherwise, we're
   // logging in with a dev user that bypasses Okta.
 
@@ -17,7 +14,7 @@ const SecureInitialDataLoad = ({ stateCode, userData }) => {
   useEffect(() => {
     if (userData !== false) {
       setToken();
-      dispatch(loadUserThenSections({ stateCode, userData }));
+      dispatch(loadUserThenSections(userData.userToken));
     }
   }, []);
 
@@ -32,7 +29,7 @@ const SecureInitialDataLoad = ({ stateCode, userData }) => {
         // show logged-out page here?
       } else {
         setToken(authState.accessToken);
-        dispatch(secureLoadUserThenSections());
+        dispatch(loadUserThenSections());
       }
     }
   }, [authState, authService]);
