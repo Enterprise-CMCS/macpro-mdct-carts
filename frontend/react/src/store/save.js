@@ -18,6 +18,7 @@ export default (state = initial, action) => {
       };
 
     case CERTIFY_AND_SUBMIT_SUCCESS:
+      // When the report is certified and submitted...
       return {
         ...state,
         lastSave: new Date(),
@@ -32,6 +33,7 @@ export default (state = initial, action) => {
       };
 
     case SET_STATE_STATUS:
+      // When the report status initially loads...
       return {
         ...state,
         lastSave:
