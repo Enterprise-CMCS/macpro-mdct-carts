@@ -144,6 +144,7 @@ const formula = (targets, providedFormula, precision) => {
             : targets[i]
         );
       } else {
+        // If value is a non-empty string, return false
         available = false;
       }
     });
