@@ -118,7 +118,6 @@
                 },
                 "questions": [
                   {
-
                     "type": "fieldset",
                     "fieldset_type": "datagrid",
 
@@ -161,7 +160,6 @@
                 },
                 "questions": [
                   {
-
                     "type": "fieldset",
                     "fieldset_type": "datagrid",
 
@@ -485,7 +483,6 @@
                 },
                 "questions": [
                   {
-
                     "type": "fieldset",
                     "fieldset_type": "datagrid",
 
@@ -528,7 +525,6 @@
                 },
                 "questions": [
                   {
-
                     "type": "fieldset",
                     "fieldset_type": "datagrid",
                     "questions": [
@@ -570,7 +566,6 @@
                 },
                 "questions": [
                   {
-
                     "type": "fieldset",
                     "fieldset_type": "datagrid",
 
@@ -613,7 +608,6 @@
                 },
                 "questions": [
                   {
-
                     "type": "fieldset",
                     "fieldset_type": "datagrid",
 
