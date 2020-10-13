@@ -133,7 +133,9 @@ const formula = (targets, providedFormula, precision) => {
       const replaceValue = new RegExp(`<${i}>`, "g");
       manipulatedFormula = manipulatedFormula.replace(
         replaceValue,
-        targets[i] != null ? targets[i] : 0
+        Number.isNaN(targets[i]) || targets[i] === null || targets[i] === ""
+          ? 0
+          : targets[i]
       );
     });
 
