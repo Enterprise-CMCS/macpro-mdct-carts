@@ -25,32 +25,24 @@ class Command(BaseCommand):
             app_label="carts_api", model="section"
         )
         section_model_id = section_model.id
-        start_id = 100  # try starting here and see what happens
         for code in codes:
-            new_perms, start_id = _create_permissions_for_state(
-                code, start_id, section_model_id
-            )
+            new_perms = _create_permissions_for_state(code, section_model_id)
             for perm in new_perms:
-                try:
+                if Permission.objects.filter(**perm).count() == 0:
                     new_perm, _ = Permission.objects.get_or_create(**perm)
                     new_perm.save()
-                except IntegrityError:
-                    # This may get run multiple times, and if the permissions
-                    # exist that's fine.
-                    pass
 
         for code in codes:
             _create_change_view_group_for_state(code)
 
         _create_permissions_for_admins()
+        _create_permissions_for_business_owners()
 
 
-def _create_permissions_for_state(
-    code: str, start_id: int, content_type: int
-) -> Tuple[list, int]:
-    def generate_perm(ident: int, term: str, ctype: int, state: str) -> dict:
+def _create_permissions_for_state(code: str, content_type: int) -> list:
+    def generate_perm(term: str, ctype: int, state: str) -> dict:
         return {
-            "id": ident,
+            # "id": ident,
             "content_type_id": ctype,
             "codename": f"{term}_state_{state.lower()}",
             "name": f"Can {term} {state.upper()} sections",
@@ -58,10 +50,10 @@ def _create_permissions_for_state(
 
     verbs = ("add", "change", "delete", "view")
     perms = []
-    for i, verb in enumerate(verbs):
-        perms.append(generate_perm(start_id + i, verb, content_type, code))
+    for verb in verbs:
+        perms.append(generate_perm(verb, content_type, code))
 
-    return perms, start_id + len(verbs)
+    return perms
 
 
 def _create_change_view_group_for_state(code: str) -> None:
@@ -86,14 +78,40 @@ def _create_permissions_for_admins() -> None:
 
     verbs = ("add", "change", "delete", "view")
     models = (
+        "appuser",
+        "group",
+        "logentry",
+        "permission",
+        "rolefromjobcode",
+        "rolefromusername",
+        "session",
+        "state",
+        "statesfromusername",
+        "user",
+    )
+    group_permissions = []
+
+    for model in models:
+        for verb in verbs:
+            codename = f"{verb}_{model}"
+            group_permissions.append(Permission.objects.get(codename=codename))
+
+    group.permissions.set(group_permissions)
+    group.save()
+
+
+def _create_permissions_for_business_owners() -> None:
+    name = "Business owner users"
+    group, _ = Group.objects.get_or_create(name=name)
+
+    verbs = ("add", "change", "delete", "view")
+    models = (
+        "acs",
         "fmap",
         "section",
         "sectionbase",
         "sectionschema",
         "state",
-        "statesfromusername",
-        "roleandstatesfromusername",
-        "rolefromjobcode",
     )
     group_permissions = []
 

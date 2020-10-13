@@ -72,6 +72,7 @@ US_TERRITORIES = (
 
 USER_ROLES = (  # Descending permissions order; alphabetical by coincidence
     ("admin_user", "Admin User"),
+    ("bus_user", "Central Office Business Owner"),
     ("co_user", "Central Office User"),
     ("state_user", "State User"),
     ("temp_user", "Temporary User"),
@@ -170,21 +171,19 @@ def get_role_from_job_codes(
         # Ensure only valid roles can be set here:
         if user_role in role_codes:
             role_code_map[job_code] = user_role
-    # TODO: An override is necessary to ensure that the admin job code
-    # isn't set to non-admin privileges.
-    # For the moment, that job code is effectively CARTS_Group_Dev.
-    if "CARTS_Group_Dev" in codes:
-        return "admin"
-    # Check the role set in db_username_map and if it's in the set of approved
-    # roles, return it:
+    # The user must have some job code that maps to the role they've been
+    # assigned as an individual user; the ability to map a specific user to a
+    # role essentially just lets us prioritize so that if they're entitled to a
+    # higher set of privileges we can still give them a lower privilege level.
     for username_map in db_username_maps:
         user_role = username_map.user_role
-        if user_role in roles:
+        if user_role in role_codes:
             for code in codes:
                 if role_code_map.get(code) == user_role:
                     return user_role
     # Go through the roles in order and check the job codes the user has to see
-    # if they provide that role:
+    # if they provide that role; this goes in order so that more-privileged
+    # roles get set first.
     for role_code, _ in roles:
         for code in codes:
             if role_code_map.get(code) == role_code:

@@ -143,7 +143,7 @@ class RoleFromJobCode(models.Model):
     """
 
     job_code = models.CharField(max_length=64, unique=True)
-    user_role = models.CharField(max_length=64)
+    user_role = models.CharField(max_length=64, choices=USER_ROLES)
 
 
 class RoleFromUsername(models.Model):
@@ -156,7 +156,7 @@ class RoleFromUsername(models.Model):
     """
 
     username = models.CharField(max_length=64, unique=True)
-    user_role = models.CharField(max_length=64)
+    user_role = models.CharField(max_length=64, choices=USER_ROLES)
 
 
 class StateStatus(models.Model):

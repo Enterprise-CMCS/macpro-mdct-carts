@@ -86,7 +86,7 @@ class RoleFromJobCodeSerializer(serializers.HyperlinkedModelSerializer):
 class RoleFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RoleFromUsername
-        fields = ["username", "user_role", "state_codes"]
+        fields = ["username", "user_role"]
 
 
 class StateStatusSerializer(serializers.HyperlinkedModelSerializer):
