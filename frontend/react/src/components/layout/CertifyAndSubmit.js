@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button } from "@cmsgov/design-system-core";
+import { useHistory } from "react-router-dom";
 import { certifyAndSubmit, done } from "../../actions/certify";
 
 import PageInfo from "./PageInfo";
@@ -21,33 +23,40 @@ const Submit = ({ certify }) => (
 );
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
-const Thanks = ({ done: doneDispatch }) => (
+const Thanks = ({ done: doneDispatch, lastSave }) => (
   <>
     <h3>Thank you for submitting your CARTS report!</h3>
-    <p>Submitted on [date] at [time] by [username].</p>
+    <p>
+      Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
+      {lastSave.format("h:mm A")} by [username].
+    </p>
     <h3>What to expect next</h3>
     <p>You‘ll hear from CMS if they have any questions about your report.</p>
     <Button onClick={doneDispatch} variation="primary">
       Done
-    </Button>{" "}
+    </Button>
   </>
 );
-Thanks.propTypes = { done: PropTypes.func.isRequired };
+Thanks.propTypes = {
+  done: PropTypes.func.isRequired,
+  lastSave: PropTypes.object.isRequired,
+};
 
 const CertifyAndSubmit = ({
   certifyAndSubmit: certifyAction,
   done: doneAction,
+  isCertified,
+  lastSave,
 }) => {
-  const [submitted, setSubmitted] = useState(false);
+  const history = useHistory();
 
   const certify = () => {
-    setSubmitted(true);
     certifyAction();
   };
 
   const doneClick = () => {
-    setSubmitted(false);
     doneAction();
+    history.push("/");
   };
 
   return (
@@ -55,7 +64,11 @@ const CertifyAndSubmit = ({
       <div className="main">
         <PageInfo />
         <h2>Certify and Submit</h2>
-        {submitted ? <Thanks done={doneClick} /> : <Submit certify={certify} />}
+        {isCertified ? (
+          <Thanks done={doneClick} lastSave={lastSave} />
+        ) : (
+          <Submit certify={certify} />
+        )}
       </div>
     </div>
   );
@@ -63,8 +76,15 @@ const CertifyAndSubmit = ({
 CertifyAndSubmit.propTypes = {
   certifyAndSubmit: PropTypes.func.isRequired,
   done: PropTypes.func.isRequired,
+  isCertified: PropTypes.bool.isRequired,
+  lastSave: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = { certifyAndSubmit, done };
+const mapState = (state) => ({
+  isCertified: state.reportStatus.status === "certified",
+  lastSave: moment(state.save.lastSave),
+});
 
-export default connect(null, mapDispatchToProps)(CertifyAndSubmit);
+const mapDispatch = { certifyAndSubmit, done };
+
+export default connect(mapState, mapDispatch)(CertifyAndSubmit);
