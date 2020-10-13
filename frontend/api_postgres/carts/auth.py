@@ -8,7 +8,13 @@ from carts.oidc import (
     invalidate_cache,
     verify_token,
 )
-from carts.carts_api.models import AppUser, State, StatesFromUsername
+from carts.carts_api.models import (
+    AppUser,
+    State,
+    RoleFromUsername,
+    RoleFromJobCode,
+    StatesFromUsername,
+)
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 
 
@@ -70,9 +76,15 @@ class JwtAuthentication(authentication.BaseAuthentication):
         """
         # TODO: have to switch this back and forth in dev until we get test EUA
         # users:
-        role = role_from_raw_ldap_job_codes(user_info["job_codes"])
         # role = "state_user"
-        states = None
+        role_map = [*RoleFromJobCode.objects.all()]
+        username_map = [
+            *RoleFromUsername.objects.filter(username=user.username)
+        ]
+        role = role_from_raw_ldap_job_codes(
+            role_map, username_map, user_info["job_codes"]
+        )
+        states = []
 
         if role in ("state_user", "co_user"):
             # This is where we load their state from the table that
@@ -90,7 +102,7 @@ class JwtAuthentication(authentication.BaseAuthentication):
                 pass
 
         app_user, _ = AppUser.objects.get_or_create(user=user)
-        app_user.states = states
+        app_user.states.set(states)
         app_user.role = role
         app_user.save()
 

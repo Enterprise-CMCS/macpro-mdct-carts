@@ -92,6 +92,8 @@ def _create_permissions_for_admins() -> None:
         "sectionschema",
         "state",
         "statesfromusername",
+        "roleandstatesfromusername",
+        "rolefromjobcode",
     )
     group_permissions = []
 

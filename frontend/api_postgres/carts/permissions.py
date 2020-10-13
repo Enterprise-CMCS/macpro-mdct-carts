@@ -28,5 +28,30 @@ class StateChangeSectionPermission(permissions.BasePermission):
 
 
 class AdminHideStatesFromUsername(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
     def __init__(self):
         self.perms_map["GET"] = ["carts_api.view_statesfromusername"]
+
+
+class AdminHideRoleFromJobCode(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_rolefromjobcode"]
+
+
+class AdminHideRoleFromUsername(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_rolefromusername"]

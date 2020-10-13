@@ -128,8 +128,35 @@ class StatesFromUsername(models.Model):
     as state.
     """
 
-    username = models.CharField(max_length=64)
+    username = models.CharField(max_length=64, unique=True)
     state_codes = ArrayField(models.CharField(max_length=2))
+
+
+class RoleFromJobCode(models.Model):
+    """
+    Associate job codes with a role.
+    Every time a user logs in, their job code is checked against the contents
+    of this table, and their role is set to whatever is in this table.
+    Note that this checks the string of the username and not the user instance;
+    the contents of this table exists prior to any of the users logging in.
+    Similarly, the user role is a string and not the instance.
+    """
+
+    job_code = models.CharField(max_length=64, unique=True)
+    user_role = models.CharField(max_length=64)
+
+
+class RoleFromUsername(models.Model):
+    """
+    Assign role and states according to username. An extended version of
+    StatesFromUsername that can also assign a role, essentially. The role
+    should still respect the assignment of role via job code—essentially, if
+    none of their job codes allow them to have the role assigned via the
+    endpoint entering data for this model, the assignment shouldn't happen.
+    """
+
+    username = models.CharField(max_length=64, unique=True)
+    user_role = models.CharField(max_length=64)
 
 
 class StateStatus(models.Model):

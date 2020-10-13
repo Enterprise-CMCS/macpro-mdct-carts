@@ -29,6 +29,8 @@ from rest_framework.permissions import (  # type: ignore
 from carts.auth import JwtAuthentication
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
+    AdminHideRoleFromUsername,
+    AdminHideRoleFromJobCode,
     AdminHideStatesFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
@@ -36,6 +38,8 @@ from carts.permissions import (
 from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
+    RoleFromUsernameSerializer,
+    RoleFromJobCodeSerializer,
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
@@ -44,6 +48,8 @@ from carts.carts_api.serializers import (
     StatesFromUsernameSerializer,
 )
 from carts.carts_api.models import (
+    RoleFromUsername,
+    RoleFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
@@ -102,6 +108,56 @@ class StatesFromUsernameViewSet(viewsets.ModelViewSet):
     permission_classes = [AdminHideStatesFromUsername]
     queryset = StatesFromUsername.objects.all()
     serializer_class = StatesFromUsernameSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per username, and for the new
+        # entry to overwrite.
+        existing = StatesFromUsername.objects.filter(
+            username=request.data.get("username")
+        )
+        if existing.count() > 0:
+            existing.delete()
+        super().create(request)
+
+
+class RoleFromUsernameViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRoleFromUsername]
+    queryset = RoleFromUsername.objects.all()
+    serializer_class = RoleFromUsernameSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per username, and for the new
+        # entry to overwrite.
+        existing = RoleFromUsername.objects.filter(
+            username=request.data.get("username")
+        )
+        if existing.count() > 0:
+            existing.delete()
+        super().create(request)
+
+
+class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRoleFromJobCode]
+    queryset = RoleFromJobCode.objects.all()
+    serializer_class = RoleFromJobCodeSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per job code, and for the new
+        # entry to overwrite.
+        existing = RoleFromJobCode.objects.filter(
+            job_code=request.data.get("job_code")
+        )
+        if existing.count() > 0:
+            existing.delete()
+        super().create(request)
 
 
 class StateStatusViewSet(viewsets.ModelViewSet):
@@ -416,8 +472,13 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 def authenticate_user(request):
     jwt_auth = JwtAuthentication()
     user, _ = jwt_auth.authenticate(request)
-    state = user.appuser.state
+    states = [*user.appuser.states.all()]
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
+
+    # The JS currently only knows how to handle one state per user, so:
+    state = None
+    if states:
+        state = states[0]
 
     program_names = ", ".join(state.program_names) if state else None
     program_text = f"{state.code.upper} {program_names}" if state else None
