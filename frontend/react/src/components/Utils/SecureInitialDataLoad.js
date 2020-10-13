@@ -31,17 +31,8 @@ const SecureInitialDataLoad = ({ stateCode, userData }) => {
       if (!authState.isAuthenticated) {
         // show logged-out page here?
       } else {
-        authService.getUser().then((info) => {
-          setToken(authState.accessToken);
-          dispatch(
-            secureLoadUserThenSections({
-              userData: info,
-              authState,
-              authService,
-              stateCode,
-            })
-          );
-        });
+        setToken(authState.accessToken);
+        dispatch(secureLoadUserThenSections());
       }
     }
   }, [authState, authService]);
