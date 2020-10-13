@@ -126,21 +126,32 @@ const rpn = (values, rpnString, precision) => {
  */
 const formula = (targets, providedFormula, precision) => {
   let computedValue = "Not Available";
+  let available = true;
   let manipulatedFormula = providedFormula;
 
   if (manipulatedFormula && targets) {
+    // Loop through formula as an object
     Object.keys(manipulatedFormula).forEach((i) => {
-      const replaceValue = new RegExp(`<${i}>`, "g");
-      manipulatedFormula = manipulatedFormula.replace(
-        replaceValue,
-        Number.isNaN(targets[i]) || targets[i] === null || targets[i] === ""
-          ? 0
-          : targets[i]
-      );
+      // Check if value has a string value
+      if (!Number.isNaN(targets[i]) && targets[i] !== "") {
+        const replaceValue = new RegExp(`<${i}>`, "g");
+
+        // Replace placehholders with actual values from targets
+        manipulatedFormula = manipulatedFormula.replace(
+          replaceValue,
+          Number.isNaN(targets[i]) || targets[i] === null || targets[i] === ""
+            ? 0
+            : targets[i]
+        );
+      } else {
+        available = false;
+      }
     });
 
-    // Evaluate the formula (string) and round to precision
-    computedValue = round(evaluate(manipulatedFormula), precision);
+    if (available) {
+      // Evaluate the formula (string) and round to precision
+      computedValue = round(evaluate(manipulatedFormula), precision);
+    }
   }
 
   return computedValue;
