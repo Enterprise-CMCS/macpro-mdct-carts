@@ -115,7 +115,7 @@ resource "aws_ecs_service" "api_postgres" {
     container_name   = "api_postgres"
     container_port   = 8000
   }
-  deployment_minimum_healthy_percent = local.deployment_minimum_healthy_percent
+  deployment_minimum_healthy_percent = 100
 }
 
 resource "null_resource" "wait_for_ecs_stability_api_postgres" {
@@ -175,7 +175,9 @@ resource "aws_alb_target_group" "api_postgres" {
   protocol             = "HTTP"
   deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
-
+  health_check {
+    matcher = "200,403"
+  }
   depends_on = [aws_alb.api_postgres]
 }
 

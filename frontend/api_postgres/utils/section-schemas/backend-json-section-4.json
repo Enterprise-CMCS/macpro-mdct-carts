@@ -40,6 +40,7 @@
                       {
                         "id": "2020-04-a-01-01-01-02",
                         "type": "repeatables",
+                        "typeLabel": "Goal",
                         "questions": [
                           {
                             "id": "2020-04-a-01-01-01-02-01",
