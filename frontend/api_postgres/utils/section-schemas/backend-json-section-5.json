@@ -355,35 +355,41 @@
                 "label": "How much did you spend on personnel in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "hint": "This includes wages, salaries, and other employee costs.",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
                 "fieldset_info": {
                   "id": "2020-05-a-02-01"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-01-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-01-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-01-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-01-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-01-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-01-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
