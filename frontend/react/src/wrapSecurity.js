@@ -7,7 +7,11 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
-import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
+import {
+  Security,
+  SecureRoute as OktaSecureRoute,
+  LoginCallback,
+} from "@okta/okta-react";
 import * as qs from "query-string";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -49,16 +53,19 @@ const WrappedSecurity = () => {
   let userData = false;
   let stateCode = false;
   if (loc.dev && Object.keys(devKeys).includes(loc.dev)) {
+    // We're going to bypass Okta.
     userData = { userToken: loc.dev };
     stateCode = devKeys[loc.dev];
   }
 
-  const Wrapper = userData === false ? Security : "div";
-  const SpecialRoute = userData === false ? SecureRoute : Route;
+  // If we're using Okta, wrap everything in Okta's Security component and use
+  // its SecureRoutes. Otherwise, use plain Routes and wrap everything in a div.
+  const SecurityWrapper = userData === false ? Security : "div";
+  const SecureRoute = userData === false ? OktaSecureRoute : Route;
 
   return (
     <div className="App" data-test="component-app">
-      <Wrapper
+      <SecurityWrapper
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}
       >
@@ -70,53 +77,53 @@ const WrappedSecurity = () => {
                 stateCode={stateCode}
                 userData={userData}
               />
-              <SpecialRoute path="/" />
+              <SecureRoute path="/" />
               <SaveError />
               <ScrollToTop />
               <Route path={config.callback} component={LoginCallback} />
-              <SpecialRoute path="/profile" component={Profile} />
+              <SecureRoute path="/profile" component={Profile} />
               <Switch>
-                <SpecialRoute exact path="/">
+                <SecureRoute exact path="/">
                   <Homepage />
-                </SpecialRoute>
+                </SecureRoute>
 
-                <SpecialRoute
+                <SecureRoute
                   exact
                   path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
                 >
                   <Sidebar />
                   <InvokeSection />
-                </SpecialRoute>
-                <SpecialRoute path="/views/sections/:state/:year/:sectionOrdinal">
+                </SecureRoute>
+                <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
                   <Sidebar />
                   <InvokeSection />
-                </SpecialRoute>
+                </SecureRoute>
 
-                <SpecialRoute path="/sections/:year/:sectionOrdinal/:subsectionMarker">
+                <SecureRoute path="/sections/:year/:sectionOrdinal/:subsectionMarker">
                   <Sidebar />
                   <InvokeSection userData={userData} />
-                </SpecialRoute>
-                <SpecialRoute path="/sections/:year/:sectionOrdinal">
+                </SecureRoute>
+                <SecureRoute path="/sections/:year/:sectionOrdinal">
                   <Sidebar />
                   <InvokeSection userData={userData} />
-                </SpecialRoute>
-                <SpecialRoute path="/sections/certify-and-submit">
+                </SecureRoute>
+                <SecureRoute path="/sections/certify-and-submit">
                   <Sidebar />
                   <CertifyAndSubmit />
-                </SpecialRoute>
+                </SecureRoute>
               </Switch>
-              <SpecialRoute exact path="/userinfo" component={Userinfo} />
-              <SpecialRoute
+              <SecureRoute exact path="/userinfo" component={Userinfo} />
+              <SecureRoute
                 exact
                 path="/state_assoc"
                 component={StateAssociations}
               />
-              <SpecialRoute
+              <SecureRoute
                 exact
                 path="/role_user_assoc"
                 component={UserRoleAssociations}
               />
-              <SpecialRoute
+              <SecureRoute
                 exact
                 path="/role_jobcode_assoc"
                 component={JobCodeRoleAssociations}
@@ -125,7 +132,7 @@ const WrappedSecurity = () => {
           </div>
         </Router>
         {VisibleFooter}
-      </Wrapper>
+      </SecurityWrapper>
     </div>
   );
 };
