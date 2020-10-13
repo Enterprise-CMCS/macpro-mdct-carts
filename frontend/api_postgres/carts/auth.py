@@ -70,8 +70,8 @@ class JwtAuthentication(authentication.BaseAuthentication):
         """
         # TODO: have to switch this back and forth in dev until we get test EUA
         # users:
-        role = role_from_raw_ldap_job_codes(user_info["job_codes"])
-        # role = "state_user"
+        # role = role_from_raw_ldap_job_codes(user_info["job_codes"])
+        role = "state_user"
         state = None
 
         if role not in ("admin_user", "co_user"):
