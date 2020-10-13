@@ -8,12 +8,8 @@ class UserProfile extends Component {
   }
 
   render() {
-    const fullName =
-      this.props.currentUser.firstname + " " + this.props.currentUser.lastname;
-    const email = this.props.currentUser.email;
-    const username = this.props.currentUser.username;
-    const state = this.props.currentUser.state;
-    const role = this.props.currentUser.role;
+    const {firstname, lastname, email, username,state,role} = this.props.currentUser;
+    
 
     return (
       <div className="page-info">
@@ -29,7 +25,7 @@ class UserProfile extends Component {
               </div>
               <div>
                 <div>Name: </div>
-                <div>{fullName}</div>
+                <div>{firstname +' '+ lastname}</div>
               </div>
               <div>
                 <div>Email: </div>
