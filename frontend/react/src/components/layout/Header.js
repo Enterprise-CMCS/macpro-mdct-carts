@@ -5,7 +5,14 @@ import Autosave from "./Autosave";
 import Logout from "./Logout";
 
 class Header extends Component {
-  static toggleUserNav(e) {
+  constructor() {
+    super();
+
+    this.toggleUserNav = this.toggleUserNav.bind(this);
+  }
+
+  // eslint-disable-next-line
+  toggleUserNav(e) {
     e.preventDefault();
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
