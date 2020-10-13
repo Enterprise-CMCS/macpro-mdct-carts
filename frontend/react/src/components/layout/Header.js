@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Autosave from "./Autosave";
 import Logout from "./Logout";
 
@@ -10,13 +11,13 @@ class Header extends Component {
     this.toggleUserNav = this.toggleUserNav.bind(this);
   }
 
-  toggleUserNav(e) {
+  toggleUserNav = (e) => {
     e.preventDefault();
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
 
     // Close menu when leaving focus
-    let root = document.getElementById("root");
+    const root = document.getElementById("root");
     root.addEventListener(
       "click",
       () => {
@@ -25,9 +26,11 @@ class Header extends Component {
       },
       false
     );
-  }
+  };
 
   render() {
+    const { currentUser } = this.props;
+    const { username } = currentUser;
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
@@ -44,10 +47,10 @@ class Header extends Component {
                       <a
                         href="#menu"
                         className="nav--dropdown__trigger"
-                        onClick={this.toggleUserNav}
+                        onClick={() => this.toggleUserNav()}
                         data-test="component-header-username"
                       >
-                        {this.props.currentUser.username}
+                        {username}
                       </a>
                     </li>
                   </ul>
@@ -68,6 +71,11 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  username: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,

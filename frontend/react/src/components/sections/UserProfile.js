@@ -1,65 +1,56 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-class UserProfile extends Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    const {firstname, lastname, email, username,state,role} = this.props.currentUser;
-    
-
-    return (
-      <div className="page-info">
-        <div className="ds-l-col--12 content ds-u-padding-left--4 ">
-          <h1>User Profile</h1>
-          <div className="main">
-            If any information is incorrect, please contact the{" "}
-            <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>.
-            <div className="profile-information">
-              <div>
-                <div>EUA Id: </div>
-                <div>{username}</div>
-              </div>
-              <div>
-                <div>Name: </div>
-                <div>{firstname +' '+ lastname}</div>
-              </div>
-              <div>
-                <div>Email: </div>
-                <div>{email}</div>
-              </div>
-              <div>
-                <div>State: </div>
-                <div>
-                  {
-                    // Check if state is an array. If so display all of them else display state object
-
-                    Array.isArray(state) ? (
-                      <ul>
-                        {state.map((object) => (
-                          <li>{object.name}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      state.name
-                    )
-                  }
-                </div>
-              </div>
-              <div>
-                <div>Role: </div>
-                <div>{role ? role : "No role available"}</div>
-              </div>
+const UserProfile = ({ currentUser }) => {
+  <div className="page-info">
+    <div className="ds-l-col--12 content ds-u-padding-left--4 ">
+      <h1>User Profile</h1>
+      <div className="main">
+        If any information is incorrect, please contact the{" "}
+        <a href="mailto:cartshelp@cms.hhs.gov">CARTS Help Desk</a>.
+        <div className="profile-information">
+          <div>
+            <div>EUA Id: </div>
+            <div>{currentUser.username}</div>
+          </div>
+          <div>
+            <div>Name: </div>
+            <div>
+              {currentUser.firstname} {currentUser.lastname}
             </div>
+          </div>
+          <div>
+            <div>Email: </div>
+            <div>{currentUser.UserProfileemail}</div>
+          </div>
+          <div>
+            <div>State: </div>
+            <div>
+              {
+                // Check if state is an array. If so display all of them else display state object
+
+                Array.isArray(currentUser.state) ? (
+                  <ul>
+                    {currentUser.state.map((object) => (
+                      <li>{object.name}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  currentUser.state.name
+                )
+              }
+            </div>
+          </div>
+          <div>
+            <div>Role: </div>
+            <div>{currentUser.role}</div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  </div>;
+};
 
 UserProfile.propTypes = {
   currentUser: PropTypes.object.isRequired,
