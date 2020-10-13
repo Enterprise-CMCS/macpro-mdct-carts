@@ -19,8 +19,3 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
     }
   }
 };
-
-export const done = () => ({
-  type: done.toString(),
-});
-done.toString = () => "certify/done";
