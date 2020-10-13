@@ -28,138 +28,170 @@
               },
               {
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
                 "label": "How much did you spend on Managed Care in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
+                "fieldset_info": {
+                  "id": "2020-05-a-01-01"
+                },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-01-01",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-02",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-03",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-01-01-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-01-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-01-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on Fee for Service in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on Fee for Service in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-01-02"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-01-02-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-02-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-02-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-01-02-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-02-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-02-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on anything else related to benefit costs in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on anything else related to benefit costs in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-01-03"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-01-03-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-03-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-03-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-01-03-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-03-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-03-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you receive in cost sharing from beneficiaries to offset your costs in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you receive in cost sharing from beneficiaries to offset your costs in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-01-04"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-01-04-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-04-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-01-04-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-01-04-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-04-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-01-04-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
@@ -356,215 +388,260 @@
                 ]
               },
               {
-                "label": "How much did you spend on general administration in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on general administration in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-02-02"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-02-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-02-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-02-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-02-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-02-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-02-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on contractors and brokers, such as enrollment contractors in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on contractors and brokers, such as enrollment contractors in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-02-03"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-03-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-03-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-03-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-03-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-03-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-03-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on claims processing in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on claims processing in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-02-04"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-04-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-04-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-04-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-04-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-04-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-04-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on outreach and marketing in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on outreach and marketing in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-02-05"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-05-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-05-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-05-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-05-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-05-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-05-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on your Health Services Initiatives (HSI) if you had any in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on your Health Services Initiatives (HSI) if you had any in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-02-06"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-06-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-06-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-06-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-06-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-06-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-06-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "label": "How much did you spend on anything else related to administrative costs in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "type": "fieldset",
-                "fieldset_type": "datagrid",
+                "fieldset_type": "marked",
+                "label": "How much did you spend on anything else related to administrative costs in FFY 2020? How much do you anticipate spending in FFY 2021 and 2022?",
                 "fieldset_info": {
                   "id": "2020-05-a-02-07"
                 },
                 "questions": [
                   {
-                    "comment": "This is the first real question so far in this part…",
-                    "type": "money",
-                    "id": "2020-05-a-02-07-a",
-                    "label": "2020",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-07-b",
-                    "label": "2021",
-                    "answer": {
-                      "entry": null
-                    }
-                  },
-                  {
-                    "type": "money",
-                    "id": "2020-05-a-02-07-c",
-                    "label": "2022",
-                    "answer": {
-                      "entry": null
-                    }
+
+                    "type": "fieldset",
+                    "fieldset_type": "datagrid",
+
+                    "questions": [
+                      {
+                        "comment": "This is the first real question so far in this part…",
+                        "type": "money",
+                        "id": "2020-05-a-02-07-a",
+                        "label": "2020",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-07-b",
+                        "label": "2021",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "type": "money",
+                        "id": "2020-05-a-02-07-c",
+                        "label": "2022",
+                        "answer": {
+                          "entry": null
+                        }
+                      }
+                    ]
                   }
                 ]
               },
+
               {
                 "type": "fieldset",
                 "label": "Table 2: Administrative Costs",
