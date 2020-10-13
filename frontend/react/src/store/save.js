@@ -1,6 +1,6 @@
 import { SAVE_FINISHED, SAVE_STARTED } from "./saveMiddleware";
 import { SET_STATE_STATUS } from "../actions/initial";
-import { certifyAndSubmit } from "../actions/certify";
+import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
 
 const initial = {
   error: false,
@@ -17,7 +17,7 @@ export default (state = initial, action) => {
         saving: true,
       };
 
-    case certifyAndSubmit.success:
+    case CERTIFY_AND_SUBMIT_SUCCESS:
       return {
         ...state,
         lastSave: new Date(),

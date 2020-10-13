@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button } from "@cmsgov/design-system-core";
 import { useHistory } from "react-router-dom";
-import { certifyAndSubmit, done } from "../../actions/certify";
+import { certifyAndSubmit } from "../../actions/certify";
 
 import PageInfo from "./PageInfo";
 
@@ -44,7 +44,6 @@ Thanks.propTypes = {
 
 const CertifyAndSubmit = ({
   certifyAndSubmit: certifyAction,
-  done: doneAction,
   isCertified,
   lastSave,
 }) => {
@@ -55,7 +54,6 @@ const CertifyAndSubmit = ({
   };
 
   const doneClick = () => {
-    doneAction();
     history.push("/");
   };
 
@@ -75,7 +73,6 @@ const CertifyAndSubmit = ({
 };
 CertifyAndSubmit.propTypes = {
   certifyAndSubmit: PropTypes.func.isRequired,
-  done: PropTypes.func.isRequired,
   isCertified: PropTypes.bool.isRequired,
   lastSave: PropTypes.object.isRequired,
 };
@@ -85,6 +82,6 @@ const mapState = (state) => ({
   lastSave: moment(state.save.lastSave),
 });
 
-const mapDispatch = { certifyAndSubmit, done };
+const mapDispatch = { certifyAndSubmit };
 
 export default connect(mapState, mapDispatch)(CertifyAndSubmit);
