@@ -5,13 +5,7 @@ import Autosave from "./Autosave";
 import Logout from "./Logout";
 
 class Header extends Component {
-  constructor() {
-    super();
-
-    this.toggleUserNav = this.toggleUserNav.bind(this);
-  }
-
-  toggleUserNav = (e) => {
+  static toggleUserNav(e) {
     e.preventDefault();
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
@@ -26,7 +20,7 @@ class Header extends Component {
       },
       false
     );
-  };
+  }
 
   render() {
     const { currentUser } = this.props;
@@ -47,7 +41,7 @@ class Header extends Component {
                       <a
                         href="#menu"
                         className="nav--dropdown__trigger"
-                        onClick={() => this.toggleUserNav()}
+                        onClick={this.toggleUserNav}
                         data-test="component-header-username"
                       >
                         {username}
