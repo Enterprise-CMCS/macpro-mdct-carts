@@ -1,48 +1,66 @@
-import axios from "axios";
+import axios from "../axios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
-import forwardedQueryString from "../util/devQueryString";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
+export const SET_STATE_STATUS = "SET_STATE_STATUS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
 /* eslint-disable no-underscore-dangle, no-console */
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
-    const { data } = await axios
-      .get(`${window.env.API_POSTGRES_URL}/state/${forwardedQueryString()}`)
-      .catch((err) => {
-        console.log("error:", err);
-        console.dir(err);
-      });
-
-    dispatch({ type: GET_ALL_STATES_DATA, data });
+    try {
+      const { data } = await axios.get("/state/");
+      dispatch({ type: GET_ALL_STATES_DATA, data });
+    } catch (err) {
+      console.log("error:", err);
+      console.dir(err);
+    }
   };
 };
 
-export const loadSections = ({ userData, headers, stateCode }) => {
-  const xhrHeaders = headers || {};
-  const apiHost = window.env.API_POSTGRES_URL;
-  const apiPath = "/api/v1/sections/2020/";
-  const state = stateCode || userData.abbr;
-  const queryString = forwardedQueryString();
-  const apiURL = [apiHost, apiPath, state, queryString].join("");
-  return async (dispatch) => {
-    const { data } = await axios({
-      method: "GET",
-      url: apiURL,
-      headers: xhrHeaders,
-    }).catch((err) => {
-      // Error-handling would go here. For now, just log it so we can see
-      // it in the console, at least.
-      console.log("--- ERROR LOADING SECTIONS ---");
-      console.log(err);
-      // Without the following too many things break, because the
-      // entire app is too dependent on section data being present.
-      dispatch({ type: LOAD_SECTIONS, data: [] });
-      throw err;
+export const getStateStatus = ({ stateCode }) => async (dispatch) => {
+  const { data } = await axios.get(`/state_status/`);
+
+  // Get the latest status for this state.
+  // TODO: Need to also check for the correct year, but since the year is
+  // hardcoded elsewhere right now, it doesn't seem like the right time to
+  // fix that here...
+  const payload = data
+    .reverse()
+    .find((status) => status.state.endsWith(`/state/${stateCode}/`));
+
+  if (payload) {
+    dispatch({
+      type: SET_STATE_STATUS,
+      payload,
     });
+  } else {
+    const { data: newData } = await axios.post(`/state_status/`, {
+      state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
+      year: 2020,
+    });
+    dispatch({ type: SET_STATE_STATUS, payload: newData });
+  }
+};
+
+export const loadSections = ({ userData, stateCode }) => {
+  const state = stateCode || userData.abbr;
+
+  return async (dispatch) => {
+    const { data } = await axios
+      .get(`/api/v1/sections/2020/${state}`)
+      .catch((err) => {
+        // Error-handling would go here. For now, just log it so we can see
+        // it in the console, at least.
+        console.log("--- ERROR LOADING SECTIONS ---");
+        console.log(err);
+        // Without the following too many things break, because the
+        // entire app is too dependent on section data being present.
+        dispatch({ type: LOAD_SECTIONS, data: [] });
+        throw err;
+      });
 
     dispatch({ type: LOAD_SECTIONS, data });
   };
@@ -50,17 +68,15 @@ export const loadSections = ({ userData, headers, stateCode }) => {
 
 export const loadUserThenSections = ({ userData, stateCode }) => {
   const { userToken } = userData;
-  const apiHost = window.env.API_POSTGRES_URL;
-  const apiPath = "/api/v1/appusers/";
-  const queryString = forwardedQueryString();
-  const apiURL = [apiHost, apiPath, userToken, queryString].join("");
+
   return async (dispatch) => {
     await axios
-      .get(apiURL)
+      .get(`/api/v1/appusers/${userToken}`)
       .then((res) => {
         dispatch(loadSections({ userData: res.data, stateCode }));
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
+        dispatch(getStateStatus({ stateCode }));
         dispatch(getUserData(res.data.currentUser));
         dispatch(getAllStatesData());
       })
@@ -82,20 +98,10 @@ export const loadUserThenSections = ({ userData, stateCode }) => {
   };
 };
 
-export const secureLoadUserThenSections = ({
-  authState,
-  // authService,
-  stateCode,
-}) => {
-  const xhrURL = `${
-    window.env.API_POSTGRES_URL
-  }/api/v1/appusers/auth${forwardedQueryString()}`;
-  const xhrHeaders = {
-    Authorization: `Bearer ${authState.accessToken}`,
-  };
-
+export const secureLoadUserThenSections = () => {
   return async (dispatch) => {
-    await axios({ method: "POST", url: xhrURL, headers: xhrHeaders })
+    await axios
+      .post("/api/v1/appusers/auth")
       .then((res) => {
         /* The order here is important because in the cases where there's
          * no state info (e.g. admin users) the current loadSections code
@@ -104,10 +110,11 @@ export const secureLoadUserThenSections = ({
          * The same applies to needing to eliminate the mostly-redundant
          * functions in this file that apply to non-secure loading.
          */
+        const stateCode = res.data.currentUser.state.id;
+
         dispatch(getUserData(res.data.currentUser));
-        dispatch(
-          loadSections({ userData: res.data, headers: xhrHeaders, stateCode })
-        );
+        dispatch(loadSections({ userData: res.data, stateCode }));
+        dispatch(getStateStatus({ stateCode }));
         dispatch(getProgramData(res.data));
         dispatch(getStateData(res.data));
       })
