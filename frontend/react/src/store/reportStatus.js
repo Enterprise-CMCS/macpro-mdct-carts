@@ -1,5 +1,5 @@
 import { SET_STATE_STATUS } from "../actions/initial";
-import { certifyAndSubmit } from "../actions/certify";
+import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
 
 const initialState = {
   id: null,
@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
         lastChanged: action.payload.last_changed,
         status: action.payload.status,
       };
-    case certifyAndSubmit.success:
+    case CERTIFY_AND_SUBMIT_SUCCESS:
       return {
         ...state,
         status: "certified",
