@@ -43,6 +43,8 @@ class UploadComponent extends Component {
 
     const signedURL = response.data.url;
 
+    console.log(`!*********generated signed url ${signedURL}`);
+
     return signedURL;
   }
 
