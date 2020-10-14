@@ -1,13 +1,11 @@
 import json
 import string
+import boto3
 from typing import (
     Dict,
     List,
     Union,
 )
-
-import boto3
-
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
@@ -448,9 +446,8 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def presigned_url(request):
-
     session = boto3.session.Session()
-    s3 = session.client("s3")
+    s3      = session.client("s3")
 
     # Generate the URL to get 'key-name' from 'bucket-name'
     url = s3.generate_presigned_url(
@@ -466,7 +463,6 @@ def presigned_url(request):
     generated_presigned_url = {
         "upload_url": url
     }
-
     return HttpResponse(generated_presigned_url)
 
 
