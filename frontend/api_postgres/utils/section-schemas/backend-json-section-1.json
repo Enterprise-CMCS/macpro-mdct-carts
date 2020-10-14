@@ -558,7 +558,7 @@
               "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 4.",
               "show_if_state_program_type_in": ["medicaid_exp_chip", "combo"]
             },
-            "text": "Indicate any changes you’ve made to your Medicaid Expansion CHIP program policies in the past federal fiscal year. All changes listed in this section require a State Plan Amendment (SPA) if you haven’t submitted one already.",
+            "text": "Indicate any changes you’ve made to your Medicaid Expansion CHIP program policies in the past federal fiscal year. Many changes listed in this section require a State Plan Amendment (SPA), while some don't, such as changing outreach efforts or changing the health plan enrollment process. Please submit a SPA to reflect any changes that do require a SPA.",
             "questions": [
               {
                 "id": "2020-01-a-03-01",
@@ -948,7 +948,7 @@
                   },
                   {
                     "id": "2020-01-a-03-18",
-                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any of the changes addressed in this section?",
+                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
                     "type": "radio",
                     "answer": {
                       "entry": null,
@@ -976,7 +976,7 @@
               "skip_text": "Part 4 only applies to states with a Separate CHIP program. Please skip to the next section.",
               "show_if_state_program_type_in": ["separate_chip", "combo"]
             },
-            "text": "Indicate any changes you’ve made to your Separate CHIP program and policies in the past federal fiscal year. All changes listed in this section require a State Plan Amendment (SPA) if you haven’t submitted one already.",
+            "text": "Indicate any changes you’ve made to your Separate CHIP program and policies in the past federal fiscal year. Many changes listed in this section require a State Plan Amendment (SPA), while some don't, such as changing outreach efforts or changing the health plan enrollment process. Please submit a SPA to reflect any changes that do require a SPA.",
             "questions": [
               {
                 "id": "2020-01-a-04-01",
@@ -1434,7 +1434,7 @@
                   },
                   {
                     "id": "2020-01-a-04-21",
-                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any of the changes addressed in this section?",
+                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
                     "type": "radio",
                     "answer": {
                       "entry": null,
