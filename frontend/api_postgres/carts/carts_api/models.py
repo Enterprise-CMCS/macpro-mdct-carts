@@ -192,3 +192,4 @@ class StateStatus(models.Model):
         max_length=32, choices=STATUSES, default="not_started"
     )
     last_changed = models.DateTimeField(null=True)
+    user_name = models.TextField(null=True)

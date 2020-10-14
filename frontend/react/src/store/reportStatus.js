@@ -5,6 +5,7 @@ const initialState = {
   id: null,
   status: null,
   lastChanged: null,
+  userName: null,
 };
 
 export default (state = initialState, action) => {
@@ -14,11 +15,13 @@ export default (state = initialState, action) => {
         id: action.payload.id,
         lastChanged: action.payload.last_changed,
         status: action.payload.status,
+        userName: action.payload.user_name,
       };
     case CERTIFY_AND_SUBMIT_SUCCESS:
       return {
         ...state,
         status: "certified",
+        userName: action.user,
       };
     default:
       return state;

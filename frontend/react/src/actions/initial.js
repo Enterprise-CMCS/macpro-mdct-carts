@@ -20,16 +20,29 @@ export const getAllStatesData = () => {
   };
 };
 
-export const getStateStatus = ({ stateCode }) => async (dispatch) => {
+export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
   const { data } = await axios.get(`/state_status/`);
+  const year = +getState().global.formYear;
 
   // Get the latest status for this state.
-  // TODO: Need to also check for the correct year, but since the year is
-  // hardcoded elsewhere right now, it doesn't seem like the right time to
-  // fix that here...
   const payload = data
-    .reverse()
-    .find((status) => status.state.endsWith(`/state/${stateCode}/`));
+    .filter(
+      (status) =>
+        status.state.endsWith(`/state/${stateCode}/`) && status.year === year
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.last_changed);
+      const dateB = new Date(b.last_changed);
+
+      if (dateA > dateB) {
+        return 1;
+      }
+      if (dateA < dateB) {
+        return -1;
+      }
+      return 0;
+    })
+    .pop();
 
   if (payload) {
     dispatch({
@@ -39,7 +52,7 @@ export const getStateStatus = ({ stateCode }) => async (dispatch) => {
   } else {
     const { data: newData } = await axios.post(`/state_status/`, {
       state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
-      year: 2020,
+      year,
     });
     dispatch({ type: SET_STATE_STATUS, payload: newData });
   }

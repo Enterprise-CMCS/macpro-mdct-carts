@@ -11,6 +11,7 @@ from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
+from django.utils import timezone
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -243,7 +244,7 @@ class SectionViewSet(viewsets.ModelViewSet):
     @transaction.atomic
     def update_sections(self, request):
         try:
-
+            certified = False
             state_id = False
             year = False
             for entry in request.data:
@@ -259,10 +260,16 @@ class SectionViewSet(viewsets.ModelViewSet):
 
                 self.check_object_permissions(request, section)
 
-                status, _ = StateStatus.objects.get_or_create(
-                    state_id=section_state, year=year
-                )
-                if status.status == "certified":
+                if certified == False:
+                    status = (
+                        StateStatus.objects.all()
+                        .filter(state_id=section_state, year=year)
+                        .order_by("last_changed")
+                        .last()
+                    )
+                    certified = status != None and status.status == "certified"
+
+                if certified == True:
                     return HttpResponse(
                         "cannot save certified report", status=400
                     )
@@ -272,16 +279,20 @@ class SectionViewSet(viewsets.ModelViewSet):
 
             print(year, state_id)
 
-            status, _ = StateStatus.objects.get_or_create(
-                state_id=section_state, year=year
+            status = (
+                StateStatus.objects.all()
+                .filter(state_id=section_state, year=year)
+                .order_by("last_changed")
+                .last()
             )
-            status.last_changed = datetime.now()
+            status.last_changed = datetime.now(tz=timezone.utc)
             status.save()
             return HttpResponse(status=204)
 
         except PermissionDenied:
             raise
-        except:
+        except Exception as e:
+            print(e)
             raise ValidationError(
                 "There is a problem with the provided data.", 400
             )
