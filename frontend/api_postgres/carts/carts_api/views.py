@@ -22,7 +22,6 @@ from rest_framework.exceptions import (  # type: ignore
 )
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
-    DjangoModelPermissions,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
@@ -112,12 +111,11 @@ class StatesFromUsernameViewSet(viewsets.ModelViewSet):
     def create(self, request):
         # We want there only to be one entry per username, and for the new
         # entry to overwrite.
-        existing = StatesFromUsername.objects.filter(
-            username=request.data.get("username")
-        )
-        if existing.count() > 0:
-            existing.delete()
-        super().create(request)
+        username = request.data.get("username")
+        existing = StatesFromUsername.objects.filter(username=username)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
 
 
 class RoleFromUsernameViewSet(viewsets.ModelViewSet):
@@ -132,12 +130,11 @@ class RoleFromUsernameViewSet(viewsets.ModelViewSet):
     def create(self, request):
         # We want there only to be one entry per username, and for the new
         # entry to overwrite.
-        existing = RoleFromUsername.objects.filter(
-            username=request.data.get("username")
-        )
-        if existing.count() > 0:
-            existing.delete()
-        super().create(request)
+        username = request.data.get("username")
+        existing = RoleFromUsername.objects.filter(username=username)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
 
 
 class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
@@ -152,12 +149,11 @@ class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
     def create(self, request):
         # We want there only to be one entry per job code, and for the new
         # entry to overwrite.
-        existing = RoleFromJobCode.objects.filter(
-            job_code=request.data.get("job_code")
-        )
-        if existing.count() > 0:
-            existing.delete()
-        super().create(request)
+        job_code = request.data.get("job_code")
+        existing = RoleFromJobCode.objects.filter(job_code=job_code)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
 
 
 class StateStatusViewSet(viewsets.ModelViewSet):
