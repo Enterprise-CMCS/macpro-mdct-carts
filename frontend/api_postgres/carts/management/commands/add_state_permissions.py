@@ -1,13 +1,12 @@
 from json import loads
 from pathlib import Path
-from typing import Tuple, Union
+from typing import Union
 from django.contrib.auth.models import (  # type: ignore
     Permission,
     Group,
 )
 from django.contrib.contenttypes.models import ContentType  # type: ignore
 from django.core.management.base import BaseCommand  # type: ignore
-from django.db.utils import IntegrityError  # type: ignore
 from toolz import pluck  # type: ignore
 
 Json = Union[dict, list]
