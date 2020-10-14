@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('carts_api', '0010_statestatus'),
+        ('carts_api', '0013_auto_20201013_2227'),
     ]
 
     operations = [
