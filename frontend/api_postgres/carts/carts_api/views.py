@@ -466,8 +466,7 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
 @api_view(["POST"])
 def authenticate_user(request):
-    jwt_auth = JwtAuthentication()
-    user, _ = jwt_auth.authenticate(request)
+    user = request.user
     states = [*user.appuser.states.all()]
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
 

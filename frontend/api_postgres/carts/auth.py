@@ -76,7 +76,6 @@ def _get_or_create_user(user_info):
         # This is where we load their state from the table that
         # associates EUA IDs to states, but here we default to MA,
         # which we'll need to change once we have proper test users.
-        states = [State.objects.get(code="MA")]
         try:
             state_relationship = StatesFromUsername.objects.get(
                 username=user.username

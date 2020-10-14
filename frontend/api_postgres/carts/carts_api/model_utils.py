@@ -155,13 +155,12 @@ def parse_raw_ldap_job_codes(entry: str) -> List[dict]:
 
 
 def get_role_from_job_codes(
-    roles: Tuple,
-    role_code_map: dict,
-    db_role_map: list,
-    db_username_maps: list,
-    entries: List[dict],
+    roles: Tuple,  # Tuple of tuples containing role/friendly role pairs.
+    role_code_map: dict,  # Base mapping of job codes to roles.
+    db_role_map: list,  # DB's overriding mappings of job codes to roles.
+    db_username_maps: list,  # DB's overriding mappings of this user to a role.
+    entries: List[dict],  # List of job codes for this user from Okta.
 ) -> Union[bool, str]:
-    # roles ordered by auth descending, so we want first match below:
     codes = [entry["job_code"] for entry in entries]
     role_codes = [_[0] for _ in roles]
     # Update JOB_CODES_TO_ROLES with what's in the db via the db_role_map list:
@@ -193,11 +192,11 @@ def get_role_from_job_codes(
 
 
 def role_from_raw_ldap_job_codes_and_role_data(
-    roles: Tuple,
-    role_code_map: dict,
-    db_role_map: list,
-    db_username_map: list,
-    entry: str,
+    roles: Tuple,  # Tuple of tuples containing role/friendly role pairs.
+    role_code_map: dict,  # Base mapping of job codes to roles.
+    db_role_map: list,  # DB's overriding mapping of job codes to roles.
+    db_username_map: list,  # DB's overriding mappings of this user to a role.
+    entry: str,  # Raw string from Okta about user job codes.
 ) -> Union[bool, str]:
     codes = parse_raw_ldap_job_codes(entry)
     return get_role_from_job_codes(
