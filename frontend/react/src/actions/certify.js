@@ -8,24 +8,21 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
   const state = getState();
   const user = state.stateUser.currentUser;
 
-  const reportId = state.reportStatus.id;
   const stateCode = state.stateUser.abbr;
   const userName = `${user.firstname} ${user.lastname}`;
   const year = +state.global.formYear;
 
-  if (reportId) {
-    dispatch({ type: CERTIFY_AND_SUBMIT });
-    try {
-      await axios.post(`/state_status/`, {
-        last_changed: new Date(),
-        state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
-        status: "certified",
-        user_name: userName,
-        year,
-      });
-      dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });
-    } catch (e) {
-      dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
-    }
+  dispatch({ type: CERTIFY_AND_SUBMIT });
+  try {
+    await axios.post(`/state_status/`, {
+      last_changed: new Date(),
+      state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
+      status: "certified",
+      user_name: userName,
+      year,
+    });
+    dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });
+  } catch (e) {
+    dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
   }
 };

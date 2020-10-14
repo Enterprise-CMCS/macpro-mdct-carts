@@ -99,4 +99,4 @@ class RoleFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
 class StateStatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = StateStatus
-        fields = ["id", "state", "year", "status", "last_changed", "user_name"]
+        fields = ["state", "year", "status", "last_changed", "user_name"]
