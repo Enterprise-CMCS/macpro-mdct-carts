@@ -277,8 +277,6 @@ class SectionViewSet(viewsets.ModelViewSet):
                 section.contents = entry["contents"]
                 section.save()
 
-            print(year, state_id)
-
             status = (
                 StateStatus.objects.all()
                 .filter(state_id=section_state, year=year)
@@ -291,8 +289,7 @@ class SectionViewSet(viewsets.ModelViewSet):
 
         except PermissionDenied:
             raise
-        except Exception as e:
-            print(e)
+        except:
             raise ValidationError(
                 "There is a problem with the provided data.", 400
             )
