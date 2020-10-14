@@ -18,6 +18,7 @@ import InvokeSection from "./components/Utils/InvokeSection";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Sidebar from "./components/layout/Sidebar";
 import ScrollToTop from "./components/Utils/ScrollToTop";
+import StateAssociations from "./components/Utils/StateAssociations";
 import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
@@ -84,6 +85,11 @@ const WrappedSecurity = () => {
                 </SecureRoute>
               </Switch>
               <SecureRoute exact path="/userinfo" component={Userinfo} />
+              <SecureRoute
+                exact
+                path="/state_assoc"
+                component={StateAssociations}
+              />
             </div>
           </div>
         </Router>
