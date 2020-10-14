@@ -49,7 +49,7 @@ const Repeatables = ({
               headerRef={ref}
               number={i + 1}
               question={q}
-              type={type}
+              type={question.typeLabel ? question.typeLabel : type}
             />
           </AccordionItem>
         ))}
