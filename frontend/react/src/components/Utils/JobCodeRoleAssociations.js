@@ -18,15 +18,11 @@ const handleOnFileLoad = (token, data) => {
     if (!row.data.job_code) {
       return;
     }
-    const postData ={
+    const postData = {
       job_code: row.data.job_code.trim(),
-      user_role: row.data.user_role.trim()
+      user_role: row.data.user_role.trim(),
     };
-    postDataToEndpointWithToken(
-      postData,
-      "/role_assoc/",
-      token
-    );
+    postDataToEndpointWithToken(postData, "/role_assoc/", token);
   });
 };
 
@@ -45,7 +41,14 @@ const JobCodeRoleAssociation = ({ currentUser }) => {
       <div>
         <p>
           The CSV must have a header row with <code>job_code</code> and{" "}
-          <code>user_role</code> as the headers, in order. Each row must contain only two values. The role with the highest level of privileges will be assigned to a user if they have multiple job codes. In order to assign a role with lower privileges to a user, that job code must be associated with that role here (note that this affects all users with that job code) and the specific user must be associated with the role via <a href="/role_user_assoc">/role_user_assoc</a> for that</p>
+          <code>user_role</code> as the headers, in order. Each row must contain
+          only two values. The role with the highest level of privileges will be
+          assigned to a user if they have multiple job codes. In order to assign
+          a role with lower privileges to a user, that job code must be
+          associated with that role here (note that this affects all users with
+          that job code) and the specific user must be associated with the role
+          via <a href="/role_user_assoc">/role_user_assoc</a> for that
+        </p>
         <p>A sample valid CSV would look like this:</p>
         <p>
           <pre>
@@ -91,4 +94,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(JobCodeRoleAssociation);
-

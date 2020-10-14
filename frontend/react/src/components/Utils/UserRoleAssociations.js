@@ -18,15 +18,11 @@ const handleOnFileLoad = (token, data) => {
     if (!row.data.username) {
       return;
     }
-    const postData ={
+    const postData = {
       username: row.data.username.trim(),
-      user_role: row.data.user_role.trim()
+      user_role: row.data.user_role.trim(),
     };
-    postDataToEndpointWithToken(
-      postData,
-      "/role_user_assoc/",
-      token
-    );
+    postDataToEndpointWithToken(postData, "/role_user_assoc/", token);
   });
 };
 
@@ -45,7 +41,11 @@ const UserRoleAssociation = ({ currentUser }) => {
       <div>
         <p>
           The CSV must have a header row with <code>username</code> and{" "}
-          <code>user_role</code> as the headers, in order. Each row must contain only two values. If you assign a role that the job codes for that user do not entitle them to, this will not work; use <a href="/role_jobcode_assoc">/role_jobcode_assoc</a> for that.</p>
+          <code>user_role</code> as the headers, in order. Each row must contain
+          only two values. If you assign a role that the job codes for that user
+          do not entitle them to, this will not work; use{" "}
+          <a href="/role_jobcode_assoc">/role_jobcode_assoc</a> for that.
+        </p>
         <p>A sample valid CSV would look like this:</p>
         <p>
           <pre>

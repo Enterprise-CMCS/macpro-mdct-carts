@@ -3,11 +3,7 @@ import forwardedQueryString from "./devQueryString";
 
 const postDataToEndpointWithToken = (data, endpoint, token) => {
   const queryString = forwardedQueryString();
-  const xhrURL = [
-    window.env.API_POSTGRES_URL,
-    endpoint,
-    queryString,
-  ].join("");
+  const xhrURL = [window.env.API_POSTGRES_URL, endpoint, queryString].join("");
   const xhrHeaders = {
     Authorization: `Bearer ${token}`,
   };
