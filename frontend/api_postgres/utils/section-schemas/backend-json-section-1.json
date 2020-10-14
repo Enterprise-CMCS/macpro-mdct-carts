@@ -948,7 +948,7 @@
                   },
                   {
                     "id": "2020-01-a-03-18",
-                    "label": " Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
+                    "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
                     "type": "radio",
                     "answer": {
                       "entry": null,
