@@ -1,11 +1,11 @@
 import axios from "axios";
-import forwardedQueryString from "../../util/devQueryString";
+import forwardedQueryString from "./devQueryString";
 
-const setStateAssociations = (data, token) => {
+const postDataToEndpointWithToken = (data, endpoint, token) => {
   const queryString = forwardedQueryString();
   const xhrURL = [
     window.env.API_POSTGRES_URL,
-    "/state_assoc/",
+    endpoint,
     queryString,
   ].join("");
   const xhrHeaders = {
@@ -16,4 +16,4 @@ const setStateAssociations = (data, token) => {
   return returnData();
 };
 
-export default setStateAssociations;
+export default postDataToEndpointWithToken;

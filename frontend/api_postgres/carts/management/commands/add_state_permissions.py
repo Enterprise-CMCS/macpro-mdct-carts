@@ -41,7 +41,6 @@ class Command(BaseCommand):
 def _create_permissions_for_state(code: str, content_type: int) -> list:
     def generate_perm(term: str, ctype: int, state: str) -> dict:
         return {
-            # "id": ident,
             "content_type_id": ctype,
             "codename": f"{term}_state_{state.lower()}",
             "name": f"Can {term} {state.upper()} sections",

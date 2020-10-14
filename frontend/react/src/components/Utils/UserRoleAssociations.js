@@ -18,12 +18,13 @@ const handleOnFileLoad = (token, data) => {
     if (!row.data.username) {
       return;
     }
-    const stateCodes = row.data.state_codes
-      .split(",")
-      .map((code) => code.trim());
+    const postData ={
+      username: row.data.username.trim(),
+      user_role: row.data.user_role.trim()
+    };
     postDataToEndpointWithToken(
-      { username: row.data.username, state_codes: stateCodes },
-      "/state_assoc/",
+      postData,
+      "/role_user_assoc/",
       token
     );
   });
@@ -33,7 +34,7 @@ const handleOnError = (err, file, inputElem, reason) => {
   console.log(err, file, inputElem, reason); // eslint-disable-line no-console
 };
 
-const StateAssociation = ({ currentUser }) => {
+const UserRoleAssociation = ({ currentUser }) => {
   const { authState } = useOktaAuth();
   const wrappedHandle = (data) => {
     const { accessToken } = authState;
@@ -44,19 +45,15 @@ const StateAssociation = ({ currentUser }) => {
       <div>
         <p>
           The CSV must have a header row with <code>username</code> and{" "}
-          <code>state_codes</code> as the headers, in order. The values in
-          state_codes must be a list of the two-digit state codes, separated by
-          commas, and the entire list of state codes must be enclosed in
-          quotation marks.
-        </p>
+          <code>user_role</code> as the headers, in order. Each row must contain only two values. If you assign a role that the job codes for that user do not entitle them to, this will not work; use <a href="/role_jobcode_assoc">/role_jobcode_assoc</a> for that.</p>
         <p>A sample valid CSV would look like this:</p>
         <p>
           <pre>
-            username,state_codes
+            username,user_role
             <br />
-            1234,&quot;AK&quot;
+            1234,bus_user
             <br />
-            5678,&quot;AZ,MA&quot;
+            5678,admin_user
             <br />
           </pre>
         </p>
@@ -85,7 +82,7 @@ const StateAssociation = ({ currentUser }) => {
   return userRole === "admin_user" ? authorized : unauthorized;
 };
 
-StateAssociation.propTypes = {
+UserRoleAssociation.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
@@ -93,4 +90,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
 });
 
-export default connect(mapStateToProps)(StateAssociation);
+export default connect(mapStateToProps)(UserRoleAssociation);

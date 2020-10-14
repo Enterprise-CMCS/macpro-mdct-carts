@@ -19,6 +19,8 @@ import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Sidebar from "./components/layout/Sidebar";
 import ScrollToTop from "./components/Utils/ScrollToTop";
 import StateAssociations from "./components/Utils/StateAssociations";
+import UserRoleAssociations from "./components/Utils/UserRoleAssociations";
+import JobCodeRoleAssociations from "./components/Utils/JobCodeRoleAssociations";
 import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
@@ -89,6 +91,16 @@ const WrappedSecurity = () => {
                 exact
                 path="/state_assoc"
                 component={StateAssociations}
+              />
+              <SecureRoute
+                exact
+                path="/role_user_assoc"
+                component={UserRoleAssociations}
+              />
+              <SecureRoute
+                exact
+                path="/role_jobcode_assoc"
+                component={JobCodeRoleAssociations}
               />
             </div>
           </div>

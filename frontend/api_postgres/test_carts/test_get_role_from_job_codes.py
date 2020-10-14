@@ -1,5 +1,5 @@
-import pytest
 from types import SimpleNamespace
+import pytest
 from carts.carts_api.model_utils import (
     USER_ROLES,
     JOB_CODES_TO_ROLES,
