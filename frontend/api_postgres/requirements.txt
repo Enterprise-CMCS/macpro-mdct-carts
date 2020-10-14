@@ -8,3 +8,9 @@ django-filter
 django-cors-headers
 jsonschema
 jsonpath_ng
+python_jwt
+requests
+cffi
+pycparser
+cryptography
+toolz

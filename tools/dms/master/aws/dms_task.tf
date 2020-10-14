@@ -1,4 +1,5 @@
 variable source_database_password {}
+variable source_database_host {}
 variable target_database_password {}
 
 module "dms_master" {
@@ -11,7 +12,7 @@ module "dms_master" {
   source_database_name_seds  = "SCHIP"
   source_database_username = "mbescbes"
   source_database_password = "${var.source_database_password}"
-  source_database_host     = "192.168.154.56"
+  source_database_host     = "${var.source_database_host}"
   source_database_port     = "1515"
   target_database_name     = "postgres"
   target_database_username = "pguser"

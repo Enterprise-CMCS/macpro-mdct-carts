@@ -37,7 +37,7 @@ module "db" {
   vpc_security_group_ids  = [aws_security_group.db.id]
   maintenance_window      = "Mon:00:00-Mon:03:00"
   backup_window           = "03:00-06:00"
-  backup_retention_period = 0
+  backup_retention_period = terraform.workspace == "prod"? 21:0
   tags = {
     Environment = terraform.workspace
   }
@@ -70,16 +70,31 @@ resource "aws_security_group_rule" "vpn" {
 
 resource "aws_db_parameter_group" "db_param_group" {
   name   = "rds-pg-${terraform.workspace}"
+
   family = "postgres9.6"
 
   parameter {
     name  = "pgaudit.role"
     value = "rds_pgaudit"
+    apply_method = "pending-reboot"
   }
 
   parameter {
     name  = "pgaudit.log"
     value = "ALL"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "shared_preload_libraries"
+    value = "pg_stat_statements, pgaudit"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "10000"
+    apply_method = "pending-reboot"
   }
 }
 

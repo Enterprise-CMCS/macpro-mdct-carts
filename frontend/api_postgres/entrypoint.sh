@@ -11,6 +11,8 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py makemigrations && python manage.py migrate && python manage.py idempotent_fixtures --overwrite
+python utils/section-schemas/generate_fixtures.py
+python utils/section-schemas/compare_fixtures.py
+python manage.py makemigrations && python manage.py migrate && python manage.py idempotent_fixtures --overwrite && python manage.py add_state_permissions
 
 exec "$@"

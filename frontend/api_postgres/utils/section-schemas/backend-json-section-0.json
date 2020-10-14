@@ -1,0 +1,124 @@
+{
+  "section": {
+    "year": 2020,
+    "state": null,
+    "valid": null,
+    "ordinal": 0,
+    "id": "2020-00",
+    "type": "section",
+    "title": "Basic State Information",
+    "subsections": [
+      {
+        "type": "subsection",
+        "id": "2020-00-a",
+        "parts": [
+          {
+            "id": "2020-00-a-01",
+            "type": "part",
+            "title": "Welcome!",
+            "text": "We already have some information about your state from our records.\nIf any information is incorrect, please contact the [CARTS Help Desk](mailto:cartshelp@cms.hhs.gov).",
+            "questions": [
+              {
+                "id": "2020-00-a-01-01",
+                "label": "State or territory name:",
+                "type": "text",
+                "answer": {
+                  "prepopulated": true,
+                  "readonly": true,
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-00-a-01-02",
+                "label": "Program type:",
+                "type": "radio",
+                "answer": {
+                  "prepopulated": true,
+                  "readonly": true,
+                  "entry": null,
+                  "options": [
+                    {
+                      "value": "combo",
+                      "label": "Combination"
+                    },
+                    {
+                      "value": "medicaid_exp_chip",
+                      "label": "Medicaid Expansion CHIP only"
+                    },
+                    {
+                      "value": "separate_chip",
+                      "label": "Separate CHIP only"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "2020-00-a-01-03",
+                "label": "CHIP program name(s):",
+                "type": "text_medium",
+                "answer": {
+                  "prepopulated": true,
+                  "readonly": true,
+                  "entry": null
+                }
+              },
+              {
+                "type": "fieldset",
+                "label": "Who should we contact if we have any questions about your report?",
+                "questions": [
+                  {
+                    "id": "2020-00-a-01-04",
+                    "label": "Contact name:",
+                    "type": "text",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-00-a-01-05",
+                    "label": "Job title:",
+                    "type": "text",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-00-a-01-06",
+                    "label": "Email:",
+                    "type": "email",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-00-a-01-07",
+                    "label": "Full mailing address:",
+                    "hint": "Include city, state, and zip code.",
+                    "type": "mailing_address",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2020-00-a-01-08",
+                    "label": "Phone number:",
+                    "type": "phone_number",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "type": "fieldset",
+                    "label": "PRA Disclosure Statement.",
+                    "hint": "This information is being collected to assist the Centers for Medicare & Medicaid Services (CMS) in partnership with States with the ongoing management of Medicaid and CHIP programs and policies. This mandatory information collection (42 U.S.C. 1397hh) will be used to help each state meet the statutory requirements at section 2108(a) of the Social Security Act to assess the operation of the State child health plan in each Federal fiscal year and to report the results of the assessment including the progress made in reducing the number of uncovered, low-income children. Under the Privacy Act of 1974 any personally identifying information obtained will be kept private to the extent of the law. According to the Paperwork Reduction Act of 1995, no persons are required to respond to a collection of information unless it displays a valid OMB control number. The valid OMB control number for this information collection is 0938-1148 (CMS-10398 #1). The time required to complete this information collection is estimated to average 40 hours per response, including the time to review instructions, search existing data resources, gather the data needed, and complete and review the information collection. Send comments regarding this burden estimate or any other aspect of this collection of information, including suggestions for reducing this burden, to CMS, 7500 Security Boulevard, Attn: Paperwork Reduction Act Reports Clearance Officer, Mail Stop C4-26-05, Baltimore, Maryland 21244-1850.",
+                    "questions": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

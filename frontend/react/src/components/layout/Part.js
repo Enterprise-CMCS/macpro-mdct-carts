@@ -1,63 +1,96 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { selectFragment } from "../../store/formData";
-import { _ } from "underscore";
-import QuestionComponent from "../fields/QuestionComponent";
 import { Alert } from "@cmsgov/design-system-core";
-import { shouldDisplay } from "../../util/shouldDisplay";
 
-const showPart = (context_data, programType, state) => {
-  if (context_data &&
+import { selectFragment } from "../../store/formData";
+import Question from "../fields/Question";
+import { selectQuestionsForPart } from "../../store/selectors";
+import { shouldDisplay } from "../../util/shouldDisplay";
+import Text from "./Text";
+
+const showPart = (contextData, programType, state) => {
+  if (
+    contextData &&
     programType &&
-    _.has(context_data, "show_if_state_program_type_in") &&
-    !context_data.show_if_state_program_type_in.includes(programType)) {
+    contextData.show_if_state_program_type_in &&
+    !contextData.show_if_state_program_type_in.includes(programType)
+  ) {
     return false;
   }
 
-  if (context_data && _.has(context_data, "conditional_display")) {
-    return shouldDisplay(state, context_data);
-  }
+  return shouldDisplay(state, contextData);
+};
 
-  return true;
-}
+const Part = ({
+  context_data: contextData,
+  partId,
+  partNumber,
+  questions,
+  show,
+  text,
+  title,
+}) => {
+  let innards = null;
 
-const Part = ({ partId, text, title, context_data, show }) => {
-  // Determine Part Number from partId
-  let partNum = Number(partId.split("-").pop());
+  const [, section] = partId.split("-");
 
   if (show) {
-    return (
-      <div id={partId}>
-        <h2>Part {partNum}{title ? ": " + title : null}</h2>
-        {text ? <p>{text}</p> : null}
-        <QuestionComponent partId={partId} />
-      </div>
+    innards = (
+      <>
+        {text ? <Text>{text}</Text> : null}
+
+        {questions.map((question) => (
+          <Question key={question.id} question={question} />
+        ))}
+      </>
     );
   } else {
-    return (
-      <div id={partId}>
-        <h2>Part {partNum}{title ? ": " + title : null}</h2>
-        <Alert>
-          <p className="ds-c-alert__text">
-            {context_data.skip_text ? <p>{context_data.skip_text}</p> : null}
-          </p>
-        </Alert>
-      </div>
+    innards = (
+      <Alert>
+        <div className="ds-c-alert__text">
+          {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
+        </div>
+      </Alert>
     );
-
   }
+
+  return (
+    <div id={partId}>
+      <h2>
+        {+section !== 0 && partNumber && `Part ${partNumber}: `}
+        {title ? `${title}` : null}
+      </h2>
+      {innards}
+    </div>
+  );
+};
+Part.propTypes = {
+  context_data: PropTypes.object,
+  partId: PropTypes.oneOf([PropTypes.string, null]).isRequired,
+  partNumber: PropTypes.number.isRequired,
+  questions: PropTypes.array.isRequired,
+  show: PropTypes.bool.isRequired,
+  text: PropTypes.string,
+  title: PropTypes.string,
+};
+Part.defaultProps = {
+  context_data: null,
+  text: "",
+  title: "",
 };
 
 const mapStateToProps = (state, { partId }) => {
   const part = selectFragment(state, partId);
-  const contextData = _.has(part, "context_data") ? part.context_data : null;
+  const questions = selectQuestionsForPart(state, partId);
+  const contextData = part.context_data;
 
   return {
+    context_data: part.context_data,
+    questions,
+    show: showPart(contextData, state.stateUser.programType, state),
     text: part ? part.text : null,
     title: part ? part.title : null,
-    context_data: _.has(part, "context_data") ? part.context_data : null,
-    programType: state.stateUser.programType,
-    show: showPart(contextData, state.stateUser.programType, state),
   };
 };
 

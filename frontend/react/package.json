@@ -19,6 +19,7 @@
     "jsonpath": "^1.0.2",
     "moment": "^2.28.0",
     "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-number-format": "^4.4.1",
@@ -36,7 +37,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "npx prettier $(git diff --name-only --relative | xargs) -w"
+    "lint": "eslint 'src/**/*.js'",
+    "prettier": "npx prettier $(git diff --diff-filter=ACMR --name-only --relative | xargs) -w"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,10 +57,17 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
     "babel-preset-env": "^1.7.0",
     "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.6",
     "husky": "^4.3.0",
     "jest-enzyme": "^7.1.2",
     "prettier": "^2.1.1"
@@ -66,7 +75,7 @@
   "prettier": {},
   "husky": {
     "hooks": {
-      "pre-commit": "npx prettier $(git diff --cached --name-only --relative | xargs) --check || true"
+      "pre-commit": "npx prettier $(git diff --diff-filter=ACMR --cached --name-only --relative | xargs) --check --ignore-unknown"
     }
   }
 }

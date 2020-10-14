@@ -3,7 +3,7 @@ JSON Structure Documentation
 
 2020-07-28
 
-..  contents:: :local: 
+..  contents:: :local:
 
 Overview
 --------
@@ -101,7 +101,7 @@ JSON–component translation
 ++++++++++++++++++++++++++
 The frontend components expect JSON-like data for their configuration, but while this is similar to the JSON provided by the backend, it isn't the same, and cannot be identical without overly intermingling form and presentation. Implementing this translation will probably result in some changes to the backend's JSON structure, although hopefullly these will be minimal.
 
-Notes on ``id`` 
+Notes on ``id``
 ++++++++++++++++
 Every construct with an ``id`` has the ``id`` of the nearest parent with an ``id`` plus a hyphen and its own representation, which for most constructs is a two-digit number with a leading zero, starting at "01". Subsections and questions whose parent elements are questions use letter representations, starting with ``a``.
 
@@ -150,11 +150,11 @@ The top-level construct is a section. Sections have the following properties:
     Despite the name, this covers the District of Columbia, and would also cover any future non-state regions that might be added to the system.
 ``valid``
     Boolean.
-    
+
     This status is determined by the backend. Note that incomplete submissions, while invalid, will still be accepted as input by the API. This status is primarily informational and doesn't indicate that the sytem will refuse to accept or certify the section.
 ``ordinal``
     Integer.
-    
+
     Section 1 has ordinal ``1``, etc.
 ``type``
     String.
@@ -162,7 +162,7 @@ The top-level construct is a section. Sections have the following properties:
     At this time it is assumed that this will always be ``section``, but this is currently being included as a hedge.
 ``title``
     String.
-    
+
     The title for the section, for example “Program Fees and Policy Changes”.
 ``subsections``
     Array of ``subsection`` constructs.
@@ -275,7 +275,7 @@ A property that contains data about whether and/or how the segment should be dis
     Array of program categories.
 
     The only valid values here are:
-    
+
     +   ``medicaid_exp_chip``
     +   ``separate_chip``
     +   ``combo``
@@ -302,7 +302,7 @@ Questions can contain other questions, so questions have either questions or par
 ``type``
     String.
 
-    The kind of question construct. The various types are described in the `Question Types`_ section. 
+    The kind of question construct. The various types are described in the `Question Types`_ section.
 ``label``
     String.
 
@@ -351,7 +351,7 @@ The default for all questions, in both interactive and noninteractive views, is 
     Always ``conditional_display``.
 ``comment``
     Plain-language description of the logic. For example:
-        
+
         Interactive: Hide if 2020-01-a-01-01 is no or unanswered; noninteractive: hide if that's no.
 ``skip_text`` (optional)
     String.
@@ -398,7 +398,7 @@ The ``id`` for the first question is ``2020-01-a-01-01``, and it allows for answ
         }
 
 To express the logic described above, the sub-question has this ``conditional_display``:
-    
+
 ..  code:: json
 
     "conditional_display": {
@@ -443,6 +443,8 @@ If the middle two questions were inside a fieldset, they are still at the same l
 
 Fieldsets do not have ``id`` properties, and the questions within them increment their ``id`` properties as if the fieldset container were not present.
 
+Fieldsets with ``skip_text`` based on conditional logic must have skip_text located in a ``conditional_display`` object.
+
 ``fieldset_type`` (optional)
     String.
 
@@ -455,7 +457,7 @@ Fieldsets do not have ``id`` properties, and the questions within them increment
     Array of program categories.
 
     The only valid values here are:
-    
+
     +   ``medicaid_exp_chip``
     +   ``separate_chip``
     +   ``combo``
@@ -480,7 +482,7 @@ Other ``fieldset`` instances nested below it do not inherit its ``marked`` natur
 
 ``synthesized_value``
 #####################
-Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result.
+Get values from elsewhere, defined in the ``targets`` property, perform some action(s) upon them, defined in the ``actions`` property, and display the result. For ``rpn`` actions, there is also an ``rpn`` property that defines the RPN string to be applied with the target values.
 
 Both ``targets`` and ``actions`` expect arrays.
 
@@ -496,6 +498,8 @@ Supported actions are:
     Add all of the values and return the result. This probably implies casting them to number types first.
 ``percentage``
     Divide the contents of the first target by the contents of the second target, multiply by 100. This probably implies casting them to number types first. The default is to round to two decimal places, but if a ``precision`` property is also present, its integer value will be used to determing how many digits of precision are required (``0`` would mean round to the nearest integer, ``2`` would mean round to the second decimal place, etc.),
+``rpn``
+    Given the list of targets, apply the RPN string provided in the ``rpn`` property. ``@`` characters in the RPN string will be replaced sequentially target values. The RPN string should be space delimited, with operators and operands being separated by a single space character. This string can include numeric constants, e.g., ``@ @ @ 9 + + /`` is equivalent to ``(@ + @ + @) /9``, where the ``@`` values are replaced with target values.
 
 
 The property is called ``actions``, but hopefully we'll only ever need to have one action listed, and thus won't have to define what happens in what order if there are multiple values.
@@ -622,13 +626,99 @@ Example of using ``contents``:
 
 The above would display ``The temperature in Fahrenheit at 01:00 in St. Petersburg on Valentine's Day, 1998`` and ``12.2``.
 
+Example of using ``rpn``:
+
+..  code:: json
+
+    {
+      "type": "fieldset",
+      "fieldset_type": "synthesized_value",
+      "label": "Total number of loosely-defined tales of the fantastical",
+      "fieldset_info": {
+        "targets": [
+          "$..*[?(@.id=='q1')].answer.entry",
+          "$..*[?(@.id=='q2')].answer.entry"
+          "$..*[?(@.id=='q3')].answer.entry"
+          "$..*[?(@.id=='q4')].answer.entry"
+        ],
+        "actions": ["rpn"],
+        "rpn": "@ @ @ @ 3 + - / *"
+      }
+    }
+
+The above would display a value equal to ``(((q1 + q2) - q3) / q4) * 3``
+
+One additional type of synthesized value that behaves a bit differently from those that perform calculations is the ``lookupFmapFy`` action. This pulls the enhanced FMAP for the current state. Just add the ``lookupFmapFy`` property to a synthesized table cell and specify the fiscal year as the value. This example shows one such cell in a synthesized table:
+
+..  code:: json
+
+    [
+      { "contents": "FMAP" },
+      {
+        "lookupFmapFy": "2020",
+        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
+      },
+    ],
+
+Another outlier is the ``lookupAcs`` action, which is used to pull American Community Survey data. Add the ``lookupAcs`` property to a synthesized table cell and specify the fiscal year and property name, as an object, for the value.
+
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
+..  code:: json
+
+    "rows": [
+        [
+            {
+                "lookupAcs": {
+                    "acsProperty": "percent_uninsured",
+                    "ffy": "2015"
+                }
+            },
+            {
+                "lookupAcs": {
+                    "acsProperty": "number_uninsured_moe",
+                    "ffy": "2016"
+                }
+            },
+            ...
+        ]
+    ]
+
+In addition there is ``compareACS`` which allows comparing a property against two years.  Add the ``compareACS`` property to a synthesized table cell and specify a fiscal year, the second fiscal year, to compare against, and property name, as an object, for the value.
+Available properties:
+*  number_uninsured
+*  number_uninsured_moe
+*  percent_uninsured
+*  number_uninsured_moe
+*  year
+
+..  code:: json
+
+    "rows": [
+        [
+            {
+                "compareACS": {
+                    "ffy1": "2018",
+                    "ffy2": "2019",
+                    "acsProperty": "percent_uninsured"
+                }
+            },
+            ...
+        ]
+    ]
+
 ``synthesized_table``
 ########################
 This displays a table constructed out of values either provided by or indicated in the ``fieldset_info`` property.
 
 The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
 
-``headers`` is an array containing the values for the header row of the table. 
+``headers`` is an array containing the values for the header row of the table.
 
 ``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
 
@@ -740,6 +830,32 @@ Assuming the answers to the two questions were ``2`` and ``3``, the above would 
              2            3                                                         5
         ======  ===========  ========================================================
 
+Most ``targets`` values will be jsonpath expressions that query the JSON tree, but occasionally it is necessary to pull data in from the Redux store. A target value containing an object with a `lookupFmapFy` key will pull in FMAP data from Redux for the fiscal year specified as the value of that object. For example, this is one row of a synthesized table that has FMAP data for FY20 and FY21:
+
+..   code:: json
+
+    [
+      { "contents": "FMAP" },
+      {
+        "targets": [
+          { "lookupFmapFy": "2020" }
+        ],
+        "actions": ["identity"],
+        "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
+      },
+      {
+        "targets": [
+          { "lookupFmapFy": "2021" }
+        ],
+        "actions": ["rpn"],
+        "rpn": "@ + 100",
+        "$comment": "This should pull the FMAP data from the API for this state (FY21) and plug it in and add 100 to it"
+      }
+    ],
+
+Because the ``identity`` action is called on the FY20 data, it will be pulled in as is. The FY21 cell shows how the value can be used in further calculation.
+
+If the specified value is not available, the data used in the calculation will be a ``NaN`` and the text displayed in the cell will be "Not available".
 
 ``noninteractive_table``
 ########################
@@ -749,7 +865,7 @@ This is essentially a simplification of ``synthesized_table`` where there are no
 
 The ``fieldset_info`` property contains two fields, ``headers`` and ``rows``.
 
-``headers`` is an array containing the values for the header row of the table. 
+``headers`` is an array containing the values for the header row of the table.
 
 ``rows`` is a two-dimensional array; each item is an array containing the values for that row of the table.
 
@@ -919,7 +1035,7 @@ For example, we want to ask about the state program's tier levels are if their f
 At least one row is required, but there is no limit to the number of rows a user can enter.
 
 The ``answer`` construct would be:
-    
+
     ..  code:: javascript
 
         {
@@ -930,7 +1046,7 @@ The ``answer`` construct would be:
         }
 
 If the user entered data stating that answer was the same as our example, i.e. equivalent to the two rows “21%–40% FPL: $30–$50” and “41%–60% FPL: $60–$80”, the ``answer`` construct with a populated ``entry`` property would be:
-    
+
     ..  code:: javascript
 
         {
@@ -987,7 +1103,7 @@ When creating new goals and/or objectives, the frontend must
 +   Set the ``id`` properties at all levels of the new construct to the appropriate values.
 
     For example, the first ``objectives`` question in Section 2B has an ``id`` of ``2020-02-b-01-01`` (year, section, subsection, part, question).
-    
+
     The lone (initial) direct child in its ``questions`` property has a type of ``objective``, and an ``id`` of ``2020-02-b-01-01-01`` (year, section, subsection, part, question, objective).
 
     The first direct child of the ``questions`` property of that ``objective`` question has a type of ``text_multiline``, and an ``id`` of ``2020-02-b-01-01-01-01`` (year, section, subsection, part, question, objective, question).

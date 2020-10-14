@@ -1,25 +1,33 @@
-import React from 'react';
-import { useOktaAuth } from '@okta/okta-react';
-import config from '../../auth-config';
+import React from "react";
+import { useOktaAuth } from "@okta/okta-react";
+import { Button } from "@cmsgov/design-system-core";
+import config from "../../auth-config";
 
 const redirectUri = `${window.location.origin}`;
 
 // Basic component with logout button
-const Logout = () => { 
-  const { authState, authService } = useOktaAuth();
+const Logout = () => {
+  const isOktaAuth = useOktaAuth();
 
-  const logout = async () => {
-    // Read idToken before local session is cleared
-    const idToken = authState.idToken;
-    await authService.logout('/');
+  if (isOktaAuth) {
+    const { authState, authService } = isOktaAuth;
 
-    // Clear remote session
-    window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
-  };
+    const logout = async () => {
+      // Read idToken before local session is cleared
+      const { idToken } = authState;
+      await authService.logout("/");
 
-  return (
-    <a onClick={logout}>Log out</a>
-  );
+      // Clear remote session
+      window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
+    };
+
+    return (
+      <Button type="button" inversed variation="transparent" onClick={logout}>
+        Log out
+      </Button>
+    );
+  }
+  return <span>Not Okta User</span>;
 };
 
 export default Logout;

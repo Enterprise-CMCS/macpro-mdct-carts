@@ -1,6 +1,9 @@
 import axios from "axios";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
+import { SET_FRAGMENT } from "../actions/repeatables";
+
+import forwardedQueryString from "../util/devQueryString";
 
 export const SAVE_STARTED = "automatic save has started";
 export const SAVE_FINISHED = "automated save has finished";
@@ -40,8 +43,10 @@ const saveMiddleware = (store) => {
 
       try {
         store.dispatch({ type: SAVE_STARTED });
-        await axios.post(
-          `${window._env_.API_POSTGRES_URL}/api/v1/sections/2020/AK/temp`,
+        await axios.put(
+          `${
+            window.env.API_POSTGRES_URL
+          }/api/v1/sections${forwardedQueryString()}`,
           // In a future world, we might save only the pending changes, but for
           // now, we save by posting the whole document in its current state.
           store.getState().formData
@@ -88,6 +93,7 @@ const saveMiddleware = (store) => {
     const result = next(action);
     switch (action.type) {
       case QUESTION_ANSWERED:
+      case SET_FRAGMENT:
         runSave(action);
         break;
       default:

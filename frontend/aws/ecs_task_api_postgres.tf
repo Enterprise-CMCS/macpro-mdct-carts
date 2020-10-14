@@ -1,5 +1,5 @@
 locals {
-  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${var.acm_certificate_domain_api_postgres}"
+  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}:8000" : "https://${var.acm_certificate_domain_api_postgres}"
 }
 
 # Number of container instances to spawn per resource. Default is 1.
@@ -115,7 +115,7 @@ resource "aws_ecs_service" "api_postgres" {
     container_name   = "api_postgres"
     container_port   = 8000
   }
-  deployment_minimum_healthy_percent = local.deployment_minimum_healthy_percent
+  deployment_minimum_healthy_percent = 100
 }
 
 resource "null_resource" "wait_for_ecs_stability_api_postgres" {
@@ -175,7 +175,9 @@ resource "aws_alb_target_group" "api_postgres" {
   protocol             = "HTTP"
   deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
-
+  health_check {
+    matcher = "200,403"
+  }
   depends_on = [aws_alb.api_postgres]
 }
 
@@ -239,16 +241,16 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     sampled_requests_enabled   = true
   }
 
-  rule{
-    name = "${terraform.workspace}-api-DDOSRateLimitRule"
+  rule {
+    name     = "${terraform.workspace}-api-DDOSRateLimitRule"
     priority = 0
-    action{
-      count{}
+    action {
+      count {}
     }
 
     statement {
-      rate_based_statement{
-        limit = 5000
+      rate_based_statement {
+        limit              = 5000
         aggregate_key_type = "IP"
       }
     }
@@ -260,18 +262,18 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-api-RegAWSCommonRule"
+  rule {
+    name     = "${terraform.workspace}-api-RegAWSCommonRule"
     priority = 1
 
-    override_action{
-      count{}
+    override_action {
+      count {}
     }
 
     statement {
-      managed_rule_group_statement{
+      managed_rule_group_statement {
         vendor_name = "AWS"
-        name = "AWSManagedRulesCommonRuleSet"
+        name        = "AWSManagedRulesCommonRuleSet"
       }
     }
 
@@ -282,18 +284,18 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-api-AWSManagedRulesAmazonIpReputationList"
+  rule {
+    name     = "${terraform.workspace}-api-AWSManagedRulesAmazonIpReputationList"
     priority = 2
 
-    override_action{
-      none{}
+    override_action {
+      none {}
     }
 
     statement {
-      managed_rule_group_statement{
+      managed_rule_group_statement {
         vendor_name = "AWS"
-        name = "AWSManagedRulesAmazonIpReputationList"
+        name        = "AWSManagedRulesAmazonIpReputationList"
       }
     }
 
@@ -304,18 +306,18 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-api-RegAWSManagedRulesKnownBadInputsRuleSet"
+  rule {
+    name     = "${terraform.workspace}-api-RegAWSManagedRulesKnownBadInputsRuleSet"
     priority = 3
 
-    override_action{
-      count{}
+    override_action {
+      count {}
     }
 
     statement {
-      managed_rule_group_statement{
+      managed_rule_group_statement {
         vendor_name = "AWS"
-        name = "AWSManagedRulesKnownBadInputsRuleSet"
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
       }
     }
 
@@ -326,15 +328,15 @@ resource "aws_wafv2_web_acl" "apiwaf" {
     }
   }
 
-  rule{
-    name = "${terraform.workspace}-api-allow-usa-plus-territories"
+  rule {
+    name     = "${terraform.workspace}-api-allow-usa-plus-territories"
     priority = 5
-    action{
-      allow{}
+    action {
+      allow {}
     }
 
     statement {
-      geo_match_statement{
+      geo_match_statement {
         country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
       }
     }

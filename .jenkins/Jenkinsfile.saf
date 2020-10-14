@@ -28,10 +28,8 @@ pipeline {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           jenkinsUtils.triggerEcrScan("postgres_deployer", env.BUILD_TAG)
           jenkinsUtils.triggerEcrScan("postgres_django", env.BUILD_TAG)
-          jenkinsUtils.triggerEcrScan("sqlserver_django", env.BUILD_TAG)          
           jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
           jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
-          jenkinsUtils.fetchEcrScanResult("sqlserver_django", env.BUILD_TAG)
         }
       }
       post {

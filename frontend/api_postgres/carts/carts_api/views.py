@@ -5,17 +5,33 @@ from typing import (
     List,
     Union,
 )
+
 from django.contrib.auth.models import User, Group  # type: ignore
+from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
-from rest_framework.decorators import api_view  # type: ignore
+from rest_framework.decorators import (  # type: ignore
+    api_view,
+)
+from rest_framework.exceptions import (  # type: ignore
+    PermissionDenied,
+    ValidationError,
+)
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
+    DjangoModelPermissions,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
+)
+from carts.auth import JwtAuthentication
+from carts.auth_dev import JwtDevAuthentication
+from carts.permissions import (
+    AdminHideStateFromUsername,
+    StateChangeSectionPermission,
+    StateViewSectionPermission,
 )
 from carts.carts_api.serializers import (
     UserSerializer,
@@ -23,28 +39,25 @@ from carts.carts_api.serializers import (
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
-    FMAPSerializer,
+    StateSerializer,
+    StateStatusSerializer,
+    StateFromUsernameSerializer,
 )
 from carts.carts_api.models import (
     Section,
     SectionBase,
     SectionSchema,
-    FMAP,
+    State,
+    StateStatus,
+    StateFromUsername,
 )
 
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
-    "AK": {
-        "program_type": "medicaid_exp_chip"
-    },
-    "AZ": {
-        "program_type": "separate_chip"
-    },
-    "MA": {
-        "program_type": "combo"
-    },
-
+    "AK": {"program_type": "medicaid_exp_chip"},
+    "AZ": {"program_type": "separate_chip"},
+    "MA": {"program_type": "combo"},
 }
 
 
@@ -52,8 +65,9 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
 
 
@@ -61,71 +75,153 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-class FMAPViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that returns FMAP percentages for each state.
-    """
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = FMAP.objects.all()
-    serializer_class = FMAPSerializer
 
-    #def list(self, request):
+class StateViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that returns state data.
+    """
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = State.objects.all()
+    serializer_class = StateSerializer
+
+    # def list(self, request):
     #    return Response(self.serializer_class(self.queryset).data)
-@api_view(["GET"])
-def fmap_by_state(request, state):
+
+
+class StateFromUsernameViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that retrieves the FMAP for a single state
+    API endpoint for username–state associations.
     """
-    fmapdata = FMAP.objects.filter(state=state)
-    serializer = FMAPSerializer(fmapdata, many=True)
-    return Response(serializer.data)
+
+    permission_classes = [AdminHideStateFromUsername]
+    queryset = StateFromUsername.objects.all()
+    serializer_class = StateFromUsernameSerializer
+
+
+class StateStatusViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for state status.
+    """
+
+    permission_classes = [
+        StateViewSectionPermission,
+        StateChangeSectionPermission,
+    ]
+    queryset = StateStatus.objects.all()
+    serializer_class = StateStatusSerializer
+
 
 class SectionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    permission_classes = [IsAuthenticatedOrReadOnly]
+
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
+    permission_classes = [
+        StateViewSectionPermission,
+        StateChangeSectionPermission,
+    ]
 
     def list(self, request):
         queryset = self.get_queryset()
-        serializer = SectionSerializer(queryset, many=True,
-                                       context={"request": request})
+        serializer = SectionSerializer(
+            queryset, many=True, context={"request": request}
+        )
         return Response(serializer.data)
 
+    def get_sections_by_year_and_state(self, request, year, state):
+        sections = self.get_queryset().filter(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+        )
 
-@api_view(["GET"])
-def sections_by_year_and_state(request, year, state):
-    try:
-        data = Section.objects.filter(contents__section__year=year,
-                                      contents__section__state=state.upper())
-    except Section.DoesNotExist:
-        return HttpResponse(status=404)
+        for section in sections:
+            # TODO: streamline this so if users have access to all of the
+            # objects (e.g. if they're admins) the check occurs ony once.
+            print("about to check object permissions", flush=True)
+            self.check_object_permissions(request, section)
 
-    if request.method == 'GET':
-        serializer = SectionSerializer(data, many=True,
-                                       context={"request": request})
+        serializer = SectionSerializer(
+            sections, many=True, context={"request": request}
+        )
         return Response(serializer.data)
 
-@api_view(["POST"])
-def temp_post_endpoint(request, year, state):
-    return HttpResponse(status=204)
+    def get_section_by_year_and_state(self, request, year, state, section):
+        section = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
+
+        self.check_object_permissions(request, section)
+
+        serializer = SectionSerializer(section, context={"request": request})
+        return Response(serializer.data)
+
+    @transaction.atomic
+    def update_sections(self, request):
+        try:
+
+            for entry in request.data:
+                section_id = entry["contents"]["section"]["id"]
+                section_state = entry["contents"]["section"]["state"]
+
+                section = Section.objects.get(
+                    contents__section__id=section_id,
+                    contents__section__state=section_state.upper(),
+                )
+
+                self.check_object_permissions(request, section)
+
+                section.contents = entry["contents"]
+                section.save()
+                return HttpResponse(status=204)
+
+        except PermissionDenied:
+            raise
+        except:
+            raise ValidationError(
+                "There is a problem with the provided data.", 400
+            )
+
+    def get_permissions(self):
+        permission_classes_by_action = {
+            "get_sections_by_year_and_state": [StateViewSectionPermission],
+            "get_section_by_year_and_state": [StateViewSectionPermission],
+            "update_sections": [
+                StateViewSectionPermission,
+                StateChangeSectionPermission,
+            ],
+        }
+
+        try:
+            return [
+                permission()
+                for permission in permission_classes_by_action[self.action]
+            ]
+        except:
+            return [permission() for permission in self.permission_classes]
+
 
 @api_view(["GET"])
 def section_by_year_and_state(request, year, state, section):
     try:
-        data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper(),
-                                   contents__section__ordinal=section)
+        data = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = SectionSerializer(data)
         return Response(serializer.data)
 
@@ -137,21 +233,23 @@ def sectionbases_by_year(request, year):
     except SectionBase.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
-        serializer = SectionBaseSerializer(data, many=True,
-                                           context={"request": request})
+    if request.method == "GET":
+        serializer = SectionBaseSerializer(
+            data, many=True, context={"request": request}
+        )
         return Response(serializer.data)
 
 
 @api_view(["GET"])
 def sectionbase_by_year_and_section(request, year, section):
     try:
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
     except SectionBase.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = SectionBaseSerializer(data)
         return Response(serializer.data)
 
@@ -159,8 +257,9 @@ def sectionbase_by_year_and_section(request, year, section):
 @api_view(["GET"])
 def sectionbase_by_year_section_subsection(request, year, section, subsection):
     try:
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
         subsection_id = _id_from_chunks(year, section, subsection)
         subsections = data.contents["section"]["subsections"]
         targets = [_ for _ in subsections if _["id"] == subsection_id]
@@ -171,18 +270,21 @@ def sectionbase_by_year_section_subsection(request, year, section, subsection):
     except SectionBase.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = SectionBaseSerializer(data)
         return Response(serializer.data)
 
 
 @api_view(["GET"])
-def section_subsection_by_year_and_state(request, year, state, section,
-                                         subsection):
+def section_subsection_by_year_and_state(
+    request, year, state, section, subsection
+):
     try:
-        data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper(),
-                                   contents__section__ordinal=section)
+        data = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
         subsections = data.contents["section"]["subsections"]
         subsection_id = _id_from_chunks(year, section, subsection)
         targets = [_ for _ in subsections if _["id"] == subsection_id]
@@ -193,7 +295,7 @@ def section_subsection_by_year_and_state(request, year, state, section,
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = SectionSerializer(data)
         return Response(serializer.data)
 
@@ -202,9 +304,11 @@ def section_subsection_by_year_and_state(request, year, state, section,
 def fragment_by_year_state_id(request, state, id):
     try:
         year, section = _year_section_query_from_id(id)
-        data = Section.objects.get(contents__section__year=year,
-                                   contents__section__state=state.upper(),
-                                   contents__section__ordinal=section)
+        data = Section.objects.get(
+            contents__section__year=year,
+            contents__section__state=state.upper(),
+            contents__section__ordinal=section,
+        )
         targets = _get_fragment_by_id(id, data.contents.get("section"))
         if not len(targets) == 1:
             return HttpResponse(status=404)
@@ -213,7 +317,7 @@ def fragment_by_year_state_id(request, state, id):
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = SectionSerializer(data)
         return Response(serializer.data)
 
@@ -222,8 +326,9 @@ def fragment_by_year_state_id(request, state, id):
 def generic_fragment_by_id(request, id):
     try:
         year, section = _year_section_query_from_id(id)
-        data = SectionBase.objects.get(contents__section__year=year,
-                                       contents__section__ordinal=section)
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
         targets = _get_fragment_by_id(id, data.contents.get("section"))
         if not len(targets) == 1:
             return HttpResponse(status=404)
@@ -232,7 +337,7 @@ def generic_fragment_by_id(request, id):
     except Section.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = SectionBaseSerializer(data)
         return Response(serializer.data)
 
@@ -241,6 +346,7 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionBase.objects.all()
     serializer_class = SectionBaseSerializer
@@ -250,6 +356,7 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionSchema.objects.all()
     serializer_class = SectionSchemaSerializer
@@ -258,77 +365,83 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
 def report(request, year=None, state=None):
     assert year
     assert state
-    sections = Section.objects.filter(contents__section__year=year,
-                                      contents__section__state=state.upper())
-    ordered = sorted([_.contents["section"] for _ in sections],
-                     key=lambda s: s["ordinal"])
+    sections = Section.objects.filter(
+        contents__section__year=year, contents__section__state=state.upper()
+    )
+    ordered = sorted(
+        [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+    )
     context = {
         "sections": ordered,
         "state": STATE_INFO[state.upper()],
-        "l": len(ordered)
+        "l": len(ordered),
     }
     report_template = get_template("report.html")
     return HttpResponse(report_template.render(context=context))
 
 
-def fake_user_data(request, username=None):
-    assert username
-    assert "-" in username
-    state = username.split("-")[1].upper()
+def fake_user_data(request, username=None):  # pylint: disable=unused-argument
+    jwt_auth = JwtDevAuthentication()
+    user, _ = jwt_auth.authenticate(request, username=username)
+    state = user.appuser.state
+    groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
-    fakeUserData = {
-        "AK": {
-            "name": "Alaska",
-            "abbr": "AK",
-            "programType": "medicaid_exp_chip",
-            "programName": "AK Program Name??",
-            "imageURI": "/img/states/ak.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "AK",
-                    "name": "Alaska"
-                },
-                "username": "dev-jane.doe@alaska.gov",
-            }
+    program_names = ", ".join(state.program_names) if state else None
+    program_text = f"{state.code.upper} {program_names}" if state else None
+
+    user_data = {
+        "name": state.name if state else None,
+        "abbr": state.code.upper() if state else None,
+        "programType": state.program_type if state else None,
+        "programName": program_text,
+        "formName": "CARTS FY",
+        "currentUser": {
+            "role": user.appuser.role,
+            "firstname": user.first_name,
+            "lastname": user.last_name,
+            "state": {
+                "id": state.code.upper() if state else None,
+                "name": state.name if state else None,
+            },
+            "username": user.username,
+            "email": user.email,
+            "group": groups,
         },
-        "AZ": {
-            "name": "Arizona",
-            "abbr": "AZ",
-            "programType": "separate_chip",
-            "programName": "AZ Program Name??",
-            "imageURI": "/img/states/az.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "AZ",
-                    "name": "Arizona"
-                },
-                "username": "dev-john.smith@arizona.gov",
-            }
-        },
-        "MA": {
-            "name": "Massachusetts",
-            "abbr": "MA",
-            "programType": "combo",
-            "programName": "MA Program Name??",
-            "imageURI": "/img/states/ma.svg",
-            "formName": "CARTS FY",
-            "currentUser": {
-                "role": "state_user",
-                "state": {
-                    "id": "MA",
-                    "name": "Massachusetts"
-                },
-                "username": "dev-naoise.murphy@massachusetts.gov",
-            }
-        }
     }
 
-    assert state in fakeUserData
-    return HttpResponse(json.dumps(fakeUserData[state]))
+    return HttpResponse(json.dumps(user_data))
+
+
+@api_view(["POST"])
+def authenticate_user(request):
+    jwt_auth = JwtAuthentication()
+    user, _ = jwt_auth.authenticate(request)
+    state = user.appuser.state
+    groups = ", ".join(user.groups.all().values_list("name", flat=True))
+
+    program_names = ", ".join(state.program_names) if state else None
+    program_text = f"{state.code.upper} {program_names}" if state else None
+
+    user_data = {
+        "name": state.name if state else None,
+        "abbr": state.code.upper() if state else None,
+        "programType": state.program_type if state else None,
+        "programName": program_text,
+        "formName": "CARTS FY",
+        "currentUser": {
+            "role": user.appuser.role,
+            "firstname": user.first_name,
+            "lastname": user.last_name,
+            "state": {
+                "id": state.code.upper() if state else None,
+                "name": state.name if state else None,
+            },
+            "username": user.username,
+            "email": user.email,
+            "group": groups,
+        },
+    }
+    return HttpResponse(json.dumps(user_data))
 
 
 def _id_from_chunks(year, *args):
@@ -337,6 +450,7 @@ def _id_from_chunks(year, *args):
         if chunk in string.ascii_lowercase:
             return chunk
         return chunk.zfill(2)
+
     chunks = [year] + [*args]
 
     return "-".join(fill(c) for c in chunks)
@@ -346,8 +460,9 @@ def _year_section_query_from_id(ident: str) -> List[int]:
     return [int(_) for _ in ident.split("-")[:2]]
 
 
-def _get_fragment_by_id(ident: str,
-                        contents: Union[Dict, List]) -> DatumInContext:
+def _get_fragment_by_id(
+    ident: str, contents: Union[Dict, List]
+) -> DatumInContext:
     pathstring = f"$..*[?(@.id=='{ident}')]"
     find_by_id = parse(pathstring)
     return find_by_id.find(contents)

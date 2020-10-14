@@ -43,19 +43,9 @@ services:
       - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
+      - OPENID_DISCOVERY_URL=https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration
     volumes:
       - ./api_postgres/:/usr/src/app/
-  api_sqlserver:
-    build:
-      context: ./api_sqlserver
-      dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
-    ports:
-      - 8001:8000
-    networks:
-      - data_net
-    volumes:
-      - ./api_sqlserver/:/usr/src/app/
 networks:
   data_net:
     external: true
