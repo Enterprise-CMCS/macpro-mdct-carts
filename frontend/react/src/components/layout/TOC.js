@@ -72,8 +72,8 @@ class TOC extends Component {
         id: "certify-and-submit",
         label: "Certify and Submit",
         onClick: this.click,
-        selected: location.pathname === "/sections/certify-and-submit",
-        url: "/sections/certify-and-submit",
+        selected: location.pathname === "/sections/2020/certify-and-submit",
+        url: "/sections/2020/certify-and-submit",
       });
     }
 

@@ -99,6 +99,10 @@ const WrappedSecurity = () => {
                   <InvokeSection />
                 </SecureRoute>
 
+                <SecureRoute path="/sections/:year/certify-and-submit" exact>
+                  <Sidebar />
+                  <CertifyAndSubmit />
+                </SecureRoute>
                 <SecureRoute path="/sections/:year/:sectionOrdinal/:subsectionMarker">
                   <Sidebar />
                   <InvokeSection userData={userData} />
@@ -106,10 +110,6 @@ const WrappedSecurity = () => {
                 <SecureRoute path="/sections/:year/:sectionOrdinal">
                   <Sidebar />
                   <InvokeSection userData={userData} />
-                </SecureRoute>
-                <SecureRoute path="/sections/certify-and-submit">
-                  <Sidebar />
-                  <CertifyAndSubmit />
                 </SecureRoute>
               </Switch>
               <SecureRoute exact path="/userinfo" component={Userinfo} />
