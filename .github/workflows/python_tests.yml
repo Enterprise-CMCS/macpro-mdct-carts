@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions//checkout@af513c7a016048ae468971c52ed77d9562c7c819
       - name: install requirements
-        working-directory: ./frontend/api_postgress
+        working-directory: ./frontend/api_postgres
         run: pip install -r requirements.txt
       - name: run tests
-        working-directory: ./frontend/api_postgress
+        working-directory: ./frontend/api_postgres
         run: pytest test_carts
