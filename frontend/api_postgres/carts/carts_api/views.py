@@ -23,39 +23,34 @@ from rest_framework.exceptions import (  # type: ignore
 )
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
+    DjangoModelPermissions,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
 from carts.auth import JwtAuthentication
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
-    AdminHideRoleFromUsername,
-    AdminHideRoleFromJobCode,
-    AdminHideStatesFromUsername,
+    AdminHideStateFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
 )
 from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
-    RoleFromUsernameSerializer,
-    RoleFromJobCodeSerializer,
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
     StateSerializer,
     StateStatusSerializer,
-    StatesFromUsernameSerializer,
+    StateFromUsernameSerializer,
 )
 from carts.carts_api.models import (
-    RoleFromUsername,
-    RoleFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
     State,
     StateStatus,
-    StatesFromUsername,
+    StateFromUsername,
 )
 
 
@@ -100,61 +95,14 @@ class StateViewSet(viewsets.ModelViewSet):
     #    return Response(self.serializer_class(self.queryset).data)
 
 
-class StatesFromUsernameViewSet(viewsets.ModelViewSet):
+class StateFromUsernameViewSet(viewsets.ModelViewSet):
     """
     API endpoint for username–state associations.
     """
 
-    permission_classes = [AdminHideStatesFromUsername]
-    queryset = StatesFromUsername.objects.all()
-    serializer_class = StatesFromUsernameSerializer
-
-    def create(self, request):
-        # We want there only to be one entry per username, and for the new
-        # entry to overwrite.
-        username = request.data.get("username")
-        existing = StatesFromUsername.objects.filter(username=username)
-        for relation in existing:
-            relation.delete()
-        return super().create(request)
-
-
-class RoleFromUsernameViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint for username–state associations.
-    """
-
-    permission_classes = [AdminHideRoleFromUsername]
-    queryset = RoleFromUsername.objects.all()
-    serializer_class = RoleFromUsernameSerializer
-
-    def create(self, request):
-        # We want there only to be one entry per username, and for the new
-        # entry to overwrite.
-        username = request.data.get("username")
-        existing = RoleFromUsername.objects.filter(username=username)
-        for relation in existing:
-            relation.delete()
-        return super().create(request)
-
-
-class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint for username–state associations.
-    """
-
-    permission_classes = [AdminHideRoleFromJobCode]
-    queryset = RoleFromJobCode.objects.all()
-    serializer_class = RoleFromJobCodeSerializer
-
-    def create(self, request):
-        # We want there only to be one entry per job code, and for the new
-        # entry to overwrite.
-        job_code = request.data.get("job_code")
-        existing = RoleFromJobCode.objects.filter(job_code=job_code)
-        for relation in existing:
-            relation.delete()
-        return super().create(request)
+    permission_classes = [AdminHideStateFromUsername]
+    queryset = StateFromUsername.objects.all()
+    serializer_class = StateFromUsernameSerializer
 
 
 class StateStatusViewSet(viewsets.ModelViewSet):
@@ -489,13 +437,8 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 def authenticate_user(request):
     jwt_auth = JwtAuthentication()
     user, _ = jwt_auth.authenticate(request)
-    states = [*user.appuser.states.all()]
+    state = user.appuser.state
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
-
-    # The JS currently only knows how to handle one state per user, so:
-    state = None
-    if states:
-        state = states[0]
 
     program_names = ", ".join(state.program_names) if state else None
     program_text = f"{state.code.upper} {program_names}" if state else None

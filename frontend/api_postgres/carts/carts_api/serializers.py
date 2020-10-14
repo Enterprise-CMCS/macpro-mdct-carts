@@ -1,13 +1,11 @@
 from django.contrib.auth.models import User, Group  # type: ignore
 from rest_framework import serializers  # type: ignore
 from carts.carts_api.models import (
-    RoleFromUsername,
-    RoleFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
     State,
-    StatesFromUsername,
+    StateFromUsername,
     StateStatus,
     FMAP,
     ACS,
@@ -71,22 +69,10 @@ class StateSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["code", "name", "fmap_set", "acs_set"]
 
 
-class StatesFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
+class StateFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = StatesFromUsername
-        fields = ["username", "state_codes"]
-
-
-class RoleFromJobCodeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = RoleFromJobCode
-        fields = ["job_code", "user_role"]
-
-
-class RoleFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = RoleFromUsername
-        fields = ["username", "user_role"]
+        model = StateFromUsername
+        fields = ["username", "state_code"]
 
 
 class StateStatusSerializer(serializers.HyperlinkedModelSerializer):

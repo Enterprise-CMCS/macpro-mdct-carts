@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group  # type: ignore
 from rest_framework import exceptions  # type: ignore
 from carts.auth import JwtAuthentication
-from carts.carts_api.models import AppUser, State, StatesFromUsername
+from carts.carts_api.models import AppUser, State
 
 
 class JwtDevAuthentication(JwtAuthentication):
@@ -35,21 +35,12 @@ class JwtDevAuthentication(JwtAuthentication):
 
             role = roles[suffix]
 
-            if role in ("state_user", "co_user"):
-                state_codes = [suffix.upper()]
-                states = State.objects.filter(code__in=state_codes)
-                email = f"{dev_username}@{states[0].name.lower()}.gov"
-                try:
-                    state_relationship = StatesFromUsername.objects.get(
-                        username=dev_username
-                    )
-                    if state_relationship:
-                        state_codes = state_relationship.state_codes
-                        states = State.objects.filter(code__in=state_codes)
-                except StatesFromUsername.DoesNotExist:
-                    pass
+            if role == "state_user":
+                state_code = suffix.upper()
+                state = State.objects.get(code=state_code)
+                email = f"{dev_username}@{state.name.lower()}.gov"
             else:
-                states = []
+                state = None
                 email = f"{dev_username}@example.com"
 
             dev_user, _ = User.objects.get_or_create(
@@ -63,23 +54,14 @@ class JwtDevAuthentication(JwtAuthentication):
                 group = Group.objects.get(name="Admin users")
                 dev_user.groups.set([group])
             # Once we have different permissions for co_users, add here.
-            elif role == "co_user" and states:
-                groups = []
-                for state in states:
-                    for group in Group.objects.filter(
-                        name__endswith=" sections"
-                    ):
-                        if group.name.endswith(f"{state.code} sections"):
-                            groups.append(group)
-                dev_user.groups.set(groups)
             elif role == "state_user":
                 group = Group.objects.get(
-                    name__endswith=f"{state_codes[0]} sections"
+                    name__endswith=f"{state_code} sections"
                 )
-                dev_user.groups.set([group])
+                dev_user.groups.set([group.id])
 
             app_user, _ = AppUser.objects.get_or_create(user=dev_user)
-            app_user.states.set(states)
+            app_user.state = state
             app_user.role = role
             app_user.save()
 
