@@ -8,14 +8,12 @@ import setStateAssociation from "./SetStateAssociation";
 const buttonRef = React.createRef();
 
 const handleOpenDialog = (e) => {
-  // Note that the ref is set async, so it might be null at some point
   if (buttonRef.current) {
     buttonRef.current.open(e);
   }
 };
 
 const handleOnFileLoad = (token, data) => {
-  // console.log(data)
   data.forEach((row) => {
     if (!row.data.username) {
       return;
