@@ -29,7 +29,7 @@ const handleOnFileLoad = (token, data) => {
 };
 
 const handleOnError = (err, file, inputElem, reason) => {
-  console.log(err, file, inputElem, reason);  // eslint-disable-line no-console
+  console.log(err, file, inputElem, reason); // eslint-disable-line no-console
 };
 
 const StateAssociation = ({ currentUser }) => {
