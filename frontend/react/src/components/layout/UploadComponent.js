@@ -1,96 +1,128 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { TextField, Button } from "@cmsgov/design-system-core";
-import { mimeTypes, fileExtensions } from "../Utils/helperFunctions";
-import { setAnswerEntry } from "../../actions/initial";
+import React, { Component }   from "react";
+import { connect }            from "react-redux";
+import { Button, TextField }  from "@cmsgov/design-system-core";
+import axios                  from "axios";
+import { withOktaAuth }       from '@okta/okta-react';
+import { setAnswerEntry }     from "../../actions/initial";
 
 class UploadComponent extends Component {
+
   constructor(props) {
-    super();
+    super(props);
+
     this.state = {
       blockFileSubmission: true,
+      loadedFiles: []
     };
+  }
+
+
+  componentDidMount() {
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
     this.submitUpload = this.submitUpload.bind(this);
   }
 
-  submitUpload() {
-    const { loadedFiles } = this.state;
-    // Some HTTP Request or middleware
 
-    // WHERE THE ACTUAL UPLOAD WILL TAKE PLACE
+  async submitUpload() {
+    const { loadedFiles }             = this.state;
+    const fileFormData                = new FormData();
+
+    // *** traverse loaded files and append to form data
+    Object.keys(loadedFiles).forEach((key) => {
+      fileFormData.append(loadedFiles[key].name, loadedFiles[key]);
+    });
+
+    // *** obtain signed URL
+    const response = await axios.post(
+      `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
+       {
+          somevalue: 'hey now'
+       }
+    );
+
+    const signedURL = response.data.url;
+
+    console.log(`!*********generated signed url ${signedURL}`);
+
+    return signedURL;
   }
 
-  // Removes a file, but just from local state. Should include an HTTP request as well/ instead
-  removeFile(evt) {
-    // find it in state
-    let filesInLocalState = this.state.loadedFiles;
+  isFileTypeAllowed(extension) {
+    const allowedFileTypes = [
+      "jpg",
+      "jpeg",
+      "png",
+      "document",
+      "sheet",
+      "pdf",
+      "docx",
+      "doc",
+      "xltx",
+      "xlsx",
+      "xls"
+    ];
 
-    let filteredStateFiles = filesInLocalState.filter(
+    return (allowedFileTypes.indexOf(extension) > -1);
+  }
+
+  removeFile(evt) {
+    const { loadedFiles } = this.state;
+
+    const filteredStateFiles = loadedFiles.filter(
       (e) => e.name !== evt.target.name
     );
 
     this.setState({
       loadedFiles: filteredStateFiles,
     });
-
-    // Will need some form of put/delete request to remove the deleted files
   }
+
 
   // TODO: when one file errors, the others are loaded but the error stays
   // to duplicate: try loading all 9
-
   validateFileByExtension(event) {
-    if (event.target.files.length !== 0) {
-      let filesArray = event.target.files; // All files selected by a user
 
-      let filePayload = [];
-      let errorString = "";
+    if (event.target.files.length > 0) {
+      const filesArray  = event.target.files; // All files selected by a user
+      const filePayload = [];
+      const maxFileSize = 25; // in MB
 
-      for (let i = 0; i < filesArray.length; i++) {
-        let singleFile = filesArray[i];
-        let uploadName = singleFile.name;
-        let mediaSize = singleFile.size / 1024 / 1024; // Converting bytes to MB, roughly
+      let errorString   = "";
 
-        let mediaExtension = uploadName.split(".").slice(-1)[0]; // Grab file type from extension name
-        let included = fileExtensions(mediaExtension); // Check if it is included in the list of acceptable file extensions
+      Object.keys(filesArray).forEach((key) => {
+        const singleFile      = filesArray[key];
+        const uploadName      = singleFile.name;
+        const mediaSize       = singleFile.size / 1024 / 1024;
+        const mediaExtension  = uploadName.split(".").pop();
+        const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
 
-        if (included && mediaSize < 25) {
-          filePayload.push({
-            name: uploadName,
-            rawMediaType: singleFile.type,
-            type: included ? mediaExtension : "Unknown file type",
-            size: mediaSize,
-            associatedUser: this.props.user.username,
-            associatedState: this.props.user.state,
-            associatedEmail: this.props.user.email,
-            UUID: "999", // this should be some unique identifier returned from S3
-          });
+        if (fileTypeAllowed === true) {
+          if (mediaSize <= maxFileSize) {
+            filePayload.push(singleFile);
+          }
+          else {
+            errorString = errorString.concat(
+              `${uploadName} exceeds ${maxFileSize}MB file size maximum`
+            );
+          }
         }
-
-        if (!included) {
+        else {
           errorString = errorString.concat(
             `${uploadName} is not an approved file type`
           );
         }
+      });
 
-        if (mediaSize > 25) {
-          errorString = errorString.concat(
-            `${uploadName} exceeds 25MB file size maximum`
-          );
-        }
-      }
+      const { loadedFiles } = this.state;
 
       this.setState({
         inputErrors: errorString || null,
-        loadedFiles: this.state.loadedFiles
-          ? [...this.state.loadedFiles, ...filePayload]
+        loadedFiles: loadedFiles
+          ? [...loadedFiles, ...filePayload]
           : [...filePayload],
         blockFileSubmission: false,
       });
-
-      console.log("Formatted payload:", filePayload);
 
       if (errorString === "") {
         this.props.setAnswer(event.target.name, filePayload);
@@ -100,13 +132,15 @@ class UploadComponent extends Component {
       // slicing off the extension name is more succinct
 
       // Results from file.type
-      //PDF: "application/pdf"
+      // PDF: "application/pdf"
       // JPEG: "image/jpeg"
       // PNG: "image/png"
       // Microsoft word document: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       // Spreadsheet: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     }
   }
+
+
   render() {
     return (
       <div>
@@ -126,7 +160,7 @@ class UploadComponent extends Component {
 
         {this.state.loadedFiles // Display the files that have been uploaded
           ? this.state.loadedFiles.map((element) => (
-              <div>
+              <div key={element.name}>
                 <a href={element.name} download>
                   {" "}
                   {element.name}{" "}
@@ -154,16 +188,19 @@ class UploadComponent extends Component {
   }
 }
 
+
 const mapStateToProps = (state) => ({
   USState: state.stateUser.abbr, // Currently this is meaningless dummy data
   user: state.stateUser.currentUser,
 });
 
+
 const mapDispatchToProps = {
   setAnswer: setAnswerEntry,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadComponent);
+
+export default withOktaAuth(connect(mapStateToProps, mapDispatchToProps)(UploadComponent));
 
 // associate with US State
 // meets file validation requirements ( #517 )

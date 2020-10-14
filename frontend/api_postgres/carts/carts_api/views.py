@@ -6,6 +6,8 @@ from typing import (
     Union,
 )
 
+import boto3
+
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
@@ -444,6 +446,30 @@ def authenticate_user(request):
     return HttpResponse(json.dumps(user_data))
 
 
+@api_view(["POST"])
+def presigned_url(request):
+
+    session = boto3.session.Session()
+    s3 = session.client("s3")
+
+    # Generate the URL to get 'key-name' from 'bucket-name'
+    url = s3.generate_presigned_url(
+        ClientMethod="get_object",
+        Params={
+            f"Bucket": "cartscms-uploads-{terraform.workspace}",
+            f"Key": "testfile.txt",
+            f"ResponseContentType": "text/plain",
+        },
+        ExpiresIn=100,
+    )
+
+    generated_presigned_url = {
+        "upload_url": url
+    }
+
+    return HttpResponse(generated_presigned_url)
+
+
 def _id_from_chunks(year, *args):
     def fill(chunk):
         chunk = str(chunk).lower()
@@ -466,3 +492,4 @@ def _get_fragment_by_id(
     pathstring = f"$..*[?(@.id=='{ident}')]"
     find_by_id = parse(pathstring)
     return find_by_id.find(contents)
+

@@ -49,7 +49,8 @@ const fileExtensions = (ext) => {
   return false;
 };
 
-export { sliceId, mimeTypes, fileExtensions };
+
+export { sliceId, mimeTypes};
 
 // Files must be in one of these formats:
 // PDF, DONE
