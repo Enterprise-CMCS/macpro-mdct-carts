@@ -34,7 +34,7 @@ from carts.carts_api.model_utils import (
                 SimpleNamespace(
                     **{
                         "job_code": "CARTS_Group_Dev",
-                        "user_role": "admin_user",
+                        "user_roles": ["admin_user"],
                     }
                 ),
             ],
@@ -46,13 +46,13 @@ from carts.carts_api.model_utils import (
             # specifically to state_user, we get back state_user:
             USER_ROLES,
             {
-                "IDM_OKTA_TEST": "state_user",
-                "CARTS_Group_Dev": "admin_user",
+                "IDM_OKTA_TEST": ["state_user"],
+                "CARTS_Group_Dev": ["admin_user"],
             },
             [
                 SimpleNamespace(
                     job_code="CARTS_Group_Dev",
-                    user_role="admin_user",
+                    user_roles=["admin_user"],
                 ),
             ],
             [
@@ -70,11 +70,11 @@ from carts.carts_api.model_utils import (
             [
                 SimpleNamespace(
                     job_code="CARTS_Group_Dev",
-                    user_role="admin_user",
+                    user_roles=["admin_user"],
                 ),
                 SimpleNamespace(
                     job_code="IDM_OKTA_TEST",
-                    user_role="state_user",
+                    user_roles=["state_user"],
                 ),
             ],
             [
@@ -93,7 +93,7 @@ from carts.carts_api.model_utils import (
             [
                 SimpleNamespace(
                     job_code="IDM_OKTA_TEST",
-                    user_role="state_user",
+                    user_roles=["state_user"],
                 ),
             ],
             [
@@ -112,7 +112,7 @@ from carts.carts_api.model_utils import (
             [
                 SimpleNamespace(
                     job_code="IDM_OKTA_TEST",
-                    user_role="state_user",
+                    user_roles=["state_user"],
                 ),
             ],
             [
@@ -130,7 +130,7 @@ from carts.carts_api.model_utils import (
             [
                 SimpleNamespace(
                     job_code="IDM_OKTA_TEST",
-                    user_role="unknown_user",
+                    user_roles=["unknown_user"],
                 ),
             ],
             [],
@@ -144,7 +144,7 @@ from carts.carts_api.model_utils import (
             [
                 SimpleNamespace(
                     job_code="IDM_OKTA_TEST",
-                    user_role="unknown_user",
+                    user_roles=["unknown_user"],
                 ),
             ],
             [
@@ -154,6 +154,51 @@ from carts.carts_api.model_utils import (
             ],
             [{"job_code": "CARTS_Group_Dev"}, {"job_code": "IDM_OKTA_TEST"}],
             False,
+        ),
+        (  # with the association set in the defaults and the user set
+            # specifically to state_user, we get back state_user, checking
+            # against multiple roles associated with a job code.
+            USER_ROLES,
+            {
+                "IDM_OKTA_TEST": ["state_user"],
+                "CARTS_Group_Dev": ["admin_user", "state_user"],
+            },
+            [
+                SimpleNamespace(
+                    job_code="CARTS_Group_Dev",
+                    user_roles=["admin_user", "state_user"],
+                ),
+            ],
+            [
+                SimpleNamespace(
+                    user_role="state_user",
+                ),
+            ],
+            [{"job_code": "CARTS_Group_Dev"}],
+            "state_user",
+        ),
+        (  # with the association set in the defaults and the user set
+            # specifically to state_user, but then the db overrides that to
+            # just allow admin_user, we get back admin_user, checking
+            # against multiple roles associated with a job code.
+            USER_ROLES,
+            {
+                "IDM_OKTA_TEST": ["state_user"],
+                "CARTS_Group_Dev": ["admin_user", "state_user"],
+            },
+            [
+                SimpleNamespace(
+                    job_code="CARTS_Group_Dev",
+                    user_roles=["admin_user"],
+                ),
+            ],
+            [
+                SimpleNamespace(
+                    user_role="state_user",
+                ),
+            ],
+            [{"job_code": "CARTS_Group_Dev"}],
+            "admin_user",
         ),
     ),
     ids=repr,

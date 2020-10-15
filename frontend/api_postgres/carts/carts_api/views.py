@@ -30,6 +30,7 @@ from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
     AdminHideRoleFromUsername,
     AdminHideRoleFromJobCode,
+    AdminHideRolesFromJobCode,
     AdminHideStatesFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
@@ -39,6 +40,7 @@ from carts.carts_api.serializers import (
     GroupSerializer,
     RoleFromUsernameSerializer,
     RoleFromJobCodeSerializer,
+    RolesFromJobCodeSerializer,
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
@@ -49,6 +51,7 @@ from carts.carts_api.serializers import (
 from carts.carts_api.models import (
     RoleFromUsername,
     RoleFromJobCode,
+    RolesFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
@@ -151,6 +154,25 @@ class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
         # entry to overwrite.
         job_code = request.data.get("job_code")
         existing = RoleFromJobCode.objects.filter(job_code=job_code)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
+
+
+class RolesFromJobCodeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRolesFromJobCode]
+    queryset = RolesFromJobCode.objects.all()
+    serializer_class = RolesFromJobCodeSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per job code, and for the new
+        # entry to overwrite.
+        job_code = request.data.get("job_code")
+        existing = RolesFromJobCode.objects.filter(job_code=job_code)
         for relation in existing:
             relation.delete()
         return super().create(request)
