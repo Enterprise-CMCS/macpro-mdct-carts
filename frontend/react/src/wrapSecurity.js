@@ -16,6 +16,7 @@ import * as qs from "query-string";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Userinfo from "./components/sections/Userinfo";
+import UserProfile from "./components/sections/UserProfile";
 import InvokeSection from "./components/Utils/InvokeSection";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Sidebar from "./components/layout/Sidebar";
@@ -83,9 +84,8 @@ const WrappedSecurity = () => {
               <Route path={config.callback} component={LoginCallback} />
               <SecureRoute path="/profile" component={Profile} />
               <Switch>
-                <SecureRoute exact path="/">
-                  <Homepage />
-                </SecureRoute>
+                <SecureRoute exact path="/" component={Homepage} />
+                <SecureRoute path="/user/profile" component={UserProfile} />
 
                 <SecureRoute
                   exact
