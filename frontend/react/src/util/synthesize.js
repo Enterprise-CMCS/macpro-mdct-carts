@@ -1,3 +1,4 @@
+import { evaluate } from "mathjs";
 import jsonpath from "./jsonpath";
 
 /* eslint-disable camelcase */
@@ -115,6 +116,49 @@ const rpn = (values, rpnString, precision) => {
   return "";
 };
 
+/**
+ * Calculate formulas from JSON using human-readable algorithms.
+ *
+ * @param {array} targets
+ * @param {string} formula
+ * @param {int} precision
+ * @returns {string}
+ */
+const formula = (targets, providedFormula, precision) => {
+  let computedValue = "Not Available";
+  let available = true;
+  let manipulatedFormula = providedFormula;
+
+  if (manipulatedFormula && targets) {
+    // Loop through formula as an object
+    Object.keys(manipulatedFormula).forEach((i) => {
+      // Check if value has a string value
+      if (!Number.isNaN(targets[i]) && targets[i] !== "") {
+        const replaceValue = new RegExp(`<${i}>`, "g");
+
+        // Replace placehholders with actual values from targets
+        manipulatedFormula = manipulatedFormula.replace(
+          replaceValue,
+          Number.isNaN(targets[i]) || targets[i] === null || targets[i] === ""
+            ? 0
+            : targets[i]
+        );
+      } else {
+        // If value is a non-empty string, return false
+        available = false;
+      }
+    });
+
+    if (available) {
+      // Evaluate the formula (string) and round to precision
+      computedValue = round(evaluate(manipulatedFormula), precision);
+    }
+  }
+
+  return computedValue;
+};
+
+// Maaaaaaaath.
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
 const lookupFMAP = (state, fy) => {
@@ -247,6 +291,8 @@ const synthesizeValue = (value, state) => {
           return { contents: rpn(targets, value.rpn, value.precision) };
         case "sum":
           return { contents: sum(targets) };
+        case "formula":
+          return { contents: formula(targets, value.formula, value.precision) };
 
         default:
           return { contents: targets[0] };

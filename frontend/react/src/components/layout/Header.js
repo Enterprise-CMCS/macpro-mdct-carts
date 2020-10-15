@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Autosave from "./Autosave";
 import Logout from "./Logout";
 
@@ -10,13 +11,14 @@ class Header extends Component {
     this.toggleUserNav = this.toggleUserNav.bind(this);
   }
 
+  // eslint-disable-next-line
   toggleUserNav(e) {
     e.preventDefault();
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
 
     // Close menu when leaving focus
-    let root = document.getElementById("root");
+    const root = document.getElementById("root");
     root.addEventListener(
       "click",
       () => {
@@ -28,6 +30,8 @@ class Header extends Component {
   }
 
   render() {
+    const { currentUser } = this.props;
+    const { username } = currentUser;
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
@@ -47,13 +51,13 @@ class Header extends Component {
                         onClick={this.toggleUserNav}
                         data-test="component-header-username"
                       >
-                        {this.props.currentUser.username}
+                        {username}
                       </a>
                     </li>
                   </ul>
                   <ul className="menu-block" id="menu-block">
                     <li className="manage-account">
-                      <a href="javascript:void(0)">Manage account</a>
+                      <a href="/user/profile">Manage account</a>
                     </li>
                     <li className="logout">
                       <Logout />
@@ -68,6 +72,11 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  username: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
