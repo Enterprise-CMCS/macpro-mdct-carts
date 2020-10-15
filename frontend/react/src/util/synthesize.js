@@ -52,15 +52,15 @@ const round = (number, precision) => {
 };
 
 const percent = ([numerator, denominator], precision = 2) => {
-  if (+denominator !== 0) {
+  if (+denominator !== 0 && numerator !== "" && numerator !== null) {
     const division = round((100 * +numerator) / +denominator, precision);
     if (!Number.isNaN(division)) {
       return `${division}%`;
     }
   }
 
-  // Denominator is NaN or 0, or the division operation results in NaN
-  return NaN;
+  // Denominator is NaN or 0, or the division operation results in ""
+  return "";
 };
 
 const rpn = (values, rpnString, precision) => {
@@ -112,10 +112,9 @@ const rpn = (values, rpnString, precision) => {
     }
   }
 
-  return NaN;
+  return "";
 };
 
-// Maaaaaaaath.
 const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
 
 const lookupFMAP = (state, fy) => {
