@@ -435,7 +435,7 @@ def report(request, year=None, state=None):
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
     user, _ = jwt_auth.authenticate(request, username=username)
-    state = user.appuser.state
+    state = user.appuser.states.all()[0] if user.appuser.states.all() else []
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
     program_names = ", ".join(state.program_names) if state else None
