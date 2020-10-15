@@ -1,21 +1,19 @@
-import React, { Component }   from "react";
-import { connect }            from "react-redux";
-import { Button, TextField }  from "@cmsgov/design-system-core";
-import axios                  from "axios";
-import { withOktaAuth }       from '@okta/okta-react';
-import { setAnswerEntry }     from "../../actions/initial";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Button, TextField } from "@cmsgov/design-system-core";
+import axios from "axios";
+import { withOktaAuth } from "@okta/okta-react";
+import { setAnswerEntry } from "../../actions/initial";
 
 class UploadComponent extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       blockFileSubmission: true,
-      loadedFiles: []
+      loadedFiles: [],
     };
   }
-
 
   componentDidMount() {
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
@@ -23,32 +21,7 @@ class UploadComponent extends Component {
     this.submitUpload = this.submitUpload.bind(this);
   }
 
-
-  async submitUpload() {
-    const { loadedFiles }             = this.state;
-    const fileFormData                = new FormData();
-
-    // *** traverse loaded files and append to form data
-    Object.keys(loadedFiles).forEach((key) => {
-      fileFormData.append(loadedFiles[key].name, loadedFiles[key]);
-    });
-
-    // *** obtain signed URL
-    const response = await axios.post(
-      `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
-       {
-          somevalue: 'hey now'
-       }
-    );
-
-    const signedURL = response.data.url;
-
-    console.log(`!*********generated signed url ${signedURL}`);
-
-    return signedURL;
-  }
-
-  isFileTypeAllowed(extension) {
+  isFileTypeAllowed = (extension) => {
     const allowedFileTypes = [
       "jpg",
       "jpeg",
@@ -60,10 +33,35 @@ class UploadComponent extends Component {
       "doc",
       "xltx",
       "xlsx",
-      "xls"
+      "xls",
     ];
 
-    return (allowedFileTypes.indexOf(extension) > -1);
+    return allowedFileTypes.indexOf(extension) > -1;
+  };
+
+  async submitUpload() {
+    const { loadedFiles } = this.state;
+    const fileFormData = new FormData();
+
+    // *** traverse loaded files and append to form data
+    Object.keys(loadedFiles).forEach((key) => {
+      fileFormData.append(loadedFiles[key].name, loadedFiles[key]);
+    });
+
+    // *** obtain signed URL
+    const response = await axios.post(
+      `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
+      {
+        somevalue: "hey now",
+      }
+    );
+
+    const signedURL = response.data.url;
+
+    // eslint-disable-next-line no-console
+    console.log(`!*********generated signed url ${signedURL}`);
+
+    return signedURL;
   }
 
   removeFile(evt) {
@@ -78,36 +76,32 @@ class UploadComponent extends Component {
     });
   }
 
-
   // TODO: when one file errors, the others are loaded but the error stays
   // to duplicate: try loading all 9
   validateFileByExtension(event) {
-
     if (event.target.files.length > 0) {
-      const filesArray  = event.target.files; // All files selected by a user
+      const filesArray = event.target.files; // All files selected by a user
       const filePayload = [];
       const maxFileSize = 25; // in MB
 
-      let errorString   = "";
+      let errorString = "";
 
       Object.keys(filesArray).forEach((key) => {
-        const singleFile      = filesArray[key];
-        const uploadName      = singleFile.name;
-        const mediaSize       = singleFile.size / 1024 / 1024;
-        const mediaExtension  = uploadName.split(".").pop();
+        const singleFile = filesArray[key];
+        const uploadName = singleFile.name;
+        const mediaSize = singleFile.size / 1024 / 1024;
+        const mediaExtension = uploadName.split(".").pop();
         const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
 
         if (fileTypeAllowed === true) {
           if (mediaSize <= maxFileSize) {
             filePayload.push(singleFile);
-          }
-          else {
+          } else {
             errorString = errorString.concat(
               `${uploadName} exceeds ${maxFileSize}MB file size maximum`
             );
           }
-        }
-        else {
+        } else {
           errorString = errorString.concat(
             `${uploadName} is not an approved file type`
           );
@@ -125,7 +119,9 @@ class UploadComponent extends Component {
       });
 
       if (errorString === "") {
-        this.props.setAnswer(event.target.name, filePayload);
+        // eslint-disable-next-line react/prop-types
+        const { setAnswer } = this.props;
+        setAnswer(event.target.name, filePayload);
       }
 
       // !! The reason we're  not using file.type, the results are inconsistent and irregular.
@@ -140,7 +136,6 @@ class UploadComponent extends Component {
     }
   }
 
-
   render() {
     return (
       <div>
@@ -148,18 +143,22 @@ class UploadComponent extends Component {
           <TextField
             accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
             className="file_upload"
+            /* eslint-disable-next-line react/destructuring-assignment */
             errorMessage={this.state.inputErrors}
             hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
             label=""
             multiple
+            /* eslint-disable-next-line react/prop-types,react/destructuring-assignment */
             name={this.props.question.id}
             onChange={this.validateFileByExtension}
             type="file"
           />
         </div>
 
+        {/* eslint-disable-next-line react/destructuring-assignment */}
         {this.state.loadedFiles // Display the files that have been uploaded
-          ? this.state.loadedFiles.map((element) => (
+          ? // eslint-disable-next-line react/destructuring-assignment
+            this.state.loadedFiles.map((element) => (
               <div key={element.name}>
                 <a href={element.name} download>
                   {" "}
@@ -179,6 +178,7 @@ class UploadComponent extends Component {
         <Button
           onClick={this.submitUpload}
           size="small"
+          /* eslint-disable-next-line react/destructuring-assignment */
           disabled={this.state.blockFileSubmission}
         >
           Upload
@@ -188,19 +188,18 @@ class UploadComponent extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => ({
   USState: state.stateUser.abbr, // Currently this is meaningless dummy data
   user: state.stateUser.currentUser,
 });
 
-
 const mapDispatchToProps = {
   setAnswer: setAnswerEntry,
 };
 
-
-export default withOktaAuth(connect(mapStateToProps, mapDispatchToProps)(UploadComponent));
+export default withOktaAuth(
+  connect(mapStateToProps, mapDispatchToProps)(UploadComponent)
+);
 
 // associate with US State
 // meets file validation requirements ( #517 )
