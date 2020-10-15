@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../authenticatedAxios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";

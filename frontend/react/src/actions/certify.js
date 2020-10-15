@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../authenticatedAxios";
 
 export const CERTIFY_AND_SUBMIT = "CERTIFY_AND_SUBMIT";
 export const CERTIFY_AND_SUBMIT_SUCCESS = "CERTIFY_AND_SUBMIT_SUCCESS";

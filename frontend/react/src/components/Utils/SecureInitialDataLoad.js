@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useOktaAuth } from "@okta/okta-react";
 import { loadUserThenSections } from "../../actions/initial";
-import { setToken } from "../../axios";
+import { setToken } from "../../authenticatedAxios";
 
 const SecureInitialDataLoad = ({ userData }) => {
   // If userData is false, then we're logging in with Okta. Otherwise, we're

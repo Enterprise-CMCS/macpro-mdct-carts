@@ -1,12 +1,12 @@
 import Axios from "axios";
 import forwardedQueryString from "./util/devQueryString";
 
-const axios = Axios.create({
+const authenticatedAxios = Axios.create({
   baseURL: window.env.API_POSTGRES_URL,
 });
 
 export const setToken = (token) => {
-  axios.interceptors.request.use((config) => {
+  authenticatedAxios.interceptors.request.use((config) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -15,4 +15,4 @@ export const setToken = (token) => {
   });
 };
 
-export default axios;
+export default authenticatedAxios;

@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../authenticatedAxios";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables";

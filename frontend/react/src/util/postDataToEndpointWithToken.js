@@ -1,15 +1,8 @@
-import axios from "axios";
-import forwardedQueryString from "./devQueryString";
+import axios from "../authenticatedAxios";
 
-const postDataToEndpointWithToken = (data, endpoint, token) => {
-  const queryString = forwardedQueryString();
-  const xhrURL = [window.env.API_POSTGRES_URL, endpoint, queryString].join("");
-  const xhrHeaders = {
-    Authorization: `Bearer ${token}`,
-  };
-  const returnData = async () =>
-    axios({ method: "POST", url: xhrURL, headers: xhrHeaders, data });
-  return returnData();
+const postDataToEndpointWithToken = (data, endpoint) => {
+  const xhrURL = [window.env.API_POSTGRES_URL, endpoint].join("");
+  return axios.post(xhrURL, data);
 };
 
 export default postDataToEndpointWithToken;
