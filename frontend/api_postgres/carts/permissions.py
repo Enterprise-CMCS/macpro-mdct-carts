@@ -47,6 +47,16 @@ class AdminHideRoleFromJobCode(permissions.DjangoModelPermissions):
         self.perms_map["GET"] = ["carts_api.view_rolefromjobcode"]
 
 
+class AdminHideRolesFromJobCode(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_rolesfromjobcode"]
+
+
 class AdminHideRoleFromUsername(permissions.DjangoModelPermissions):
     """
     By restricting the view to users with this permission, we hide it from

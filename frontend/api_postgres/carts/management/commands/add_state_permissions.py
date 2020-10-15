@@ -81,6 +81,7 @@ def _create_permissions_for_admins() -> None:
         "logentry",
         "permission",
         "rolefromjobcode",
+        "rolesfromjobcode",
         "rolefromusername",
         "session",
         "state",
