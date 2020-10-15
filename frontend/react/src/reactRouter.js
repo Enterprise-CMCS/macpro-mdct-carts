@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Homepage from "./components/sections/homepage/Homepage";
+import UserProfile from "./components/sections/UserProfile";
 import Review from "./components/review/Review";
 import Sidebar from "./components/layout/Sidebar";
 import Userinfo from "./components/sections/Userinfo";
@@ -26,6 +27,7 @@ const Routes = ({ userData }) => (
         <ScrollToTop />
         <Switch>
           <Route exact path="/" component={Homepage} />
+          <Route path="/user/profile" component={UserProfile} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
           <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker">
             <InvokeSection userData={userData} />
