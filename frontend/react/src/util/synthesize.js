@@ -5,7 +5,6 @@ import jsonpath from "./jsonpath";
 
 // For the identity case, just return the first target value.
 const identity = ([value]) => value;
-
 const round = (number, precision) => {
   if (Number.isNaN(number)) {
     return number;
@@ -155,11 +154,21 @@ const formula = (targets, providedFormula, precision) => {
     }
   }
 
-  return computedValue;
+  return computedValue !== 0 ? computedValue : "";
 };
 
-// Maaaaaaaath.
-const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
+const sum = (values) => {
+  let allNull = true;
+  values.map((value) => {
+    if (value === null) {
+      allNull = false;
+    }
+    return "";
+  });
+  return allNull === false
+    ? values.reduce((acc, value) => acc + +value, 0)
+    : "";
+};
 
 const lookupFMAP = (state, fy) => {
   if (state.allStatesData && state.stateUser) {
