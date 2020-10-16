@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CSVReader } from "react-papaparse";
-import { useOktaAuth } from "@okta/okta-react";
 import postDataToEndpointWithToken from "../../util/postDataToEndpointWithToken";
 
 const buttonRef = React.createRef();
@@ -13,16 +12,17 @@ const handleOpenDialog = (e) => {
   }
 };
 
-const handleOnFileLoad = (token, data) => {
+const handleOnFileLoad = (data) => {
   data.forEach((row) => {
     if (!row.data.job_code) {
       return;
     }
+    const userRoles = row.data.user_roles.split(",").map((code) => code.trim());
     const postData = {
       job_code: row.data.job_code.trim(),
-      user_role: row.data.user_role.trim(),
+      user_roles: userRoles,
     };
-    postDataToEndpointWithToken(postData, "/role_assoc/", token);
+    postDataToEndpointWithToken(postData, "/roles_assoc/");
   });
 };
 
@@ -31,11 +31,6 @@ const handleOnError = (err, file, inputElem, reason) => {
 };
 
 const JobCodeRoleAssociation = ({ currentUser }) => {
-  const { authState } = useOktaAuth();
-  const wrappedHandle = (data) => {
-    const { accessToken } = authState;
-    handleOnFileLoad(accessToken, data);
-  };
   const authorized = (
     <>
       <div>
@@ -47,16 +42,22 @@ const JobCodeRoleAssociation = ({ currentUser }) => {
           a role with lower privileges to a user, that job code must be
           associated with that role here (note that this affects all users with
           that job code) and the specific user must be associated with the role
-          via <a href="/role_user_assoc">/role_user_assoc</a> for that
+          via <a href="/role_user_assoc">/role_user_assoc</a> for that.
         </p>
+        <p>
+          The values in user_roles must be a list of the user roles, separated
+          by commas, and the entire list of user roles must be enclosed in
+          quotation marks.
+        </p>
+
         <p>A sample valid CSV would look like this:</p>
         <p>
           <pre>
-            job_code,user_role
+            job_code,user_roles
             <br />
             Job_Code_One,bus_user
             <br />
-            JOB_CODE_TWO,admin_user
+            JOB_CODE_TWO,&quot;admin_user,state_user&quot;
             <br />
           </pre>
         </p>
@@ -64,7 +65,7 @@ const JobCodeRoleAssociation = ({ currentUser }) => {
       <div>
         <CSVReader
           ref={buttonRef}
-          onFileLoad={wrappedHandle}
+          onFileLoad={handleOnFileLoad}
           onError={handleOnError}
           config={{ header: true }}
           noClick

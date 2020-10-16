@@ -80,8 +80,8 @@ USER_ROLES = (  # Descending permissions order; alphabetical by coincidence
 
 # Once we have a more complete list of job codes, this should move to the db.
 JOB_CODES_TO_ROLES = {
-    "IDM_OKTA_TEST": "state_user",
-    "CARTS_Group_Dev": "admin_user",
+    "IDM_OKTA_TEST": ["state_user"],
+    "CARTS_Group_Dev": ["admin_user", "bus_user", "co_user", "state_user"],
 }
 
 # Provisional; these need to be updated with the final list of statuses.
@@ -166,10 +166,11 @@ def get_role_from_job_codes(
     # Update JOB_CODES_TO_ROLES with what's in the db via the db_role_map list:
     for role_mapping in db_role_map:
         job_code = role_mapping.job_code
-        user_role = role_mapping.user_role
+        user_roles = role_mapping.user_roles
+        valid_roles = [x for x in user_roles if x in role_codes]
         # Ensure only valid roles can be set here:
-        if user_role in role_codes:
-            role_code_map[job_code] = user_role
+        if valid_roles:
+            role_code_map[job_code] = valid_roles
     # The user must have some job code that maps to the role they've been
     # assigned as an individual user; the ability to map a specific user to a
     # role essentially just lets us prioritize so that if they're entitled to a
@@ -178,14 +179,14 @@ def get_role_from_job_codes(
         user_role = username_map.user_role
         if user_role in role_codes:
             for code in codes:
-                if role_code_map.get(code) == user_role:
+                if user_role in role_code_map.get(code, []):
                     return user_role
     # Go through the roles in order and check the job codes the user has to see
     # if they provide that role; this goes in order so that more-privileged
     # roles get set first.
     for role_code, _ in roles:
         for code in codes:
-            if role_code_map.get(code) == role_code:
+            if role_code in role_code_map.get(code, []):
                 return role_code
 
     return False

@@ -3,6 +3,7 @@ from rest_framework import serializers  # type: ignore
 from carts.carts_api.models import (
     RoleFromUsername,
     RoleFromJobCode,
+    RolesFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
@@ -83,6 +84,12 @@ class RoleFromJobCodeSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["job_code", "user_role"]
 
 
+class RolesFromJobCodeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RolesFromJobCode
+        fields = ["job_code", "user_roles"]
+
+
 class RoleFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RoleFromUsername
@@ -92,4 +99,4 @@ class RoleFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
 class StateStatusSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = StateStatus
-        fields = ["state", "year", "status", "last_changed"]
+        fields = ["state", "year", "status", "last_changed", "user_name"]

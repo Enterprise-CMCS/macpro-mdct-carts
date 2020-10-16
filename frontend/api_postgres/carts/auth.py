@@ -12,7 +12,7 @@ from carts.carts_api.models import (
     AppUser,
     State,
     RoleFromUsername,
-    RoleFromJobCode,
+    RolesFromJobCode,
     StatesFromUsername,
 )
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
@@ -65,7 +65,7 @@ def _get_or_create_user(user_info):
     user.last_name = user_info["family_name"]
     user.email = user_info["email"]
 
-    role_map = [*RoleFromJobCode.objects.all()]
+    role_map = [*RolesFromJobCode.objects.all()]
     username_map = [*RoleFromUsername.objects.filter(username=user.username)]
     role = role_from_raw_ldap_job_codes(
         role_map, username_map, user_info["job_codes"]

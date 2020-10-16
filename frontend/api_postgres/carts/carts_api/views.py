@@ -6,10 +6,12 @@ from typing import (
     Union,
 )
 
+from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
+from django.utils import timezone
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -30,6 +32,7 @@ from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
     AdminHideRoleFromUsername,
     AdminHideRoleFromJobCode,
+    AdminHideRolesFromJobCode,
     AdminHideStatesFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
@@ -39,6 +42,7 @@ from carts.carts_api.serializers import (
     GroupSerializer,
     RoleFromUsernameSerializer,
     RoleFromJobCodeSerializer,
+    RolesFromJobCodeSerializer,
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
@@ -49,6 +53,7 @@ from carts.carts_api.serializers import (
 from carts.carts_api.models import (
     RoleFromUsername,
     RoleFromJobCode,
+    RolesFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
@@ -156,6 +161,25 @@ class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
         return super().create(request)
 
 
+class RolesFromJobCodeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRolesFromJobCode]
+    queryset = RolesFromJobCode.objects.all()
+    serializer_class = RolesFromJobCodeSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per job code, and for the new
+        # entry to overwrite.
+        job_code = request.data.get("job_code")
+        existing = RolesFromJobCode.objects.filter(job_code=job_code)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
+
+
 class StateStatusViewSet(viewsets.ModelViewSet):
     """
     API endpoint for state status.
@@ -220,10 +244,14 @@ class SectionViewSet(viewsets.ModelViewSet):
     @transaction.atomic
     def update_sections(self, request):
         try:
+            state_id = False
+            year = False
 
             for entry in request.data:
                 section_id = entry["contents"]["section"]["id"]
                 section_state = entry["contents"]["section"]["state"]
+                state_id = section_state
+                year = entry["contents"]["section"]["year"]
 
                 section = Section.objects.get(
                     contents__section__id=section_id,
@@ -232,9 +260,35 @@ class SectionViewSet(viewsets.ModelViewSet):
 
                 self.check_object_permissions(request, section)
 
+                status = (
+                    StateStatus.objects.all()
+                    .filter(state_id=section_state, year=year)
+                    .order_by("last_changed")
+                    .last()
+                )
+                can_save = status == None or status.status not in [
+                    "certified",
+                    "published",
+                    "approved",
+                ]
+
+                if can_save == False:
+                    return HttpResponse(
+                        f"cannot save {status} report", status=400
+                    )
+
                 section.contents = entry["contents"]
                 section.save()
-                return HttpResponse(status=204)
+
+            status = (
+                StateStatus.objects.all()
+                .filter(state_id=section_state, year=year)
+                .order_by("last_changed")
+                .last()
+            )
+            status.last_changed = datetime.now(tz=timezone.utc)
+            status.save()
+            return HttpResponse(status=204)
 
         except PermissionDenied:
             raise
@@ -435,7 +489,7 @@ def report(request, year=None, state=None):
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
     user, _ = jwt_auth.authenticate(request, username=username)
-    state = user.appuser.state
+    state = user.appuser.states.all()[0] if user.appuser.states.all() else []
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
     program_names = ", ".join(state.program_names) if state else None

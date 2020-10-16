@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CSVReader } from "react-papaparse";
-import { useOktaAuth } from "@okta/okta-react";
 import postDataToEndpointWithToken from "../../util/postDataToEndpointWithToken";
 
 const buttonRef = React.createRef();
@@ -13,7 +12,7 @@ const handleOpenDialog = (e) => {
   }
 };
 
-const handleOnFileLoad = (token, data) => {
+const handleOnFileLoad = (data) => {
   data.forEach((row) => {
     if (!row.data.username) {
       return;
@@ -23,8 +22,7 @@ const handleOnFileLoad = (token, data) => {
       .map((code) => code.trim());
     postDataToEndpointWithToken(
       { username: row.data.username, state_codes: stateCodes },
-      "/state_assoc/",
-      token
+      "/state_assoc/"
     );
   });
 };
@@ -34,11 +32,6 @@ const handleOnError = (err, file, inputElem, reason) => {
 };
 
 const StateAssociation = ({ currentUser }) => {
-  const { authState } = useOktaAuth();
-  const wrappedHandle = (data) => {
-    const { accessToken } = authState;
-    handleOnFileLoad(accessToken, data);
-  };
   const authorized = (
     <>
       <div>
@@ -64,7 +57,7 @@ const StateAssociation = ({ currentUser }) => {
       <div>
         <CSVReader
           ref={buttonRef}
-          onFileLoad={wrappedHandle}
+          onFileLoad={handleOnFileLoad}
           onError={handleOnError}
           config={{ header: true }}
           noClick

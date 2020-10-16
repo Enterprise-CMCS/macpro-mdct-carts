@@ -7,13 +7,16 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
-import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-dependencies
-import Routes from "./reactRouter";
+import {
+  Security,
+  SecureRoute as OktaSecureRoute,
+  LoginCallback,
+} from "@okta/okta-react";
+import * as qs from "query-string";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Userinfo from "./components/sections/Userinfo";
-import InitialDataLoad from "./components/Utils/InitialDataLoad";
+import UserProfile from "./components/sections/UserProfile";
 import InvokeSection from "./components/Utils/InvokeSection";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Sidebar from "./components/layout/Sidebar";
@@ -24,6 +27,8 @@ import JobCodeRoleAssociations from "./components/Utils/JobCodeRoleAssociations"
 import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
+import CertifyAndSubmit from "./components/layout/CertifyAndSubmit";
+import Homepage from "./components/sections/homepage/Homepage";
 
 const WrappedSecurity = () => {
   const VisibleHeader =
@@ -46,21 +51,22 @@ const WrappedSecurity = () => {
     "dev-admin": "admin_user",
     "dev-co_user": "co_user",
   };
+  let userData = false;
+  let stateCode = false;
   if (loc.dev && Object.keys(devKeys).includes(loc.dev)) {
-    const userData = { userToken: loc.dev };
-
-    return (
-      <div className="App" data-test="component-app">
-        <InitialDataLoad userData={userData} />
-        {VisibleHeader}
-        <Routes />
-        {VisibleFooter}
-      </div>
-    );
+    // We're going to bypass Okta.
+    userData = { userToken: loc.dev };
+    stateCode = devKeys[loc.dev];
   }
+
+  // If we're using Okta, wrap everything in Okta's Security component and use
+  // its SecureRoutes. Otherwise, use plain Routes and wrap everything in a div.
+  const SecurityWrapper = userData === false ? Security : "div";
+  const SecureRoute = userData === false ? OktaSecureRoute : Route;
+
   return (
     <div className="App" data-test="component-app">
-      <Security
+      <SecurityWrapper
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}
       >
@@ -68,22 +74,42 @@ const WrappedSecurity = () => {
         <Router>
           <div className="ds-l-container">
             <div className="ds-l-row">
-              <SecureInitialDataLoad />
+              <SecureInitialDataLoad
+                stateCode={stateCode}
+                userData={userData}
+              />
               <SecureRoute path="/" />
-              <Sidebar />
               <SaveError />
               <ScrollToTop />
               <Route path={config.callback} component={LoginCallback} />
               <SecureRoute path="/profile" component={Profile} />
               <Switch>
+                <SecureRoute exact path="/" component={Homepage} />
+                <SecureRoute path="/user/profile" component={UserProfile} />
+
                 <SecureRoute
                   exact
                   path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
                 >
+                  <Sidebar />
                   <InvokeSection />
                 </SecureRoute>
                 <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
+                  <Sidebar />
                   <InvokeSection />
+                </SecureRoute>
+
+                <SecureRoute path="/sections/:year/certify-and-submit" exact>
+                  <Sidebar />
+                  <CertifyAndSubmit />
+                </SecureRoute>
+                <SecureRoute path="/sections/:year/:sectionOrdinal/:subsectionMarker">
+                  <Sidebar />
+                  <InvokeSection userData={userData} />
+                </SecureRoute>
+                <SecureRoute path="/sections/:year/:sectionOrdinal">
+                  <Sidebar />
+                  <InvokeSection userData={userData} />
                 </SecureRoute>
               </Switch>
               <SecureRoute exact path="/userinfo" component={Userinfo} />
@@ -106,7 +132,7 @@ const WrappedSecurity = () => {
           </div>
         </Router>
         {VisibleFooter}
-      </Security>
+      </SecurityWrapper>
     </div>
   );
 };
