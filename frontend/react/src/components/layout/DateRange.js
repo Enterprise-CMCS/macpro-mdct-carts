@@ -149,7 +149,6 @@ class DateRange extends Component {
 
   // This method takes all user input and sets it to state
   handleInput(evt) {
-
     let tempValue = evt.target.value ? evt.target.value : [];
 
     this.setState({
@@ -158,7 +157,6 @@ class DateRange extends Component {
   }
 
   calculateValue(input) {
-
     // Determine row
     let ordinal;
     if (input === "monthStart" || input === "yearStart") {
@@ -177,13 +175,13 @@ class DateRange extends Component {
 
     // Determine output
     if (this.state[{ input }]) {
-      return this.state[{ input }]
+      return this.state[{ input }];
     } else {
       if (this.props.question.answer.entry) {
         if (this.props.question.answer.entry[ordinal] === null) {
-          return null
+          return null;
         }
-        return this.props.question.answer.entry[ordinal].split("-")[index]
+        return this.props.question.answer.entry[ordinal].split("-")[index];
       }
       return null;
     }
@@ -217,7 +215,7 @@ class DateRange extends Component {
                 inputRef={(monthStart) => (this.monthStart = monthStart)}
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
-                value={this.calculateValue('monthStart')}
+                value={this.calculateValue("monthStart")}
               />
               <div className="ds-c-datefield__separator">/</div>
               <TextField
@@ -228,7 +226,7 @@ class DateRange extends Component {
                 onChange={this.handleInput}
                 onBlur={this.validateStartInput}
                 numeric
-                value={this.calculateValue('yearStart')}
+                value={this.calculateValue("yearStart")}
               />
             </div>
           </div>
@@ -258,7 +256,7 @@ class DateRange extends Component {
                 label={""}
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
-                value={this.calculateValue('monthEnd')}
+                value={this.calculateValue("monthEnd")}
               />
               <div className="ds-c-datefield__separator">/</div>
 
@@ -270,7 +268,7 @@ class DateRange extends Component {
                 onChange={this.handleInput}
                 onBlur={this.validateEndInput}
                 numeric
-                value={this.calculateValue('yearEnd')}
+                value={this.calculateValue("yearEnd")}
               />
             </div>
             <div className="errors">

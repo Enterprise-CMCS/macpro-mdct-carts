@@ -36,8 +36,8 @@ const getExactPath = (data, path) => {
       // end with [0]. But that's not what is being requested: the [*] at the
       // end means the request is for ALL of the things, not the first, so in
       // that case, replace [0] at the end of the exact path with [*].
-      if(path.endsWith('[*]')) {
-        exact = exact.replace(/\[0\]$/, '[*]');
+      if (path.endsWith("[*]")) {
+        exact = exact.replace(/\[0\]$/, "[*]");
       }
     } else {
       // If there is NOT a matching path, cache the inexact path so we don't

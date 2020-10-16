@@ -2,9 +2,8 @@
 // from all objectives & goals, stopping at the underscore
 
 const sliceId = (id) => {
-  let idString = id.toString();
-  let num = idString.slice(idString.indexOf("_", idString.length - 1));
-  return num;
+  const idString = id.toString();
+  return idString.slice(idString.indexOf("_", idString.length - 1));
 };
 
 // This helper function takes in a  file signature and returns the file type
@@ -30,27 +29,7 @@ const mimeTypes = (fileSignature) => {
   }
 };
 
-const fileExtensions = (ext) => {
-  switch (ext) {
-    case "jpg":
-    case "jpeg":
-    case "png":
-    case "document":
-    case "sheet":
-    case "pdf":
-    case "docx":
-    case "doc":
-    case "xltx":
-    case "xlsx":
-    case "xls":
-      return true;
-  }
-
-  return false;
-};
-
-
-export { sliceId, mimeTypes};
+export { sliceId, mimeTypes };
 
 // Files must be in one of these formats:
 // PDF, DONE

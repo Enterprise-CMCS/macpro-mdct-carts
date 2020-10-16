@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import CMSChoice from "./CMSChoice";
-import CMSLegend from "./CMSLegend";
 import { Alert, TextField, ChoiceList } from "@cmsgov/design-system-core";
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import CMSChoice from "./CMSChoice";
+// eslint-disable-next-line import/no-named-as-default
+import CMSLegend from "./CMSLegend";
 import DateRange from "../layout/DateRange";
+// eslint-disable-next-line import/extensions,import/no-unresolved
 import CMSRanges from "./CMSRanges";
 import { setAnswerEntry } from "../../actions/initial";
 import { selectQuestionsForPart } from "../../store/selectors";
@@ -38,13 +41,14 @@ class QuestionComponent extends Component {
         error = "Please enter only numbers and decimals";
       } else {
         error = null;
+        // eslint-disable-next-line react/prop-types,react/destructuring-assignment
         this.props.setAnswer(evt.target.name, evt.target.value);
       }
     }
 
     // Write to local state
     this.setState({
-      [evt.target.name + "Err"]: error,
+      [`${evt.target.name}Err`]: error,
     });
   }
 
@@ -61,19 +65,21 @@ class QuestionComponent extends Component {
 
     if (evt.target.value.length > 0) {
       if (validNumberRegex.test(evt.target.value)) {
-        let formattedNum = evt.target.value.replace(/[ ,]/g, "");
+        const formattedNum = evt.target.value.replace(/[ ,]/g, "");
+        // eslint-disable-next-line react/destructuring-assignment,react/prop-types
         this.props.setAnswer(evt.target.name, formattedNum);
         this.setState({
           [evt.target.name]: evt.target.value ? evt.target.value : null,
 
-          [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
+          [`${evt.target.name}Err`]: validNumberRegex.test(evt.target.value),
         });
       } else {
         this.setState({
-          [evt.target.name + "Err"]: validNumberRegex.test(evt.target.value),
+          [`${evt.target.name}Err`]: validNumberRegex.test(evt.target.value),
         });
       }
     } else {
+      // eslint-disable-next-line react/prop-types,react/destructuring-assignment
       this.props.setAnswer(evt.target.name, evt.target.value);
     }
   }
@@ -84,13 +90,14 @@ class QuestionComponent extends Component {
     );
     if (evt.target.value.length > 0) {
       if (validEmailRegex.test(evt.target.value)) {
+        // eslint-disable-next-line react/prop-types,react/destructuring-assignment
         this.props.setAnswer(evt.target.name, evt.target.value);
         this.setState({
-          [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
+          [`${evt.target.name}Err`]: !validEmailRegex.test(evt.target.value),
         });
       } else {
         this.setState({
-          [evt.target.name + "Err"]: !validEmailRegex.test(evt.target.value),
+          [`${evt.target.name}Err`]: !validEmailRegex.test(evt.target.value),
         });
       }
     }
@@ -99,7 +106,7 @@ class QuestionComponent extends Component {
   // Limit to 10 digits or throw error
   validatePhone(evt) {
     // Remove hyphens
-    let digits = evt.target.value.replace(/-/g, "");
+    const digits = evt.target.value.replace(/-/g, "");
 
     let errorMessage;
     if (digits.length > 10) {
@@ -107,21 +114,23 @@ class QuestionComponent extends Component {
     } else {
       errorMessage = null;
 
+      // eslint-disable-next-line react/prop-types,react/destructuring-assignment
       this.props.setAnswer(evt.target.name, digits);
     }
 
     this.setState({
-      [evt.target.name + "Err"]: errorMessage,
+      [`${evt.target.name}Err`]: errorMessage,
     });
   }
 
   handleCheckboxInput(evtArr) {
     // An array of the checkbox items already selected, or an empty array
-    let selections = this.state[evtArr[0]] ?? [];
+    // eslint-disable-next-line react/destructuring-assignment
+    const selections = this.state[evtArr[0]] ?? [];
 
     // If the current choice is already in state, find it's index in that array
     // returns -1 if the choice isnt in the selections array
-    let alreadySelected = selections.indexOf(evtArr[1]);
+    const alreadySelected = selections.indexOf(evtArr[1]);
 
     // if its already there and it is being selected again, remove it
     if (alreadySelected !== -1) {
@@ -133,29 +142,35 @@ class QuestionComponent extends Component {
 
     this.setState({ [evtArr[0]]: [...selections] });
 
+    // eslint-disable-next-line react/prop-types,react/destructuring-assignment
     this.props.setAnswer([evtArr[0]], selections);
   }
 
   handleCheckboxFlag(evt) {
+    // eslint-disable-next-line react/prop-types,react/destructuring-assignment
     this.props.setAnswer(evt.target.name, evt.target.checked);
   }
 
   handleChange(evt) {
+    // eslint-disable-next-line react/prop-types,react/destructuring-assignment
     this.props.setAnswer(evt.target.name, evt.target.value);
   }
 
   handleChangeArray(evtArray) {
+    // eslint-disable-next-line react/prop-types,react/destructuring-assignment
     this.props.setAnswer(evtArray[0], evtArray[1]);
     this.setState({
       [evtArray[0]]: evtArray[1] ? evtArray[1] : null,
-      [evtArray[0] + "Mod"]: true,
+      [`${evtArray[0]}Mod`]: true,
     });
   }
 
   render() {
     return (
       <>
+        {/* eslint-disable-next-line react/prop-types,react/destructuring-assignment */}
         {this.props.data.map((question, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <div className="question" key={index}>
             <fieldset className="ds-c-fieldset">
               {/* Generating question label */}
@@ -163,7 +178,8 @@ class QuestionComponent extends Component {
                 <CMSLegend id={question.id} label={question.label} />
               </legend>
               {question.type === "radio"
-                ? question.answer.options.map(({ label, value }, index) => {
+                ? // eslint-disable-next-line no-shadow
+                  question.answer.options.map(({ label, value }, index) => {
                     return (
                       <CMSChoice
                         name={question.id}
@@ -172,10 +188,14 @@ class QuestionComponent extends Component {
                         type={question.type}
                         answer={question.answer.entry}
                         conditional={question.conditional}
+                        /* eslint-disable-next-line react/no-children-prop */
                         children={question.questions}
+                        /* eslint-disable-next-line react/destructuring-assignment */
                         valueFromParent={this.state[question.id]}
                         onChange={this.handleChangeArray}
+                        /* eslint-disable-next-line react/no-array-index-key */
                         key={index}
+                        /* eslint-disable-next-line react/destructuring-assignment,react/prop-types */
                         setAnswer={this.props.setAnswer}
                         disabled={question.answer.readonly}
                         disabledFromParent={question.answer.readonly}
@@ -185,7 +205,8 @@ class QuestionComponent extends Component {
                 : null}
 
               {question.type === "checkbox"
-                ? question.answer.options.map(({ label, value }, index) => {
+                ? // eslint-disable-next-line no-shadow
+                  question.answer.options.map(({ label, value }, index) => {
                     return (
                       <CMSChoice
                         name={question.id}
@@ -194,10 +215,14 @@ class QuestionComponent extends Component {
                         type={question.type}
                         answer={question.answer.entry}
                         conditional={question.conditional}
+                        /* eslint-disable-next-line react/no-children-prop */
                         children={question.questions}
+                        /* eslint-disable-next-line react/destructuring-assignment */
                         valueFromParent={this.state[question.id]}
                         onChange={this.handleCheckboxInput}
+                        /* eslint-disable-next-line react/no-array-index-key */
                         key={index}
+                        /* eslint-disable-next-line react/prop-types,react/destructuring-assignment */
                         setAnswer={this.props.setAnswer}
                         disabled={question.answer.readonly}
                       />
@@ -223,8 +248,10 @@ class QuestionComponent extends Component {
                 <TextField
                   name={question.id}
                   value={
+                    // eslint-disable-next-line react/destructuring-assignment
                     this.state[question.id]
-                      ? this.state[question.id]
+                      ? // eslint-disable-next-line react/destructuring-assignment
+                        this.state[question.id]
                       : question.answer.entry
                   }
                   type="text"
@@ -232,7 +259,8 @@ class QuestionComponent extends Component {
                   onBlur={this.validateEmail}
                   onChange={this.updateLocalStateOnly}
                   errorMessage={
-                    this.state[question.id + "Err"]
+                    // eslint-disable-next-line react/destructuring-assignment
+                    this.state[`${question.id}Err`]
                       ? "Please enter a valid email address"
                       : false
                   }
@@ -293,12 +321,13 @@ class QuestionComponent extends Component {
                 <CMSRanges item={question} onChange={this.handleChangeArray} />
               ) : null}
 
-              {/* If integer*/}
+              {/* If integer */}
               {question.type === "integer" ? (
                 <TextField
                   className="ds-c-input"
                   errorMessage={
-                    this.state[question.id + "Err"] === false
+                    // eslint-disable-next-line react/destructuring-assignment
+                    this.state[`${question.id}Err`] === false
                       ? "Please enter numbers only"
                       : false
                   }
@@ -321,7 +350,8 @@ class QuestionComponent extends Component {
                   <TextField
                     className="money"
                     errorMessage={
-                      this.state[question.id + "Err"] === false
+                      // eslint-disable-next-line react/destructuring-assignment
+                      this.state[`${question.id}Err`] === false
                         ? "Please enter numbers only"
                         : false
                     }
@@ -350,14 +380,16 @@ class QuestionComponent extends Component {
                 <TextField
                   className="phone_number"
                   errorMessage={
-                    this.state[question.id + "Err"]
-                      ? this.state[question.id + "Err"]
+                    // eslint-disable-next-line react/destructuring-assignment
+                    this.state[`${question.id}Err`]
+                      ? // eslint-disable-next-line react/destructuring-assignment
+                        this.state[`${question.id}Err`]
                       : null
                   }
                   label=""
                   mask="phone"
                   name={question.id}
-                  numeric={true}
+                  numeric
                   onBlur={this.validatePhone}
                   pattern="[0-9]*"
                   value={question.answer.entry || ""}
@@ -370,14 +402,16 @@ class QuestionComponent extends Component {
                   <TextField
                     className="percentage"
                     errorMessage={
-                      this.state[question.id + "Err"]
-                        ? this.state[question.id + "Err"]
+                      // eslint-disable-next-line react/destructuring-assignment
+                      this.state[`${question.id}Err`]
+                        ? // eslint-disable-next-line react/destructuring-assignment
+                          this.state[`${question.id}Err`]
                         : null
                     }
                     inputMode="percentage"
                     label=""
                     name={question.id}
-                    numeric={true}
+                    numeric
                     onChange={this.validatePercentage}
                     pattern="[0-9]*"
                     value={question.answer.entry || ""}
@@ -403,15 +437,16 @@ class QuestionComponent extends Component {
                   value={question.answer.entry || ""}
                 />
               ) : null}
-              {/*Children of radio and checkboxes are handled in their respective sections (above)*/}
+              {/* Children of radio and checkboxes are handled in their respective sections (above) */}
               {question.questions &&
               question.type !== "fieldset" &&
               question.type !== "radio" &&
               question.type !== "checkbox" ? (
                 <QuestionComponent
-                  subquestion={true}
+                  subquestion
+                  /* eslint-disable-next-line react/destructuring-assignment,react/prop-types */
                   setAnswer={this.props.setAnswer}
-                  data={question.questions} //Array of subquestions to map through
+                  data={question.questions} // Array of subquestions to map through
                 />
               ) : null}
 
@@ -426,13 +461,12 @@ class QuestionComponent extends Component {
                   </Alert>
                 ) : (
                   <div className="cmsfieldset">
-                    {
-                      <QuestionComponent
-                        subquestion={true}
-                        setAnswer={this.props.setAnswer}
-                        data={question.questions}
-                      />
-                    }
+                    <QuestionComponent
+                      subquestion
+                      /* eslint-disable-next-line react/destructuring-assignment,react/prop-types */
+                      setAnswer={this.props.setAnswer}
+                      data={question.questions}
+                    />
                   </div>
                 ))}
 
@@ -444,7 +478,9 @@ class QuestionComponent extends Component {
                         {value[0] === "headers" ? (
                           <thead>
                             <tr>
+                              {/* eslint-disable-next-line func-names */}
                               {question.fieldset_info.headers.map(function (
+                                // eslint-disable-next-line no-shadow
                                 value
                               ) {
                                 return (
@@ -463,9 +499,11 @@ class QuestionComponent extends Component {
                           </thead>
                         ) : null}
                         {value[0] === "rows"
-                          ? question.fieldset_info.rows.map((value) => {
+                          ? // eslint-disable-next-line no-shadow
+                            question.fieldset_info.rows.map((value) => {
                               return (
                                 <tr>
+                                  {/* eslint-disable-next-line no-shadow */}
                                   {value.map((value) => {
                                     return (
                                       <td

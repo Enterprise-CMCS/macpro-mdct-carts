@@ -32,7 +32,7 @@ class Questions3C extends Component {
       p2_q4: "",
       p2_q5: "",
       p2_q6: "",
-      previousYear:this.props.previousYear,
+      previousYear: this.props.previousYear,
       previousp1_q3: "last year's text Q3",
       previousp1_q4: "last year's text q4",
       previousp1_q5: "last year's text q5",
@@ -121,17 +121,24 @@ class Questions3C extends Component {
               presumptive eligibility, and have you implemented this?
             </div>
             <div id="p1_q1">
-              {//<ChoiceList hint="Note: This question may not apply to Medicaid Expansion states."/>
+              {
+                //<ChoiceList hint="Note: This question may not apply to Medicaid Expansion states."/>
               }
-              <Choice 
-                name="p1_q1" 
-                type="radio" 
+              <Choice
+                name="p1_q1"
+                type="radio"
                 value="yes"
-                defaultChecked={this.props.previousEntry === "true" ? (this.state.previous_p1_q1 === "yes" ? true : false) : false}
+                defaultChecked={
+                  this.props.previousEntry === "true"
+                    ? this.state.previous_p1_q1 === "yes"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={this.setConditional}
-                >
-                  Yes
-                </Choice>
+              >
+                Yes
+              </Choice>
 
               <div className="conditional">
                 <label className="ds-c-label">
@@ -170,45 +177,68 @@ class Questions3C extends Component {
           </div>
           <div className="sub-questions">
             <div id="p1_q2__1">
-              
-              <Choice 
-                name="p1_q2__1" 
-                type="radio" 
-
+              <Choice
+                name="p1_q2__1"
+                type="radio"
                 value="yes"
-                defaultChecked={this.props.previousYear === "true" ? (this.state.previous_p1_q2__1 === "yes" ? true : false) : false}
+                defaultChecked={
+                  this.props.previousYear === "true"
+                    ? this.state.previous_p1_q2__1 === "yes"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={this.setConditional}
-                >
-                  Yes
-                </Choice>
-                <Choice 
-                name="p1_q2__1" 
-                type="radio" 
-                value="no"
-                defaultChecked={this.props.previousYear === "true" ? (this.state.previous_p1_q2__1 === "no" ? true : false) : false}
-                onChange={this.setConditional}
-                >
-                  No
-                </Choice>
-            </div>
-            <div id="p1_q2__2">
-              {//<ChoiceList label="b. Do you send renewal reminder notices to all families?"/>
-              }
-              <Choice 
-              name="p1_q2__2" 
-              type="radio" 
-              value="yes"
-              defaultChecked={this.props.previousYear === "true" ? (this.state.previous_p1_q2__2 === "yes" ? true : false) : false}
-              onChange={this.setConditional}
               >
                 Yes
               </Choice>
-              <Choice 
-              name="p1_q2__2" 
-              type="radio" 
-              value="no"
-              defaultChecked={this.props.previousYear === "true" ? (this.state.previous_p1_q2__2 === "no" ? true : false) : false}
-              onChange={this.setConditional}
+              <Choice
+                name="p1_q2__1"
+                type="radio"
+                value="no"
+                defaultChecked={
+                  this.props.previousYear === "true"
+                    ? this.state.previous_p1_q2__1 === "no"
+                      ? true
+                      : false
+                    : false
+                }
+                onChange={this.setConditional}
+              >
+                No
+              </Choice>
+            </div>
+            <div id="p1_q2__2">
+              {
+                //<ChoiceList label="b. Do you send renewal reminder notices to all families?"/>
+              }
+              <Choice
+                name="p1_q2__2"
+                type="radio"
+                value="yes"
+                defaultChecked={
+                  this.props.previousYear === "true"
+                    ? this.state.previous_p1_q2__2 === "yes"
+                      ? true
+                      : false
+                    : false
+                }
+                onChange={this.setConditional}
+              >
+                Yes
+              </Choice>
+              <Choice
+                name="p1_q2__2"
+                type="radio"
+                value="no"
+                defaultChecked={
+                  this.props.previousYear === "true"
+                    ? this.state.previous_p1_q2__2 === "no"
+                      ? true
+                      : false
+                    : false
+                }
+                onChange={this.setConditional}
               >
                 No
               </Choice>
