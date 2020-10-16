@@ -244,9 +244,9 @@ class SectionViewSet(viewsets.ModelViewSet):
     @transaction.atomic
     def update_sections(self, request):
         try:
-            certified = False
             state_id = False
             year = False
+
             for entry in request.data:
                 section_id = entry["contents"]["section"]["id"]
                 section_state = entry["contents"]["section"]["state"]
@@ -260,18 +260,21 @@ class SectionViewSet(viewsets.ModelViewSet):
 
                 self.check_object_permissions(request, section)
 
-                if certified == False:
-                    status = (
-                        StateStatus.objects.all()
-                        .filter(state_id=section_state, year=year)
-                        .order_by("last_changed")
-                        .last()
-                    )
-                    certified = status != None and status.status == "certified"
+                status = (
+                    StateStatus.objects.all()
+                    .filter(state_id=section_state, year=year)
+                    .order_by("last_changed")
+                    .last()
+                )
+                can_save = status == None or status.status not in [
+                    "certified",
+                    "published",
+                    "approved",
+                ]
 
-                if certified == True:
+                if can_save == False:
                     return HttpResponse(
-                        "cannot save certified report", status=400
+                        f"cannot save {status} report", status=400
                     )
 
                 section.contents = entry["contents"]
