@@ -11,11 +11,12 @@
       {
         "type": "subsection",
         "id": "2020-04-a",
+        "title": "State Plan Goals and Objectives",
         "parts": [
           {
             "id": "2020-04-a-01",
             "type": "part",
-            "title": "State Plan Goals and Objectives",
+            "title": "Tell us about your goals and objectives",
             "text": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
             "questions": [
               {
@@ -237,6 +238,46 @@
                     ]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "id": "2020-04-a-02",
+            "type": "part",
+            "title": "Additional questions",
+            "questions": [
+              {
+                "id": "2020-04-a-02-01",
+                "type": "text_multiline",
+                "label": "Do you have other strategies for measuring and reporting on your performance goals? What are these strategies, and what information have you found through this research?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-04-a-02-02",
+                "type": "text_multiline",
+                "label": "Do you plan to add new strategies for measuring and reporting on your goals and objectives? What do you plan to do, and when will this data become available?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-04-a-02-03",
+                "type": "text_multiline",
+                "label": "Have you conducted any focused studies on your CHIP population? (For example: studies on adolescents, attention deficit disorder, substance use, special healthcare needs, or other emerging healthcare needs.) What have you discovered through this research?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-04-a-02-04",
+                "type": "file_upload",
+                "label": "Optional: Attach any additional documents here.",
+                "hint": "For example: studies, analyses, or any other documents that address your performance goals.",
+                "answer": {
+                  "entry": null
+                }
               }
             ]
           }
