@@ -6191,7 +6191,7 @@
             "id": "2020-03-h-02",
             "type": "part",
             "title": "You collected the CAHPS survey",
-            "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
+            "text": "Since you collected the CAHPS survey, please complete Part 2.",
             "context_data": {
               "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
               "conditional_display": {
@@ -6210,7 +6210,7 @@
               {
                 "id": "2020-03-h-02-01",
                 "label": "Upload a summary report of your CAHPS survey results.",
-                "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                "hint": "This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database. Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
                 "type": "file_upload",
                 "answer": {
                   "entry": null
