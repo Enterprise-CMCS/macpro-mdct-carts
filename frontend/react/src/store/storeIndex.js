@@ -7,6 +7,7 @@ import stateUser from "./stateUser";
 import global from "./globalVariables";
 import saveMiddleware from "./saveMiddleware";
 import allStatesData from "./allStatesData";
+import reportStatus from "./reportStatus";
 
 // Consolidate reducers
 export const reducer = combineReducers({
@@ -15,6 +16,7 @@ export const reducer = combineReducers({
   stateUser,
   global,
   allStatesData,
+  reportStatus,
 });
 
 // Consolidate middleware

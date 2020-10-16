@@ -6,10 +6,12 @@ from typing import (
     Union,
 )
 
+from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
+from django.utils import timezone
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -242,10 +244,14 @@ class SectionViewSet(viewsets.ModelViewSet):
     @transaction.atomic
     def update_sections(self, request):
         try:
+            state_id = False
+            year = False
 
             for entry in request.data:
                 section_id = entry["contents"]["section"]["id"]
                 section_state = entry["contents"]["section"]["state"]
+                state_id = section_state
+                year = entry["contents"]["section"]["year"]
 
                 section = Section.objects.get(
                     contents__section__id=section_id,
@@ -254,9 +260,35 @@ class SectionViewSet(viewsets.ModelViewSet):
 
                 self.check_object_permissions(request, section)
 
+                status = (
+                    StateStatus.objects.all()
+                    .filter(state_id=section_state, year=year)
+                    .order_by("last_changed")
+                    .last()
+                )
+                can_save = status == None or status.status not in [
+                    "certified",
+                    "published",
+                    "approved",
+                ]
+
+                if can_save == False:
+                    return HttpResponse(
+                        f"cannot save {status} report", status=400
+                    )
+
                 section.contents = entry["contents"]
                 section.save()
-                return HttpResponse(status=204)
+
+            status = (
+                StateStatus.objects.all()
+                .filter(state_id=section_state, year=year)
+                .order_by("last_changed")
+                .last()
+            )
+            status.last_changed = datetime.now(tz=timezone.utc)
+            status.save()
+            return HttpResponse(status=204)
 
         except PermissionDenied:
             raise
