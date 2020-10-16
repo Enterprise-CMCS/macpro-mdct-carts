@@ -5240,7 +5240,7 @@
               },
               {
                 "id": "2020-03-f-01-04",
-                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
+                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -5270,8 +5270,8 @@
                 "questions": [
                   {
                     "id": "2020-03-f-01-05-a",
-                    "label": "What safeguards and procedures do the Managed Care plans have in place? Attach any relevant documents.",
-                    "type": "file_upload",
+                    "label": "What safeguards and procedures do the Managed Care plans have in place?",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
