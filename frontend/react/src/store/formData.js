@@ -4,12 +4,25 @@ import { SET_FRAGMENT } from "../actions/repeatables";
 import jsonpath from "../util/jsonpath";
 import { selectQuestion } from "./selectors";
 
+const sortByOrdinal = (sectionA, sectionB) => {
+  const a = sectionA.contents.section.ordinal;
+  const b = sectionB.contents.section.ordinal;
+
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+};
+
 const initialState = [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
-      return action.data;
+      return action.data.sort(sortByOrdinal);
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
       fragment.answer.entry = action.data;
