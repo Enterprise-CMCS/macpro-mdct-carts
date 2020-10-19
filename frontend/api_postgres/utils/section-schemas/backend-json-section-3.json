@@ -1204,7 +1204,7 @@
               {
                 "type": "fieldset",
                 "label": "Helpful hints on age groups",
-                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
+                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2020 must be born after January 2004. Similarly, children who are newly enrolled in February 2020 must be born after February 2004, and children newly enrolled in March 2020 must be born after March 2004.",
                 "questions": []
               },
               {
@@ -2862,7 +2862,7 @@
               {
                 "type": "fieldset",
                 "label": "Helpful hints on age groups",
-                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
+                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2004. Similarly, children who are newly enrolled in February 2020 must be born after February 2004, and children newly enrolled in March 2020 must be born after March 2004.",
                 "questions": []
               },
               {
@@ -4827,19 +4827,6 @@
                       "label": "No"
                     }
                   ]
-                },
-                "context_data": {
-                  "conditional_display": {
-                    "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2020-03-e-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
-                    "hide_if": {
-                      "target": "$..*[?(@.id=='2020-03-e-01-01')].answer.entry",
-                      "values": {
-                        "interactive": [null, "no"],
-                        "noninteractive": ["no"]
-                      }
-                    }
-                  }
                 }
               }
             ]
@@ -5240,7 +5227,7 @@
               },
               {
                 "id": "2020-03-f-01-04",
-                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
+                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -5270,8 +5257,8 @@
                 "questions": [
                   {
                     "id": "2020-03-f-01-05-a",
-                    "label": "What safeguards and procedures do the Managed Care plans have in place? Attach any relevant documents.",
-                    "type": "file_upload",
+                    "label": "What safeguards and procedures do the Managed Care plans have in place?",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -6191,7 +6178,7 @@
             "id": "2020-03-h-02",
             "type": "part",
             "title": "You collected the CAHPS survey",
-            "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
+            "text": "Since you collected the CAHPS survey, please complete Part 2.",
             "context_data": {
               "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
               "conditional_display": {
@@ -6210,7 +6197,7 @@
               {
                 "id": "2020-03-h-02-01",
                 "label": "Upload a summary report of your CAHPS survey results.",
-                "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                "hint": "This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database. Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
                 "type": "file_upload",
                 "answer": {
                   "entry": null
@@ -6538,7 +6525,7 @@
         "id": "2020-03-i",
         "title": "Health Services Initiative (HSI) Programs",
         "type": "subsection",
-        "text": "All states with approved HSI program(s) should complete this section.\nStates can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
+        "text": "All states with approved HSI program(s) should complete this section.\nStates can use up to 10% of their fiscal year allotment to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
         "parts": [
           {
             "id": "2020-03-i-01",

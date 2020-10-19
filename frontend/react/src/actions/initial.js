@@ -51,7 +51,9 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
     });
   } else {
     const { data: newData } = await axios.post(`/state_status/`, {
+      last_changed: new Date(),
       state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
+      status: "started",
       year,
     });
     dispatch({ type: SET_STATE_STATUS, payload: newData });
