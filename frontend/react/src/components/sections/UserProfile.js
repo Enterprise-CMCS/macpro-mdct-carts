@@ -23,7 +23,7 @@ const UserProfile = ({ currentUser }) => {
             </div>
             <div>
               <div>Email: </div>
-              <div>{currentUser.UserProfileemail}</div>
+              <div>{currentUser.email}</div>
             </div>
             <div>
               <div>State: </div>
