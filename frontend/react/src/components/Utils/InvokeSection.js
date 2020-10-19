@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { constructIdFromYearSectionAndSubsection } from "../../store/formData";
 import Section from "../layout/Section";
 import SecureInitialDataLoad from "./SecureInitialDataLoad";
 
-const InvokeSection = ({ userData }) => {
+const InvokeSection = () => {
   const { state, year, sectionOrdinal, subsectionMarker } = useParams();
   if (state) {
     SecureInitialDataLoad({ stateCode: state });
@@ -22,17 +21,7 @@ const InvokeSection = ({ userData }) => {
     Number(sectionOrdinal),
     filteredMarker
   );
-  return (
-    <Section
-      userData={userData}
-      sectionId={sectionId}
-      subsectionId={subsectionId}
-    />
-  );
-};
-
-InvokeSection.propTypes = {
-  userData: PropTypes.object.isRequired,
+  return <Section sectionId={sectionId} subsectionId={subsectionId} />;
 };
 
 export default InvokeSection;
