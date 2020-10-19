@@ -13,8 +13,8 @@
    around jsonpath so that we can get the performance benefits everywhere
    without having to change anything anywhere else.
  */
-const jsonpath = require("jsonpath");
-const idLetterMarkers = require("./idLetterMarkers");
+import jsonpath from "jsonpath";
+import idLetterMarkers from "./idLetterMarkers";
 
 const fullPathFromIDPath = (originalPath) => {
   const idMatch = /\[\?\(@\.id===?['"]([^'"]+)['"]\)\](.*)$/.exec(originalPath);

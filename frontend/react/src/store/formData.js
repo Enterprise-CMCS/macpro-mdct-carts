@@ -1,4 +1,4 @@
-import { _ } from "underscore";
+import _ from "underscore";
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables"; // eslint-disable-line import/no-cycle
 import jsonpath from "../util/jsonpath";
