@@ -14,6 +14,7 @@
    without having to change anything anywhere else.
  */
 const jsonpath = require("jsonpath");
+const idLetterMarkers = require("./idLetterMarkers");
 
 const fullPathFromIDPath = (originalPath) => {
   const idMatch = /\[\?\(@\.id===?['"]([^'"]+)['"]\)\](.*)$/.exec(originalPath);
@@ -34,9 +35,9 @@ const fullPathFromIDPath = (originalPath) => {
       pathParts.push(`.formData[${+section}].contents.section`);
     }
     if (subsection) {
-      // Subsections are lowercase letters, starting at a. Subtract the ASCII
-      // value for lowercase a (97) to compute the index.
-      const subsectionNumber = subsection.toLowerCase().charCodeAt(0) - 97;
+      // We'll make an assumption that subsections will always be a-zz, because
+      // that seems safe enough for now.
+      const subsectionNumber = idLetterMarkers.indexOf(subsection);
       pathParts.push(`.subsections[${subsectionNumber}]`);
     }
     if (part) {

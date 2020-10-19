@@ -3,6 +3,7 @@ import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables"; // eslint-disable-line import/no-cycle
 import jsonpath from "../util/jsonpath";
 import { selectQuestion } from "./selectors"; // eslint-disable-line import/no-cycle
+import idLetterMarkers from "../util/idLetterMarkers";
 
 const sortByOrdinal = (sectionA, sectionB) => {
   const a = sectionA.contents.section.ordinal;
@@ -108,65 +109,6 @@ export const selectFragmentById = (state, id) => {
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 };
 
-/*
- * Letter markers go from a to z, and then from aa to zz although we all hope
- * that will never be needed.
- */
-export const letterMarkers = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "aa",
-  "bb",
-  "cc",
-  "dd",
-  "ee",
-  "ff",
-  "gg",
-  "hh",
-  "ii",
-  "jj",
-  "kk",
-  "ll",
-  "mm",
-  "nn",
-  "oo",
-  "pp",
-  "qq",
-  "rr",
-  "ss",
-  "tt",
-  "uu",
-  "vv",
-  "ww",
-  "xx",
-  "yy",
-  "zz",
-];
-
 /**
  * Selects a fragment from a given object using the jsonpath expression passed in.
  * Assumes there's only one matching result and returns it.
@@ -204,10 +146,10 @@ export const selectFragment = (state, id = null, jp = null) => {
   const chunks = idValue.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
   if (chunks.length >= 2) {
     // id of e.g. (2020-01-)a-01 means our target is the fragment's parent, subsection a:
-    targetObject = targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+    targetObject = targetObject.subsections[idLetterMarkers.indexOf(chunks[0])];
   } else {
     // if it's just one chunk, it's a subsection, so:
-    return targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+    return targetObject.subsections[idLetterMarkers.indexOf(chunks[0])];
   }
   if (chunks.length >= 3) {
     // id of e.g. (2020-01-)a-01-01 means our target is the fragment's parent, part 01:
@@ -223,9 +165,9 @@ export const selectFragment = (state, id = null, jp = null) => {
     // if it's just three chunks it's a question, so:
     return targetObject.questions[Number(chunks[2]) - 1];
   }
-  if (chunks.length >= 5 && letterMarkers.includes(chunks[3])) {
+  if (chunks.length >= 5 && idLetterMarkers.includes(chunks[3])) {
     // id of e.g. (2020-01-)a-01-01-a-01 means our target is the fragment's parent, question a:
-    targetObject = targetObject.questions[letterMarkers.indexOf(chunks[3])];
+    targetObject = targetObject.questions[idLetterMarkers.indexOf(chunks[3])];
   }
   // TODO: account for objectives/repeatables here.
 
