@@ -1,4 +1,4 @@
-import { SET_STATE_STATUS } from "../actions/initial";
+import { SET_STATE_STATUS, SET_STATE_STATUSES } from "../actions/initial";
 import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
 
 const initialState = {
@@ -15,6 +15,8 @@ export default (state = initialState, action) => {
         status: action.payload.status,
         userName: action.payload.user_name,
       };
+    case SET_STATE_STATUSES:
+      return action.payload;
     case CERTIFY_AND_SUBMIT_SUCCESS:
       return {
         ...state,
