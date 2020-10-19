@@ -4827,19 +4827,6 @@
                       "label": "No"
                     }
                   ]
-                },
-                "context_data": {
-                  "conditional_display": {
-                    "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2020-03-e-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
-                    "hide_if": {
-                      "target": "$..*[?(@.id=='2020-03-e-01-01')].answer.entry",
-                      "values": {
-                        "interactive": [null, "no"],
-                        "noninteractive": ["no"]
-                      }
-                    }
-                  }
                 }
               }
             ]
