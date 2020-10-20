@@ -37,7 +37,8 @@ def write_state_section_json(here: Path, states: Path) -> None:
             first = populate_section_zero(state_data[k], generic_sections[0])
             write_json(states / f"2020-{k.lower()}-section-0.json", first)
             rest = [
-                populate_section(state_data[k], s) for s in generic_sections[1:]
+                populate_section(state_data[k], s)
+                for s in generic_sections[1:]
             ]
             for i, section in enumerate(rest):
                 num = i + 1
