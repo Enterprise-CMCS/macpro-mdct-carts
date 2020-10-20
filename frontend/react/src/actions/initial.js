@@ -61,10 +61,7 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
 
   // Get the latest status for this state.
   const payload = data
-    .filter(
-      (status) =>
-        status.state === stateCode && status.year === year
-    )
+    .filter((status) => status.state === stateCode && status.year === year)
     .sort((a, b) => {
       const dateA = new Date(a.last_changed);
       const dateB = new Date(b.last_changed);
