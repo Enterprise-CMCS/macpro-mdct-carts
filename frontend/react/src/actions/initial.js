@@ -130,7 +130,7 @@ export const loadForm = (state) => async (dispatch, getState) => {
   const stateCode = state ?? stateUser.currentUser.state.id;
 
   // Start isFetching for spinner; turned off in Part.js
-  dispatch({"type": "CONTENT_FETCHING_STARTED"})
+  dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
   dispatch(loadSections({ userData: stateUser, stateCode }));
   dispatch(getStateStatus({ stateCode }));
