@@ -4,21 +4,23 @@ const initialState = {
   formName: "CARTS FY",
   formYear: new Date().getFullYear().toString(),
   largeTextBoxHeight: 6,
-  isFetching: false
+  isFetching: false,
 };
 
-// REDUCER
-export default function global (state = initialState, action) {
-  if (action.type === 'CONTENT_FETCHING_STARTED') {
+// Global REDUCER
+export default function global(state = initialState, action) {
+  // Triggers isFetching which activates Spinner.js (reactRouter.js)
+  if (action.type === "CONTENT_FETCHING_STARTED") {
     return Object.assign({}, state, {
-      isFetching: true
-    })
+      isFetching: true,
+    });
   }
 
-  if (action.type === 'CONTENT_FETCHING_FINISHED') {
+  // Triggers isFetching which deactivates Spinner.js (reactRouter.js)
+  if (action.type === "CONTENT_FETCHING_FINISHED") {
     return Object.assign({}, state, {
-      isFetching: false
-    })
+      isFetching: false,
+    });
   }
 
   return state;

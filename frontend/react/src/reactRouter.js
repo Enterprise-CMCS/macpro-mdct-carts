@@ -18,6 +18,10 @@ const VisibleSidebar =
     <Sidebar />
   );
 
+// Only show Spinner on form pages
+const VisibleSpinner =
+  window.location.pathname.split("/")[1] === "sections" ? <Spinner /> : null;
+
 const Routes = ({ userData }) => (
   <Router>
     <div className="ds-l-container">
@@ -25,7 +29,7 @@ const Routes = ({ userData }) => (
         {VisibleSidebar}
         <SaveError />
         <ScrollToTop />
-        <Spinner />
+        {VisibleSpinner}
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />
