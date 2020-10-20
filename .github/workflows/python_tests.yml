@@ -3,7 +3,7 @@ name: Python tests
 on:
   pull_request:
     paths:
-      - "frontend/api_postgres/*"
+      - "frontend/api_postgres/**"
 
 jobs:
   pytest:
