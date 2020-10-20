@@ -31,10 +31,6 @@ const WrappedSecurity = () => {
       <Footer />
     );
 
-  // Only show Spinner on form pages
-  const VisibleSpinner =
-    window.location.pathname.split("/")[1] === "sections" ? <Spinner /> : null;
-
   const loc = qs.parse(useLocation().search);
   const devKeys = {
     "dev-ak": "AK",
@@ -63,7 +59,7 @@ const WrappedSecurity = () => {
         tokenManager={{ secure: true, storage: "cookie" }}
       >
         {VisibleHeader}
-        {VisibleSpinner}
+        <Spinner />
         <Router>
           <SecureInitialDataLoad stateCode={stateCode} userData={userData} />
           <Route path={config.callback} component={LoginCallback} />

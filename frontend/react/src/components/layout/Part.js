@@ -95,9 +95,4 @@ const mapStateToProps = (state, { partId }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  // End spinner, started in initial.js
-  dispatch({ type: "CONTENT_FETCHING_FINISHED" });
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Part);
+export default connect(mapStateToProps)(Part);
