@@ -210,7 +210,12 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         if new_status == "started":
             new_status = "in_progress"
         user = request.user
-        assert all([state_code, year, new_status, user])
+        try:
+            assert all([state_code, year, new_status, user])
+        except AssertionError:
+            return HttpResponse(
+                "state_code, year, status, or user missing", status=400
+            )
         state = State.objects.get(code=state_code.upper())
         current = (
             StateStatus.objects.all()
