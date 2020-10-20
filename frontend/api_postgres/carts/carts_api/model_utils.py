@@ -242,7 +242,7 @@ def validate_status_change(
         },
         "in_progress": {
             "possible_new_states": {
-                "submitted": {
+                "certified": {
                     "authorized_roles": ["state_user"],
                 }
             }

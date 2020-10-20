@@ -35,7 +35,7 @@ class JwtDevAuthentication(JwtAuthentication):
 
             role = roles[suffix]
 
-            if role in ("state_user", "co_user"):
+            if role == "state_user":
                 state_codes = [suffix.upper()]
                 states = State.objects.filter(code__in=state_codes)
                 email = f"{dev_username}@{states[0].name.lower()}.gov"
@@ -63,15 +63,9 @@ class JwtDevAuthentication(JwtAuthentication):
                 group = Group.objects.get(name="Admin users")
                 dev_user.groups.set([group])
             # Once we have different permissions for co_users, add here.
-            elif role == "co_user" and states:
-                groups = []
-                for state in states:
-                    for group in Group.objects.filter(
-                        name__endswith=" sections"
-                    ):
-                        if group.name.endswith(f"{state.code} sections"):
-                            groups.append(group)
-                dev_user.groups.set(groups)
+            elif role in ("bus_user", "co_user"):
+                group = Group.objects.get(name="Business owner users")
+                dev_user.groups.set([group])
             elif role == "state_user":
                 group = Group.objects.get(
                     name__endswith=f"{state_codes[0]} sections"
