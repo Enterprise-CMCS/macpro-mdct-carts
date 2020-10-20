@@ -11,16 +11,12 @@ const initialState = {
 export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
   if (action.type === "CONTENT_FETCHING_STARTED") {
-    return Object.assign({}, state, {
-      isFetching: true,
-    });
+    return { ...state, isFetching: true };
   }
 
   // Triggers isFetching which deactivates Spinner.js (reactRouter.js)
   if (action.type === "CONTENT_FETCHING_FINISHED") {
-    return Object.assign({}, state, {
-      isFetching: false,
-    });
+    return { ...state, isFetching: false };
   }
 
   return state;

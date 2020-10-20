@@ -1,21 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-class Spinner extends Component {
-  render() {
-    return this.props.isFetching ? (
-      <div className="preloader">
-        <div className="preloader-image">
-          <img
-            src={process.env.PUBLIC_URL + "/img/spinner.gif"}
-            alt="Loading. Please wait."
-          />
-        </div>
+const Spinner = (props) => {
+  const { isFetching } = props;
+
+  return isFetching ? (
+    <div className="preloader">
+      <div className="preloader-image">
+        <img
+          src={`${process.env.PUBLIC_URL}/img/spinner.gif`}
+          alt="Loading. Please wait."
+        />
       </div>
-    ) : null;
-  }
-}
+    </div>
+  ) : null;
+};
 
+Spinner.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+};
 const mapStateToProps = (state) => {
   return {
     isFetching: state.global.isFetching,
