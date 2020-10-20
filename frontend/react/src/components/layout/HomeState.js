@@ -17,18 +17,6 @@ const StateHome = ({ SecureRouteComponent: SecureRoute }) => (
     <Switch>
       <SecureRoute exact path="/" component={Homepage} />
 
-      <SecureRoute
-        exact
-        path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
-      >
-        <Sidebar />
-        <InvokeSection />
-      </SecureRoute>
-      <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
-        <Sidebar />
-        <InvokeSection />
-      </SecureRoute>
-
       <SecureRoute path="/sections/:year/certify-and-submit" exact>
         <Sidebar />
         <CertifyAndSubmit />
