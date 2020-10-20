@@ -49,7 +49,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-01-02-01-01",
-                                "label": "Briefly describe your goal.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "hint": "For example: In an effort to reduce the number of uninsured children, our goal is to enroll 90% of eligible children in the CHIP program.",
                                 "type": "text_multiline",
                                 "answer": {
@@ -243,7 +243,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your CHIP State Plan?",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "hint": "You can edit the suggested objective so it matches what’s in your CHIP State Plan.",
                         "id": "2020-04-a-01-01-02-01",
                         "answer": {
@@ -261,7 +261,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-02-02-01-01",
-                                "label": "Briefly describe your goal.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "hint": "For example: In an effort to increase access to care, our goal is to increase the number of children who have visited a primary care physician by 5%.",
                                 "type": "text_multiline",
                                 "answer": {
@@ -455,7 +455,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your CHIP State Plan?",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "hint": "You can edit the suggested objective to match what’s in your CHIP State Plan.",
                         "id": "2020-04-a-01-01-03-01",
                         "answer": {
@@ -473,7 +473,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-03-02-01-01",
-                                "label": "Briefly describe your goal.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                 "type": "text_multiline",
                                 "answer": {
@@ -667,7 +667,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your CHIP State Plan?",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "id": "2020-04-a-01-01-04-01",
                         "answer": {
                           "entry": null
@@ -684,7 +684,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-04-02-01-01",
-                                "label": "Briefly describe your goal.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -875,7 +875,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your CHIP State Plan?",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "id": "2020-04-a-01-01-05-01",
                         "answer": {
                           "entry": null
@@ -892,7 +892,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-05-02-01-01",
-                                "label": "Briefly describe your goal.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -1083,7 +1083,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state CHIP State Plan?",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "id": "2020-04-a-01-01-06-01",
                         "answer": {
                           "entry": null
@@ -1100,7 +1100,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-06-02-01-01",
-                                "label": "Briefly describe your goal.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
