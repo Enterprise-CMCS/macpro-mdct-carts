@@ -47,7 +47,7 @@ export const getAllStateStatuses = () => async (dispatch, getState) => {
     .reduce(
       (out, status) => ({
         ...out,
-        [status.state.replace(/.*\/([A-Z]{2})\//, "$1")]: status.status,
+        [status.state]: status.status,
       }),
       {}
     );
@@ -61,10 +61,7 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
 
   // Get the latest status for this state.
   const payload = data
-    .filter(
-      (status) =>
-        status.state.endsWith(`/state/${stateCode}/`) && status.year === year
-    )
+    .filter((status) => status.state === stateCode && status.year === year)
     .sort((a, b) => {
       const dateA = new Date(a.last_changed);
       const dateB = new Date(b.last_changed);
@@ -87,8 +84,8 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
   } else {
     const { data: newData } = await axios.post(`/state_status/`, {
       last_changed: new Date(),
-      state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
-      status: "started",
+      state: stateCode,
+      status: "in_progress",
       year,
     });
     dispatch({ type: SET_STATE_STATUS, payload: newData });
@@ -132,14 +129,16 @@ export const loadForm = (state) => async (dispatch, getState) => {
   // Start isFetching for spinner
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
-  await Promise.all([
-    dispatch(loadSections({ userData: stateUser, stateCode })),
-    dispatch(getStateStatus({ stateCode })),
-    dispatch(getAllStatesData()),
-  ]);
-
-  // End isFetching for spinner
-  dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+  try {
+    await Promise.all([
+      dispatch(loadSections({ userData: stateUser, stateCode })),
+      dispatch(getStateStatus({ stateCode })),
+      dispatch(getAllStatesData()),
+    ]);
+  } finally {
+    // End isFetching for spinner
+    dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+  }
 };
 
 // Move this to where actions should go when we know where that is.
