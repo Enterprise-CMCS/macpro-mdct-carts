@@ -9,6 +9,7 @@ import test from "./components/test";
 import InvokeSection from "./components/Utils/InvokeSection";
 import ScrollToTop from "./components/Utils/ScrollToTop";
 import SaveError from "./components/layout/SaveError";
+import Spinner from "./components/Utils/Spinner";
 
 const VisibleSidebar =
   window.location.pathname === "/" ||
@@ -24,6 +25,7 @@ const Routes = ({ userData }) => (
         {VisibleSidebar}
         <SaveError />
         <ScrollToTop />
+        <Spinner />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/reports/:stateAbbrev/:year" component={Review} />

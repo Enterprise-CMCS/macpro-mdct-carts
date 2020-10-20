@@ -91,7 +91,13 @@ const mapStateToProps = (state, { partId }) => {
     show: showPart(contextData, state.stateUser.programType, state),
     text: part ? part.text : null,
     title: part ? part.title : null,
+    isFetching: state.global.isFetching,
   };
 };
 
-export default connect(mapStateToProps)(Part);
+const mapDispatchToProps = dispatch => {
+  // End spinner, started in initial.js
+  dispatch({"type": "CONTENT_FETCHING_FINISHED"})
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Part);

@@ -55,6 +55,10 @@ export const loadUserThenSections = ({ userData, stateCode }) => {
   const queryString = forwardedQueryString();
   const apiURL = [apiHost, apiPath, userToken, queryString].join("");
   return async (dispatch) => {
+
+    // Begin spinner, this is terminated in Part.js
+    dispatch({"type": "CONTENT_FETCHING_STARTED"});
+
     await axios
       .get(apiURL)
       .then((res) => {
