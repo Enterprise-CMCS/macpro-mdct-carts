@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ReportItem = ({ link1Text, link1URL, name, statusText, statusURL }) => {
   const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
@@ -13,9 +14,9 @@ const ReportItem = ({ link1Text, link1URL, name, statusText, statusURL }) => {
         {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
       </div>
       <div className="actions ds-l-col--6">
-        <a href={link1URL} target={anchorTarget}>
+        <Link to={link1URL} target={anchorTarget}>
           {link1Text}
-        </a>
+        </Link>
       </div>
     </div>
   );
