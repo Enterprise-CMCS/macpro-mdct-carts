@@ -204,14 +204,13 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         and turn the latter into the former.
 
         """
-        state_code = request.POST.get("state")
-        year = request.POST.get("year")
-        new_status = request.POST.get("status")
+        state_code = request.data.get("state")
+        year = request.data.get("year")
+        new_status = request.data.get("status")
         if new_status == "started":
             new_status = "in_progress"
         user = request.user
         assert all([state_code, year, new_status, user])
-        print(state_code.upper(), flush=True)
         state = State.objects.get(code=state_code.upper())
         current = (
             StateStatus.objects.all()
@@ -220,6 +219,8 @@ class StateStatusViewSet(viewsets.ModelViewSet):
             .last()
         )
         current_status = current.status if current else "not_started"
+        if current_status == new_status:
+            return self.list(request)
         if current_status == "started":
             current_status = "in_progress"
         is_change_valid = validate_status_change(
