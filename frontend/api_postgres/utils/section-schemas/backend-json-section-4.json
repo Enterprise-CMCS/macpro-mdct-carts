@@ -17,7 +17,7 @@
             "id": "2020-04-a-01",
             "type": "part",
             "title": "Tell us about your goals and objectives",
-            "text": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
+            "text": "Tell us about the progress you’ve made on your performance goals in the past year. The objectives and goals you add to this section should match those reflected in your CHIP State Plan, Section 9. Submit a CHIP State Plan Amendment (SPA) if any of them are different. \nObjective 1 is required. We’ve provided examples for other objectives, but you can edit them so they match the objectives in your CHIP State Plan. You can add additional objectives and goals to fit what’s in your CHIP State Plan.",
             "questions": [
               {
                 "id": "2020-04-a-01-01",
@@ -29,12 +29,12 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is your objective as listed in your CHIP State Plan?",
+                        "hint": "Completing this objective is required.",
                         "id": "2020-04-a-01-01-01-01",
                         "answer": {
                           "readonly": true,
-                          "default_entry": "Reduce the number of uninsured children.",
+                          "default_entry": "Reduce the number of uninsured children",
                           "entry": null
                         }
                       },
@@ -49,8 +49,8 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-01-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
+                                "hint": "For example: In an effort to reduce the number of uninsured children, our goal is to enroll 90% of eligible children in the CHIP program.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -243,11 +243,11 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "hint": "You can edit the suggested objective so it matches what’s in your CHIP State Plan.",
                         "id": "2020-04-a-01-01-02-01",
                         "answer": {
-                          "entry": "Increasing access to care"
+                          "entry": "Increase access to care"
                         }
                       },
                       {
@@ -261,8 +261,8 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-02-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
+                                "hint": "For example: In an effort to increase access to care, our goal is to increase the number of children who have visited a primary care physician by 5%.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -328,7 +328,7 @@
                                   {
                                     "id": "2020-04-a-01-01-02-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
-                                    "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
+                                    "hint": "For example: The number of children enrolled in CHIP who visited a primary care physician in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -351,7 +351,7 @@
                                   {
                                     "id": "2020-04-a-01-01-02-02-01-05",
                                     "label": "Which population are you measuring in the denominator?",
-                                    "hint": "For example: The total number of eligible children in the last federal fiscal year.",
+                                    "hint": "For example: The total number of children enrolled in CHIP in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -455,11 +455,11 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "hint": "You can edit the suggested objective to match what’s in your CHIP State Plan.",
                         "id": "2020-04-a-01-01-03-01",
                         "answer": {
-                          "entry": "Increasing the use of preventative care"
+                          "entry": "Increase the use of preventative care"
                         }
                       },
                       {
@@ -473,8 +473,8 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-03-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
+                                "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -540,7 +540,7 @@
                                   {
                                     "id": "2020-04-a-01-01-03-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
-                                    "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
+                                    "hint": "For example: The number of children who received one or more well child visits in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -563,7 +563,7 @@
                                   {
                                     "id": "2020-04-a-01-01-03-02-01-05",
                                     "label": "Which population are you measuring in the denominator?",
-                                    "hint": "For example: The total number of eligible children in the last federal fiscal year.",
+                                    "hint": "For example: The total number of children enrolled in CHIP in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -667,8 +667,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "id": "2020-04-a-01-01-04-01",
                         "answer": {
                           "entry": null
@@ -685,8 +684,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-04-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -752,7 +750,6 @@
                                   {
                                     "id": "2020-04-a-01-01-04-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
-                                    "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -775,7 +772,6 @@
                                   {
                                     "id": "2020-04-a-01-01-04-02-01-05",
                                     "label": "Which population are you measuring in the denominator?",
-                                    "hint": "For example: The total number of eligible children in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -879,8 +875,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "id": "2020-04-a-01-01-05-01",
                         "answer": {
                           "entry": null
@@ -897,8 +892,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-05-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -964,7 +958,6 @@
                                   {
                                     "id": "2020-04-a-01-01-05-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
-                                    "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -987,7 +980,6 @@
                                   {
                                     "id": "2020-04-a-01-01-05-02-01-05",
                                     "label": "Which population are you measuring in the denominator?",
-                                    "hint": "For example: The total number of eligible children in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
@@ -1091,8 +1083,7 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
                         "id": "2020-04-a-01-01-06-01",
                         "answer": {
                           "entry": null
@@ -1109,8 +1100,7 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-06-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -1176,7 +1166,6 @@
                                   {
                                     "id": "2020-04-a-01-01-06-02-01-03",
                                     "label": "Which population are you measuring in the numerator?",
-                                    "hint": "For example: The number of children enrolled in CHIP in the last federal fiscal year.",
                                     "type": "text_medium",
                                     "answer": {
                                       "entry": null
