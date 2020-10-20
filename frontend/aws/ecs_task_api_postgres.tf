@@ -177,7 +177,7 @@ resource "aws_alb_target_group" "api_postgres" {
   vpc_id               = data.aws_vpc.app.id
   health_check {
     matcher             = "200,403"
-    unhealthy_threshold = 15
+    unhealthy_threshold = 10
   }
   depends_on = [aws_alb.api_postgres]
 }
