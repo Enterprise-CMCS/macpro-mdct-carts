@@ -16,6 +16,7 @@ import UserProfile from "./components/sections/UserProfile";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Profile from "./Profile";
 import config from "./auth-config";
+import Spinner from "./components/Utils/Spinner";
 
 const WrappedSecurity = () => {
   const VisibleHeader =
@@ -58,6 +59,7 @@ const WrappedSecurity = () => {
         tokenManager={{ secure: true, storage: "cookie" }}
       >
         {VisibleHeader}
+        <Spinner />
         <Router>
           <SecureInitialDataLoad stateCode={stateCode} userData={userData} />
           <Route path={config.callback} component={LoginCallback} />

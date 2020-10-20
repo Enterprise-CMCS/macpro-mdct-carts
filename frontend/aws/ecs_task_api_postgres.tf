@@ -176,7 +176,9 @@ resource "aws_alb_target_group" "api_postgres" {
   deregistration_delay = "1"
   vpc_id               = data.aws_vpc.app.id
   health_check {
-    matcher = "200,403"
+    matcher             = "200,403"
+    unhealthy_threshold = 10
+    interval            = 60
   }
   depends_on = [aws_alb.api_postgres]
 }
