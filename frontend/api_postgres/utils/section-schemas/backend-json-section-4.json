@@ -34,7 +34,7 @@
                         "id": "2020-04-a-01-01-01-01",
                         "answer": {
                           "readonly": true,
-                          "default_entry": "Reduce the number of uninsured children.",
+                          "default_entry": "Reduce the number of uninsured children",
                           "entry": null
                         }
                       },
@@ -247,7 +247,7 @@
                         "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
                         "id": "2020-04-a-01-01-02-01",
                         "answer": {
-                          "entry": "Increasing access to care"
+                          "entry": "Increase access to care"
                         }
                       },
                       {
@@ -459,7 +459,7 @@
                         "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
                         "id": "2020-04-a-01-01-03-01",
                         "answer": {
-                          "entry": "Increasing the use of preventative care"
+                          "entry": "Increase the use of preventative care"
                         }
                       },
                       {
