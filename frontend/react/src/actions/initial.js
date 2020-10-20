@@ -1,141 +1,140 @@
-import axios from "axios";
+import axios from "../authenticatedAxios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
-import forwardedQueryString from "../util/devQueryString";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
+export const SET_STATE_STATUS = "SET_STATE_STATUS";
+export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
 /* eslint-disable no-underscore-dangle, no-console */
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
-    const { data } = await axios
-      .get(`${window.env.API_POSTGRES_URL}/state/${forwardedQueryString()}`)
-      .catch((err) => {
-        console.log("error:", err);
-        console.dir(err);
-      });
-
-    dispatch({ type: GET_ALL_STATES_DATA, data });
+    try {
+      const { data } = await axios.get("/state/");
+      dispatch({ type: GET_ALL_STATES_DATA, data });
+    } catch (err) {
+      console.log("error:", err);
+      console.dir(err);
+    }
   };
 };
 
-export const loadSections = ({ userData, headers, stateCode }) => {
-  const xhrHeaders = headers || {};
-  const apiHost = window.env.API_POSTGRES_URL;
-  const apiPath = "/api/v1/sections/2020/";
-  const state = stateCode || userData.abbr;
-  const queryString = forwardedQueryString();
-  const apiURL = [apiHost, apiPath, state, queryString].join("");
-  return async (dispatch) => {
-    const { data } = await axios({
-      method: "GET",
-      url: apiURL,
-      headers: xhrHeaders,
-    }).catch((err) => {
-      // Error-handling would go here. For now, just log it so we can see
-      // it in the console, at least.
-      console.log("--- ERROR LOADING SECTIONS ---");
-      console.log(err);
-      // Without the following too many things break, because the
-      // entire app is too dependent on section data being present.
-      dispatch({ type: LOAD_SECTIONS, data: [] });
-      throw err;
+export const getAllStateStatuses = () => async (dispatch, getState) => {
+  const { data } = await axios.get(`/state_status/`);
+  const year = +getState().global.formYear;
+
+  const payload = data
+    .filter((status) => status.year === year)
+    .sort((a, b) => {
+      const dateA = new Date(a.last_changed);
+      const dateB = new Date(b.last_changed);
+
+      if (dateA > dateB) {
+        return 1;
+      }
+      if (dateA < dateB) {
+        return -1;
+      }
+      return 0;
+    })
+    .filter(
+      (status, index, original) =>
+        original.slice(index + 1).findIndex((el) => el.state === status.state) <
+        0
+    )
+    .reduce(
+      (out, status) => ({
+        ...out,
+        [status.state.replace(/.*\/([A-Z]{2})\//, "$1")]: status.status,
+      }),
+      {}
+    );
+
+  dispatch({ type: SET_STATE_STATUSES, payload });
+};
+
+export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
+  const { data } = await axios.get(`/state_status/`);
+  const year = +getState().global.formYear;
+
+  // Get the latest status for this state.
+  const payload = data
+    .filter(
+      (status) =>
+        status.state.endsWith(`/state/${stateCode}/`) && status.year === year
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.last_changed);
+      const dateB = new Date(b.last_changed);
+
+      if (dateA > dateB) {
+        return 1;
+      }
+      if (dateA < dateB) {
+        return -1;
+      }
+      return 0;
+    })
+    .pop();
+
+  if (payload) {
+    dispatch({
+      type: SET_STATE_STATUS,
+      payload,
     });
+  } else {
+    const { data: newData } = await axios.post(`/state_status/`, {
+      last_changed: new Date(),
+      state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
+      status: "started",
+      year,
+    });
+    dispatch({ type: SET_STATE_STATUS, payload: newData });
+  }
+};
+
+export const loadSections = ({ userData, stateCode }) => {
+  const state = stateCode || userData.abbr;
+
+  return async (dispatch) => {
+    const { data } = await axios
+      .get(`/api/v1/sections/2020/${state}`)
+      .catch((err) => {
+        // Error-handling would go here. For now, just log it so we can see
+        // it in the console, at least.
+        console.log("--- ERROR LOADING SECTIONS ---");
+        console.log(err);
+        // Without the following too many things break, because the
+        // entire app is too dependent on section data being present.
+        dispatch({ type: LOAD_SECTIONS, data: [] });
+        throw err;
+      });
 
     dispatch({ type: LOAD_SECTIONS, data });
   };
 };
 
-export const loadUserThenSections = ({ userData, stateCode }) => {
-  const { userToken } = userData;
-  const apiHost = window.env.API_POSTGRES_URL;
-  const apiPath = "/api/v1/appusers/";
-  const queryString = forwardedQueryString();
-  const apiURL = [apiHost, apiPath, userToken, queryString].join("");
-  return async (dispatch) => {
-
-    // Begin spinner, this is terminated in Part.js
-    dispatch({"type": "CONTENT_FETCHING_STARTED"});
-
-    await axios
-      .get(apiURL)
-      .then((res) => {
-        dispatch(loadSections({ userData: res.data, stateCode }));
-        dispatch(getProgramData(res.data));
-        dispatch(getStateData(res.data));
-        dispatch(getUserData(res.data.currentUser));
-        dispatch(getAllStatesData());
-      })
-      .catch((err) => {
-        /*
-         * Error-handling would go here, but for now, since the anticipated
-         * error is trying to run on cartsdemo, we just use the fake data.
-         * This fake user data has AK/AZ/MA, just like the fake data on the
-         * server. Log the error and proceed.
-         */
-        console.log("--- ERROR LOADING USER FROM API ---");
-        console.log(err);
-
-        dispatch(loadSections({ userData }));
-        dispatch(getProgramData(userData));
-        dispatch(getStateData(userData));
-        dispatch(getUserData(userData.currentUser));
-      });
-  };
+export const loadUser = (userToken) => async (dispatch) => {
+  const { data } = userToken
+    ? await axios.get(`/api/v1/appusers/${userToken}`)
+    : await axios.post(`/api/v1/appusers/auth`);
+  dispatch(getUserData(data.currentUser));
+  dispatch(getStateData(data));
+  dispatch(getProgramData(data));
 };
 
-export const secureLoadUserThenSections = ({
-  authState,
-  // authService,
-  stateCode,
-}) => {
-  const xhrURL = `${
-    window.env.API_POSTGRES_URL
-  }/api/v1/appusers/auth${forwardedQueryString()}`;
-  const xhrHeaders = {
-    Authorization: `Bearer ${authState.accessToken}`,
-  };
+export const loadForm = (state) => async (dispatch, getState) => {
+  const { stateUser } = getState();
+  const stateCode = state ?? stateUser.currentUser.state.id;
 
-  return async (dispatch) => {
-    await axios({ method: "POST", url: xhrURL, headers: xhrHeaders })
-      .then((res) => {
-        /* The order here is important because in the cases where there's
-         * no state info (e.g. admin users) the current loadSections code
-         * will error out, which we need to change once we're completely
-         * away from using various kinds of fake users.
-         * The same applies to needing to eliminate the mostly-redundant
-         * functions in this file that apply to non-secure loading.
-         */
-        dispatch(getUserData(res.data.currentUser));
-        dispatch(
-          loadSections({ userData: res.data, headers: xhrHeaders, stateCode })
-        );
-        dispatch(getProgramData(res.data));
-        dispatch(getStateData(res.data));
-      })
-      .catch((err) => {
-        /*
-         * Error-handling would go here, but for now, since the anticipated
-         * error is trying to run on cartsdemo, we just use the fake data.
-         * This fake user data has AK/AZ/MA, just like the fake data on the server.
-         */
-        // Error-handling would go here. For now, just log it so we can see
-        // it in the console, at least.
-        console.log("--- ERROR SECURELY LOADING SECTIONS ---");
-        console.log(err);
-        /*
-         * TODO: fix the issue underlying the following--without it, we end up
-         * in a weird state where the frontend thinks we're logged in, but the
-         * backend auth fails, so that the logout button isn't available but we
-         * can't get backend authorization. This crude fix forces logout if the
-         * backend calls fail, which is fragile in other ways.
-         */
-        // authService.logout("/");
-        throw err;
-      });
-  };
+  // Start isFetching for spinner; turned off in Part.js
+  dispatch({"type": "CONTENT_FETCHING_STARTED"})
+
+  dispatch(loadSections({ userData: stateUser, stateCode }));
+  dispatch(getStateStatus({ stateCode }));
+  dispatch(getAllStatesData());
 };
 
 // Move this to where actions should go when we know where that is.

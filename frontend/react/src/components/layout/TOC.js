@@ -31,7 +31,7 @@ class TOC extends Component {
   };
 
   render() {
-    const { location, sections } = this.props;
+    const { location, sections, userRole } = this.props;
 
     const items = sections
       .map(({ id: sectionId, ordinal, subsections, title: sectionTitle }) => ({
@@ -66,6 +66,17 @@ class TOC extends Component {
         return updated;
       });
 
+    // If the user can certify and submit AND the form is not yet submitted...
+    if (userRole === "state_user") {
+      items.push({
+        id: "certify-and-submit",
+        label: "Certify and Submit",
+        onClick: this.click,
+        selected: location.pathname === "/sections/2020/certify-and-submit",
+        url: "/sections/2020/certify-and-submit",
+      });
+    }
+
     return (
       <div className="toc">
         <VerticalNav selectedId="toc" items={items} />
@@ -77,6 +88,7 @@ TOC.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   sections: PropTypes.array.isRequired,
+  userRole: PropTypes.string.isRequired,
 };
 
 const sortByOrdinal = (sectionA, sectionB) => {
@@ -116,6 +128,9 @@ const selectSectionsForNav = (state) => {
   return [];
 };
 
-const mapStateToProps = (state) => ({ sections: selectSectionsForNav(state) });
+const mapStateToProps = (state) => ({
+  sections: selectSectionsForNav(state),
+  userRole: state.stateUser.currentUser.role,
+});
 
 export default connect(mapStateToProps)(withRouter(TOC));

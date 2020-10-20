@@ -58,7 +58,10 @@ class State(models.Model):
 
 class AppUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
+    state = models.ForeignKey(
+        State, on_delete=models.CASCADE, null=True, related_name="appusers"
+    )
+    states = models.ManyToManyField(State)
     role = models.CharField(max_length=32, choices=USER_ROLES)
 
 
@@ -112,21 +115,70 @@ class ACS(models.Model):
     )
 
 
-class StateFromUsername(models.Model):
+class StatesFromUsername(models.Model):
     """
-    Associate a state with a user.
+    Associate states with a user.
     Keyed off their CMS identifier, which is initially EUA ID but may become a
     different id in future.
     Every time a user logs in, their username is checked against the contents
-    of this table, and their state is set to whatever is in this table.
+    of this table, and their states are set to whatever is in this table.
     Note that this checks the string of the username and not the user instance;
     the contents of this table exists prior to any of the users logging in.
     Similarly, this uses the two-character state code, not the state instance,
     as state.
     """
 
-    username = models.CharField(max_length=64)
-    state_code = models.CharField(max_length=2)
+    username = models.CharField(max_length=64, unique=True)
+    state_codes = ArrayField(models.CharField(max_length=2))
+
+
+class RoleFromJobCode(models.Model):
+    """
+    Associate job codes with a role.
+    Every time a user logs in, their job code is checked against the contents
+    of this table, and their role is set to whatever is in this table.
+    Note that this checks the string of the username and not the user instance;
+    the contents of this table exists prior to any of the users logging in.
+    Similarly, the user role is a string and not the instance.
+    """
+
+    job_code = models.CharField(max_length=64, unique=True)
+    user_role = models.CharField(max_length=64, choices=USER_ROLES)
+
+
+class RolesFromJobCode(models.Model):
+    """
+    Associate job codes with a roles.
+    Every time a user logs in, their job code is checked against the contents
+    of this table, and they are allowed to have whatever role is assigned to
+    them in this table.
+    Note that regardless of the order in this table, they will be assigned the
+    highest-privilege role in the list associated with their job code. This may
+    be changed by associating their username with a lower-privilege role via
+    RoleFromUsername, but note that the role assigned to them there must be
+    among the roles assigned to them here.
+    Note that this checks the string of the username and not the user instance;
+    the contents of this table exists prior to any of the users logging in.
+    Similarly, the user role is a string and not the instance.
+    """
+
+    job_code = models.CharField(max_length=64, unique=True)
+    user_roles = ArrayField(
+        models.CharField(max_length=64, choices=USER_ROLES)
+    )
+
+
+class RoleFromUsername(models.Model):
+    """
+    Assign role and states according to username. An extended version of
+    StatesFromUsername that can also assign a role, essentially. The role
+    should still respect the assignment of role via job code—essentially, if
+    none of their job codes allow them to have the role assigned via the
+    endpoint entering data for this model, the assignment shouldn't happen.
+    """
+
+    username = models.CharField(max_length=64, unique=True)
+    user_role = models.CharField(max_length=64, choices=USER_ROLES)
 
 
 class StateStatus(models.Model):
@@ -140,3 +192,4 @@ class StateStatus(models.Model):
         max_length=32, choices=STATUSES, default="not_started"
     )
     last_changed = models.DateTimeField(null=True)
+    user_name = models.TextField(null=True)

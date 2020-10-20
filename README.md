@@ -16,6 +16,19 @@ Prod is not automatically triggered, but is instead released ad hoc as warranted
 
 A PR must be reviewed and approved by someone other than the submitter. When the reviewer(s) accept the PR, they are responsible for merging it to `master`. However, the submitter is still responsible if that merge causes anything to go wrong.
 
+## Users and role/state assignments
+
+The user info comes from Okta/EUA, and that info doesn't include user roles in this application or what state(s) a user is associated with.
+
+On the frontend, `/state_assoc`, `/role_user_assoc`, and `/role_jobcode_assoc` allow for uploading CSVs that can associate states to usernames, roles to usernames, and roles to job codes.
+To associate users to states, the most convenient process is most likely:
+
+1. Assign `state_user` to a job code via `/role_jobcode_assoc` (don't use `CARTS_Group_Dev` for this, though).
+2. Assign a user who has whatever job code you associated with `state_user` in step one to `state_user` in `/role_user_assoc` using their EUA ID as their username.
+3. Assign that user a state (or, if they're a `co_user`, a list of states) using `/state_assoc`.
+
+`/profile` will show you what info Okta provides about your user; `/userinfo` will show you what our info our backend provides about your user.
+
 ## Usage
 
 1. Run `git config --global core.autocrlf input` to set line endings throughout

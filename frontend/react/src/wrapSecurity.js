@@ -1,26 +1,22 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
+import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-} from "react-router-dom";
-import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import * as qs from "query-string"; // eslint-disable-line import/no-extraneous-dependencies
-import Routes from "./reactRouter";
+  Security,
+  SecureRoute as OktaSecureRoute,
+  LoginCallback,
+} from "@okta/okta-react";
+import * as qs from "query-string";
 import Header from "./components/layout/Header";
+import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
 import Userinfo from "./components/sections/Userinfo";
-import InitialDataLoad from "./components/Utils/InitialDataLoad";
-import InvokeSection from "./components/Utils/InvokeSection";
+import UserProfile from "./components/sections/UserProfile";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
-import Sidebar from "./components/layout/Sidebar";
-import ScrollToTop from "./components/Utils/ScrollToTop";
-import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
+import Spinner from "./components/Utils/Spinner";
 
 const WrappedSecurity = () => {
   const VisibleHeader =
@@ -35,6 +31,10 @@ const WrappedSecurity = () => {
       <Footer />
     );
 
+  // Only show Spinner on form pages
+  const VisibleSpinner =
+    window.location.pathname.split("/")[1] === "sections" ? <Spinner /> : null;
+
   const loc = qs.parse(useLocation().search);
   const devKeys = {
     "dev-ak": "AK",
@@ -43,52 +43,39 @@ const WrappedSecurity = () => {
     "dev-admin": "admin_user",
     "dev-co_user": "co_user",
   };
+  let userData = false;
+  let stateCode = false;
   if (loc.dev && Object.keys(devKeys).includes(loc.dev)) {
-    const userData = { userToken: loc.dev };
-
-    return (
-      <div className="App" data-test="component-app">
-        <InitialDataLoad userData={userData} />
-        {VisibleHeader}
-        <Routes />
-        {VisibleFooter}
-      </div>
-    );
+    // We're going to bypass Okta.
+    userData = { userToken: loc.dev };
+    stateCode = devKeys[loc.dev];
   }
+
+  // If we're using Okta, wrap everything in Okta's Security component and use
+  // its SecureRoutes. Otherwise, use plain Routes and wrap everything in a div.
+  const SecurityWrapper = userData === false ? Security : "div";
+  const SecureRoute = userData === false ? OktaSecureRoute : Route;
+
   return (
     <div className="App" data-test="component-app">
-      <Security
+      <SecurityWrapper
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}
       >
         {VisibleHeader}
+        {VisibleSpinner}
         <Router>
-          <div className="ds-l-container">
-            <div className="ds-l-row">
-              <SecureInitialDataLoad />
-              <SecureRoute path="/" />
-              <Sidebar />
-              <SaveError />
-              <ScrollToTop />
-              <Route path={config.callback} component={LoginCallback} />
-              <SecureRoute path="/profile" component={Profile} />
-              <Switch>
-                <SecureRoute
-                  exact
-                  path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
-                >
-                  <InvokeSection />
-                </SecureRoute>
-                <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
-                  <InvokeSection />
-                </SecureRoute>
-              </Switch>
-              <SecureRoute exact path="/userinfo" component={Userinfo} />
-            </div>
-          </div>
+          <SecureInitialDataLoad stateCode={stateCode} userData={userData} />
+          <Route path={config.callback} component={LoginCallback} />
+          <Home SecureRouteComponent={SecureRoute} />
+
+          {/* These routes are available to everyone, so define them here */}
+          <SecureRoute exact path="/userinfo" component={Userinfo} />
+          <SecureRoute path="/profile" component={Profile} />
+          <SecureRoute path="/user/profile" component={UserProfile} />
         </Router>
         {VisibleFooter}
-      </Security>
+      </SecurityWrapper>
     </div>
   );
 };

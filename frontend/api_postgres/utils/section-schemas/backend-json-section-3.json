@@ -1204,7 +1204,7 @@
               {
                 "type": "fieldset",
                 "label": "Helpful hints on age groups",
-                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
+                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2020 must be born after January 2004. Similarly, children who are newly enrolled in February 2020 must be born after February 2004, and children newly enrolled in March 2020 must be born after March 2004.",
                 "questions": []
               },
               {
@@ -2862,7 +2862,7 @@
               {
                 "type": "fieldset",
                 "label": "Helpful hints on age groups",
-                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2003. Similarly, children who are newly enrolled in February 2020 must be born after February 2003, and children newly enrolled in March 2020 must be born after March 2003.",
+                "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2020. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2020 must be born after January 2004. Similarly, children who are newly enrolled in February 2020 must be born after February 2004, and children newly enrolled in March 2020 must be born after March 2004.",
                 "questions": []
               },
               {
@@ -4805,18 +4805,52 @@
         "type": "subsection",
         "id": "2020-03-e",
         "title": "Employer Sponsored Insurance and Premium Assistance",
+        "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents.",
         "parts": [
           {
             "id": "2020-03-e-01",
             "type": "part",
-            "context_data": {
-              "comment": "Only show this section to states with a premium assistance program. As of 2020-07-31, this was six states: MA, NJ, OK, RI, VA, WI.",
-              "skip_text": "This section only applies to states with a premium assistance program."
-            },
-            "text": "States with a premium assistance program can use CHIP funds to purchase coverage through employer sponsored insurance (ESI) on behalf of eligible children and parents. ",
             "questions": [
               {
                 "id": "2020-03-e-01-01",
+                "label": "Does your state offer ESI including a premium assistance program under the CHIP State Plan or a Section 1115 Title XXI demonstration?",
+                "type": "radio",
+                "answer": {
+                  "entry": null,
+                  "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "2020-03-e-02",
+            "type": "part",
+            "context_data": {
+              "skip_text": "Part 2 was skipped because it only applies to states that offer ESI including a premium assistance program.",
+              "conditional_display": {
+                "type": "conditional_display",
+                "comment": "Interactive: Hide if 2020-03-e-01-01 is unanswered or no; noninteractive: hide if it's no",
+                "hide_if": {
+                  "target": "$..*[?(@.id=='2020-03-e-01-01')].answer.entry",
+                  "values": {
+                    "interactive": ["no"],
+                    "noninteractive": ["no"]
+                  }
+                }
+              }
+            },
+            "questions": [
+              {
+                "id": "2020-03-e-02-01",
                 "label": "Under which authority and statutes does your state offer premium assistance?",
                 "hint": "Check all that apply.",
                 "type": "checkbox",
@@ -4839,7 +4873,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-02",
+                "id": "2020-03-e-02-02",
                 "label": "Does your premium assistance program include coverage for adults?",
                 "type": "radio",
                 "answer": {
@@ -4857,7 +4891,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-03",
+                "id": "2020-03-e-02-03",
                 "label": "What benefit package is offered as part of your premium assistance program, including any applicable minimum coverage requirements?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "text_multiline",
@@ -4866,7 +4900,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-04",
+                "id": "2020-03-e-02-04",
                 "label": "Does your premium assistance program provide wrap-around coverage for gaps in coverage?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
@@ -4885,7 +4919,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-05",
+                "id": "2020-03-e-02-05",
                 "label": "Does your premium assistance program meet the same cost sharing requirements as that of the CHIP program?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
@@ -4908,7 +4942,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-06",
+                "id": "2020-03-e-02-06",
                 "label": "Are there protections on cost sharing for children (such as the 5% out-of-pocket maximum) in your premium assistance program?",
                 "hint": "This only applies to states operating an 1115 demo.",
                 "type": "radio",
@@ -4927,7 +4961,7 @@
                 },
                 "questions": [
                   {
-                    "id": "2020-03-e-01-06-a",
+                    "id": "2020-03-e-02-06-a",
                     "label": "How do you track cost sharing to ensure families don’t pay more than 5% of the aggregate household income in a year?",
                     "type": "text_multiline",
                     "answer": {
@@ -4936,9 +4970,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-e-01-09 is unanswered or no; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-03-e-02-09 is unanswered or no; noninteractive: hide if that's no.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-e-01-09')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-03-e-02-09')].answer.entry",
                           "values": {
                             "interactive": [null, "no"],
                             "noninteractive": ["no"]
@@ -4950,7 +4984,7 @@
                 ]
               },
               {
-                "id": "2020-03-e-01-07",
+                "id": "2020-03-e-02-07",
                 "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
@@ -4961,7 +4995,7 @@
                 "type": "fieldset",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-08",
+                    "id": "2020-03-e-02-08",
                     "label": "What’s the average monthly contribution the state pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -4969,7 +5003,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-09",
+                    "id": "2020-03-e-02-09",
                     "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -4977,7 +5011,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-10",
+                    "id": "2020-03-e-02-10",
                     "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                     "type": "money",
                     "answer": {
@@ -5010,17 +5044,17 @@
                         [
                           {
                             "targets": [
-                              "$..*[?(@.id=='2020-03-e-01-08')].answer.entry"
+                              "$..*[?(@.id=='2020-03-e-02-08')].answer.entry"
                             ]
                           },
                           {
                             "targets": [
-                              "$..*[?(@.id=='2020-03-e-01-09')].answer.entry"
+                              "$..*[?(@.id=='2020-03-e-02-09')].answer.entry"
                             ]
                           },
                           {
                             "targets": [
-                              "$..*[?(@.id=='2020-03-e-01-10')].answer.entry"
+                              "$..*[?(@.id=='2020-03-e-02-10')].answer.entry"
                             ]
                           }
                         ]
@@ -5034,7 +5068,7 @@
                 "type": "fieldset",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-11",
+                    "id": "2020-03-e-02-11",
                     "label": "What’s the range in the average monthly contribution paid by the state on behalf of a child?",
                     "type": "ranges",
                     "answer": {
@@ -5047,7 +5081,7 @@
                     }
                   },
                   {
-                    "id": "2020-03-e-01-12",
+                    "id": "2020-03-e-02-12",
                     "label": "What’s the range in the average monthly contribution paid by the state on behalf of a parent? ",
                     "type": "ranges",
                     "answer": {
@@ -5065,21 +5099,8 @@
                 "type": "fieldset",
                 "questions": [
                   {
-                    "id": "2020-03-e-01-13",
+                    "id": "2020-03-e-02-13",
                     "label": "What’s the range in income levels for children who receive premium assistance (if it’s different from the range covering the general CHIP population)?",
-                    "type": "ranges",
-                    "answer": {
-                      "entry": null,
-                      "header": "Federal Poverty Levels",
-                      "range_categories": [["Starts at", "Ends at"]],
-                      "range_type": ["percentage"],
-                      "entry_min": 1,
-                      "entry_max": 1
-                    }
-                  },
-                  {
-                    "id": "2020-03-e-01-14",
-                    "label": "What’s the range in income levels for children who receive premium assistance?",
                     "type": "ranges",
                     "answer": {
                       "entry": null,
@@ -5093,7 +5114,7 @@
                 ]
               },
               {
-                "id": "2020-03-e-01-15",
+                "id": "2020-03-e-02-14",
                 "label": "What strategies have been most effective in reducing the administrative barriers in order to provide premium assistance?",
                 "type": "text_multiline",
                 "answer": {
@@ -5101,7 +5122,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-16",
+                "id": "2020-03-e-02-15",
                 "label": "What challenges did you experience with your premium assistance program in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
@@ -5109,7 +5130,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-17",
+                "id": "2020-03-e-02-16",
                 "label": "What accomplishments did you experience with your premium assistance program in FFY 2020?",
                 "type": "text_multiline",
                 "answer": {
@@ -5117,7 +5138,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-18",
+                "id": "2020-03-e-02-17",
                 "label": "Is there anything else you’d like to add that wasn’t already covered?",
                 "type": "text_multiline",
                 "answer": {
@@ -5125,7 +5146,7 @@
                 }
               },
               {
-                "id": "2020-03-e-01-19",
+                "id": "2020-03-e-02-18",
                 "label": "Optional: Attach any additional documents here.",
                 "type": "file_upload",
                 "answer": {
@@ -5206,7 +5227,7 @@
               },
               {
                 "id": "2020-03-f-01-04",
-                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases? Attach any relevant documents.  ",
+                "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases?",
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
@@ -5236,8 +5257,8 @@
                 "questions": [
                   {
                     "id": "2020-03-f-01-05-a",
-                    "label": "What safeguards and procedures do the Managed Care plans have in place? Attach any relevant documents.",
-                    "type": "file_upload",
+                    "label": "What safeguards and procedures do the Managed Care plans have in place?",
+                    "type": "text_multiline",
                     "answer": {
                       "entry": null
                     },
@@ -6157,7 +6178,7 @@
             "id": "2020-03-h-02",
             "type": "part",
             "title": "You collected the CAHPS survey",
-            "text": "Since you collected the CAHPS survey, please complete Part 2. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database.",
+            "text": "Since you collected the CAHPS survey, please complete Part 2.",
             "context_data": {
               "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
               "conditional_display": {
@@ -6176,7 +6197,7 @@
               {
                 "id": "2020-03-h-02-01",
                 "label": "Upload a summary report of your CAHPS survey results.",
-                "hint": "Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                "hint": "This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database. Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
                 "type": "file_upload",
                 "answer": {
                   "entry": null
@@ -6504,7 +6525,7 @@
         "id": "2020-03-i",
         "title": "Health Services Initiative (HSI) Programs",
         "type": "subsection",
-        "text": "All states with approved HSI program(s) should complete this section.\nStates can use up to 10% of their actual or estimated federal expenditures to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
+        "text": "All states with approved HSI program(s) should complete this section.\nStates can use up to 10% of their fiscal year allotment to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act.] States can only develop HSI programs after funding other costs to administer their CHIP State Plan, as defined in regulations at 42 CFR 457.10.",
         "parts": [
           {
             "id": "2020-03-i-01",

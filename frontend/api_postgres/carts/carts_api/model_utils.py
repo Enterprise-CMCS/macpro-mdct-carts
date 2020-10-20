@@ -72,6 +72,7 @@ US_TERRITORIES = (
 
 USER_ROLES = (  # Descending permissions order; alphabetical by coincidence
     ("admin_user", "Admin User"),
+    ("bus_user", "Central Office Business Owner"),
     ("co_user", "Central Office User"),
     ("state_user", "State User"),
     ("temp_user", "Temporary User"),
@@ -79,8 +80,8 @@ USER_ROLES = (  # Descending permissions order; alphabetical by coincidence
 
 # Once we have a more complete list of job codes, this should move to the db.
 JOB_CODES_TO_ROLES = {
-    "IDM_OKTA_TEST": "state_user",
-    "CARTS_Group_Dev": "admin_user",
+    "IDM_OKTA_TEST": ["state_user"],
+    "CARTS_Group_Dev": ["admin_user", "bus_user", "co_user", "state_user"],
 }
 
 # Provisional; these need to be updated with the final list of statuses.
@@ -154,23 +155,54 @@ def parse_raw_ldap_job_codes(entry: str) -> List[dict]:
 
 
 def get_role_from_job_codes(
-    roles: Tuple, role_code_map: dict, entries: List[dict]
-) -> Union[bool, Tuple[str, str]]:
-    # roles ordered by auth descending, so we want first match below:
+    roles: Tuple,  # Tuple of tuples containing role/friendly role pairs.
+    role_code_map: dict,  # Base mapping of job codes to roles.
+    db_role_map: list,  # DB's overriding mappings of job codes to roles.
+    db_username_maps: list,  # DB's overriding mappings of this user to a role.
+    entries: List[dict],  # List of job codes for this user from Okta.
+) -> Union[bool, str]:
     codes = [entry["job_code"] for entry in entries]
+    role_codes = [_[0] for _ in roles]
+    # Update JOB_CODES_TO_ROLES with what's in the db via the db_role_map list:
+    for role_mapping in db_role_map:
+        job_code = role_mapping.job_code
+        user_roles = role_mapping.user_roles
+        valid_roles = [x for x in user_roles if x in role_codes]
+        # Ensure only valid roles can be set here:
+        if valid_roles:
+            role_code_map[job_code] = valid_roles
+    # The user must have some job code that maps to the role they've been
+    # assigned as an individual user; the ability to map a specific user to a
+    # role essentially just lets us prioritize so that if they're entitled to a
+    # higher set of privileges we can still give them a lower privilege level.
+    for username_map in db_username_maps:
+        user_role = username_map.user_role
+        if user_role in role_codes:
+            for code in codes:
+                if user_role in role_code_map.get(code, []):
+                    return user_role
+    # Go through the roles in order and check the job codes the user has to see
+    # if they provide that role; this goes in order so that more-privileged
+    # roles get set first.
     for role_code, _ in roles:
         for code in codes:
-            if role_code_map.get(code) == role_code:
+            if role_code in role_code_map.get(code, []):
                 return role_code
 
     return False
 
 
 def role_from_raw_ldap_job_codes_and_role_data(
-    roles: Tuple, role_code_map: dict, entry: str
-) -> Union[bool, Tuple[str, str]]:
+    roles: Tuple,  # Tuple of tuples containing role/friendly role pairs.
+    role_code_map: dict,  # Base mapping of job codes to roles.
+    db_role_map: list,  # DB's overriding mapping of job codes to roles.
+    db_username_map: list,  # DB's overriding mappings of this user to a role.
+    entry: str,  # Raw string from Okta about user job codes.
+) -> Union[bool, str]:
     codes = parse_raw_ldap_job_codes(entry)
-    return get_role_from_job_codes(roles, role_code_map, codes)
+    return get_role_from_job_codes(
+        roles, role_code_map, db_role_map, db_username_map, codes
+    )
 
 
 role_from_raw_ldap_job_codes = partial(
