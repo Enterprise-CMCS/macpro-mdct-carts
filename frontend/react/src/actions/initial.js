@@ -129,14 +129,16 @@ export const loadForm = (state) => async (dispatch, getState) => {
   // Start isFetching for spinner
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
-  await Promise.all([
-    dispatch(loadSections({ userData: stateUser, stateCode })),
-    dispatch(getStateStatus({ stateCode })),
-    dispatch(getAllStatesData()),
-  ]);
-
-  // End isFetching for spinner
-  dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+  try {
+    await Promise.all([
+      dispatch(loadSections({ userData: stateUser, stateCode })),
+      dispatch(getStateStatus({ stateCode })),
+      dispatch(getAllStatesData()),
+    ]);
+  } finally {
+    // End isFetching for spinner
+    dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+  }
 };
 
 // Move this to where actions should go when we know where that is.
