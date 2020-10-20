@@ -91,6 +91,7 @@ const mapStateToProps = (state, { partId }) => {
     show: showPart(contextData, state.stateUser.programType, state),
     text: part ? part.text : null,
     title: part ? part.title : null,
+    isFetching: state.global.isFetching,
   };
 };
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useOktaAuth } from "@okta/okta-react";
-import { loadUserThenSections } from "../../actions/initial";
+import { loadUser } from "../../actions/initial";
 import { setToken } from "../../authenticatedAxios";
 
 const SecureInitialDataLoad = ({ userData }) => {
@@ -14,7 +14,7 @@ const SecureInitialDataLoad = ({ userData }) => {
   useEffect(() => {
     if (userData !== false) {
       setToken();
-      dispatch(loadUserThenSections(userData.userToken));
+      dispatch(loadUser(userData.userToken));
     }
   }, []);
 
@@ -26,10 +26,14 @@ const SecureInitialDataLoad = ({ userData }) => {
     // brackets.
     if (authState && authService) {
       if (!authState.isAuthenticated) {
-        // show logged-out page here?
+        if (!authState.isPending) {
+          authService.login();
+        } else {
+          // show logged-out page here?
+        }
       } else {
         setToken(authState.accessToken);
-        dispatch(loadUserThenSections());
+        dispatch(loadUser());
       }
     }
   }, [authState, authService]);

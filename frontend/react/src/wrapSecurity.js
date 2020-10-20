@@ -1,12 +1,7 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
 import {
   Security,
   SecureRoute as OktaSecureRoute,
@@ -14,21 +9,14 @@ import {
 } from "@okta/okta-react";
 import * as qs from "query-string";
 import Header from "./components/layout/Header";
+import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
 import Userinfo from "./components/sections/Userinfo";
 import UserProfile from "./components/sections/UserProfile";
-import InvokeSection from "./components/Utils/InvokeSection";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
-import Sidebar from "./components/layout/Sidebar";
-import ScrollToTop from "./components/Utils/ScrollToTop";
-import StateAssociations from "./components/Utils/StateAssociations";
-import UserRoleAssociations from "./components/Utils/UserRoleAssociations";
-import JobCodeRoleAssociations from "./components/Utils/JobCodeRoleAssociations";
-import SaveError from "./components/layout/SaveError";
 import Profile from "./Profile";
 import config from "./auth-config";
-import CertifyAndSubmit from "./components/layout/CertifyAndSubmit";
-import Homepage from "./components/sections/homepage/Homepage";
+import Spinner from "./components/Utils/Spinner";
 
 const WrappedSecurity = () => {
   const VisibleHeader =
@@ -71,65 +59,16 @@ const WrappedSecurity = () => {
         tokenManager={{ secure: true, storage: "cookie" }}
       >
         {VisibleHeader}
+        <Spinner />
         <Router>
-          <div className="ds-l-container">
-            <div className="ds-l-row">
-              <SecureInitialDataLoad
-                stateCode={stateCode}
-                userData={userData}
-              />
-              <SecureRoute path="/" />
-              <SaveError />
-              <ScrollToTop />
-              <Route path={config.callback} component={LoginCallback} />
-              <SecureRoute path="/profile" component={Profile} />
-              <Switch>
-                <SecureRoute exact path="/" component={Homepage} />
-                <SecureRoute path="/user/profile" component={UserProfile} />
+          <SecureInitialDataLoad stateCode={stateCode} userData={userData} />
+          <Route path={config.callback} component={LoginCallback} />
+          <Home SecureRouteComponent={SecureRoute} />
 
-                <SecureRoute
-                  exact
-                  path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
-                >
-                  <Sidebar />
-                  <InvokeSection />
-                </SecureRoute>
-                <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
-                  <Sidebar />
-                  <InvokeSection />
-                </SecureRoute>
-
-                <SecureRoute path="/sections/:year/certify-and-submit" exact>
-                  <Sidebar />
-                  <CertifyAndSubmit />
-                </SecureRoute>
-                <SecureRoute path="/sections/:year/:sectionOrdinal/:subsectionMarker">
-                  <Sidebar />
-                  <InvokeSection userData={userData} />
-                </SecureRoute>
-                <SecureRoute path="/sections/:year/:sectionOrdinal">
-                  <Sidebar />
-                  <InvokeSection userData={userData} />
-                </SecureRoute>
-              </Switch>
-              <SecureRoute exact path="/userinfo" component={Userinfo} />
-              <SecureRoute
-                exact
-                path="/state_assoc"
-                component={StateAssociations}
-              />
-              <SecureRoute
-                exact
-                path="/role_user_assoc"
-                component={UserRoleAssociations}
-              />
-              <SecureRoute
-                exact
-                path="/role_jobcode_assoc"
-                component={JobCodeRoleAssociations}
-              />
-            </div>
-          </div>
+          {/* These routes are available to everyone, so define them here */}
+          <SecureRoute exact path="/userinfo" component={Userinfo} />
+          <SecureRoute path="/profile" component={Profile} />
+          <SecureRoute path="/user/profile" component={UserProfile} />
         </Router>
         {VisibleFooter}
       </SecurityWrapper>

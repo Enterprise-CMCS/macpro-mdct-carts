@@ -33,9 +33,9 @@ const initialState = {
   imageURI: `${process.env.PUBLIC_URL}/img/states/ny.svg`,
   formName: "CARTS FY",
   currentUser: {
-    role: "admin",
-    state: { id: "NY", name: "New York" },
-    username: "karen.dalton@state.gov",
+    role: false,
+    state: { id: "", name: "" },
+    username: "",
   },
 };
 

@@ -91,22 +91,9 @@ TOC.propTypes = {
   userRole: PropTypes.string.isRequired,
 };
 
-const sortByOrdinal = (sectionA, sectionB) => {
-  const a = sectionA.contents.section.ordinal;
-  const b = sectionB.contents.section.ordinal;
-
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
-};
-
 const selectSectionsForNav = (state) => {
   if (state.formData) {
-    const sections = state.formData.sort(sortByOrdinal);
+    const sections = state.formData;
     return sections.map(
       ({
         contents: {
