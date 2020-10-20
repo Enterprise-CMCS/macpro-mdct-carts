@@ -157,10 +157,11 @@ const formula = (targets, providedFormula, precision) => {
   return computedValue !== 0 ? computedValue : "";
 };
 
+// If all of the values in the calculation are null or blank, then don't display 0 as the total
 const sum = (values) => {
   let allNull = true;
   values.map((value) => {
-    if (value === null) {
+    if (value !== null && value !== "") {
       allNull = false;
     }
     return "";
