@@ -178,6 +178,7 @@ resource "aws_alb_target_group" "api_postgres" {
   health_check {
     matcher             = "200,403"
     unhealthy_threshold = 10
+    interval            = 60
   }
   depends_on = [aws_alb.api_postgres]
 }
