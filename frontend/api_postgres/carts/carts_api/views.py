@@ -347,6 +347,9 @@ class SectionViewSet(viewsets.ModelViewSet):
                     "approved",
                 ]
 
+                if request.user.appuser.role != "state_user":
+                    can_save = False
+
                 if can_save == False:
                     return HttpResponse(
                         f"cannot save {status} report", status=400
