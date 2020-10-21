@@ -24,6 +24,7 @@ import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
 /* eslint-enable */
 
 import { setAnswerEntry } from "../../actions/initial";
+import { selectIsFormEditable } from "../../store/selectors";
 
 const questionTypes = new Map([
   ["checkbox", Checkbox],
@@ -59,7 +60,7 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ hideNumber, question, setAnswer, ...props }) => {
+const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -102,7 +103,9 @@ const Question = ({ hideNumber, question, setAnswer, ...props }) => {
           question={question}
           name={question.id}
           onChange={onChange}
-          disabled={(question.answer && question.answer.readonly) || false}
+          disabled={
+            readonly || (question.answer && question.answer.readonly) || false
+          }
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -123,14 +126,19 @@ const Question = ({ hideNumber, question, setAnswer, ...props }) => {
 Question.propTypes = {
   hideNumber: PropTypes.bool,
   question: PropTypes.object.isRequired,
+  readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
 };
 Question.defaultProps = {
   hideNumber: false,
 };
 
+const mapState = (state) => ({
+  readonly: !selectIsFormEditable(state),
+});
+
 const mapDispatchToProps = {
   setAnswer: setAnswerEntry,
 };
 
-export default connect(null, mapDispatchToProps)(Question);
+export default connect(mapState, mapDispatchToProps)(Question);

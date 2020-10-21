@@ -139,3 +139,36 @@ export const selectSectionsForNav = (state) => {
   }
   return [];
 };
+
+export const selectIsFormEditable = (state) => {
+  const { status } = state.reportStatus;
+
+  switch (status) {
+    case "not_started":
+    case "in_progress":
+    case "uncertified":
+      return true;
+    default:
+      return false;
+  }
+};
+
+export const selectFormStatus = (() => {
+  const STATUS_MAPPING = {
+    not_started: "Not started",
+    in_progress: "In progress",
+    certified: "Certified",
+    uncertified: "Uncertified",
+    approved: "Approved",
+    submitted: "Submitted",
+    published: "Published",
+  };
+
+  return (state) => {
+    const { status } = state.reportStatus;
+    if (STATUS_MAPPING[status]) {
+      return STATUS_MAPPING[status];
+    }
+    return null;
+  };
+})();
