@@ -353,7 +353,8 @@ div[data-state="open"] .accordion-header .arrow:before {
 .comingsoon {
   text-align: center;
 
-  h1, h4 {
+  h1,
+  h4 {
     color: $brand-primary;
     font-weight: $font-weight-bold;
     text-align: center;

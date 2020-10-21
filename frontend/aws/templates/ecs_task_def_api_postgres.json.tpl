@@ -28,6 +28,10 @@
       {
         "name": "POSTGRES_API_URL",
         "value": "${postgres_api_url}"
+      },
+      {
+        "name": "S3_UPLOADS_BUCKET_NAME",
+        "value": "${s3_uploads_bucket_name}"
       }
     ],
     "logConfiguration": {

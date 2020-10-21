@@ -15,19 +15,27 @@ class ReportItem extends Component {
     let statusURL = this.props.statusURL ? (
       <a href={this.props.statusURL}> {statusText} </a>
     ) : (
-        statusText
-      );
+      statusText
+    );
 
     let anchorTarget = this.props.link1Text === "Edit" ? "_self" : "_blank";
-    const shortenEmail = email => {
-      return email.substring(0, email.indexOf('@'))
-    }
+    const shortenEmail = (email) => {
+      return email.substring(0, email.indexOf("@"));
+    };
 
-    const editorURL = (< a href={`${this.props.editor}`} > {shortenEmail(this.props.editor)} </a>)
+    const editorURL = (
+      <a href={`${this.props.editor}`}> {shortenEmail(this.props.editor)} </a>
+    );
     return (
-      <div className="report-item ds-l-row" >
+      <div className="report-item ds-l-row">
         <div className="name ds-l-col--1">{this.props.name}</div>
-        <div className={`status ds-l-col--2 ${statusText === 'Overdue' && `alert`}`}>{statusURL}</div>
+        <div
+          className={`status ds-l-col--2 ${
+            statusText === "Overdue" && `alert`
+          }`}
+        >
+          {statusURL}
+        </div>
         <div className="actions ds-l-col--3">
           <a href={link1URL} target={anchorTarget}>
             {link1Text}
