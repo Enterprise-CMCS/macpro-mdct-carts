@@ -117,9 +117,14 @@ export const loadUser = (userToken) => async (dispatch) => {
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
-  dispatch(getUserData(data.currentUser));
-  dispatch(getStateData(data));
-  dispatch(getProgramData(data));
+
+  await Promise.all([
+    dispatch(getUserData(data.currentUser)),
+    dispatch(getStateData(data)),
+    dispatch(getProgramData(data)),
+    dispatch(getStateStatus({ stateCode: data.abbr })),
+    dispatch(getAllStatesData()),
+  ]);
 };
 
 export const loadForm = (state) => async (dispatch, getState) => {
@@ -130,11 +135,7 @@ export const loadForm = (state) => async (dispatch, getState) => {
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
   try {
-    await Promise.all([
-      dispatch(loadSections({ userData: stateUser, stateCode })),
-      dispatch(getStateStatus({ stateCode })),
-      dispatch(getAllStatesData()),
-    ]);
+    await dispatch(loadSections({ userData: stateUser, stateCode }));
   } finally {
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });

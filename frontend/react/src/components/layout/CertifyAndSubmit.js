@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { certifyAndSubmit } from "../../actions/certify";
 
 import PageInfo from "./PageInfo";
+import { selectIsFormEditable } from "../../store/selectors";
 
 const Submit = ({ certify }) => (
   <>
@@ -84,7 +85,7 @@ CertifyAndSubmit.defaultProps = {
 };
 
 const mapState = (state) => ({
-  isCertified: state.reportStatus.status === "certified",
+  isCertified: !selectIsFormEditable(state),
   lastSave: moment(state.save.lastSave),
   user: state.reportStatus.userName,
 });

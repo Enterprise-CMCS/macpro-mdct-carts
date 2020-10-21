@@ -13,6 +13,7 @@ import {
 
 const Repeatables = ({
   addRepeatableTo,
+  disabled,
   question,
   removeRepeatableFrom,
   type,
@@ -56,6 +57,7 @@ const Repeatables = ({
 
         {question.questions.length > 1 && (
           <button
+            disabled={disabled}
             onClick={remove}
             type="button"
             className="add-objective ds-c-button ds-c-button--danger"
@@ -72,6 +74,7 @@ const Repeatables = ({
 
         <div className="ds-c-field__hint">Optional</div>
         <button
+          disabled={disabled}
           onClick={add}
           type="button"
           className="add-objective ds-c-button ds-c-button--primary"
@@ -85,6 +88,7 @@ const Repeatables = ({
 };
 Repeatables.propTypes = {
   addRepeatableTo: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
   question: PropTypes.object.isRequired,
   removeRepeatableFrom: PropTypes.func.isRequired,
   type: PropTypes.oneOf([PropTypes.string, null]),
