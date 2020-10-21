@@ -72,7 +72,7 @@ def _get_or_create_user(user_info):
     )
     states = []
 
-    if role in ("state_user", "co_user"):
+    if role in ("state_user"):
         # This is where we load their state from the table that
         # associates EUA IDs to states, but here we default to MA,
         # which we'll need to change once we have proper test users.
@@ -95,16 +95,12 @@ def _get_or_create_user(user_info):
         group = Group.objects.get(name__endswith=f"{states[0].code} sections")
         user.groups.set([group])
 
-    if role == "co_user" and states:
-        groups = []
-        for state in states:
-            for group in Group.objects.filter(name__endswith=" sections"):
-                if group.name.endswith(f"{state.code} sections"):
-                    groups.append(group)
-        user.groups.set(groups)
-
     if role == "admin_user":
         group = Group.objects.get(name="Admin users")
+        user.groups.set([group])
+
+    if role == "co_user":
+        group = Group.objects.get(name="CO users")
         user.groups.set([group])
 
     if role == "bus_user":
