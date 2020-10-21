@@ -1,15 +1,29 @@
-import { _ } from "underscore";
+import _ from "underscore";
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
-import { SET_FRAGMENT } from "../actions/repeatables";
+import { SET_FRAGMENT } from "../actions/repeatables"; // eslint-disable-line import/no-cycle
 import jsonpath from "../util/jsonpath";
-import { selectQuestion } from "./selectors";
+import { selectQuestion } from "./selectors"; // eslint-disable-line import/no-cycle
+import idLetterMarkers from "../util/idLetterMarkers";
+
+const sortByOrdinal = (sectionA, sectionB) => {
+  const a = sectionA.contents.section.ordinal;
+  const b = sectionB.contents.section.ordinal;
+
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+};
 
 const initialState = [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
-      return action.data;
+      return action.data.sort(sortByOrdinal);
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
       fragment.answer.entry = action.data;
@@ -61,9 +75,8 @@ export const constructIdFromYearSectionAndSubsection = (
   const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
   if (subsectionMarker) {
     return [year, sectionChunk, subsectionMarker].join("-");
-  } else {
-    return [year, sectionChunk].join("-");
   }
+  return [year, sectionChunk].join("-");
 };
 
 export const extractJsonPathExpressionFromQuestionLike = (
@@ -73,9 +86,8 @@ export const extractJsonPathExpressionFromQuestionLike = (
 ) => {
   if (questionLikeId) {
     return `$..*[?(@.id=='${questionLikeId}')]`;
-  } else {
-    return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
   }
+  return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
 };
 
 export const selectFragmentByJsonPath = (
@@ -83,10 +95,9 @@ export const selectFragmentByJsonPath = (
   expr,
   sectionOrdinal = false
 ) => {
-  if (!sectionOrdinal) {
-    sectionOrdinal = extractSectionOrdinalFromJPExpr(expr);
-  }
-  const section = selectSectionByOrdinal(state, sectionOrdinal);
+  const sectionNumber = sectionOrdinal || extractSectionOrdinalFromJPExpr(expr);
+
+  const section = selectSectionByOrdinal(state, sectionNumber);
   // Note that the following assumes that there's only one matching result.
   const fragment = jsonpath.query(section, expr)[0];
   return fragment;
@@ -97,65 +108,6 @@ export const selectFragmentById = (state, id) => {
   const jpexpr = `$..*[?(@.id=='${id}')]`;
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 };
-
-/*
- * Letter markers go from a to z, and then from aa to zz although we all hope
- * that will never be needed.
- */
-export const letterMarkers = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "aa",
-  "bb",
-  "cc",
-  "dd",
-  "ee",
-  "ff",
-  "gg",
-  "hh",
-  "ii",
-  "jj",
-  "kk",
-  "ll",
-  "mm",
-  "nn",
-  "oo",
-  "pp",
-  "qq",
-  "rr",
-  "ss",
-  "tt",
-  "uu",
-  "vv",
-  "ww",
-  "xx",
-  "yy",
-  "zz",
-];
 
 /**
  * Selects a fragment from a given object using the jsonpath expression passed in.
@@ -187,42 +139,40 @@ export const selectFragment = (state, id = null, jp = null) => {
   if (!id && !jp) {
     return null;
   }
-  id = id ? id : jp.split("id=='")[1].split("'")[0];
-  const sectionOrdinal = extractSectionOrdinalFromId(id);
+  const idValue = id ?? jp.split("id=='")[1].split("'")[0];
+  const sectionOrdinal = extractSectionOrdinalFromId(idValue);
   const section = selectSectionByOrdinal(state, sectionOrdinal);
   let targetObject = section;
-  let chunks = id.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
+  const chunks = idValue.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
   if (chunks.length >= 2) {
     // id of e.g. (2020-01-)a-01 means our target is the fragment's parent, subsection a:
-    targetObject = targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+    targetObject = targetObject.subsections[idLetterMarkers.indexOf(chunks[0])];
   } else {
     // if it's just one chunk, it's a subsection, so:
-    return targetObject.subsections[letterMarkers.indexOf(chunks[0])];
+    return targetObject.subsections[idLetterMarkers.indexOf(chunks[0])];
   }
   if (chunks.length >= 3) {
     // id of e.g. (2020-01-)a-01-01 means our target is the fragment's parent, part 01:
     targetObject = targetObject.parts[Number(chunks[1]) - 1];
   } else {
-    //if it's just two chunks it's a part, so:
+    // if it's just two chunks it's a part, so:
     return targetObject.parts[Number(chunks[1]) - 1];
   }
   if (chunks.length >= 4) {
     // id of e.g. (2020-01-)a-01-01-a means our target is the fragment's parent, question 01 (although it could also be an objective, etc.):
     targetObject = targetObject.questions[Number(chunks[2]) - 1];
   } else {
-    //if it's just three chunks it's a question, so:
+    // if it's just three chunks it's a question, so:
     return targetObject.questions[Number(chunks[2]) - 1];
   }
-  if (chunks.length >= 5 && letterMarkers.includes(chunks[3])) {
+  if (chunks.length >= 5 && idLetterMarkers.includes(chunks[3])) {
     // id of e.g. (2020-01-)a-01-01-a-01 means our target is the fragment's parent, question a:
-    targetObject = targetObject.questions[letterMarkers.indexOf(chunks[3])];
+    targetObject = targetObject.questions[idLetterMarkers.indexOf(chunks[3])];
   }
   // TODO: account for objectives/repeatables here.
 
-  if (!jp) {
-    jp = `$..*[?(@.id=='${id}')]`;
-  }
-  return selectFragmentFromTarget(targetObject, jp);
+  const path = jp || `$..*[?(@.id=='${idValue}')]`;
+  return selectFragmentFromTarget(targetObject, path);
 };
 
 /* /Helper functions for getting values from the JSON returned by the API */
@@ -238,14 +188,15 @@ export const winnowProperties = (fragment) => {
 
   // Remove the property named key, then replace it with a list of objects containing only the ids of the original objects in the list.
   const winnow = (orig, key) => {
-    let copy = _.omit(orig, [key]);
+    const copy = _.omit(orig, [key]);
     copy[key] = orig[key].map((item) => (item.id ? { id: item.id } : {}));
     return copy;
   };
 
   // Check for subsections, parts, and questions, in that order.
   const props = ["subsections", "parts", "questions"];
-  for (let prop of props) {
+  for (let i = 0; i < props.length; i += 1) {
+    const prop = props[i];
     if (prop in fragment) {
       return winnow(fragment, prop);
     }
@@ -256,7 +207,7 @@ export const winnowProperties = (fragment) => {
 
 // Generate subsection label including letter, ie: 'Section 3F'
 export const generateSubsectionLabel = (str) => {
-  let idArray = str.split("-");
-  let sectionNumber = Number(idArray[1]);
+  const idArray = str.split("-");
+  const sectionNumber = Number(idArray[1]);
   return `Section ${sectionNumber}${idArray[2]}`;
 };

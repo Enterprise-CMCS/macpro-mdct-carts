@@ -1,15 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { loadForm } from "../../actions/initial";
 import { constructIdFromYearSectionAndSubsection } from "../../store/formData";
 import Section from "../layout/Section";
-import SecureInitialDataLoad from "./SecureInitialDataLoad";
 
-const InvokeSection = ({ userData }) => {
+const InvokeSection = (username) => {
   const { state, year, sectionOrdinal, subsectionMarker } = useParams();
-  if (state) {
-    SecureInitialDataLoad({ stateCode: state });
-  }
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (username) {
+      dispatch(loadForm(state));
+    }
+  }, [username]);
+
   const filteredMarker = subsectionMarker
     ? subsectionMarker.toLowerCase()
     : "a";
@@ -22,17 +27,11 @@ const InvokeSection = ({ userData }) => {
     Number(sectionOrdinal),
     filteredMarker
   );
-  return (
-    <Section
-      userData={userData}
-      sectionId={sectionId}
-      subsectionId={subsectionId}
-    />
-  );
+  return <Section sectionId={sectionId} subsectionId={subsectionId} />;
 };
 
-InvokeSection.propTypes = {
-  userData: PropTypes.object.isRequired,
-};
+const mapState = (state) => ({
+  username: state.stateUser.currentUser.username,
+});
 
-export default InvokeSection;
+export default connect(mapState)(InvokeSection);

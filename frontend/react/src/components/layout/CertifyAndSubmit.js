@@ -23,12 +23,12 @@ const Submit = ({ certify }) => (
 );
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
-const Thanks = ({ done: doneDispatch, lastSave }) => (
+const Thanks = ({ done: doneDispatch, lastSave, user }) => (
   <>
     <h3>Thank you for submitting your CARTS report!</h3>
     <p>
       Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
-      {lastSave.format("h:mm A")} by [username].
+      {lastSave.format("h:mm A")} by {user}.
     </p>
     <h3>What to expect next</h3>
     <p>You‘ll hear from CMS if they have any questions about your report.</p>
@@ -40,12 +40,14 @@ const Thanks = ({ done: doneDispatch, lastSave }) => (
 Thanks.propTypes = {
   done: PropTypes.func.isRequired,
   lastSave: PropTypes.object.isRequired,
+  user: PropTypes.string.isRequired,
 };
 
 const CertifyAndSubmit = ({
   certifyAndSubmit: certifyAction,
   isCertified,
   lastSave,
+  user,
 }) => {
   const history = useHistory();
 
@@ -63,7 +65,7 @@ const CertifyAndSubmit = ({
         <PageInfo />
         <h2>Certify and Submit</h2>
         {isCertified ? (
-          <Thanks done={doneClick} lastSave={lastSave} />
+          <Thanks done={doneClick} lastSave={lastSave} user={user} />
         ) : (
           <Submit certify={certify} />
         )}
@@ -75,11 +77,16 @@ CertifyAndSubmit.propTypes = {
   certifyAndSubmit: PropTypes.func.isRequired,
   isCertified: PropTypes.bool.isRequired,
   lastSave: PropTypes.object.isRequired,
+  user: PropTypes.oneOf([PropTypes.string, null]),
+};
+CertifyAndSubmit.defaultProps = {
+  user: null,
 };
 
 const mapState = (state) => ({
   isCertified: state.reportStatus.status === "certified",
   lastSave: moment(state.save.lastSave),
+  user: state.reportStatus.userName,
 });
 
 const mapDispatch = { certifyAndSubmit };

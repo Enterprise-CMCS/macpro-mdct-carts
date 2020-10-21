@@ -18,9 +18,9 @@ const Homepage = () => (
               <legend className="ds-u-padding--2 ds-h3">All Reports</legend>
             </div>
             <div className="report-header ds-l-row">
-              <div className="name ds-l-col--1">Year</div>
-              <div className="status ds-l-col--2">Status</div>
-              <div className="actions ds-l-col--3">Actions</div>
+              <div className="name ds-l-col--2">Year</div>
+              <div className="status ds-l-col--4">Status</div>
+              <div className="actions ds-l-col--6">Actions</div>
             </div>
 
             <ReportItem

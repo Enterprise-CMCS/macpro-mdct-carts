@@ -1,4 +1,4 @@
-from rest_framework import permissions
+from rest_framework import permissions  # type: ignore
 
 
 class StateViewSectionPermission(permissions.BasePermission):
@@ -35,6 +35,41 @@ class StateChangeSectionPermission(permissions.BasePermission):
         return request.user.has_perm(required_permission)
 
 
-class AdminHideStateFromUsername(permissions.DjangoModelPermissions):
+class AdminHideStatesFromUsername(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
     def __init__(self):
-        self.perms_map["GET"] = ["carts_api.view_statefromusername"]
+        self.perms_map["GET"] = ["carts_api.view_statesfromusername"]
+
+
+class AdminHideRoleFromJobCode(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_rolefromjobcode"]
+
+
+class AdminHideRolesFromJobCode(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_rolesfromjobcode"]
+
+
+class AdminHideRoleFromUsername(permissions.DjangoModelPermissions):
+    """
+    By restricting the view to users with this permission, we hide it from
+    everyone else.
+    """
+
+    def __init__(self):
+        self.perms_map["GET"] = ["carts_api.view_rolefromusername"]

@@ -5,6 +5,23 @@
   padding: ($padding * 2) 0;
 }
 
+.preloader {
+  background: rgba(255, 255, 255, 0.75);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 998;
+
+  .preloader-image {
+    left: calc(50% - 32px);
+    position: absolute;
+    top: 20%;
+    z-index: 999;
+  }
+}
+
 .page-info {
   margin-top: ($margin * 8);
 
@@ -364,5 +381,25 @@ div[data-state="open"] .accordion-header .arrow:before {
   div {
     margin: 0.8rem;
     width: 100%;
+  }
+}
+
+.profile-information {
+  margin-top: 1.2rem;
+
+  & > div:nth-child(even) {
+    background-color: #efefef;
+  }
+
+  & > div {
+    div:first-of-type {
+      display: inline-block;
+      margin: 0.4rem 0.6rem 0.4rem 0.4rem;
+      min-width: 55px;
+    }
+
+    div:last-of-type {
+      display: inline-block;
+    }
   }
 }

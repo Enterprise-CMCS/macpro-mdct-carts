@@ -1,15 +1,17 @@
 import json
 import string
-import boto3
 from typing import (
     Dict,
     List,
     Union,
 )
+
+from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
+from django.utils import timezone  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -22,35 +24,43 @@ from rest_framework.exceptions import (  # type: ignore
 )
 from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
-    DjangoModelPermissions,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-from carts.auth import JwtAuthentication
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
-    AdminHideStateFromUsername,
+    AdminHideRoleFromUsername,
+    AdminHideRoleFromJobCode,
+    AdminHideRolesFromJobCode,
+    AdminHideStatesFromUsername,
     StateChangeSectionPermission,
     StateViewSectionPermission,
 )
 from carts.carts_api.serializers import (
     UserSerializer,
     GroupSerializer,
+    RoleFromUsernameSerializer,
+    RoleFromJobCodeSerializer,
+    RolesFromJobCodeSerializer,
     SectionSerializer,
     SectionBaseSerializer,
     SectionSchemaSerializer,
     StateSerializer,
     StateStatusSerializer,
-    StateFromUsernameSerializer,
+    StatesFromUsernameSerializer,
 )
 from carts.carts_api.models import (
+    RoleFromUsername,
+    RoleFromJobCode,
+    RolesFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
     State,
     StateStatus,
-    StateFromUsername,
+    StatesFromUsername,
 )
+from carts.carts_api.model_utils import validate_status_change
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -94,14 +104,80 @@ class StateViewSet(viewsets.ModelViewSet):
     #    return Response(self.serializer_class(self.queryset).data)
 
 
-class StateFromUsernameViewSet(viewsets.ModelViewSet):
+class StatesFromUsernameViewSet(viewsets.ModelViewSet):
     """
     API endpoint for username–state associations.
     """
 
-    permission_classes = [AdminHideStateFromUsername]
-    queryset = StateFromUsername.objects.all()
-    serializer_class = StateFromUsernameSerializer
+    permission_classes = [AdminHideStatesFromUsername]
+    queryset = StatesFromUsername.objects.all()
+    serializer_class = StatesFromUsernameSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per username, and for the new
+        # entry to overwrite.
+        username = request.data.get("username")
+        existing = StatesFromUsername.objects.filter(username=username)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
+
+
+class RoleFromUsernameViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRoleFromUsername]
+    queryset = RoleFromUsername.objects.all()
+    serializer_class = RoleFromUsernameSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per username, and for the new
+        # entry to overwrite.
+        username = request.data.get("username")
+        existing = RoleFromUsername.objects.filter(username=username)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
+
+
+class RoleFromJobCodeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRoleFromJobCode]
+    queryset = RoleFromJobCode.objects.all()
+    serializer_class = RoleFromJobCodeSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per job code, and for the new
+        # entry to overwrite.
+        job_code = request.data.get("job_code")
+        existing = RoleFromJobCode.objects.filter(job_code=job_code)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
+
+
+class RolesFromJobCodeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for username–state associations.
+    """
+
+    permission_classes = [AdminHideRolesFromJobCode]
+    queryset = RolesFromJobCode.objects.all()
+    serializer_class = RolesFromJobCodeSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per job code, and for the new
+        # entry to overwrite.
+        job_code = request.data.get("job_code")
+        existing = RolesFromJobCode.objects.filter(job_code=job_code)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
 
 
 class StateStatusViewSet(viewsets.ModelViewSet):
@@ -115,6 +191,81 @@ class StateStatusViewSet(viewsets.ModelViewSet):
     ]
     queryset = StateStatus.objects.all()
     serializer_class = StateStatusSerializer
+
+    def create(self, request):
+        """
+        The object being created here is the newest status for a given
+        state/year.
+        We expect the post request to have state, year, and status; we get the
+        user from request.user and we update last_changed ourselves.
+
+        We've had some confusion over whether or not the name for a form in
+        progress is "in progress" or "started", so we accommodate both below
+        and turn the latter into the former.
+
+        """
+        state_code = request.data.get("state")
+        year = request.data.get("year")
+        new_status = request.data.get("status")
+        if new_status == "started":
+            new_status = "in_progress"
+        user = request.user
+        try:
+            assert all([state_code, year, new_status, user])
+        except AssertionError:
+            return HttpResponse(
+                "state_code, year, status, or user missing", status=400
+            )
+        state = State.objects.get(code=state_code.upper())
+        current = (
+            StateStatus.objects.all()
+            .filter(state_id=state_code.upper(), year=year)
+            .order_by("last_changed")
+            .last()
+        )
+        current_status = current.status if current else "not_started"
+        if current_status == new_status:
+            return self.list(request)
+        if current_status == "started":
+            current_status = "in_progress"
+        is_change_valid = validate_status_change(
+            user.appuser.role, current_status, new_status
+        )
+        if is_change_valid.update_success:
+            updated = StateStatus.objects.create(
+                state=state,
+                year=year,
+                status=is_change_valid.new_status,
+                last_changed=datetime.now(tz=timezone.utc),
+                user_name=user.username,
+            )
+            updated.save()
+            """
+            The "submitted" state is transitory and we should probably get rid
+            of it, but while it exists, it exists only to be immediately turned
+            into "certified":
+            """
+            if updated.status == "submitted":
+                certified = StateStatus.objects.create(
+                    state=state,
+                    year=year,
+                    status="certified",
+                    last_changed=datetime.now(tz=timezone.utc),
+                    user_name=user.username,
+                )
+                certified.save()
+
+            return self.list(request)
+
+        return HttpResponse(is_change_valid.message, status=400)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.appuser.role == "state_user":
+            state = user.appuser.states.all()[0]
+            return StateStatus.objects.filter(state=state)
+        elif user.appuser.role in ("bus_user", "co_user"):
+            return StateStatus.objects.all()
 
 
 class SectionViewSet(viewsets.ModelViewSet):
@@ -168,10 +319,14 @@ class SectionViewSet(viewsets.ModelViewSet):
     @transaction.atomic
     def update_sections(self, request):
         try:
+            state_id = False
+            year = False
 
             for entry in request.data:
                 section_id = entry["contents"]["section"]["id"]
                 section_state = entry["contents"]["section"]["state"]
+                state_id = section_state
+                year = entry["contents"]["section"]["year"]
 
                 section = Section.objects.get(
                     contents__section__id=section_id,
@@ -180,9 +335,35 @@ class SectionViewSet(viewsets.ModelViewSet):
 
                 self.check_object_permissions(request, section)
 
+                status = (
+                    StateStatus.objects.all()
+                    .filter(state_id=section_state, year=year)
+                    .order_by("last_changed")
+                    .last()
+                )
+                can_save = status == None or status.status not in [
+                    "certified",
+                    "published",
+                    "approved",
+                ]
+
+                if can_save == False:
+                    return HttpResponse(
+                        f"cannot save {status} report", status=400
+                    )
+
                 section.contents = entry["contents"]
                 section.save()
-                return HttpResponse(status=204)
+
+            status = (
+                StateStatus.objects.all()
+                .filter(state_id=section_state, year=year)
+                .order_by("last_changed")
+                .last()
+            )
+            status.last_changed = datetime.now(tz=timezone.utc)
+            status.save()
+            return HttpResponse(status=204)
 
         except PermissionDenied:
             raise
@@ -383,7 +564,7 @@ def report(request, year=None, state=None):
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
     user, _ = jwt_auth.authenticate(request, username=username)
-    state = user.appuser.state
+    state = user.appuser.states.all()[0] if user.appuser.states.all() else []
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
     program_names = ", ".join(state.program_names) if state else None
@@ -414,10 +595,14 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
 @api_view(["POST"])
 def authenticate_user(request):
-    jwt_auth = JwtAuthentication()
-    user, _ = jwt_auth.authenticate(request)
-    state = user.appuser.state
+    user = request.user
+    states = [*user.appuser.states.all()]
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
+
+    # The JS currently only knows how to handle one state per user, so:
+    state = None
+    if states:
+        state = states[0]
 
     program_names = ", ".join(state.program_names) if state else None
     program_text = f"{state.code.upper} {program_names}" if state else None
@@ -444,28 +629,6 @@ def authenticate_user(request):
     return HttpResponse(json.dumps(user_data))
 
 
-@api_view(["POST"])
-def presigned_url(request):
-    session = boto3.session.Session()
-    s3      = session.client("s3")
-
-    # Generate the URL to get 'key-name' from 'bucket-name'
-    url = s3.generate_presigned_url(
-        ClientMethod="get_object",
-        Params={
-            f"Bucket": "cartscms-uploads-{terraform.workspace}",
-            f"Key": "testfile.txt",
-            f"ResponseContentType": "text/plain",
-        },
-        ExpiresIn=100,
-    )
-
-    generated_presigned_url = {
-        "upload_url": url
-    }
-    return HttpResponse(generated_presigned_url)
-
-
 def _id_from_chunks(year, *args):
     def fill(chunk):
         chunk = str(chunk).lower()
@@ -488,4 +651,3 @@ def _get_fragment_by_id(
     pathstring = f"$..*[?(@.id=='{ident}')]"
     find_by_id = parse(pathstring)
     return find_by_id.find(contents)
-

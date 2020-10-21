@@ -11,12 +11,13 @@
       {
         "type": "subsection",
         "id": "2020-04-a",
+        "title": "State Plan Goals and Objectives",
         "parts": [
           {
             "id": "2020-04-a-01",
             "type": "part",
-            "title": "State Plan Goals and Objectives",
-            "text": "Your performance goals should match those reflected in your CHIP State Plan, Section 9. If your objectives or goals are different, submit a State Plan Amendment (SPA) to reconcile these differences.",
+            "title": "Tell us about your goals and objectives",
+            "text": "Tell us about the progress you’ve made on your performance goals in the past year. The objectives and goals you add to this section should match those reflected in your CHIP State Plan, Section 9. Submit a CHIP State Plan Amendment (SPA) if any of them are different. \nObjective 1 is required. We’ve provided examples for other objectives, but you can edit them so they match the objectives in your CHIP State Plan. You can add additional objectives and goals to fit what’s in your CHIP State Plan.",
             "questions": [
               {
                 "id": "2020-04-a-01-01",
@@ -28,12 +29,12 @@
                     "questions": [
                       {
                         "type": "text_multiline",
-                        "label": "What is your objective as listed in your state plan?",
-                        "hint": "For example: Our objective is to increase enrollment in our CHIP program.",
+                        "label": "What is your objective as listed in your CHIP State Plan?",
+                        "hint": "Completing this objective is required.",
                         "id": "2020-04-a-01-01-01-01",
                         "answer": {
                           "readonly": true,
-                          "default_entry": "Reduce the number of uninsured children.",
+                          "default_entry": "Reduce the number of uninsured children",
                           "entry": null
                         }
                       },
@@ -48,8 +49,8 @@
                             "questions": [
                               {
                                 "id": "2020-04-a-01-01-01-02-01-01",
-                                "label": "Briefly describe your goal.",
-                                "hint": "For example: Enroll 75% of eligible children in the CHIP program.",
+                                "label": "Briefly describe your goal for this objective.",
+                                "hint": "For example: In an effort to reduce the number of uninsured children, our goal is to enroll 90% of eligible children in the CHIP program.",
                                 "type": "text_multiline",
                                 "answer": {
                                   "entry": null
@@ -235,8 +236,1097 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "type": "objective",
+                    "id": "2020-04-a-01-01-02",
+                    "questions": [
+                      {
+                        "type": "text_multiline",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "hint": "You can edit the suggested objective so it matches what’s in your CHIP State Plan.",
+                        "id": "2020-04-a-01-01-02-01",
+                        "answer": {
+                          "entry": "Increase access to care"
+                        }
+                      },
+                      {
+                        "id": "2020-04-a-01-01-02-02",
+                        "type": "repeatables",
+                        "typeLabel": "Goal",
+                        "questions": [
+                          {
+                            "id": "2020-04-a-01-01-02-02-01",
+                            "type": "repeatable",
+                            "questions": [
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-01",
+                                "label": "Briefly describe your goal for this objective.",
+                                "hint": "For example: In an effort to increase access to care, our goal is to increase the number of children who have visited a primary care physician by 5%.",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-02",
+                                "label": "What type of goal is it?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_new",
+                                      "label": "New goal"
+                                    },
+                                    {
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
+                                    },
+                                    {
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
+                                    }
+                                  ],
+                                  "default_entry": "goal_new",
+                                  "entry": null
+                                },
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-02-02-01-02-a",
+                                    "label": "Why was this goal discontinued?",
+                                    "type": "text_multiline",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-04-a-01-01-02-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-04-a-01-01-02-02-01-02')].answer.entry",
+                                          "values": {
+                                            "interactive": [
+                                              null,
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ],
+                                            "noninteractive": [
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the numerator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-02-02-01-03",
+                                    "label": "Which population are you measuring in the numerator?",
+                                    "hint": "For example: The number of children enrolled in CHIP who visited a primary care physician in the last federal fiscal year.",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-02-02-01-04",
+                                    "label": "Numerator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the denominator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-02-02-01-05",
+                                    "label": "Which population are you measuring in the denominator?",
+                                    "hint": "For example: The total number of children enrolled in CHIP in the last federal fiscal year.",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-02-02-01-06",
+                                    "label": "Denominator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "fieldset_type": "synthesized_value",
+                                "fieldset_info": {
+                                  "targets": [
+                                    "$..*[?(@.id=='2020-04-a-01-01-02-02-01-04')].answer.entry",
+                                    "$..*[?(@.id=='2020-04-a-01-01-02-02-01-06')].answer.entry"
+                                  ],
+                                  "actions": ["percentage"]
+                                },
+                                "questions": []
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-07",
+                                "label": "What is the date range of your data?",
+                                "type": "daterange",
+                                "answer": {
+                                  "labels": ["Start", "End"],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-08",
+                                "label": "Which data source did you use?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
+                                    },
+                                    {
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
+                                    },
+                                    {
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
+                                    }
+                                  ],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-09",
+                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-10",
+                                "label": "What are you doing to continually make progress towards your goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-11",
+                                "label": "Anything else you'd like to tell us about this goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-02-02-01-12",
+                                "label": "Do you have any supporting documentation?",
+                                "hint": "Optional",
+                                "type": "file_upload",
+                                "answer": {
+                                  "entry": null
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "objective",
+                    "id": "2020-04-a-01-01-03",
+                    "questions": [
+                      {
+                        "type": "text_multiline",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "hint": "You can edit the suggested objective to match what’s in your CHIP State Plan.",
+                        "id": "2020-04-a-01-01-03-01",
+                        "answer": {
+                          "entry": "Increase the use of preventative care"
+                        }
+                      },
+                      {
+                        "id": "2020-04-a-01-01-03-02",
+                        "type": "repeatables",
+                        "typeLabel": "Goal",
+                        "questions": [
+                          {
+                            "id": "2020-04-a-01-01-03-02-01",
+                            "type": "repeatable",
+                            "questions": [
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-01",
+                                "label": "Briefly describe your goal for this objective.",
+                                "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-02",
+                                "label": "What type of goal is it?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_new",
+                                      "label": "New goal"
+                                    },
+                                    {
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
+                                    },
+                                    {
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
+                                    }
+                                  ],
+                                  "default_entry": "goal_new",
+                                  "entry": null
+                                },
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-03-02-01-02-a",
+                                    "label": "Why was this goal discontinued?",
+                                    "type": "text_multiline",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-04-a-01-01-03-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-04-a-01-01-03-02-01-02')].answer.entry",
+                                          "values": {
+                                            "interactive": [
+                                              null,
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ],
+                                            "noninteractive": [
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the numerator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-03-02-01-03",
+                                    "label": "Which population are you measuring in the numerator?",
+                                    "hint": "For example: The number of children who received one or more well child visits in the last federal fiscal year.",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-03-02-01-04",
+                                    "label": "Numerator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the denominator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-03-02-01-05",
+                                    "label": "Which population are you measuring in the denominator?",
+                                    "hint": "For example: The total number of children enrolled in CHIP in the last federal fiscal year.",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-03-02-01-06",
+                                    "label": "Denominator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "fieldset_type": "synthesized_value",
+                                "fieldset_info": {
+                                  "targets": [
+                                    "$..*[?(@.id=='2020-04-a-01-01-03-02-01-04')].answer.entry",
+                                    "$..*[?(@.id=='2020-04-a-01-01-03-02-01-06')].answer.entry"
+                                  ],
+                                  "actions": ["percentage"]
+                                },
+                                "questions": []
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-07",
+                                "label": "What is the date range of your data?",
+                                "type": "daterange",
+                                "answer": {
+                                  "labels": ["Start", "End"],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-08",
+                                "label": "Which data source did you use?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
+                                    },
+                                    {
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
+                                    },
+                                    {
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
+                                    }
+                                  ],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-09",
+                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-10",
+                                "label": "What are you doing to continually make progress towards your goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-11",
+                                "label": "Anything else you'd like to tell us about this goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-03-02-01-12",
+                                "label": "Do you have any supporting documentation?",
+                                "hint": "Optional",
+                                "type": "file_upload",
+                                "answer": {
+                                  "entry": null
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "objective",
+                    "id": "2020-04-a-01-01-04",
+                    "questions": [
+                      {
+                        "type": "text_multiline",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "id": "2020-04-a-01-01-04-01",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-04-a-01-01-04-02",
+                        "type": "repeatables",
+                        "typeLabel": "Goal",
+                        "questions": [
+                          {
+                            "id": "2020-04-a-01-01-04-02-01",
+                            "type": "repeatable",
+                            "questions": [
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-01",
+                                "label": "Briefly describe your goal for this objective.",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-02",
+                                "label": "What type of goal is it?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_new",
+                                      "label": "New goal"
+                                    },
+                                    {
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
+                                    },
+                                    {
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
+                                    }
+                                  ],
+                                  "default_entry": "goal_new",
+                                  "entry": null
+                                },
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-04-02-01-02-a",
+                                    "label": "Why was this goal discontinued?",
+                                    "type": "text_multiline",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-04-a-01-01-04-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-04-a-01-01-04-02-01-02')].answer.entry",
+                                          "values": {
+                                            "interactive": [
+                                              null,
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ],
+                                            "noninteractive": [
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the numerator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-04-02-01-03",
+                                    "label": "Which population are you measuring in the numerator?",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-04-02-01-04",
+                                    "label": "Numerator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the denominator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-04-02-01-05",
+                                    "label": "Which population are you measuring in the denominator?",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-04-02-01-06",
+                                    "label": "Denominator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "fieldset_type": "synthesized_value",
+                                "fieldset_info": {
+                                  "targets": [
+                                    "$..*[?(@.id=='2020-04-a-01-01-04-02-01-04')].answer.entry",
+                                    "$..*[?(@.id=='2020-04-a-01-01-04-02-01-06')].answer.entry"
+                                  ],
+                                  "actions": ["percentage"]
+                                },
+                                "questions": []
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-07",
+                                "label": "What is the date range of your data?",
+                                "type": "daterange",
+                                "answer": {
+                                  "labels": ["Start", "End"],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-08",
+                                "label": "Which data source did you use?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
+                                    },
+                                    {
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
+                                    },
+                                    {
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
+                                    }
+                                  ],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-09",
+                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-10",
+                                "label": "What are you doing to continually make progress towards your goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-11",
+                                "label": "Anything else you'd like to tell us about this goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-04-02-01-12",
+                                "label": "Do you have any supporting documentation?",
+                                "hint": "Optional",
+                                "type": "file_upload",
+                                "answer": {
+                                  "entry": null
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "objective",
+                    "id": "2020-04-a-01-01-05",
+                    "questions": [
+                      {
+                        "type": "text_multiline",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "id": "2020-04-a-01-01-05-01",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-04-a-01-01-05-02",
+                        "type": "repeatables",
+                        "typeLabel": "Goal",
+                        "questions": [
+                          {
+                            "id": "2020-04-a-01-01-05-02-01",
+                            "type": "repeatable",
+                            "questions": [
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-01",
+                                "label": "Briefly describe your goal for this objective.",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-02",
+                                "label": "What type of goal is it?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_new",
+                                      "label": "New goal"
+                                    },
+                                    {
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
+                                    },
+                                    {
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
+                                    }
+                                  ],
+                                  "default_entry": "goal_new",
+                                  "entry": null
+                                },
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-05-02-01-02-a",
+                                    "label": "Why was this goal discontinued?",
+                                    "type": "text_multiline",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-04-a-01-01-05-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-04-a-01-01-05-02-01-02')].answer.entry",
+                                          "values": {
+                                            "interactive": [
+                                              null,
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ],
+                                            "noninteractive": [
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the numerator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-05-02-01-03",
+                                    "label": "Which population are you measuring in the numerator?",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-05-02-01-04",
+                                    "label": "Numerator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the denominator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-05-02-01-05",
+                                    "label": "Which population are you measuring in the denominator?",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-05-02-01-06",
+                                    "label": "Denominator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "fieldset_type": "synthesized_value",
+                                "fieldset_info": {
+                                  "targets": [
+                                    "$..*[?(@.id=='2020-04-a-01-01-05-02-01-04')].answer.entry",
+                                    "$..*[?(@.id=='2020-04-a-01-01-05-02-01-06')].answer.entry"
+                                  ],
+                                  "actions": ["percentage"]
+                                },
+                                "questions": []
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-07",
+                                "label": "What is the date range of your data?",
+                                "type": "daterange",
+                                "answer": {
+                                  "labels": ["Start", "End"],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-08",
+                                "label": "Which data source did you use?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
+                                    },
+                                    {
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
+                                    },
+                                    {
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
+                                    }
+                                  ],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-09",
+                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-10",
+                                "label": "What are you doing to continually make progress towards your goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-11",
+                                "label": "Anything else you'd like to tell us about this goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-05-02-01-12",
+                                "label": "Do you have any supporting documentation?",
+                                "hint": "Optional",
+                                "type": "file_upload",
+                                "answer": {
+                                  "entry": null
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "objective",
+                    "id": "2020-04-a-01-01-06",
+                    "questions": [
+                      {
+                        "type": "text_multiline",
+                        "label": "What is the next objective listed in your CHIP State Plan?",
+                        "id": "2020-04-a-01-01-06-01",
+                        "answer": {
+                          "entry": null
+                        }
+                      },
+                      {
+                        "id": "2020-04-a-01-01-06-02",
+                        "type": "repeatables",
+                        "typeLabel": "Goal",
+                        "questions": [
+                          {
+                            "id": "2020-04-a-01-01-06-02-01",
+                            "type": "repeatable",
+                            "questions": [
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-01",
+                                "label": "Briefly describe your goal for this objective.",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-02",
+                                "label": "What type of goal is it?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_new",
+                                      "label": "New goal"
+                                    },
+                                    {
+                                      "value": "goal_continuing",
+                                      "label": "Continuing goal"
+                                    },
+                                    {
+                                      "value": "goal_discontinued",
+                                      "label": "Discontinued goal"
+                                    }
+                                  ],
+                                  "default_entry": "goal_new",
+                                  "entry": null
+                                },
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-06-02-01-02-a",
+                                    "label": "Why was this goal discontinued?",
+                                    "type": "text_multiline",
+                                    "answer": {
+                                      "entry": null
+                                    },
+                                    "context_data": {
+                                      "conditional_display": {
+                                        "type": "conditional_display",
+                                        "comment": "Interactive: Hide if 2020-04-a-01-01-06-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                        "hide_if": {
+                                          "target": "$..*[?(@.id=='2020-04-a-01-01-06-02-01-02')].answer.entry",
+                                          "values": {
+                                            "interactive": [
+                                              null,
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ],
+                                            "noninteractive": [
+                                              "goal_continuing",
+                                              "goal_new"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the numerator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-06-02-01-03",
+                                    "label": "Which population are you measuring in the numerator?",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-06-02-01-04",
+                                    "label": "Numerator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "label": "Define the denominator you're measuring",
+                                "questions": [
+                                  {
+                                    "id": "2020-04-a-01-01-06-02-01-05",
+                                    "label": "Which population are you measuring in the denominator?",
+                                    "hint": "For example: The total number of eligible children in the last federal fiscal year.",
+                                    "type": "text_medium",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  },
+                                  {
+                                    "id": "2020-04-a-01-01-06-02-01-06",
+                                    "label": "Denominator (total number)",
+                                    "type": "integer",
+                                    "answer": {
+                                      "entry": null
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "fieldset",
+                                "fieldset_type": "synthesized_value",
+                                "fieldset_info": {
+                                  "targets": [
+                                    "$..*[?(@.id=='2020-04-a-01-01-06-02-01-04')].answer.entry",
+                                    "$..*[?(@.id=='2020-04-a-01-01-06-02-01-06')].answer.entry"
+                                  ],
+                                  "actions": ["percentage"]
+                                },
+                                "questions": []
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-07",
+                                "label": "What is the date range of your data?",
+                                "type": "daterange",
+                                "answer": {
+                                  "labels": ["Start", "End"],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-08",
+                                "label": "Which data source did you use?",
+                                "type": "radio",
+                                "answer": {
+                                  "options": [
+                                    {
+                                      "value": "goal_enrollment_data",
+                                      "label": "Eligibility or enrollment data"
+                                    },
+                                    {
+                                      "value": "goal_survey_data",
+                                      "label": "Survey data"
+                                    },
+                                    {
+                                      "value": "goal_other_data",
+                                      "label": "Another data source"
+                                    }
+                                  ],
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-09",
+                                "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-10",
+                                "label": "What are you doing to continually make progress towards your goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-11",
+                                "label": "Anything else you'd like to tell us about this goal?",
+                                "type": "text_multiline",
+                                "answer": {
+                                  "entry": null
+                                }
+                              },
+                              {
+                                "id": "2020-04-a-01-01-06-02-01-12",
+                                "label": "Do you have any supporting documentation?",
+                                "hint": "Optional",
+                                "type": "file_upload",
+                                "answer": {
+                                  "entry": null
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "id": "2020-04-a-02",
+            "type": "part",
+            "title": "Additional questions",
+            "questions": [
+              {
+                "id": "2020-04-a-02-01",
+                "type": "text_multiline",
+                "label": "Do you have other strategies for measuring and reporting on your performance goals? What are these strategies, and what information have you found through this research?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-04-a-02-02",
+                "type": "text_multiline",
+                "label": "Do you plan to add new strategies for measuring and reporting on your goals and objectives? What do you plan to do, and when will this data become available?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-04-a-02-03",
+                "type": "text_multiline",
+                "label": "Have you conducted any focused studies on your CHIP population? (For example: studies on adolescents, attention deficit disorder, substance use, special healthcare needs, or other emerging healthcare needs.) What have you discovered through this research?",
+                "answer": {
+                  "entry": null
+                }
+              },
+              {
+                "id": "2020-04-a-02-04",
+                "type": "file_upload",
+                "label": "Optional: Attach any additional documents here.",
+                "hint": "For example: studies, analyses, or any other documents that address your performance goals.",
+                "answer": {
+                  "entry": null
+                }
               }
             ]
           }

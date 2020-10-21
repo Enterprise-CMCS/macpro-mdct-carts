@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User, Group  # type: ignore
 from rest_framework import serializers  # type: ignore
 from carts.carts_api.models import (
+    RoleFromUsername,
+    RoleFromJobCode,
+    RolesFromJobCode,
     Section,
     SectionBase,
     SectionSchema,
     State,
-    StateFromUsername,
+    StatesFromUsername,
     StateStatus,
     FMAP,
     ACS,
@@ -69,13 +72,33 @@ class StateSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["code", "name", "fmap_set", "acs_set"]
 
 
-class StateFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
+class StatesFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = StateFromUsername
-        fields = ["username", "state_code"]
+        model = StatesFromUsername
+        fields = ["username", "state_codes"]
+
+
+class RoleFromJobCodeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RoleFromJobCode
+        fields = ["job_code", "user_role"]
+
+
+class RolesFromJobCodeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RolesFromJobCode
+        fields = ["job_code", "user_roles"]
+
+
+class RoleFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RoleFromUsername
+        fields = ["username", "user_role"]
 
 
 class StateStatusSerializer(serializers.HyperlinkedModelSerializer):
+    state = serializers.PrimaryKeyRelatedField(queryset=State.objects.all())
+
     class Meta:
         model = StateStatus
-        fields = ["id", "state", "year", "status", "last_changed"]
+        fields = ["state", "year", "status", "last_changed", "user_name"]

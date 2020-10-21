@@ -72,8 +72,8 @@ class TOC extends Component {
         id: "certify-and-submit",
         label: "Certify and Submit",
         onClick: this.click,
-        selected: location.pathname === "/sections/certify-and-submit",
-        url: "/sections/certify-and-submit",
+        selected: location.pathname === "/sections/2020/certify-and-submit",
+        url: "/sections/2020/certify-and-submit",
       });
     }
 
@@ -91,22 +91,9 @@ TOC.propTypes = {
   userRole: PropTypes.string.isRequired,
 };
 
-const sortByOrdinal = (sectionA, sectionB) => {
-  const a = sectionA.contents.section.ordinal;
-  const b = sectionB.contents.section.ordinal;
-
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
-};
-
 const selectSectionsForNav = (state) => {
   if (state.formData) {
-    const sections = state.formData.sort(sortByOrdinal);
+    const sections = state.formData;
     return sections.map(
       ({
         contents: {
