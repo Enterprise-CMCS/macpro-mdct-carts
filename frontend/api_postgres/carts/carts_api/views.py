@@ -11,7 +11,7 @@ from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
-from django.utils import timezone
+from django.utils import timezone  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -27,7 +27,6 @@ from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-from carts.auth import JwtAuthentication
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
     AdminHideRoleFromUsername,
@@ -61,6 +60,7 @@ from carts.carts_api.models import (
     StateStatus,
     StatesFromUsername,
 )
+from carts.carts_api.model_utils import validate_status_change
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -191,6 +191,81 @@ class StateStatusViewSet(viewsets.ModelViewSet):
     ]
     queryset = StateStatus.objects.all()
     serializer_class = StateStatusSerializer
+
+    def create(self, request):
+        """
+        The object being created here is the newest status for a given
+        state/year.
+        We expect the post request to have state, year, and status; we get the
+        user from request.user and we update last_changed ourselves.
+
+        We've had some confusion over whether or not the name for a form in
+        progress is "in progress" or "started", so we accommodate both below
+        and turn the latter into the former.
+
+        """
+        state_code = request.data.get("state")
+        year = request.data.get("year")
+        new_status = request.data.get("status")
+        if new_status == "started":
+            new_status = "in_progress"
+        user = request.user
+        try:
+            assert all([state_code, year, new_status, user])
+        except AssertionError:
+            return HttpResponse(
+                "state_code, year, status, or user missing", status=400
+            )
+        state = State.objects.get(code=state_code.upper())
+        current = (
+            StateStatus.objects.all()
+            .filter(state_id=state_code.upper(), year=year)
+            .order_by("last_changed")
+            .last()
+        )
+        current_status = current.status if current else "not_started"
+        if current_status == new_status:
+            return self.list(request)
+        if current_status == "started":
+            current_status = "in_progress"
+        is_change_valid = validate_status_change(
+            user.appuser.role, current_status, new_status
+        )
+        if is_change_valid.update_success:
+            updated = StateStatus.objects.create(
+                state=state,
+                year=year,
+                status=is_change_valid.new_status,
+                last_changed=datetime.now(tz=timezone.utc),
+                user_name=user.username,
+            )
+            updated.save()
+            """
+            The "submitted" state is transitory and we should probably get rid
+            of it, but while it exists, it exists only to be immediately turned
+            into "certified":
+            """
+            if updated.status == "submitted":
+                certified = StateStatus.objects.create(
+                    state=state,
+                    year=year,
+                    status="certified",
+                    last_changed=datetime.now(tz=timezone.utc),
+                    user_name=user.username,
+                )
+                certified.save()
+
+            return self.list(request)
+
+        return HttpResponse(is_change_valid.message, status=400)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.appuser.role == "state_user":
+            state = user.appuser.states.all()[0]
+            return StateStatus.objects.filter(state=state)
+        elif user.appuser.role in ("bus_user", "co_user"):
+            return StateStatus.objects.all()
 
 
 class SectionViewSet(viewsets.ModelViewSet):

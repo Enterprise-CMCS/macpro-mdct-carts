@@ -16,7 +16,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
   try {
     await axios.post(`/state_status/`, {
       last_changed: new Date(),
-      state: `${window.env.API_POSTGRES_URL}/state/${stateCode}/`,
+      state: stateCode,
       status: "certified",
       user_name: userName,
       year,
