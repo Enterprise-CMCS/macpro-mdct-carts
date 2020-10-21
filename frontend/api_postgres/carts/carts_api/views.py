@@ -365,6 +365,8 @@ class SectionViewSet(viewsets.ModelViewSet):
                 .last()
             )
             status.last_changed = datetime.now(tz=timezone.utc)
+            # if the form is being changed, it must be in progress:
+            status.status = "in_progress"
             status.save()
             return HttpResponse(status=204)
 
