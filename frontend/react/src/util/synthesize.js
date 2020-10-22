@@ -159,16 +159,12 @@ const formula = (targets, providedFormula, precision) => {
 
 // If all of the values in the calculation are null or blank, then don't display 0 as the total
 const sum = (values) => {
-  let allNull = true;
-  values.map((value) => {
-    if (value !== null && value !== "") {
-      allNull = false;
-    }
-    return "";
-  });
-  return allNull === false
-    ? values.reduce((acc, value) => acc + +value, 0)
-    : "";
+  let returnValue = "";
+  const hasNumbers = values.some((value) => value !== null && value !== "");
+  if (hasNumbers) {
+    returnValue = values.reduce((acc, value) => acc + +value, 0);
+  }
+  return returnValue;
 };
 
 const lookupFMAP = (state, fy) => {
