@@ -118,6 +118,7 @@ def _create_permissions_for_co_users() -> None:
     for model in models:
         for verb in verbs:
             codename = f"{verb}_{model}"
+            group_permissions.append(Permission.objects.get(codename=codename))
 
     group.permissions.set(group_permissions)
     group.save()
