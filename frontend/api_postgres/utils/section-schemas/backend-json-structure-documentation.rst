@@ -105,7 +105,7 @@ Notes on ``id``
 ++++++++++++++++
 Every construct with an ``id`` has the ``id`` of the nearest parent with an ``id`` plus a hyphen and its own representation, which for most constructs is a two-digit number with a leading zero, starting at "01". Subsections and questions whose parent elements are questions use letter representations, starting with ``a``.
 
-If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as structues similar to parts (and thus don't use letter markers), not as questions, which explains the ``id`` values found in Section 2B.
+If a part's ``id`` is 2020-05-e-01, the first child question of that part would have the ``id`` ``2020-05-e-01-01``, and if that question had a child question, its ``id`` would be ``2020-05-e-01-01-a``. For the purposes of this representation, objectives and goals are treated as structures similar to parts (and thus don't use letter markers), not as questions, which explains the ``id`` values found in Section 2B.
 
 Not yet covered
 +++++++++++++++
