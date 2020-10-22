@@ -13,7 +13,7 @@ const Submit = ({ certify }) => (
   <>
     <h3>Ready to certify and submit?</h3>
     <p>
-      Now that you‘ve reviewd your CARTS FFY 2020 report, certify that it‘s
+      Now that you‘ve reviewed your CARTS FFY 2020 report, certify that it‘s
       accurate and in compliance with Title XXI of the Social Security Act
       (Section 2109(a) and Section 2108(e)).
     </p>
