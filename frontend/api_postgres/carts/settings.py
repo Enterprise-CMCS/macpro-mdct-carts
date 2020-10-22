@@ -82,8 +82,7 @@ REST_FRAMEWORK = {
 }
 
 JWT_AUTHENTICATION = {
-    # 'OPENID_DISCOVERY_URL': os.environ.get('OPENID_DISCOVERY_URL')
-    "OPENID_DISCOVERY_URL": "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
+    'OPENID_DISCOVERY_URL': os.environ.get('OPENID_DISCOVERY_URL')
 }
 
 CACHES = {
