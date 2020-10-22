@@ -13,9 +13,14 @@ const Submit = ({ certify }) => (
   <>
     <h3>Ready to certify and submit?</h3>
     <p>
-      Now that you‘ve reviewed your CARTS FFY 2020 report, certify that it‘s
-      accurate and in compliance with Title XXI of the Social Security Act
-      (Section 2109(a) and Section 2108(e)).
+      Double check that everything in your CARTS report is accurate. You won’t
+      be able to make any edits after submitting, unless you send a request to
+      CMS to uncertify your report.
+    </p>
+    <p>
+      Once you’ve reviewed your report, certify that it’s accurate and in
+      compliance with Title XXI of the Social Security Act (Section 2109(a) and
+      Section 2108(e)).
     </p>
     <Button onClick={certify} variation="primary">
       Certify and Submit
