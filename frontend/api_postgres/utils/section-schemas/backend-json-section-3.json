@@ -232,7 +232,7 @@
               {
                 "id": "2020-03-b-01-03",
                 "label": "What percent of applicants screened for CHIP eligibility cannot be enrolled because they have group health plan coverage?",
-                "type": "text_multiline",
+                "type": "percentage",
                 "answer": {
                   "entry": null
                 }
@@ -4970,9 +4970,9 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2020-03-e-02-09 is unanswered or no; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2020-03-e-02-06 is unanswered or no; noninteractive: hide if that's no.",
                         "hide_if": {
-                          "target": "$..*[?(@.id=='2020-03-e-02-09')].answer.entry",
+                          "target": "$..*[?(@.id=='2020-03-e-02-06')].answer.entry",
                           "values": {
                             "interactive": [null, "no"],
                             "noninteractive": ["no"]
@@ -4986,7 +4986,7 @@
               {
                 "id": "2020-03-e-02-07",
                 "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2020?",
-                "type": "text_multiline",
+                "type": "integer",
                 "answer": {
                   "entry": null
                 }
@@ -6427,7 +6427,7 @@
               {
                 "id": "2020-03-h-02-06",
                 "label": "Is there anything else you'd like to add about your CAHPS survey results?",
-                "type": "text",
+                "type": "text_multiline",
                 "answer": {
                   "entry": null
                 }
@@ -6627,7 +6627,7 @@
                       {
                         "id": "2020-03-i-02-01-01-03",
                         "label": "Which populations does the HSI program serve?",
-                        "type": "text",
+                        "type": "text_multiline",
                         "answer": {
                           "entry": null
                         },
