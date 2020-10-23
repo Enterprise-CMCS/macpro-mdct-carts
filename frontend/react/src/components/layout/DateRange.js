@@ -59,23 +59,15 @@ class DateRange extends Component {
     const storedValue = question.answer.entry;
 
     if (storedValue) {
-      // Returns an array with the values of the start date, split
-      const startDate = storedValue[0].split("-"); // ie: ['2019', '11', '01']
-
-      // Returns an array with the values of the start date, split
-      const endDate = storedValue[1].split("-"); // ie: ['2020', '09', '01']
-
-      const monthStartValue = startDate[1]; // '11'
-      const yearStartValue = startDate[0]; // '2019'
-
-      const monthEndValue = endDate[1]; // '09'
-      const yearEndValue = endDate[0]; // '2020'
+      // Split each date string into an array and extract month and year variables with destructuring
+      const [yearStartValue, monthStartValue] = storedValue[0].split("-"); // ie: '2019' and '11'
+      const [yearEndValue, monthEndValue] = storedValue[1].split("-"); // ie: '2020' and '09'
 
       this.setState({
-        monthStart: monthStartValue || "",
-        monthEnd: monthEndValue || "",
-        yearStart: yearStartValue || "",
-        yearEnd: yearEndValue || "",
+        monthStart: monthStartValue ?? "",
+        monthEnd: monthEndValue ?? "",
+        yearStart: yearStartValue ?? "",
+        yearEnd: yearEndValue ?? "",
       });
     } else {
       this.setState({
@@ -105,11 +97,11 @@ class DateRange extends Component {
     if (monthStart && monthEnd && yearStart && yearEnd) {
       // Turn the input into date objects for easy comparison
 
-      monthStart = monthStart.padStart(2, "0");
-      monthEnd = monthEnd.padStart(2, "0");
-
       const startDate = new Date(yearStart, monthStart - 1);
       const endDate = new Date(yearEnd, monthEnd - 1);
+
+      monthStart = monthStart.padStart(2, "0");
+      monthEnd = monthEnd.padStart(2, "0");
 
       // The entry value for daterange must be sent to the server as an array of two strings
       // The format must be an ISO 8601 Date format.
