@@ -33,8 +33,5 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'carts.auth_dev.JwtAuthentication',
     ],
-    'xDEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
     'COERCE_DECIMAL_TO_STRING': False,
 }
