@@ -9,7 +9,6 @@ const InvokeSection = (username) => {
   const { state, year, sectionOrdinal, subsectionMarker } = useParams();
   const dispatch = useDispatch();
 
-  console.log("SHOW ME THE PARAMS", useParams());
   useEffect(() => {
     if (username) {
       dispatch(loadForm(state));
