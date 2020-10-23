@@ -13,10 +13,13 @@ import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
 import Userinfo from "./components/sections/Userinfo";
 import UserProfile from "./components/sections/UserProfile";
+import Print from "./components/sections/Print";
 import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Profile from "./Profile";
 import config from "./auth-config";
 import Spinner from "./components/Utils/Spinner";
+import Sidebar from "./components/layout/Sidebar";
+import InvokeSection from "./components/Utils/InvokeSection";
 
 const WrappedSecurity = () => {
   const VisibleHeader =
@@ -69,6 +72,7 @@ const WrappedSecurity = () => {
           <SecureRoute exact path="/userinfo" component={Userinfo} />
           <SecureRoute path="/profile" component={Profile} />
           <SecureRoute path="/user/profile" component={UserProfile} />
+          <SecureRoute path="/print" component={Print} />
         </Router>
         {VisibleFooter}
       </SecurityWrapper>
