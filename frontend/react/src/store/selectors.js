@@ -2,6 +2,7 @@ import jsonpath from "../util/jsonpath";
 
 import { selectFragment } from "./formData"; // eslint-disable-line import/no-cycle
 import { shouldDisplay } from "../util/shouldDisplay";
+import statesArray from "../components/Utils/statesArray";
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
@@ -139,3 +140,47 @@ export const selectSectionsForNav = (state) => {
   }
   return [];
 };
+
+export const selectIsFormEditable = (state) => {
+  const { status } = state.reportStatus;
+  const { role } = state.stateUser.currentUser;
+
+  switch (status) {
+    case "not_started":
+    case "in_progress":
+    case "uncertified":
+      // Forms can only be edited if the current user is a state user AND the
+      // form is in one of the statuses above.
+      return role === "state_user";
+    default:
+      return false;
+  }
+};
+
+export const { selectFormStatus, selectFormStatuses } = (() => {
+  const STATUS_MAPPING = {
+    not_started: "Not started",
+    in_progress: "In progress",
+    certified: "Certified",
+    uncertified: "Uncertified",
+    approved: "Approved",
+    submitted: "Submitted",
+    published: "Published",
+  };
+
+  return {
+    selectFormStatus: (state) => {
+      const { status } = state.reportStatus;
+      if (STATUS_MAPPING[status]) {
+        return STATUS_MAPPING[status];
+      }
+      return null;
+    },
+    selectFormStatuses: (state) =>
+      Object.entries(state.reportStatus).map(([stateCode, status]) => ({
+        state: statesArray.find(({ value }) => value === stateCode)?.label,
+        stateCode,
+        status: STATUS_MAPPING[status],
+      })),
+  };
+})();

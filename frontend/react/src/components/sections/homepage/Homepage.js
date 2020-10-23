@@ -1,8 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import { DownloadDrawer } from "./DownloadDrawer";
+import {
+  selectFormStatus,
+  selectIsFormEditable,
+} from "../../../store/selectors";
 
-const Homepage = () => (
+const Homepage = ({ editable, status }) => (
   <div className="homepage">
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -28,10 +34,10 @@ const Homepage = () => (
               lastEditedTime="1:32pm"
               lastEditedDate="9/21/20"
               link1URL="/sections/2020/00"
-              link1Text="Edit"
+              link1Text={editable ? "Edit" : "View"}
               link2URL="#"
               link2Text={null}
-              statusText="In Progress"
+              statusText={status}
               editor="karen.dalton@state.gov"
             />
           </div>
@@ -51,5 +57,14 @@ const Homepage = () => (
     </div>
   </div>
 );
+Homepage.propTypes = {
+  editable: PropTypes.bool.isRequired,
+  status: PropTypes.string.isRequired,
+};
 
-export default Homepage;
+const mapState = (state) => ({
+  editable: selectIsFormEditable(state),
+  status: selectFormStatus(state),
+});
+
+export default connect(mapState)(Homepage);

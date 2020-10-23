@@ -325,7 +325,7 @@ class SectionViewSet(viewsets.ModelViewSet):
             for entry in request.data:
                 section_id = entry["contents"]["section"]["id"]
                 section_state = entry["contents"]["section"]["state"]
-                state_id = section_state
+                state_id = section_state.upper()
                 year = entry["contents"]["section"]["year"]
 
                 section = Section.objects.get(
@@ -337,17 +337,20 @@ class SectionViewSet(viewsets.ModelViewSet):
 
                 status = (
                     StateStatus.objects.all()
-                    .filter(state_id=section_state, year=year)
+                    .filter(state_id=state_id, year=year)
                     .order_by("last_changed")
                     .last()
                 )
-                can_save = status == None or status.status not in [
+                can_save = status is None or status.status not in [
                     "certified",
                     "published",
                     "approved",
                 ]
 
-                if can_save == False:
+                if request.user.appuser.role != "state_user":
+                    can_save = False
+
+                if not can_save:
                     return HttpResponse(
                         f"cannot save {status} report", status=400
                     )
@@ -361,16 +364,30 @@ class SectionViewSet(viewsets.ModelViewSet):
                 .order_by("last_changed")
                 .last()
             )
-            status.last_changed = datetime.now(tz=timezone.utc)
-            status.save()
+
+            if status.status == "in_progress":
+                status.last_changed = datetime.now(tz=timezone.utc)
+                status.save()
+            else:
+                # if the form is being changed, it must be in progress:
+                state = State.objects.get(code=section_state.upper())
+                updated = StateStatus.objects.create(
+                    state=state,
+                    year=year,
+                    status="in_progress",
+                    last_changed=datetime.now(tz=timezone.utc),
+                    user_name=request.user.username,
+                )
+                updated.save()
+
             return HttpResponse(status=204)
 
         except PermissionDenied:
             raise
-        except:
+        except Exception as e:
             raise ValidationError(
                 "There is a problem with the provided data.", 400
-            )
+            ) from e
 
     def get_permissions(self):
         permission_classes_by_action = {

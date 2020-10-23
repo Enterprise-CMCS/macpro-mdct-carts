@@ -28,6 +28,10 @@
       {
         "name": "POSTGRES_API_URL",
         "value": "${postgres_api_url}"
+      },
+      {
+        "name": "OPENID_DISCOVERY_URL",
+        "value": "${openid_discovery_url}"
       }
     ],
     "logConfiguration": {
