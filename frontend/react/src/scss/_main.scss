@@ -316,7 +316,7 @@ div[data-state="open"] .accordion-header .arrow:before {
     text-align: right;
   }
   & > div {
-    display: inline-block;
+    display: block;
     margin: ($margin * 2) $margin;
   }
   .share-container {
