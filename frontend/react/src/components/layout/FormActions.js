@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 const FormActions = () => {
   /**
@@ -22,7 +22,7 @@ const FormActions = () => {
 
   const togglePrintDiaglogue = () => {
     setPrintShow(!printShow);
-  }
+  };
   return (
     <section className="action-buttons">
       <div className="print-button">
@@ -35,29 +35,40 @@ const FormActions = () => {
         </Button>
       </div>
       {printShow ? (
-      <div className="print-dialogue">
-        <h4>Print</h4>
-        <div className="print-options">
-          <div className="print-page">
+        <div className="print-dialogue">
+          <div className="close">
             <Button
-              className="ds-c-button--primary ds-c-button--small"
-              onClick={printWindow}
-              title="This Page"
+              className="ds-c-button--transparent ds-c-button--small"
+              onClick={togglePrintDiaglogue}
+              title="close"
             >
-              <FontAwesomeIcon icon={faPrint} /> This Page
+              <FontAwesomeIcon icon={faWindowClose} />
             </Button>
           </div>
-          <div className="print-form">
-            <Button
-              className="ds-c-button--primary ds-c-button--small"
-              href="/print?dev=dev-ak"
-              title="Entire Form"
-            >
-              <FontAwesomeIcon icon={faPrint} /> Entire Form
-            </Button>
+          <h4>Print</h4>
+          <div className="print-options">
+            <div className="print-page">
+              <Button
+                className="ds-c-button--primary ds-c-button--small"
+                onClick={printWindow}
+                title="This Page"
+              >
+                <FontAwesomeIcon icon={faPrint} /> This Page
+              </Button>
+            </div>
+            <div className="print-form">
+              <Button
+                className="ds-c-button--primary ds-c-button--small"
+                href="/print?dev=dev-ak"
+                title="Entire Form"
+                target="_blank"
+              >
+                <FontAwesomeIcon icon={faPrint} /> Entire Form
+              </Button>
+            </div>
           </div>
         </div>
-      </div>) : null }
+      ) : null}
     </section>
   );
 };
