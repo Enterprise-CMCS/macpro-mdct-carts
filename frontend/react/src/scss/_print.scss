@@ -8,6 +8,13 @@
   .page-info {
     display: none;
   }
+  .print-only {
+    display: block;
+  }
+
+  .print-exclude {
+    display: none;
+  }
 
   .print-all-btn {
     margin: 2.2rem;
@@ -21,6 +28,7 @@
   .header,
   .nav-buttons,
   .print-all-btn,
+  .print-exclude,
   .sidebar {
     display: none;
   }
