@@ -2,6 +2,14 @@ import React, {useEffect} from "react";
 import {connect, useDispatch} from "react-redux";
 import {getAllStatesData, getStateStatus, loadSections} from "../../actions/initial";
 import Section from "../layout/Section";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPrint} from "@fortawesome/free-solid-svg-icons";
+import {Button} from "@cmsgov/design-system-core";
+
+const printWindow = (event) => {
+  event.preventDefault();
+  window.print();
+};
 
 const Print = (props) => {
   const dispatch = useDispatch();
@@ -13,7 +21,7 @@ const Print = (props) => {
     const stateCode = stateUser.currentUser.state.id;
 
     // Start Spinner
-    // dispatch({ type: "CONTENT_FETCHING_STARTED" });
+    dispatch({type: "CONTENT_FETCHING_STARTED"});
 
     // Pull data based on user details
     try {
@@ -25,10 +33,10 @@ const Print = (props) => {
     } catch (err) {
       console.log("err", err);
     }
-  }, []);
 
-  // End isFetching for spinner
-  //dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+    // End isFetching for spinner
+    dispatch({type: "CONTENT_FETCHING_FINISHED"});
+  }, []);
 
   let sections = [];
 
@@ -37,11 +45,11 @@ const Print = (props) => {
   if (formData !== undefined && formData.length != 0) {
 
     // Loop through each section to get sectionId
-    for(let i = 0; i < formData.length; i++) {
+    for (let i = 0; i < formData.length; i++) {
       let sectionId = formData[i].contents.section.id;
 
       // Loop through subsections to get subsectionId
-      for(let j = 0; j < formData[i].contents.section.subsections.length; j++) {
+      for (let j = 0; j < formData[i].contents.section.subsections.length; j++) {
         let subsectionId = formData[i].contents.section.subsections[j].id;
 
         // Add section to sections array
@@ -50,8 +58,18 @@ const Print = (props) => {
     }
   }
 
-  // Use map to add wrapper div with class
-  return sections;
+  // Return sections with wrapper div and print dialogue box
+  return (
+    <div className="print-all">
+      <Button
+        className="ds-c-button--primary ds-c-button--large print-all-btn"
+        onClick={printWindow}
+        title="Print"
+      >
+        <FontAwesomeIcon icon={faPrint}/> Print
+      </Button>
+      {sections}
+    </div>);
 };
 
 const mapStateToProps = (state) => ({

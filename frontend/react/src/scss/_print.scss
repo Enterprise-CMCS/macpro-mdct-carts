@@ -1,8 +1,26 @@
+/**
+  * Contains Print media query AND print page
+ */
+
+.print-all {
+  .ds-c-alert,
+  .form-footer,
+  .page-info {
+    display: none;
+  }
+
+  .print-all-btn {
+    margin: 2.2rem;
+  }
+}
+
 @media print {
   .action-buttons,
+  .ds-c-alert,
   .footer,
   .header,
   .nav-buttons,
+  .print-all-btn,
   .sidebar {
     display: none;
   }
@@ -57,5 +75,8 @@
 
   .ly_header {
     margin-bottom: ($margin * 8);
+  }
+  .question {
+    break-inside: avoid;
   }
 }
