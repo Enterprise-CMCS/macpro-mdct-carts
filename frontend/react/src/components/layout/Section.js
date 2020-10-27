@@ -25,9 +25,9 @@ const Section = ({ subsectionId, title, sectionId }) => {
             </span>
           </h2>
         ) : (
-          <h2>{title}</h2>
+          <h2 className="print-only">{title}</h2>
         )}
-        <h2 className="print-exclude">{title}</h2>
+        <h2 className="screen-only">{title}</h2>
         <Subsection key={subsectionId} subsectionId={subsectionId} />
       </div>
       <div className="form-footer">
