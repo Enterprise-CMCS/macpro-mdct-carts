@@ -74,13 +74,17 @@ const Print = (props) => {
   // Return sections with wrapper div and print dialogue box
   return (
     <div className="print-all">
-      <Button
-        className="ds-c-button--primary ds-c-button--large print-all-btn"
-        onClick={printWindow}
-        title="Print"
-      >
-        <FontAwesomeIcon icon={faPrint} /> Print
-      </Button>
+      <div className="print-directions">
+        <p>Click below to print full CARTS report shown here</p>
+        <Button
+          className="ds-c-button--primary ds-c-button--large print-all-btn"
+          onClick={printWindow}
+          title="Print"
+        >
+          <FontAwesomeIcon icon={faPrint} /> Print
+        </Button>
+      </div>
+
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"

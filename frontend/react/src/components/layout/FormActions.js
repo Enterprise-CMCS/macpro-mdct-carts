@@ -51,9 +51,9 @@ const FormActions = () => {
               <Button
                 className="ds-c-button--primary ds-c-button--small"
                 onClick={printWindow}
-                title="This Page"
+                title="This Section"
               >
-                <FontAwesomeIcon icon={faPrint} /> This Page
+                <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
             </div>
             <div className="print-form">
