@@ -82,6 +82,13 @@ const Print = (props) => {
         <FontAwesomeIcon icon={faPrint} /> Print
       </Button>
       {sections}
+      <Button
+        className="ds-c-button--primary ds-c-button--large print-all-btn"
+        onClick={printWindow}
+        title="Print"
+      >
+        <FontAwesomeIcon icon={faPrint} /> Print
+      </Button>
     </div>
   );
 };
