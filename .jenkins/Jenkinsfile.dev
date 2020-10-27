@@ -15,6 +15,7 @@ pipeline {
     BUILD_TAG = resolveBuildTag()
     VPC_NAME = "macpro-dev"
     TF_VAR_acm_certificate_domain_ui = "cartsdemo.cms.gov"
+    TF_VAR_acm_certificate_domain_api_postgres = "api.cartsdemo.cms.gov"
   }
   stages {
     stage("Prep Agent") {
