@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllStateStatuses } from "../../../actions/initial";
-import states from "../../Utils/statesArray";
 import ReportItem from "./ReportItem";
+import { selectFormStatuses } from "../../../store/selectors";
 
 const CMSHomepage = ({ getStatuses, statuses }) => {
   useEffect(() => {
@@ -33,17 +33,15 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
                 <div className="status ds-l-col--4">Status</div>
                 <div className="actions ds-l-col--6">Actions</div>
               </div>
-              {states.map(({ label, value }) =>
-                statuses[value] ? (
-                  <ReportItem
-                    key={value}
-                    link1URL={`/views/sections/${value}/2020/00/a`}
-                    name={`${label} 2020`}
-                    statusText={statuses[value] || "not started"}
-                    editor="x@y.z"
-                  />
-                ) : null
-              )}
+              {statuses.map(({ state, stateCode, status }) => (
+                <ReportItem
+                  key={stateCode}
+                  link1URL={`/views/sections/${stateCode}/2020/00/a`}
+                  name={`${state} 2020`}
+                  statusText={status}
+                  editor="x@y.z"
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -57,7 +55,7 @@ CMSHomepage.propTypes = {
 };
 
 const mapState = (state) => ({
-  statuses: state.reportStatus,
+  statuses: selectFormStatuses(state),
 });
 
 const mapDispatch = {

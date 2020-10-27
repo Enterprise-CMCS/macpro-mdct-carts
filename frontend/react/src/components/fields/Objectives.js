@@ -11,7 +11,12 @@ import {
   removeRepeatable,
 } from "../../actions/repeatables";
 
-const Objectives = ({ addObjectiveTo, question, removeObjectiveFrom }) => {
+const Objectives = ({
+  addObjectiveTo,
+  disabled,
+  question,
+  removeObjectiveFrom,
+}) => {
   const ref = useRef();
 
   const add = () => {
@@ -46,6 +51,7 @@ const Objectives = ({ addObjectiveTo, question, removeObjectiveFrom }) => {
 
         {question.questions.length > 1 && (
           <button
+            disabled={disabled}
             onClick={remove}
             type="button"
             className="add-objective ds-c-button ds-c-button--danger"
@@ -62,6 +68,7 @@ const Objectives = ({ addObjectiveTo, question, removeObjectiveFrom }) => {
 
         <div className="ds-c-field__hint">Optional</div>
         <button
+          disabled={disabled}
           onClick={add}
           type="button"
           className="add-objective ds-c-button ds-c-button--primary"
@@ -75,6 +82,7 @@ const Objectives = ({ addObjectiveTo, question, removeObjectiveFrom }) => {
 };
 Objectives.propTypes = {
   addObjectiveTo: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
   question: PropTypes.object.isRequired,
   removeObjectiveFrom: PropTypes.func.isRequired,
 };
