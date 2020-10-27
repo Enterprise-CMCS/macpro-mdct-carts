@@ -18,8 +18,6 @@ import SecureInitialDataLoad from "./components/Utils/SecureInitialDataLoad";
 import Profile from "./Profile";
 import config from "./auth-config";
 import Spinner from "./components/Utils/Spinner";
-import Sidebar from "./components/layout/Sidebar";
-import InvokeSection from "./components/Utils/InvokeSection";
 
 const WrappedSecurity = () => {
   const VisibleHeader =
