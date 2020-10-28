@@ -22,6 +22,7 @@
               {
                 "type": "fieldset",
                 "fieldset_type": "noninteractive_table",
+                "fieldset_id": "noninteractive-table-1",
                 "fieldset_info": {
                   "headers": [
                     "Program",
@@ -30,8 +31,18 @@
                     "Percent change"
                   ],
                   "rows": [
-                    ["Medicaid Expansion CHIP", 284143, 300579, 5.78],
-                    ["Separate CHIP", 478542, 511473, 6.88]
+                    [
+                      "Medicaid Expansion CHIP",
+                      284143,
+                      300579,
+                      5.78
+                    ],
+                    [
+                      "Separate CHIP",
+                      478542,
+                      511473,
+                      6.88
+                    ]
                   ]
                 },
                 "questions": []
@@ -46,7 +57,28 @@
                 "context_data": {
                   "interactive_conditional": "Hide if percent change values in parent's table are all under 3.",
                   "noninteractive_conditional": "Hide if percent change values in parent's table are all under 3.",
-                  "skip_text": "Since your percent change didn’t exceed 3%, you can skip to Part 2."
+                  "skip_text": "Since your percent change didn’t exceed 3%, you can skip to Part 2.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "hide_if_table_value": {
+                      "target": "$..*[?(@.fieldset_id=='noninteractive-table-1')].fieldset_info.rows",
+                      "variation_operator": "or",
+                      "variations": [
+                        {
+                          "threshold": "3",
+                          "operator": ">",
+                          "row": "*",
+                          "row_key": "3"
+                        },
+                        {
+                          "threshold": "-3",
+                          "operator": "<",
+                          "row": "*",
+                          "row_key": "3"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             ]
@@ -293,8 +325,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-02')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }
@@ -336,7 +373,10 @@
                         "label": "Tell us the date range for your data",
                         "type": "daterange",
                         "answer": {
-                          "labels": ["Start", "End"],
+                          "labels": [
+                            "Start",
+                            "End"
+                          ],
                           "entry": null
                         }
                       },
@@ -396,8 +436,13 @@
                         "hide_if": {
                           "target": "$..*[?(@.id=='2020-02-a-02-03')].answer.entry",
                           "values": {
-                            "interactive": [null, "no"],
-                            "noninteractive": ["no"]
+                            "interactive": [
+                              null,
+                              "no"
+                            ],
+                            "noninteractive": [
+                              "no"
+                            ]
                           }
                         }
                       }

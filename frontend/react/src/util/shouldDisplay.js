@@ -46,6 +46,82 @@ const hideIfNot = (state, hideIfNotInfo) => {
   return includedBoolean;
 };
 
+
+const hideIfTableValue = (state, hideIfTableValueInfo) => {
+  // Get table values
+  const targetValues = jsonpath.query(state, hideIfTableValueInfo.target)[0];
+  const variations = hideIfTableValueInfo.variations;
+  const variation_operator = hideIfTableValueInfo.variation_operator;
+
+  let resultsArray = [];
+  let result;
+
+  // Loop through variations and check is threshold is met
+  for(let i = 0; i < variations.length; i++ ) {
+
+    // Loop through table rows for matches
+    for(let j = 0; j < targetValues.length; j++) {
+
+      // Check if current variation corresponds with targetValue row
+      if(variations[i].row === "*" || variations[i].row === j) {
+
+        // get row key
+        const row_key = parseInt(variations[i]['row_key'], 10);
+        let threshold = parseInt(variations[i].threshold, 10);
+        let comparison_value = parseInt(targetValues[j][row_key], 10);
+
+        let b = typeof comparison_value;
+        let a =0;
+        // Check if threshold is met
+        switch(variations[i].operator) {
+          case "<":
+            if(comparison_value < threshold) {
+              resultsArray.push(true)
+              let a = 0;
+            }
+            break;
+          case ">":
+            if(comparison_value > threshold) {
+              resultsArray.push(true)
+              let a = 0;
+            }
+            break;
+          case "=":
+            if(targetValues[j][row_key] === variations[i].threshold) {
+              resultsArray.push(true)
+            }
+            break;
+          case "!=":
+            if(targetValues[j][row_key] !== variations[i].threshold) {
+              resultsArray.push(true)
+            }
+            break;
+          default:
+            resultsArray.push("not caught")
+        }
+
+        // Determine is variation_operator is true
+
+        if(variation_operator === "or") {
+          if(resultsArray.includes(true)) {
+            result = true;
+          }
+
+        } else if(variation_operator === "and") {
+          if(resultsArray.includes(false)) {
+            result = false;
+          }
+        }
+      }
+    }
+
+
+  }
+  let a =0;
+  return result;
+}
+
+
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
@@ -84,6 +160,12 @@ const shouldDisplay = (state, context) => {
   // displaying relies on that array of answers including any of the values from the hide_if_not.values.interactive array
   if (context.conditional_display.hide_if_not) {
     return !hideIfNot(state, context.conditional_display.hide_if_not);
+  }
+
+  // hide_if_table_value, there is one target table that may have multiple variations
+  // displaying relies on variations supplied to return a bool is ANY are tru
+  if (context.conditional_display.hide_if_table_value) {
+    return hideIfTableValue(state, context.conditional_display.hide_if_table_value);
   }
 
   // If we don't know what the heck is going on, just return true. Better to
