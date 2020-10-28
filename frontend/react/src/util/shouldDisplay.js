@@ -50,49 +50,48 @@ const hideIfNot = (state, hideIfNotInfo) => {
 const hideIfTableValue = (state, hideIfTableValueInfo) => {
   // Get table values
   const targetValues = jsonpath.query(state, hideIfTableValueInfo.target)[0];
-  const variations = hideIfTableValueInfo.variations;
-  const variation_operator = hideIfTableValueInfo.variation_operator;
+  const {variations} = hideIfTableValueInfo;
+  const variationOperator = hideIfTableValueInfo.variation_operator;
 
-  let resultsArray = [];
+  const resultsArray = [];
   let result;
 
   // Loop through variations and check is threshold is met
+  /* eslint-disable no-plusplus */
   for(let i = 0; i < variations.length; i++ ) {
 
     // Loop through table rows for matches
+    /* eslint-disable no-plusplus */
     for(let j = 0; j < targetValues.length; j++) {
 
       // Check if current variation corresponds with targetValue row
+      /* eslint-disable no-plusplus */
       if(variations[i].row === "*" || variations[i].row === j) {
 
         // get row key
-        const row_key = parseInt(variations[i]['row_key'], 10);
-        let threshold = parseInt(variations[i].threshold, 10);
-        let comparison_value = parseInt(targetValues[j][row_key], 10);
+        const rowKey = parseInt(variations[i].row_key, 10);
+        const threshold = parseInt(variations[i].threshold, 10);
+        const comparisonValue = parseInt(targetValues[j][rowKey], 10);
 
-        let b = typeof comparison_value;
-        let a =0;
         // Check if threshold is met
         switch(variations[i].operator) {
           case "<":
-            if(comparison_value < threshold) {
+            if(comparisonValue < threshold) {
               resultsArray.push(true)
-              let a = 0;
             }
             break;
           case ">":
-            if(comparison_value > threshold) {
+            if(comparisonValue > threshold) {
               resultsArray.push(true)
-              let a = 0;
             }
             break;
           case "=":
-            if(targetValues[j][row_key] === variations[i].threshold) {
+            if(comparisonValue === variations[i].threshold) {
               resultsArray.push(true)
             }
             break;
           case "!=":
-            if(targetValues[j][row_key] !== variations[i].threshold) {
+            if(comparisonValue !== variations[i].threshold) {
               resultsArray.push(true)
             }
             break;
@@ -102,12 +101,12 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
         // Determine is variation_operator is true
 
-        if(variation_operator === "or") {
+        if(variationOperator === "or") {
           if(resultsArray.includes(true)) {
             result = true;
           }
 
-        } else if(variation_operator === "and") {
+        } else if(variationOperator === "and") {
           if(resultsArray.includes(false)) {
             result = false;
           }
@@ -117,7 +116,6 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
 
   }
-  let a =0;
   return result;
 }
 
