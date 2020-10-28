@@ -65,8 +65,14 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
     for(let j = 0; j < targetValues.length; j++) {
 
       // Check if current variation corresponds with targetValue row
+      let rowValue;
+      if(variations[i].row === "*") {
+        rowValue = "*"
+      } else {
+        rowValue = parseInt(variations[i].row, 10)
+      }
       /* eslint-disable no-plusplus */
-      if(variations[i].row === "*" || variations[i].row === j) {
+      if( rowValue === "*" || rowValue === j) {
 
         // get row key
         const rowKey = parseInt(variations[i].row_key, 10);
@@ -78,35 +84,46 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
           case "<":
             if(comparisonValue < threshold) {
               resultsArray.push(true)
+            } else {
+              resultsArray.push(false)
             }
             break;
           case ">":
             if(comparisonValue > threshold) {
               resultsArray.push(true)
+            }else {
+              resultsArray.push(false)
             }
             break;
           case "=":
             if(comparisonValue === variations[i].threshold) {
               resultsArray.push(true)
+            }else {
+              resultsArray.push(false)
             }
             break;
           case "!=":
             if(comparisonValue !== variations[i].threshold) {
               resultsArray.push(true)
+            }else {
+              resultsArray.push(false)
             }
             break;
           default:
-            resultsArray.push("not caught")
+            resultsArray.push(false)
         }
 
         // Determine is variation_operator is true
 
         if(variationOperator === "or") {
+          result = false;
+
           if(resultsArray.includes(true)) {
             result = true;
           }
 
         } else if(variationOperator === "and") {
+          result = true;
           if(resultsArray.includes(false)) {
             result = false;
           }
