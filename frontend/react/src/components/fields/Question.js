@@ -86,6 +86,12 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
     }
   }
 
+  // Disable the File Upload component for launch since it is not fully functional
+  if (question.type === "file_upload") {
+    question.answer.readonly = true;
+    question.hint = "Currently unavailable";
+  }
+
   return (
     <div className="question">
       <Container question={question}>
