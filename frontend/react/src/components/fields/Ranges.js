@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,24 +15,55 @@ const inputs = new Map([
 ]);
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
+  const [rangeError, setRangeError] = useState("");
+  const [startQuestion, setStartQuestion] = useState({});
+  const [endQuestion, setEndQuestion] = useState({});
+
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
   }
 
-  const startQuestion = {
+  // useEffect(() => {
+
+  //   setStartQuestion(startQuestionObject)
+  //   setEndQuestion(endQuestionObject)
+  // }, [num]);
+
+  const startQuestionObject = {
     id: `${id}-row-${row}-${index}-start`,
     answer: {
       entry: values ? values[0] : "",
     },
   };
 
-  const endQuestion = {
+  const endQuestionObject = {
     id: `${id}-row-${row}-${index}-end`,
     answer: {
       entry: values ? values[1] : "",
     },
   };
+
+  const validateInequality = () => {
+    if (values.length === 2) {
+      const start = parseInt(values[0], 10);
+      const end = parseInt(values[1], 10);
+
+      if (start > end) {
+        setRangeError("Start value must be less than end value");
+      } else {
+        setRangeError("");
+      }
+    }
+  };
+
+  // Any more ideas??
+  // Make it stateful?? Issue: state needs to be as updated as possible,
+  // make sure it never gets stale
+  // Use effect!
+
+  // Plan Z:
+  // If theres an error, go into redux and change all values to null
 
   const changeStart = ({ target: { value } }) => {
     onChange(row, index, 0, value);
@@ -45,6 +76,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   return (
     <div className="cmsrange">
       <div className="cmsrange-outer ds-l-container">
+        {rangeError ? <div className="errors">{rangeError}</div> : null}
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
             <Input
@@ -53,6 +85,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               className="cmsrange-input"
               question={startQuestion}
               onChange={changeStart}
+              onBlur={validateInequality}
             />
           </div>
           <div className="cmsrange-arrow">
@@ -65,6 +98,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               className="cmsrange-input"
               question={endQuestion}
               onChange={changeEnd}
+              onBlur={validateInequality}
             />
           </div>
         </div>
