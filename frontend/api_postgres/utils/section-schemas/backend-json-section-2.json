@@ -22,7 +22,7 @@
               {
                 "type": "fieldset",
                 "fieldset_type": "noninteractive_table",
-                "fieldset_id": "noninteractive-table-1",
+                "fieldset_id": "noninteractive-table-2-1",
                 "fieldset_info": {
                   "headers": [
                     "Program",
@@ -61,7 +61,8 @@
                   "conditional_display": {
                     "type": "conditional_display",
                     "hide_if_table_value": {
-                      "target": "$..*[?(@.fieldset_id=='noninteractive-table-1')].fieldset_info.rows",
+                      "target": "$..*[?(@.fieldset_id=='noninteractive-table-2-1')].fieldset_info.rows",
+                      "computed": false,
                       "variation_operator": "or",
                       "variations": [
                         {
@@ -94,6 +95,7 @@
                 "label": "",
                 "hint": "",
                 "fieldset_type": "synthesized_table",
+                "fieldset_id": "synthesized-table-2-1",
                 "fieldset_info": {
                   "headers": [
                     {
@@ -265,6 +267,7 @@
               {
                 "type": "fieldset",
                 "fieldset_type": "synthesized_table",
+                "fieldset_id": "synthesized-table-2-2",
                 "fieldset_info": {
                   "headers": [
                     {
@@ -291,6 +294,33 @@
                 "type": "text_multiline",
                 "answer": {
                   "entry": null
+                },
+                "context_data": {
+                  "interactive_conditional": "Hide if percent change values in parent's table are all under 3.",
+                  "noninteractive_conditional": "Hide if percent change values in parent's table are all under 3.",
+                  "skip_text": "Since your percent change didn’t exceed 3%, you can skip to Part 2.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "hide_if_table_value": {
+                      "target": "$..*[?(@.fieldset_id=='synthesized-table-2-2')].fieldset_info.rows",
+                      "computed": true,
+                      "variation_operator": "or",
+                      "variations": [
+                        {
+                          "threshold": "3",
+                          "operator": ">",
+                          "row": "*",
+                          "row_key": "0"
+                        },
+                        {
+                          "threshold": "-3",
+                          "operator": "<",
+                          "row": "*",
+                          "row_key": "0"
+                        }
+                      ]
+                    }
+                  }
                 }
               },
               {

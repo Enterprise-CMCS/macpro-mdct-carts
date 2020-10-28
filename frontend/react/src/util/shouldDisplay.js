@@ -1,4 +1,5 @@
 import jsonpath from "./jsonpath";
+import {compareACS} from "../../src/util/synthesize"
 
 /**
  * This function determines whether a radio's conditional subquestion should hide
@@ -49,7 +50,25 @@ const hideIfNot = (state, hideIfNotInfo) => {
 
 const hideIfTableValue = (state, hideIfTableValueInfo) => {
   // Get table values
-  const targetValues = jsonpath.query(state, hideIfTableValueInfo.target)[0];
+  let targetValues = jsonpath.query(state, hideIfTableValueInfo.target)[0];
+  let computedValue = new Array();
+
+  // If target needs to be calculated
+  if(hideIfTableValueInfo.computed) {
+    const type = targetValues[0][0];
+
+    if(type['compareACS']) {
+      // get computed value via compareACS and push into a multidimensional array
+      computedValue.push([compareACS(state, type['compareACS'])]);
+    }
+
+    if(type['lookupAcs']) {
+
+    }
+  } else {
+    computedValue = targetValues;
+  }
+
   const {variations} = hideIfTableValueInfo;
   const variationOperator = hideIfTableValueInfo.variation_operator;
 
@@ -62,7 +81,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
     // Loop through table rows for matches
     /* eslint-disable no-plusplus */
-    for(let j = 0; j < targetValues.length; j++) {
+    for(let j = 0; j < computedValue.length; j++) {
 
       // Check if current variation corresponds with targetValue row
       let rowValue;
@@ -77,8 +96,8 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
         // get row key
         const rowKey = parseInt(variations[i].row_key, 10);
         const threshold = parseInt(variations[i].threshold, 10);
-        const comparisonValue = parseInt(targetValues[j][rowKey], 10);
-
+        const comparisonValue = parseInt(computedValue[j][rowKey], 10);
+let a =0;
         // Check if threshold is met
         switch(variations[i].operator) {
           case "<":
@@ -121,6 +140,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
           if(resultsArray.includes(true)) {
             result = true;
           }
+          let a =0;
 
         } else if(variationOperator === "and") {
           result = true;
@@ -133,6 +153,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
 
   }
+  let a =0;
   return result;
 }
 

@@ -614,6 +614,9 @@
             "comment": {
               "type": "string"
             },
+            "computed": {
+              "type": "boolean"
+            },
             "variation_operator": {
               "type": "string"
             },
@@ -636,7 +639,7 @@
                   }
                 }
               },
-              "required": ["threshold", "operator", "row", "row_key"]
+              "required": ["threshold", "operator", "computed", "row", "row_key"]
             }
           },
           "required": ["target", "variation_operator", "variations"]
