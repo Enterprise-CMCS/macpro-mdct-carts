@@ -117,6 +117,8 @@ export const loadUser = (userToken) => async (dispatch) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
+  console.log("axios cred: ", axios.defaults);
+
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
