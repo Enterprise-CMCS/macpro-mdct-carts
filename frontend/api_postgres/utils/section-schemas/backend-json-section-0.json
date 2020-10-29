@@ -58,7 +58,7 @@
                 "type": "text_medium",
                 "answer": {
                   "prepopulated": true,
-                  "readonly": true,
+                  "readonly": false,
                   "entry": null
                 }
               },
