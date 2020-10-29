@@ -22,7 +22,7 @@ const Print = (props) => {
   useEffect(async () => {
     // Get user details
     const { stateUser } = props.state;
-    const stateCode = stateUser.currentUser.state.id;
+    const stateCode = stateUser.abbr;
 
     // Start Spinner
     dispatch({ type: "CONTENT_FETCHING_STARTED" });
