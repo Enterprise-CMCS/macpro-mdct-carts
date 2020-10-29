@@ -62,9 +62,6 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
       computedValue.push([compareACS(state, type['compareACS'])]);
     }
 
-    if(type['lookupAcs']) {
-
-    }
   } else {
     computedValue = targetValues;
   }
