@@ -25,6 +25,7 @@ import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
 
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
+import { showQuestionByPath } from "../Utils/helperFunctions";
 
 const questionTypes = new Map([
   ["checkbox", Checkbox],
@@ -86,6 +87,9 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
     }
   }
 
+  // Check if question should be shown based on pathname
+  const pageDisable = showQuestionByPath(window.location.pathname);
+
   // Disable the File Upload component for launch since it is not fully functional
   if (question.type === "file_upload") {
     question.answer.readonly = true;
@@ -110,7 +114,10 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
           name={question.id}
           onChange={onChange}
           disabled={
-            readonly || (question.answer && question.answer.readonly) || false
+            pageDisable ||
+            readonly ||
+            (question.answer && question.answer.readonly) ||
+            false
           }
         />
 
