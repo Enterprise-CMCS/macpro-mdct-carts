@@ -643,7 +643,11 @@
                         ]
                       },
                       {
-                        "contents": "100%"
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-02-01')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -820,7 +824,11 @@
                         ]
                       },
                       {
-                        "contents": "100%"
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -889,7 +897,11 @@
                         ]
                       },
                       {
-                        "contents": "100%"
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-03-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -1066,7 +1078,11 @@
                         ]
                       },
                       {
-                        "contents": "100%"
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-02')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
                       }
                     ],
                     [
@@ -1135,7 +1151,11 @@
                         ]
                       },
                       {
-                        "contents": "100%"
+                        "targets": [
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry",
+                          "$..*[?(@.id=='2020-03-c-04-04')].answer.entry"
+                        ],
+                        "actions": ["percentage"]
                       }
                     ],
                     [
