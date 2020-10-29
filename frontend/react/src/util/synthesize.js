@@ -202,6 +202,10 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
     // If acs exists, return the value from the object
     if (acs) {
       returnValue = `${acs[acsProperty]}`;
+      if (acsProperty.includes("percent"))
+      {
+        returnValue = returnValue + "%"
+      }
     }
   }
   return returnValue;
@@ -246,7 +250,7 @@ const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
       // Calculate the percent change
       returnValue = parseFloat(
         ((tempEnd - tempStart) / tempStart) * 100
-      ).toFixed(percentagePrecision);
+      ).toFixed(percentagePrecision) + "%";
     }
   }
   return returnValue;
