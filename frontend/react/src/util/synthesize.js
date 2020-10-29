@@ -5,7 +5,6 @@ import jsonpath from "./jsonpath";
 
 // For the identity case, just return the first target value.
 const identity = ([value]) => value;
-
 const round = (number, precision) => {
   if (Number.isNaN(number)) {
     return number;
@@ -53,15 +52,15 @@ const round = (number, precision) => {
 };
 
 const percent = ([numerator, denominator], precision = 2) => {
-  if (+denominator !== 0) {
+  if (+denominator !== 0 && numerator !== "" && numerator !== null) {
     const division = round((100 * +numerator) / +denominator, precision);
     if (!Number.isNaN(division)) {
       return `${division}%`;
     }
   }
 
-  // Denominator is NaN or 0, or the division operation results in NaN
-  return NaN;
+  // Denominator is NaN or 0, or the division operation results in ""
+  return "";
 };
 
 const rpn = (values, rpnString, precision) => {
@@ -113,7 +112,7 @@ const rpn = (values, rpnString, precision) => {
     }
   }
 
-  return NaN;
+  return "";
 };
 
 /**
@@ -155,11 +154,18 @@ const formula = (targets, providedFormula, precision) => {
     }
   }
 
-  return computedValue;
+  return computedValue !== 0 ? computedValue : "";
 };
 
-// Maaaaaaaath.
-const sum = (values) => values.reduce((acc, value) => acc + +value, 0);
+// If all of the values in the calculation are null or blank, then don't display 0 as the total
+const sum = (values) => {
+  let returnValue = "";
+  const hasNumbers = values.some((value) => value !== null && value !== "");
+  if (hasNumbers) {
+    returnValue = values.reduce((acc, value) => acc + +value, 0);
+  }
+  return returnValue;
+};
 
 const lookupFMAP = (state, fy) => {
   if (state.allStatesData && state.stateUser) {
