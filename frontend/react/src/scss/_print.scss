@@ -1,8 +1,49 @@
+/**
+  * Contains Print media query AND print page
+ */
+
+.print-all {
+  .ds-c-alert,
+  .form-footer,
+  .page-info {
+    display: none;
+  }
+  .print-only {
+    display: block;
+  }
+
+  .screen-only {
+    display: none;
+  }
+
+  .print-all-btn {
+    margin: 2.2rem;
+  }
+
+  .print-directions {
+    border: 1px solid #aaa;
+    border-radius: $border-radius;
+    box-shadow: 2px 3px 4px #aaa;
+    margin: 2.2rem auto;
+    max-width: 90%;
+    text-align: center;
+    width: auto;
+
+    .print-all-btn {
+      margin: 0 2.2rem 1.2rem 2.2rem;
+    }
+  }
+}
+
 @media print {
   .action-buttons,
+  .ds-c-alert,
   .footer,
   .header,
   .nav-buttons,
+  .print-all-btn,
+  .print-directions,
+  .screen-only,
   .sidebar {
     display: none;
   }
@@ -57,5 +98,8 @@
 
   .ly_header {
     margin-bottom: ($margin * 8);
+  }
+  .question {
+    break-inside: avoid;
   }
 }
