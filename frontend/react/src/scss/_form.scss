@@ -243,6 +243,48 @@
 
 .action-buttons {
   clear: both;
+
+  .print-dialogue {
+    border: 1px solid #aaa;
+    border-radius: $border-radius;
+    box-shadow: 2px 3px 4px #aaa;
+    clear: both;
+    display: block;
+    float: right;
+    margin-top: 0;
+    max-width: 360px;
+    padding: 0.6rem;
+    position: relative;
+
+    h4 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .close {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      svg {
+        color: $color-gray-light;
+        &:hover {
+          color: $color-gray;
+        }
+      }
+    }
+
+    .print-options {
+      & > div {
+        display: inline-block;
+        padding: 0 1.2rem;
+        width: auto;
+
+        &:first-of-type {
+          border-right: 1px solid #bbb;
+        }
+      }
+    }
+  }
 }
 
 .autosave {

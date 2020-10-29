@@ -1,113 +1,76 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShareSquare, faPrint } from "@fortawesome/free-solid-svg-icons";
-import { faWindowClose, faCopy } from "@fortawesome/free-regular-svg-icons";
+import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
-class FormActions extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      copyUrl: "https://cartsdemo.cms.gov/l32kksf3isdgf823nsd9",
-      shareShow: false,
-    };
-
-    this.printWindow = this.printWindow.bind(this);
-    this.copyInput = this.copyInput.bind(this);
-    this.toggleShare = this.toggleShare.bind(this);
-  }
-
+const FormActions = () => {
   /**
-   * Toggle state value for showing shareURL box
-   *
-   * @param {Event} event
+   * Print dialogue box
+   * Defaults to false
    */
-  toggleShare(event) {
-    this.setState({
-      shareShow: this.state.shareShow ? false : true,
-    });
-  }
+  const [printShow, setPrintShow] = useState(false);
 
   /**
    * Opens print dialogue for current view
    *
    * @param {Event} event
    */
-  printWindow(event) {
+  const printWindow = (event) => {
     event.preventDefault();
     window.print();
-  }
+  };
 
-  /**
-   * Copy contents from share URL input
-   *
-   */
-  copyInput() {
-    this.shareURL.select();
-    document.execCommand("copy");
-  }
-
-  render() {
-    return (
-      <section className="action-buttons">
-        <div className="print-button">
-          <Button
-            className="ds-c-button--primary ds-c-button--small"
-            onClick={this.printWindow}
-            title="Print"
-          >
-            <FontAwesomeIcon icon={faPrint} /> Print
-          </Button>
-        </div>
-
-        <div className="share-button">
-          <Button
-            className="ds-c-button--primary ds-c-button--small"
-            onClick={this.toggleShare}
-            title="Share"
-          >
-            <FontAwesomeIcon icon={faShareSquare} />
-            Share
-          </Button>
-          <div
-            className={
-              "share-container " + (this.state["shareShow"] ? "active" : "")
-            }
-          >
-            <div className="close">
+  const togglePrintDiaglogue = () => {
+    setPrintShow(!printShow);
+  };
+  return (
+    <section className="action-buttons">
+      <div className="print-button">
+        <Button
+          className="ds-c-button--primary ds-c-button--small"
+          onClick={togglePrintDiaglogue}
+          title="Print"
+        >
+          <FontAwesomeIcon icon={faPrint} /> Print
+        </Button>
+      </div>
+      {printShow ? (
+        <div className="print-dialogue">
+          <div className="close">
+            <Button
+              className="ds-c-button--transparent ds-c-button--small"
+              onClick={togglePrintDiaglogue}
+              title="close"
+            >
+              <FontAwesomeIcon icon={faWindowClose} />
+            </Button>
+          </div>
+          <h4>Print</h4>
+          <div className="print-options">
+            <div className="print-page">
               <Button
-                className="ds-c-button--transparent ds-c-button--small"
-                onClick={this.toggleShare}
-                title="close"
+                className="ds-c-button--primary ds-c-button--small"
+                onClick={printWindow}
+                title="This Section"
               >
-                <FontAwesomeIcon icon={faWindowClose} />
+                <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
             </div>
-            <h4>Share your progress</h4>
-            <div className="form">
-              <form>
-                <input
-                  type="text"
-                  value={this.state.copyUrl}
-                  ref={(shareURL) => (this.shareURL = shareURL)}
-                />
-              </form>
-            </div>
-            <div className="copy">
+            <div className="print-form">
               <Button
-                className="ds-c-button--transparent ds-c-button--small"
-                onClick={this.copyInput}
-                title="Copy to clipboard"
+                className="ds-c-button--primary ds-c-button--small"
+                href="/print?dev=dev-ak"
+                title="Entire Form"
+                target="_blank"
               >
-                <FontAwesomeIcon icon={faCopy} />
+                <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
             </div>
           </div>
         </div>
-      </section>
-    );
-  }
-}
+      ) : null}
+    </section>
+  );
+};
 
 export default FormActions;
