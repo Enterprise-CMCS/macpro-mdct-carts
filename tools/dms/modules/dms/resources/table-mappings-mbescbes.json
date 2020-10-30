@@ -12,8 +12,8 @@
         },
         {
             "rule-type": "selection",
-            "rule-id": "1",
-            "rule-name": "1",
+            "rule-id": "2",
+            "rule-name": "2",
             "object-locator": {
                 "schema-name": "dbo",
                 "table-name": "secUser"
@@ -22,8 +22,8 @@
         },
         {
             "rule-type": "transformation",
-            "rule-id": "2",
-            "rule-name": "2",
+            "rule-id": "3",
+            "rule-name": "3",
             "rule-action": "rename",
             "rule-target": "schema",
             "object-locator": {
@@ -33,8 +33,8 @@
         },
         {
             "rule-type": "transformation",
-            "rule-id": "3",
-            "rule-name": "3",
+            "rule-id": "4",
+            "rule-name": "4",
             "rule-action": "convert-lowercase",
             "rule-target": "table",
             "object-locator": {
