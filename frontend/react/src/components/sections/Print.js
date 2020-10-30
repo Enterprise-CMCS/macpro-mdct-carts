@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { connect, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -10,40 +10,41 @@ import {
   loadSections,
 } from "../../actions/initial";
 import Section from "../layout/Section";
+import {useOktaAuth} from "@okta/okta-react";
 
 const printWindow = (event) => {
   event.preventDefault();
   window.print();
 };
 
-const Print = (props) => {
+const Print = ({currentUser, myState}) => {
   const dispatch = useDispatch();
-
-  useEffect(async () => {
+let n =0;
+  useEffect(() => {
     // Get user details
-    const { stateUser } = props.state;
+    const { stateUser } = myState;
     const stateCode = stateUser.abbr;
-
+let a = 0;
     // Start Spinner
     dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
     // Pull data based on user details
-    await Promise.all([
-      dispatch(loadSections({ userData: stateUser, stateCode })),
-      dispatch(getStateStatus({ stateCode })),
-      dispatch(getAllStatesData()),
+    Promise.all([
+      dispatch(loadSections({ userData: currentUser, stateCode })),
+      // dispatch(getStateStatus({ stateCode })),
+      // dispatch(getAllStatesData()),
     ]);
 
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
-  }, []);
+  }, [currentUser]);
 
   const sections = [];
 
   // Check if formData has values
-  const { state } = props;
-  const { formData } = state;
-
+  const { state } = myState;
+  const { formData } = myState;
+let a =0;
   if (formData !== undefined && formData.length !== 0) {
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
@@ -99,11 +100,12 @@ const Print = (props) => {
 
 Print.propTypes = {
   state: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  username: state.stateUser.currentUser.username,
-  state,
+  currentUser: state.stateUser,
+  myState: state,
 });
 
 export default connect(mapStateToProps)(Print);
