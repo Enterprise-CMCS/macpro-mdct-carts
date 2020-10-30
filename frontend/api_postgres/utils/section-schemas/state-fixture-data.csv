@@ -1,7 +1,7 @@
 State abbreviation,State,Type,Program Names,Contact,Title,Email,Address,Phone
 AL,Alabama,combo,All,Alabamian Name,Alabamian Contact,contact@alabama.gov,Some Alabama address,Some Alabama phone number
 AK,Alaska,medicaid_exp_chip,"All, Denali KidCare",Alaskan Name,Alaskan Deathless Functionary,contact@alaska.gov,Some Alaska address,Some Alaska phone number
-AZ,Arizona,separate_chip,"All, Arizona",Arizonan Name,Immortal Arizonan of the East Wind,contact@arizona.gov,Some Arizona address,Some Arizona phone number
+AZ,Arizona,combo,"All, Arizona",Arizonan Name,Immortal Arizonan of the East Wind,contact@arizona.gov,Some Arizona address,Some Arizona phone number
 AR,Arkansas,combo,All,Arkansan Name,Arkansan Contact,contact@arkansas.gov,Some Arkansas address,Some Arkansas phone number
 CA,California,combo,All,Californian Name,Californian Contact,contact@california.gov,Some California address,Some California phone number
 CO,Colorado,combo,All,Coloradan Name,Coloradan Contact,contact@colorado.gov,Some Colorado address,Some Colorado phone number
