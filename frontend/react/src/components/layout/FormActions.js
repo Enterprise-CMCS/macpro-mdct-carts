@@ -98,7 +98,7 @@ const FormActions = () => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href="/print?dev=dev-ak"
+                href="/print"
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDiaglogue}
