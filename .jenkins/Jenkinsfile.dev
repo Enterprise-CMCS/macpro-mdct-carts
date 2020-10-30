@@ -14,6 +14,9 @@ pipeline {
   environment {
     BUILD_TAG = resolveBuildTag()
     VPC_NAME = "macpro-dev"
+    OIDC_CLIENT_ID = "0oa4juv4poiQ6nDB6297"
+    OIDC_ISSUER = "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
+    TF_VAR_openid_discovery_url = "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
   }
   stages {
     stage("Prep Agent") {
