@@ -16,19 +16,11 @@ const inputs = new Map([
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
   const [rangeError, setRangeError] = useState("");
-  const [startQuestion, setStartQuestion] = useState({});
-  const [endQuestion, setEndQuestion] = useState({});
 
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
   }
-
-  // useEffect(() => {
-
-  //   setStartQuestion(startQuestionObject)
-  //   setEndQuestion(endQuestionObject)
-  // }, [num]);
 
   const startQuestionObject = {
     id: `${id}-row-${row}-${index}-start`,
@@ -44,6 +36,14 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
+  const [startQuestion, setStartQuestion] = useState(startQuestionObject);
+  const [endQuestion, setEndQuestion] = useState(endQuestionObject);
+
+  useEffect(() => {
+    setStartQuestion(startQuestionObject);
+    setEndQuestion(endQuestionObject);
+  }, [values]);
+
   const validateInequality = () => {
     if (values.length === 2) {
       const start = parseInt(values[0], 10);
@@ -51,6 +51,9 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
 
       if (start > end) {
         setRangeError("Start value must be less than end value");
+        // reset both values in redux
+        onChange(row, index, 0, "");
+        onChange(row, index, 1, "");
       } else {
         setRangeError("");
       }
@@ -60,7 +63,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   // Any more ideas??
   // Make it stateful?? Issue: state needs to be as updated as possible,
   // make sure it never gets stale
-  // Use effect!
+  // Use effect
 
   // Plan Z:
   // If theres an error, go into redux and change all values to null
