@@ -2,9 +2,21 @@
 // from all objectives & goals, stopping at the underscore
 
 const sliceId = (id) => {
-  let idString = id.toString();
-  let num = idString.slice(idString.indexOf("_", idString.length - 1));
+  const idString = id.toString();
+  const num = idString.slice(idString.indexOf("_", idString.length - 1));
   return num;
 };
 
-export { sliceId };
+// Set pageDisable based on location
+// hide for print page
+const showQuestionByPath = (path) => {
+  let pageDisable = false;
+
+  if (path === "/print") {
+    pageDisable = true;
+  }
+
+  return pageDisable;
+};
+
+export { sliceId, showQuestionByPath };
