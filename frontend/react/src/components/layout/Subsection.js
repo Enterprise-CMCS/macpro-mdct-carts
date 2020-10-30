@@ -8,7 +8,7 @@ import Text from "./Text";
 const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
     <div id={subsectionId}>
-      <h2>{title}</h2>
+      <h2 className="screen-only">{title}</h2>
       {text ? (
         <div className="helper-text">
           <Text>{text}</Text>
