@@ -4,46 +4,54 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
-import {
-  getAllStatesData,
-  getStateStatus,
-  loadSections,
-} from "../../actions/initial";
+import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 
+// Print page
 const printWindow = (event) => {
   event.preventDefault();
   window.print();
 };
 
-const Print = (props) => {
+/**
+ * Generate data and load entire form based on user information
+ *
+ * @param currentUser
+ * @param state
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Print = ({ currentUser, state }) => {
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    // Get user details
-    const { stateUser } = props.state;
-    const stateCode = stateUser.abbr;
+  // Load formData via side effect
+  useEffect(() => {
+    // Create function to call data to prevent return data from useEffect
+    const retrieveUserData = async () => {
+      // Get user details
+      const { stateUser } = state;
+      const stateCode = stateUser.abbr;
 
-    // Start Spinner
-    dispatch({ type: "CONTENT_FETCHING_STARTED" });
+      // Start Spinner
+      dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
-    // Pull data based on user details
-    await Promise.all([
-      dispatch(loadSections({ userData: stateUser, stateCode })),
-      dispatch(getStateStatus({ stateCode })),
-      dispatch(getAllStatesData()),
-    ]);
+      // Pull data based on user details
+      await Promise.all([
+        dispatch(loadSections({ userData: currentUser, stateCode })),
+      ]);
 
-    // End isFetching for spinner
-    dispatch({ type: "CONTENT_FETCHING_FINISHED" });
-  }, []);
+      // End isFetching for spinner
+      dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+    };
+
+    // Call async function to load data
+    retrieveUserData();
+  }, [currentUser]);
 
   const sections = [];
 
   // Check if formData has values
-  const { state } = props;
   const { formData } = state;
-
   if (formData !== undefined && formData.length !== 0) {
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
@@ -99,10 +107,11 @@ const Print = (props) => {
 
 Print.propTypes = {
   state: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  username: state.stateUser.currentUser.username,
+  currentUser: state.stateUser,
   state,
 });
 
