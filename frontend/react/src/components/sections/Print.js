@@ -17,26 +17,33 @@ const printWindow = (event) => {
   window.print();
 };
 
+
+
 const Print = ({currentUser, myState}) => {
   const dispatch = useDispatch();
 let n =0;
-  useEffect(() => {
-    // Get user details
-    const { stateUser } = myState;
-    const stateCode = stateUser.abbr;
-let a = 0;
-    // Start Spinner
-    dispatch({ type: "CONTENT_FETCHING_STARTED" });
+  useEffect( () => {
 
-    // Pull data based on user details
-    Promise.all([
-      dispatch(loadSections({ userData: currentUser, stateCode })),
-      // dispatch(getStateStatus({ stateCode })),
-      // dispatch(getAllStatesData()),
-    ]);
+    const retrieveUserData = async (myState, currentUser, dispatch) => {
+      // Get user details
+      const { stateUser } = myState;
+      const stateCode = stateUser.abbr;
+      let a = 0;
+      // Start Spinner
+      dispatch({ type: "CONTENT_FETCHING_STARTED" });
+      let b = 0;
+      // Pull data based on user details
+      await Promise.all([
+        dispatch(loadSections({ userData: currentUser, stateCode })),
+        // dispatch(getStateStatus({ stateCode })),
+        // dispatch(getAllStatesData()),
+      ]);
 
-    // End isFetching for spinner
-    dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+      // End isFetching for spinner
+      dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+    }
+
+    retrieveUserData(myState, currentUser, dispatch)
   }, [currentUser]);
 
   const sections = [];
