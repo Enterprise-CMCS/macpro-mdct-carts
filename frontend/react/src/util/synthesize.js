@@ -208,9 +208,8 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
     // If acs exists, return the value from the object
     if (acs) {
       returnValue = Number(`${acs[acsProperty]}`).toLocaleString();
-      if (acsProperty.includes("percent"))
-      {
-        returnValue = returnValue + "%"
+      if (acsProperty.includes("percent")) {
+        returnValue += "%";
       }
     }
   }
@@ -254,9 +253,11 @@ const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
       const tempEnd = parseFloat(endACS[acsProperty]);
 
       // Calculate the percent change
-      returnValue = parseFloat(
-        ((tempEnd - tempStart) / tempStart) * 100
-      ).toFixed(percentagePrecision).toLocaleString() + "%";
+
+      returnValue = // eslint-disable-next-line
+        parseFloat(((tempEnd - tempStart) / tempStart) * 100)
+          .toFixed(percentagePrecision)
+          .toLocaleString() + "%";
     }
   }
   return returnValue;
