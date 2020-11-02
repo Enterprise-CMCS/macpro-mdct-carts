@@ -85,16 +85,16 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
       if(variations[i].row === "*") {
         rowValue = "*"
       } else {
-        rowValue = parseInt(variations[i].row, 10)
+        rowValue = parseFloat(variations[i].row, 10)
       }
       /* eslint-disable no-plusplus */
       if( rowValue === "*" || rowValue === j) {
 
         // get row key
-        const rowKey = parseInt(variations[i].row_key, 10);
-        const threshold = parseInt(variations[i].threshold, 10);
-        const comparisonValue = parseInt(computedValue[j][rowKey], 10);
-let a =0;
+        const rowKey = parseFloat(variations[i].row_key, 10);
+        const threshold = parseFloat(variations[i].threshold, 10);
+        const comparisonValue = parseFloat(computedValue[j][rowKey], 10);
+
         // Check if threshold is met
         switch(variations[i].operator) {
           case "<":
