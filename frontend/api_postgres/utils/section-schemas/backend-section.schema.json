@@ -639,7 +639,13 @@
                   }
                 }
               },
-              "required": ["threshold", "operator", "computed", "row", "row_key"]
+              "required": [
+                "threshold",
+                "operator",
+                "computed",
+                "row",
+                "row_key"
+              ]
             }
           },
           "required": ["target", "variation_operator", "variations"]
