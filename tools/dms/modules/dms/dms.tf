@@ -114,6 +114,27 @@ resource "aws_dms_endpoint" "source-seds" {
   }
 }
 
+resource "aws_dms_endpoint" "source-mbescbes" {
+  endpoint_id                 = "dms-source-endpoint-${var.application}-${terraform.workspace}-mbescbes"
+  endpoint_type               = "source"
+  engine_name                 = "sqlserver"
+  extra_connection_attributes = ""
+  server_name                 = var.source_database_host
+  database_name               = var.source_database_name_mbescbes
+  username                    = var.source_database_username
+  password                    = var.source_database_password
+  port                        = var.source_database_port
+  ssl_mode                    = "none"
+
+  tags = {
+    Name        = "${var.team_name} Source Endpoint"
+    Description = "Managed by Terraform"
+    Application = var.application
+    Owner       = var.team_name
+    Env         = var.environment-name
+  }
+}
+
 # Create a new target endpoint
 resource "aws_dms_endpoint" "target" {
   endpoint_id                 = "dms-target-endpoint-${var.application}-${terraform.workspace}"
@@ -142,6 +163,10 @@ data "local_file" "replication-table-mappings-carts" {
 
 data "local_file" "replication-table-mappings-seds" {
   filename = "${path.module}/resources/table-mappings-seds.json"
+}
+
+data "local_file" "replication-table-mappings-mbescbes" {
+  filename = "${path.module}/resources/table-mappings-mbescbes.json"
 }
 
 data "local_file" "replication-tasks-settings" {
@@ -179,6 +204,27 @@ resource "aws_dms_replication_task" "replication-task-seds" {
   target_endpoint_arn = aws_dms_endpoint.target.endpoint_arn
 
   table_mappings            = data.local_file.replication-table-mappings-seds.content
+  replication_task_settings = data.local_file.replication-tasks-settings.content
+
+  tags = {
+    Name        = "${var.team_name} Replication Task"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+
+# Create a new replication task
+resource "aws_dms_replication_task" "replication-task-mbescbes" {
+  migration_type           = "full-load"
+  replication_instance_arn = aws_dms_replication_instance.replication-instance.replication_instance_arn
+  replication_task_id      = "dms-replication-task-${var.application}-${terraform.workspace}-mbescbes"
+
+  source_endpoint_arn = aws_dms_endpoint.source-mbescbes.endpoint_arn
+  target_endpoint_arn = aws_dms_endpoint.target.endpoint_arn
+
+  table_mappings            = data.local_file.replication-table-mappings-mbescbes.content
   replication_task_settings = data.local_file.replication-tasks-settings.content
 
   tags = {

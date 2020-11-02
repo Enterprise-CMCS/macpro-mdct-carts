@@ -26,6 +26,7 @@ services:
       - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
+      - DJANGO_SETTINGS_MODULE=carts.settings_prod
 networks:
   data_net:
     external: true
