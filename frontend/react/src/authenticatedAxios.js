@@ -11,6 +11,10 @@ export const setToken = (token) => {
       config.headers.Authorization = `Bearer ${token}`;
     }
     config.url += forwardedQueryString();
+
+    /* eslint-disable-line */
+    console.log("!+++++++++++++AXIOS CONFIG:", config);
+
     return config;
   });
 };
