@@ -44,6 +44,7 @@ services:
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
       - OPENID_DISCOVERY_URL=https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration
+      - DJANGO_SETTINGS_MODULE=carts.settings
     volumes:
       - ./api_postgres/:/usr/src/app/
 networks:
