@@ -165,6 +165,10 @@ data "local_file" "replication-table-mappings-seds" {
   filename = "${path.module}/resources/table-mappings-seds.json"
 }
 
+data "local_file" "replication-table-mappings-mbescbes" {
+  filename = "${path.module}/resources/table-mappings-mbescbes.json"
+}
+
 data "local_file" "replication-tasks-settings" {
   filename = "${path.module}/resources/settings.json"
 }
