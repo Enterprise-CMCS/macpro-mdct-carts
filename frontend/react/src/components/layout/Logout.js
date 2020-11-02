@@ -34,10 +34,3 @@ const Logout = () => {
 };
 
 export default Logout;
-
-// return (
-//   <a onClick={logout}>
-//     <FontAwesomeIcon icon={faSignOutAlt} />
-//     Log out
-//   </a>
-// );

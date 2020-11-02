@@ -32,7 +32,7 @@ class Header extends Component {
 
   render() {
     const { currentUser } = this.props;
-    const { username, email } = currentUser;
+    const { email } = currentUser;
 
     return (
       <div className="header" data-test="component-header">
@@ -81,7 +81,6 @@ class Header extends Component {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  username: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
