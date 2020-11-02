@@ -10,6 +10,7 @@ module "dms_prod" {
   environment-name         = "prod"
   source_database_name_carts  = "SCHIPAnnualReports"
   source_database_name_seds  = "SCHIP"
+  source_database_name_mbescbes = "MBESCBES"
   source_database_username = "mbescbes"
   source_database_password = "${var.source_database_password}"
   source_database_host     = "${var.source_database_host}"
