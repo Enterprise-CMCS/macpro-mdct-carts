@@ -3,6 +3,8 @@ import forwardedQueryString from "./util/devQueryString";
 
 const authenticatedAxios = Axios.create({
   baseURL: window.env.API_POSTGRES_URL,
+  xsrfHeaderName: "X-CSRFTOKEN",
+  xsrfCookieName: "csrftoken",
 });
 
 export const setToken = (token) => {
