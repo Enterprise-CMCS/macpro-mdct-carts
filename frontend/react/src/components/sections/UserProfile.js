@@ -26,24 +26,6 @@ const UserProfile = ({ currentUser }) => {
               <div>{currentUser.email}</div>
             </div>
             <div>
-              <div>State: </div>
-              <div>
-                {
-                  // Check if state is an array. If so display all of them else display state object
-
-                  Array.isArray(currentUser.state) ? (
-                    <ul>
-                      {currentUser.state.map((object) => (
-                        <li>{object.name}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    currentUser.state.name
-                  )
-                }
-              </div>
-            </div>
-            <div>
               <div>Role: </div>
               <div>{currentUser.role}</div>
             </div>
