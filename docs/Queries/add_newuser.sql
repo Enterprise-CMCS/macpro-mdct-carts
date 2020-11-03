@@ -11,7 +11,7 @@ values ('', false, (select eua from newuser), false, true)
 ;
 
 --Add the user to carts_api_appuser
-insert into public.carts_api_user (state_id, role, user_id)
+insert into public.carts_api_appuser (state_id, role, user_id)
 values ((select states from newuser), (select roles from newuser), (select id from public.auth_user where username = (select eua from newuser)))
 ;
 
