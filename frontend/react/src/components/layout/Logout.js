@@ -1,6 +1,8 @@
 import React from "react";
 import { useOktaAuth } from "@okta/okta-react";
 import { Button } from "@cmsgov/design-system-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import config from "../../auth-config";
 
 const redirectUri = `${window.location.origin}`;
@@ -23,6 +25,7 @@ const Logout = () => {
 
     return (
       <Button type="button" inversed variation="transparent" onClick={logout}>
+        <FontAwesomeIcon icon={faSignOutAlt} />
         Log out
       </Button>
     );
