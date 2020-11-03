@@ -21,7 +21,13 @@ A PR must be reviewed and approved by someone other than the submitter. When the
 The user info comes from Okta/EUA, and that info doesn't include user roles in this application or what state(s) a user is associated with.
 
 On the frontend, `/state_assoc`, `/role_user_assoc`, and `/role_jobcode_assoc` allow for uploading CSVs that can associate states to usernames, roles to usernames, and roles to job codes.
-To associate users to states, the most convenient process is most likely:
+
+For the initial set up of users in PROD, as a result of limited user management capabilities, role associations and the initial user base will need to be imported from csv files. The following csv files from the docs folder should be imported to the public database:
+1. role_jobcode_assoc.csv should be imported to public.carts_api_rolesfromjobcode
+2. user_role_assoc.csv should be imported to public.carts_api_rolefromusername
+3. user_state_assoc.csv should be imported to public.carts_api_statesfromusername
+
+To associate users to states, the most convenient process is most likely: (this is currently not operational)
 
 1. Assign `state_user` to a job code via `/role_jobcode_assoc` (don't use `CARTS_Group_Dev` for this, though).
 2. Assign a user who has whatever job code you associated with `state_user` in step one to `state_user` in `/role_user_assoc` using their EUA ID as their username.
