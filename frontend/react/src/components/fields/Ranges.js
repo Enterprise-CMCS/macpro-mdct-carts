@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,6 +39,9 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   const [startQuestion, setStartQuestion] = useState(startQuestionObject);
   const [endQuestion, setEndQuestion] = useState(endQuestionObject);
 
+  let rangeStart = useRef();
+  let rangeEnd = useRef();
+
   useEffect(() => {
     setStartQuestion(startQuestionObject);
     setEndQuestion(endQuestionObject);
@@ -52,8 +55,8 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
       if (start > end) {
         setRangeError("Start value must be less than end value");
         // reset both values in redux
-        onChange(row, index, 0, "");
-        onChange(row, index, 1, "");
+        // onChange(row, index, 0, "");
+        // onChange(row, index, 1, "");
       } else {
         setRangeError("");
       }
@@ -69,11 +72,28 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   // If theres an error, go into redux and change all values to null
 
   const changeStart = ({ target: { value } }) => {
+    // call some validation function
+    chronologyValidation();
+    // check that both values are present
     onChange(row, index, 0, value);
   };
 
   const changeEnd = ({ target: { value } }) => {
+    // call some validation function
+    chronologyValidation();
+    // check that both values are present
     onChange(row, index, 1, value);
+  };
+
+  const chronologyValidation = () => {
+    console.log("Range start??", rangeStart);
+    console.log("Range end??", rangeEnd);
+
+    // Are both values present ?
+    // Are they in the right order?
+    // return true
+
+    // return false
   };
 
   return (
@@ -83,6 +103,11 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
             <Input
+              // ref={rangeStart}
+              ref={(input) => {
+                console.log("INPUT???", input);
+                rangeStart = input;
+              }}
               id={`${id}-${row}-${index}-0`}
               label={category[0]}
               className="cmsrange-input"
@@ -96,6 +121,10 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
           </div>
           <div className="cmsrange-container cmsrange-end">
             <Input
+              // ref={rangeEnd}
+              ref={(input) => {
+                rangeEnd = input;
+              }}
               id={`${id}-${row}-${index}-1`}
               label={category[1]}
               className="cmsrange-input"
