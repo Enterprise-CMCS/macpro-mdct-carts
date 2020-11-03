@@ -8,6 +8,7 @@ import { certifyAndSubmit } from "../../actions/certify";
 
 import PageInfo from "./PageInfo";
 import { selectIsFormEditable } from "../../store/selectors";
+import FormActions from "./FormActions";
 
 const Submit = ({ certify }) => (
   <>
@@ -76,6 +77,7 @@ const CertifyAndSubmit = ({
           <Submit certify={certify} />
         )}
       </div>
+      <FormActions />
     </div>
   );
 };
