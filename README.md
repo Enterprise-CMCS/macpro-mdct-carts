@@ -23,6 +23,7 @@ The user info comes from Okta/EUA, and that info doesn't include user roles in t
 On the frontend, `/state_assoc`, `/role_user_assoc`, and `/role_jobcode_assoc` allow for uploading CSVs that can associate states to usernames, roles to usernames, and roles to job codes.
 
 For the initial set up of users in PROD, as a result of limited user management capabilities, role associations and the initial user base will need to be imported from csv files. The following csv files from the docs folder should be imported to the public database:
+
 1. role_jobcode_assoc.csv should be imported to public.carts_api_rolesfromjobcode
 2. user_role_assoc.csv should be imported to public.carts_api_rolefromusername
 3. user_state_assoc.csv should be imported to public.carts_api_statesfromusername
@@ -54,25 +55,27 @@ To associate users to states, the most convenient process is most likely: (this 
    1. `cd cms-carts-seds`
 2. Navigate to the 'frontend' subfolder
    1. `cd frontend`
-   2.  `docker network create data_net` (should only be necessary on first build)`
+   2. `docker network create data_net` (should only be necessary on first build)`
 3. Run `docker-compose -f docker-compose.dev.yml down`
 4. Run `docker-compose -f docker-compose.dev.yml up --build`
 5. In another terminal window:
    1. ~~(Should no longer be necessary For Linux: run `local-additional.sh`)~~
    2. For Windows: run `docker-compose -f docker-compose.dev.yml run api_postgres sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py generate_fixtures"`
 6. Available Endpoints:
-    - `/api/v1/sections/<int:year>/<str:state>`: all the sections for a year and state, e.g. `/api/v1/sections/2020/ak`.
-    - `/api/v1/sections/<int:year>/<str:state>/<int:section>`: the section for that year and state, e.g. `/api/v1/sections/2020/ak/1`.
-    - `/api/v1/sections/<int:year>/<str:state>/<int:section>/<str:subsection>`: the subsection for that year and state, e.g. `/api/v1/sections/2020/az/3/c`.
-    - `/api/v1/questions/<str:state>/<slug:id>`: e.g. `/api/v1/questions/ma/2020-03-c-01-01`.
-    - `/api/v1/generic-sections/<int:year>`: all the default sections for a year e.g. `/api/v1/generic-sections/2020`.
-    - `/api/v1/generic-sections/<int:year>/<int:section>`: the default section for that year e.g. `/api/v1/generic-sections/2020/1`.
-    - `/api/v1/generic-sections/<int:year>/<int:section>/<str:subsection>`: the default subsection for that year e.g. `/api/v1/generic-sections/2020/1/a`.
-    - `/api/v1/generic-questions/<slug:id>`: the default corresponding question, e.g. `/api/v1/generic-questions/2020-01-a-01`.
 
-    Currently only Sections 1, 2, 3 (incomplete) and 5 are available, and only mock data for AK, AZ, and MA is available.
+   - `/api/v1/sections/<int:year>/<str:state>`: all the sections for a year and state, e.g. `/api/v1/sections/2020/ak`.
+   - `/api/v1/sections/<int:year>/<str:state>/<int:section>`: the section for that year and state, e.g. `/api/v1/sections/2020/ak/1`.
+   - `/api/v1/sections/<int:year>/<str:state>/<int:section>/<str:subsection>`: the subsection for that year and state, e.g. `/api/v1/sections/2020/az/3/c`.
+   - `/api/v1/questions/<str:state>/<slug:id>`: e.g. `/api/v1/questions/ma/2020-03-c-01-01`.
+   - `/api/v1/generic-sections/<int:year>`: all the default sections for a year e.g. `/api/v1/generic-sections/2020`.
+   - `/api/v1/generic-sections/<int:year>/<int:section>`: the default section for that year e.g. `/api/v1/generic-sections/2020/1`.
+   - `/api/v1/generic-sections/<int:year>/<int:section>/<str:subsection>`: the default subsection for that year e.g. `/api/v1/generic-sections/2020/1/a`.
+   - `/api/v1/generic-questions/<slug:id>`: the default corresponding question, e.g. `/api/v1/generic-questions/2020-01-a-01`.
 
-    Append `?format=json` to the URLs to get bare JSON.
+   Currently only Sections 1, 2, 3 (incomplete) and 5 are available, and only mock data for AK, AZ, and MA is available.
+
+   Append `?format=json` to the URLs to get bare JSON.
+
 7. Available Routes:
    - `/sections/:year/:sectionOrdinal/:subsectionMarker` e.g. `http://localhost:81/sections/2020/3/c`
    - `/sections/:year/:sectionOrdinal/` e.g. `http://localhost:81/sections/2020/3`
