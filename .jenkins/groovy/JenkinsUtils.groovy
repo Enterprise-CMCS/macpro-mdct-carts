@@ -33,7 +33,16 @@ void fetchEcrScanResult(String repositoryName, String tag) {
 void loginToEcr() {
   sh """
     set +x
-    eval \$(aws ecr get-login --region us-east-1 --no-include-email) > /dev/null 2>&1
+    # Check the aws cli version
+    if aws --version | grep aws-cli/2 ; then
+      aws ecr get-login-password \
+        --region us-east-1 \
+      | docker login \
+        --username AWS \
+        --password-stdin `aws sts get-caller-identity | jq -r .Account`.dkr.ecr.us-east-1.amazonaws.com
+    else
+      eval \$(aws ecr get-login --region us-east-1 --no-include-email)
+    fi
     set -x
   """
 }
