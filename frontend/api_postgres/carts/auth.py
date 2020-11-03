@@ -45,12 +45,18 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _do_authenticate(self, token):
         try:
+            sys.stdout.write('\n\n\n extracting kid  \n\n\n') ; sys.stdout.flush()
             kid = extract_kid(token)
+            sys.stdout.write('\n\n\n fetching pub key  \n\n\n') ; sys.stdout.flush()
             key = fetch_pub_key(kid)
+            sys.stdout.write('\n\n\n verifying token  \n\n\n') ; sys.stdout.flush()
             verify_token(token, key)
 
+            sys.stdout.write('\n\n\n fetching user info  \n\n\n') ; sys.stdout.flush()
             user_info = fetch_user_info(token)
+            sys.stdout.write('\n\n\n fetching user  \n\n\n') ; sys.stdout.flush()
             user = _get_or_create_user(user_info)
+            sys.stdout.write('\n\n\n !!!!!!!!!!!AUTHENTICATION DONE!!!!!!!!!!!  \n\n\n') ; sys.stdout.flush()
 
             return (user, None)
         except Exception:
