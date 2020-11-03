@@ -18,6 +18,22 @@
   margin: 1.2rem 0;
 }
 
+.synthesized-table,
+.non-interactive-table {
+  table {
+    thead {
+      th {
+        background: #ddd;
+      }
+    }
+    tbody {
+      td {
+        background: #efefef;
+      }
+    }
+  }
+}
+
 .form-options {
   margin: ($padding * 3) 0;
 
