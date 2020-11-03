@@ -37,6 +37,10 @@ variable "source_database_name_seds" {
   description = "Name of source database (psql -d)"
 }
 
+variable "source_database_name_mbescbes" {
+  description = "Name of source database (psql -d)"
+}
+
 variable "source_database_username" {
   description = "username in source database (psql -U)"
 }

@@ -26,7 +26,7 @@ services:
       - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
-      - S3_UPLOADS_BUCKET_NAME=placeholder # I don't know how you want to handle this for local dev.  placeholder for now
+      - DJANGO_SETTINGS_MODULE=carts.settings_prod
 networks:
   data_net:
     external: true
