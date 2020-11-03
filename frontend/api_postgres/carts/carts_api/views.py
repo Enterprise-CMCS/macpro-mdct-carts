@@ -9,7 +9,7 @@ from typing import (
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
-from django.http import HttpResponse  # type: ignore
+from django.http import HttpResponse, JsonResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from django.utils import timezone  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
@@ -62,6 +62,7 @@ from carts.carts_api.models import (
 )
 from carts.carts_api.model_utils import validate_status_change
 
+from django.views.decorators.csrf import csrf_exempt
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -559,7 +560,6 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
     queryset = SectionSchema.objects.all()
     serializer_class = SectionSchemaSerializer
 
-
 def report(request, year=None, state=None):
     assert year
     assert state
@@ -577,6 +577,23 @@ def report(request, year=None, state=None):
     report_template = get_template("report.html")
     return HttpResponse(report_template.render(context=context))
 
+@csrf_exempt
+def report_json(request, year=None, state=None):
+    assert year
+    assert state
+    sections = Section.objects.filter(
+        contents__section__year=year, contents__section__state=state.upper()
+    )
+    ordered = sorted(
+        [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+    )
+    context = {
+        "sections": ordered,
+        "state": STATE_INFO[state.upper()],
+        "l": len(ordered),
+    }
+
+    return JsonResponse(context)
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
