@@ -560,6 +560,7 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
     queryset = SectionSchema.objects.all()
     serializer_class = SectionSchemaSerializer
 
+
 @csrf_exempt
 def report(request, year=None, state=None):
     assert year
@@ -576,9 +577,10 @@ def report(request, year=None, state=None):
         "l": len(ordered),
     }
     report_template = get_template("report.html")
-    if request.content_type == 'application/json':
+    if request.content_type == "application/json":
         return JsonResponse(context)
     return HttpResponse(report_template.render(context=context))
+
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
