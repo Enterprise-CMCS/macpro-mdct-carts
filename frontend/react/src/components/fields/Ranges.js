@@ -17,11 +17,14 @@ const inputs = new Map([
 const Range = ({ category, id, index, onChange, row, type, values }) => {
   const [rangeError, setRangeError] = useState("");
 
+  // This choses the appropriate mask for the <Input/>, Month, Percentage or Text
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
   }
 
+  // Extract start value from redux's nested array, passed down from <Ranges/>
+  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
   const startQuestionObject = {
     id: `${id}-row-${row}-${index}-start`,
     answer: {
@@ -29,6 +32,8 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
+  // Extract start value from redux's nested array, passed down from <Ranges/>
+  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
   const endQuestionObject = {
     id: `${id}-row-${row}-${index}-end`,
     answer: {
@@ -36,17 +41,23 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
+  // Set both the start value object and the end value objects to STATE
   const [startQuestion, setStartQuestion] = useState(startQuestionObject);
   const [endQuestion, setEndQuestion] = useState(endQuestionObject);
 
-  let rangeStart = useRef();
-  let rangeEnd = useRef();
-
+  // This will update both the start and end objects in STATE when the value from redux is changed
   useEffect(() => {
     setStartQuestion(startQuestionObject);
     setEndQuestion(endQuestionObject);
   }, [values]);
 
+  // Create input references for both the start and end input fields
+  let rangeStart = useRef();
+  let rangeEnd = useRef();
+
+  // This helper function checks that both values are present from REDUX and validates them
+  // This helper function sets a validation error on the UI but currently does nothing to prevent...
+  // ... invalid data from reaching REDUX
   const validateInequality = () => {
     if (values.length === 2) {
       const start = parseInt(values[0], 10);
@@ -54,13 +65,38 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
 
       if (start > end) {
         setRangeError("Start value must be less than end value");
-        // reset both values in redux
-        // onChange(row, index, 0, "");
-        // onChange(row, index, 1, "");
       } else {
         setRangeError("");
       }
     }
+  };
+
+  // This function returns a boolean after confirming chronology
+  // This function is truggered before either input field sends data to REDUX
+  const chronologyValidation = () => {
+    console.log("Range start??", rangeStart);
+    console.log("Range end??", rangeEnd);
+
+    // PSEUODOCODE:
+    // -- Are both values present ?
+    // ---- Are they in the right order?
+    // ------ return true
+
+    // -- return false
+  };
+
+  // This function is triggered by the first input onChange
+  const changeStart = ({ target: { value } }) => {
+    chronologyValidation(); // call some validation function
+
+    onChange(row, index, 0, value); // Sends data to redux
+  };
+
+  // This function is triggered by the second input onChange
+  const changeEnd = ({ target: { value } }) => {
+    chronologyValidation(); // call some validation function
+
+    onChange(row, index, 1, value); // Sends data to redux
   };
 
   // Any more ideas??
@@ -71,31 +107,6 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   // Plan Z:
   // If theres an error, go into redux and change all values to null
 
-  const changeStart = ({ target: { value } }) => {
-    // call some validation function
-    chronologyValidation();
-    // check that both values are present
-    onChange(row, index, 0, value);
-  };
-
-  const changeEnd = ({ target: { value } }) => {
-    // call some validation function
-    chronologyValidation();
-    // check that both values are present
-    onChange(row, index, 1, value);
-  };
-
-  const chronologyValidation = () => {
-    console.log("Range start??", rangeStart);
-    console.log("Range end??", rangeEnd);
-
-    // Are both values present ?
-    // Are they in the right order?
-    // return true
-
-    // return false
-  };
-
   return (
     <div className="cmsrange">
       <div className="cmsrange-outer ds-l-container">
@@ -105,7 +116,6 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
             <Input
               // ref={rangeStart}
               ref={(input) => {
-                console.log("INPUT???", input);
                 rangeStart = input;
               }}
               id={`${id}-${row}-${index}-0`}
@@ -160,16 +170,28 @@ const Ranges = ({ onChange, question }) => {
     },
   } = question;
 
+  // DELETE:
+  // Example entry
+  //     "entry": [
+  //     [["21", "40"], ["30", "50"]],
+  //     [["41", "60"], ["60", "80"]],
+  // ]
+
+  // If there is a saved "entry" in redux, save as the variable "values"
   const [values, setValues] = useState(() => {
     if (Array.isArray(entry)) {
       return entry;
     }
 
+    // TODO: Document what min and max mean and do
     const numberToCreate = min > 0 ? min : 1;
     return [...Array(numberToCreate)].map(() =>
       categories.map(() => [null, null])
     );
   });
+
+  // This function is triggered in <Range/> onChange
+  // This function takes in input and places it where it should be in the nested entry array
 
   const rowChange = (row, category, index, value) => {
     values[row][category][index] = value;
