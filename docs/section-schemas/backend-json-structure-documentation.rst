@@ -1188,7 +1188,18 @@ Endpoints
 
 ``reports``
 ++++++++++++++
-Path: report/<int:year>/<str:state>/
+Path: /report/states/<int:year>/<str:state>/
+    year: use 4-digit year (ex. 2020)
+    state: use 2-char state abbreviation (ex. MD)
 Verbs: POST, GET
+Returns: A single state set of questions with entries, state status, program type
 
-This endpoint returns a full state report with all questions from all sections. Additionally, this endpoint is not bound by csrf/xsrf protections. Instead, it is publicly available and can return an html response (default) or a JSON response when passed the header [{"key":"Content-Type","value":"application/json","description":""}]
+Path: /report/states/<int:year>/
+    year: use 4-digit year (ex. 2020)
+Verbs: POST, GET
+Returns: All states and territories sets of questions with entries, state name, state abbreviation, program type
+
+Path: /report/states/status/<int:year>/
+    year: use 4-digit year (ex. 2020)
+Verbs: POST, GET
+Returns: All states and territories sets of state abbreviation, year, status, last changed
