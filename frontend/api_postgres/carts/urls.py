@@ -68,6 +68,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     path("report/<int:year>/<str:state>/", views.report),
+    path("report/states/<int:year>/<str:state>/", views.report_full),
+    path("report/states/<int:year>/", views.report_all),
+    path("report/states/status/<int:year>/", views.report_state_status),
     path(
         "data/<int:year>/<str:state>/<int:section>",
         views.section_by_year_and_state,

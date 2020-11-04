@@ -561,7 +561,6 @@ class SectionSchemaViewSet(viewsets.ModelViewSet):
     serializer_class = SectionSchemaSerializer
 
 
-@csrf_exempt
 def report(request, year=None, state=None):
     assert year
     assert state
@@ -577,9 +576,34 @@ def report(request, year=None, state=None):
         "l": len(ordered),
     }
     report_template = get_template("report.html")
-    if request.content_type == "application/json":
-        return JsonResponse(context)
     return HttpResponse(report_template.render(context=context))
+
+@csrf_exempt
+def report_full(request, year=None, state=None):
+    assert year
+    assert state
+    sections = Section.objects.filter(
+        contents__section__year=year, contents__section__state=state.upper()
+    )
+    ordered = sorted(
+        [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+    )
+
+    state_status = StateStatus.objects.all().filter(state_id=state.upper(), year=year)
+
+    # Get program_type
+    state_record = State.objects.all().filter(code=state.upper())
+
+    context = {
+        "state_abbrev": state_status[0].state_id,
+        "program_type": state_record[0].program_type,
+        "status": state_status[0].status,
+        "sections": ordered,
+        "state": STATE_INFO[state.upper()],
+        "l": len(ordered),
+    }
+
+    return JsonResponse(context)
 
 """ Returns JSON of all states form data sorted by State """
 @csrf_exempt
@@ -616,6 +640,24 @@ def report_all(request, year=None,):
 
     return JsonResponse(context, safe=False)
 
+
+@csrf_exempt
+def report_state_status(request, year=None,):
+    assert year
+
+    # Get all states ordered by code column
+    state_status =  StateStatus.objects.all()
+    context = []
+
+    for single in state_status:
+        context.append({
+            "state": single.state_id,
+            "year": single.year,
+            "status": single.status,
+            "last_changed": single.last_changed,
+        })
+
+    return JsonResponse(context, safe=False)
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
