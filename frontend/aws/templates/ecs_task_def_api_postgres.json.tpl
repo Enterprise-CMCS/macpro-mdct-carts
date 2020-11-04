@@ -32,6 +32,10 @@
       {
         "name": "OPENID_DISCOVERY_URL",
         "value": "${openid_discovery_url}"
+      },
+      {
+        "name": "DJANGO_SETTINGS_MODULE",
+        "value": "${django_settings_module}"
       }
     ],
     "logConfiguration": {
