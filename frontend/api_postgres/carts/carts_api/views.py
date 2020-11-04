@@ -581,6 +581,41 @@ def report(request, year=None, state=None):
         return JsonResponse(context)
     return HttpResponse(report_template.render(context=context))
 
+""" Returns JSON of all states form data sorted by State """
+@csrf_exempt
+def report_all(request, year=None,):
+    assert year
+
+    # Get all states ordered by code column
+    states =  State.objects.all().order_by('code')
+
+    context = []
+
+    # Loop through all states to retreive content
+    for state in states:
+
+        # Filter by year and state and order by section
+        sections = Section.objects.filter(
+            contents__section__year=year, contents__section__state=state.code.upper()
+        )
+        ordered = sorted(
+            [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+        )
+
+        # Add state code and name for easier sorting/ingesting
+        context.append([
+            state.name.upper(),
+            state.code.upper(),
+            state.program_type,
+            [{
+                "sections": ordered,
+                "state": state.code.upper(),
+                "l": len(ordered),
+            }]
+        ])
+
+    return JsonResponse(context, safe=False)
+
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
