@@ -8,7 +8,8 @@ const Sidebar = () => {
     const handleScroll = () => {
       const scrollTop = $(window).scrollTop();
       const elementOffsetTop = $(".sidebar").offset().top;
-      const distance = elementOffsetTop - scrollTop;
+      const distanceBetweenTopAndSidebar = elementOffsetTop - scrollTop;
+      // Calculates when to stop the sidebar to avoid the footer
       const untilTheBottom =
         parseInt($(document).height().toString().replace("px", ""), 10) -
         parseInt(scrollTop.toString().replace("px", ""), 10);
@@ -17,11 +18,15 @@ const Sidebar = () => {
         (parseInt($(".sidebar").css("width").replace("px", ""), 10) - 25) // eslint-disable-next-line
           .toString() + "px";
 
-      if (distance <= 20 && scrollTop > 75 && untilTheBottom > 775) {
+      if (
+        distanceBetweenTopAndSidebar <= 20 &&
+        scrollTop > 75 &&
+        untilTheBottom > 775
+      ) {
         $(".sidebarInner").css("width", calculatedTop);
         $(".sidebarInner").css("position", "absolute");
         $(".sidebarInner").css("top", scrollTop);
-      } else if (distance > 20 && scrollTop > 75) {
+      } else if (distanceBetweenTopAndSidebar > 20 && scrollTop > 75) {
         $(".sidebarInner").css("width", calculatedTop);
         $(".sidebarInner").css("position", "absolute");
         $(".sidebarInner").css("top", scrollTop);
@@ -35,6 +40,7 @@ const Sidebar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
+
   return (
     <div className="sidebar ds-l-col--3">
       <div className="sidebarInner">
