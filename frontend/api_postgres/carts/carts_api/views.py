@@ -598,8 +598,11 @@ def report_full(request, year=None, state=None):
     )
 
     # Retrieve status of state
-    state_status = StateStatus.objects.all().filter(
-        state_id=state.upper(), year=year
+    state_status = (
+        StateStatus.objects.all()
+        .filter(state_id=state.upper(), year=year)
+        .order_by("last_changed")
+        .reverse()
     )
 
     # Get program_type
@@ -610,7 +613,7 @@ def report_full(request, year=None, state=None):
         "program_type": state_record[0].program_type,
         "status": state_status[0].status,
         "sections": ordered,
-        "state": STATE_INFO[state.upper()],
+        "state": state.upper(),
         "l": len(ordered),
     }
 
