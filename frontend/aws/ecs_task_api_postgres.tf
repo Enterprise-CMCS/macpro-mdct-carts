@@ -1,5 +1,8 @@
 locals {
   endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}:8000" : "https://${var.acm_certificate_domain_api_postgres}"
+  django_settings_module = {
+    "prod" : "carts.settings_prod"
+  }
 }
 
 data "aws_ssm_parameter" "postgres_user" {
@@ -44,6 +47,7 @@ resource "aws_ecs_task_definition" "api_postgres" {
     cloudwatch_stream_prefix = "api_postgres",
     postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
     openid_discovery_url     = var.openid_discovery_url
+    django_settings_module   = lookup(local.django_settings_module, terraform.workspace, "carts.settings")
   })
 }
 
