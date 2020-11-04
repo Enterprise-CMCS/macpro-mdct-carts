@@ -578,18 +578,29 @@ def report(request, year=None, state=None):
     report_template = get_template("report.html")
     return HttpResponse(report_template.render(context=context))
 
+
+""" Returns a state report with status"""
+
+
 @csrf_exempt
 def report_full(request, year=None, state=None):
     assert year
     assert state
+
+    # Retrieve all sections
     sections = Section.objects.filter(
         contents__section__year=year, contents__section__state=state.upper()
     )
+
+    # Order by ordinal (form order)
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
 
-    state_status = StateStatus.objects.all().filter(state_id=state.upper(), year=year)
+    # Retrieve status of state
+    state_status = StateStatus.objects.all().filter(
+        state_id=state.upper(), year=year
+    )
 
     # Get program_type
     state_record = State.objects.all().filter(code=state.upper())
@@ -605,59 +616,80 @@ def report_full(request, year=None, state=None):
 
     return JsonResponse(context)
 
+
 """ Returns JSON of all states form data sorted by State """
+
+
 @csrf_exempt
-def report_all(request, year=None,):
+def report_all(
+    request,
+    year=None,
+):
     assert year
 
     # Get all states ordered by code column
-    states =  State.objects.all().order_by('code')
+    states = State.objects.all().order_by("code")
 
     context = []
 
-    # Loop through all states to retreive content
+    # Loop through all states to retrieve content
     for state in states:
 
         # Filter by year and state and order by section
         sections = Section.objects.filter(
-            contents__section__year=year, contents__section__state=state.code.upper()
+            contents__section__year=year,
+            contents__section__state=state.code.upper(),
         )
+
+        # Order by ordinal (form order)
         ordered = sorted(
-            [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+            [_.contents["section"] for _ in sections],
+            key=lambda s: s["ordinal"],
         )
 
         # Add state code and name for easier sorting/ingesting
-        context.append([
-            state.name.upper(),
-            state.code.upper(),
-            state.program_type,
-            [{
-                "sections": ordered,
-                "state": state.code.upper(),
-                "l": len(ordered),
-            }]
-        ])
+        context.append(
+            [
+                state.name.upper(),
+                state.code.upper(),
+                state.program_type,
+                [
+                    {
+                        "sections": ordered,
+                        "state": state.code.upper(),
+                        "l": len(ordered),
+                    }
+                ],
+            ]
+        )
 
     return JsonResponse(context, safe=False)
 
 
 @csrf_exempt
-def report_state_status(request, year=None,):
+def report_state_status(
+    request,
+    year=None,
+):
     assert year
 
     # Get all states ordered by code column
-    state_status =  StateStatus.objects.all()
+    state_status = StateStatus.objects.all()
     context = []
 
+    # Build context array with necessary state_status values
     for single in state_status:
-        context.append({
-            "state": single.state_id,
-            "year": single.year,
-            "status": single.status,
-            "last_changed": single.last_changed,
-        })
+        context.append(
+            {
+                "state": single.state_id,
+                "year": single.year,
+                "status": single.status,
+                "last_changed": single.last_changed,
+            }
+        )
 
     return JsonResponse(context, safe=False)
+
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
