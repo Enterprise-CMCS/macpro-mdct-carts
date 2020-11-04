@@ -597,7 +597,7 @@ def report_full(request, year=None, state=None):
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
 
-    # Retrieve status of state
+    # Retrieve status of state sorted by last changed date in reverse
     state_status = (
         StateStatus.objects.all()
         .filter(state_id=state.upper(), year=year)
@@ -605,8 +605,13 @@ def report_full(request, year=None, state=None):
         .reverse()
     )
 
-    # Get program_type
-    state_record = State.objects.all().filter(code=state.upper())
+    # Get program_type, sorted by reverse
+    state_record = (
+        State.objects.all()
+        .filter(code=state.upper())
+        .order_by("last_changed")
+        .reverse()
+    )
 
     context = {
         "state_abbrev": state_status[0].state_id,
