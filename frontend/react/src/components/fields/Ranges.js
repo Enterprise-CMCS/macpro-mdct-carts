@@ -105,10 +105,38 @@ const Ranges = ({ onChange, question }) => {
     );
   });
 
+  //   "entry": [
+  //   [["21", "40"]],
+  // ]
+
+  const [rangeError, setRangeError] = useState("");
+
   const rowChange = (row, category, index, value) => {
     values[row][category][index] = value;
+
+    // Perform validation here
+    // Set row specific error messages to state here
+
+    const rowToValiate = values[row][category];
+    const startValue = rowToValiate[0];
+    const endValue = rowToValiate[1];
+
+    // Update Ranges local state
     setValues(values);
-    onChange({ target: { name: question.id, value: values } });
+
+    // if (startValue && endValue) {
+    //   const start = parseFloat(startValue, 10);
+    //   const end = parseFloat(endValue, 10);
+
+    //   if (start >= end) {
+    //     setRangeError("Start value must be less than end value");
+    //   } else {
+    //     setRangeError("");
+
+    //     // Where it gets sent to REDUX
+    //     onChange({ target: { name: question.id, value: values } });
+    //   }
+    // }
   };
 
   const addRow = () => {
@@ -126,6 +154,8 @@ const Ranges = ({ onChange, question }) => {
   return (
     <div className="cmsranges">
       {header && <h3>{header}</h3>}
+
+      {rangeError ? <div className="errors">{rangeError}</div> : null}
 
       {values.map((rowValues, row) =>
         rowValues.map((categoryValues, index) => (
