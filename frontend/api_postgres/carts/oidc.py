@@ -35,10 +35,15 @@ def fetch_jwks():
 
 @cached(CACHE_LOCATION, 300)
 def fetch_user_info(token):
+    print('fetching user info with token: ' + token)
+
     user_info_uri = metadata('userinfo_endpoint')
+    print('fetching user info from: ' + user_info_uri)
+
     user_info_res = requests.get(
         user_info_uri, headers={"Authorization": f"Bearer {token}"}
     )
+    print('!!!got user info from okta: ' + user_info_res)
     return user_info_res.json()
 
 
