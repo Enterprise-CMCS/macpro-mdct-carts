@@ -26,7 +26,7 @@ from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
-    AllowAny
+    AllowAny,
 )
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
@@ -321,6 +321,7 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     transaction.atomic
+
     def update_sections(self, request):
         try:
             state_id = False

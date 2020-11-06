@@ -28,18 +28,18 @@ SECRET_KEY = get_random_string(50)
 
 
 ALLOWED_HOSTS = [
-    'localhost' '127.0.0.1',
-    '[::1]',
-    '*',
-    os.environ.get('POSTGRES_API_URL'),
+    "localhost" "127.0.0.1",
+    "[::1]",
+    "*",
+    os.environ.get("POSTGRES_API_URL"),
 ]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'carts.auth_dev.JwtAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "carts.auth_dev.JwtAuthentication",
     ],
-    'COERCE_DECIMAL_TO_STRING': False,
+    "COERCE_DECIMAL_TO_STRING": False,
 }
