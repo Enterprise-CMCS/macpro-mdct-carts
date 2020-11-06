@@ -16,12 +16,12 @@ from carts.carts_api.models import (
     StatesFromUsername,
 )
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
-
+from rest_framework.permissions import AllowAny
 
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         raw_token = self._extract_token(request)
-
+        print('+++++++++raw token: ' + raw_token)
         try:
             return self._do_authenticate(raw_token)
         except Exception as e:
@@ -45,11 +45,16 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _do_authenticate(self, token):
         try:
+            print(f"\n\n%%%%>got token: {token}")
             kid = extract_kid(token)
+            print(f"\n\n%%%%>kid extracted: {kid}")
             key = fetch_pub_key(kid)
+            print(f"\n\n%%%%>key extracted: {key}")
             verify_token(token, key)
+            print(f"\n\n%%%%>token verified: {kid}")
 
             user_info = fetch_user_info(token)
+            print(f"\n\n\ncreating user...", user_info)
             user = _get_or_create_user(user_info)
 
             return (user, None)
@@ -58,15 +63,25 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
 
 def _get_or_create_user(user_info):
+
+    print(f"$$$$\n\nin create user\n\n\n")
+
     user, _ = User.objects.get_or_create(
         username=user_info["preferred_username"],
     )
+
     user.first_name = user_info["given_name"]
     user.last_name = user_info["family_name"]
     user.email = user_info["email"]
 
+    print(f"$$$$\n\nobtained user", user.email, "\n\n\n")
+
     role_map = [*RolesFromJobCode.objects.all()]
+    print(f"$$$$\n\nhere's a role map", role_map, "\n\n\n")
+    print(f"\n\n      getting user with username: ", user.username)
+
     username_map = [*RoleFromUsername.objects.filter(username=user.username)]
+
     role = role_from_raw_ldap_job_codes(
         role_map, username_map, user_info["job_codes"]
     )
@@ -89,6 +104,10 @@ def _get_or_create_user(user_info):
     app_user, _ = AppUser.objects.get_or_create(user=user)
     app_user.states.set(states)
     app_user.role = role
+
+    print(f"$$$$\n\nabout to save app_user\n\n\n")
+
+
     app_user.save()
 
     if role == "state_user" and states:

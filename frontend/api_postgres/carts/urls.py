@@ -61,6 +61,7 @@ api_patterns = [
     ),
     path("generic-questions/<slug:id>", views.generic_fragment_by_id),
     path("appusers/auth", views.authenticate_user),
+    path("initiate", views.initiate_session),
     path("appusers/<slug:username>", views.fake_user_data),
 ]
 

@@ -113,7 +113,28 @@ export const loadSections = ({ userData, stateCode }) => {
   };
 };
 
+const getCookie = (key) => {
+  let result;
+
+  return (result = new RegExp(
+    "(?:^|; )" + encodeURIComponent(key) + "=([^;]*)"
+  ).exec(document.cookie))
+    ? result[1]
+    : null;
+};
+
 export const loadUser = (userToken) => async (dispatch) => {
+  if (getCookie("csrftoken") === null) {
+    await axios
+      .get("/api/v1/initiate", { withCredentials: true })
+      .then(function (result) {
+        console.log("!!!!Django session initiated successfully!!! ", result);
+      })
+      .catch(function (error) {
+        console.log("???????error initiating Django session ?????:", error);
+      });
+  }
+
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
