@@ -27,6 +27,7 @@ services:
       - DATABASE=postgres
       - POSTGRES_API_URL=localhost
       - DJANGO_SETTINGS_MODULE=carts.settings_prod
+      - ENDPOINT_UI=http://localhost:81
 networks:
   data_net:
     external: true
