@@ -40,10 +40,19 @@ def fetch_user_info(token):
     user_info_uri = metadata('userinfo_endpoint')
     print('fetching user info from: ' + user_info_uri)
 
-    user_info_res = requests.get(
-        user_info_uri, headers={"Authorization": f"Bearer {token}"}
-    )
-    print('!!!got user info from okta: ' + user_info_res)
+    try:
+        user_info_res = requests.get(
+            user_info_uri, headers={"Authorization": f"Bearer {token}"}
+        )
+
+    except HTTPError as http_err:
+        print(f"HTTP ERROR === fetching user failed: {http_err}")  # as of python 3.6
+    except Exception as err:
+        print(f"EXCEPTION === fetching user failed:  {err}")  # as of python 3.6
+    else:
+        print("!! SUCCESS fetching user info", user_info_res.json())
+
+    print(f"\n\n\n!!!got user info from okta: ", user_info_res.json())
     return user_info_res.json()
 
 
@@ -57,5 +66,8 @@ def metadata(key):
 
 
 def verify_token(token, pub_key):
+    print(f"\n\n\n^^^^verifying token")
     jwk = JWK.from_json(json.dumps(pub_key))
+    print(f"\n\n\n^^^^jwk obtained")
+
     return jwt.verify_jwt(token, jwk, ['RS256'], checks_optional=True)
