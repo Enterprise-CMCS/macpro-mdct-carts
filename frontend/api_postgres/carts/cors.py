@@ -8,5 +8,5 @@ class CorsMiddleware(object):
         return self.get_response(request)
 
     def process_response(self, request, response):
-        response["Access-Control-Allow-Origin"] = "localhost"
+        response["Access-Control-Allow-Origin"] = os.environ.get('ENDPOINT_UI')
         return response

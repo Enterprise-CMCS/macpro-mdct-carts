@@ -114,13 +114,11 @@ export const loadSections = ({ userData, stateCode }) => {
 };
 
 const getCookie = (key) => {
-  let result;
+  let result = new RegExp(`(?:^|; ) ${encodeURIComponent(key)}=([^;]*)`).exec(
+    document.cookie
+  );
 
-  return (result = new RegExp(
-    "(?:^|; )" + encodeURIComponent(key) + "=([^;]*)"
-  ).exec(document.cookie))
-    ? result[1]
-    : null;
+  return result ? result[1] : null;
 };
 
 export const loadUser = (userToken) => async (dispatch) => {
