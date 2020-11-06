@@ -18,10 +18,11 @@ from carts.carts_api.models import (
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 from rest_framework.permissions import AllowAny
 
+
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         raw_token = self._extract_token(request)
-        print('+++++++++raw token: ' + raw_token)
+        print("+++++++++raw token: " + raw_token)
         try:
             return self._do_authenticate(raw_token)
         except Exception as e:
@@ -111,7 +112,6 @@ def _get_or_create_user(user_info):
     app_user.role = role
 
     print(f"$$$$\n\nabout to save app_user\n\n\n")
-
 
     app_user.save()
 

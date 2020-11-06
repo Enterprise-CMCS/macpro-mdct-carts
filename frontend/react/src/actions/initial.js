@@ -137,7 +137,7 @@ export const loadUser = (userToken) => async (dispatch) => {
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
 
-  await Promise.all([
+  await Prlomise.all([
     dispatch(getUserData(data.currentUser)),
     dispatch(getStateData(data)),
     dispatch(getProgramData(data)),

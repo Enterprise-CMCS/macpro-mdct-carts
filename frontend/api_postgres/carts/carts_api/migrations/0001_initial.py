@@ -8,30 +8,53 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Section',
+            name="Section",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('contents', django.contrib.postgres.fields.jsonb.JSONField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("contents", django.contrib.postgres.fields.jsonb.JSONField()),
             ],
         ),
         migrations.CreateModel(
-            name='SectionBase',
+            name="SectionBase",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('contents', django.contrib.postgres.fields.jsonb.JSONField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("contents", django.contrib.postgres.fields.jsonb.JSONField()),
             ],
         ),
         migrations.CreateModel(
-            name='SectionSchema',
+            name="SectionSchema",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('year', models.IntegerField()),
-                ('contents', django.contrib.postgres.fields.jsonb.JSONField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("year", models.IntegerField()),
+                ("contents", django.contrib.postgres.fields.jsonb.JSONField()),
             ],
         ),
     ]
