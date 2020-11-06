@@ -47,7 +47,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     cloudwatch_stream_prefix = "api_postgres",
     postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
     openid_discovery_url     = var.openid_discovery_url
-    django_settings_module   = lookup(local.django_settings_module, terraform.workspace, "carts.settings")
+    django_settings_module   = lookup(local.django_settings_module, terraform.workspace, "carts.settings"),
+    endpoint_ui              = local.endpoint_ui
   })
 }
 

@@ -46,6 +46,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = [
     f"http://localhost:81",
+    os.environ.get('ENDPOINT_UI'),
 ]
 
 # Application definition
