@@ -9,6 +9,8 @@ const Integer = ({ onChange, question, ...props }) => {
     const numeric = +value;
     const parsed = parseInt(numeric, 10);
 
+    // TODO: Strip parsed of any commas
+
     if (numeric === parsed && !Number.isNaN(parsed)) {
       onChange({ target: { name, value } });
       setError(false);

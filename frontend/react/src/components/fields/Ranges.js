@@ -15,6 +15,7 @@ const inputs = new Map([
 ]);
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
+  const [rangeError, setRangeError] = useState("");
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
@@ -34,6 +35,19 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
+  const validateInequality = () => {
+    if (values.length === 2) {
+      const start = parseFloat(values[0], 10);
+      const end = parseFloat(values[1], 10);
+
+      if (start > end) {
+        setRangeError("Start value must be less than end value");
+      } else {
+        setRangeError("");
+      }
+    }
+  };
+
   const changeStart = ({ target: { value } }) => {
     onChange(row, index, 0, value);
   };
@@ -45,6 +59,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   return (
     <div className="cmsrange">
       <div className="cmsrange-outer ds-l-container">
+        {rangeError ? <div className="errors">{rangeError}</div> : null}
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
             <Input
@@ -52,7 +67,8 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[0]}
               className="cmsrange-input"
               question={startQuestion}
-              onChange={changeStart}
+              onChange={validateInequality}
+              onBlur={changeStart}
             />
           </div>
           <div className="cmsrange-arrow">
@@ -64,7 +80,8 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[1]}
               className="cmsrange-input"
               question={endQuestion}
-              onChange={changeEnd}
+              onChange={validateInequality}
+              onBlur={changeEnd}
             />
           </div>
         </div>
@@ -105,38 +122,10 @@ const Ranges = ({ onChange, question }) => {
     );
   });
 
-  //   "entry": [
-  //   [["21", "40"]],
-  // ]
-
-  const [rangeError, setRangeError] = useState("");
-
   const rowChange = (row, category, index, value) => {
     values[row][category][index] = value;
-
-    // Perform validation here
-    // Set row specific error messages to state here
-
-    const rowToValiate = values[row][category];
-    const startValue = rowToValiate[0];
-    const endValue = rowToValiate[1];
-
-    // Update Ranges local state
     setValues(values);
-
-    // if (startValue && endValue) {
-    //   const start = parseFloat(startValue, 10);
-    //   const end = parseFloat(endValue, 10);
-
-    //   if (start >= end) {
-    //     setRangeError("Start value must be less than end value");
-    //   } else {
-    //     setRangeError("");
-
-    //     // Where it gets sent to REDUX
-    //     onChange({ target: { name: question.id, value: values } });
-    //   }
-    // }
+    onChange({ target: { name: question.id, value: values } });
   };
 
   const addRow = () => {
@@ -154,8 +143,6 @@ const Ranges = ({ onChange, question }) => {
   return (
     <div className="cmsranges">
       {header && <h3>{header}</h3>}
-
-      {rangeError ? <div className="errors">{rangeError}</div> : null}
 
       {values.map((rowValues, row) =>
         rowValues.map((categoryValues, index) => (
