@@ -114,7 +114,7 @@ export const loadSections = ({ userData, stateCode }) => {
 };
 
 const getCookie = (key) => {
-  let result = new RegExp(`(?:^|; ) ${encodeURIComponent(key)}=([^;]*)`).exec(
+  const result = new RegExp(`(?:^|; ) ${encodeURIComponent(key)}=([^;]*)`).exec(
     document.cookie
   );
 
