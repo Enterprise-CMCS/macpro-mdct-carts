@@ -82,9 +82,14 @@ def _get_or_create_user(user_info):
 
     username_map = [*RoleFromUsername.objects.filter(username=user.username)]
 
+    print(f"\n\n    $$$$$username_map is: ", username_map)
+
     role = role_from_raw_ldap_job_codes(
         role_map, username_map, user_info["job_codes"]
     )
+
+    print(f"\n\n!!!$$$$$role is: ", role)
+
     states = []
 
     if role in ("state_user"):

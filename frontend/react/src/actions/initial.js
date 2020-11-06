@@ -126,7 +126,7 @@ export const loadUser = (userToken) => async (dispatch) => {
     await axios
       .get("/api/v1/initiate", { withCredentials: true })
       .then(function (result) {
-        console.log("!!!!Django session initiated successfully!!! ", result);
+        console.log("!!!!Django session initialted successfully!!! ", result);
       })
       .catch(function (error) {
         console.log("???????error initiating Django session ?????:", error);
