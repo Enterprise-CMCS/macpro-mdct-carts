@@ -19,8 +19,8 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   const [rangeValues, setRangeValues] = useState(values);
 
   useEffect(() => {
-    //validateInequality();
-  })
+    validateInequality();
+  }, []);
 
   let Input = Text;
   if (inputs.has(type)) {
@@ -138,43 +138,9 @@ const Ranges = ({ onChange, question }) => {
   });
 
   const rowChange = (row, category, index, value) => {
-    let c;
-    let d;
-    // Set all values to values
-    let a = (values[0][0][1] ? parseFloat(values[0][0][0]) : 0);
-    let bee = (values[0][0][1] ? parseFloat(values[0][0][1]) : 0);
-
-    // Check for another row
-    if(values[0].length > 1) {
-      c = (values[0][1][0] ? parseFloat(values[0][1][0]) : 0);
-      d = (values[0][1][1] ? parseFloat(values[0][1][1]) : 0);
-    }
-
-    // Overwrite with current value
-    if(category == 0) {
-      if(index == 0) {
-        a = value ? parseFloat(value) : 0;
-      } else {
-        bee = value ? parseFloat(value) : 0;
-      }
-    } else {
-      if(index == 0) {
-        c = value ? parseFloat(value) : 0;
-      } else {
-        d = value ? parseFloat(value) : 0;
-      }
-    }
-
-    let e = 0;
-
     values[row][category][index] = value;
     setValues(values);
-
-    if(a <= bee || c <= d) {
-      let f = 0;
-
-      onChange({target: {name: question.id, value: values}});
-    }
+    onChange({target: {name: question.id, value: values}});
   };
 
   const addRow = () => {
