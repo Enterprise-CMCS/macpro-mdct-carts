@@ -26,6 +26,7 @@ from rest_framework.response import Response  # type: ignore
 from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
+    AllowAny,
 )
 from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
@@ -61,6 +62,9 @@ from carts.carts_api.models import (
     StatesFromUsername,
 )
 from carts.carts_api.model_utils import validate_status_change
+
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -316,7 +320,8 @@ class SectionViewSet(viewsets.ModelViewSet):
         serializer = SectionSerializer(section, context={"request": request})
         return Response(serializer.data)
 
-    @transaction.atomic
+    transaction.atomic
+
     def update_sections(self, request):
         try:
             state_id = False
@@ -608,6 +613,15 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     }
 
     return HttpResponse(json.dumps(user_data))
+
+
+@csrf_exempt
+@ensure_csrf_cookie
+def initiate_session(request):
+    print(f"\n\n\n!!!!!!!!!!!!!!!initiating session")
+    resultJson = {"transaction_result": "success"}
+
+    return HttpResponse(json.dumps(resultJson))
 
 
 @api_view(["POST"])
