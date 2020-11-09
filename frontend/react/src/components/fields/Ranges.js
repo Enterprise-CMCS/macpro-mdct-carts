@@ -16,6 +16,9 @@ const inputs = new Map([
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
   const [rangeError, setRangeError] = useState("");
+let a =0;
+  const [rangeValues, setRangeValues] = useState(values);
+
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
@@ -36,9 +39,11 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   };
 
   const validateInequality = () => {
+    setRangeValues([values[0], values[1]])
+
     if (values.length === 2) {
-      const start = parseFloat(values[0], 10);
-      const end = parseFloat(values[1], 10);
+      const start = parseFloat(values[0]);
+      const end = parseFloat(values[1]);
 
       if (start > end) {
         setRangeError("Start value must be less than end value");
@@ -49,10 +54,12 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   };
 
   const changeStart = ({ target: { value } }) => {
+    setRangeValues([value, rangeValues[1]])
     onChange(row, index, 0, value);
   };
 
   const changeEnd = ({ target: { value } }) => {
+    setRangeValues([rangeValues[0], value])
     onChange(row, index, 1, value);
   };
 
@@ -67,8 +74,9 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[0]}
               className="cmsrange-input"
               question={startQuestion}
-              onChange={validateInequality}
-              onBlur={changeStart}
+              onChange={changeStart}
+              onBlur={validateInequality}
+              value={rangeValues[0] ? rangeValues[0] : values[0]}
             />
           </div>
           <div className="cmsrange-arrow">
@@ -80,8 +88,9 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[1]}
               className="cmsrange-input"
               question={endQuestion}
-              onChange={validateInequality}
-              onBlur={changeEnd}
+              onChange={changeEnd}
+              onBlur={validateInequality}
+              value={rangeValues[1] ? rangeValues[1] : values[1]}
             />
           </div>
         </div>
@@ -123,9 +132,38 @@ const Ranges = ({ onChange, question }) => {
   });
 
   const rowChange = (row, category, index, value) => {
+
+    // Set all values to values
+    let a = (values[0][0][1] ? parseFloat(values[0][0][0]) : 0);
+    let bee = (values[0][0][1] ? parseFloat(values[0][0][1]) : 0);
+    let c = (values[0][1][0] ? parseFloat(values[0][1][0]) : 0);
+    let d = (values[0][1][1] ? parseFloat(values[0][1][1]) : 0);
+
+    // Overwrite with current value
+    if(category == 0) {
+      if(index == 0) {
+        a = value ? parseFloat(value) : 0;
+      } else {
+        bee = value ? parseFloat(value) : 0;
+      }
+    } else {
+      if(index == 0) {
+        c = value ? parseFloat(value) : 0;
+      } else {
+        d = value ? parseFloat(value) : 0;
+      }
+    }
+
+    let e = 0;
+
     values[row][category][index] = value;
     setValues(values);
-    onChange({ target: { name: question.id, value: values } });
+
+    if(a <= bee && c <= d) {
+      let f = 0;
+
+      onChange({target: {name: question.id, value: values}});
+    }
   };
 
   const addRow = () => {
