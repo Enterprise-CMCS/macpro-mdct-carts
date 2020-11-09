@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,8 +16,11 @@ const inputs = new Map([
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
   const [rangeError, setRangeError] = useState("");
-let a =0;
   const [rangeValues, setRangeValues] = useState(values);
+
+  useEffect(() => {
+    //validateInequality();
+  })
 
   let Input = Text;
   if (inputs.has(type)) {
@@ -39,6 +42,9 @@ let a =0;
   };
 
   const validateInequality = () => {
+    if(!values && !rangeValues) {
+      return;
+    }
     setRangeValues([values[0], values[1]])
 
     if (values.length === 2) {
@@ -132,12 +138,17 @@ const Ranges = ({ onChange, question }) => {
   });
 
   const rowChange = (row, category, index, value) => {
-
+    let c;
+    let d;
     // Set all values to values
     let a = (values[0][0][1] ? parseFloat(values[0][0][0]) : 0);
     let bee = (values[0][0][1] ? parseFloat(values[0][0][1]) : 0);
-    let c = (values[0][1][0] ? parseFloat(values[0][1][0]) : 0);
-    let d = (values[0][1][1] ? parseFloat(values[0][1][1]) : 0);
+
+    // Check for another row
+    if(values[0].length > 1) {
+      c = (values[0][1][0] ? parseFloat(values[0][1][0]) : 0);
+      d = (values[0][1][1] ? parseFloat(values[0][1][1]) : 0);
+    }
 
     // Overwrite with current value
     if(category == 0) {
@@ -159,7 +170,7 @@ const Ranges = ({ onChange, question }) => {
     values[row][category][index] = value;
     setValues(values);
 
-    if(a <= bee && c <= d) {
+    if(a <= bee || c <= d) {
       let f = 0;
 
       onChange({target: {name: question.id, value: values}});
