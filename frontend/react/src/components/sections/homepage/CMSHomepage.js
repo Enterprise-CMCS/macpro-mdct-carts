@@ -10,6 +10,8 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
     getStatuses();
   }, []);
 
+  let a = statuses
+  let b = 0
   return (
     <div className="homepage">
       <div className="ds-l-container">
@@ -33,6 +35,7 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
                 <div className="status ds-l-col--4">Status</div>
                 <div className="actions ds-l-col--6">Actions</div>
               </div>
+
               {statuses.map(({ state, stateCode, status }) => (
                 <ReportItem
                   key={stateCode}

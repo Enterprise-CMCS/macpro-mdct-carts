@@ -1,5 +1,6 @@
 import { SET_STATE_STATUS, SET_STATE_STATUSES } from "../actions/initial";
 import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
+import { UNCERTIFY_SUCCESS } from "../actions/uncertify";
 
 const initialState = {
   status: null,
@@ -23,6 +24,12 @@ export default (state = initialState, action) => {
         status: "certified",
         userName: action.user,
       };
+      case UNCERTIFY_SUCCESS:
+        return {
+          ...state,
+          status: "uncertified",
+          userName: action.user,
+        };
     default:
       return state;
   }

@@ -1,9 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Button } from "@cmsgov/design-system-core";
 import { Link } from "react-router-dom";
+import { theUncertify } from "../../../actions/uncertify";
 
-const ReportItem = ({ link1Text, link1URL, name, statusText, statusURL }) => {
+const ReportItem = ({ link1Text, link1URL, name, statusText, statusURL, theUncertify: uncertifyAction }) => {
   const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
+  const uncertify = () => {
+    uncertifyAction();
+  };
 
   return (
     <div className="report-item ds-l-row">
@@ -17,12 +23,17 @@ const ReportItem = ({ link1Text, link1URL, name, statusText, statusURL }) => {
         <Link to={link1URL} target={anchorTarget}>
           {link1Text}
         </Link>
+        {statusText === "Certified" ? (<Button onClick={uncertify} variation="primary">
+          Uncertify
+        </Button>) : null}
+
       </div>
     </div>
   );
 };
 
 ReportItem.propTypes = {
+  uncertify: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -34,6 +45,14 @@ ReportItem.defaultProps = {
   link1URL: "#",
   statusText: "Submitted",
   statusURL: "",
+
 };
 
-export default ReportItem;
+
+const mapState = (state) => ({
+  user: state.reportStatus.userName,
+});
+
+const mapDispatch = { theUncertify };
+
+export default connect(mapState, mapDispatch)(ReportItem);
