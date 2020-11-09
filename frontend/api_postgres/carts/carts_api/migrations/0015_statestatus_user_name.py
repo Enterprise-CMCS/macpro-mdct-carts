@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('carts_api', '0014_rolesfromjobcode'),
+        ("carts_api", "0014_rolesfromjobcode"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='statestatus',
-            name='user_name',
+            model_name="statestatus",
+            name="user_name",
             field=models.TextField(null=True),
         ),
     ]

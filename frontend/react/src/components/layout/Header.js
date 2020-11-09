@@ -14,6 +14,7 @@ class Header extends Component {
   // eslint-disable-next-line
   toggleUserNav(e) {
     e.preventDefault();
+
     document.getElementById("menu-block").classList.toggle("open");
     document.getElementById("nav-user").classList.toggle("open");
 
@@ -31,7 +32,8 @@ class Header extends Component {
 
   render() {
     const { currentUser } = this.props;
-    const { username } = currentUser;
+    const { email } = currentUser;
+
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
@@ -49,16 +51,20 @@ class Header extends Component {
                         href="#menu"
                         className="nav--dropdown__trigger"
                         onClick={this.toggleUserNav}
-                        data-test="component-header-username"
                       >
-                        {username}
+                        {email}
                       </a>
                     </li>
                   </ul>
                   <ul className="menu-block" id="menu-block">
+                    <li className="helpdesk">
+                      <a href="mailto:cartshelp@cms.hhs.gov">Helpdesk</a>
+                    </li>
+
                     <li className="manage-account">
                       <a href="/user/profile">Manage account</a>
                     </li>
+
                     <li className="logout">
                       <Logout />
                     </li>
@@ -75,7 +81,6 @@ class Header extends Component {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  username: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

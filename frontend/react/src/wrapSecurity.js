@@ -53,6 +53,9 @@ const WrappedSecurity = () => {
   const SecurityWrapper = userData === false ? Security : "div";
   const SecureRoute = userData === false ? OktaSecureRoute : Route;
 
+  /* eslint-disable-line */
+  console.log("!***** initial data load [userData] ===>", userData);
+
   return (
     <div className="App" data-test="component-app">
       <SecurityWrapper
