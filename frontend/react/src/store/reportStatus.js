@@ -24,12 +24,11 @@ export default (state = initialState, action) => {
         status: "certified",
         userName: action.user,
       };
-      case UNCERTIFY_SUCCESS:
-        return {
-          ...state,
-          status: "uncertified",
-          userName: action.user,
-        };
+    case UNCERTIFY_SUCCESS:
+      return {
+        ...state,
+        [action.stateCode]: "uncertified"
+      };
     default:
       return state;
   }

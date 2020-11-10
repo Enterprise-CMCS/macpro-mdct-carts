@@ -10,8 +10,6 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
     getStatuses();
   }, []);
 
-  let a = statuses
-  let b = 0
   return (
     <div className="homepage">
       <div className="ds-l-container">
@@ -32,19 +30,20 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
               </div>
               <div className="report-header ds-l-row">
                 <div className="name ds-l-col--2">Report</div>
-                <div className="status ds-l-col--4">Status</div>
+                <div className="status ds-l-col--3">Status</div>
                 <div className="actions ds-l-col--6">Actions</div>
               </div>
 
-              {statuses.map(({ state, stateCode, status }) => (
-                <ReportItem
-                  key={stateCode}
-                  link1URL={`/views/sections/${stateCode}/2020/00/a`}
-                  name={`${state} 2020`}
-                  statusText={status}
-                  editor="x@y.z"
-                />
-              ))}
+              {statuses.sort((a, b) => a.state > b.state ? 1 : -1)
+                .map(({ state, stateCode, status }) => (
+                  <ReportItem
+                    key={stateCode}
+                    link1URL={`/views/sections/${stateCode}/2020/00/a`}
+                    name={`${state} 2020`}
+                    statusText={status}
+                    editor="x@y.z"
+                  />
+                ))}
             </div>
           </div>
         </div>
