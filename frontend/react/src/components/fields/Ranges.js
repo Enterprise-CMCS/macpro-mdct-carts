@@ -62,12 +62,12 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     }
   };
 
-  const changeStart = ({ target: { value } }) => {
+  const changeStart = ({ target: { stripped: value } }) => {
     setRangeValues([value, rangeValues[1]]);
     onChange(row, index, 0, value);
   };
 
-  const changeEnd = ({ target: { value } }) => {
+  const changeEnd = ({ target: { stripped: value } }) => {
     setRangeValues([rangeValues[0], value]);
     onChange(row, index, 1, value);
   };
