@@ -349,3 +349,127 @@ resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
   resource_arn = aws_alb.api_postgres.id
   web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
 }
+
+# # ============== Data ====================
+data "aws_caller_identity" "current" {}
+
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+}
+
+# ==============Create S3 Bucket==============================
+
+# S3 Bucket to store WebACL Traffic Logs. This resource is needed by Amazon Kinesis Firehose as data delivery output target.
+resource "aws_s3_bucket" "webacl_traffic_s3" {
+  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
+  bucket = "${lower(terraform.workspace)}-${local.account_id}"
+  acl    = "private"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  versioning {
+    enabled = "true"
+  }
+
+  tags = {
+    Name          = "${lower(terraform.workspace)}-${local.account_id}"
+    Description   = "Bucket for storing WebACL traffic information"
+    ManagedBy     = "terraform"
+  }
+}
+
+# # ========================Create Kinesis firehose and role ========================
+resource "aws_kinesis_firehose_delivery_stream" "stream" {
+  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
+  name        = "aws-waf-logs-${terraform.workspace}"
+  destination = "extended_s3"
+
+  extended_s3_configuration {
+    role_arn   = aws_iam_role.firehose_role.arn
+    bucket_arn = aws_s3_bucket.webacl_traffic_s3[count.index].arn
+  }
+}
+
+resource "aws_iam_role" "firehose_role" {
+  name = "KinesisFirehoseRole-aws-${terraform.workspace}"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "firehose.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "firehose_policy" {
+  depends_on  = [aws_kinesis_firehose_delivery_stream.stream]
+  name = "KinesisFirehosePolicy-aws-${terraform.workspace}"
+  role = aws_iam_role.firehose_role.id
+
+  policy = <<-EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Allow",
+        "Action": [
+          "s3:AbortMultipartUpload",
+          "s3:GetBucketLocation",
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:ListBucketMultipartUploads",
+          "s3:PutObject"
+          ],
+        "Resource": [
+          "arn:aws:s3:::${var.s3_bucket}",
+          "arn:aws:s3:::${var.s3_bucket}/*"
+        ]
+      },
+      {
+        "Sid": "",
+        "Effect": "Allow",
+        "Action": [
+          "lambda:InvokeFunction",
+          "lambda:GetFunctionConfiguration"
+        ],
+        "Resource": [
+          "arn:aws:lambda:${var.region}:${local.account_id}:function:*"
+        ]
+      },
+      {
+        "Sid": "",
+        "Effect": "Allow",
+        "Action": [
+          "logs:PutLogEvents"
+        ],
+        "Resource": [
+          "arn:aws:logs:${var.region}:${local.account_id}:log-group:/aws/kinesisfirehose/aws-${terraform.workspace}:log-stream:*"
+        ]
+      }
+    ]
+  }
+  EOF
+}
+
+# =================== Enable WAF Logging ===================
+resource "aws_wafv2_web_acl_logging_configuration" "log" {
+  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
+  log_destination_configs = [ aws_kinesis_firehose_delivery_stream.stream[count.index].arn ]
+  resource_arn            = aws_wafv2_web_acl.apiwaf.arn
+}
