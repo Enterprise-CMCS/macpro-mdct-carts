@@ -54,9 +54,11 @@ class JwtAuthentication(authentication.BaseAuthentication):
             verify_token(token, key)
             print(f"\n\n%%%%>token verified: {kid}")
 
+            sys.stdout.write('\n\n\n fetching user info  \n\n\n') ; sys.stdout.flush()
             user_info = fetch_user_info(token)
             print(f"\n\n\ncreating user...", user_info)
             user = _get_or_create_user(user_info)
+            sys.stdout.write('\n\n\n !!!!!!!!!!!AUTHENTICATION DONE!!!!!!!!!!!  \n\n\n') ; sys.stdout.flush()
 
             return (user, None)
         except Exception:
