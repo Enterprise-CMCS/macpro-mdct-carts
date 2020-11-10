@@ -10,7 +10,7 @@ export const theUncertify = (stateCode) => async (dispatch, getState) => {
   const userName = `${user.firstname} ${user.lastname}`;
   const year = +state.global.formYear;
 
-
+  // created a new record in carts_api_statestatus that will label the state as uncertified
   dispatch({ type: UNCERTIFY });
   try {
     await axios.post(`/state_status/`, {

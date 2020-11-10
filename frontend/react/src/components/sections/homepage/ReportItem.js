@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { getAllStateStatuses } from "../../../actions/initial";
 
-const ReportItem = ({ key, link1Text, link1URL, name, statusText, statusURL, theUncertify: uncertifyAction }) => {
+const ReportItem = ({link1Text, link1URL, name, statusText, statusURL, theUncertify: uncertifyAction }) => {
   const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
   const stateCode = link1URL.toString().split("/")[3]
   const uncertify = () => {
