@@ -6,12 +6,10 @@ const Integer = ({ onChange, question, ...props }) => {
   const [error, setError] = useState(false);
 
   const change = ({ target: { name, value } }) => {
-    const numeric = +value;
-    const parsed = parseInt(numeric, 10);
+    const stripped = value.replace(/,/g, "");
+    const parsed = parseFloat(stripped);
 
-    // TODO: Strip parsed of any commas
-
-    if (numeric === parsed && !Number.isNaN(parsed)) {
+    if (!Number.isNaN(parsed)) {
       onChange({ target: { name, value } });
       setError(false);
     } else {

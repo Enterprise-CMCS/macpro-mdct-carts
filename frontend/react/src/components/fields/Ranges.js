@@ -42,14 +42,17 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   };
 
   const validateInequality = () => {
-    if(!values && !rangeValues) {
+    if (!values && !rangeValues) {
       return;
     }
-    setRangeValues([values[0], values[1]])
+    setRangeValues([values[0], values[1]]);
 
     if (values.length === 2) {
-      const start = parseFloat(values[0]);
-      const end = parseFloat(values[1]);
+      const strippedStart = values[0].replace(/,/g, "");
+      const strippedEnd = values[1].replace(/,/g, "");
+
+      const start = parseFloat(strippedStart);
+      const end = parseFloat(strippedEnd);
 
       if (start > end) {
         setRangeError("Start value must be less than end value");
@@ -60,12 +63,12 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   };
 
   const changeStart = ({ target: { value } }) => {
-    setRangeValues([value, rangeValues[1]])
+    setRangeValues([value, rangeValues[1]]);
     onChange(row, index, 0, value);
   };
 
   const changeEnd = ({ target: { value } }) => {
-    setRangeValues([rangeValues[0], value])
+    setRangeValues([rangeValues[0], value]);
     onChange(row, index, 1, value);
   };
 
@@ -140,7 +143,7 @@ const Ranges = ({ onChange, question }) => {
   const rowChange = (row, category, index, value) => {
     values[row][category][index] = value;
     setValues(values);
-    onChange({target: {name: question.id, value: values}});
+    onChange({ target: { name: question.id, value: values } });
   };
 
   const addRow = () => {
