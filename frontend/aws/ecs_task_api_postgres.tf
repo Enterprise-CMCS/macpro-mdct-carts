@@ -350,38 +350,15 @@ resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
   web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
 }
 
-# # ============== Data ====================
+# # ============== Import Data ====================
 data "aws_caller_identity" "current" {}
 
 locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
-# ==============Create S3 Bucket==============================
-
-# S3 Bucket to store WebACL Traffic Logs. This resource is needed by Amazon Kinesis Firehose as data delivery output target.
-resource "aws_s3_bucket" "webacl_traffic_s3" {
-  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
-  bucket = "${lower(terraform.workspace)}-${local.account_id}"
-  acl    = "private"
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-
-  versioning {
-    enabled = "true"
-  }
-
-  tags = {
-    Name          = "${lower(terraform.workspace)}-${local.account_id}"
-    Description   = "Bucket for storing WebACL traffic information"
-    ManagedBy     = "terraform"
-  }
+data "aws_s3_bucket" "webacl_s3" {
+  bucket = "${var.s3_bucket}"
 }
 
 # # ========================Create Kinesis firehose and role ========================
@@ -392,7 +369,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
 
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = aws_s3_bucket.webacl_traffic_s3[count.index].arn
+    bucket_arn = data.aws_s3_bucket.webacl_s3.arn
   }
 }
 
@@ -437,8 +414,8 @@ resource "aws_iam_role_policy" "firehose_policy" {
           "s3:PutObject"
           ],
         "Resource": [
-          "${aws_s3_bucket.webacl_traffic_s3[count.index].arn}",
-          "${aws_s3_bucket.webacl_traffic_s3[count.index].arn}/*"
+          "arn:aws:s3:::${var.s3_bucket}",
+          "arn:aws:s3:::${var.s3_bucket}/*"
         ]
       },
       {
