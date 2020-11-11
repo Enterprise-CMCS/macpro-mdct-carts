@@ -23,7 +23,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     validateInequality();
   }, []);
 
-  // This chooses the appropriate mask for the <Input/>, Month, Percentage or Text
+  // This chooses the appropriate mask for the <Input/>, Money, Percentage or Text
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
@@ -52,13 +52,19 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     if (!values && !rangeValues) {
       return;
     }
+
+    // If the range type is text, skip validation
+    if (type === "text") {
+      return;
+    }
+
     // Update local state
     setRangeValues([values[0], values[1]]);
 
-    if (values.length === 2) {
+    if (values.length === 2 && !values.includes(null)) {
       // Strip both values of commas
-      const strippedStart = values[0].replace(/,/g, "");
-      const strippedEnd = values[1].replace(/,/g, "");
+      let strippedStart = values[0].replace(/,/g, "");
+      let strippedEnd = values[1].replace(/,/g, "");
 
       const start = parseFloat(strippedStart);
       const end = parseFloat(strippedEnd);
@@ -72,14 +78,14 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     }
   };
 
-  const changeStart = ({ target: { stripped: value } }) => {
+  const changeStart = ({ target: { value } }) => {
     // Update local state
     setRangeValues([value, rangeValues[1]]);
     // Update <Ranges/>
     onChange(row, index, 0, value);
   };
 
-  const changeEnd = ({ target: { stripped: value } }) => {
+  const changeEnd = ({ target: { value } }) => {
     // Update local state
     setRangeValues([rangeValues[0], value]);
     // Update <Ranges/>
@@ -97,6 +103,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[0]}
               className="cmsrange-input"
               question={startQuestion}
+              fieldType={type}
               onChange={changeStart}
               onBlur={validateInequality}
               value={rangeValues[0] ? rangeValues[0] : values[0]}
@@ -111,6 +118,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[1]}
               className="cmsrange-input"
               question={endQuestion}
+              fieldType={type}
               onChange={changeEnd}
               onBlur={validateInequality}
               value={rangeValues[1] ? rangeValues[1] : values[1]}

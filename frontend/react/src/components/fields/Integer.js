@@ -10,7 +10,7 @@ const Integer = ({ onChange, question, ...props }) => {
     const parsed = parseFloat(stripped);
 
     if (!Number.isNaN(parsed)) {
-      onChange({ target: { name, stripped } });
+      onChange({ target: { name, value: `${stripped}` } });
       setError(false);
     } else {
       setError("Please enter whole numbers only");
