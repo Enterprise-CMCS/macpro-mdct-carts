@@ -18,9 +18,9 @@ variable "region" {
 variable "s3_bucket" {
   type = string
   description = "(optional) describe your variable"
-  default="dev-waf-logs-s3"
+  default="cms-cloud-730373213083-us-east-1-legacy"
 }
 variable "enable_log_waf_acl" {
   description = "Should logging be enabled on WAF ACL or not? Default is FALSE to not create"
-  default = true
+  default = false
 }
