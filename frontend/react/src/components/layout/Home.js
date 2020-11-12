@@ -8,7 +8,6 @@ import StateHome from "./HomeState";
 
 const Home = ({ role, SecureRouteComponent }) => {
   let content = null;
-  role = "bus_user"
   switch (role) {
     case "admin_user":
       content = <AdminHome SecureRouteComponent={SecureRouteComponent} />;

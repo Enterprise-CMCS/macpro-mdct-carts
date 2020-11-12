@@ -34,19 +34,19 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
                 <div className="actions ds-l-col--6">Actions</div>
               </div>
 
-              {statuses.sort((a, b) => a.state > b.state ? 1 : -1)
-                .map(({ state, stateCode, status }) => 
-                // with statement below we get the three bogus records (username, status, and lastchanged)
-                  stateCode.toString().length === 2 ?
-                  (
-                  <ReportItem
-                    key={stateCode}
-                    link1URL={`/views/sections/${stateCode}/2020/00/a`}
-                    name={`${state} 2020`}
-                    statusText={status}
-                    editor="x@y.z"
-                  />)
-                  : null
+              {statuses
+                .sort((a, b) => (a.state > b.state ? 1 : -1))
+                .map(({ state, stateCode, status }) =>
+                  // with statement below we get the three bogus records (username, status, and lastchanged)
+                  stateCode.toString().length === 2 ? (
+                    <ReportItem
+                      key={stateCode}
+                      link1URL={`/views/sections/${stateCode}/2020/00/a`}
+                      name={`${state} 2020`}
+                      statusText={status}
+                      editor="x@y.z"
+                    />
+                  ) : null
                 )}
             </div>
           </div>

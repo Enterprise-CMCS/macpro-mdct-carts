@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case UNCERTIFY_SUCCESS:
       return {
         ...state,
-        [action.stateCode]: "uncertified"
+        [action.stateCode]: "uncertified",
       };
     default:
       return state;
