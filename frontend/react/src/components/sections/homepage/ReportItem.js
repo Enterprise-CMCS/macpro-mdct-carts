@@ -6,11 +6,20 @@ import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { getAllStateStatuses } from "../../../actions/initial";
 
-const ReportItem = ({link1Text, link1URL, name, statusText, statusURL, theUncertify: uncertifyAction }) => {
+const ReportItem = ({
+  link1Text,
+  link1URL,
+  name,
+  statusText,
+  statusURL,
+  theUncertify: uncertifyAction,
+}) => {
   const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
-  const stateCode = link1URL.toString().split("/")[3]
+  const stateCode = link1URL.toString().split("/")[3];
   const uncertify = () => {
-    if(window.confirm('Are you sure to uncertify this record?')){ uncertifyAction(stateCode);}
+    if (window.confirm("Are you sure to uncertify this record?")) {
+      uncertifyAction(stateCode);
+    }
     //Getting the new statuses to update the page
     getAllStateStatuses();
   };
@@ -27,13 +36,13 @@ const ReportItem = ({link1Text, link1URL, name, statusText, statusURL, theUncert
         <Link to={link1URL} target={anchorTarget}>
           {link1Text}
         </Link>
-
-
       </div>
       <div className="actions ds-l-col--4">
-        {statusText === "Certified" ? (<Button onClick={uncertify} variation="primary">
-          Uncertify
-        </Button>) : null}
+        {statusText === "Certified" ? (
+          <Button onClick={uncertify} variation="primary">
+            Uncertify
+          </Button>
+        ) : null}
       </div>
     </div>
   );
@@ -52,9 +61,7 @@ ReportItem.defaultProps = {
   link1URL: "#",
   statusText: "Submitted",
   statusURL: "",
-
 };
-
 
 const mapState = (state) => ({
   user: state.reportStatus.userName,
