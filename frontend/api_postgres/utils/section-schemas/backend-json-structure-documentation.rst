@@ -415,6 +415,112 @@ To express the logic described above, the sub-question has this ``conditional_di
 
 .. _JSON Path: https://goessner.net/articles/JsonPath/
 
+``hide_if_table_value``
+    This construct describes the conditions under which the question should be hidden from view. It has several properties, ``target``, ``computed``, ``variation_operator``, and ``variations``. ``Variations`` is an object with the following properties ``threshold``, ``operator``, ``row``, and ``row_key``. The frontend will evaluate the current value of the JSON elements specified by ``target`` and hide it from view if the values fall within the threshold provided.
+
+    This is valuable for determining if a value falls above or below a specified threshold. This can be compared against an array of items, a compareACS (computed) value and a seds (computed) field.
+
+    ``target``
+        String.
+
+        This is an string of `JSON Path`_ expression that points to the locations in the JSON to find the values to be evaluated against. Normally this will be the values of an ``entry`` property. The vast majority of these will refer to ``id`` values. For example, to find the value of ``entry`` for a question with the ``id`` of ``2020-01-a-01-01``, the expression would be ``$..*[?(@.id=='2020-01-a-01-01')].answer.entry``. The assumption is that changing these values will almost always be a question of simply changing the ``id`` and leaving the rest of the expression unchanged.
+    ``computed``
+        Bool.
+
+        This determines if the target is a synthesized table (true) or a non-interactive table (false).
+
+    ``variation_operator``
+        String.
+
+        Options: `or` or `and`. Select `or` for items that should resolve true if ANY of the variations are true. Use `and` when all variations must resolve true.
+
+    ``variations``
+        Array[Objects]
+
+        Variations house the data to determine if a comparison resolves as true or false.
+
+        ``threshold``
+            String.
+
+            Enter the number that is being compared against. (E.g. if checking that a value is greater than 3, set threshold to 3)
+
+        ``operator``
+            String.
+
+            Options: `>`, `<`, `=`, `!=`. Set which operator for the comparison
+
+        ``row``
+            String.
+
+            Options: *(all), number. This corresponds with the row number from the `target` table. This field starts at 0. For the second row, select 1.
+
+        ``row_key``
+            Number.
+
+            This is the column, or row index. If attempted to read the 3rd value in a row, select 2.
+
+
+Section 2 has question 1. “What are some reasons why the number and/or percent of uninsured children has changed?”, This question is shown only if the value from the preceding table is less than -3 OR greater than +3.
+
+The ``fieldset_id`` for the target table is ``noninteractive-table-2-1``, and will show if the value is either less than -3 or greater than +3.
+
+Example of non-interactive table (note the fieldset_id)
+.. code:: json
+    {
+        "type": "fieldset",
+        "fieldset_type": "noninteractive_table",
+        "fieldset_id": "noninteractive-table-2-1",
+        "fieldset_info": {
+          "headers": [
+            "Program",
+            "Number of children enrolled in FFY 2019",
+            "Number of children enrolled in FFY 2020",
+            "Percent change"
+          ],
+          "rows": [
+            [
+              "Medicaid Expansion CHIP",
+              284143,
+              300579,
+              5.78
+            ],
+            [
+              "Separate CHIP",
+              478542,
+              511473,
+              6.88
+            ]
+          ]
+        },
+        "questions": []
+    },
+
+Below is an example of the conditional display for the above example.
+..  code:: json
+
+        "conditional_display": {
+            "type": "conditional_display",
+            "hide_if_table_value": {
+              "target": "$..*[?(@.fieldset_id=='noninteractive-table-2-1')].fieldset_info.rows",
+              "computed": false,
+              "variation_operator": "or",
+              "variations": [
+                {
+                  "threshold": "3",
+                  "operator": ">",
+                  "row": "*",
+                  "row_key": "3"
+                },
+                {
+                  "threshold": "-3",
+                  "operator": "<",
+                  "row": "*",
+                  "row_key": "3"
+                }
+              ]
+            }
+          }
+
 Question types
 --------------
 This section describes the characteristics and properties (in addition to those described in the Answer section) of answer constructs of a given question type that are specific to that type of question.
