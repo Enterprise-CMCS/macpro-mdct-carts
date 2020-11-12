@@ -626,6 +626,8 @@ def initiate_session(request):
 
 @api_view(["POST"])
 def authenticate_user(request):
+    print(f"\n\n\n\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!moving on")
+
     user = request.user
     states = [*user.appuser.states.all()]
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
@@ -658,6 +660,18 @@ def authenticate_user(request):
         },
     }
     return HttpResponse(json.dumps(user_data))
+
+
+@api_view(["POST"])
+def generate_upload_psurl(request):
+
+    generated_psurl = {
+        "psurl": "adfasfadfadsfafwertqewra"
+    }
+
+    print(vars(request))
+
+    return HttpResponse(json.dumps(generated_psurl))
 
 
 def _id_from_chunks(year, *args):

@@ -54,11 +54,11 @@ class JwtAuthentication(authentication.BaseAuthentication):
             verify_token(token, key)
             print(f"\n\n%%%%>token verified: {kid}")
 
-            sys.stdout.write('\n\n\n fetching user info  \n\n\n') ; sys.stdout.flush()
+            print(f"\n\n\n fetching user info  \n\n\n")
             user_info = fetch_user_info(token)
             print(f"\n\n\ncreating user...", user_info)
             user = _get_or_create_user(user_info)
-            sys.stdout.write('\n\n\n !!!!!!!!!!!AUTHENTICATION DONE!!!!!!!!!!!  \n\n\n') ; sys.stdout.flush()
+            print(f"\n\n\n !!!!!!!!!!!AUTHENTICATION DONE!!!!!!!!!!!  \n\n\n")
 
             return (user, None)
         except Exception:
@@ -117,6 +117,8 @@ def _get_or_create_user(user_info):
 
     app_user.save()
 
+    print(f"\n\n\n@@@@@app_user saved!!!")
+
     if role == "state_user" and states:
         group = Group.objects.get(name__endswith=f"{states[0].code} sections")
         user.groups.set([group])
@@ -133,6 +135,9 @@ def _get_or_create_user(user_info):
         group = Group.objects.get(name="Business owner users")
         user.groups.set([group])
 
+    print(f"\n\n\n~~~~~saving USER now!!")
     user.save()
+    print(f"\n\n\n~~~~~USER saved")
+    print(user)
 
     return user

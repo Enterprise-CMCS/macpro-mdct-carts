@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system-core";
-import axios from "axios";
-import { withOktaAuth } from "@okta/okta-react";
+import axios    from "../../authenticatedAxios";
+import { withOktaAuth }      from "@okta/okta-react";
 import { setAnswerEntry } from "../../actions/initial";
 
 class UploadComponent extends Component {
@@ -21,7 +21,7 @@ class UploadComponent extends Component {
     this.submitUpload = this.submitUpload.bind(this);
   }
 
-  isFileTypeAllowed = (extension) => {
+  isFileTypeAllowed(extension) {
     const allowedFileTypes = [
       "jpg",
       "jpeg",
@@ -44,15 +44,16 @@ class UploadComponent extends Component {
     const fileFormData = new FormData();
 
     // *** traverse loaded files and append to form data
-    Object.keys(loadedFiles).forEach((key) => {
-      fileFormData.append(loadedFiles[key].name, loadedFiles[key]);
-    });
+    for (const file of loadedFiles) {
+      fileFormData.append(file.name, file);
+    }
+    alert('getting ready to upload')
 
     // *** obtain signed URL
     const response = await axios.post(
       `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
       {
-        somevalue: "hey now",
+        "some_value": "hey hey"
       }
     );
 
@@ -86,16 +87,15 @@ class UploadComponent extends Component {
 
       let errorString = "";
 
-      Object.keys(filesArray).forEach((key) => {
-        const singleFile = filesArray[key];
-        const uploadName = singleFile.name;
-        const mediaSize = singleFile.size / 1024 / 1024;
+      for (const file of filesArray) {
+        const uploadName = file.name;
+        const mediaSize = file.size / 1024 / 1024;
         const mediaExtension = uploadName.split(".").pop();
         const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
 
         if (fileTypeAllowed === true) {
           if (mediaSize <= maxFileSize) {
-            filePayload.push(singleFile);
+            filePayload.push(file);
           } else {
             errorString = errorString.concat(
               `${uploadName} exceeds ${maxFileSize}MB file size maximum`
@@ -106,7 +106,7 @@ class UploadComponent extends Component {
             `${uploadName} is not an approved file type`
           );
         }
-      });
+      }
 
       const { loadedFiles } = this.state;
 

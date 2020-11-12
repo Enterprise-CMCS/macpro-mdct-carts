@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SUPERUSER_USERNAME admin
 ENV DJANGO_SUPERUSER_PASSWORD admin
 ENV DJANGO_SUPERUSER_EMAIL test@gsa.gov
-
+ENV ENDPOINT_UI http://localhost:81
 
 # install psycopg2 dependencies
 RUN apk update \
