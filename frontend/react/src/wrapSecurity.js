@@ -56,15 +56,8 @@ const WrappedSecurity = () => {
   /* eslint-disable-line */
   console.log("!***** initial data load [userData] ===>", userData);
 
-  // Internet Explorer 6-11
-  const isIE = /*@cc_on!@*/false || !!document.documentMode;
-
-// Edge 20+
-  const isEdge = !isIE && !!window.StyleMedia;
-
   return (
     <div className="App" data-test="component-app">
-      {isIE || isEdge ? <BrowserIssue /> : (
       <SecurityWrapper
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}
@@ -84,7 +77,6 @@ const WrappedSecurity = () => {
         </Router>
         {VisibleFooter}
       </SecurityWrapper>
-        )}
     </div>
   );
 };
