@@ -8,6 +8,7 @@ import InvokeSection from "../Utils/InvokeSection";
 import SaveError from "./SaveError";
 import ScrollToTop from "../Utils/ScrollToTop";
 import Sidebar from "./Sidebar";
+import Unauthorized from "./Unauthorized";
 
 const StateHome = ({ SecureRouteComponent: SecureRoute }) => (
   <>
@@ -29,6 +30,11 @@ const StateHome = ({ SecureRouteComponent: SecureRoute }) => (
         <Sidebar />
         <InvokeSection />
       </SecureRoute>
+      {/* Add routes from admin that should be unauthorized for state users */}
+      <SecureRoute
+        path={["/role_user_assoc", "/state_assoc", "/role_jobcode_assoc"]}
+        component={Unauthorized}
+      />
     </Switch>
   </>
 );

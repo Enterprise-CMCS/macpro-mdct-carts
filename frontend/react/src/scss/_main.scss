@@ -1,6 +1,7 @@
 /**********************
   MAIN
 **********************/
+
 .main {
   padding: ($padding * 2) 0;
 }
@@ -403,4 +404,10 @@ div[data-state="open"] .accordion-header .arrow:before {
       display: inline-block;
     }
   }
+}
+
+.browser-issue {
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
 }
