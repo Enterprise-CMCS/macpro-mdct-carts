@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import AdminHome from "./HomeAdmin";
 import CMSHome from "./HomeCMS";
 import StateHome from "./HomeState";
+import Unauthorized from "./Unauthorized";
 
 const Home = ({ role, SecureRouteComponent }) => {
   let content = null;
@@ -20,7 +21,7 @@ const Home = ({ role, SecureRouteComponent }) => {
       content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
       break;
     default:
-      content = null;
+      content = <Unauthorized />;
   }
 
   return (

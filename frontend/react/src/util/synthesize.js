@@ -225,7 +225,7 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
  * @param {string} acsProperty
  * @returns {(string|float)}
  */
-const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
+export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   const percentagePrecision = 2;
   let returnValue = "Not Available";
   // if allStatesData and stateUser are available
