@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
+import Users from "../layout/users/Users"
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
   <>
@@ -36,6 +37,11 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
                   Associate EUA job codes to CARTS roles
                 </Link>
               </li>
+              <li>
+                <Link to="/users">
+                  List and edit all users
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -51,6 +57,11 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
       exact
       path="/role_jobcode_assoc"
       component={JobCodeRoleAssociations}
+    />
+    <SecureRoute
+      exact
+      path="/users"
+      component={Users}
     />
   </>
 );

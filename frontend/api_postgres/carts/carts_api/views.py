@@ -66,6 +66,8 @@ from carts.carts_api.model_utils import validate_status_change
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -83,6 +85,18 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
+
+
+@api_view(["POST"])
+def UserProfiles(request):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = list(User.objects.all().order_by("username").values())
+
+#     serializer_class = UserSerializer
+
+    return HttpResponse(json.dumps(queryset, cls=DjangoJSONEncoder))
 
 
 class GroupViewSet(viewsets.ModelViewSet):
