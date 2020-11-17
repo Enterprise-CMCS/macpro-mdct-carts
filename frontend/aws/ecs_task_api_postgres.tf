@@ -357,8 +357,15 @@ locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
+// data "aws_s3_bucket" "webacl_s3" {
+//   bucket = "${var.s3_bucket}"
+// }
+
+# Need to update with Prod and Val Bucket name
+locals { waf_logging_bucket = { prod: "prod-bucket-name-here", val: "val-bucket-name-here", master: "cms-cloud-730373213083-us-east-1-legacy" } }
+
 data "aws_s3_bucket" "webacl_s3" {
-  bucket = "${var.s3_bucket}"
+  bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
 }
 
 # # ========================Create Kinesis firehose and role ========================
@@ -414,8 +421,8 @@ resource "aws_iam_role_policy" "firehose_policy" {
           "s3:PutObject"
           ],
         "Resource": [
-          "arn:aws:s3:::${var.s3_bucket}",
-          "arn:aws:s3:::${var.s3_bucket}/*"
+          "arn:aws:s3:::${"data.aws_s3_bucket.webacl_s3"}",
+          "arn:aws:s3:::${"data.aws_s3_bucket.webacl_s3"}/*"
         ]
       },
       {
