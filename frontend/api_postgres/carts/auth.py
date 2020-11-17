@@ -76,7 +76,6 @@ def _get_or_create_user(user_info):
     user.last_name = user_info["family_name"]
     user.email = user_info["email"]
     user.last_login = datetime.now()
-    user.is_active = True
 
     print(f"$$$$\n\nobtained user", user.email, "\n\n\n")
 
