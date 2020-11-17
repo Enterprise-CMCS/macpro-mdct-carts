@@ -59,11 +59,12 @@ const CMSHomepage = ({ getStatuses, statuses, currentYear }) => {
 CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
   statuses: PropTypes.object.isRequired,
+  currentYear: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
-  currentYear: state.global.formYear
+  currentYear: state.global.formYear,
 });
 
 const mapDispatch = {

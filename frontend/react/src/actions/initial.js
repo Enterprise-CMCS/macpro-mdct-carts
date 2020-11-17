@@ -94,7 +94,7 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
 
 export const loadSections = ({ userData, stateCode }) => {
   const state = stateCode || userData.abbr;
-  
+
   return async (dispatch) => {
     const { data } = await axios
       .get(`/api/v1/sections/2020/${state}`)

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Button } from "@cmsgov/design-system-core";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { getAllStateStatuses } from "../../../actions/initial";
@@ -13,7 +12,7 @@ const ReportItem = ({
   statusText,
   statusURL,
   theUncertify: uncertifyAction,
-  stateUser
+  stateUser,
 }) => {
   const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
   const stateCode = link1URL.toString().split("/")[3];
@@ -38,12 +37,13 @@ const ReportItem = ({
           {link1Text}
         </Link>
       </div>
-      {statusText === "Certified" && !stateUser ? 
-      <div className="actions ds-l-col--4">
+      {statusText === "Certified" && !stateUser ? (
+        <div className="actions ds-l-col--4">
           <Link onClick={uncertify} variation="primary">
             Uncertify
           </Link>
-      </div> : null}
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -55,7 +55,7 @@ ReportItem.propTypes = {
   name: PropTypes.string.isRequired,
   statusText: PropTypes.string,
   statusURL: PropTypes.string,
-  stateUser: PropTypes.bool
+  stateUser: PropTypes.bool,
 };
 ReportItem.defaultProps = {
   link1Text: "View only",
