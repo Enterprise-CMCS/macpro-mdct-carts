@@ -363,7 +363,7 @@ locals {
 // }
 
 # Need to update with Prod and Val Bucket name
-locals { waf_logging_bucket = { prod: "prod-bucket-name-here", val: "val-bucket-name-here", master: "cms-cloud-730373213083-us-east-1-legacy" } }
+locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy", val: "cms-cloud-730373213083-us-east-1-legacy", master: "cms-cloud-730373213083-us-east-1-legacy" } }
 
 data "aws_s3_bucket" "webacl_s3" {
   bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
