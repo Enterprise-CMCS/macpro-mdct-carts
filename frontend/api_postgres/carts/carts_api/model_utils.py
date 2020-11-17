@@ -276,7 +276,7 @@ def validate_status_change(
                 "approved": {
                     "authorized_roles": ["bus_user", "co_user"],
                 },
-                "uncertified": {
+                "in_progress": {
                     "authorized_roles": ["bus_user", "co_user"],
                 },
             }

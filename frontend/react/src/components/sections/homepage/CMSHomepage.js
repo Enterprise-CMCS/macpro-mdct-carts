@@ -5,7 +5,7 @@ import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses } from "../../../store/selectors";
 
-const CMSHomepage = ({ getStatuses, statuses }) => {
+const CMSHomepage = ({ getStatuses, statuses, currentYear }) => {
   useEffect(() => {
     getStatuses();
   }, []);
@@ -37,14 +37,15 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
               {statuses
                 .sort((a, b) => (a.state > b.state ? 1 : -1))
                 .map(({ state, stateCode, status }) =>
-                  // with statement below we get the three bogus records (username, status, and lastchanged)
+                  // with statement below we don't get the three bogus records (username, status, and lastchanged)
                   stateCode.toString().length === 2 ? (
                     <ReportItem
                       key={stateCode}
-                      link1URL={`/views/sections/${stateCode}/2020/00/a`}
-                      name={`${state} 2020`}
+                      link1URL={`/views/sections/${stateCode}/${currentYear}/00/a`}
+                      name={`${state} ${currentYear}`}
                       statusText={status}
                       editor="x@y.z"
+                      stateUser={false}
                     />
                   ) : null
                 )}
@@ -62,6 +63,7 @@ CMSHomepage.propTypes = {
 
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
+  currentYear: state.global.formYear
 });
 
 const mapDispatch = {

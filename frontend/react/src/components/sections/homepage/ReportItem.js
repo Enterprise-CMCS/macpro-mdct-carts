@@ -13,6 +13,7 @@ const ReportItem = ({
   statusText,
   statusURL,
   theUncertify: uncertifyAction,
+  stateUser
 }) => {
   const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
   const stateCode = link1URL.toString().split("/")[3];
@@ -37,13 +38,12 @@ const ReportItem = ({
           {link1Text}
         </Link>
       </div>
+      {statusText === "Certified" && !stateUser ? 
       <div className="actions ds-l-col--4">
-        {statusText === "Certified" ? (
-          <Button onClick={uncertify} variation="primary">
+          <Link onClick={uncertify} variation="primary">
             Uncertify
-          </Button>
-        ) : null}
-      </div>
+          </Link>
+      </div> : null}
     </div>
   );
 };
@@ -55,6 +55,7 @@ ReportItem.propTypes = {
   name: PropTypes.string.isRequired,
   statusText: PropTypes.string,
   statusURL: PropTypes.string,
+  stateUser: PropTypes.bool
 };
 ReportItem.defaultProps = {
   link1Text: "View only",

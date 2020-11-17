@@ -25,8 +25,8 @@ const Homepage = ({ editable, status }) => (
             </div>
             <div className="report-header ds-l-row">
               <div className="name ds-l-col--2">Year</div>
-              <div className="status ds-l-col--4">Status</div>
-              <div className="actions ds-l-col--6">Actions</div>
+              <div className="status ds-l-col--2">Status</div>
+              <div className="actions ds-l-col--4">Actions</div>
             </div>
 
             <ReportItem
@@ -39,6 +39,7 @@ const Homepage = ({ editable, status }) => (
               link2Text={null}
               statusText={status}
               editor="karen.dalton@state.gov"
+              stateUser={true}
             />
           </div>
         </div>

@@ -16,12 +16,12 @@ export const theUncertify = (stateCode) => async (dispatch, getState) => {
     await axios.post(`/state_status/`, {
       last_changed: new Date(),
       state: stateCode,
-      status: "uncertified",
+      status: "in_progress",
       user_name: userName,
       year,
     });
     dispatch({ type: UNCERTIFY_SUCCESS, stateCode: stateCode });
   } catch (e) {
-    dispatch({ type: UNCERTIFY_FAILURE });
+    dispatch({ type: UNCERTIFY_FAILURE, message: { e } });
   }
 };
