@@ -142,7 +142,9 @@ def parse_raw_ldap_job_codes(entry: str) -> List[dict]:
         }
 
     print(f"\n\n==>about to start splitting")
-    delimited = entry.replace(",CN=", ",cn=").replace(",cn=", ";SPLIT;cn=")  # crude, but ¯\_(ツ)_/¯
+    delimited = entry.replace(",CN=", ",cn=").replace(
+        ",cn=", ";SPLIT;cn="
+    )  # crude, but ¯\_(ツ)_/¯
     print(f"\n\n==>delimited: {delimited}")
     raw_entries = delimited.split(";SPLIT;")
     print(f"\n\n==>delimited: {delimited}")
@@ -277,6 +279,9 @@ def validate_status_change(
                     "authorized_roles": ["bus_user", "co_user"],
                 },
                 "in_progress": {
+                    "authorized_roles": ["bus_user", "co_user"],
+                },
+                "uncertified": {
                     "authorized_roles": ["bus_user", "co_user"],
                 },
             }
