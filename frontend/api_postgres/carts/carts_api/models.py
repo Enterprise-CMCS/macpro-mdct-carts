@@ -193,3 +193,26 @@ class StateStatus(models.Model):
     )
     last_changed = models.DateTimeField(null=True)
     user_name = models.TextField(null=True)
+
+
+class UserProfiles(models.Model):
+    """
+    Pulls from view, represents all user profile information.
+    """
+
+    password = models.CharField(max_length=100)
+    last_login = models.DateTimeField(auto_now_add=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField(auto_now_add=True)
+    user_role = models.CharField(max_length=100)
+    state_codes = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = "vw_userprofile"

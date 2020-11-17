@@ -60,6 +60,7 @@ from carts.carts_api.models import (
     State,
     StateStatus,
     StatesFromUsername,
+    UserProfiles,
 )
 from carts.carts_api.model_utils import validate_status_change
 
@@ -88,38 +89,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["POST"])
-def UserProfiles(request):
+def UserProfilesViewSet(request):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that returns all user profile data.
     """
 
-    all_users = []
     # Get all users
-    users = list(User.objects.all().order_by("username").values())
+    users = list(UserProfiles.objects.all().order_by("username").values())
 
-    # Loop through users and get associated state_codes
-    for user in users:
-
-        # Carts Role
-        roles = list(RoleFromUsername.objects.all().filter(
-            username=user["username"]
-        ).values())
-
-        # Add state_codes to user dict
-        user['role'] = roles[0]["user_role"]
-
-        #Get states filtered by username
-        states = list(StatesFromUsername.objects.all().filter(
-            username=user["username"]
-        ).values())
-
-        # Add state_codes to user dict
-        user['states'] = states[0]["state_codes"]
-
-        # Add user to return list
-        all_users.append(user)
-
-    return HttpResponse(json.dumps(all_users, cls=DjangoJSONEncoder))
+    return HttpResponse(json.dumps(users, cls=DjangoJSONEncoder))
 
 
 class GroupViewSet(viewsets.ModelViewSet):
