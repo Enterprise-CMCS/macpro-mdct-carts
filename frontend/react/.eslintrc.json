@@ -1,4 +1,9 @@
 {
+  "settings": {
+    "react": {
+      "version": "16.13.1"
+    }
+  },
   "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
@@ -12,7 +17,8 @@
     "react/jsx-props-no-spreading": 0
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "es6": true
   },
   "overrides": [
     {
