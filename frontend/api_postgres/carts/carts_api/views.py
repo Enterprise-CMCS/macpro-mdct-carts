@@ -92,11 +92,34 @@ def UserProfiles(request):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = list(User.objects.all().order_by("username").values())
 
-#     serializer_class = UserSerializer
+    all_users = []
+    # Get all users
+    users = list(User.objects.all().order_by("username").values())
 
-    return HttpResponse(json.dumps(queryset, cls=DjangoJSONEncoder))
+    # Loop through users and get associated state_codes
+    for user in users:
+
+        # Carts Role
+        roles = list(RoleFromUsername.objects.all().filter(
+            username=user["username"]
+        ).values())
+
+        # Add state_codes to user dict
+        user['role'] = roles[0]["user_role"]
+
+        #Get states filtered by username
+        states = list(StatesFromUsername.objects.all().filter(
+            username=user["username"]
+        ).values())
+
+        # Add state_codes to user dict
+        user['states'] = states[0]["state_codes"]
+
+        # Add user to return list
+        all_users.append(user)
+
+    return HttpResponse(json.dumps(all_users, cls=DjangoJSONEncoder))
 
 
 class GroupViewSet(viewsets.ModelViewSet):
