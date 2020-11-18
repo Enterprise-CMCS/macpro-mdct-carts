@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,11 +15,22 @@ const inputs = new Map([
 ]);
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
+  const [rangeError, setRangeError] = useState("");
+  const [rangeValues, setRangeValues] = useState(values);
+
+  // Trigger validation when page loads so that all error messages show
+  useEffect(() => {
+    validateInequality();
+  }, []);
+
+  // This chooses the appropriate mask for the <Input/>, Money, Percentage or Text
   let Input = Text;
   if (inputs.has(type)) {
     Input = inputs.get(type);
   }
 
+  // Extract start value from redux's nested array, passed down from <Ranges/>
+  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
   const startQuestion = {
     id: `${id}-row-${row}-${index}-start`,
     answer: {
@@ -27,6 +38,8 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
+  // Extract start value from redux's nested array, passed down from <Ranges/>
+  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
   const endQuestion = {
     id: `${id}-row-${row}-${index}-end`,
     answer: {
@@ -34,17 +47,55 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
+  // Validate that the second field is greater than the first field
+  const validateInequality = () => {
+    if (!values && !rangeValues) {
+      return;
+    }
+
+    // If the range type is text, skip validation
+    if (type === "text") {
+      return;
+    }
+
+    // Update local state
+    setRangeValues([values[0], values[1]]);
+
+    if (values.length === 2 && !values.includes(null)) {
+      // Strip both values of commas
+      let strippedStart = values[0].replace(/,/g, "");
+      let strippedEnd = values[1].replace(/,/g, "");
+
+      const start = parseFloat(strippedStart);
+      const end = parseFloat(strippedEnd);
+
+      // If both values are present, compare them and set appropriate error messages to state
+      if (start > end) {
+        setRangeError("Start value must be less than end value");
+      } else {
+        setRangeError("");
+      }
+    }
+  };
+
   const changeStart = ({ target: { value } }) => {
+    // Update local state
+    setRangeValues([value, rangeValues[1]]);
+    // Update <Ranges/>
     onChange(row, index, 0, value);
   };
 
   const changeEnd = ({ target: { value } }) => {
+    // Update local state
+    setRangeValues([rangeValues[0], value]);
+    // Update <Ranges/>
     onChange(row, index, 1, value);
   };
 
   return (
     <div className="cmsrange">
       <div className="cmsrange-outer ds-l-container">
+        {rangeError ? <div className="errors">{rangeError}</div> : null}
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
             <Input
@@ -52,7 +103,10 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[0]}
               className="cmsrange-input"
               question={startQuestion}
+              fieldType={type}
               onChange={changeStart}
+              onBlur={validateInequality}
+              value={rangeValues[0] ? rangeValues[0] : values[0]}
             />
           </div>
           <div className="cmsrange-arrow">
@@ -64,7 +118,10 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               label={category[1]}
               className="cmsrange-input"
               question={endQuestion}
+              fieldType={type}
               onChange={changeEnd}
+              onBlur={validateInequality}
+              value={rangeValues[1] ? rangeValues[1] : values[1]}
             />
           </div>
         </div>
@@ -106,8 +163,10 @@ const Ranges = ({ onChange, question }) => {
   });
 
   const rowChange = (row, category, index, value) => {
+    // Set incoming value to <Ranges/> local state
     values[row][category][index] = value;
     setValues(values);
+    // Send to redux
     onChange({ target: { name: question.id, value: values } });
   };
 
