@@ -363,7 +363,7 @@ locals {
 // }
 
 # Need to update with Prod and Val Bucket name
-locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail/${terraform.workspace}", val: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail/${terraform.workspace}", master: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail/${terraform.workspace}" } }
+locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail", val: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail", master: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail}" } }
 
 data "aws_s3_bucket" "webacl_s3" {
   bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
