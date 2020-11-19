@@ -47,30 +47,10 @@ div[hidden] {
 }
 
 .user-profiles {
-  overflow-x: scroll;
   overflow-y: hidden;
   margin: 2.2rem 0;
-
-  ul {
-    margin: 1.2rem 0;
-    padding: 0;
-    width: 1200px;
-  }
-  li {
-    display: grid;
-    grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr;
-    list-style-type: none;
-
-    &:nth-child(even) {
-      background: #eee;
-    }
-
-    .label {
-      font-weight: bold;
-    }
-
-    div {
-      padding: .6rem .2rem .6rem .2rem;
-    }
-  }
 }
+
+ .data-table-extensions {
+   min-height: 67px;
+ }

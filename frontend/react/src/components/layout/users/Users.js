@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "../../../authenticatedAxios";
-import { LOAD_SECTIONS, loadSections } from "../../../actions/initial";
+import DataTable from "react-data-table-component";
+import DataTableExtensions from 'react-data-table-component-extensions';
+import Card from "@material-ui/core/Card";
+import 'react-data-table-component-extensions/dist/index.css';
+import SortIcon from "@material-ui/icons/ArrowDownward";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 /**
@@ -9,8 +13,6 @@ import moment from "moment";
  *
  * @constructor
  */
-
-
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -32,86 +34,97 @@ const Users = () => {
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
   }, []);
 
-  const reorderList = (type) => {
-    setSortType(type);
+  const deactivateUser = (e) => {
+    console.log("deactivateUser", e)
   }
 
-  let output = [];
+  const activateUser = (e) => {
+    console.log("activateUser", e)
+  }
 
-  if (users) {
+  let tableData;
 
-    // Sort data by selected value
-    if(sortType == 'name') {
-      users.sort((a, b) => (a.last_name.toLowerCase() > b.last_name.toLowerCase()) ? 1 : -1)
-    }
-    if(sortType == 'username') {
-      users.sort((a, b) => (a.username.toLowerCase() > b.username.toLowerCase()) ? 1 : -1)
-    }
-    if(sortType == 'email') {
-      users.sort((a, b) => (a.email.toLowerCase() > b.email.toLowerCase()) ? 1 : -1)
-    }
-    if(sortType == 'joined') {
-      users.sort((a, b) => (a.date_joined > b.date_joined) ? 1 : -1)
-    }
-    if(sortType == 'role') {
-      users.sort((a, b) => (a.user_role.toLowerCase() > b.user_role.toLowerCase()) ? 1 : -1)
-    }
-    if(sortType == 'active') {
-      users.sort((a, b) => (a.is_active > b.is_active) ? 1 : -1)
-    }
+  if(users) {
 
-    for (const user of users) {
-      // Split array into comma separated string
-      const stateCodes = user.state_codes.join(", ");
+    // Build column structure for react-data-tables
+    const columns = [
+      {
+        name: "Username",
+        selector: "username",
+        sortable: true,
+      },
+      {
+        name: "First Name",
+        selector: "first_name",
+        sortable: true,
+      },
+      {
+        name: "Last Name",
+        selector: "last_name",
+        sortable: true
+      },
+      {
+        name: "Email",
+        selector: "email",
+        sortable: true,
+        cell: e => <span><a href={`mailto:${e.email}`}>{e.email}</a></span>
+      },
+      {
+        name: "Joined",
+        selector: "date_joined",
+        sortable: true,
+        cell: d => <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>
+      },
+      {
+        name: "Last Active",
+        selector: "last_login",
+        sortable: true,
+        cell: l => <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>
+      },
+      {
+        name: "States",
+        selector: "state_codes",
+        sortable: true,
+        cell: s => <span>{s.state_codes.sort().join(', ')}</span>,
+      },
+      {
+        name: "Active",
+        selector: "is_active",
+        sortable: true,
+        cell: s => <span>{s.state_codes ? <button className="btn btn-primary" onClick={deactivateUser}>Deactivate</button>: <button className="btn btn-primary" onClick={activateUser}>Activate</button>}</span>,
+      }
+    ]
 
-      // Trim email for display
-      // const email = user.email.substring(0, 18) + "..."
-      const email = user.email;
+    tableData = {
+      columns,
+      data: users,
+      exportHeaders: true,
 
-      // Correct time
-      const dateJoined = moment(user.date_joined).format("MM/DD/YYYY");
-
-      // Set active/inactive
-      const active = user.is_active ? "active" : "inactive";
-
-      output.push(
-        <li key={user.id}>
-          <div class="username">{user.username}</div>
-          <div class="name">
-            {user.last_name}, {user.first_name}
-          </div>
-          <div class="email">
-            <a href={`mailto:${user.email}`}>{email}</a>
-          </div>
-          <div class="date_joined">{dateJoined}</div>
-          <div class="user_role">{user.user_role}</div>
-          <div class="state_codes">{stateCodes}</div>
-          <div class="active">{active}</div>
-        </li>
-      );
     }
   }
 
-  console.log("zzoutput", output);
-
-  let a = 0;
   return (
     <div className="user-profiles">
       <h1>Users</h1>
-      <ul>
-        <li>
-          <div className="label username"><button onClick={() => reorderList("username")}>Username</button></div>
-          <div className="label name"><button onClick={() => reorderList("name")}>Name</button></div>
-          <div className="label email"><button onClick={() => reorderList("email")}>Email</button></div>
-          <div className="label date_joined"><button onClick={() => reorderList("joined")}>Joined</button></div>
-          <div className="label user_role"><button onClick={() => reorderList("role")}>Role</button></div>
-          <div className="label state_codes">State(s)</div>
-          <div className="label active"><button onClick={() => reorderList("active")}>Active</button></div>
-        </li>
-        {output}
-      </ul>
+      <Card>
+        {tableData ?
+        <DataTableExtensions
+          {...tableData}
+        >
+        <DataTable
+          title="Users"
+          defaultSortField="username"
+          sortIcon={<SortIcon />}
+          selectableRows
+          highlightOnHover
+          selectableRows={false}
+          responsive={true}
+        />
+        </DataTableExtensions>
+          : null }
+      </Card>
     </div>
-  );
+  )
 };
 
 export default Users;
