@@ -363,7 +363,7 @@ locals {
 // }
 
 # Need to update with Prod and Val Bucket name
-locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail", val: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail", master: "cms-cloud-730373213083-us-east-1-legacy/cloudtrail}" } }
+locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy", val: "cms-cloud-730373213083-us-east-1-legacy", master: "cms-cloud-730373213083-us-east-1-legacy}" } }
 
 data "aws_s3_bucket" "webacl_s3" {
   bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
@@ -378,6 +378,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = data.aws_s3_bucket.webacl_s3.arn
+    prefix ="cloudtrail/${terraform.workspace}/"
   }
 }
 
