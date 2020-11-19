@@ -598,6 +598,24 @@ def report(request, year=None, state=None):
     return HttpResponse(report_template.render(context=context))
 
 
+@api_view(["POST"])
+def UserActivateViewSet(request, user=None):
+    # Get user
+    current = User.objects.get(username=user)
+    current.is_active = True
+    current.save()
+
+    return HttpResponse("Activated User")
+
+@api_view(["POST"])
+def UserDeactivateViewSet(request, user=None):
+    # Get user
+    current = User.objects.get(username=user)
+    current.is_active = False
+    current.save()
+
+    return HttpResponse("Deactivated User")
+
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
     user, _ = jwt_auth.authenticate(request, username=username)
