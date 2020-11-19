@@ -39,7 +39,7 @@
                   "options": [
                     {
                       "value": "combo",
-                      "label": "Combination"
+                      "label": "Both Medicaid Expansion CHIP and Separate CHIP"
                     },
                     {
                       "value": "medicaid_exp_chip",
