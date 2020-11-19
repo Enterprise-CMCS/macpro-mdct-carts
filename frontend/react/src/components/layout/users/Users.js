@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "../../../authenticatedAxios";
 import DataTable from "react-data-table-component";
-import DataTableExtensions from 'react-data-table-component-extensions';
+import DataTableExtensions from "react-data-table-component-extensions";
 import Card from "@material-ui/core/Card";
-import 'react-data-table-component-extensions/dist/index.css';
+import "react-data-table-component-extensions/dist/index.css";
 import SortIcon from "@material-ui/icons/ArrowDownward";
 import { useDispatch } from "react-redux";
 import moment from "moment";
@@ -17,35 +17,38 @@ import moment from "moment";
 const Users = () => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState();
-  const [sortType, setSortType] = useState();
 
-  useEffect(async () => {
+  const loadUserData = async () => {
     dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
     try {
-      console.log("xxxxxxxxxxxxxxxxx");
       let { data } = await axios.post(`/api/v1/userprofiles`);
-      console.log("zzjson", data);
       setUsers(data);
     } catch (e) {
       console.log("Error pulling users data: ", e);
-      console.log("zzjson-failure");
     }
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+  };
+
+  useEffect(async () => {
+    await loadUserData();
   }, []);
 
-  const deactivateUser = (e) => {
-    console.log("deactivateUser", e)
-  }
+  const deactivateUser = async (e) => {
+    axios.post(`/api/v1/user/deactivate/${e}`).then(async (response) => {
+      await loadUserData();
+    });
+  };
 
-  const activateUser = (e) => {
-    console.log("activateUser", e)
-  }
+  const activateUser = async (e) => {
+    axios.post(`/api/v1/user/activate/${e}`).then(async (response) => {
+      await loadUserData();
+    });
+  };
 
   let tableData;
 
-  if(users) {
-
+  if (users) {
     // Build column structure for react-data-tables
     const columns = [
       {
@@ -61,70 +64,89 @@ const Users = () => {
       {
         name: "Last Name",
         selector: "last_name",
-        sortable: true
+        sortable: true,
       },
       {
         name: "Email",
         selector: "email",
         sortable: true,
-        cell: e => <span><a href={`mailto:${e.email}`}>{e.email}</a></span>
+        cell: (e) => (
+          <span>
+            <a href={`mailto:${e.email}`}>{e.email}</a>
+          </span>
+        ),
       },
       {
         name: "Joined",
         selector: "date_joined",
         sortable: true,
-        cell: d => <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>
+        cell: (d) => <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>,
       },
       {
         name: "Last Active",
         selector: "last_login",
         sortable: true,
-        cell: l => <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>
+        cell: (l) => <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>,
       },
       {
         name: "States",
         selector: "state_codes",
         sortable: true,
-        cell: s => <span>{s.state_codes.sort().join(', ')}</span>,
+        cell: (s) => <span>{s.state_codes.sort().join(", ")}</span>,
       },
       {
         name: "Active",
         selector: "is_active",
         sortable: true,
-        cell: s => <span>{s.state_codes ? <button className="btn btn-primary" onClick={deactivateUser}>Deactivate</button>: <button className="btn btn-primary" onClick={activateUser}>Activate</button>}</span>,
-      }
-    ]
+        cell: (s) => (
+          <span>
+            {s.is_active ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => deactivateUser(s.username)}
+              >
+                Deactivate
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary"
+                onClick={() => activateUser(s.username)}
+              >
+                Activate
+              </button>
+            )}
+          </span>
+        ),
+      },
+    ];
 
     tableData = {
       columns,
       data: users,
       exportHeaders: true,
-
-    }
+    };
   }
 
   return (
     <div className="user-profiles">
       <h1>Users</h1>
       <Card>
-        {tableData ?
-        <DataTableExtensions
-          {...tableData}
-        >
-        <DataTable
-          title="Users"
-          defaultSortField="username"
-          sortIcon={<SortIcon />}
-          selectableRows
-          highlightOnHover
-          selectableRows={false}
-          responsive={true}
-        />
-        </DataTableExtensions>
-          : null }
+        {tableData ? (
+          <DataTableExtensions {...tableData}>
+            <DataTable
+              title="Users"
+              defaultSortField="username"
+              sortIcon={<SortIcon />}
+              selectableRows
+              highlightOnHover
+              selectableRows={false}
+              responsive={true}
+            />
+          </DataTableExtensions>
+        ) : null}
       </Card>
     </div>
-  )
+  );
 };
 
 export default Users;
