@@ -32,3 +32,24 @@ img {
 .screen-only {
   display: block;
 }
+
+.searchable {
+  .searchable-input {
+    color: black;
+    background-color: #ddd;
+    border: 1px solid black;
+    &::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: red;
+      opacity: 1; /* Firefox */
+    }
+    .searchable-input-control {
+      color: black;
+    }
+  }
+  .searchable-input-arrow-inner {
+    svg {
+      color: black;
+    }
+  }
+}
