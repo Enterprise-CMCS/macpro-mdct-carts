@@ -607,6 +607,7 @@ def UserActivateViewSet(request, user=None):
 
     return HttpResponse("Activated User")
 
+
 @api_view(["POST"])
 def UserDeactivateViewSet(request, user=None):
     # Get user
@@ -615,6 +616,7 @@ def UserDeactivateViewSet(request, user=None):
     current.save()
 
     return HttpResponse("Deactivated User")
+
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
     jwt_auth = JwtDevAuthentication()
