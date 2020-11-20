@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../../authenticatedAxios";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
@@ -39,7 +39,7 @@ const Users = () => {
       `Are you sure you want to deactivate user ${e}`
     );
     if (really) {
-      axios.post(`/api/v1/user/deactivate/${e}`).then(async (response) => {
+      axios.post(`/api/v1/user/deactivate/${e}`).then(async () => {
         await loadUserData();
       });
     }
@@ -50,7 +50,7 @@ const Users = () => {
       `Are you sure you want to activate user ${e}`
     );
     if (really) {
-      axios.post(`/api/v1/user/activate/${e}`).then(async (response) => {
+      axios.post(`/api/v1/user/activate/${e}`).then(async () => {
         await loadUserData();
       });
     }
@@ -80,11 +80,13 @@ const Users = () => {
         name: "Email",
         selector: "email",
         sortable: true,
-        cell: (e) => (
-          <span>
-            <a href={`mailto:${e.email}`}>{e.email}</a>
-          </span>
-        ),
+        cell: function modifyEmail(e) {
+          return (
+            <span>
+              <a href={`mailto:${e.email}`}>{e.email}</a>
+            </span>
+          );
+        },
       },
       {
         name: "Role",
@@ -95,49 +97,59 @@ const Users = () => {
         name: "Joined",
         selector: "date_joined",
         sortable: true,
-        cell: (d) => <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>,
+        cell: function modifyDateJoined(d) {
+          return <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>;
+        },
       },
       {
         name: "Last Active",
         selector: "last_login",
         sortable: true,
-        cell: (l) => <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>,
+        cell: function modifyLastLogin(l) {
+          return <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>;
+        },
       },
       {
         name: "Created",
         selector: "date_joined",
         sortable: true,
-        cell: (l) => <span>{moment(l.date_joined).format("MM/DD/YYYY")}</span>,
+        cell: function modifyDateJoined(l) {
+          return <span>{moment(l.date_joined).format("MM/DD/YYYY")}</span>;
+        },
       },
       {
         name: "States",
         selector: "state_codes",
         sortable: true,
-        cell: (s) => <span>{s.state_codes.sort().join(", ")}</span>,
+        cell: function modifyStateCodes(s) {
+          return <span>{s.state_codes.sort().join(", ")}</span>;
+        },
       },
       {
         name: "Status",
         selector: "is_active",
         sortable: true,
-        cell: (s) => (
-          <span>
-            {s.is_active ? (
-              <button
-                className="btn btn-primary"
-                onClick={() => deactivateUser(s.username)}
-              >
-                Deactivate
-              </button>
-            ) : (
-              <button
-                className="btn btn-primary"
-                onClick={() => activateUser(s.username)}
-              >
-                Activate
-              </button>
-            )}
-          </span>
-        ),
+        cell: function modifyIsActive(s) {
+          return (
+            <span>
+              {s.is_active ? (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => deactivateUser(s.username)}
+                >
+                  Deactivate
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => activateUser(s.username)}
+                >
+                  Activate
+                </button>
+              )}
+            </span>
+          );
+        },
       },
     ];
 
@@ -158,7 +170,6 @@ const Users = () => {
               title="Users"
               defaultSortField="username"
               sortIcon={<SortIcon />}
-              selectableRows
               highlightOnHover
               selectableRows={false}
               responsive={true}
