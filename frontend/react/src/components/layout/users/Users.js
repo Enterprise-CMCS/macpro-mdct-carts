@@ -35,8 +35,10 @@ const Users = () => {
   }, []);
 
   const deactivateUser = async (e) => {
-    const really = window.confirm(`Are you sure you want to deactivate user ${e}`);
-    if(really) {
+    const really = window.confirm(
+      `Are you sure you want to deactivate user ${e}`
+    );
+    if (really) {
       axios.post(`/api/v1/user/deactivate/${e}`).then(async (response) => {
         await loadUserData();
       });
@@ -44,8 +46,10 @@ const Users = () => {
   };
 
   const activateUser = async (e) => {
-    const really = window.confirm(`Are you sure you want to activate user ${e}`);
-    if(really) {
+    const really = window.confirm(
+      `Are you sure you want to activate user ${e}`
+    );
+    if (really) {
       axios.post(`/api/v1/user/activate/${e}`).then(async (response) => {
         await loadUserData();
       });
@@ -83,6 +87,11 @@ const Users = () => {
         ),
       },
       {
+        name: "Role",
+        selector: "user_role",
+        sortable: true,
+      },
+      {
         name: "Joined",
         selector: "date_joined",
         sortable: true,
@@ -93,6 +102,12 @@ const Users = () => {
         selector: "last_login",
         sortable: true,
         cell: (l) => <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>,
+      },
+      {
+        name: "Created",
+        selector: "date_joined",
+        sortable: true,
+        cell: (l) => <span>{moment(l.date_joined).format("MM/DD/YYYY")}</span>,
       },
       {
         name: "States",
