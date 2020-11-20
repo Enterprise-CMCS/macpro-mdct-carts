@@ -35,15 +35,21 @@ const Users = () => {
   }, []);
 
   const deactivateUser = async (e) => {
-    axios.post(`/api/v1/user/deactivate/${e}`).then(async (response) => {
-      await loadUserData();
-    });
+    const really = window.confirm(`Are you sure you want to deactivate user ${e}`);
+    if(really) {
+      axios.post(`/api/v1/user/deactivate/${e}`).then(async (response) => {
+        await loadUserData();
+      });
+    }
   };
 
   const activateUser = async (e) => {
-    axios.post(`/api/v1/user/activate/${e}`).then(async (response) => {
-      await loadUserData();
-    });
+    const really = window.confirm(`Are you sure you want to activate user ${e}`);
+    if(really) {
+      axios.post(`/api/v1/user/activate/${e}`).then(async (response) => {
+        await loadUserData();
+      });
+    }
   };
 
   let tableData;
@@ -95,7 +101,7 @@ const Users = () => {
         cell: (s) => <span>{s.state_codes.sort().join(", ")}</span>,
       },
       {
-        name: "Active",
+        name: "Status",
         selector: "is_active",
         sortable: true,
         cell: (s) => (
