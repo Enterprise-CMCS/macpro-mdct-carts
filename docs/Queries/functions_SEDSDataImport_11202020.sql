@@ -187,7 +187,7 @@ BEGIN
                 c."program",
                 COALESCE(c."PrevYear", 0)                                            as "PrevYear",
                 COALESCE(c."CurrentYear", 0)                                          as "CurrentYear",
-                COALESCE(((c."CurrentYear" / c."PrevYear") - 1) * 100, 0)                   as "PercentChange"
+                case when c."PrevYear" = 0 or c."PrevYear" is null then 0 else COALESCE(((c."CurrentYear" / c."PrevYear") - 1) * 100, 0) end                   as "PercentChange"
         FROM    combo c
         WHERE   lower(c."StateCode") like '%' || lower(datastate) || '%'
           AND   c.program = dataprogram;
