@@ -6,6 +6,7 @@ from typing import (
     Union,
 )
 import boto3
+import os
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
@@ -682,11 +683,13 @@ def generate_upload_psurl(request):
     session = boto3.session.Session()
     s3 = session.client("s3")
 
+    terraform_workspace = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+
     # Generate the URL to get 'key-name' from 'bucket-name'
     url = s3.generate_presigned_url(
         ClientMethod="get_object",
         Params={
-            f"Bucket": "cartscms-uploads-{terraform.workspace}",
+            f"Bucket": "cartscms-uploads-{terraform_workspace}",
             f"Key": "testfile.txt",
             f"ResponseContentType": "text/plain",
         },
