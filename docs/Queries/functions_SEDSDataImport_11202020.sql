@@ -235,8 +235,9 @@ $BODY$;
                                         '{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 1}',
                                         jsonb_build_array(program_name, prev_year, current_year, percent_change), true)
             END
-        WHEN metric = 'Separate CHIP' THEN
-            CASE WHEN trim(contents#>'{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 0}'->>0) != 'Medicaid Expansion CHIP' THEN
+        ELSE
+            CASE WHEN trim(contents#>'{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 0}'->>0) != 'Medicaid Expansion CHIP'
+				THEN
                  jsonb_set(contents,
                                             '{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 0}',
                                             jsonb_build_array(program_name, prev_year, current_year, percent_change), true)
@@ -246,13 +247,7 @@ $BODY$;
                                         jsonb_build_array(program_name, prev_year, current_year, percent_change), true)
             END
        END
-    WHERE
-        CASE WHEN metric = 'Medicaid Expansion CHIP' THEN
-            trim(contents#>'{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 0}'->>0) = metric
-        ELSE
-            trim(contents#>'{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 1}'->>0) = metric
-        END
-      AND  contents->'section'->>'state' = datastate;
+    WHERE contents->'section'->>'state' = datastate;
  END;
  $$
  LANGUAGE PLPGSQL;
