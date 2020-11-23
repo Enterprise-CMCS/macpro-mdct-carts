@@ -5,6 +5,7 @@ from typing import (
     List,
     Union,
 )
+import boto3
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
@@ -660,23 +661,39 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
+    # user_state = StatesFromUsername.objects.filter(
+    #    username=request.user
+    # ).values_list("state_codes", flat=True)[0][0]
 
     # loop through all uploaded files and save to database (carts_api_uploadedfiles table)
-    for file in request.data["uploadedFiles"]:
-        uploadedFile = UploadedFiles.objects.create(
-            uploaded_username=f"{request.user}",
-            question_id=request.data["questionId"],
-            filename=file,
-            aws_filename=f"aws_{file}",
-            uploaded_state=user_state,
-        )
+    # for file in request.data["uploadedFiles"]:
+    #    uploadedFile = UploadedFiles.objects.create(
+    #        uploaded_username=f"{request.user}",
+    #        question_id=request.data["questionId"],
+    #        filename=file,
+    #        aws_filename=f"aws_{file}",
+    #        uploaded_state=user_state,
+    #    )
 
-        uploadedFile.save()
+    #    uploadedFile.save()
 
-    generated_psurl = {"psurl": "aws.s3.someurl.asdfasfaf"}
+    # generated_psurl = {"psurl": "aws.s3.someurl.asdfasfaf"}
+
+    session = boto3.session.Session()
+    s3 = session.client("s3")
+
+    # Generate the URL to get 'key-name' from 'bucket-name'
+    url = s3.generate_presigned_url(
+        ClientMethod="get_object",
+        Params={
+            f"Bucket": "cartscms-uploads-{terraform.workspace}",
+            f"Key": "testfile.txt",
+            f"ResponseContentType": "text/plain",
+        },
+        ExpiresIn=100,
+    )
+
+    generated_presigned_url = {"psurl": url}
 
     return HttpResponse(json.dumps(generated_psurl))
 
