@@ -17,6 +17,7 @@ from carts.carts_api.models import (
 )
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 from rest_framework.permissions import AllowAny
+from datetime import datetime
 
 
 class JwtAuthentication(authentication.BaseAuthentication):
@@ -76,6 +77,7 @@ def _get_or_create_user(user_info):
     user.first_name = user_info["given_name"]
     user.last_name = user_info["family_name"]
     user.email = user_info["email"]
+    user.last_login = datetime.now()
 
     # print(f"$$$$\n\nobtained user", user.email, "\n\n\n")
 

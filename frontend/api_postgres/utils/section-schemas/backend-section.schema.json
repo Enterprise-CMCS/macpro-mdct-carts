@@ -399,6 +399,9 @@
         "fieldset_info": {
           "type": "object"
         },
+        "fieldset_id": {
+          "type": "string"
+        },
         "context_data": {
           "$ref": "#/definitions/context_data"
         },
@@ -601,6 +604,51 @@
             }
           },
           "required": ["target", "values"]
+        },
+        "hide_if_table_value": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string"
+            },
+            "comment": {
+              "type": "string"
+            },
+            "computed": {
+              "type": "boolean"
+            },
+            "variation_operator": {
+              "type": "string"
+            },
+            "variations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "threshold": {
+                    "type": "string"
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "row": {
+                    "type": "string"
+                  },
+                  "row_key": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "threshold",
+                "operator",
+                "computed",
+                "row",
+                "row_key"
+              ]
+            }
+          },
+          "required": ["target", "variation_operator", "variations"]
         }
       },
       "additionalProperties": false,
@@ -614,6 +662,9 @@
         },
         {
           "required": ["hide_if_not"]
+        },
+        {
+          "required": ["hide_if_table_value"]
         }
       ]
     },
