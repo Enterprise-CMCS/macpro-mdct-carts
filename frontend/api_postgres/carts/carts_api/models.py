@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import (  # type: ignore
 from django.db import models  # type: ignore
 from carts.carts_api.model_utils import PROGRAM_TYPES, USER_ROLES, STATUSES
 
+
 class SectionSchema(models.Model):
     year = models.IntegerField()
     contents = JSONField()
@@ -230,4 +231,3 @@ class UserProfiles(DBView):
     class Meta:
         managed = False
         db_table = "vw_userprofile"
-
