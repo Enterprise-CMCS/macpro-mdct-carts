@@ -689,7 +689,7 @@ def generate_upload_psurl(request):
     url = s3.generate_presigned_url(
         ClientMethod="get_object",
         Params={
-            f"Bucket": "cartscms-uploads-{terraform_workspace}",
+            f"Bucket": "{terraform_workspace}",
             f"Key": "testfile.txt",
             f"ResponseContentType": "text/plain",
         },
