@@ -16,6 +16,8 @@ Prod is not automatically triggered, but is instead released ad hoc as warranted
 
 A PR must be reviewed and approved by someone other than the submitter. When the reviewer(s) accept the PR, they are responsible for merging it to `master`. However, the submitter is still responsible if that merge causes anything to go wrong.
 
+Remember: Run `npx prettier --write /path/to/file` on your files before submitting your PR!
+
 ## Users and role/state assignments
 
 The user info comes from Okta/EUA, and that info doesn't include user roles in this application or what state(s) a user is associated with.

@@ -4,13 +4,20 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./store/storeIndex";
+import BrowserIssue from "./components/layout/BrowserIssue";
 
 import App from "./App";
+
+// Internet Explorer
+const isIE = /*@cc_on!@*/ false || !!document.documentMode;
+
+// Edge
+const isEdge = !isIE && !!window.StyleMedia;
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      {isIE || isEdge ? <BrowserIssue /> : <App />}
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

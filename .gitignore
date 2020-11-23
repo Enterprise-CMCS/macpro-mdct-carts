@@ -134,7 +134,7 @@ dmypy.json
 
 #NPM
 node_modules
-
+frontend/react/node_modules
 #
 .jenkins/infra
 .vscode

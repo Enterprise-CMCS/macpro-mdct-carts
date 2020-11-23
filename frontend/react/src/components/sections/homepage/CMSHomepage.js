@@ -5,7 +5,7 @@ import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses } from "../../../store/selectors";
 
-const CMSHomepage = ({ getStatuses, statuses }) => {
+const CMSHomepage = ({ getStatuses, statuses, currentYear }) => {
   useEffect(() => {
     getStatuses();
   }, []);
@@ -30,18 +30,25 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
               </div>
               <div className="report-header ds-l-row">
                 <div className="name ds-l-col--2">Report</div>
-                <div className="status ds-l-col--4">Status</div>
+                <div className="status ds-l-col--3">Status</div>
                 <div className="actions ds-l-col--6">Actions</div>
               </div>
-              {statuses.map(({ state, stateCode, status }) => (
-                <ReportItem
-                  key={stateCode}
-                  link1URL={`/views/sections/${stateCode}/2020/00/a`}
-                  name={`${state} 2020`}
-                  statusText={status}
-                  editor="x@y.z"
-                />
-              ))}
+
+              {statuses
+                .sort((a, b) => (a.state > b.state ? 1 : -1))
+                .map(({ state, stateCode, status }) =>
+                  // with statement below we don't get the three bogus records (username, status, and lastchanged)
+                  stateCode.toString().length === 2 ? (
+                    <ReportItem
+                      key={stateCode}
+                      link1URL={`/views/sections/${stateCode}/${currentYear}/00/a`}
+                      name={`${state} ${currentYear}`}
+                      statusText={status}
+                      editor="x@y.z"
+                      stateUser={false}
+                    />
+                  ) : null
+                )}
             </div>
           </div>
         </div>
@@ -52,10 +59,12 @@ const CMSHomepage = ({ getStatuses, statuses }) => {
 CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
   statuses: PropTypes.object.isRequired,
+  currentYear: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
+  currentYear: state.global.formYear,
 });
 
 const mapDispatch = {
