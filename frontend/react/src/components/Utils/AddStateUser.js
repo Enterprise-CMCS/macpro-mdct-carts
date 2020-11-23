@@ -5,6 +5,13 @@ import axios from "../../authenticatedAxios";
 import Searchable from "react-searchable-dropdown";
 import { TextField } from "@cmsgov/design-system-core";
 
+/**
+ * Add a new record to carts_api_rolefromusername & carts_api_statesfromusername so that the user can become a state_user.
+ *
+ * @param {object} currentUser
+ * @param {Array} stateList
+ */
+
 const AddStateUser = ({ currentUser, stateList }) => {
   const addUser = async (stateId, userId) => {
     const xhrURL = [
