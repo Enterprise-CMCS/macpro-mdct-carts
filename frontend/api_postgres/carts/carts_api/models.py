@@ -193,3 +193,16 @@ class StateStatus(models.Model):
     )
     last_changed = models.DateTimeField(null=True)
     user_name = models.TextField(null=True)
+
+
+class UploadedFiles(models.Model):
+    filename = models.CharField(max_length=256, default="")
+    aws_filename = models.CharField(max_length=256, default="")
+    question_id = models.CharField(max_length=16)
+    uploaded_date = models.DateTimeField(null=False, auto_now_add=True)
+    uploaded_username = models.CharField(max_length=16, default="")
+    uploaded_state = models.CharField(max_length=16, default="")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(UploadedFiles, self).save(*args, **kwargs)

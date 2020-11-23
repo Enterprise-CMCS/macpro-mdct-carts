@@ -60,6 +60,7 @@ from carts.carts_api.models import (
     State,
     StateStatus,
     StatesFromUsername,
+    UploadedFiles,
 )
 from carts.carts_api.model_utils import validate_status_change
 
@@ -299,8 +300,7 @@ class SectionViewSet(viewsets.ModelViewSet):
 
         for section in sections:
             # TODO: streamline this so if users have access to all of the
-            # objects (e.g. if they're admins) the check occurs ony once.
-            print("about to check object permissions", flush=True)
+            # objects (e.g. if they're admins) the check occurs ony once.`
             self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
@@ -618,16 +618,12 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 @csrf_exempt
 @ensure_csrf_cookie
 def initiate_session(request):
-    print(f"\n\n\n!!!!!!!!!!!!!!!initiating session")
-    resultJson = {"transaction_result": "success"}
-
+    resultJson = {"transaction_result": "session_initiated"}
     return HttpResponse(json.dumps(resultJson))
 
 
 @api_view(["POST"])
 def authenticate_user(request):
-    print(f"\n\n\n\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!moving on")
-
     user = request.user
     states = [*user.appuser.states.all()]
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
@@ -664,14 +660,46 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
 
-    generated_psurl = {
-        "psurl": "adfasfadfadsfafwertqewra"
-    }
+    # loop through all uploaded files and save to database (carts_api_uploadedfiles table)
+    for file in request.data["uploadedFiles"]:
+        uploadedFile = UploadedFiles.objects.create(
+            uploaded_username=f"{request.user}",
+            question_id=request.data["questionId"],
+            filename=file,
+            aws_filename=f"aws_{file}",
+            uploaded_state=user_state,
+        )
 
-    print(vars(request))
+        uploadedFile.save()
+
+    generated_psurl = {"psurl": "aws.s3.someurl.asdfasfaf"}
 
     return HttpResponse(json.dumps(generated_psurl))
+
+
+@api_view(["POST"])
+def view_uploaded_files(request):
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
+    uploaded_files = UploadedFiles.objects.filter(
+        uploaded_username=request.user,
+        uploaded_state=user_state,
+        question_id=request.data["questionId"],
+    ).values_list("filename", flat=True)
+
+    uploaded_file_list = []
+
+    for file in uploaded_files:
+        uploaded_file_list.append(f"{file}")
+
+    uploadedFiles = {"uploaded_files": uploaded_file_list}
+
+    return HttpResponse(json.dumps(uploadedFiles))
 
 
 def _id_from_chunks(year, *args):

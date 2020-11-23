@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system-core";
-import axios    from "../../authenticatedAxios";
-import { withOktaAuth }      from "@okta/okta-react";
+import axios from "../../authenticatedAxios";
 import { setAnswerEntry } from "../../actions/initial";
 
 class UploadComponent extends Component {
@@ -12,6 +11,9 @@ class UploadComponent extends Component {
     this.state = {
       blockFileSubmission: true,
       loadedFiles: [],
+      uploadedFiles: [],
+      displayUploadedFiles: false,
+      uploadedFilesRetrieved: false,
     };
   }
 
@@ -19,6 +21,7 @@ class UploadComponent extends Component {
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
     this.submitUpload = this.submitUpload.bind(this);
+    this.viewUploaded = this.viewUploaded.bind(this);
   }
 
   isFileTypeAllowed(extension) {
@@ -35,34 +38,71 @@ class UploadComponent extends Component {
       "xlsx",
       "xls",
     ];
-
     return allowedFileTypes.indexOf(extension) > -1;
-  };
+  }
 
   async submitUpload() {
     const { loadedFiles } = this.state;
-    const fileFormData = new FormData();
+    const questionId = this.props.question.id;
+    let uploadedFiles = [];
 
     // *** traverse loaded files and append to form data
     for (const file of loadedFiles) {
-      fileFormData.append(file.name, file);
+      uploadedFiles.push(file.name);
     }
-    alert('getting ready to upload')
 
     // *** obtain signed URL
     const response = await axios.post(
       `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
       {
-        "some_value": "hey hey"
+        uploadedFiles,
+        questionId,
       }
     );
-
-    const signedURL = response.data.url;
+    const signedURL = response.data["psurl"];
 
     // eslint-disable-next-line no-console
-    console.log(`!*********generated signed url ${signedURL}`);
+    console.log(`!*********generated:`, signedURL);
+    return "";
+  }
 
-    return signedURL;
+  async viewUploaded() {
+    // *** re-initialize state
+    this.setState({
+      uploadedFilesRetrieved: false,
+    });
+
+    if (this.state.displayUploadedFiles === false) {
+      const questionId = this.props.question.id;
+
+      // *** make sure container for files is displayed
+      this.setState({
+        displayUploadedFiles: true,
+      });
+
+      // *** retrieve files
+      const response = await axios
+        .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
+          questionId,
+        })
+        .catch((error) => {
+          console.log("!!!Error retrieving files: ", error);
+        });
+
+      // *** hide the loading preloader
+      this.setState({
+        uploadedFilesRetrieved: true,
+      });
+
+      this.setState({
+        uploadedFiles: response.data["uploaded_files"],
+      });
+    } else {
+      // *** make sure container for files is displayed
+      this.setState({
+        displayUploadedFiles: false,
+      });
+    }
   }
 
   removeFile(evt) {
@@ -123,16 +163,6 @@ class UploadComponent extends Component {
         const { setAnswer } = this.props;
         setAnswer(event.target.name, filePayload);
       }
-
-      // !! The reason we're  not using file.type, the results are inconsistent and irregular.
-      // slicing off the extension name is more succinct
-
-      // Results from file.type
-      // PDF: "application/pdf"
-      // JPEG: "image/jpeg"
-      // PNG: "image/png"
-      // Microsoft word document: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      // Spreadsheet: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     }
   }
 
@@ -143,22 +173,18 @@ class UploadComponent extends Component {
           <TextField
             accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
             className="file_upload"
-            /* eslint-disable-next-line react/destructuring-assignment */
             errorMessage={this.state.inputErrors}
             hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
             label=""
             multiple
-            /* eslint-disable-next-line react/prop-types,react/destructuring-assignment */
             name={this.props.question.id}
             onChange={this.validateFileByExtension}
             type="file"
           />
         </div>
 
-        {/* eslint-disable-next-line react/destructuring-assignment */}
-        {this.state.loadedFiles // Display the files that have been uploaded
-          ? // eslint-disable-next-line react/destructuring-assignment
-            this.state.loadedFiles.map((element) => (
+        {this.state.loadedFiles
+          ? this.state.loadedFiles.map((element) => (
               <div key={element.name}>
                 <a href={element.name} download>
                   {" "}
@@ -178,11 +204,51 @@ class UploadComponent extends Component {
         <Button
           onClick={this.submitUpload}
           size="small"
-          /* eslint-disable-next-line react/destructuring-assignment */
           disabled={this.state.blockFileSubmission}
+          className=""
         >
           Upload
         </Button>
+
+        <Button
+          onClick={this.viewUploaded}
+          size="small"
+          className="margin-left-1em"
+        >
+          {this.state.displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
+        </Button>
+
+        {this.state.displayUploadedFiles ? (
+          <table key={"uploadedFilesContainer"}>
+            {!this.state.uploadedFilesRetrieved ? (
+              <tr>
+                <td>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/img/bouncing_ball.gif`}
+                    alt="Retrieving uploaded files... Please wait..."
+                  />{" "}
+                  <br />
+                  <br />
+                  Loading... Please wait...
+                </td>
+              </tr>
+            ) : (
+              this.state.uploadedFiles.map((filename) => {
+                return (
+                  <tr key={filename}>
+                    <td>{filename}</td>
+                    <td>
+                      <Button size="small">Download</Button>
+                    </td>
+                    <td>
+                      <Button size="small">Delete</Button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </table>
+        ) : null}
       </div>
     );
   }
@@ -197,9 +263,7 @@ const mapDispatchToProps = {
   setAnswer: setAnswerEntry,
 };
 
-export default withOktaAuth(
-  connect(mapStateToProps, mapDispatchToProps)(UploadComponent)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadComponent);
 
 // associate with US State
 // meets file validation requirements ( #517 )

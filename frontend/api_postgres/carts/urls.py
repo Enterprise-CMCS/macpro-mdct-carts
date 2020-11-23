@@ -64,6 +64,7 @@ api_patterns = [
     path("appusers/<slug:username>", views.fake_user_data),
     path("initiate", views.initiate_session),
     path("psurl_upload", views.generate_upload_psurl),
+    path("view_uploaded", views.view_uploaded_files),
 ]
 
 urlpatterns = [

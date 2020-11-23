@@ -7,8 +7,6 @@ export const SET_STATE_STATUS = "SET_STATE_STATUS";
 export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 
-/* eslint-disable no-underscore-dangle, no-console */
-
 export const getAllStatesData = () => {
   return async (dispatch) => {
     try {
@@ -117,20 +115,13 @@ const getCookie = (key) => {
   const result = new RegExp(`(?:^|; ) ${encodeURIComponent(key)}=([^;]*)`).exec(
     document.cookie
   );
-
   return result ? result[1] : null;
 };
 
 export const loadUser = (userToken) => async (dispatch) => {
+  // *** make sure this cookie is present for all future django posts
   if (getCookie("csrftoken") === null) {
-    await axios
-      .get("/api/v1/initiate", { withCredentials: true })
-      .then(function (result) {
-        console.log("!!!!Django session initialted successfully!!! ", result);
-      })
-      .catch(function (error) {
-        console.log("???????error initiating Django session ?????:", error);
-      });
+    await axios.get("/api/v1/initiate", { withCredentials: true });
   }
 
   const { data } = userToken
