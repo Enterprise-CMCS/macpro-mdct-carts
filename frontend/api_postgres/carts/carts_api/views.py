@@ -610,12 +610,7 @@ def report_full(request, year=None, state=None):
     )
 
     # Get program_type, sorted by reverse
-    state_record = (
-        State.objects.all()
-        .filter(code=state.upper())
-        .order_by("last_changed")
-        .reverse()
-    )
+    state_record = State.objects.all().filter(code=state.upper()).reverse()
 
     context = {
         "state_abbrev": state_status[0].state_id,
