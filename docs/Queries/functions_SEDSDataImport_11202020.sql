@@ -117,10 +117,10 @@ BEGIN
                        AND      EXTRACT(year from MCHIP."SubmissionDate") = datayear)       as "CurrentYear"
             FROM
                 (
-                 SELECT     distinct MCHIP."StateCode",
+                 SELECT     "StateCode",
                             datayear || '-02-a-01' as id,
                             'Medicaid Expansion CHIP' as program
-                 FROM       MCHIP
+                 FROM       schip.secstate
                 ) a
         ),
         SCHIP as (
@@ -160,27 +160,35 @@ BEGIN
             SELECT  a."id",
                     a."StateCode",
                     a."program",
-                    (SELECT     SCHIP."Line7Total"
+                    case when (Select count(1) from SCHIP where SCHIP."StateCode" = a."StateCode") > 0 then (SELECT     SCHIP."Line7Total"
                      FROM       SCHIP
                      WHERE      SCHIP."StateCode" = a."StateCode"
-                       AND      EXTRACT(year from SCHIP."SubmissionDate") = (datayear - 1)) as "PrevYear",
-                    (SELECT     SCHIP."Line7Total"
+                       AND      EXTRACT(year from SCHIP."SubmissionDate") = (datayear - 1)) else 0 end as "PrevYear",
+                    case when (Select count(1) from SCHIP where SCHIP."StateCode" = a."StateCode") > 0 then (SELECT     SCHIP."Line7Total"
                      FROM       SCHIP
                      WHERE      SCHIP."StateCode" = a."StateCode"
-                       AND      EXTRACT(year from SCHIP."SubmissionDate") = datayear)       as "CurrentYear"
+                       AND      EXTRACT(year from SCHIP."SubmissionDate") = datayear) else 0 end as "CurrentYear"
             FROM
                 (
-                 SELECT     distinct SCHIP."StateCode",
+                 SELECT     "StateCode",
                             datayear || '-02-a-01'                                          as id,
                             'Separate CHIP'                                                 as program
-                 FROM       SCHIP
+                 FROM       schip.secstate
                 ) a
         ),
         combo as (
-            SELECT  *
+            SELECT  MedicaidCHIP.id::text
+				   ,"StateCode"::character varying
+				   ,MedicaidCHIP.program::text
+				   ,"PrevYear"
+				   ,"CurrentYear"
             FROM    MedicaidCHIP
-              UNION
-            SELECT  *
+              UNION ALL
+            SELECT  SeparateCHIP.id::text
+				   ,"StateCode"::character varying
+				   ,SeparateCHIP.program::text
+				   ,"PrevYear"
+				   ,"CurrentYear"
             FROM    SeparateCHIP)
         SELECT  c.id,
                 c."StateCode",
@@ -227,7 +235,7 @@ $BODY$;
                                         '{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 1}',
                                         jsonb_build_array(program_name, prev_year, current_year, percent_change), true)
             END
-        ELSE
+        WHEN metric = 'Separate CHIP' THEN
             CASE WHEN trim(contents#>'{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 0}'->>0) != 'Medicaid Expansion CHIP' THEN
                  jsonb_set(contents,
                                             '{section, subsections, 0, parts, 0, questions, 0, fieldset_info, rows, 0}',
