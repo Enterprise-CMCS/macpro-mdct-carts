@@ -33,23 +33,60 @@ img {
   display: block;
 }
 
-.searchable {
-  .searchable-input {
+.searchable-input-control {
+  .input {
+    background-color: white;
     color: black;
-    background-color: #ddd;
+  }
+  color: black;
+}
+
+.searchable {
+  width: 50%;
+  .searchable-input {
+    .searchable-input-control {
+      input[type="text"] {
+        background-color: white;
+        color: black;
+      }
+      color: black;
+    }
+    color: black;
+    background-color: #595959;
     border: 1px solid black;
     &::placeholder {
       /* Chrome, Firefox, Opera, Safari 10.1+ */
       color: red;
       opacity: 1; /* Firefox */
     }
-    .searchable-input-control {
-      color: black;
+  }
+
+  .searchable-list {
+    .searchable-list__visible {
+      .searchable-list-item {
+        background-color: white;
+        color: black;
+      }
     }
+    background-color: white;
+    color: black;
   }
   .searchable-input-arrow-inner {
     svg {
       color: black;
     }
+  }
+  .searchable-list-item {
+    background-color: white;
+    color: black;
+  }
+}
+
+.eua-id {
+  .ds-c-label {
+    font-weight: 70;
+  }
+  .ds-c-field {
+    border: 1px solid #212121;
   }
 }

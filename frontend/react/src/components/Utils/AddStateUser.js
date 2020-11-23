@@ -11,10 +11,10 @@ const AddStateUser = ({ currentUser, stateList }) => {
       window.env.API_POSTGRES_URL,
       `/api/v1/addstateuser/${userId}/${stateId.value}`,
     ].join("");
-
+    // eslint-disable-next-line
     const result = await axios.get(xhrURL).then(function (result2) {
-      // eslint-disable-line
       window.alert(result2.data.toString());
+      window.location.reload(false);
     });
   };
 
@@ -23,20 +23,37 @@ const AddStateUser = ({ currentUser, stateList }) => {
 
   const authorized = (
     <>
-      <div>
+      <div className="ds-base">
+        <h1>Add State User</h1>
+        <p>
+          To add a state user, enter their EUA Id, select their state, and click
+          Add User
+        </p>
+
         <div>
-          <Searchable
-            value=""
-            options={stateList}
-            placeholder="Select a State"
-            //notFoundText="Not Found"
-            onSelect={(option) => {
-              setStateId(option);
-            }}
-          />
+          <div className="eua-id">
+            <TextField
+              label="EUA Id:"
+              onBlur={(e) => setUserId(e.target.value)}
+              className="ds-c-field--small"
+            ></TextField>
+          </div>
+          <div>
+            State:
+            <br />
+            <Searchable
+              value=""
+              options={stateList}
+              placeholder="Select a State"
+              //notFoundText="Not Found"
+              onSelect={(option) => {
+                setStateId(option);
+              }}
+            />
+          </div>
+          <br />
+          <button onClick={() => addUser(stateId, userId)}>Add User</button>
         </div>
-        <TextField onBlur={(e) => setUserId(e.target.value)}></TextField>
-        <button onClick={() => addUser(stateId, userId)}>Add User</button>
       </div>
     </>
   );
