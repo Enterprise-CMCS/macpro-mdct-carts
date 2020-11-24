@@ -30,16 +30,14 @@ const Submit = ({ certify }) => (
 );
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
-// add a class that has "visibility none"
-
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
   const [showAlert, setShowAlert] = useState(true);
 
-  const surveyOptions = {
-    1: "https://docs.google.com/forms/d/1HTOqQ4-gVw8OSRg7Whyjn-FQUoFYKWUogWeG69lR7cQ/edit?ts=5fb6f4d6&gxids=7628",
-    2: "https://docs.google.com/forms/d/1c8DN_GDuD4vfYBcAAGFa-JEK4b3KqcC8oYvjUjzVaZM/edit?ts=5fb6f4ed&gxids=7628",
-  };
-
+  const surveyOptions = [
+    "https://docs.google.com/forms/d/1HTOqQ4-gVw8OSRg7Whyjn-FQUoFYKWUogWeG69lR7cQ/edit?ts=5fb6f4d6&gxids=7628",
+    "https://docs.google.com/forms/d/1c8DN_GDuD4vfYBcAAGFa-JEK4b3KqcC8oYvjUjzVaZM/edit?ts=5fb6f4ed&gxids=7628",
+  ];
+  // This will randomly be assigned to the number 1 or 2
   const oddOrEven = Math.floor(Math.random() * 10) % 2;
 
   return (
@@ -59,20 +57,21 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
           <Alert
             variation="success"
             role="alertdialog"
-            heading="User Feedback Survey"
+            heading="Optional User Feedback Survey"
           >
             <p className="ds-c-alert__text">
-              OPTIONAL: We would appreciate feedback on the CARTS 2020 Redesign.
+              We would appreciate your feedback on the CARTS 2020 Redesign.
               Follow this link to participate in a brief survey
               <a href={surveyOptions[oddOrEven]}> Google Forms</a>
-              <Button
-                variation="transparent"
-                onClick={() => setShowAlert(!showAlert)}
-              >
-                {" "}
-                No, thank you{" "}
-              </Button>
             </p>
+            <Button
+              className="hide-alert-button"
+              variation="transparent"
+              onClick={() => setShowAlert(!showAlert)}
+            >
+              {" "}
+              No, thank you{" "}
+            </Button>
           </Alert>
         </div>
       ) : null}
