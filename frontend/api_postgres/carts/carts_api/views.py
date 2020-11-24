@@ -702,7 +702,10 @@ def generate_upload_psurl(request):
 
     generated_presigned_url = {"psurl": url}
 
-    return HttpResponse(json.dumps(generated_psurl))
+    print(f"\n\n@@@@@ returning this: ")
+    print(generated_psurl)
+
+    return HttpResponse(json.dumps(generated_presigned_url))
 
 
 @api_view(["POST"])
