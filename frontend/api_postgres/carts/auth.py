@@ -57,10 +57,10 @@ class JwtAuthentication(authentication.BaseAuthentication):
             print(f"\n\n%%%%>token verified: {kid}")
 
             user_info = fetch_user_info(token)
-            print(f"\n\n\ncreating user...", user_info)
 
             # Check if user is_active in database, if not exit
             if _is_user_active(user_info) == False:
+                print("username: ", user_info.preferred_username)
                 return
 
             user = _get_or_create_user(user_info)
@@ -72,9 +72,9 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
 def _is_user_active(user_info):
     """ Returns boolean of is_active column in auth_user table """
-    return User.objects.filter(username="A1LX").values_list(
-        "is_active", flat=True
-    )[0]
+    return User.objects.filter(
+        username=user_info["preferred_username"]
+    ).values_list("is_active", flat=True)[0]
 
 
 def _get_or_create_user(user_info):
