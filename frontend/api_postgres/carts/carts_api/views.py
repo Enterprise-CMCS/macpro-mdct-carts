@@ -703,7 +703,7 @@ def generate_upload_psurl(request):
     generated_presigned_url = {"psurl": url}
 
     print(f"\n\n@@@@@ returning this: ")
-    print(generated_psurl)
+    print(generated_presigned_url)
 
     return HttpResponse(json.dumps(generated_presigned_url))
 
