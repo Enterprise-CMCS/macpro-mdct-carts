@@ -46,11 +46,13 @@ class UploadComponent extends Component {
     const questionId = this.props.question.id;
 
     for (const uploadedFile of loadedFiles) {
+      console.log("########", uploadedFile);
+
       // *** obtain signed URL
       const response = await axios.post(
         `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
         {
-          uploadedFile,
+          uploadedFile: uploadedFile.name,
           questionId,
         }
       );
