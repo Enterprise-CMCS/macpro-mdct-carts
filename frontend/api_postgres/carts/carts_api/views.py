@@ -683,16 +683,12 @@ def generate_upload_psurl(request):
     session = boto3.session.Session()
     s3 = session.client("s3")
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-
-    print(f"\n\n===>uploading to bucket: {s3_bucket} ")
-
     # Generate the URL to get 'key-name' from 'bucket-name'
     url = s3.generate_presigned_url(
         ClientMethod="get_object",
         Params={
-            f"Bucket": f"{s3_bucket}",
-            f"Key": f"testfile.txt",
+            f"Bucket":              os.environ.get("S3_UPLOADS_BUCKET_NAME"),
+            f"Key":                 request.data["uploadedFile"],
             f"ResponseContentType": "text/plain",
         },
         ExpiresIn=100,

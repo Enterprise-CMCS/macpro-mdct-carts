@@ -44,26 +44,26 @@ class UploadComponent extends Component {
   async submitUpload() {
     const { loadedFiles } = this.state;
     const questionId = this.props.question.id;
-    let uploadedFiles = [];
 
-    // *** traverse loaded files and append to form data
-    for (const file of loadedFiles) {
-      uploadedFiles.push(file.name);
+    for (const uploadedFile of loadedFiles) {
+      // *** obtain signed URL
+      const response = await axios.post(
+        `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
+        {
+          uploadedFile,
+          questionId,
+        }
+      );
+      const signedURL = response.data["psurl"];
+
+      // eslint-disable-next-line no-console
+      console.log(`!*********generated:`, signedURL);
+
+      const result = axios.put(signedURL, uploadedFile);
+
+      // eslint-disable-next-line no-console
+      console.log("@@@@upload result: ", result);
     }
-
-    // *** obtain signed URL
-    const response = await axios.post(
-      `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
-      {
-        uploadedFiles,
-        questionId,
-      }
-    );
-    const signedURL = response.data["psurl"];
-
-    // eslint-disable-next-line no-console
-    console.log(`!*********generated:`, signedURL);
-    return "";
   }
 
   async viewUploaded() {
