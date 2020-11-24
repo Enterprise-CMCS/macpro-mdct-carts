@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
+import Users from "../layout/users/Users";
 import AddStateUser from "../Utils/AddStateUser";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
@@ -38,7 +39,10 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
                 </Link>
               </li>
               <li>
-                <Link to="/add_state_user">Add state user</Link>
+                <Link to="/users">List and edit all users</Link>
+              </li>
+              <li>
+              <Link to="/add_state_user">Add state user</Link>
               </li>
             </ul>
           </div>
@@ -56,6 +60,7 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
       path="/role_jobcode_assoc"
       component={JobCodeRoleAssociations}
     />
+    <SecureRoute exact path="/users" component={Users} />
     <SecureRoute exact path="/add_state_user" component={AddStateUser} />
   </>
 );

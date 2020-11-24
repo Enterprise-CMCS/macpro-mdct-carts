@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "carts",
     "carts.carts_api",
     "corsheaders",
+    "django_db_views",
 ]
 
 MIDDLEWARE = [

@@ -60,11 +60,14 @@ from carts.carts_api.models import (
     State,
     StateStatus,
     StatesFromUsername,
+    UserProfiles,
 )
 from carts.carts_api.model_utils import validate_status_change
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
+
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -83,6 +86,18 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
+
+
+@api_view(["POST"])
+def UserProfilesViewSet(request):
+    """
+    API endpoint that returns all user profile data.
+    """
+
+    # Get all users
+    users = list(UserProfiles.objects.all().order_by("username").values())
+
+    return HttpResponse(json.dumps(users, cls=DjangoJSONEncoder))
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -620,6 +635,26 @@ def report(request, year=None, state=None):
     }
     report_template = get_template("report.html")
     return HttpResponse(report_template.render(context=context))
+
+
+@api_view(["POST"])
+def UserActivateViewSet(request, user=None):
+    # Get user
+    current = User.objects.get(username=user)
+    current.is_active = True
+    current.save()
+
+    return HttpResponse("Activated User")
+
+
+@api_view(["POST"])
+def UserDeactivateViewSet(request, user=None):
+    # Get user
+    current = User.objects.get(username=user)
+    current.is_active = False
+    current.save()
+
+    return HttpResponse("Deactivated User")
 
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
