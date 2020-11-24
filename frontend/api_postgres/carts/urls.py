@@ -63,6 +63,9 @@ api_patterns = [
     path("appusers/auth", views.authenticate_user),
     path("initiate", views.initiate_session),
     path("appusers/<slug:username>", views.fake_user_data),
+    path("userprofiles", views.UserProfilesViewSet),
+    path("user/activate/<str:user>", views.UserActivateViewSet),
+    path("user/deactivate/<str:user>", views.UserDeactivateViewSet),
 ]
 
 urlpatterns = [
