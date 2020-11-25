@@ -12,12 +12,8 @@ import { TextField } from "@cmsgov/design-system-core";
  */
 
 const AddStateUser = ({ currentUser, stateList }) => {
-  
-
   const addUser = async (stateId, userId) => {
-    
-    if( stateId !== undefined && userId != "" )
-    {
+    if (stateId !== undefined && userId != "") {
       const xhrURL = [
         window.env.API_POSTGRES_URL,
         `/api/v1/addstateuser/${userId}/${stateId.value}`,
@@ -27,18 +23,16 @@ const AddStateUser = ({ currentUser, stateList }) => {
         window.alert(result2.data.toString());
         window.location.reload(false);
       });
+    } else {
+      setError(true);
     }
-    else{
-      setError(true)
-    }
-    
   };
 
   const [userId, setUserId] = useState();
   const [stateId, setStateId] = useState();
   const [error, setError] = useState(false);
-  
-  const authorized =  (
+
+  const authorized = (
     <>
       <div className="ds-base">
         <h1>Add State User</h1>
@@ -47,9 +41,10 @@ const AddStateUser = ({ currentUser, stateList }) => {
           Add User
         </p>
         {error && (
-        <p className="error" id="Error">
-          You must enter an EUA Id and select a state.
-        </p>)}
+          <p className="error" id="Error">
+            You must enter an EUA Id and select a state.
+          </p>
+        )}
         <div>
           <div className="eua-id">
             <TextField
@@ -71,7 +66,12 @@ const AddStateUser = ({ currentUser, stateList }) => {
             />
           </div>
           <br />
-          <button className="btn btn-primary" onClick={() => addUser(stateId, userId)}>Add User</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => addUser(stateId, userId)}
+          >
+            Add User
+          </button>
         </div>
       </div>
     </>
