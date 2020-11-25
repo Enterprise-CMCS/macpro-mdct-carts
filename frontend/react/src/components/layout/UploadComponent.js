@@ -52,7 +52,8 @@ class UploadComponent extends Component {
       const response = await axios.post(
         `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
         {
-          uploadedFile: uploadedFile.name,
+          uploadedFileName: uploadedFile.name,
+          uploadedFileType: uploadedFile.type,
           questionId,
         }
       );
@@ -61,7 +62,11 @@ class UploadComponent extends Component {
       // eslint-disable-next-line no-console
       console.log(`!*********generated:`, signedURL);
 
-      const result = axios.put(signedURL, uploadedFile);
+      const result = axios.put(signedURL, uploadedFile, {
+        headers: {
+          "Content-Type": uploadedFile.type,
+        },
+      });
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);

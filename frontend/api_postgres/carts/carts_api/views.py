@@ -684,12 +684,13 @@ def generate_upload_psurl(request):
     s3 = session.client("s3")
 
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    file = request.data["uploadedFile"]
+    file = request.data["uploadedFileName"]
+    file_type = request.data["uploadedFileType"]
 
     print(f"\n\n()()???>env variables")
     print(os.environ)
 
-    print(f"\n\n===>uploading {file} to bucket: {s3_bucket} ")
+    print(f"\n\n===>uploading {file} of type {file_type} to bucket: {s3_bucket} ")
 
     # Generate the URL to get 'key-name' from 'bucket-name'
     url = s3.generate_presigned_url(
@@ -697,7 +698,7 @@ def generate_upload_psurl(request):
         Params={
             f"Bucket": f"{s3_bucket}",
             f"Key": f"{file}",
-            f"ResponseContentType": "text/plain",
+            f"ResponseContentType": f"{file_type}",
         },
         ExpiresIn=100,
     )
