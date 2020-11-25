@@ -5768,7 +5768,7 @@
               {
                 "type": "fieldset",
                 "fieldset_type": "marked",
-                "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one dental care service during FFY 2020?",
+                "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one preventative dental care service during FFY 2020?",
                 "fieldset_info": {
                   "id": "2020-03-g-01-04"
                 },
@@ -5880,6 +5880,7 @@
               },
               {
                 "type": "fieldset",
+                "label": "Dental care service codes and definitions",
                 "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                 "questions": []
               },
