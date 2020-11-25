@@ -72,7 +72,6 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
 def _is_user_active(user_info):
     """ Returns boolean of is_active column in auth_user table """
-    print("inside is user active")
     is_active = User.objects.all().filter(
         username=user_info["preferred_username"]
     ).values_list("is_active", flat=True)[0]
