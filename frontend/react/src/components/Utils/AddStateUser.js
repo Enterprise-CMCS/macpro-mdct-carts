@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import axios from "../../authenticatedAxios";
 import Searchable from "react-searchable-dropdown";
 import { TextField } from "@cmsgov/design-system-core";
-
 /**
  * Add a new record to carts_api_rolefromusername & carts_api_statesfromusername so that the user can become a state_user.
  *
@@ -13,22 +12,33 @@ import { TextField } from "@cmsgov/design-system-core";
  */
 
 const AddStateUser = ({ currentUser, stateList }) => {
+  
+
   const addUser = async (stateId, userId) => {
-    const xhrURL = [
-      window.env.API_POSTGRES_URL,
-      `/api/v1/addstateuser/${userId}/${stateId.value}`,
-    ].join("");
-    // eslint-disable-next-line
-    const result = await axios.get(xhrURL).then(function (result2) {
-      window.alert(result2.data.toString());
-      window.location.reload(false);
-    });
+    
+    if( stateId !== undefined && userId != "" )
+    {
+      const xhrURL = [
+        window.env.API_POSTGRES_URL,
+        `/api/v1/addstateuser/${userId}/${stateId.value}`,
+      ].join("");
+      // eslint-disable-next-line
+      const result = await axios.get(xhrURL).then(function (result2) {
+        window.alert(result2.data.toString());
+        window.location.reload(false);
+      });
+    }
+    else{
+      setError(true)
+    }
+    
   };
 
   const [userId, setUserId] = useState();
   const [stateId, setStateId] = useState();
-
-  const authorized = (
+  const [error, setError] = useState(false);
+  
+  const authorized =  (
     <>
       <div className="ds-base">
         <h1>Add State User</h1>
@@ -36,7 +46,10 @@ const AddStateUser = ({ currentUser, stateList }) => {
           To add a state user, enter their EUA Id, select their state, and click
           Add User
         </p>
-
+        {error && (
+        <p className="error" id="Error">
+          You must enter an EUA Id and select a state.
+        </p>)}
         <div>
           <div className="eua-id">
             <TextField
@@ -49,7 +62,6 @@ const AddStateUser = ({ currentUser, stateList }) => {
             State:
             <br />
             <Searchable
-              value=""
               options={stateList}
               placeholder="Select a State"
               //notFoundText="Not Found"
@@ -59,7 +71,7 @@ const AddStateUser = ({ currentUser, stateList }) => {
             />
           </div>
           <br />
-          <button onClick={() => addUser(stateId, userId)}>Add User</button>
+          <button className="btn btn-primary" onClick={() => addUser(stateId, userId)}>Add User</button>
         </div>
       </div>
     </>
