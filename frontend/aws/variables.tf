@@ -22,5 +22,5 @@ variable "region" {
 // }
 variable "enable_log_waf_acl" {
   description = "Should logging be enabled on WAF ACL or not? Default is FALSE to not create"
-  default = true
+  default = false
 }
