@@ -705,7 +705,7 @@ def generate_upload_psurl(request):
             f"Key": f"{file}",
             f"ResponseContentType": f"{file_type}",
         },
-        ExpiresIn=100,
+        ExpiresIn=10000,
     )
 
     print(f"\n\n!!!! got url: {url}")
