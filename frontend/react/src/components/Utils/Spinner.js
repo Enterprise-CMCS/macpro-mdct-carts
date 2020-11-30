@@ -55,7 +55,7 @@ const Spinner = (props) => {
             <CountdownCircleTimer
               isPlaying
               duration={8}
-              size={440}
+              size={480}
               colors={[["#a30000", 0.33], ["#f7b801", 0.33], ["#009500"]]}
               strokeWidth={16}
             >
