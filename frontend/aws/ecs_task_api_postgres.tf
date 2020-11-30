@@ -369,6 +369,14 @@ data "aws_s3_bucket" "webacl_s3" {
   bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
 }
 
+// ##Create S3 Sub-folder
+resource "aws_s3_bucket_object" "waf_bucket_folder" {
+    bucket = "${data.aws_s3_bucket.webacl_s3.id}"
+    acl    = "private"
+    ##key= "/Prefix/Sub-folder/"
+    key    = "CloudTrail/${terraform.workspace}/"
+    
+}
 # # ========================Create Kinesis firehose and role ========================
 resource "aws_kinesis_firehose_delivery_stream" "stream" {
   count = "${var.enable_log_waf_acl == true ? 1 : 0}"
@@ -378,7 +386,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = data.aws_s3_bucket.webacl_s3.arn
-    prefix ="cloudtrail/${terraform.workspace}/"
+    prefix ="CloudTrail/${terraform.workspace}/"
   }
 }
 
