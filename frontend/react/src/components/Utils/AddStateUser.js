@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import axios from "../../authenticatedAxios";
 import Searchable from "react-searchable-dropdown";
 import { TextField } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system-core";
 /**
  * Add a new record to carts_api_rolefromusername & carts_api_statesfromusername so that the user can become a state_user.
  *
@@ -66,12 +67,12 @@ const AddStateUser = ({ currentUser, stateList }) => {
             />
           </div>
           <br />
-          <button
+          <Button
             className="btn btn-primary"
             onClick={() => addUser(stateId, userId)}
           >
             Add User
-          </button>
+          </Button>
         </div>
       </div>
     </>
