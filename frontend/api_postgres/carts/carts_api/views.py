@@ -6,6 +6,7 @@ from typing import (
     Union,
 )
 import boto3
+from botocore.config import Config
 import os
 
 from datetime import datetime
@@ -93,6 +94,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     API endpoint that allows groups to be viewed or edited.
     """
 
+    print(f"\n\n+++++++++++++in group view set ")
     permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -679,9 +681,10 @@ def generate_upload_psurl(request):
     #    uploadedFile.save()
 
     # generated_psurl = {"psurl": "aws.s3.someurl.asdfasfaf"}
+    region = os.environ.get("AWS_REGION")
 
     session = boto3.session.Session()
-    s3 = session.client("s3")
+    s3 = session.client("s3", f"{region}")
 
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
     file = request.data["uploadedFileName"]
@@ -690,7 +693,9 @@ def generate_upload_psurl(request):
     print(f"\n\n()()???>env variables")
     print(os.environ)
 
-    print(f"\n\n===>uploading {file} of type {file_type} to bucket: {s3_bucket} ")
+    print(
+        f"\n\n===>uploading {file} of type {file_type} to bucket: {s3_bucket} "
+    )
 
     # Generate the URL to get 'key-name' from 'bucket-name'
     url = s3.generate_presigned_url(

@@ -119,6 +119,8 @@ const getCookie = (key) => {
 };
 
 export const loadUser = (userToken) => async (dispatch) => {
+  // dispatch({ type: "SIGN_IN_STARTED" });
+
   // *** make sure this cookie is present for all future django posts
   if (getCookie("csrftoken") === null) {
     await axios.get("/api/v1/initiate", { withCredentials: true });
@@ -127,6 +129,8 @@ export const loadUser = (userToken) => async (dispatch) => {
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
+
+  // dispatch({ type: "SIGN_IN_FINISHED" });
 
   await Promise.all([
     dispatch(getUserData(data.currentUser)),

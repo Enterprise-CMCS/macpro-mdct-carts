@@ -23,6 +23,7 @@
     "prop-types": "^15.7.2",
     "query-string": "^6.13.5",
     "react": "^16.13.1",
+    "react-countdown-circle-timer": "^2.3.7",
     "react-dom": "^16.13.1",
     "react-number-format": "^4.4.1",
     "react-papaparse": "^3.8.0",

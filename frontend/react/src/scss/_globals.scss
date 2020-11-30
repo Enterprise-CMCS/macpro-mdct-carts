@@ -32,3 +32,20 @@ img {
 .screen-only {
   display: block;
 }
+
+.timer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.timer {
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+}
+
+.large-text {
+  font-size: 2em !important;
+}
