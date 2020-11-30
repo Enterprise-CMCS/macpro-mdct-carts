@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Button } from "@cmsgov/design-system-core";
+import { Button, Alert } from "@cmsgov/design-system-core";
 import { useHistory } from "react-router-dom";
 import { certifyAndSubmit } from "../../actions/certify";
 
@@ -30,20 +30,60 @@ const Submit = ({ certify }) => (
 );
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
-const Thanks = ({ done: doneDispatch, lastSave, user }) => (
-  <>
-    <h3>Thank you for submitting your CARTS report!</h3>
-    <p>
-      Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
-      {lastSave.format("h:mm A")} by {user}.
-    </p>
-    <h3>What to expect next</h3>
-    <p>You‘ll hear from CMS if they have any questions about your report.</p>
-    <Button onClick={doneDispatch} variation="primary">
-      Done
-    </Button>
-  </>
-);
+const Thanks = ({ done: doneDispatch, lastSave, user }) => {
+  const [showAlert, setShowAlert] = useState(true);
+
+  const surveyOptions = [
+    "https://docs.google.com/forms/d/1HTOqQ4-gVw8OSRg7Whyjn-FQUoFYKWUogWeG69lR7cQ/edit?ts=5fb6f4d6&gxids=7628",
+    "https://docs.google.com/forms/d/1c8DN_GDuD4vfYBcAAGFa-JEK4b3KqcC8oYvjUjzVaZM/edit?ts=5fb6f4ed&gxids=7628",
+  ];
+  // This will randomly be assigned to the number 1 or 2
+  const oddOrEven = Math.floor(Math.random() * 10) % 2;
+
+  return (
+    <>
+      <h3>Thank you for submitting your CARTS report!</h3>
+      <p>
+        Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
+        {lastSave.format("h:mm A")} by {user}.
+      </p>
+
+      {showAlert ? (
+        <div
+          aria-live="polite"
+          aria-relevant="additions removals"
+          className="visibility"
+        >
+          <Alert
+            variation="success"
+            role="alertdialog"
+            heading="Optional User Feedback Survey"
+          >
+            <p className="ds-c-alert__text">
+              We would appreciate your feedback on the CARTS 2020 Redesign.
+              Follow this link to participate in a brief survey
+              <a href={surveyOptions[oddOrEven]}> Google Forms</a>
+            </p>
+            <Button
+              className="hide-alert-button"
+              variation="transparent"
+              onClick={() => setShowAlert(!showAlert)}
+            >
+              {" "}
+              No, thank you{" "}
+            </Button>
+          </Alert>
+        </div>
+      ) : null}
+
+      <h3>What to expect next</h3>
+      <p>You‘ll hear from CMS if they have any questions about your report.</p>
+      <Button onClick={doneDispatch} variation="primary">
+        Done
+      </Button>
+    </>
+  );
+};
 Thanks.propTypes = {
   done: PropTypes.func.isRequired,
   lastSave: PropTypes.object.isRequired,
