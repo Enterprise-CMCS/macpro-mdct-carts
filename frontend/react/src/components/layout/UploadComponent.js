@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system-core";
 import axios from "../../authenticatedAxios";
+import rawAxios from "axios";
+
 import { setAnswerEntry } from "../../actions/initial";
 
 class UploadComponent extends Component {
@@ -62,7 +64,7 @@ class UploadComponent extends Component {
       // eslint-disable-next-line no-console
       console.log(`!*********generated:`, signedURL);
 
-      const result = axios.put(signedURL, uploadedFile, {
+      const result = rawAxios.put(signedURL, uploadedFile, {
         headers: {
           "Content-Type": uploadedFile.type,
         },
