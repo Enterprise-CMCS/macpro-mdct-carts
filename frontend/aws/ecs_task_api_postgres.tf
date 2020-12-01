@@ -224,134 +224,6 @@ resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
   }
 }
 
-resource "aws_wafv2_web_acl" "apiwaf" {
-  name        = "apiwaf-${terraform.workspace}"
-  description = "WAF for postgres api alb"
-  scope       = "REGIONAL"
-
-  default_action {
-    block {}
-  }
-
-  visibility_config {
-    cloudwatch_metrics_enabled = true
-    metric_name                = "${terraform.workspace}-webacl"
-    sampled_requests_enabled   = true
-  }
-
-  rule {
-    name     = "${terraform.workspace}-api-DDOSRateLimitRule"
-    priority = 0
-    action {
-      count {}
-    }
-
-    statement {
-      rate_based_statement {
-        limit              = 5000
-        aggregate_key_type = "IP"
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-api-DDOSRateLimitRuleMetric"
-      sampled_requests_enabled   = false
-    }
-  }
-
-  rule {
-    name     = "${terraform.workspace}-api-RegAWSCommonRule"
-    priority = 1
-
-    override_action {
-      count {}
-    }
-
-    statement {
-      managed_rule_group_statement {
-        vendor_name = "AWS"
-        name        = "AWSManagedRulesCommonRuleSet"
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-api-RegAWSCommonRuleMetric"
-      sampled_requests_enabled   = false
-    }
-  }
-
-  rule {
-    name     = "${terraform.workspace}-api-AWSManagedRulesAmazonIpReputationList"
-    priority = 2
-
-    override_action {
-      none {}
-    }
-
-    statement {
-      managed_rule_group_statement {
-        vendor_name = "AWS"
-        name        = "AWSManagedRulesAmazonIpReputationList"
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesAmazonIpReputationList"
-      sampled_requests_enabled   = false
-    }
-  }
-
-  rule {
-    name     = "${terraform.workspace}-api-RegAWSManagedRulesKnownBadInputsRuleSet"
-    priority = 3
-
-    override_action {
-      count {}
-    }
-
-    statement {
-      managed_rule_group_statement {
-        vendor_name = "AWS"
-        name        = "AWSManagedRulesKnownBadInputsRuleSet"
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-api-RegAWS-AWSManagedRulesKnownBadInputsRuleSet"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule {
-    name     = "${terraform.workspace}-api-allow-usa-plus-territories"
-    priority = 5
-    action {
-      allow {}
-    }
-
-    statement {
-      geo_match_statement {
-        country_codes = ["US", "GU", "PR", "UM", "VI", "MP"]
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "${terraform.workspace}-api-geo-rule"
-      sampled_requests_enabled   = true
-    }
-  }
-}
-
-resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
-  resource_arn = aws_alb.api_postgres.id
-  web_acl_arn  = aws_wafv2_web_acl.apiwaf.arn
-}
-
 # # ============== Import Data ====================
 data "aws_caller_identity" "current" {}
 
@@ -366,22 +238,7 @@ locals {
 # Need to update with Prod and Val Bucket name
 locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy", val: "cms-cloud-730373213083-us-east-1-legacy", master: "cms-cloud-730373213083-us-east-1-legacy" } }
 
-data "aws_s3_bucket" "webacl_s3" {
-  bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
-}
 
-# # ========================Create Kinesis firehose and role ========================
-resource "aws_kinesis_firehose_delivery_stream" "stream" {
-  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
-  name        = "aws-waf-logs-${terraform.workspace}"
-  destination = "extended_s3"
-
-  extended_s3_configuration {
-    role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = data.aws_s3_bucket.webacl_s3.arn
-    prefix ="cloudtrail/${terraform.workspace}/"
-  }
-}
 
 resource "aws_iam_role" "firehose_role" {
   name = "KinesisFirehoseRole-aws-${terraform.workspace}"
@@ -452,11 +309,4 @@ resource "aws_iam_role_policy" "firehose_policy" {
     ]
   }
   EOF
-}
-
-# =================== Enable WAF Logging ===================
-resource "aws_wafv2_web_acl_logging_configuration" "log" {
-  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
-  log_destination_configs = [ aws_kinesis_firehose_delivery_stream.stream[count.index].arn ]
-  resource_arn            = aws_wafv2_web_acl.apiwaf.arn
 }
