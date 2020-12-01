@@ -703,7 +703,6 @@ def generate_upload_psurl(request):
         Params={
             f"Bucket": f"{s3_bucket}",
             f"Key": f"{file}",
-            f"ResponseContentType": f"{file_type}",
         },
         ExpiresIn=10000,
     )
