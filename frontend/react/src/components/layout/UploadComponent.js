@@ -59,16 +59,13 @@ class UploadComponent extends Component {
           questionId,
         }
       );
-      const signedURL = response.data["psurl"];
+      const { psurl, psdata } = response.data;
 
       // eslint-disable-next-line no-console
-      console.log(`!*********generated:`, signedURL);
+      console.log(`!*********generated: ${psurl}`);
+      console.log(`${psdata}`);
 
-      const result = rawAxios.post(signedURL, uploadedFile, {
-        headers: {
-          "Content-Type": uploadedFile.type,
-        },
-      });
+      const result = rawAxios.post(psurl, uploadedFile, psdata);
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);
