@@ -79,7 +79,7 @@ STATE_INFO = {
 }
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -100,7 +100,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GroupSerializer
 
 
-class StateViewSet(viewsets.ModelViewSet):
+class StateViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that returns state data.
     """
@@ -703,7 +703,7 @@ def generate_upload_psurl(request):
         Params={
             f"Bucket": f"{s3_bucket}",
             f"Key": f"{file}",
-            #f"ResponseContentType": f"{file_type}",
+            f"ResponseContentType": f"{file_type}",
         },
         ExpiresIn=10000,
     )
