@@ -4,7 +4,7 @@ locals {
   # In short though, if we haven't specified a certificate for the API, then we're assuming we're
   #   reaching the API over http... and to hit the API over http, we must not hit the UI over
   #   https.  This avoids the Mixed Content errors seen in the console with section G.
-  endpoint_ui = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_cloudfront_distribution.www_distribution.domain_name}" : "https://${aws_cloudfront_distribution.www_distribution.domain_name}"
+  endpoint_ui = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_cloudfront_distribution.www_distribution.domain_name}" : "https://${var.acm_certificate_domain_api_postgres}"
 }
 
 resource "aws_s3_bucket" "www" {
