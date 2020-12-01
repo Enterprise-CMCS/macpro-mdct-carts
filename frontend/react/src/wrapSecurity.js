@@ -55,9 +55,12 @@ const WrappedSecurity = () => {
 
   /* eslint-disable-line */
   console.log("!***** initial data load [userData] ===>", userData);
-  let pageName = window.location.pathname.split("/")[1];
+
   return (
-    <div className={`${pageName + " App"}`} data-test="component-app">
+    <div
+      className={"App " + window.location.pathname.split("/")[1]}
+      data-test="component-app"
+    >
       <SecurityWrapper
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}
