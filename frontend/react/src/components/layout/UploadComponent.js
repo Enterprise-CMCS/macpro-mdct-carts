@@ -64,7 +64,7 @@ class UploadComponent extends Component {
       // eslint-disable-next-line no-console
       console.log(`!*********generated:`, signedURL);
 
-      const result = rawAxios.put(signedURL, uploadedFile, {
+      const result = rawAxios.post(signedURL, uploadedFile, {
         headers: {
           "Content-Type": uploadedFile.type,
         },

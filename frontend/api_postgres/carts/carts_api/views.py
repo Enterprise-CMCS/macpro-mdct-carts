@@ -698,18 +698,17 @@ def generate_upload_psurl(request):
     )
 
     # Generate the URL to get 'key-name' from 'bucket-name'
-    url = s3.generate_presigned_url(
-        ClientMethod="put_object",
-        Params={
-            f"Bucket": f"{s3_bucket}",
-            f"Key": f"{file}",
-        },
-        ExpiresIn=10000,
+    parts = s3.generate_presigned_post(
+        Bucket = f"{s3_bucket}",
+        Key = f"{file}"
     )
+
+    url = parts['url']
+    data = parts['fields']
 
     print(f"\n\n!!!! got url: {url}")
 
-    generated_presigned_url = {"psurl": url}
+    generated_presigned_url = {"psurl": url, "psdata": data}
 
     print(f"\n\n@@@@@ returning this: ")
     print(generated_presigned_url)
