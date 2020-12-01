@@ -194,8 +194,6 @@ pipeline {
         }
       }
     }
-    */
-    /*
     stage("Run Inspec Scans") {
       when {
         expression { env.DEPLOY == "true"}
