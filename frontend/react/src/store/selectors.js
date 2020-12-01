@@ -1,6 +1,5 @@
-import jsonpath from "../util/jsonpath";
-
-import { selectFragment } from "./formData"; // eslint-disable-line import/no-cycle
+import jsonpath from "../util/jsonpath"; // eslint-disable-line
+import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
 
@@ -163,7 +162,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     in_progress: "In progress",
     certified: "Certified",
     uncertified: "Uncertified",
-    approved: "Approved",
+    accepted: "Accepted",
     submitted: "Submitted",
     published: "Published",
   };

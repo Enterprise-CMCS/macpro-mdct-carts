@@ -51,21 +51,11 @@ from carts.carts_api.model_utils import (
         (
             "co_user",
             "certified",
-            "approved",
+            "accepted",
             StatusUpdateMessage(
-                new_status="approved",
+                new_status="accepted",
                 update_success=True,
-                message="co_user set certified to approved",
-            ),
-        ),
-        (
-            "bus_user",
-            "certified",
-            "approved",
-            StatusUpdateMessage(
-                new_status="approved",
-                update_success=True,
-                message="bus_user set certified to approved",
+                message="co_user set certified to accepted",
             ),
         ),
         (
