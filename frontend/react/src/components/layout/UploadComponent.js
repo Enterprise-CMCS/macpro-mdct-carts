@@ -79,15 +79,9 @@ class UploadComponent extends Component {
       console.log("parsed: ");
       console.log(generatedHeaders);
 
-      const result = rawAxios.post(
-        psurl,
-        {
-          file: uploadedFile,
-        },
-        {
-          headers: generatedHeaders,
-        }
-      );
+      const result = rawAxios.post(psurl, uploadedFile, {
+        headers: generatedHeaders,
+      });
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);
