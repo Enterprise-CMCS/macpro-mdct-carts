@@ -65,7 +65,7 @@ from carts.carts_api.model_utils import (
             StatusUpdateMessage(
                 new_status="accepted",
                 update_success=False,
-                message="bus_user set certified to accepted",
+                message="bus_user can't set certified to accepted",
             ),
         ),
         (
