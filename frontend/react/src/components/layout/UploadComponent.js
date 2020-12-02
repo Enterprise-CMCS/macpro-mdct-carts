@@ -64,29 +64,38 @@ class UploadComponent extends Component {
       // eslint-disable-next-line no-console
       console.log(`!*********generated: ${psurl}`);
       console.log(psdata);
-      // *** dynamically generate headers
-      let generatedHeaders = {};
 
-      const formData = new FormData();
-      formData.append("file", uploadedFile);
-
-      for (const headerKey in psdata) {
-        if (psdata.hasOwnProperty(headerKey)) {
-          generatedHeaders[headerKey] = psdata[headerKey];
-        }
-      }
-
-      console.log("parsed: ");
-      console.log(generatedHeaders);
-
-      const result = rawAxios.post(psurl, formData, {
-        headers: generatedHeaders,
-      });
+      const result = await this.uploadFileToS3(
+        psdata,
+        "some test cotents blah blah blah"
+      );
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);
     }
   }
+
+  uploadFileToS3 = (presignedPostData, file) => {
+    console.log("in upload");
+    console.log(presignedPostData);
+
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+
+      Object.keys(presignedPostData.fields).forEach((key) => {
+        formData.append(key, presignedPostData.fields[key]);
+      });
+
+      formData.append("file", file);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", presignedPostData.url, true);
+      xhr.send(formData);
+      xhr.onload = function () {
+        this.status === 204 ? resolve() : reject(this.responseText);
+      };
+    });
+  };
 
   async viewUploaded() {
     // *** re-initialize state
