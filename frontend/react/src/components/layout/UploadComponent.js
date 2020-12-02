@@ -94,7 +94,9 @@ class UploadComponent extends Component {
       xhr.open("POST", presignedPostData.url, true);
       xhr.send(formData);
       xhr.onload = function () {
-        this.status === 204 ? resolve() : reject(this.responseText);
+        this.status === 204
+          ? resolve(`Resolved: ${this.response}`)
+          : reject(`Rejected: ${this.responseText}`);
       };
     });
   };
