@@ -70,10 +70,7 @@ class UploadComponent extends Component {
         fields: psdata,
       };
 
-      const result = await this.uploadFileToS3(
-        parts,
-        "some test cotents blah blah blah"
-      );
+      const result = await this.uploadFileToS3(parts, uploadedFile);
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);
