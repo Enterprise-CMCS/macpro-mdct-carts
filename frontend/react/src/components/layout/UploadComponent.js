@@ -73,9 +73,6 @@ class UploadComponent extends Component {
         }
       }
 
-      // *** add content type
-      generatedHeaders["Content-Type"] = uploadedFile.type;
-
       console.log("parsed: ");
       console.log(generatedHeaders);
 
