@@ -67,6 +67,9 @@ class UploadComponent extends Component {
       // *** dynamically generate headers
       let generatedHeaders = {};
 
+      const formData = new FormData();
+      formData.append("file", uploadedFile);
+
       for (const headerKey in psdata) {
         if (psdata.hasOwnProperty(headerKey)) {
           generatedHeaders[headerKey] = psdata[headerKey];
@@ -76,7 +79,7 @@ class UploadComponent extends Component {
       console.log("parsed: ");
       console.log(generatedHeaders);
 
-      const result = rawAxios.post(psurl, uploadedFile, {
+      const result = rawAxios.post(psurl, formData, {
         headers: generatedHeaders,
       });
 
