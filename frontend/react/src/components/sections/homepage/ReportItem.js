@@ -16,7 +16,7 @@ const ReportItem = ({
   theAccept: acceptAction,
   userRole,
 }) => {
-  const anchorTarget = link1Text === "Edit" ? "_self" : "_blank";
+  const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const uncertify = () => {
     if (window.confirm("Are you sure to uncertify this record?")) {

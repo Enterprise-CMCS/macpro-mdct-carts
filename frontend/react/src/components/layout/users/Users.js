@@ -56,7 +56,7 @@ const Users = () => {
     }
   };
 
-  let tableData;
+  let tableData = false;
 
   if (users) {
     // Build column structure for react-data-tables
@@ -92,13 +92,24 @@ const Users = () => {
         name: "Role",
         selector: "user_role",
         sortable: true,
+        cell: function Role(r) {
+          if (r) {
+            return r.user_role;
+          } else {
+            return "";
+          }
+        },
       },
       {
         name: "Joined",
         selector: "date_joined",
         sortable: true,
         cell: function modifyDateJoined(d) {
-          return <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>;
+          if (d.date_joined) {
+            return <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>;
+          } else {
+            return "";
+          }
         },
       },
       {
@@ -106,7 +117,11 @@ const Users = () => {
         selector: "last_login",
         sortable: true,
         cell: function modifyLastLogin(l) {
-          return <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>;
+          if (l.last_login) {
+            return <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>;
+          } else {
+            return "";
+          }
         },
       },
       {
@@ -136,14 +151,14 @@ const Users = () => {
             <span>
               {s.is_active ? (
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary status"
                   onClick={() => deactivateUser(s.username)}
                 >
                   Deactivate
                 </button>
               ) : (
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary status"
                   onClick={() => activateUser(s.username)}
                 >
                   Activate
