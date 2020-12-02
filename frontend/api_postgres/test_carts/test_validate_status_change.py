@@ -59,19 +59,29 @@ from carts.carts_api.model_utils import (
             ),
         ),
         (
+            "bus_user",
+            "certified",
+            "accepted",
+            StatusUpdateMessage(
+                new_status="accepted",
+                update_success=False,
+                message="bus_user set certified to accepted",
+            ),
+        ),
+        (
             "admin_user",
             "certified",
-            "approved",
+            "accepted",
             StatusUpdateMessage(
                 new_status="certified",
                 update_success=False,
-                message="admin_user can't set certified to approved",
+                message="admin_user can't set certified to accepted",
             ),
         ),
         (
             "admin_user",
             "whatever",
-            "approved",
+            "accepted",
             StatusUpdateMessage(
                 new_status="whatever",
                 update_success=False,
