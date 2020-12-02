@@ -57,7 +57,10 @@ const WrappedSecurity = () => {
   console.log("!***** initial data load [userData] ===>", userData);
 
   return (
-    <div className="App" data-test="component-app">
+    <div
+      className={"App " + window.location.pathname.split("/")[1]}
+      data-test="component-app"
+    >
       <SecurityWrapper
         {...config.oidc}
         tokenManager={{ secure: true, storage: "cookie" }}

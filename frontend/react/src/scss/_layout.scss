@@ -49,6 +49,21 @@ div[hidden] {
 .user-profiles {
   overflow-y: hidden;
   margin: 2.2rem 0;
+
+  .MuiPaper-root {
+    border: 1px solid #aaa;
+  }
+
+  .status {
+    min-width: 80px;
+  }
+}
+
+.App.users {
+  .ds-l-container {
+    max-width: 1120px;
+    padding: 0;
+  }
 }
 
 .data-table-extensions {
