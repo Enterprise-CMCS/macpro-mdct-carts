@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system-core";
 import axios from "../../authenticatedAxios";
-import rawAxios from "axios";
 
 import { setAnswerEntry } from "../../actions/initial";
+
+const random = require("random");
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -48,34 +49,40 @@ class UploadComponent extends Component {
     const questionId = this.props.question.id;
 
     for (const uploadedFile of loadedFiles) {
-      console.log("########", uploadedFile);
+      const awsFilename = this.generateAWSFilename(uploadedFile.name);
 
       // *** obtain signed URL
       const response = await axios.post(
         `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
         {
           uploadedFileName: uploadedFile.name,
+          awsFilename: awsFilename,
           uploadedFileType: uploadedFile.type,
           questionId,
         }
       );
+
       const { psurl, psdata } = response.data;
 
-      // eslint-disable-next-line no-console
-      console.log(`!*********generated: ${psurl}`);
-      console.log(psdata);
-
-      let parts = {
-        url: `${psurl}`,
+      const presignedPostData = {
+        url: psurl,
         fields: psdata,
       };
 
-      const result = await this.uploadFileToS3(parts, uploadedFile);
+      // *** change filename to awsName for purposes of transfer
+      uploadedFile.name = awsFilename;
 
-      // eslint-disable-next-line no-console
-      console.log("@@@@upload result: ", result);
+      await this.uploadFileToS3(presignedPostData, uploadedFile);
     }
   }
+
+  generateAWSFilename = (filename) => {
+    filename = `${filename}${random.poisson()}`;
+
+    console.log("AWS NAME: ", filename);
+
+    return filename;
+  };
 
   uploadFileToS3 = (presignedPostData, file) => {
     console.log("in upload");

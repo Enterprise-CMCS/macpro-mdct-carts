@@ -687,7 +687,7 @@ def generate_upload_psurl(request):
     s3 = session.client("s3", f"{region}")
 
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    file = request.data["uploadedFileName"]
+    file = request.data["awsFilename"]
     file_type = request.data["uploadedFileType"]
 
     print(f"\n\n()()???>env variables")
