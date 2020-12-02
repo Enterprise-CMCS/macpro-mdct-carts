@@ -65,7 +65,11 @@ class UploadComponent extends Component {
       console.log(`!*********generated: ${psurl}`);
       console.log(psdata);
 
-      const result = rawAxios.post(psurl, uploadedFile, psdata);
+      const result = rawAxios.post(psurl, uploadedFile, {
+        headers: {
+          psdata,
+        },
+      });
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);
