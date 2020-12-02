@@ -65,8 +65,13 @@ class UploadComponent extends Component {
       console.log(`!*********generated: ${psurl}`);
       console.log(psdata);
 
+      let parts = {
+        url: `${psurl}`,
+        fields: psdata,
+      };
+
       const result = await this.uploadFileToS3(
-        psdata,
+        parts,
         "some test cotents blah blah blah"
       );
 
