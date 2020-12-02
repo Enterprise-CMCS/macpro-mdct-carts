@@ -10,7 +10,7 @@ export const theAccept = (stateCode) => async (dispatch, getState) => {
   const userName = `${user.firstname} ${user.lastname}`;
   const year = +state.global.formYear;
 
-  // created a new record in carts_api_statestatus that will label the state as uncertified
+  // created a new record in carts_api_statestatus that will label the state as accepted
   dispatch({ type: ACCEPT });
   try {
     await axios.post(`/state_status/`, {
