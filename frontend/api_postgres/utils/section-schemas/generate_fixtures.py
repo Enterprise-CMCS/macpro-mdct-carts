@@ -47,7 +47,7 @@ def write_state_section_json(here: Path, states: Path) -> None:
                     states / f"2020-{k.lower()}-section-{num}.json", section
                 )
         except KeyError:
-            print(f'Could not find state data for {k} - skipping')
+            print(f"Could not find state data for {k} - skipping")
 
 
 def populate_section_zero(state_info: dict, section: dict) -> dict:

@@ -35,7 +35,7 @@ sample = {
                                         "type": "text_multiline",
                                         "id": "2020-01-a-01-01-a",
                                     }
-                                ]
+                                ],
                             },
                             {
                                 "type": "fieldset",
@@ -47,8 +47,8 @@ sample = {
                                     {
                                         "type": "text_multiline",
                                         "id": "2020-01-a-01-03",
-                                    }
-                                ]
+                                    },
+                                ],
                             },
                             {
                                 "type": "text_multiline",
@@ -58,18 +58,19 @@ sample = {
                                         "type": "text_long",
                                         "id": "2020-01-a-01-04-a",
                                     }
-                                ]
+                                ],
                             },
-                        ]
+                        ],
                     }
-                ]
+                ],
             }
-        ]
+        ],
     }
 }
 
-lettermarkers = [_ for _ in string.ascii_lowercase] +\
-                [f'{_ * 2}' for _ in string.ascii_lowercase]
+lettermarkers = [_ for _ in string.ascii_lowercase] + [
+    f"{_ * 2}" for _ in string.ascii_lowercase
+]
 """
 lettermarkers = [_ for _ in string.ascii_lowercase] +\
                 [f'{a}{b}' for a in string.ascii_lowercase for b in
@@ -191,22 +192,34 @@ def main(args: List[str] = None) -> None:
     print(json.dumps(graph_markers))
 
 
-def dfs_questions(parent_id: str, qs: List, graph_markers: Dict,
-                  parent_is_question: bool = False):
+def dfs_questions(
+    parent_id: str,
+    qs: List,
+    graph_markers: Dict,
+    parent_is_question: bool = False,
+):
     if parent_id in graph_markers:
         print("Why is the key here already?")
     else:
         print(parent_id)
         graph_markers[parent_id] = {}
     for question in qs:
-        qresult = dfs_question(parent_id, question, graph_markers,
-                               parent_is_question=parent_is_question)
+        qresult = dfs_question(
+            parent_id,
+            question,
+            graph_markers,
+            parent_is_question=parent_is_question,
+        )
         graph_markers[parent_id] = {**graph_markers[parent_id], **qresult}
     return graph_markers
 
 
-def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
-                 parent_is_question: bool = False) -> Dict:
+def dfs_question(
+    parent_id: str,
+    question: DatumInContext,
+    graph_markers: Dict,
+    parent_is_question: bool = False,
+) -> Dict:
     # What kind of question am I?
     marking = is_marking(question)
     qtypes = [
@@ -226,11 +239,15 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
         "text",
         "text_medium",
         "text_multiline",
-        "text_small"
+        "text_small",
     ]
 
-    if question.value["type"] in ("objective", "objectives", "repeatable",
-                                  "repeatables"):
+    if question.value["type"] in (
+        "objective",
+        "objectives",
+        "repeatable",
+        "repeatables",
+    ):
         sending_parent_is_question = False
     elif question.value["type"] == "fieldset":
         if is_marking(question):
@@ -250,14 +267,16 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
             if check_for_unmarked(question):
                 this_marker = make_first_descendant(parent_id, False, True)
             else:
-                this_marker = make_first_descendant(parent_id,
-                                                    parent_is_question)
+                this_marker = make_first_descendant(
+                    parent_id, parent_is_question
+                )
             print("received descendant", this_marker)
             graph_markers[parent_id][this_marker] = {}
         else:
             print("making sibling")
-            this_marker = make_next_sibling(parent_id,
-                                            graph_markers[parent_id])
+            this_marker = make_next_sibling(
+                parent_id, graph_markers[parent_id]
+            )
             print("received sibling", this_marker)
             graph_markers[parent_id][this_marker] = {}
 
@@ -273,8 +292,11 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
             return graph_markers[parent_id]
 
         graph_markers[parent_id][this_marker] = dfs_questions(
-            this_marker, subqs, {},
-            parent_is_question=sending_parent_is_question)
+            this_marker,
+            subqs,
+            {},
+            parent_is_question=sending_parent_is_question,
+        )
         return graph_markers[parent_id]
     else:
         this_marker = parent_id
@@ -284,8 +306,11 @@ def dfs_question(parent_id: str, question: DatumInContext, graph_markers: Dict,
             return graph_markers[parent_id]
 
         return dfs_questions(
-            this_marker, subqs, graph_markers,
-            parent_is_question=sending_parent_is_question)[parent_id]
+            this_marker,
+            subqs,
+            graph_markers,
+            parent_is_question=sending_parent_is_question,
+        )[parent_id]
 
 
 def is_marking(question_jsonpath: DatumInContext) -> bool:
@@ -300,8 +325,11 @@ def is_marking(question_jsonpath: DatumInContext) -> bool:
         return True
 
 
-def make_first_descendant(parent_id: str, parent_is_question: bool = False,
-                          unmarked_descendants: bool = False) -> str:
+def make_first_descendant(
+    parent_id: str,
+    parent_is_question: bool = False,
+    unmarked_descendants: bool = False,
+) -> str:
     if not parent_is_question:
         if unmarked_descendants:
             return f"{parent_id}-unmarked_descendants"
@@ -355,17 +383,17 @@ def setup_cli_parser() -> argparse.ArgumentParser:
         "--input",
         default=None,
         dest="content",
-        help="Input file to read JSON from."
+        help="Input file to read JSON from.",
     )
     parser.add_argument(
         "-c",
         "--check-ids",
         action="store_true",
-        help="Instead of generating, check current ids for validity."
+        help="Instead of generating, check current ids for validity.",
     )
 
     return parser
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
