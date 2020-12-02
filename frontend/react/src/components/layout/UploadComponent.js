@@ -64,12 +64,30 @@ class UploadComponent extends Component {
       // eslint-disable-next-line no-console
       console.log(`!*********generated: ${psurl}`);
       console.log(psdata);
+      // *** dynamically generate headers
+      let generatedHeaders = {};
 
-      const result = rawAxios.post(psurl, uploadedFile, {
-        headers: {
-          psdata,
+      for (const headerKey in psdata) {
+        if (psdata.hasOwnProperty(headerKey)) {
+          generatedHeaders[headerKey] = psdata[headerKey];
+        }
+      }
+
+      // *** add content type
+      generatedHeaders["Content-Type"] = uploadedFile.type;
+
+      console.log("parsed: ");
+      console.log(generatedHeaders);
+
+      const result = rawAxios.post(
+        psurl,
+        {
+          file: uploadedFile,
         },
-      });
+        {
+          headers: generatedHeaders,
+        }
+      );
 
       // eslint-disable-next-line no-console
       console.log("@@@@upload result: ", result);
