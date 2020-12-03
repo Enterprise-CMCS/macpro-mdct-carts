@@ -665,33 +665,39 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
-    # user_state = StatesFromUsername.objects.filter(
-    #    username=request.user
-    # ).values_list("state_codes", flat=True)[0][0]
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
 
     # loop through all uploaded files and save to database (carts_api_uploadedfiles table)
     # for file in request.data["uploadedFiles"]:
-    #    uploadedFile = UploadedFiles.objects.create(
-    #        uploaded_username=f"{request.user}",
-    #        question_id=request.data["questionId"],
-    #        filename=file,
-    #        aws_filename=f"aws_{file}",
-    #        uploaded_state=user_state,
-    #    )
+    uploadedFile = UploadedFiles.objects.create(
+        uploaded_username=f"{request.user}",
+        question_id=request.data["questionId"],
+        filename=file,
+        aws_filename=f"aws_{file}",
+        uploaded_state=user_state,
+    )
 
-    #    uploadedFile.save()
+    uploadedFile.save()
 
-    # generated_psurl = {"psurl": "aws.s3.someurl.asdfasfaf"}
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    file = request.data["uploadedFileName"]
 
-    s3_bucket       = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    file            = request.data["uploadedFileName"]
-    aws_filename    = str(random.randint(100, 100000)).zfill(7) + "_" + datetime.now().strftime("%Y%m%d%_H_%M_%S") + f"_{file}"
-    file_type       = request.data["uploadedFileType"]
+    # current pattern for aws filename alias is 0000000_YYYYMMDD_H_M_S_filename
+    # that should yield enough entropy to never incur a collision
+    aws_filename = (
+        str(random.randint(100, 100000)).zfill(7)
+        + "_"
+        + datetime.now().strftime("%Y%m%d%_H_%M_%S")
+        + f"_{file}"
+    )
+    file_type = request.data["uploadedFileType"]
 
-    region          = os.environ.get("AWS_REGION")
+    region = os.environ.get("AWS_REGION")
 
-    session         = boto3.session.Session()
-    s3              = session.client("s3", f"{region}")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
 
     print(
         f"\n\n===>uploading {file} aliased as {aws_filename} of type {file_type} to bucket: {s3_bucket} "
@@ -699,12 +705,11 @@ def generate_upload_psurl(request):
 
     # Generate the URL to get 'key-name' from 'bucket-name'
     parts = s3.generate_presigned_post(
-        Bucket = f"{s3_bucket}",
-        Key = f"{aws_filename}"
+        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
     )
 
-    url = parts['url']
-    data = parts['fields']
+    url = parts["url"]
+    data = parts["fields"]
 
     generated_presigned_url = {"psurl": url, "psdata": data}
 
