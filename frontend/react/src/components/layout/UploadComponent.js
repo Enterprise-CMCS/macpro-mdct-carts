@@ -74,7 +74,12 @@ class UploadComponent extends Component {
   }
 
   generateAWSFilename = (filename) => {
-    filename = `${filename}${random.poisson()}`;
+    const awsSuffix = `${`${random.int(100, 100000)}`.padStart(
+      9,
+      "0"
+    )}_${new Date().toString().replace(/ /gi, "_")}`;
+
+    filename = `${filename}_${awsSuffix}`;
 
     console.log("AWS NAME: ", filename);
 
