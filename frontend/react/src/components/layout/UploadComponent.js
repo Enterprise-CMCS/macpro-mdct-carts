@@ -69,9 +69,6 @@ class UploadComponent extends Component {
         fields: psdata,
       };
 
-      // *** change filename to awsName for purposes of transfer
-      uploadedFile.name = awsFilename;
-
       await this.uploadFileToS3(presignedPostData, uploadedFile);
     }
   }
