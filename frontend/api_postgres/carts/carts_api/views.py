@@ -684,10 +684,12 @@ def generate_upload_psurl(request):
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
     file = request.data["uploadedFileName"]
 
-    # current pattern for aws filename alias is 0000000_YYYYMMDD_H_M_S_filename
+    # current pattern for aws filename alias is user_0000000_YYYYMMDD_H_M_S_filename
     # that should yield enough entropy to never incur a collision
     aws_filename = (
-        str(random.randint(100, 100000)).zfill(7)
+        {request.user}
+        + "_"
+        + str(random.randint(100, 100000)).zfill(7)
         + "_"
         + datetime.now().strftime("%Y%m%d%_H_%M_%S")
         + f"_{file}"
