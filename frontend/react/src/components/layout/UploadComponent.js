@@ -5,8 +5,6 @@ import axios from "../../authenticatedAxios";
 
 import { setAnswerEntry } from "../../actions/initial";
 
-const random = require("random");
-
 class UploadComponent extends Component {
   constructor(props) {
     super(props);
@@ -49,14 +47,11 @@ class UploadComponent extends Component {
     const questionId = this.props.question.id;
 
     for (const uploadedFile of loadedFiles) {
-      const awsFilename = this.generateAWSFilename(uploadedFile.name);
-
       // *** obtain signed URL
       const response = await axios.post(
         `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
         {
           uploadedFileName: uploadedFile.name,
-          awsFilename: awsFilename,
           uploadedFileType: uploadedFile.type,
           questionId,
         }
@@ -73,23 +68,7 @@ class UploadComponent extends Component {
     }
   }
 
-  generateAWSFilename = (filename) => {
-    const awsSuffix = `${`${random.int(100, 100000)}`.padStart(
-      9,
-      "0"
-    )}_${new Date().toString().replace(/ /gi, "_")}`;
-
-    filename = `${filename}_${awsSuffix}`;
-
-    console.log("AWS NAME: ", filename);
-
-    return filename;
-  };
-
-  uploadFileToS3 = (presignedPostData, file) => {
-    console.log("in upload");
-    console.log(presignedPostData);
-
+  uploadFileToS3(presignedPostData, file) {
     return new Promise((resolve, reject) => {
       const formData = new FormData();
 
@@ -108,7 +87,7 @@ class UploadComponent extends Component {
           : reject(`Rejected: ${this.responseText}`);
       };
     });
-  };
+  }
 
   async viewUploaded() {
     // *** re-initialize state
@@ -218,7 +197,7 @@ class UploadComponent extends Component {
             accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
             className="file_upload"
             errorMessage={this.state.inputErrors}
-            hint=" Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
+            hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
             label=""
             multiple
             name={this.props.question.id}

@@ -8,6 +8,7 @@ from typing import (
 import boto3
 from botocore.config import Config
 import os
+import random
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
@@ -681,32 +682,29 @@ def generate_upload_psurl(request):
     #    uploadedFile.save()
 
     # generated_psurl = {"psurl": "aws.s3.someurl.asdfasfaf"}
-    region = os.environ.get("AWS_REGION")
 
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
+    s3_bucket       = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    file            = request.data["uploadedFileName"]
+    aws_filename    = str(random.randint(100, 100000)).zfill(7) + "_" + datetime.now().strftime("%Y%m%d%_H_%M_%S") + f"_{file}"
+    file_type       = request.data["uploadedFileType"]
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    file = request.data["awsFilename"]
-    file_type = request.data["uploadedFileType"]
+    region          = os.environ.get("AWS_REGION")
 
-    print(f"\n\n()()???>env variables")
-    print(os.environ)
+    session         = boto3.session.Session()
+    s3              = session.client("s3", f"{region}")
 
     print(
-        f"\n\n===>uploading {file} of type {file_type} to bucket: {s3_bucket} "
+        f"\n\n===>uploading {file} aliased as {aws_filename} of type {file_type} to bucket: {s3_bucket} "
     )
 
     # Generate the URL to get 'key-name' from 'bucket-name'
     parts = s3.generate_presigned_post(
         Bucket = f"{s3_bucket}",
-        Key = f"{file}"
+        Key = f"{aws_filename}"
     )
 
     url = parts['url']
     data = parts['fields']
-
-    print(f"\n\n!!!! got url: {url}")
 
     generated_presigned_url = {"psurl": url, "psdata": data}
 
