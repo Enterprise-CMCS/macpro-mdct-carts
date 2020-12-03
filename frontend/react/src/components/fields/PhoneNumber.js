@@ -13,10 +13,10 @@ const PhoneNumber = ({ onChange, question, ...props }) => {
         setError("Please limit to 10 digits");
       } else {
         setError(false);
+        onChange({ target: { name, value } });
       }
     } else {
       setError(false);
-      onChange({ target: { name, value } });
     }
 
     setPhone(value);
