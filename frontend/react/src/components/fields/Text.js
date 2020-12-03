@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
+import ReactHtmlParser from "react-html-parser";
 
 const Text = ({ question, ...props }) => {
   const [printValue, setPrintValue] = useState(
@@ -8,11 +9,12 @@ const Text = ({ question, ...props }) => {
   );
 
   const updatePrintHelper = ({ target: { value } }) => {
-    setPrintValue(value);
+    const val = value.replace(/\n/g, "<br/>");
+    setPrintValue(val);
   };
   return (
     <>
-      <div className="print-helper">{printValue}</div>
+      <div className="print-helper">{ReactHtmlParser(printValue)}</div>
       <TextField
         value={(question.answer && question.answer.entry) || ""}
         type="text"
