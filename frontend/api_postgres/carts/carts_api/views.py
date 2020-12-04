@@ -710,10 +710,10 @@ def generate_upload_psurl(request):
         Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
     )
 
-    url = parts["url"]
-    data = parts["fields"]
-
-    generated_presigned_url = {"psurl": "sdfsa", "psdata": "afae"}
+    generated_pre   signed_url = {
+        "psurl": parts["url"],
+        "psdata": parts["fields"],
+    }
 
     print(f"\n\n@@@@@ returning this: ")
     print(generated_presigned_url)
