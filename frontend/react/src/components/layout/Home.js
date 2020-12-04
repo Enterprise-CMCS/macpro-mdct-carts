@@ -6,9 +6,11 @@ import AdminHome from "./HomeAdmin";
 import CMSHome from "./HomeCMS";
 import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
+import IncompleteUser from "./IncompleteUser";
 
-const Home = ({ role, SecureRouteComponent }) => {
+const Home = ({ role, SecureRouteComponent, stateId }) => {
   let content = null;
+  console.log("zzzzzzzzz", stateId);
   switch (role) {
     case "admin_user":
       content = <AdminHome SecureRouteComponent={SecureRouteComponent} />;
@@ -18,7 +20,13 @@ const Home = ({ role, SecureRouteComponent }) => {
       content = <CMSHome SecureRouteComponent={SecureRouteComponent} />;
       break;
     case "state_user":
-      content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
+      if (stateId) {
+        content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
+      } else {
+        content = (
+          <IncompleteUser SecureRouteComponent={SecureRouteComponent} />
+        );
+      }
       break;
     default:
       content = <Unauthorized />;
@@ -32,11 +40,13 @@ const Home = ({ role, SecureRouteComponent }) => {
 };
 Home.propTypes = {
   role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,
+  stateId: PropTypes.element.isRequired,
   SecureRouteComponent: PropTypes.element.isRequired,
 };
 
 const mapState = (state) => ({
   role: state.stateUser?.currentUser?.role,
+  stateId: state.stateUser?.currentUser?.state.id,
 });
 
 export default connect(mapState)(Home);

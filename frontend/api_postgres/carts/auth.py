@@ -105,9 +105,12 @@ def _get_or_create_user(user_info):
 
     print(f"\n\n    $$$$$username_map is: ", username_map)
 
-    role = role_from_raw_ldap_job_codes(
-        role_map, username_map, user_info["job_codes"]
-    )
+    if not username_map:
+        role = "state_user"
+    else:
+        role = role_from_raw_ldap_job_codes(
+            role_map, username_map, user_info["job_codes"]
+        )
 
     print(f"\n\n!!!$$$$$role is: ", role)
 
