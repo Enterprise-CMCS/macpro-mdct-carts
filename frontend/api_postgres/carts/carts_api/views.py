@@ -665,39 +665,39 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
+    file = request.data["uploadedFileName"]
+
+    # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
+    # that should yield enough entropy to never incur a collision
+    aws_filename = (
+        f"{request.user}_"
+        + str(random.randint(100, 100000)).zfill(7)
+        + "_"
+        + datetime.now().strftime("%Y%m%d_%H%M%S")
+        + f"_{file}"
+    )
+    file_type = request.data["uploadedFileType"]
+
     user_state = StatesFromUsername.objects.filter(
         username=request.user
     ).values_list("state_codes", flat=True)[0][0]
 
-    # loop through all uploaded files and save to database (carts_api_uploadedfiles table)
-    # for file in request.data["uploadedFiles"]:
+    print(
+        f"{request.user} is {user_state} and {file} aliased {aws_filename} for {request.data['questionId']}"
+    )
+
     uploadedFile = UploadedFiles.objects.create(
         uploaded_username=f"{request.user}",
         question_id=request.data["questionId"],
         filename=file,
-        aws_filename=f"aws_{file}",
+        aws_filename=aws_filename,
         uploaded_state=user_state,
     )
 
     uploadedFile.save()
 
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    file = request.data["uploadedFileName"]
-
-    # current pattern for aws filename alias is user_0000000_YYYYMMDD_H_M_S_filename
-    # that should yield enough entropy to never incur a collision
-    aws_filename = (
-        {request.user}
-        + "_"
-        + str(random.randint(100, 100000)).zfill(7)
-        + "_"
-        + datetime.now().strftime("%Y%m%d%_H_%M_%S")
-        + f"_{file}"
-    )
-    file_type = request.data["uploadedFileType"]
-
     region = os.environ.get("AWS_REGION")
-
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
 
@@ -713,7 +713,7 @@ def generate_upload_psurl(request):
     url = parts["url"]
     data = parts["fields"]
 
-    generated_presigned_url = {"psurl": url, "psdata": data}
+    generated_presigned_url = {"psurl": "sdfsa", "psdata": "afae"}
 
     print(f"\n\n@@@@@ returning this: ")
     print(generated_presigned_url)

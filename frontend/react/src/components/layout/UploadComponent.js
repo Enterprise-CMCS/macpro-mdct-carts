@@ -23,6 +23,7 @@ class UploadComponent extends Component {
     this.removeFile = this.removeFile.bind(this);
     this.submitUpload = this.submitUpload.bind(this);
     this.viewUploaded = this.viewUploaded.bind(this);
+    this.isFileTypeAllowed = this.isFileTypeAllowed.bind(this);
   }
 
   isFileTypeAllowed(extension) {
