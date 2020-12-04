@@ -66,6 +66,7 @@ class UploadComponent extends Component {
       };
 
       await this.uploadFileToS3(presignedPostData, uploadedFile);
+      await this.viewUploaded();
     }
   }
 
