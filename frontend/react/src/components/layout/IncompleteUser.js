@@ -4,9 +4,10 @@ const incompleteUser = () => (
   <div>
     <h1>User Account Error</h1>
     <p>
-      Your account has not been fully set up. Please contact{" "}
+      Additional information is required to provide access to your CARTS
+      account, please contact the Help Desk at{" "}
       <a href="mailto:cartshelp@cms.hhs.gov">cartshelp@cms.hhs.gov</a> for
-      assistance.
+      further assistance.
     </p>
   </div>
 );
