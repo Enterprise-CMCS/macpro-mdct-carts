@@ -702,7 +702,7 @@ def generate_upload_psurl(request):
     s3 = session.client("s3", f"{region}")
 
     print(
-        f"\n\\nn===>uploading {file} aliased as {aws_filename} of type {file_type} to bucket: {s3_bucket} "
+        f"\n\n\n===>uploading {file} aliased as {aws_filename} of type {file_type} to bucket: {s3_bucket} "
     )
 
     # Generate the URL to get 'key-name' from 'bucket-name'
@@ -710,7 +710,7 @@ def generate_upload_psurl(request):
         Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
     )
 
-    generated_pre   signed_url = {
+    generated_presigned_url = {
         "psurl": parts["url"],
         "psdata": parts["fields"],
     }
