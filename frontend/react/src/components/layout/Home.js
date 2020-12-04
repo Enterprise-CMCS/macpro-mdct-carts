@@ -10,7 +10,7 @@ import IncompleteUser from "./IncompleteUser";
 
 const Home = ({ role, SecureRouteComponent, stateId }) => {
   let content = null;
-  console.log("zzzzzzzzz", stateId);
+
   switch (role) {
     case "admin_user":
       content = <AdminHome SecureRouteComponent={SecureRouteComponent} />;
@@ -20,9 +20,11 @@ const Home = ({ role, SecureRouteComponent, stateId }) => {
       content = <CMSHome SecureRouteComponent={SecureRouteComponent} />;
       break;
     case "state_user":
+      // If there is a state associated to the user, send them to home page
       if (stateId) {
         content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
       } else {
+        // If no state, alert the user that their setup is incomplete
         content = (
           <IncompleteUser SecureRouteComponent={SecureRouteComponent} />
         );

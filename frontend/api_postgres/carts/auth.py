@@ -106,6 +106,8 @@ def _get_or_create_user(user_info):
     print(f"\n\n    $$$$$username_map is: ", username_map)
 
     if not username_map:
+        # If nothing is returned from RoleFromUsername
+        # table, default to state user
         role = "state_user"
     else:
         role = role_from_raw_ldap_job_codes(
