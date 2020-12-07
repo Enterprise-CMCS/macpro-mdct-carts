@@ -167,7 +167,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     submitted: "Submitted",
     published: "Published",
   };
-
+  
   return {
     selectFormStatus: (state) => {
       const { status } = state.reportStatus;
@@ -176,11 +176,12 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
       }
       return null;
     },
-    selectFormStatuses: (state) =>
-      Object.entries(state.reportStatus).map(([stateCode, status]) => ({
+    selectFormStatuses: (state) => 
+      Object.entries(state.reportStatus).map(([stateCode, status, year]) => ({
         state: statesArray.find(({ value }) => value === stateCode)?.label,
         stateCode,
         status: STATUS_MAPPING[status],
+        year,
       })),
   };
 })();

@@ -21,12 +21,31 @@ export const getAllStatesData = () => {
   };
 };
 
-export const getAllStateStatuses = () => async (dispatch, getState) => {
+export const getAllStateStatuses = (selectedYears = [], selectedStates = [], selectedStatus = []) => async (dispatch, getState) => {
+  
   const { data } = await axios.get(`/state_status/`);
-  const year = +getState().global.formYear;
+  let yearFilter = () =>{};
+  let stateFilter = () =>{};
+  let statusFilter = () =>{}
 
+  selectedYears.length > 0 ? 
+  yearFilter =  (status) => selectedYears.includes(status.year) : 
+  yearFilter = (status) => 1 === 1
+
+  selectedStates.length > 0 ? 
+  stateFilter =  (status) => selectedStates.includes(status.state) : 
+  stateFilter = (status) => 1 === 1
+  
+  selectedStatus.length > 0 ? 
+  statusFilter =  (status) => selectedStatus.includes(status.status) : 
+  statusFilter = (status) => 1 === 1
+
+
+  console.log("year",)
   const payload = data
-    .filter((status) => status.year === year)
+    .filter(yearFilter)
+    .filter(stateFilter)
+    .filter(statusFilter)
     .sort((a, b) => {
       const dateA = new Date(a.last_changed);
       const dateB = new Date(b.last_changed);
@@ -47,11 +66,11 @@ export const getAllStateStatuses = () => async (dispatch, getState) => {
     .reduce(
       (out, status) => ({
         ...out,
-        [status.state]: status.status,
+        [status.state]: {status:status.status,year:status.year,state:status.state},
       }),
       {}
     );
-
+      console.log("filtered payload",payload)
   dispatch({ type: SET_STATE_STATUSES, payload });
 };
 

@@ -26,7 +26,7 @@ const ReportItem = ({
 
   return (
     <div className="report-item ds-l-row">
-      <div className="name ds-l-col--2">{name}</div>
+      <div className="name ds-l-col--3">{name}</div>
       <div
         className={`status ds-l-col--2 ${statusText === "Overdue" && `alert`}`}
       >
@@ -60,7 +60,7 @@ ReportItem.propTypes = {
 ReportItem.defaultProps = {
   link1Text: "View only",
   link1URL: "#",
-  statusText: "Submitted",
+  statusText: "Missing Status",
   statusURL: "",
 };
 
