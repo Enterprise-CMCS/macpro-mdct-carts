@@ -7,22 +7,27 @@ import { selectFormStatuses } from "../../../store/selectors";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { Button } from "@cmsgov/design-system-core";
 
-const CMSHomepage = ({ getStatuses, statuses, currentYear, stateList, reportstate }) => {
-  const [yearList, setYearList] = useState()
-  const statusList = [
-    { label:"Approved", id: "approved" },
-    { label:"Certified", id: "certified" },
-    { label:"In progress", id: "in-progress" },
-    { label:"Not started", id: "not_started" },
-    { label:"Published", id: "published" },
-    { label:"Submitted", id: "submitted" },
-    { label:"Uncertified", id: "uncertified" }
-]
-
-  let selectedStates = []
-  let selectedYears = []
-  let selectedStatuses = []
+const CMSHomepage = ({
+  getStatuses,
+  statuses,
+  currentYear,
+  currentUserRole,
+  stateList,
+}) => {
+    const [yearList, setYearList] = useState()
+    const statusList = [
+      { label:"Approved", id: "approved" },
+      { label:"Certified", id: "certified" },
+      { label:"In progress", id: "in-progress" },
+      { label:"Not started", id: "not_started" },
+      { label:"Published", id: "published" },
+      { label:"Submitted", id: "submitted" },
+      { label:"Uncertified", id: "uncertified" }
+  ]
   
+    let selectedStates = []
+    let selectedYears = []
+    let selectedStatuses = []
   useEffect(() => {
     let yearArray = []  
     for (let x = 2020; x <= currentYear; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
@@ -123,7 +128,7 @@ const onSelectStatus = (element) => {
                       name={`${state} ${currentYear}`}
                       statusText={status}
                       editor="x@y.z"
-                      stateUser={false}
+                      userRole={currentUserRole}
                     />
                   ) : null
                 )}
@@ -138,15 +143,20 @@ CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
   statuses: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
+  currentUserRole: PropTypes.string.isRequired,
 };
 
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
   currentYear: state.global.formYear,
+<<<<<<< HEAD
   stateList: state.allStatesData.map((element) => {
     return { label: element.name, id: element.code };
   }),
   reportstate: state.reportStatus
+=======
+  currentUserRole: state.stateUser.currentUser.role,
+>>>>>>> c61794d25ecfce2ea00df6a5596fba8869c9df32
 });
 
 const mapDispatch = {

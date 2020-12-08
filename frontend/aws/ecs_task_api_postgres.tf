@@ -431,8 +431,8 @@ resource "aws_iam_role_policy" "firehose_policy" {
           "s3:PutObject"
           ],
         "Resource": [
-          "arn:aws:s3:::${"data.aws_s3_bucket.webacl_s3"}",
-          "arn:aws:s3:::${"data.aws_s3_bucket.webacl_s3"}/*"
+          "${data.aws_s3_bucket.webacl_s3.arn}",
+          "${data.aws_s3_bucket.webacl_s3.arn}/*"
         ]
       },
       {
