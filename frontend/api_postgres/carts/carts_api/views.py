@@ -696,25 +696,26 @@ def generate_upload_psurl(request):
 
     uploadedFile.save()
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
+    # s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    # region = os.environ.get("AWS_REGION")
+    # session = boto3.session.Session()
+    # s3 = session.client("s3", f"{region}")
 
     print(
         f"\n\n\n===>uploading {file} aliased as {aws_filename} of type {file_type} to bucket: {s3_bucket} "
     )
 
     # Generate the URL to get 'key-name' from 'bucket-name'
-    parts = s3.generate_presigned_post(
-        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
-    )
+    # parts = s3.generate_presigned_post(
+    #    Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
+    # )
 
-    generated_presigned_url = {
-        "psurl": parts["url"],
-        "psdata": parts["fields"],
-    }
+    # generated_presigned_url = {
+    #    "psurl": parts["url"],
+    #    "psdata": parts["fields"],
+    # }
 
+    generate_presigned_url = {"success": "true"}
     print(f"\n\n@@@@@ returning this: ")
     print(generated_presigned_url)
 
@@ -774,7 +775,7 @@ def remove_uploaded_files(request):
     UploadedFiles.objects.filter(
         uploaded_username=request.user,
         uploaded_state=user_state,
-        aws_filename=request.data["aws_filename"],
+        aws_filename=request.data["awsFilename"],
     ).delete()
 
     response = {"success": "true"}
