@@ -737,7 +737,7 @@ def generate_download_psurl(request):
     print(f"\n\n session {session}")
     s3 = session.client("s3", f"{region}")
     print(f"\n\ns3: {s3}")
-    presigned_url = s3_client.generate_presigned_url(
+    presigned_url = s3.generate_presigned_url(
         "get_object",
         Params={"Bucket": s3_bucket, "Key": aws_filename},
         ExpiresIn=3600,
