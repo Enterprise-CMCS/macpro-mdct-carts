@@ -65,7 +65,7 @@ class UploadComponent extends Component {
         url: psurl,
         fields: psdata,
       };
-      return;
+
       await this.uploadFileToS3(presignedPostData, uploadedFile);
 
       const filteredStateFiles = loadedFiles.filter(
