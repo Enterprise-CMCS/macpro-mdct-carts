@@ -65,6 +65,8 @@ api_patterns = [
     path("initiate", views.initiate_session),
     path("psurl_upload", views.generate_upload_psurl),
     path("view_uploaded", views.view_uploaded_files),
+    path("remove_uploaded", views.remove_uploaded_files),
+    path("psurl_download", views.generate_download_psurl),
 ]
 
 urlpatterns = [

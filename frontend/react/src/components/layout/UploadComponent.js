@@ -18,15 +18,16 @@ class UploadComponent extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
     this.submitUpload = this.submitUpload.bind(this);
     this.viewUploaded = this.viewUploaded.bind(this);
     this.isFileTypeAllowed = this.isFileTypeAllowed.bind(this);
-  }
+    this.deleteFile = this.deleteFile.bind(this);
+  };
 
-  isFileTypeAllowed(extension) {
+  isFileTypeAllowed = (extension) => {
     const allowedFileTypes = [
       "jpg",
       "jpeg",
@@ -41,9 +42,9 @@ class UploadComponent extends Component {
       "xls",
     ];
     return allowedFileTypes.indexOf(extension) > -1;
-  }
+  };
 
-  async submitUpload() {
+  submitUpload = async () => {
     const { loadedFiles } = this.state;
     const questionId = this.props.question.id;
 
@@ -66,11 +67,25 @@ class UploadComponent extends Component {
       };
 
       await this.uploadFileToS3(presignedPostData, uploadedFile);
-      await this.viewUploaded();
-    }
-  }
 
-  uploadFileToS3(presignedPostData, file) {
+      const filteredStateFiles = loadedFiles.filter(
+        (e) => e.name !== uploadedFile.name
+      );
+
+      this.setState({
+        loadedFiles: filteredStateFiles,
+        blockFileSubmission: true,
+      });
+
+      if (this.state.displayUploadedFiles === false) {
+        return await this.viewUploaded();
+      } else {
+        return await this.retrieveUploadedFiles();
+      }
+    }
+  };
+
+  uploadFileToS3 = (presignedPostData, file) => {
     return new Promise((resolve, reject) => {
       const formData = new FormData();
 
@@ -89,48 +104,23 @@ class UploadComponent extends Component {
           : reject(`Rejected: ${this.responseText}`);
       };
     });
-  }
+  };
 
-  async viewUploaded() {
-    // *** re-initialize state
-    this.setState({
-      uploadedFilesRetrieved: false,
-    });
-
+  viewUploaded = async () => {
     if (this.state.displayUploadedFiles === false) {
-      const questionId = this.props.question.id;
-
-      // *** make sure container for files is displayed
       this.setState({
         displayUploadedFiles: true,
       });
-
-      // *** retrieve files
-      const response = await axios
-        .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
-          questionId,
-        })
-        .catch((error) => {
-          console.log("!!!Error retrieving files: ", error);
-        });
-
-      // *** hide the loading preloader
-      this.setState({
-        uploadedFilesRetrieved: true,
-      });
-
-      this.setState({
-        uploadedFiles: response.data["uploaded_files"],
-      });
+      await this.retrieveUploadedFiles();
     } else {
-      // *** make sure container for files is displayed
+      // *** make sure container for files is NOT displayed
       this.setState({
         displayUploadedFiles: false,
       });
     }
-  }
+  };
 
-  removeFile(evt) {
+  removeFile = (evt) => {
     const { loadedFiles } = this.state;
 
     const filteredStateFiles = loadedFiles.filter(
@@ -140,11 +130,63 @@ class UploadComponent extends Component {
     this.setState({
       loadedFiles: filteredStateFiles,
     });
-  }
+  };
+
+  downloadFile = async (awsFilename) => {
+    const response = await axios.post(
+      `${window.env.API_POSTGRES_URL}/api/v1/psurl_download`,
+      {
+        awsFilename,
+      }
+    );
+
+    const { psurl } = response["data"];
+
+    await this.downloadFileFromS3(psurl);
+  };
+
+  downloadFileFromS3 = async (psurl) => {
+    alert(psurl);
+  };
+
+  retrieveUploadedFiles = async () => {
+    const questionId = this.props.question.id;
+
+    this.setState({
+      uploadedFilesRetrieved: false,
+    });
+
+    const response = await axios
+      .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
+        questionId,
+      })
+      .catch((error) => {
+        console.log("!!!Error downloading files: ", error);
+      });
+
+    // *** hide the loading preloader
+    this.setState({
+      uploadedFilesRetrieved: true,
+      uploadedFiles: response.data["uploaded_files"],
+    });
+  };
+
+  deleteFile = async (awsFilename) => {
+    // *** retrieve files
+    await axios
+      .post(`${window.env.API_POSTGRES_URL}/api/v1/remove_uploaded`, {
+        awsFilename,
+      })
+      .catch((error) => {
+        console.log("!!!Error retrieving files: ", error);
+      });
+
+    await this.retrieveUploadedFiles();
+  };
 
   // TODO: when one file errors, the others are loaded but the error stays
   // to duplicate: try loading all 9
-  validateFileByExtension(event) {
+  validateFileByExtension = (event) => {
     if (event.target.files.length > 0) {
       const filesArray = event.target.files; // All files selected by a user
       const filePayload = [];
@@ -189,7 +231,7 @@ class UploadComponent extends Component {
         setAnswer(event.target.name, filePayload);
       }
     }
-  }
+  };
 
   render() {
     return (
@@ -245,33 +287,49 @@ class UploadComponent extends Component {
 
         {this.state.displayUploadedFiles ? (
           <table key={"uploadedFilesContainer"}>
-            {!this.state.uploadedFilesRetrieved ? (
-              <tr>
-                <td>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/img/bouncing_ball.gif`}
-                    alt="Retrieving uploaded files... Please wait..."
-                  />{" "}
-                  <br />
-                  <br />
-                  Loading... Please wait...
-                </td>
-              </tr>
-            ) : (
-              this.state.uploadedFiles.map((filename) => {
-                return (
-                  <tr key={filename}>
-                    <td>{filename}</td>
-                    <td>
-                      <Button size="small">Download</Button>
-                    </td>
-                    <td>
-                      <Button size="small">Delete</Button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
+            <tbody>
+              {!this.state.uploadedFilesRetrieved ? (
+                <tr>
+                  <td>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/img/bouncing_ball.gif`}
+                      alt="Retrieving uploaded files... Please wait..."
+                    />{" "}
+                    <br />
+                    <br />
+                    Loading... Please wait...
+                  </td>
+                </tr>
+              ) : (
+                this.state.uploadedFiles.map((file) => {
+                  const fileObj = JSON.parse(file.replace(/'/gi, '"'));
+
+                  return (
+                    <tr key={fileObj.aws_filename}>
+                      <td>{fileObj.filename}</td>
+                      <td>
+                        <Button
+                          size="small"
+                          onClick={() =>
+                            this.downloadFile(fileObj.aws_filename)
+                          }
+                        >
+                          Download
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          size="small"
+                          onClick={() => this.deleteFile(fileObj.aws_filename)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
           </table>
         ) : null}
       </div>

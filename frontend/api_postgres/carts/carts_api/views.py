@@ -722,6 +722,29 @@ def generate_upload_psurl(request):
 
 
 @api_view(["POST"])
+def generate_download_psurl(request):
+    aws_filename = request.data["awsFilename"]
+
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    region = os.environ.get("AWS_REGION")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
+
+    presigned_url = s3_client.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": s3_bucket, "Key": aws_filename},
+        ExpiresIn=3600,
+    )
+
+    print(f"\n\n\n\n+++++++++RETURNING download url!!!!!!:")
+    print(presigned_url)
+
+    generated_presigned_url = {"psurl": presigned_url}
+
+    return HttpResponse(json.dumps(generated_presigned_url))
+
+
+@api_view(["POST"])
 def view_uploaded_files(request):
     user_state = StatesFromUsername.objects.filter(
         username=request.user
@@ -730,7 +753,7 @@ def view_uploaded_files(request):
         uploaded_username=request.user,
         uploaded_state=user_state,
         question_id=request.data["questionId"],
-    ).values_list("filename", flat=True)
+    ).values("filename", "aws_filename")
 
     uploaded_file_list = []
 
@@ -740,6 +763,23 @@ def view_uploaded_files(request):
     uploadedFiles = {"uploaded_files": uploaded_file_list}
 
     return HttpResponse(json.dumps(uploadedFiles))
+
+
+@api_view(["POST"])
+def remove_uploaded_files(request):
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
+
+    UploadedFiles.objects.filter(
+        uploaded_username=request.user,
+        uploaded_state=user_state,
+        aws_filename=request.data["aws_filename"],
+    ).delete()
+
+    response = {"success": "true"}
+
+    return HttpResponse(json.dumps(response))
 
 
 def _id_from_chunks(year, *args):
