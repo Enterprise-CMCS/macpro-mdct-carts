@@ -681,10 +681,6 @@ def generate_upload_psurl(request):
         username=request.user
     ).values_list("state_codes", flat=True)[0][0]
 
-    print(
-        f"{request.user} is {user_state} and {file} aliased {aws_filename} for {request.data['questionId']}"
-    )
-
     uploadedFile = UploadedFiles.objects.create(
         uploaded_username=f"{request.user}",
         question_id=request.data["questionId"],
@@ -700,10 +696,6 @@ def generate_upload_psurl(request):
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
 
-    print(
-        f"\n\n\n===>uploading {file} aliased as {aws_filename} to bucket: {s3_bucket} "
-    )
-
     # Generate the URL to get 'key-name' from 'bucket-name'
     parts = s3.generate_presigned_post(
         Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
@@ -714,38 +706,21 @@ def generate_upload_psurl(request):
         "psdata": parts["fields"],
     }
 
-    # generated_presigned_url = {"success": "true"}
-
-    print(f"\n\n@@@@@ returning this: ")
-    print(generated_presigned_url)
-
     return HttpResponse(json.dumps(generated_presigned_url))
 
 
 @api_view(["POST"])
 def generate_download_psurl(request):
-    print(f"\n\n\n??!?!?!?!IN GENERATE DOWNLOAD PSURL")
     aws_filename = request.data["awsFilename"]
-
-    print(f"\n\ngot aws_filename: {aws_filename}")
-
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    print(f"\n\ns3_bucket: {s3_bucket}")
     region = os.environ.get("AWS_REGION")
-    print(f"\n\nregion: {region}")
     session = boto3.session.Session()
-    print(f"\n\n session {session}")
     s3 = session.client("s3", f"{region}")
-    print(f"\n\ns3: {s3}")
     presigned_url = s3.generate_presigned_url(
         "get_object",
         Params={"Bucket": s3_bucket, "Key": aws_filename},
         ExpiresIn=3600,
     )
-
-    print(f"\n\n\n\n+++++++++RETURNING download url!!!!!!:")
-    print(presigned_url)
-
     generated_presigned_url = {"psurl": presigned_url}
 
     return HttpResponse(json.dumps(generated_presigned_url))
@@ -774,6 +749,8 @@ def view_uploaded_files(request):
 
 @api_view(["POST"])
 def remove_uploaded_files(request):
+    aws_filename = request.data["awsFilename"]
+
     user_state = StatesFromUsername.objects.filter(
         username=request.user
     ).values_list("state_codes", flat=True)[0][0]
@@ -783,6 +760,12 @@ def remove_uploaded_files(request):
         uploaded_state=user_state,
         aws_filename=request.data["awsFilename"],
     ).delete()
+
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    region = os.environ.get("AWS_REGION")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
+    response = s3.delete_object("Bucket": s3_bucket, "Key": aws_filename)
 
     response = {"success": "true"}
 

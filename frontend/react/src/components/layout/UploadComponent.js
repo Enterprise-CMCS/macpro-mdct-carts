@@ -141,12 +141,7 @@ class UploadComponent extends Component {
     );
 
     const { psurl } = response["data"];
-    console.log("*******got download url");
-    console.log(psurl);
-
     window.location.href = psurl;
-
-    //await axios.get(psurl);
   };
 
   retrieveUploadedFiles = async () => {
