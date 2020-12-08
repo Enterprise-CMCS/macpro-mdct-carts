@@ -696,24 +696,26 @@ def generate_upload_psurl(request):
 
     uploadedFile.save()
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
+    # s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    # region = os.environ.get("AWS_REGION")
+    # session = boto3.session.Session()
+    # s3 = session.client("s3", f"{region}")
 
     print(
         f"\n\n\n===>uploading {file} aliased as {aws_filename} of type {file_type} to bucket: {s3_bucket} "
     )
 
     # Generate the URL to get 'key-name' from 'bucket-name'
-    parts = s3.generate_presigned_post(
-        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
-    )
+    # parts = s3.generate_presigned_post(
+    #    Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
+    # )
 
-    generated_presigned_url = {
-        "psurl": parts["url"],
-        "psdata": parts["fields"],
-    }
+    # generated_presigned_url = {
+    #    "psurl": parts["url"],
+    #    "psdata": parts["fields"],
+    # }
+
+    generate_presigned_url = {"success": "true"}
 
     print(f"\n\n@@@@@ returning this: ")
     print(generated_presigned_url)
@@ -723,13 +725,19 @@ def generate_upload_psurl(request):
 
 @api_view(["POST"])
 def generate_download_psurl(request):
+    print(f"\n\n\n??!?!?!?!IN GENERATE DOWNLOAD PSURL")
     aws_filename = request.data["awsFilename"]
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
+    print(f"\n\ngot aws_filename: {aws_filename}")
 
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    print(f"\n\ns3_bucket: {s3_bucket}")
+    region = os.environ.get("AWS_REGION")
+    print(f"\n\nregion: {region}")
+    session = boto3.session.Session()
+    print(f"\n\n session {session}")
+    s3 = session.client("s3", f"{region}")
+    print(f"\n\ns3: {s3}")
     presigned_url = s3_client.generate_presigned_url(
         "get_object",
         Params={"Bucket": s3_bucket, "Key": aws_filename},
