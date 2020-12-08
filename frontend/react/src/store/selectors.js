@@ -1,5 +1,5 @@
-import jsonpath from "../util/jsonpath"; // eslint-disable-line
-import { selectFragment } from "./formData"; // eslint-disable-line
+import jsonpath from "../util/jsonpath";
+import { selectFragment } from "./formData";
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
 
@@ -148,6 +148,7 @@ export const selectIsFormEditable = (state) => {
     case "not_started":
     case "in_progress":
     case "uncertified":
+    case undefined:
       // Forms can only be edited if the current user is a state user AND the
       // form is in one of the statuses above.
       return role === "state_user";
