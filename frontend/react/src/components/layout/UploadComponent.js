@@ -141,13 +141,13 @@ class UploadComponent extends Component {
     );
 
     const { psurl } = response["data"];
+    console.log("*******got download url");
+    console.log(psurl);
 
-    await this.downloadFileFromS3(psurl);
+    await axios.get(psurl);
   };
 
-  downloadFileFromS3 = async (psurl) => {
-    alert(psurl);
-  };
+  downloadFileFromS3 = async (psurl) => {};
 
   retrieveUploadedFiles = async () => {
     const questionId = this.props.question.id;
