@@ -107,7 +107,7 @@ pipeline {
         }
       }
     }
-    /*
+
     stage("Deploy Data Layer") {
       when {
         expression { env.DEPLOY == "true"}
@@ -132,7 +132,7 @@ pipeline {
           }
         }
       }
-    }*/
+    }
 
     stage("Deploy Frontend Layer") {
       when {
@@ -174,7 +174,7 @@ pipeline {
         }
       }
     }
-    /*
+
     stage("Test") {
       when {
         expression { env.RUN_TESTS == "true"}
@@ -194,7 +194,7 @@ pipeline {
         }
       }
     }
-    */
+
     /*
     stage("Run Inspec Scans") {
       when {
