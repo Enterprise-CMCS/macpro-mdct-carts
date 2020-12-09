@@ -712,13 +712,18 @@ def generate_upload_psurl(request):
 @api_view(["POST"])
 def generate_download_psurl(request):
     aws_filename = request.data["awsFilename"]
+    filename = request.data["filename"]
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
     region = os.environ.get("AWS_REGION")
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
     presigned_url = s3.generate_presigned_url(
         "get_object",
-        Params={"Bucket": s3_bucket, "Key": aws_filename},
+        Params={
+            "Bucket": s3_bucket,
+            "Key": aws_filename,
+            "ResponseContentDisposition": f"attachment; filename = {filename}",
+        },
         ExpiresIn=3600,
     )
     generated_presigned_url = {"psurl": presigned_url}

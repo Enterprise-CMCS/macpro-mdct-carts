@@ -166,10 +166,11 @@ class UploadComponent extends Component {
     });
   };
 
-  deleteFile = async (awsFilename) => {
+  deleteFile = async (filename, awsFilename) => {
     // *** retrieve files
     await axios
       .post(`${window.env.API_POSTGRES_URL}/api/v1/remove_uploaded`, {
+        filename,
         awsFilename,
       })
       .catch((error) => {
@@ -315,7 +316,12 @@ class UploadComponent extends Component {
                       <td>
                         <Button
                           size="small"
-                          onClick={() => this.deleteFile(fileObj.aws_filename)}
+                          onClick={() =>
+                            this.deleteFile(
+                              fileObj.filename,
+                              fileObj.aws_filename
+                            )
+                          }
                         >
                           Delete
                         </Button>
