@@ -1,5 +1,4 @@
 import jsonpath from "../util/jsonpath";
-
 import { selectFragment } from "./formData";
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
@@ -164,7 +163,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     in_progress: "In progress",
     certified: "Certified",
     uncertified: "Uncertified",
-    approved: "Approved",
+    accepted: "Accepted",
     submitted: "Submitted",
     published: "Published",
   };

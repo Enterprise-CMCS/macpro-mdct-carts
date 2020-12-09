@@ -364,7 +364,7 @@ class SectionViewSet(viewsets.ModelViewSet):
                 can_save = status is None or status.status not in [
                     "certified",
                     "published",
-                    "approved",
+                    "accepted",
                 ]
 
                 if request.user.appuser.role != "state_user":
