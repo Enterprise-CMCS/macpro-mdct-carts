@@ -132,10 +132,11 @@ class UploadComponent extends Component {
     });
   };
 
-  downloadFile = async (awsFilename) => {
+  downloadFile = async (filename, awsFilename) => {
     const response = await axios.post(
       `${window.env.API_POSTGRES_URL}/api/v1/psurl_download`,
       {
+        filename,
         awsFilename,
       }
     );
@@ -166,11 +167,10 @@ class UploadComponent extends Component {
     });
   };
 
-  deleteFile = async (filename, awsFilename) => {
+  deleteFile = async (awsFilename) => {
     // *** retrieve files
     await axios
       .post(`${window.env.API_POSTGRES_URL}/api/v1/remove_uploaded`, {
-        filename,
         awsFilename,
       })
       .catch((error) => {
@@ -307,7 +307,10 @@ class UploadComponent extends Component {
                         <Button
                           size="small"
                           onClick={() =>
-                            this.downloadFile(fileObj.aws_filename)
+                            this.downloadFile(
+                              fileObj.filename,
+                              fileObj.aws_filename
+                            )
                           }
                         >
                           Download
@@ -316,12 +319,7 @@ class UploadComponent extends Component {
                       <td>
                         <Button
                           size="small"
-                          onClick={() =>
-                            this.deleteFile(
-                              fileObj.filename,
-                              fileObj.aws_filename
-                            )
-                          }
+                          onClick={() => this.deleteFile(fileObj.aws_filename)}
                         >
                           Delete
                         </Button>
