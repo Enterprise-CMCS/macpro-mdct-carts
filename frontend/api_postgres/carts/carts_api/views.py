@@ -766,6 +766,7 @@ def remove_uploaded_files(request):
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
     response = s3.delete_object("Bucket"=s3_bucket, "Key"=aws_filename)
+
     print(f"\n\n\n\n~~~~~~~~deleted")
 
     response = {"success": "true"}
