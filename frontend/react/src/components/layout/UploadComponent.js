@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system-core";
 import axios from "../../authenticatedAxios";
@@ -288,6 +289,7 @@ class UploadComponent extends Component {
                 <tr>
                   <td>
                     <img
+                      // eslint-disable-next-line
                       src={`${process.env.PUBLIC_URL}/img/bouncing_ball.gif`}
                       alt="Retrieving uploaded files... Please wait..."
                     />{" "}
@@ -335,6 +337,11 @@ class UploadComponent extends Component {
     );
   }
 }
+
+UploadComponent.propTypes = {
+  question: PropTypes.any,
+  id: PropTypes.any,
+};
 
 const mapStateToProps = (state) => ({
   USState: state.stateUser.abbr, // Currently this is meaningless dummy data
