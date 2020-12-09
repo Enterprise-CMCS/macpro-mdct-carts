@@ -763,7 +763,6 @@ def remove_uploaded_files(request):
     ).values_list("state_codes", flat=True)[0][0]
 
     UploadedFiles.objects.filter(
-        uploaded_username=request.user,
         uploaded_state=user_state,
         aws_filename=request.data["awsFilename"],
     ).delete()
