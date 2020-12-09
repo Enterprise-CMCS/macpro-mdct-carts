@@ -91,7 +91,6 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
 
 
-class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 @api_view(["POST"])
 def UserProfilesViewSet(request):
     """
