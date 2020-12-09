@@ -91,7 +91,7 @@ STATUSES = (
     ("in_progress", "In progress"),
     ("certified", "Certified"),
     ("uncertified", "Uncertified"),
-    ("approved", "Approved"),
+    ("accepted", "Accepted"),
     ("submitted", "Submitted"),
     ("published", "Published"),
 )
@@ -261,8 +261,8 @@ def validate_status_change(
         },
         "certified": {
             "possible_new_states": {
-                "approved": {
-                    "authorized_roles": ["bus_user", "co_user"],
+                "accepted": {
+                    "authorized_roles": ["co_user"],
                 },
                 "in_progress": {
                     "authorized_roles": ["bus_user", "co_user"],
@@ -272,7 +272,7 @@ def validate_status_change(
                 },
             }
         },
-        "approved": {
+        "accepted": {
             "possible_new_states": {
                 "published": {
                     "authorized_roles": ["bus_user", "co_user"],

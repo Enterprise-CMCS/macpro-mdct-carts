@@ -14,6 +14,7 @@ from carts.carts_api.models import (
     RoleFromUsername,
     RolesFromJobCode,
     StatesFromUsername,
+    User,
 )
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 from rest_framework.permissions import AllowAny
@@ -22,9 +23,8 @@ from datetime import datetime
 
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
-        # print(request.data)
         raw_token = self._extract_token(request)
-        # print("+++++++++raw token: " + raw_token)
+        print("+++++++++raw token: " + raw_token)
         try:
             return self._do_authenticate(raw_token)
         except Exception as e:
@@ -32,7 +32,7 @@ class JwtAuthentication(authentication.BaseAuthentication):
                 "authentication failed on first attempt, ",
                 "invalidating cache and trying again...",
             ]
-            # print(e, "".join(msg), flush=True)
+            print(e, "".join(msg), flush=True)
             invalidate_cache()
 
         return self._do_authenticate(raw_token)
@@ -48,17 +48,21 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _do_authenticate(self, token):
         try:
-            # print(f"\n\n%%%%>got token: {token}")
+            print(f"\n\n%%%%>got token: {token}")
             kid = extract_kid(token)
-            # print(f"\n\n%%%%>kid extracted: {kid}")
+            print(f"\n\n%%%%>kid extracted: {kid}")
             key = fetch_pub_key(kid)
-            # print(f"\n\n%%%%>key extracted: {key}")
+            print(f"\n\n%%%%>key extracted: {key}")
             verify_token(token, key)
-            # print(f"\n\n%%%%>token verified: {kid}")
+            print(f"\n\n%%%%>token verified: {kid}")
 
-            # print(f"\n\n\n fetching user info  \n\n\n")
             user_info = fetch_user_info(token)
-            # print(f"\n\n\ncreating user...", user_info)
+
+            # Check if user is_active in database, if not exit
+            if _is_user_active(user_info) == False:
+                print("username: ", user_info.preferred_username)
+                return
+
             user = _get_or_create_user(user_info)
 
             return (user, None)
@@ -66,9 +70,21 @@ class JwtAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed("Authentication failed.")
 
 
+def _is_user_active(user_info):
+    """ Returns boolean of is_active column in auth_user table """
+    if User.objects.filter(username=user_info["preferred_username"]).exists():
+        response = User.objects.filter(
+            username=user_info["preferred_username"]
+        ).values_list("is_active", flat=True)[0]
+    else:
+        response = True
+
+    return response
+
+
 def _get_or_create_user(user_info):
 
-    # print(f"$$$$\n\nin create user\n\n\n")
+    print(f"$$$$\n\nin create user\n\n\n")
 
     user, _ = User.objects.get_or_create(
         username=user_info["preferred_username"],
@@ -79,21 +95,26 @@ def _get_or_create_user(user_info):
     user.email = user_info["email"]
     user.last_login = datetime.now()
 
-    # print(f"$$$$\n\nobtained user", user.email, "\n\n\n")
+    print(f"$$$$\n\nobtained user", user.email, "\n\n\n")
 
     role_map = [*RolesFromJobCode.objects.all()]
-    # print(f"$$$$\n\nhere's a role map", role_map, "\n\n\n")
-    # print(f"\n\n      getting user with username: ", user.username)
+    print(f"$$$$\n\nhere's a role map", role_map, "\n\n\n")
+    print(f"\n\n      getting user with username: ", user.username)
 
     username_map = [*RoleFromUsername.objects.filter(username=user.username)]
 
-    # print(f"\n\n    $$$$$username_map is: ", username_map)
+    print(f"\n\n    $$$$$username_map is: ", username_map)
 
-    role = role_from_raw_ldap_job_codes(
-        role_map, username_map, user_info["job_codes"]
-    )
+    if not username_map:
+        # If nothing is returned from RoleFromUsername
+        # table, default to state user
+        role = "state_user"
+    else:
+        role = role_from_raw_ldap_job_codes(
+            role_map, username_map, user_info["job_codes"]
+        )
 
-    # print(f"\n\n!!!$$$$$role is: ", role)
+    print(f"\n\n!!!$$$$$role is: ", role)
 
     states = []
 
@@ -115,11 +136,9 @@ def _get_or_create_user(user_info):
     app_user.states.set(states)
     app_user.role = role
 
-    # print(f"$$$$\n\nabout to save app_user\n\n\n")
+    print(f"$$$$\n\nabout to save app_user\n\n\n")
 
     app_user.save()
-
-    # print(f"\n\n\n@@@@@app_user saved!!!")
 
     if role == "state_user" and states:
         group = Group.objects.get(name__endswith=f"{states[0].code} sections")
@@ -137,9 +156,6 @@ def _get_or_create_user(user_info):
         group = Group.objects.get(name="Business owner users")
         user.groups.set([group])
 
-    # print(f"\n\n\n~~~~~saving USER now!!")
     user.save()
-    # print(f"\n\n\n~~~~~USER saved")
-    # print(user)
 
     return user

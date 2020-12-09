@@ -64,6 +64,7 @@ from carts.carts_api.models import (
     State,
     StateStatus,
     StatesFromUsername,
+    UserProfiles,
     UploadedFiles,
 )
 from carts.carts_api.model_utils import validate_status_change
@@ -88,6 +89,19 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+@api_view(["POST"])
+def UserProfilesViewSet(request):
+    """
+    API endpoint that returns all user profile data.
+    """
+
+    # Get all users
+    users = list(UserProfiles.objects.all().order_by("username").values())
+
+    return HttpResponse(json.dumps(users, cls=DjangoJSONEncoder))
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
@@ -354,7 +368,7 @@ class SectionViewSet(viewsets.ModelViewSet):
                 can_save = status is None or status.status not in [
                     "certified",
                     "published",
-                    "approved",
+                    "accepted",
                 ]
 
                 if request.user.appuser.role != "state_user":
@@ -558,6 +572,45 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionBase.objects.all()
     serializer_class = SectionBaseSerializer
+
+
+@api_view(["GET"])
+def AddStateUser(request, eua_id=None, state_code=None):
+    """
+    API endpoint for creating a state user.
+    """
+    assert eua_id
+    assert state_code
+    result = HttpResponse()
+
+    try:
+        current = (
+            StatesFromUsername.objects.all().filter(username=eua_id).last()
+        )
+
+        if current is None:
+            """
+            The objects being created here is a new state via username and
+            role via username.
+            We expect the post request to have state and username.
+
+            """
+            newStateUser = StatesFromUsername.objects.create(
+                username=eua_id.upper(), state_codes=[state_code]
+            )
+            newRole = RoleFromUsername.objects.create(
+                user_role="state_user", username=eua_id.upper()
+            )
+            result.content = "State user sucessfully added"
+            result.status_code = 200
+
+    except EnvironmentError:  # Not sure what kind of error should be here
+        result.content = (
+            "Failed to add a new state user. Please contact the help desk."
+        )
+        result.status_code = 400
+    # Note there is no .save() and it still saves to the db
+    return result
 
 
 class SectionSchemaViewSet(viewsets.ModelViewSet):

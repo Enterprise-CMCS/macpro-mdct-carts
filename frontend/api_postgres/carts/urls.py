@@ -67,6 +67,10 @@ api_patterns = [
     path("view_uploaded", views.view_uploaded_files),
     path("remove_uploaded", views.remove_uploaded_files),
     path("psurl_download", views.generate_download_psurl),
+    path("userprofiles", views.UserProfilesViewSet),
+    path("user/activate/<str:user>", views.UserActivateViewSet),
+    path("user/deactivate/<str:user>", views.UserDeactivateViewSet),
+    path("addstateuser/<str:eua_id>/<str:state_code>", views.AddStateUser),
 ]
 
 urlpatterns = [
