@@ -5,7 +5,12 @@ import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses } from "../../../store/selectors";
 
-const CMSHomepage = ({ getStatuses, statuses, currentYear }) => {
+const CMSHomepage = ({
+  getStatuses,
+  statuses,
+  currentYear,
+  currentUserRole,
+}) => {
   useEffect(() => {
     getStatuses();
   }, []);
@@ -45,7 +50,7 @@ const CMSHomepage = ({ getStatuses, statuses, currentYear }) => {
                       name={`${state} ${currentYear}`}
                       statusText={status}
                       editor="x@y.z"
-                      stateUser={false}
+                      userRole={currentUserRole}
                     />
                   ) : null
                 )}
@@ -60,11 +65,13 @@ CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
   statuses: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
+  currentUserRole: PropTypes.string.isRequired,
 };
 
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
   currentYear: state.global.formYear,
+  currentUserRole: state.stateUser.currentUser.role,
 });
 
 const mapDispatch = {

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
+import { theAccept } from "../../../actions/accept";
 import { getAllStateStatuses } from "../../../actions/initial";
 
 const ReportItem = ({
@@ -12,13 +13,22 @@ const ReportItem = ({
   statusText,
   statusURL,
   theUncertify: uncertifyAction,
-  stateUser,
+  theAccept: acceptAction,
+  userRole,
 }) => {
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const uncertify = () => {
     if (window.confirm("Are you sure you want to uncertify this record?")) {
       uncertifyAction(stateCode);
+    }
+    //Getting the new statuses to update the page
+    getAllStateStatuses();
+  };
+  const accept = () => {
+    if (window.confirm("Are you sure to accept this record?")) {
+      acceptAction(stateCode);
+      // Need to send out a notification ticket #OY2-2416
     }
     //Getting the new statuses to update the page
     getAllStateStatuses();
@@ -37,10 +47,18 @@ const ReportItem = ({
           {link1Text}
         </Link>
       </div>
-      {statusText === "Certified" && !stateUser ? (
-        <div className="actions ds-l-col--4">
+      {(statusText === "Certified" && userRole === "co_user") ||
+      userRole === "bus_user" ? (
+        <div className="actions ds-l-col--2">
           <Link onClick={uncertify} variation="primary">
             Uncertify
+          </Link>
+        </div>
+      ) : null}
+      {statusText === "Certified" && userRole === "co_user" ? (
+        <div className="actions ds-l-col--2">
+          <Link onClick={accept} variation="primary">
+            Accept
           </Link>
         </div>
       ) : null}
@@ -50,12 +68,13 @@ const ReportItem = ({
 
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
+  theAccept: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.string.isRequired,
   statusText: PropTypes.string,
   statusURL: PropTypes.string,
-  stateUser: PropTypes.bool,
+  userRole: PropTypes.string,
 };
 ReportItem.defaultProps = {
   link1Text: "View only",
@@ -68,6 +87,6 @@ const mapState = (state) => ({
   user: state.reportStatus.userName,
 });
 
-const mapDispatch = { theUncertify };
+const mapDispatch = { theUncertify, theAccept };
 
 export default connect(mapState, mapDispatch)(ReportItem);
