@@ -722,7 +722,7 @@ def generate_download_psurl(request):
         Params={
             "Bucket": s3_bucket,
             "Key": aws_filename,
-            "ResponseContentDisposition": f"attachment; filename = {filename}",
+           # "ResponseContentDisposition": f"attachment; filename = {filename}",
         },
         ExpiresIn=3600,
     )
