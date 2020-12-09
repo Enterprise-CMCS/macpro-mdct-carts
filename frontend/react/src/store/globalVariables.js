@@ -9,15 +9,29 @@ const initialState = {
 
 // Global REDUCER
 export default function global(state = initialState, action) {
-  // Triggers isFetching which activates Spinner.js (reactRouter.js)
-  if (action.type === "CONTENT_FETCHING_STARTED") {
-    return { ...state, isFetching: true };
+  let result;
+
+  switch (action.type) {
+    case "CONTENT_FETCHING_STARTED":
+      result = { ...state, isFetching: true };
+      break;
+
+    case "CONTENT_FETCHING_FINISHED":
+      result = { ...state, isFetching: false };
+      break;
+
+    case "SIGN_IN_STARTED":
+      result = { ...state, isSigningIn: true };
+      break;
+
+    case "SIGN_IN_FINISHED":
+      result = { ...state, isSigningIn: false };
+      break;
+
+    default:
+      result = state;
+      break;
   }
 
-  // Triggers isFetching which deactivates Spinner.js (reactRouter.js)
-  if (action.type === "CONTENT_FETCHING_FINISHED") {
-    return { ...state, isFetching: false };
-  }
-
-  return state;
+  return result;
 }
