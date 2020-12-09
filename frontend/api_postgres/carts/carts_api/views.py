@@ -717,6 +717,7 @@ def generate_download_psurl(request):
     region = os.environ.get("AWS_REGION")
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
+    print(f"generating url")
     presigned_url = s3.generate_presigned_url(
         "get_object",
         Params={
@@ -726,6 +727,7 @@ def generate_download_psurl(request):
         },
         ExpiresIn=3600,
     )
+    print(f"!!!!!DONE!!!!!")
     generated_presigned_url = {"psurl": presigned_url}
 
     return HttpResponse(json.dumps(generated_presigned_url))
