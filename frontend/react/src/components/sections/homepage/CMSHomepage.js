@@ -18,7 +18,7 @@ const CMSHomepage = ({
     const statusList = [
       { label:"Approved", id: "approved" },
       { label:"Certified", id: "certified" },
-      { label:"In progress", id: "in-progress" },
+      { label:"In progress", id: "in_progress" },
       { label:"Not started", id: "not_started" },
       { label:"Published", id: "published" },
       { label:"Submitted", id: "submitted" },
@@ -30,9 +30,9 @@ const CMSHomepage = ({
     let selectedStatuses = []
   useEffect(() => {
     let yearArray = []  
-    for (let x = 2020; x <= currentYear; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
+    for (let x = 2020; x <= 2022; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
     {
-      yearArray.push({ label: x.toString(), id: x.toString() })
+      yearArray.push({ label: x.toString(), id: x })
     }
     setYearList(yearArray)
     getStatuses();
@@ -45,17 +45,20 @@ const CMSHomepage = ({
     console.log("state array",selectedStates)
 }
   const onSelectYear = (element) => {
-    selectedYears = element
+    selectedYears = element.map((year) => {return year.id})
     console.log("year array",selectedYears)
 }
-
-const onSelectStatus = (element) => {
-  selectedStatuses = element
+  const onSelectStatus = (element) => {
+  selectedStatuses = element.map((status) => {return status.id})
   console.log("status array",selectedStatuses)
 }
-  const FilterReports = () => {
+
+  const filterReports = () => {
     
     getStatuses(selectedYears,selectedStates, selectedStatuses)
+  }
+  const clearFilter = () => {
+    window.location.reload(false);
   }
 
   return (
@@ -82,14 +85,18 @@ const onSelectStatus = (element) => {
                     onSelect={(element)=> onSelectState(element)}
                     onRemove={(element)=> onSelectState(element)}
                     displayValue="label" 
+                    placeholder="State"
                     />
                   </div>
                   <div>
                   <Multiselect
+
                     options={yearList}
                     onSelect={(element)=> onSelectYear(element)} 
                     onRemove={(element)=> onSelectYear(element)} 
                     displayValue="label" 
+                    placeholder="Year"
+                    showCheckbox={true}
                     />
                   </div>
                   <div>
@@ -98,13 +105,19 @@ const onSelectStatus = (element) => {
                     onSelect={(element)=> onSelectStatus(element)} 
                     onRemove={(element)=> onSelectStatus(element)} 
                     displayValue="label" 
+                    placeholder="Status"
+                    showCheckbox={true}
                     />
                   </div>
                   <div>
                     <Button 
                       type="button"
                       class="ds-c-button ds-c-button--primary"
-                      onClick={() => FilterReports()}>Filter</Button>
+                      onClick={() => filterReports()}>Filter</Button>
+                      <Button 
+                      type="button"
+                      class="ds-c-button ds-c-button--primary"
+                      onClick={() => clearFilter()}>Clear</Button>
                   </div>
                 </div>
               </div>
@@ -119,13 +132,13 @@ const onSelectStatus = (element) => {
               {console.log("statuses",statuses)}
               {statuses
                 .sort((a, b) => (a.state > b.state ? 1 : -1))
-                .map(({ state, stateCode, status }) =>
+                .map(({ state, stateCode, status, year }) =>
                   // with statement below we don't get the three bogus records (username, status, and lastchanged)
                   stateCode.toString().length === 2 ? (
                     <ReportItem
                       key={stateCode}
-                      link1URL={`/views/sections/${stateCode}/${currentYear}/00/a`}
-                      name={`${state} ${currentYear}`}
+                      link1URL={`/views/sections/${stateCode}/${year}/00/a`}
+                      name={`${state} ${year}`}
                       statusText={status}
                       editor="x@y.z"
                       userRole={currentUserRole}
@@ -149,14 +162,11 @@ CMSHomepage.propTypes = {
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
   currentYear: state.global.formYear,
-<<<<<<< HEAD
   stateList: state.allStatesData.map((element) => {
     return { label: element.name, id: element.code };
   }),
-  reportstate: state.reportStatus
-=======
   currentUserRole: state.stateUser.currentUser.role,
->>>>>>> c61794d25ecfce2ea00df6a5596fba8869c9df32
+  reportstate: state.reportStatus
 });
 
 const mapDispatch = {

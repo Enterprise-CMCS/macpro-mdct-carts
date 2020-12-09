@@ -24,24 +24,26 @@ export const getAllStatesData = () => {
 export const getAllStateStatuses = (selectedYears = [], selectedStates = [], selectedStatus = []) => async (dispatch, getState) => {
   
   const { data } = await axios.get(`/state_status/`);
+
+  console.log("data",data)
   let yearFilter = () =>{};
   let stateFilter = () =>{};
   let statusFilter = () =>{}
 
   selectedYears.length > 0 ? 
-  yearFilter =  (status) => selectedYears.includes(status.year) : 
-  yearFilter = (status) => 1 === 1
+  yearFilter =  (record) => selectedYears.includes(record.year) : 
+  yearFilter = (record) => 1 === 1
 
   selectedStates.length > 0 ? 
-  stateFilter =  (status) => selectedStates.includes(status.state) : 
-  stateFilter = (status) => 1 === 1
+  stateFilter =  (record) => selectedStates.includes(record.state) : 
+  stateFilter = (record) => 1 === 1
   
   selectedStatus.length > 0 ? 
-  statusFilter =  (status) => selectedStatus.includes(status.status) : 
-  statusFilter = (status) => 1 === 1
+  statusFilter =  (record) => selectedStatus.includes(record.status) : 
+  statusFilter = (record) => 1 === 1
 
+  
 
-  console.log("year",)
   const payload = data
     .filter(yearFilter)
     .filter(stateFilter)
@@ -59,14 +61,20 @@ export const getAllStateStatuses = (selectedYears = [], selectedStates = [], sel
       return 0;
     })
     .filter(
-      (status, index, original) =>
-        original.slice(index + 1).findIndex((el) => el.state === status.state) <
-        0
-    )
+        (status, index, original) => {
+        console.log("status",status)
+        console.log("index",index)
+        console.log("original",original)
+        return (true
+        )})
     .reduce(
-      (out, status) => ({
+      (out, record) => ({
         ...out,
-        [status.state]: {status:status.status,year:status.year,state:status.state},
+        [record.state]: {
+          status:record.status,
+          year:record.year,
+          state:record.state
+        },
       }),
       {}
     );

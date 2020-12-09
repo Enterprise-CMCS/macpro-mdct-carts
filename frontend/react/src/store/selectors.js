@@ -1,5 +1,6 @@
 import jsonpath from "../util/jsonpath";
-import { selectFragment } from "./formData";
+
+import { selectFragment } from "./formData"; // eslint-disable-line import/no-cycle
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
 
@@ -148,7 +149,6 @@ export const selectIsFormEditable = (state) => {
     case "not_started":
     case "in_progress":
     case "uncertified":
-    case undefined:
       // Forms can only be edited if the current user is a state user AND the
       // form is in one of the statuses above.
       return role === "state_user";
@@ -163,7 +163,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     in_progress: "In progress",
     certified: "Certified",
     uncertified: "Uncertified",
-    accepted: "Accepted",
+    approved: "Approved",
     submitted: "Submitted",
     published: "Published",
   };
@@ -176,12 +176,32 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
       }
       return null;
     },
-    selectFormStatuses: (state) => 
-      Object.entries(state.reportStatus).map(([stateCode, status, year]) => ({
+    selectFormStatuses: (state) => {
+console.log("state value",state.reportStatus)
+      let returnObject = []
+      
+      const allReportStatuses = Object.entries(state.reportStatus)
+      console.log("inside2",allReportStatuses)
+      
+      // This is the default value so when the page loads before the records are populated, it will crash without this check
+      if(allReportStatuses.length > 0 && allReportStatuses[0][0] !=="status"){
+       
+        returnObject = Object.entries(state.reportStatus).map(([stateCode, {status,year}]) => ({
+          state: statesArray.find(({ value }) => value === stateCode)?.label,
+          stateCode,
+          status: STATUS_MAPPING[status],
+          year,
+        }))
+    }
+    else{
+      // Need to return something before records are populated so the page doesn't crash
+      returnObject = Object.entries(state.reportStatus).map(([stateCode]) => ({
         state: statesArray.find(({ value }) => value === stateCode)?.label,
         stateCode,
-        status: STATUS_MAPPING[status],
-        year,
-      })),
-  };
+      }))
+    }
+  
+    
+    return returnObject
+  }};
 })();
