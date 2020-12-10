@@ -13,5 +13,5 @@ sh deploy.sh
 popd
 
 pushd frontend
-sh deployDev.sh
+sh deploy.sh
 popd
