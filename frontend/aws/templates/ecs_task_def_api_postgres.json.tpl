@@ -40,6 +40,10 @@
       {
         "name": "ENDPOINT_UI",
         "value": "${endpoint_ui}"
+      },
+      {
+        "name": "S3_UPLOADS_BUCKET_NAME",
+        "value": "${uploads_bucket_name}"
       }
     ],
     "logConfiguration": {

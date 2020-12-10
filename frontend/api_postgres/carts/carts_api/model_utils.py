@@ -91,7 +91,7 @@ STATUSES = (
     ("in_progress", "In progress"),
     ("certified", "Certified"),
     ("uncertified", "Uncertified"),
-    ("approved", "Approved"),
+    ("accepted", "Accepted"),
     ("submitted", "Submitted"),
     ("published", "Published"),
 )
@@ -141,25 +141,19 @@ def parse_raw_ldap_job_codes(entry: str) -> List[dict]:
             "domain_component": with_ldap_keys["dc"],
         }
 
-    print(f"\n\n==>about to start splitting")
     delimited = entry.replace(",CN=", ",cn=").replace(
         ",cn=", ";SPLIT;cn="
     )  # crude, but ¯\_(ツ)_/¯
-    print(f"\n\n==>delimited: {delimited}")
+
     raw_entries = delimited.split(";SPLIT;")
-    print(f"\n\n==>delimited: {delimited}")
     values = [[_.split("=") for _ in raw.split(",")] for raw in raw_entries]
-    print(f"\n\n==>delimited: {delimited}")
     entries = [shape(value) for value in values]
-    print(f"\n\n==>delimited: {delimited}")
 
     for parsed_entry in entries:
         for key in ("job_code", "organizational_unit", "domain_component"):
             assert key in parsed_entry
         assert parsed_entry.get("domain_component") == "cms.hhs.gov"
         assert parsed_entry.get("organizational_unit", "").lower() == "groups"
-
-    print(f"\n\n====>ENTRIES: ", entries)
 
     return entries
 
@@ -210,15 +204,7 @@ def role_from_raw_ldap_job_codes_and_role_data(
     entry: str,  # Raw string from Okta about user job codes.
 ) -> Union[bool, str]:
 
-    print(f"\n\n~~~~roles: {roles}")
-    print(f"\n\n~~~~role_code_map: {role_code_map}")
-    print(f"\n\n~~~~db_role_map: {db_role_map}")
-    print(f"\n\n~~~~db_username_map: {db_username_map}")
-    print(f"\n\n~~~~entry: {entry}")
-
     codes = parse_raw_ldap_job_codes(entry)
-
-    print(f"\n\n~~~~got codes: {codes}")
 
     return get_role_from_job_codes(
         roles, role_code_map, db_role_map, db_username_map, codes
@@ -275,8 +261,8 @@ def validate_status_change(
         },
         "certified": {
             "possible_new_states": {
-                "approved": {
-                    "authorized_roles": ["bus_user", "co_user"],
+                "accepted": {
+                    "authorized_roles": ["co_user"],
                 },
                 "in_progress": {
                     "authorized_roles": ["bus_user", "co_user"],
@@ -286,7 +272,7 @@ def validate_status_change(
                 },
             }
         },
-        "approved": {
+        "accepted": {
             "possible_new_states": {
                 "published": {
                     "authorized_roles": ["bus_user", "co_user"],
