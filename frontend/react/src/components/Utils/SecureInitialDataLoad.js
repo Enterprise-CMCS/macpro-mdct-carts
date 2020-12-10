@@ -26,6 +26,10 @@ const SecureInitialDataLoad = ({ userData }) => {
     // brackets.
     if (authState && authService) {
       if (!authState.isAuthenticated) {
+        if (authState.error) {
+          // Logout if there is an error
+          authService.logout("/");
+        }
         if (!authState.isPending) {
           authService.login();
         } else {
