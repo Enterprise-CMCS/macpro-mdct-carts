@@ -70,7 +70,7 @@ api_patterns = [
     path("userprofiles", views.UserProfilesViewSet),
     path("user/activate/<str:user>", views.UserActivateViewSet),
     path("user/deactivate/<str:user>", views.UserDeactivateViewSet),
-    path("addstateuser/<str:eua_id>/<str:state_code>", views.AddStateUser),
+    path("adduser/<str:eua_id>/<str:state_code>/<str:role>", views.AddUser),
 ]
 
 urlpatterns = [
