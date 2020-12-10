@@ -61,23 +61,21 @@ export const getAllStateStatuses = (selectedYears = [], selectedStates = [], sel
       return 0;
     })
     .filter(
-        (status, index, original) => {
-        console.log("status",status)
-        console.log("index",index)
-        console.log("original",original)
-        return (true
-        )})
-    .reduce(
-      (out, record) => ({
-        ...out,
-        [record.state]: {
-          status:record.status,
-          year:record.year,
-          state:record.state
-        },
-      }),
-      {}
-    );
+        (status, index, original) => original.slice(index + 1).findIndex((el) =>el.state === status.state && el.year === status.year) <
+        0)
+        .reduce(
+          (out, record) => ({
+            ...out,
+            [record.state+record.year]: {
+              status:record.status,
+              year:record.year,
+              stateCode:record.state,
+              lastChanged:record.last_changed,
+              username:record.user_name,
+            },
+          }),
+          {}
+        );
       console.log("filtered payload",payload)
   dispatch({ type: SET_STATE_STATUSES, payload });
 };

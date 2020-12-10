@@ -16,7 +16,7 @@ const CMSHomepage = ({
 }) => {
     const [yearList, setYearList] = useState()
     const statusList = [
-      { label:"Approved", id: "approved" },
+      { label:"Accepted", id: "accepted" },
       { label:"Certified", id: "certified" },
       { label:"In progress", id: "in_progress" },
       { label:"Not started", id: "not_started" },
@@ -24,7 +24,10 @@ const CMSHomepage = ({
       { label:"Submitted", id: "submitted" },
       { label:"Uncertified", id: "uncertified" }
   ]
-  
+    // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
+    let [tempStates, settempStates] = useState();
+    let [tempStatus, settempStatus] = useState();
+    let [tempYear, settempYear] = useState();
     let selectedStates = []
     let selectedYears = []
     let selectedStatuses = []
@@ -42,20 +45,19 @@ const CMSHomepage = ({
 
   const onSelectState = (element) => {
     selectedStates = element.map((state) => {return state.id})
-    console.log("state array",selectedStates)
+    settempStates(selectedStates)
 }
   const onSelectYear = (element) => {
     selectedYears = element.map((year) => {return year.id})
-    console.log("year array",selectedYears)
+    settempYear(selectedYears)
 }
   const onSelectStatus = (element) => {
   selectedStatuses = element.map((status) => {return status.id})
-  console.log("status array",selectedStatuses)
+  settempStatus(selectedStatuses)
 }
 
   const filterReports = () => {
-    
-    getStatuses(selectedYears,selectedStates, selectedStatuses)
+    getStatuses(tempYear,tempStates, tempStatus)
   }
   const clearFilter = () => {
     window.location.reload(false);
@@ -63,7 +65,7 @@ const CMSHomepage = ({
 
   return (
     <div className="homepage ds-l-col--12">
-      <div className="ds-l-container">
+      <div className="ds-l-container-large">
         <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">
             CHIP Annual Report Template System (CARTS)
@@ -76,10 +78,13 @@ const CMSHomepage = ({
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
             <div className="carts-report preview__grid">
-              <div className="ds-l-row ">
-                <div className="">   
+              <div className="ds-l-row filter-container">  
+              <div>
+                <div className="ds-c-label">
                   Search and Filter results
-                  <div className="">
+                </div>
+                
+                  <div className="filter-drop-down-state">
                     <Multiselect
                     options={stateList}
                     onSelect={(element)=> onSelectState(element)}
@@ -88,7 +93,7 @@ const CMSHomepage = ({
                     placeholder="State"
                     />
                   </div>
-                  <div>
+                  <div className="filter-drop-down-year-status">
                   <Multiselect
 
                     options={yearList}
@@ -99,7 +104,7 @@ const CMSHomepage = ({
                     showCheckbox={true}
                     />
                   </div>
-                  <div>
+                  <div className="filter-drop-down-year-status">
                   <Multiselect
                     options={statusList}
                     onSelect={(element)=> onSelectStatus(element)} 
@@ -112,39 +117,50 @@ const CMSHomepage = ({
                   <div>
                     <Button 
                       type="button"
-                      class="ds-c-button ds-c-button--primary"
+                      class="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => filterReports()}>Filter</Button>
                       <Button 
                       type="button"
-                      class="ds-c-button ds-c-button--primary"
+                      class="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => clearFilter()}>Clear</Button>
                   </div>
-                </div>
+                  </div>
               </div>
               <div className="ds-l-row">
                 <legend className="ds-u-padding--2 ds-h3">All Reports</legend>
               </div>
               <div className="report-header ds-l-row">
-                <div className="name ds-l-col--3">Report</div>
-                <div className="status ds-l-col--3">Status</div>
-                <div className="actions ds-l-col--6">Actions</div>
+                <div className="name ds-l-col--1">Year</div>
+                <div className="name ds-l-col--2">Report</div>
+                <div className="status ds-l-col--2">Status</div>
+                <div className="name ds-l-col--3">Last Edited</div>
+                <div className="actions ds-l-col--4">Actions</div>
               </div>
-              {console.log("statuses",statuses)}
+              <div className="report-status">
               {statuses
-                .sort((a, b) => (a.state > b.state ? 1 : -1))
-                .map(({ state, stateCode, status, year }) =>
-                  // with statement below we don't get the three bogus records (username, status, and lastchanged)
-                  stateCode.toString().length === 2 ? (
+                .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
+                .map(({ state, stateCode, status, year, username, lastChanged }) => { 
+                  return(
+                    <div>
+                      {
+                  // with statement below we don't get the three default records (username, status, and lastchanged)
+                  stateCode !== "status" && stateCode !== "lastChanged" && stateCode !== "userName" && stateCode !== undefined  ? (
                     <ReportItem
                       key={stateCode}
                       link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                      name={`${state} ${year}`}
+                      name={`${state}`}
+                      year={year}
                       statusText={status}
                       editor="x@y.z"
                       userRole={currentUserRole}
+                      username={username}
+                      lastChanged={lastChanged}
                     />
                   ) : null
-                )}
+                }
+                  </div>
+                )})}
+                </div>
             </div>
           </div>
         </div>

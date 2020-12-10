@@ -4,7 +4,7 @@ export const UNCERTIFY = "UNCERTIFY";
 export const UNCERTIFY_SUCCESS = "UNCERTIFY_SUCCESS";
 export const UNCERTIFY_FAILURE = "UNCERTIFY_FAILURE";
 
-export const theUncertify = (stateCode) => async (dispatch, getState) => {
+export const theUncertify = (stateCode, stateYear) => async (dispatch, getState) => {
   const state = getState();
   const user = state.stateUser.currentUser;
   const userName = `${user.firstname} ${user.lastname}`;
@@ -18,7 +18,7 @@ export const theUncertify = (stateCode) => async (dispatch, getState) => {
       state: stateCode,
       status: "in_progress",
       user_name: userName,
-      year,
+      year:stateYear,
     });
     dispatch({ type: UNCERTIFY_SUCCESS, stateCode: stateCode });
   } catch (e) {

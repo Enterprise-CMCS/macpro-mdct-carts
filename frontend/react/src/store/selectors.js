@@ -163,7 +163,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     in_progress: "In progress",
     certified: "Certified",
     uncertified: "Uncertified",
-    approved: "Approved",
+    accepted: "Accepted",
     submitted: "Submitted",
     published: "Published",
   };
@@ -177,20 +177,20 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
       return null;
     },
     selectFormStatuses: (state) => {
-console.log("state value",state.reportStatus)
       let returnObject = []
       
       const allReportStatuses = Object.entries(state.reportStatus)
-      console.log("inside2",allReportStatuses)
       
       // This is the default value so when the page loads before the records are populated, it will crash without this check
       if(allReportStatuses.length > 0 && allReportStatuses[0][0] !=="status"){
        
-        returnObject = Object.entries(state.reportStatus).map(([stateCode, {status,year}]) => ({
+        returnObject = Object.entries(state.reportStatus).map(([{}, {status,year,stateCode,lastChanged,username}]) => ({
           state: statesArray.find(({ value }) => value === stateCode)?.label,
           stateCode,
           status: STATUS_MAPPING[status],
           year,
+          lastChanged,
+          username
         }))
     }
     else{
