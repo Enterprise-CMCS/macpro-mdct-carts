@@ -8,6 +8,7 @@ from django.db import models  # type: ignore
 from carts.carts_api.model_utils import PROGRAM_TYPES, USER_ROLES, STATUSES
 from django_db_views.db_view import DBView
 
+
 class SectionSchema(models.Model):
     year = models.IntegerField()
     contents = JSONField()
@@ -239,6 +240,7 @@ class UserProfiles(DBView):
              LEFT JOIN carts_api_rolefromusername r ON (((r.username)::text = (a.username)::text)))
              LEFT JOIN carts_api_statesfromusername s ON (((s.username)::text = (a.username)::text)));
     """
+
     class Meta:
         managed = False
         db_table = "vw_userprofile"
