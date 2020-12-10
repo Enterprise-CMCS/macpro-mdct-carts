@@ -159,6 +159,8 @@ const shouldDisplay = (state, context) => {
     return true;
   }
 
+  // NEED: SOME CHECK HERE, TO SEE IF TEMP VALUE PRESENT
+
   // show_if_state_program_type_in: there is an array of acceptable values
   // displaying relies on that answer being included in the show_if_state_program_type_in array
   if (context.show_if_state_program_type_in) {
