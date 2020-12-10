@@ -4934,6 +4934,10 @@
                     {
                       "value": "no",
                       "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 }
@@ -4976,6 +4980,10 @@
                     {
                       "value": "no",
                       "label": "No"
+                    },
+                    {
+                      "value": "na",
+                      "label": "N/A"
                     }
                   ]
                 },
