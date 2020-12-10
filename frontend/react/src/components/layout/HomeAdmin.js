@@ -6,7 +6,7 @@ import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
 import Users from "../layout/users/Users";
-import AddStateUser from "../Utils/AddStateUser";
+import AddUser from "../Utils/AddUser";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
   <>
@@ -24,25 +24,10 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
           <div className="ds-l-row">
             <ul>
               <li>
-                <Link to="/state_assoc">
-                  Associate usernames (EUA IDs) to states
-                </Link>
+                <a href="/users">List users</a>
               </li>
               <li>
-                <Link to="/role_user_assoc">
-                  Associate usernames (EUA IDs) to CARTS roles
-                </Link>
-              </li>
-              <li>
-                <Link to="/role_jobcode_assoc">
-                  Associate EUA job codes to CARTS roles
-                </Link>
-              </li>
-              <li>
-                <a href="/users">List and edit all users</a>
-              </li>
-              <li>
-                <Link to="/add_state_user">Add state user</Link>
+                <Link to="/add_user">Add user</Link>
               </li>
             </ul>
           </div>
@@ -61,7 +46,7 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
       component={JobCodeRoleAssociations}
     />
     <SecureRoute exact path="/users" component={Users} />
-    <SecureRoute exact path="/add_state_user" component={AddStateUser} />
+    <SecureRoute exact path="/add_user" component={AddUser} />
   </>
 );
 AdminHome.propTypes = {
