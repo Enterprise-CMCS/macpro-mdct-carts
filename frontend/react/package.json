@@ -31,7 +31,6 @@
     "react-data-table-component-extensions": "^1.5.0",
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
-    "react-multi-select-component": "^3.0.7",
     "react-number-format": "^4.4.1",
     "react-papaparse": "^3.8.0",
     "react-redux": "^7.2.0",
