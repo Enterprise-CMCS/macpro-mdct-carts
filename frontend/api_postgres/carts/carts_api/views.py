@@ -217,11 +217,9 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         state/year.
         We expect the post request to have state, year, and status; we get the
         user from request.user and we update last_changed ourselves.
-
         We've had some confusion over whether or not the name for a form in
         progress is "in progress" or "started", so we accommodate both below
         and turn the latter into the former.
-
         """
         state_code = request.data.get("state")
         year = request.data.get("year")
@@ -364,7 +362,7 @@ class SectionViewSet(viewsets.ModelViewSet):
                 can_save = status is None or status.status not in [
                     "certified",
                     "published",
-                    "approved",
+                    "accepted",
                 ]
 
                 if request.user.appuser.role != "state_user":
@@ -571,40 +569,59 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
-def AddStateUser(request, eua_id=None, state_code=None):
+def AddUser(request, eua_id=None, state_code=None, role=None):
     """
     API endpoint for creating a state user.
     """
     assert eua_id
     assert state_code
+    assert role
+
     result = HttpResponse()
 
     try:
+
         current = (
-            StatesFromUsername.objects.all().filter(username=eua_id).last()
+            StatesFromUsername.objects.all()
+            .filter(username=eua_id.upper())
+            .last()
         )
 
-        if current is None:
+        if current is not None:
+            print(f"\n\n\n User exists")
+            result.content = "User already exists"
+            result.status_code = 409
+
+        else:
             """
             The objects being created here is a new state via username and
             role via username.
             We expect the post request to have state and username.
-
             """
+
+            # Create array from hyphen separated list
+            state_codes_array = state_code.split("-")
+
+            # Convert all to uppercase
+            state_codes_upper = [x.upper() for x in state_codes_array]
+
+            # Alphabetize
+            state_codes_refined = sorted(state_codes_upper)
+
             newStateUser = StatesFromUsername.objects.create(
-                username=eua_id.upper(), state_codes=[state_code]
+                username=str(eua_id.upper()), state_codes=state_codes_refined
             )
             newRole = RoleFromUsername.objects.create(
-                user_role="state_user", username=eua_id.upper()
+                user_role=role, username=eua_id.upper()
             )
             result.content = "State user sucessfully added"
             result.status_code = 200
 
-    except EnvironmentError:  # Not sure what kind of error should be here
+    except:
         result.content = (
             "Failed to add a new state user. Please contact the help desk."
         )
-        result.status_code = 400
+        result.status_code = 500
     # Note there is no .save() and it still saves to the db
     return result
 
