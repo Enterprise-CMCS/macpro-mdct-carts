@@ -26,6 +26,7 @@ COPY . /usr/src/app/
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
+
 # ==============================================================================
 # => Run container
 FROM python:3.8.0-alpine as runner
@@ -48,9 +49,6 @@ COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
-
-# TD 20201012 install dependencies needed to generate pre-signed urls
-RUN pip install boto3 --no-cache
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh $APP_HOME
