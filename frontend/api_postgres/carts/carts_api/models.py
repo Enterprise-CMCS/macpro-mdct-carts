@@ -6,6 +6,7 @@ from django.contrib.postgres.fields import (  # type: ignore
 )
 from django.db import models  # type: ignore
 from carts.carts_api.model_utils import PROGRAM_TYPES, USER_ROLES, STATUSES
+from django_db_views.db_view import DBView
 
 
 class SectionSchema(models.Model):
@@ -195,14 +196,39 @@ class StateStatus(models.Model):
     user_name = models.TextField(null=True)
 
 
-class UploadedFiles(models.Model):
-    filename = models.CharField(max_length=256, default="")
-    aws_filename = models.CharField(max_length=256, default="")
-    question_id = models.CharField(max_length=16)
-    uploaded_date = models.DateTimeField(null=False, auto_now_add=True)
-    uploaded_username = models.CharField(max_length=16, default="")
-    uploaded_state = models.CharField(max_length=16, default="")
+class UserProfiles(DBView):
+    password = models.CharField(max_length=100)
+    last_login = models.DateTimeField(auto_now_add=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField(auto_now_add=True)
+    user_role = models.CharField(max_length=100)
+    state_codes = models.CharField(max_length=100)
 
-    def save(self, *args, **kwargs):
-        self.clean()
-        super(UploadedFiles, self).save(*args, **kwargs)
+    view_definition = """
+        SELECT a.id,
+            a.password,
+            a.last_login,
+            a.is_superuser,
+            a.username,
+            a.first_name,
+            a.last_name,
+            a.email,
+            a.is_staff,
+            a.is_active,
+            a.date_joined,
+            r.user_role,
+            s.state_codes
+           FROM ((auth_user a
+             LEFT JOIN carts_api_rolefromusername r ON (((r.username)::text = (a.username)::text)))
+             LEFT JOIN carts_api_statesfromusername s ON (((s.username)::text = (a.username)::text)));
+    """
+
+    class Meta:
+        managed = False
+        db_table = "vw_userprofile"

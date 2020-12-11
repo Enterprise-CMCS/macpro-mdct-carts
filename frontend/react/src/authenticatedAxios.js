@@ -1,17 +1,24 @@
 import Axios from "axios";
+import forwardedQueryString from "./util/devQueryString";
 
 const authenticatedAxios = Axios.create({
   baseURL: window.env.API_POSTGRES_URL,
-  // *** xsrf header / cookie needed by django
   xsrfHeaderName: "X-CSRFTOKEN",
   xsrfCookieName: "csrftoken",
 });
 
 export const setToken = (token) => {
-  authenticatedAxios["interceptors"].request.use((config) => {
+  /* eslint-disable-line */
+  console.log("csrf token added");
+  authenticatedAxios.interceptors.request.use((config) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    config.url += forwardedQueryString();
+
+    /* eslint-disable-line */
+    console.log("!+++++++++++++AXIOS CONFIG:", config);
+
     return config;
   });
 };

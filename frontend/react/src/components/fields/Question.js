@@ -9,8 +9,7 @@ import { CMSLegend } from "./CMSLegend";
 import { DateRange } from "./DateRange";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
-// import { FileUpload } from "./FileUpload";
-import UploadComponent from "../layout/UploadComponent";
+import { FileUpload } from "./FileUpload";
 import { Integer } from "./Integer";
 import { MailingAddress } from "./MailingAddress";
 import { Money } from "./Money";
@@ -34,7 +33,7 @@ const questionTypes = new Map([
   ["daterange", DateRange],
   ["email", Email],
   ["fieldset", Fieldset],
-  ["file_upload", UploadComponent], // this one is functionally incomplete
+  ["file_upload", FileUpload], // this one is functionally incomplete
   ["integer", Integer],
   ["mailing_address", MailingAddress],
   ["money", Money],

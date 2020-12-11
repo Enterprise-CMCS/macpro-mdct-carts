@@ -4,7 +4,9 @@
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": ["ecs-tasks.amazonaws.com"]
+        "Service": [
+          "ecs-tasks.amazonaws.com"
+        ]
       },
       "Effect": "Allow"
     }
