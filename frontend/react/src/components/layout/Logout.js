@@ -20,7 +20,12 @@ const Logout = () => {
       await authService.logout("/");
 
       // Clear remote session
-      window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
+      if (idToken) {
+        window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
+      } else {
+        /* eslint-disable no-undef */
+        window.location.href = `${window.env.OIDC_ISSUER_URL}/login/signout?fromURI=${redirectUri}`;
+      }
     };
 
     return (
