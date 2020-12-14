@@ -39,7 +39,7 @@ const Homepage = ({ editable, status }) => (
               link2Text={null}
               statusText={status}
               editor="karen.dalton@state.gov"
-              stateUser={true}
+              userRole="state_user"
             />
           </div>
         </div>

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
+import { theAccept } from "../../../actions/accept";
 import { getAllStateStatuses } from "../../../actions/initial";
 
 const ReportItem = ({
@@ -12,15 +13,11 @@ const ReportItem = ({
   statusText,
   statusURL,
   theUncertify: uncertifyAction,
-<<<<<<< HEAD
   theAccept: acceptAction,
   userRole,
   year,
   username,
   lastChanged,
-=======
-  stateUser,
->>>>>>> 8ef7a122f113eb5559a18e99b15d6f4f520e45b5
 }) => {
 
   
@@ -79,20 +76,14 @@ const ReportItem = ({
           {link1Text}
         </Link>
       </div>
-<<<<<<< HEAD
       {(statusText === "Certified" && userRole === "co_user") ||
       userRole === "bus_user" ? (
         <div className="actions ds-l-col--1">
-=======
-      {statusText === "Certified" && !stateUser ? (
-        <div className="actions ds-l-col--4">
->>>>>>> 8ef7a122f113eb5559a18e99b15d6f4f520e45b5
           <Link onClick={uncertify} variation="primary">
             Uncertify
           </Link>
         </div>
       ) : null}
-<<<<<<< HEAD
       {statusText === "Certified" && userRole === "co_user" ? (
         <div className="actions ds-l-col--1">
           <Link onClick={accept} variation="primary">
@@ -100,8 +91,6 @@ const ReportItem = ({
           </Link>
         </div>
       ) : null}
-=======
->>>>>>> 8ef7a122f113eb5559a18e99b15d6f4f520e45b5
     </div>
   );
 };
@@ -113,14 +102,10 @@ ReportItem.propTypes = {
   name: PropTypes.string.isRequired,
   statusText: PropTypes.string,
   statusURL: PropTypes.string,
-<<<<<<< HEAD
   userRole: PropTypes.string,
   year: PropTypes.number.isRequired,
   username:PropTypes.string.isRequired,
   lastChanged:PropTypes.string.isRequired
-=======
-  stateUser: PropTypes.bool,
->>>>>>> 8ef7a122f113eb5559a18e99b15d6f4f520e45b5
 };
 ReportItem.defaultProps = {
   link1Text: "View",
@@ -133,6 +118,6 @@ const mapState = (state) => ({
   user: state.reportStatus.userName,
 });
 
-const mapDispatch = { theUncertify };
+const mapDispatch = { theUncertify, theAccept };
 
 export default connect(mapState, mapDispatch)(ReportItem);
