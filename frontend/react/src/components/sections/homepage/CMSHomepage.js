@@ -8,6 +8,7 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { Button } from "@cmsgov/design-system-core";
 
 
+<<<<<<< HEAD
 const CMSHomepage = ({
   getStatuses,
   statuses,
@@ -32,6 +33,9 @@ const CMSHomepage = ({
     let selectedStates = []
     let selectedYears = []
     let selectedStatuses = []
+=======
+const CMSHomepage = ({ getStatuses, statuses, currentYear }) => {
+>>>>>>> 8ef7a122f113eb5559a18e99b15d6f4f520e45b5
   useEffect(() => {
     let yearArray = []  
     for (let x = 2020; x <= 2022; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
@@ -173,17 +177,19 @@ CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
   statuses: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
-  currentUserRole: PropTypes.string.isRequired,
 };
 
 const mapState = (state) => ({
   statuses: selectFormStatuses(state),
   currentYear: state.global.formYear,
+<<<<<<< HEAD
   stateList: state.allStatesData.map((element) => {
     return { label: element.name, id: element.code };
   }),
   currentUserRole: state.stateUser.currentUser.role,
   reportstate: state.reportStatus
+=======
+>>>>>>> 8ef7a122f113eb5559a18e99b15d6f4f520e45b5
 });
 
 const mapDispatch = {

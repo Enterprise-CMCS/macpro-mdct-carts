@@ -5,12 +5,6 @@ from typing import (
     List,
     Union,
 )
-import boto3
-from botocore.config import Config
-import os
-import random
-
-from django.core.serializers.json import DjangoJSONEncoder
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
@@ -68,12 +62,13 @@ from carts.carts_api.models import (
     StateStatus,
     StatesFromUsername,
     UserProfiles,
-    UploadedFiles,
 )
 from carts.carts_api.model_utils import validate_status_change
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
+
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -99,7 +94,7 @@ def UserProfilesViewSet(request):
     """
     API endpoint that returns all user profile data.
     """
-    print(f"here")
+
     # Get all users
     users = list(UserProfiles.objects.all().order_by("username").values())
 
@@ -111,13 +106,12 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     API endpoint that allows groups to be viewed or edited.
     """
 
-    print(f"\n\n+++++++++++++in group view set ")
     permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
-class StateViewSet(viewsets.ReadOnlyModelViewSet):
+class StateViewSet(viewsets.ModelViewSet):
     """
     API endpoint that returns state data.
     """
@@ -224,11 +218,9 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         state/year.
         We expect the post request to have state, year, and status; we get the
         user from request.user and we update last_changed ourselves.
-
         We've had some confusion over whether or not the name for a form in
         progress is "in progress" or "started", so we accommodate both below
         and turn the latter into the former.
-
         """
         state_code = request.data.get("state")
         year = request.data.get("year")
@@ -321,7 +313,8 @@ class SectionViewSet(viewsets.ModelViewSet):
 
         for section in sections:
             # TODO: streamline this so if users have access to all of the
-            # objects (e.g. if they're admins) the check occurs ony once.`
+            # objects (e.g. if they're admins) the check occurs ony once.
+            print("about to check object permissions", flush=True)
             self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
@@ -596,6 +589,7 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
         )
 
         if current is not None:
+            print(f"\n\n\n User exists")
             result.content = "User already exists"
             result.status_code = 409
 
@@ -604,7 +598,6 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
             The objects being created here is a new state via username and
             role via username.
             We expect the post request to have state and username.
-
             """
 
             # Create array from hyphen separated list
@@ -668,6 +661,7 @@ def UserActivateViewSet(request, user=None):
     current = User.objects.get(username=user)
     current.is_active = True
     current.save()
+
     return HttpResponse("Activated User")
 
 
@@ -677,6 +671,7 @@ def UserDeactivateViewSet(request, user=None):
     current = User.objects.get(username=user)
     current.is_active = False
     current.save()
+
     return HttpResponse("Deactivated User")
 
 
@@ -715,7 +710,9 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 @csrf_exempt
 @ensure_csrf_cookie
 def initiate_session(request):
-    resultJson = {"transaction_result": "session_initiated"}
+    print(f"\n\n\n!!!!!!!!!!!!!!!initiating session")
+    resultJson = {"transaction_result": "success"}
+
     return HttpResponse(json.dumps(resultJson))
 
 
@@ -753,123 +750,6 @@ def authenticate_user(request):
         },
     }
     return HttpResponse(json.dumps(user_data))
-
-
-@api_view(["POST"])
-def generate_upload_psurl(request):
-    file = request.data["uploadedFileName"]
-
-    # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
-    # that should yield enough entropy to never incur a collision
-    aws_filename = (
-        f"{request.user}_"
-        + str(random.randint(100, 100000)).zfill(7)
-        + "_"
-        + datetime.now().strftime("%Y%m%d_%H%M%S")
-        + f"_{file}"
-    )
-
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
-
-    uploadedFile = UploadedFiles.objects.create(
-        uploaded_username=f"{request.user}",
-        question_id=request.data["questionId"],
-        filename=file,
-        aws_filename=aws_filename,
-        uploaded_state=user_state,
-    )
-
-    uploadedFile.save()
-
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
-
-    # Generate the URL to get 'key-name' from 'bucket-name'
-    parts = s3.generate_presigned_post(
-        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
-    )
-
-    generated_presigned_url = {
-        "psurl": parts["url"],
-        "psdata": parts["fields"],
-    }
-
-    return HttpResponse(json.dumps(generated_presigned_url))
-
-
-@api_view(["POST"])
-def generate_download_psurl(request):
-    aws_filename = request.data["awsFilename"]
-    filename = request.data["filename"]
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
-    print(f"generating url")
-    presigned_url = s3.generate_presigned_url(
-        "get_object",
-        Params={
-            "Bucket": s3_bucket,
-            "Key": aws_filename,
-            "ResponseContentDisposition": f"attachment; filename = {filename}",
-        },
-        ExpiresIn=3600,
-    )
-    print(f"!!!!!DONE!!!!!")
-    generated_presigned_url = {"psurl": presigned_url}
-
-    return HttpResponse(json.dumps(generated_presigned_url))
-
-
-@api_view(["POST"])
-def view_uploaded_files(request):
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
-    uploaded_files = UploadedFiles.objects.filter(
-        uploaded_username=request.user,
-        uploaded_state=user_state,
-        question_id=request.data["questionId"],
-    ).values("filename", "aws_filename")
-
-    uploaded_file_list = []
-
-    for file in uploaded_files:
-        uploaded_file_list.append(f"{file}")
-
-    uploadedFiles = {"uploaded_files": uploaded_file_list}
-
-    return HttpResponse(json.dumps(uploadedFiles))
-
-
-@api_view(["POST"])
-def remove_uploaded_files(request):
-    aws_filename = request.data["awsFilename"]
-
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
-
-    UploadedFiles.objects.filter(
-        uploaded_state=user_state,
-        aws_filename=request.data["awsFilename"],
-    ).delete()
-
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
-    response = s3.delete_object(Bucket=f"{s3_bucket}", Key=f"{aws_filename}")
-
-    print(f"\n\n\n\n~~~~~~~~deleted")
-
-    response = {"success": "true"}
-
-    return HttpResponse(json.dumps(response))
 
 
 def _id_from_chunks(year, *args):

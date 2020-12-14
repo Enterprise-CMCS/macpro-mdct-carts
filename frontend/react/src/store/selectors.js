@@ -163,7 +163,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     in_progress: "In progress",
     certified: "Certified",
     uncertified: "Uncertified",
-    accepted: "Accepted",
+    approved: "Approved",
     submitted: "Submitted",
     published: "Published",
   };
