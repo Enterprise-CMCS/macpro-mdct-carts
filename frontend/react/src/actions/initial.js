@@ -21,28 +21,28 @@ export const getAllStatesData = () => {
   };
 };
 
-export const getAllStateStatuses = (selectedYears = [], selectedStates = [], selectedStatus = []) => async (dispatch, getState) => {
-  
+export const getAllStateStatuses = (
+  selectedYears = [],
+  selectedStates = [],
+  selectedStatus = []
+) => async (dispatch, getState) => {
   const { data } = await axios.get(`/state_status/`);
 
-  console.log("data",data)
-  let yearFilter = () =>{};
-  let stateFilter = () =>{};
-  let statusFilter = () =>{}
+  let yearFilter = () => {};
+  let stateFilter = () => {};
+  let statusFilter = () => {};
 
-  selectedYears.length > 0 ? 
-  yearFilter =  (record) => selectedYears.includes(record.year) : 
-  yearFilter = (record) => 1 === 1
+  selectedYears.length > 0
+    ? (yearFilter = (record) => selectedYears.includes(record.year))
+    : (yearFilter = (record) => 1 === 1);
 
-  selectedStates.length > 0 ? 
-  stateFilter =  (record) => selectedStates.includes(record.state) : 
-  stateFilter = (record) => 1 === 1
-  
-  selectedStatus.length > 0 ? 
-  statusFilter =  (record) => selectedStatus.includes(record.status) : 
-  statusFilter = (record) => 1 === 1
+  selectedStates.length > 0
+    ? (stateFilter = (record) => selectedStates.includes(record.state))
+    : (stateFilter = (record) => 1 === 1);
 
-  
+  selectedStatus.length > 0
+    ? (statusFilter = (record) => selectedStatus.includes(record.status))
+    : (statusFilter = (record) => 1 === 1);
 
   const payload = data
     .filter(yearFilter)
@@ -61,22 +61,26 @@ export const getAllStateStatuses = (selectedYears = [], selectedStates = [], sel
       return 0;
     })
     .filter(
-        (status, index, original) => original.slice(index + 1).findIndex((el) =>el.state === status.state && el.year === status.year) <
-        0)
-        .reduce(
-          (out, record) => ({
-            ...out,
-            [record.state+record.year]: {
-              status:record.status,
-              year:record.year,
-              stateCode:record.state,
-              lastChanged:record.last_changed,
-              username:record.user_name,
-            },
-          }),
-          {}
-        );
-      console.log("filtered payload",payload)
+      (status, index, original) =>
+        original
+          .slice(index + 1)
+          .findIndex(
+            (el) => el.state === status.state && el.year === status.year
+          ) < 0
+    )
+    .reduce(
+      (out, record) => ({
+        ...out,
+        [record.state + record.year]: {
+          status: record.status,
+          year: record.year,
+          stateCode: record.state,
+          lastChanged: record.last_changed,
+          username: record.user_name,
+        },
+      }),
+      {}
+    );
   dispatch({ type: SET_STATE_STATUSES, payload });
 };
 

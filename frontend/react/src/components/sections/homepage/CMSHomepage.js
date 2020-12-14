@@ -1,13 +1,12 @@
-import React, { useEffect , getState, useState} from "react";
+import React, { useEffect, getState, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
-import { Multiselect } from 'multiselect-react-dropdown';
+import { Multiselect } from "multiselect-react-dropdown";
 import { Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
-
 
 const CMSHomepage = ({
   getStatuses,
@@ -15,54 +14,58 @@ const CMSHomepage = ({
   currentYear,
   currentUserRole,
   stateList,
-  yearList
+  yearList,
 }) => {
-    const statusList = [
-      { label:"Accepted", value: "accepted" },
-      { label:"Certified", value: "certified" },
-      { label:"In progress", value: "in_progress" },
-      { label:"Not started", value: "not_started" },
-      { label:"Published", value: "published" },
-      { label:"Submitted", value: "submitted" },
-      { label:"Uncertified", value: "uncertified" }
-  ]
-  
-    // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
-    const [tempStates, setTempStates] = useState();
-    const [tempStatuses, setTempStatus] = useState();
-    const [tempYears, setTempYear] = useState();
-    const [stateIds, setStateIds] = useState();
-    const [yearIds, setYearIds] = useState();
-    const [statusIds, setStatusIds] = useState();
-    let tempHolder = []
+  const statusList = [
+    { label: "Accepted", value: "accepted" },
+    { label: "Certified", value: "certified" },
+    { label: "In progress", value: "in_progress" },
+    { label: "Not started", value: "not_started" },
+    { label: "Published", value: "published" },
+    { label: "Submitted", value: "submitted" },
+    { label: "Uncertified", value: "uncertified" },
+  ];
+
+  // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
+  const [tempStates, setTempStates] = useState();
+  const [tempStatuses, setTempStatus] = useState();
+  const [tempYears, setTempYear] = useState();
+  const [stateIds, setStateIds] = useState();
+  const [yearIds, setYearIds] = useState();
+  const [statusIds, setStatusIds] = useState();
+  let tempHolder = [];
   useEffect(() => {
     getStatuses();
   }, []);
 
-  
-
   const onSelectState = (element) => {
-    tempHolder = element.map((state) => {return state.value})
-    setStateIds(tempHolder)
-    setTempStates(element)
-}
+    tempHolder = element.map((state) => {
+      return state.value;
+    });
+    setStateIds(tempHolder);
+    setTempStates(element);
+  };
   const onSelectYear = (element) => {
-    tempHolder = element.map((year) => {return year.value})
-    setYearIds(tempHolder)
-    setTempYear(element)
-}
+    tempHolder = element.map((year) => {
+      return year.value;
+    });
+    setYearIds(tempHolder);
+    setTempYear(element);
+  };
   const onSelectStatus = (element) => {
-    tempHolder = element.map((status) => {return status.value})
-    setStatusIds(tempHolder)
-    setTempStatus(element)
-}
+    tempHolder = element.map((status) => {
+      return status.value;
+    });
+    setStatusIds(tempHolder);
+    setTempStatus(element);
+  };
 
   const filterReports = () => {
-    getStatuses(yearIds,stateIds,statusIds)
-  }
+    getStatuses(yearIds, stateIds, statusIds);
+  };
   const clearFilter = () => {
     window.location.reload(false);
-  }
+  };
 
   return (
     <div className="homepage ds-l-col--12">
@@ -79,20 +82,18 @@ const CMSHomepage = ({
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
             <div className="carts-report preview__grid">
-              <div className="ds-l-row filter-container">  
-              <div>
-                <div className="ds-c-label">
-                  Search and Filter results
-                </div>
-                
-                  <div className="filter-drop-down-state">
+              <div className="ds-l-row filter-container">
+                <div className="filter-div">
+                  <div className="ds-c-label">Search and Filter results</div>
 
+                  <div className="filter-drop-down-state">
                     <MultiSelect
-                    options={stateList}
-                    value={tempStates}
-                    onChange={onSelectState}
-                    labelledBy={"State"}
-                    hasSelectAll={false}
+                      options={stateList}
+                      value={tempStates}
+                      onChange={onSelectState}
+                      labelledBy={"State"}
+                      hasSelectAll={false}
+                      overrideStrings={{ selectSomeItems: "State" }}
                     />
                     {/* <Multiselect
                     options={stateList}
@@ -103,14 +104,15 @@ const CMSHomepage = ({
                     />*/}
                   </div>
                   <div className="filter-drop-down-year-status">
-                  <MultiSelect
-                    options={yearList}
-                    value={tempYears}
-                    onChange={onSelectYear}
-                    labelledBy={"Year"}
-                    hasSelectAll={false}
+                    <MultiSelect
+                      options={yearList}
+                      value={tempYears}
+                      onChange={onSelectYear}
+                      labelledBy={"Year"}
+                      hasSelectAll={false}
+                      overrideStrings={{ selectSomeItems: "Year" }}
                     />
-                  {/* <Multiselect
+                    {/* <Multiselect
 
                     options={yearList}
                     onSelect={(element)=> onSelectYear(element)} 
@@ -121,14 +123,15 @@ const CMSHomepage = ({
                     /> */}
                   </div>
                   <div className="filter-drop-down-year-status">
-                  <MultiSelect
-                    options={statusList}
-                    value={tempStatuses}
-                    onChange={onSelectStatus}
-                    labelledBy={"Status"}
-                    hasSelectAll={false}
+                    <MultiSelect
+                      options={statusList}
+                      value={tempStatuses}
+                      onChange={onSelectStatus}
+                      labelledBy="Status"
+                      hasSelectAll={false}
+                      overrideStrings={{ selectSomeItems: "Status" }}
                     />
-                  {/*<Multiselect
+                    {/*<Multiselect
                     options={statusList}
                     onSelect={(element)=> onSelectStatus(element)} 
                     onRemove={(element)=> onSelectStatus(element)} 
@@ -138,16 +141,22 @@ const CMSHomepage = ({
                     /> */}
                   </div>
                   <div>
-                    <Button 
+                    <Button
                       type="button"
                       class="ds-c-button ds-c-button--primary filter-button"
-                      onClick={() => filterReports()}>Filter</Button>
-                      <Button 
+                      onClick={() => filterReports()}
+                    >
+                      Filter
+                    </Button>
+                    <Button
                       type="button"
                       class="ds-c-button ds-c-button--primary filter-button"
-                      onClick={() => clearFilter()}>Clear</Button>
+                      onClick={() => clearFilter()}
+                    >
+                      Clear
+                    </Button>
                   </div>
-                  </div>
+                </div>
               </div>
               <div className="ds-l-row">
                 <legend className="ds-u-padding--2 ds-h3">All Reports</legend>
@@ -160,30 +169,43 @@ const CMSHomepage = ({
                 <div className="actions ds-l-col--4">Actions</div>
               </div>
               <div className="report-status">
-              {statuses
-                .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
-                .map(({ state, stateCode, status, year, username, lastChanged }) => { 
-                  return(
-                    <div>
-                      {
-                  // with statement below we don't get the three default records (username, status, and lastchanged)
-                  stateCode !== "status" && stateCode !== "lastChanged" && stateCode !== "userName" && stateCode !== undefined  ? (
-                    <ReportItem
-                      key={stateCode}
-                      link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                      name={`${state}`}
-                      year={year}
-                      statusText={status}
-                      editor="x@y.z"
-                      userRole={currentUserRole}
-                      username={username}
-                      lastChanged={lastChanged}
-                    />
-                  ) : null
-                }
-                  </div>
-                )})}
-                </div>
+                {statuses
+                  .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
+                  .map(
+                    ({
+                      state,
+                      stateCode,
+                      status,
+                      year,
+                      username,
+                      lastChanged,
+                    }) => {
+                      return (
+                        <div>
+                          {
+                            // with statement below we don't get the three default records (username, status, and lastchanged)
+                            stateCode !== "status" &&
+                            stateCode !== "lastChanged" &&
+                            stateCode !== "userName" &&
+                            stateCode !== undefined ? (
+                              <ReportItem
+                                key={stateCode}
+                                link1URL={`/views/sections/${stateCode}/${year}/00/a`}
+                                name={`${state}`}
+                                year={year}
+                                statusText={status}
+                                editor="x@y.z"
+                                userRole={currentUserRole}
+                                username={username}
+                                lastChanged={lastChanged}
+                              />
+                            ) : null
+                          }
+                        </div>
+                      );
+                    }
+                  )}
+              </div>
             </div>
           </div>
         </div>

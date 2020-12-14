@@ -19,48 +19,53 @@ const ReportItem = ({
   username,
   lastChanged,
 }) => {
-
-  
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
-  const theDateTime = lastChanged.split("T")
-  const tempTime = theDateTime[1].split(":")
+  const theDateTime = lastChanged.split("T");
+  const tempTime = theDateTime[1].split(":");
 
-  if(Number(tempTime[0]) >= 12 ){ // convert from military time
-      if(Number(tempTime[0] === "12")){
-        theDateTime[1] = theDateTime[1].substring(0,8)+ " pm"
-      }
-      else{theDateTime[1] = String((Number(tempTime[0])-12))+":"+tempTime[1]+":"+tempTime[2].substring(0,2)+ " pm"}
-  }
-  else{
-    if(Number(tempTime[0] === "00")){
-      theDateTime[1] =  "12"+":"+tempTime[1]+":"+tempTime[2].substring(0,2)+ " am"
+  if (Number(tempTime[0]) >= 12) {
+    // convert from military time
+    if (Number(tempTime[0] === "12")) {
+      theDateTime[1] = theDateTime[1].substring(0, 8) + " pm";
+    } else {
+      theDateTime[1] =
+        String(Number(tempTime[0]) - 12) +
+        ":" +
+        tempTime[1] +
+        ":" +
+        tempTime[2].substring(0, 2) +
+        " pm";
     }
-    else{
-      theDateTime[1] = theDateTime[1].substring(0,8)+ " am"
+  } else {
+    if (Number(tempTime[0] === "00")) {
+      theDateTime[1] =
+        "12" + ":" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
+    } else {
+      theDateTime[1] = theDateTime[1].substring(0, 8) + " am";
     }
   }
 
   const uncertify = () => {
     if (window.confirm("Are you sure to uncertify this record?")) {
-      uncertifyAction(stateCode,stateYear);
+      uncertifyAction(stateCode, stateYear);
     }
-    //Getting the new statuses to update the page
-    getAllStateStatuses();
+    // Getting the new statuses to update the page
+    // getAllStateStatuses();
+    window.location.reload(false); // Added because above wasn't consistently reloading
   };
   const accept = () => {
     if (window.confirm("Are you sure to accept this record?")) {
-      acceptAction(stateCode,stateYear);
+      acceptAction(stateCode, stateYear);
       // Need to send out a notification ticket #OY2-2416
     }
     //Getting the new statuses to update the page
-    getAllStateStatuses();
+    window.location.reload(false);
   };
 
   return (
     <div className="report-item ds-l-row">
-      
       <div className="name ds-l-col--1">{year}</div>
       <div className="name ds-l-col--2">{name}</div>
       <div
@@ -104,8 +109,8 @@ ReportItem.propTypes = {
   statusURL: PropTypes.string,
   userRole: PropTypes.string,
   year: PropTypes.number.isRequired,
-  username:PropTypes.string.isRequired,
-  lastChanged:PropTypes.string.isRequired
+  username: PropTypes.string.isRequired,
+  lastChanged: PropTypes.string.isRequired,
 };
 ReportItem.defaultProps = {
   link1Text: "View",
