@@ -9,7 +9,7 @@ from typing import (
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
-from django.http import HttpResponse  # type: ignore
+from django.http import HttpResponse, JsonResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from django.utils import timezone  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
@@ -566,6 +566,28 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionBase.objects.all()
     serializer_class = SectionBaseSerializer
+
+
+@api_view(["GET"])
+def GetUser(request, id=None):
+    """
+    API endpoint for retrieving user info
+    """
+    assert id
+
+    try:
+        result = list(UserProfiles.objects.all().filter(id=id).values())
+    except ObjectDoesNotExist:
+        logging.error("User does not exist")
+
+    if result:
+        response = HttpResponse(json.dumps(result, cls=DjangoJSONEncoder))
+    else:
+        response = JsonResponse(
+            {"status": "false", "message": "User Not Found"}, status=500
+        )
+
+    return response
 
 
 @api_view(["GET"])
