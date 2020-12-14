@@ -1,0 +1,54 @@
+version: "3.4"
+services:
+  postgres:
+    image: postgres:9.6.9
+    ports:
+      - "5432:5432"
+    networks:
+      - data_net
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - ENDPOINT_UI=http://localhost:81
+  ui:
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "81:3000"
+    networks:
+      - data_net
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=3000
+      - API_POSTGRES_URL=http://localhost:8000
+    stdin_open: true
+    volumes:
+      - ./react:/app
+      - /app/node_modules
+  api_postgres:
+    build:
+      context: ./api_postgres
+      dockerfile: Dockerfile.local
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    networks:
+      - data_net
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres # The api can address the db by its service name over the docker bridge network
+      - DATABASE=postgres
+      - POSTGRES_API_URL=localhost
+      - OPENID_DISCOVERY_URL=https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration
+      - ENDPOINT_UI=http://localhost:81
+      - DJANGO_SETTINGS_MODULE=carts.settings
+    volumes:
+      - ./api_postgres/:/usr/src/app/
+networks:
+  data_net:
+    external: true
