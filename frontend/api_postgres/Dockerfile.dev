@@ -30,4 +30,4 @@ RUN pip install boto3 --no-cache
 COPY . /usr/src/app/
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint_local.sh"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
