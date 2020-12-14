@@ -1,17 +1,15 @@
-import React, { useEffect, getState, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
-import { Multiselect } from "multiselect-react-dropdown";
 import { Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
 
 const CMSHomepage = ({
   getStatuses,
   statuses,
-  currentYear,
   currentUserRole,
   stateList,
   yearList,
@@ -180,9 +178,9 @@ const CMSHomepage = ({
                       username,
                       lastChanged,
                     }) => {
-                      return (
+                      return (// eslint-disable-next-line
                         <div>
-                          {
+                          {// eslint-disable-next-line
                             // with statement below we don't get the three default records (username, status, and lastchanged)
                             stateCode !== "status" &&
                             stateCode !== "lastChanged" &&
@@ -218,6 +216,8 @@ CMSHomepage.propTypes = {
   statuses: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
   currentUserRole: PropTypes.string.isRequired,
+  stateList: PropTypes.object.isRequired,
+  yearList:  PropTypes.object.isRequired
 };
 
 const mapState = (state) => ({

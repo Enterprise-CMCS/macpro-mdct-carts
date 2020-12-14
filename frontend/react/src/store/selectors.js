@@ -167,7 +167,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     submitted: "Submitted",
     published: "Published",
   };
-  
+
   return {
     selectFormStatus: (state) => {
       const { status } = state.reportStatus;
@@ -177,41 +177,48 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
       return null;
     },
     selectFormStatuses: (state) => {
-      let returnObject = []
-      
-      const allReportStatuses = Object.entries(state.reportStatus)
-      
-      // This is the default value so when the page loads before the records are populated, it will crash without this check
-      if(allReportStatuses.length > 0 && allReportStatuses[0][0] !=="status"){
-       
-        returnObject = Object.entries(state.reportStatus).map(([{}, {status,year,stateCode,lastChanged,username}]) => ({
-          state: statesArray.find(({ value }) => value === stateCode)?.label,
-          stateCode,
-          status: STATUS_MAPPING[status],
-          year,
-          lastChanged,
-          username
-        }))
-    }
-    else{
-      // Need to return something before records are populated so the page doesn't crash
-      returnObject = Object.entries(state.reportStatus).map(([stateCode]) => ({
-        state: statesArray.find(({ value }) => value === stateCode)?.label,
-        stateCode,
-      }))
-    }
-  
-    
-    return returnObject
-  }};
-})();
+      let returnObject = [];
 
+      const allReportStatuses = Object.entries(state.reportStatus);
+
+      // This is the default value so when the page loads before the records are populated, it will crash without this check
+      if (
+        allReportStatuses.length > 0 &&
+        allReportStatuses[0][0] !== "status"
+      ) {
+        returnObject = Object.entries(state.reportStatus).map(
+          ([{}, { status, year, stateCode, lastChanged, username }]) => ({
+            state: statesArray.find(({ value }) => value === stateCode)?.label,
+            stateCode,
+            status: STATUS_MAPPING[status],
+            year,
+            lastChanged,
+            username,
+          })
+        );
+      } else {
+        // Need to return something before records are populated so the page doesn't crash
+        returnObject = Object.entries(state.reportStatus).map(
+          ([stateCode]) => ({
+            state: statesArray.find(({ value }) => value === stateCode)?.label,
+            stateCode,
+          })
+        );
+      }
+
+      return returnObject;
+    },
+  };
+})();
 
 export const selectYears = () => {
   let yearArray = [];
-  for (let x = 2020; x <= 2022; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
-  {
-    yearArray.push({ label: x, value: x })
+  for (
+    let x = 2020;
+    x <= 2022;
+    x++ // 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
+  ) {
+    yearArray.push({ label: x, value: x });
   }
   return yearArray;
-}
+};

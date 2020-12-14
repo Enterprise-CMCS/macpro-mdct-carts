@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
         ...state,
         [action.stateCode]: "in_progress",
       };
-      case ACCEPT_SUCCESS:
+    case ACCEPT_SUCCESS:
       return {
         ...state,
         [action.stateCode]: "accepted",

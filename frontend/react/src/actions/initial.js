@@ -25,7 +25,7 @@ export const getAllStateStatuses = (
   selectedYears = [],
   selectedStates = [],
   selectedStatus = []
-) => async (dispatch, getState) => {
+) => async (dispatch) => {
   const { data } = await axios.get(`/state_status/`);
 
   let yearFilter = () => {};
@@ -34,15 +34,15 @@ export const getAllStateStatuses = (
 
   selectedYears.length > 0
     ? (yearFilter = (record) => selectedYears.includes(record.year))
-    : (yearFilter = (record) => 1 === 1);
+    : (yearFilter = () => 1 === 1);
 
   selectedStates.length > 0
     ? (stateFilter = (record) => selectedStates.includes(record.state))
-    : (stateFilter = (record) => 1 === 1);
+    : (stateFilter = () => 1 === 1);
 
   selectedStatus.length > 0
     ? (statusFilter = (record) => selectedStatus.includes(record.status))
-    : (statusFilter = (record) => 1 === 1);
+    : (statusFilter = () => 1 === 1);
 
   const payload = data
     .filter(yearFilter)

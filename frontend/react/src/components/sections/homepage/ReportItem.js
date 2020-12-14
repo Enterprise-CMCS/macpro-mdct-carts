@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { theAccept } from "../../../actions/accept";
-import { getAllStateStatuses } from "../../../actions/initial";
 
 const ReportItem = ({
   link1Text,
@@ -103,6 +102,7 @@ const ReportItem = ({
 
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
+  theAccept: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.string.isRequired,
