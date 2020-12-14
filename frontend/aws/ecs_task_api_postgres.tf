@@ -48,7 +48,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
     openid_discovery_url     = var.openid_discovery_url
     django_settings_module   = lookup(local.django_settings_module, terraform.workspace, "carts.settings"),
-    endpoint_ui              = local.endpoint_ui
+    endpoint_ui              = local.endpoint_ui,
+    uploads_bucket_name      = aws_s3_bucket.uploads.id
   })
 }
 
@@ -157,7 +158,7 @@ resource "aws_security_group_rule" "alb_api_postgres_ingress_443" {
 }
 
 resource "aws_alb" "api_postgres" {
-  name            = "api-postgres-${terraform.workspace}"
+  name            = "api-pg-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_postgres.id]
   subnets         = data.aws_subnet_ids.public.ids

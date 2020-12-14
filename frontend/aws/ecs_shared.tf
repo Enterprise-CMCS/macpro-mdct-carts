@@ -7,6 +7,17 @@ resource "aws_iam_role" "ecs_task" {
   assume_role_policy = file("files/assume-role-policy-ecs-tasks.json")
 }
 
+resource "aws_iam_policy" "uploads_bucket" {
+  policy = templatefile("templates/api_policy_for_uploads_bucket.json.tpl", {
+    uploads_bucket_arn = aws_s3_bucket.uploads.arn
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "uploads_bucket" {
+  role       = aws_iam_role.ecs_task.id
+  policy_arn = aws_iam_policy.uploads_bucket.arn
+}
+
 resource "aws_iam_role" "ecs_execution_role" {
   # The name parameter for this resource has a length limit and is not required.  We won't specify a name.
   assume_role_policy = file("files/assume-role-policy-ecs-tasks.json")
