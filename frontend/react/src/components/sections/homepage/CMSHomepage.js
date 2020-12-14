@@ -178,9 +178,11 @@ const CMSHomepage = ({
                       username,
                       lastChanged,
                     }) => {
-                      return (// eslint-disable-next-line
+                      return (
+                        // eslint-disable-next-line
                         <div>
-                          {// eslint-disable-next-line
+                          {
+                            // eslint-disable-next-line
                             // with statement below we don't get the three default records (username, status, and lastchanged)
                             stateCode !== "status" &&
                             stateCode !== "lastChanged" &&
@@ -217,7 +219,7 @@ CMSHomepage.propTypes = {
   currentYear: PropTypes.object.isRequired,
   currentUserRole: PropTypes.string.isRequired,
   stateList: PropTypes.object.isRequired,
-  yearList:  PropTypes.object.isRequired
+  yearList: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({

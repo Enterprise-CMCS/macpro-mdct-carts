@@ -1,6 +1,6 @@
 import jsonpath from "../util/jsonpath";
 
-import { selectFragment } from "./formData"; // eslint-disable-line import/no-cycle
+import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
 
@@ -187,6 +187,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
         allReportStatuses[0][0] !== "status"
       ) {
         returnObject = Object.entries(state.reportStatus).map(
+          // eslint-disable-next-line
           ([{}, { status, year, stateCode, lastChanged, username }]) => ({
             state: statesArray.find(({ value }) => value === stateCode)?.label,
             stateCode,
