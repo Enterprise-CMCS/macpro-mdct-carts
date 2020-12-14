@@ -55,6 +55,7 @@ from carts.carts_api.serializers import (
     StateSerializer,
     StateStatusSerializer,
     StatesFromUsernameSerializer,
+    StateUserSerializer,
 )
 from carts.carts_api.models import (
     RoleFromUsername,
