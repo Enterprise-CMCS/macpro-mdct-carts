@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
-import { selectFormStatuses } from "../../../store/selectors";
+import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { Button } from "@cmsgov/design-system-core";
+import MultiSelect from "react-multi-select-component";
 
 
 const CMSHomepage = ({
@@ -14,51 +15,50 @@ const CMSHomepage = ({
   currentYear,
   currentUserRole,
   stateList,
+  yearList
 }) => {
-    const [yearList, setYearList] = useState()
     const statusList = [
-      { label:"Accepted", id: "accepted" },
-      { label:"Certified", id: "certified" },
-      { label:"In progress", id: "in_progress" },
-      { label:"Not started", id: "not_started" },
-      { label:"Published", id: "published" },
-      { label:"Submitted", id: "submitted" },
-      { label:"Uncertified", id: "uncertified" }
+      { label:"Accepted", value: "accepted" },
+      { label:"Certified", value: "certified" },
+      { label:"In progress", value: "in_progress" },
+      { label:"Not started", value: "not_started" },
+      { label:"Published", value: "published" },
+      { label:"Submitted", value: "submitted" },
+      { label:"Uncertified", value: "uncertified" }
   ]
+  
     // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
-    let [tempStates, settempStates] = useState();
-    let [tempStatus, settempStatus] = useState();
-    let [tempYear, settempYear] = useState();
-    let selectedStates = []
-    let selectedYears = []
-    let selectedStatuses = []
+    const [tempStates, setTempStates] = useState();
+    const [tempStatuses, setTempStatus] = useState();
+    const [tempYears, setTempYear] = useState();
+    const [stateIds, setStateIds] = useState();
+    const [yearIds, setYearIds] = useState();
+    const [statusIds, setStatusIds] = useState();
+    let tempHolder = []
   useEffect(() => {
-    let yearArray = []  
-    for (let x = 2020; x <= 2022; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
-    {
-      yearArray.push({ label: x.toString(), id: x })
-    }
-    setYearList(yearArray)
     getStatuses();
   }, []);
 
   
 
   const onSelectState = (element) => {
-    selectedStates = element.map((state) => {return state.id})
-    settempStates(selectedStates)
+    tempHolder = element.map((state) => {return state.value})
+    setStateIds(tempHolder)
+    setTempStates(element)
 }
   const onSelectYear = (element) => {
-    selectedYears = element.map((year) => {return year.id})
-    settempYear(selectedYears)
+    tempHolder = element.map((year) => {return year.value})
+    setYearIds(tempHolder)
+    setTempYear(element)
 }
   const onSelectStatus = (element) => {
-  selectedStatuses = element.map((status) => {return status.id})
-  settempStatus(selectedStatuses)
+    tempHolder = element.map((status) => {return status.value})
+    setStatusIds(tempHolder)
+    setTempStatus(element)
 }
 
   const filterReports = () => {
-    getStatuses(tempYear,tempStates, tempStatus)
+    getStatuses(yearIds,stateIds,statusIds)
   }
   const clearFilter = () => {
     window.location.reload(false);
@@ -86,16 +86,31 @@ const CMSHomepage = ({
                 </div>
                 
                   <div className="filter-drop-down-state">
-                    <Multiselect
+
+                    <MultiSelect
+                    options={stateList}
+                    value={tempStates}
+                    onChange={onSelectState}
+                    labelledBy={"State"}
+                    hasSelectAll={false}
+                    />
+                    {/* <Multiselect
                     options={stateList}
                     onSelect={(element)=> onSelectState(element)}
                     onRemove={(element)=> onSelectState(element)}
                     displayValue="label" 
                     placeholder="State"
-                    />
+                    />*/}
                   </div>
                   <div className="filter-drop-down-year-status">
-                  <Multiselect
+                  <MultiSelect
+                    options={yearList}
+                    value={tempYears}
+                    onChange={onSelectYear}
+                    labelledBy={"Year"}
+                    hasSelectAll={false}
+                    />
+                  {/* <Multiselect
 
                     options={yearList}
                     onSelect={(element)=> onSelectYear(element)} 
@@ -103,17 +118,24 @@ const CMSHomepage = ({
                     displayValue="label" 
                     placeholder="Year"
                     showCheckbox={true}
-                    />
+                    /> */}
                   </div>
                   <div className="filter-drop-down-year-status">
-                  <Multiselect
+                  <MultiSelect
+                    options={statusList}
+                    value={tempStatuses}
+                    onChange={onSelectStatus}
+                    labelledBy={"Status"}
+                    hasSelectAll={false}
+                    />
+                  {/*<Multiselect
                     options={statusList}
                     onSelect={(element)=> onSelectStatus(element)} 
                     onRemove={(element)=> onSelectStatus(element)} 
                     displayValue="label" 
                     placeholder="Status"
                     showCheckbox={true}
-                    />
+                    /> */}
                   </div>
                   <div>
                     <Button 
@@ -180,10 +202,11 @@ const mapState = (state) => ({
   statuses: selectFormStatuses(state),
   currentYear: state.global.formYear,
   stateList: state.allStatesData.map((element) => {
-    return { label: element.name, id: element.code };
+    return { label: element.name, value: element.code };
   }),
   currentUserRole: state.stateUser.currentUser.role,
-  reportstate: state.reportStatus
+  reportstate: state.reportStatus,
+  yearList: selectYears(),
 });
 
 const mapDispatch = {

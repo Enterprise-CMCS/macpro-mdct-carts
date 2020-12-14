@@ -205,3 +205,13 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     return returnObject
   }};
 })();
+
+
+export const selectYears = () => {
+  let yearArray = [];
+  for (let x = 2020; x <= 2022; x++)// 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
+  {
+    yearArray.push({ label: x, value: x })
+  }
+  return yearArray;
+}
