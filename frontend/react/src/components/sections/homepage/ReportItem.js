@@ -50,18 +50,19 @@ const ReportItem = ({
   const uncertify = () => {
     if (window.confirm("Are you sure to uncertify this record?")) {
       uncertifyAction(stateCode, stateYear);
+      // Getting the new statuses to update the page
+      // getAllStateStatuses();
+      window.location.reload(false); // Added because above wasn't consistently reloading
     }
-    // Getting the new statuses to update the page
-    // getAllStateStatuses();
-    window.location.reload(false); // Added because above wasn't consistently reloading
   };
   const accept = () => {
     if (window.confirm("Are you sure to accept this record?")) {
       acceptAction(stateCode, stateYear);
       // Need to send out a notification ticket #OY2-2416
+
+      //Getting the new statuses to update the page
+      window.location.reload(false);
     }
-    //Getting the new statuses to update the page
-    window.location.reload(false);
   };
 
   return (
