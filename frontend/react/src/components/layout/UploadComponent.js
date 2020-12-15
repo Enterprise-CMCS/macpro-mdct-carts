@@ -239,7 +239,7 @@ class UploadComponent extends Component {
             className="file_upload"
             errorMessage={this.state.inputErrors}
             hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
-            label=""
+            label="Click Choose Files and make your selection(s) then click Upload to attach your files. Click View Uploaded to see a list of all files attached here."
             multiple
             name={this.props.question.id}
             onChange={this.validateFileByExtension}
