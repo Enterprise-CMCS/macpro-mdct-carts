@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-/* eslint-disable import/no-cycle */
 import { Checkbox } from "./Checkbox";
 import { CheckboxFlag } from "./CheckboxFlag";
 import { CMSLegend } from "./CMSLegend";
@@ -21,7 +20,6 @@ import { Ranges } from "./Ranges";
 import { Repeatables } from "./Repeatables";
 import { SkipText } from "./SkipText";
 import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
-/* eslint-enable */
 
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
