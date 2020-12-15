@@ -33,7 +33,7 @@ const questionTypes = new Map([
   ["daterange", DateRange],
   ["email", Email],
   ["fieldset", Fieldset],
-  ["file_upload", FileUpload], // this one is functionally incomplete
+  ["file_upload", FileUpload],
   ["integer", Integer],
   ["mailing_address", MailingAddress],
   ["money", Money],
@@ -89,12 +89,6 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
 
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
-
-  // Disable the File Upload component for launch since it is not fully functional
-  if (question.type === "file_upload") {
-    question.answer.readonly = true;
-    question.hint = "Currently unavailable";
-  }
 
   return (
     <div className="question">
