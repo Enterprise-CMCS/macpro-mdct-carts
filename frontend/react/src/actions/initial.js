@@ -11,7 +11,6 @@ export const getAllStatesData = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("/state/");
-      console.log("WHATS DATA?????", data);
       dispatch({ type: GET_ALL_STATES_DATA, data });
     } catch (err) {
       console.log("error:", err);

@@ -8,7 +8,7 @@ import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 import Text from "./Text";
-import { all } from "underscore";
+// import { all } from "underscore";
 
 const showPart = (contextData, programType, state) => {
   if (
@@ -19,8 +19,7 @@ const showPart = (contextData, programType, state) => {
   ) {
     return false;
   }
-
-  return shouldDisplay(state, contextData);
+  return shouldDisplay(state, contextData, programType);
 };
 
 const Part = ({
@@ -47,13 +46,15 @@ const Part = ({
       </>
     );
   } else {
-    innards = (
-      <Alert>
-        <div className="ds-c-alert__text">
-          {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
-        </div>
-      </Alert>
-    );
+    if (contextData) {
+      innards = (
+        <Alert>
+          <div className="ds-c-alert__text">
+            {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
+          </div>
+        </Alert>
+      );
+    }
   }
 
   return (
@@ -86,62 +87,33 @@ const mapStateToProps = (state, { partId }) => {
   const questions = selectQuestionsForPart(state, partId);
   const contextData = part.context_data;
   const location = window.location.pathname.split("/");
-  const viewOnlyState = location[3];
+  const userState = location[3]; // Current state, ie: "AL" or "CT"
+  const programData = state.allStatesData.find(
+    (element) => element.code === userState
+  );
 
-  return {
-    context_data: part.context_data,
-    questions,
-    showX: showPartBasedOnUserType(contextData, viewOnlyState, state),
-    show: showPart(contextData, state.stateUser.programType, state),
-    text: part ? part.text : null,
-    title: part ? part.title : null,
-    isFetching: state.global.isFetching,
-  };
+  if (programData) {
+    return {
+      context_data: part.context_data,
+      questions,
+      show: showPartBasedOnUserType(contextData, programData, state),
+      text: part ? part.text : null,
+      title: part ? part.title : null,
+      isFetching: state.global.isFetching,
+    };
+  }
 };
 
 export default connect(mapStateToProps)(Part);
 
-// This function filters through the array of all states data
-// This function returns the program type of the current state being view
-const viewOnlyProgramType = (allStatesArray, currentState) => {
-  const found = allStatesArray.find((element) => element.code === currentState);
-  const program = found.programType;
-  console.log("FOUND????", found);
-  return " ";
-  // return found.program_type;
-};
-
-const showPartBasedOnUserType = (contextData, viewOnlyState, state) => {
+const showPartBasedOnUserType = (contextData, programData, state) => {
   const role = state.stateUser.currentUser.role;
 
-  const temporaryProgramType = viewOnlyProgramType(
-    state.allStatesData,
-    viewOnlyState
-  );
-
   if (role === "bus_user" || role === "co_user") {
-    return showPart(contextData, temporaryProgramType, state);
+    // program type from programData object
+    return showPart(contextData, programData.program_type, state);
   } else {
+    // program type from stateUser object
     return showPart(contextData, state.stateUser.programType, state);
   }
 };
-
-// showpart needs
-// contextData (JSON)
-// progrmType (usually from user redux) **
-// state (all of redux state)
-
-// WANT: If co or bus user, update some programtype variable
-
-// const showPart = (contextData, programType, state) => {
-//   if (
-//     contextData &&
-//     programType &&
-//     contextData.show_if_state_program_type_in &&
-//     !contextData.show_if_state_program_type_in.includes(programType)
-//   ) {
-//     return false;
-//   }
-
-//   return shouldDisplay(state, contextData);
-// };
