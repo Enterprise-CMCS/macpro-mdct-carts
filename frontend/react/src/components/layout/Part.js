@@ -112,7 +112,7 @@ export default connect(mapStateToProps)(Part);
  * @param {object} contextData - The context data for a Part from JSON
  * @param {object} programData - An object with the state's program type
  * @param {string} state - application state from redux
- * @returns {boolean} - determines if an element should show by invoking calling showPart()
+ * @returns {boolean} - determines if an element should show by invoking showPart()
  */
 const showPartBasedOnUserType = (contextData, programData, state) => {
   const role = state.stateUser.currentUser.role;
