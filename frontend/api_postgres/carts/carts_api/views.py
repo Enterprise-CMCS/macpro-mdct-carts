@@ -10,8 +10,6 @@ from botocore.config import Config
 import os
 import random
 
-from django.core.serializers.json import DjangoJSONEncoder
-
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
@@ -74,6 +72,8 @@ from carts.carts_api.model_utils import validate_status_change
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -98,7 +98,7 @@ def UserProfilesViewSet(request):
     """
     API endpoint that returns all user profile data.
     """
-    print(f"here")
+
     # Get all users
     users = list(UserProfiles.objects.all().order_by("username").values())
 
@@ -110,13 +110,12 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     API endpoint that allows groups to be viewed or edited.
     """
 
-    print(f"\n\n+++++++++++++in group view set ")
     permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
-class StateViewSet(viewsets.ReadOnlyModelViewSet):
+class StateViewSet(viewsets.ModelViewSet):
     """
     API endpoint that returns state data.
     """
@@ -223,11 +222,9 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         state/year.
         We expect the post request to have state, year, and status; we get the
         user from request.user and we update last_changed ourselves.
-
         We've had some confusion over whether or not the name for a form in
         progress is "in progress" or "started", so we accommodate both below
         and turn the latter into the former.
-
         """
         state_code = request.data.get("state")
         year = request.data.get("year")
@@ -320,7 +317,8 @@ class SectionViewSet(viewsets.ModelViewSet):
 
         for section in sections:
             # TODO: streamline this so if users have access to all of the
-            # objects (e.g. if they're admins) the check occurs ony once.`
+            # objects (e.g. if they're admins) the check occurs ony once.
+            print("about to check object permissions", flush=True)
             self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
@@ -595,6 +593,7 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
         )
 
         if current is not None:
+            print(f"\n\n\n User exists")
             result.content = "User already exists"
             result.status_code = 409
 
@@ -603,7 +602,6 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
             The objects being created here is a new state via username and
             role via username.
             We expect the post request to have state and username.
-
             """
 
             # Create array from hyphen separated list
@@ -667,6 +665,7 @@ def UserActivateViewSet(request, user=None):
     current = User.objects.get(username=user)
     current.is_active = True
     current.save()
+
     return HttpResponse("Activated User")
 
 
@@ -676,6 +675,7 @@ def UserDeactivateViewSet(request, user=None):
     current = User.objects.get(username=user)
     current.is_active = False
     current.save()
+
     return HttpResponse("Deactivated User")
 
 
@@ -714,7 +714,9 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 @csrf_exempt
 @ensure_csrf_cookie
 def initiate_session(request):
-    resultJson = {"transaction_result": "session_initiated"}
+    print(f"\n\n\n!!!!!!!!!!!!!!!initiating session")
+    resultJson = {"transaction_result": "success"}
+
     return HttpResponse(json.dumps(resultJson))
 
 

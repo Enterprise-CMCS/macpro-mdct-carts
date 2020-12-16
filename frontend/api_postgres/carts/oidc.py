@@ -35,10 +35,10 @@ def fetch_jwks():
 
 @cached(CACHE_LOCATION, 300)
 def fetch_user_info(token):
-    # # print("fetching user info with token: " + token)
+    print("fetching user info with token: " + token)
 
     user_info_uri = metadata("userinfo_endpoint")
-    # # print("fetching user info from: " + user_info_uri)
+    print("fetching user info from: " + user_info_uri)
 
     try:
         user_info_res = requests.get(
@@ -53,8 +53,10 @@ def fetch_user_info(token):
         print(
             f"EXCEPTION === fetching user failed:  {err}"
         )  # as of python 3.6
+    else:
+        print("!! SUCCESS fetching user info", user_info_res.json())
 
-    # print(f"\n\n\n!!!got user info from okta: ", user_info_res.json())
+    print(f"\n\n\n!!!got user info from okta: ", user_info_res.json())
     return user_info_res.json()
 
 
@@ -68,8 +70,8 @@ def metadata(key):
 
 
 def verify_token(token, pub_key):
-    # print(f"\n\n\n^^^^verifying token")
+    print(f"\n\n\n^^^^verifying token")
     jwk = JWK.from_json(json.dumps(pub_key))
-    # print(f"\n\n\n^^^^jwk obtained")
+    print(f"\n\n\n^^^^jwk obtained")
 
     return jwt.verify_jwt(token, jwk, ["RS256"], checks_optional=True)

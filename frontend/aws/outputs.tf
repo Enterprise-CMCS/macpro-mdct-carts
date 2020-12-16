@@ -7,6 +7,7 @@ output "api_postgres_endpoint" {
   value = local.endpoint_api_postgres
 }
 
+
 output "s3_bucket_name" {
   value = aws_s3_bucket.www.id
 }

@@ -222,6 +222,7 @@ class UserProfiles(DBView):
     date_joined = models.DateTimeField(auto_now_add=True)
     user_role = models.CharField(max_length=100)
     state_codes = models.CharField(max_length=100)
+
     view_definition = """
         SELECT a.id,
             a.password,

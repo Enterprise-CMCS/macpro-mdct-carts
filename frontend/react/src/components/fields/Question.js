@@ -2,14 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-/* eslint-disable import/no-cycle */
 import { Checkbox } from "./Checkbox";
 import { CheckboxFlag } from "./CheckboxFlag";
 import { CMSLegend } from "./CMSLegend";
 import { DateRange } from "./DateRange";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
-// import { FileUpload } from "./FileUpload";
+//import { FileUpload } from "./FileUpload";
 import UploadComponent from "../layout/UploadComponent";
 import { Integer } from "./Integer";
 import { MailingAddress } from "./MailingAddress";
@@ -22,7 +21,6 @@ import { Ranges } from "./Ranges";
 import { Repeatables } from "./Repeatables";
 import { SkipText } from "./SkipText";
 import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
-/* eslint-enable */
 
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
@@ -34,7 +32,7 @@ const questionTypes = new Map([
   ["daterange", DateRange],
   ["email", Email],
   ["fieldset", Fieldset],
-  ["file_upload", UploadComponent], // this one is functionally incomplete
+  ["file_upload", UploadComponent],
   ["integer", Integer],
   ["mailing_address", MailingAddress],
   ["money", Money],
@@ -90,12 +88,6 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
 
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
-
-  // Disable the File Upload component for launch since it is not fully functional
-  if (question.type === "file_upload") {
-    question.answer.readonly = true;
-    question.hint = "Currently unavailable";
-  }
 
   return (
     <div className="question">

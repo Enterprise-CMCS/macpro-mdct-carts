@@ -22,7 +22,7 @@ const AddUser = ({ currentUser, stateList }) => {
         `/api/v1/adduser/${userId}/${statesToSend}/${role}`,
       ].join("");
       // eslint-disable-next-line
-      const result = await axios.get(xhrURL).then(function (result2) {
+      await axios.get(xhrURL).then(function (result2) {
         window.alert(result2.data.toString());
         window.location.reload(false);
       });
