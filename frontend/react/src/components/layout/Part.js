@@ -8,7 +8,6 @@ import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 import Text from "./Text";
-// import { all } from "underscore";
 
 const showPart = (contextData, programType, state) => {
   if (
@@ -106,14 +105,23 @@ const mapStateToProps = (state, { partId }) => {
 
 export default connect(mapStateToProps)(Part);
 
+/**
+ * This function considers what arguments to invoke showPart() with based on user type.
+ * Business and CO users do not have program types saved to their user objects in local state
+ * @function showPartBasedOnUserType
+ * @param {object} contextData - The context data for a Part from JSON
+ * @param {object} programData - An object with the state's program type
+ * @param {string} state - application state from redux
+ * @returns {boolean} - determines if an element should show by invoking calling showPart()
+ */
 const showPartBasedOnUserType = (contextData, programData, state) => {
   const role = state.stateUser.currentUser.role;
 
   if (role === "bus_user" || role === "co_user") {
-    // program type from programData object
+    // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);
   } else {
-    // program type from stateUser object
+    // program type from stateUser object, for state_user's
     return showPart(contextData, state.stateUser.programType, state);
   }
 };
