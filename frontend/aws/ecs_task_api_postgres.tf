@@ -158,7 +158,7 @@ resource "aws_security_group_rule" "alb_api_postgres_ingress_443" {
 }
 
 resource "aws_alb" "api_postgres" {
-  name            = "api-pg-${terraform.workspace}"
+  name            = "api-postgres-${terraform.workspace}"
   internal        = false
   security_groups = [aws_security_group.alb_api_postgres.id]
   subnets         = data.aws_subnet_ids.public.ids
