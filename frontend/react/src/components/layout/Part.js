@@ -115,10 +115,7 @@ export default connect(mapStateToProps)(Part);
 const showPartBasedOnUserType = (contextData, programData, state) => {
   const role = state.stateUser.currentUser.role;
 
-  if (
-    (programData && role === "bus_user") ||
-    (programData && role === "co_user")
-  ) {
+  if (programData && (role === "bus_user" || role === "co_user")) {
     // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);
   } else {
