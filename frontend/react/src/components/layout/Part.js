@@ -91,16 +91,14 @@ const mapStateToProps = (state, { partId }) => {
     (element) => element.code === userState
   );
 
-  if (programData) {
-    return {
-      context_data: part.context_data,
-      questions,
-      show: showPartBasedOnUserType(contextData, programData, state),
-      text: part ? part.text : null,
-      title: part ? part.title : null,
-      isFetching: state.global.isFetching,
-    };
-  }
+  return {
+    context_data: part.context_data,
+    questions,
+    show: showPartBasedOnUserType(contextData, programData, state),
+    text: part ? part.text : null,
+    title: part ? part.title : null,
+    isFetching: state.global.isFetching,
+  };
 };
 
 export default connect(mapStateToProps)(Part);
@@ -117,7 +115,10 @@ export default connect(mapStateToProps)(Part);
 const showPartBasedOnUserType = (contextData, programData, state) => {
   const role = state.stateUser.currentUser.role;
 
-  if (role === "bus_user" || role === "co_user") {
+  if (
+    (programData && role === "bus_user") ||
+    (programData && role === "co_user")
+  ) {
     // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);
   } else {
