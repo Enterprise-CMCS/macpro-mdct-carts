@@ -7,7 +7,7 @@ const PageInfo = ({ lastSaved, name, status }) => (
   <div className="page-info">
     <div className="edit-info">
       {status ?? "draft"}
-      {lastSaved.isValid() && ` | Last Edited: ${lastSaved.format("M/D/YYYY")}`}
+      {lastSaved.isValid() && ` | Last Edit: ${lastSaved.format("M/D/YYYY")}`}
     </div>
     <h1>
       {name} CARTS{} FY2020
