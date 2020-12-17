@@ -6,6 +6,7 @@ import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
 import Users from "../layout/users/Users";
+import UserEdit from "../layout/users/UserEdit";
 import AddUser from "../Utils/AddUser";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
@@ -47,6 +48,7 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
     />
     <SecureRoute exact path="/users" component={Users} />
     <SecureRoute exact path="/add_user" component={AddUser} />
+    <SecureRoute exact path="/user/:id" component={UserEdit} />
   </>
 );
 AdminHome.propTypes = {
