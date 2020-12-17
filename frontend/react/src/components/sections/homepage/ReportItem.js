@@ -17,7 +17,7 @@ const ReportItem = ({
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const uncertify = () => {
-    if (window.confirm("Are you sure to uncertify this record?")) {
+    if (window.confirm("Are you sure you want to uncertify this record?")) {
       uncertifyAction(stateCode);
     }
     //Getting the new statuses to update the page
