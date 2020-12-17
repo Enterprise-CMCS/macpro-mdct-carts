@@ -648,6 +648,7 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
 
     return result
 
+
 @api_view(["GET"])
 def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
     assert id
