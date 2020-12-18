@@ -20,8 +20,6 @@ const CMSHomepage = ({
     { label: "In progress", value: "in_progress" },
     { label: "Not started", value: "not_started" },
     { label: "Published", value: "published" },
-    { label: "Submitted", value: "submitted" },
-    { label: "Uncertified", value: "uncertified" },
   ];
 
   // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
@@ -93,13 +91,6 @@ const CMSHomepage = ({
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "State" }}
                     />
-                    {/* <Multiselect
-                    options={stateList}
-                    onSelect={(element)=> onSelectState(element)}
-                    onRemove={(element)=> onSelectState(element)}
-                    displayValue="label" 
-                    placeholder="State"
-                    />*/}
                   </div>
                   <div className="filter-drop-down-year-status">
                     <MultiSelect
@@ -110,15 +101,6 @@ const CMSHomepage = ({
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "Year" }}
                     />
-                    {/* <Multiselect
-
-                    options={yearList}
-                    onSelect={(element)=> onSelectYear(element)} 
-                    onRemove={(element)=> onSelectYear(element)} 
-                    displayValue="label" 
-                    placeholder="Year"
-                    showCheckbox={true}
-                    /> */}
                   </div>
                   <div className="filter-drop-down-year-status">
                     <MultiSelect
@@ -129,14 +111,6 @@ const CMSHomepage = ({
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "Status" }}
                     />
-                    {/*<Multiselect
-                    options={statusList}
-                    onSelect={(element)=> onSelectStatus(element)} 
-                    onRemove={(element)=> onSelectStatus(element)} 
-                    displayValue="label" 
-                    placeholder="Status"
-                    showCheckbox={true}
-                    /> */}
                   </div>
                   <div>
                     <Button
