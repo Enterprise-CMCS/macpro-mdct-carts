@@ -1,6 +1,6 @@
 import jsonpath from "../util/jsonpath";
 
-import { selectFragment } from "./formData";
+import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
 
@@ -149,7 +149,6 @@ export const selectIsFormEditable = (state) => {
     case "not_started":
     case "in_progress":
     case "uncertified":
-    case undefined:
       // Forms can only be edited if the current user is a state user AND the
       // form is in one of the statuses above.
       return role === "state_user";
@@ -164,7 +163,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
     in_progress: "In progress",
     certified: "Certified",
     uncertified: "Uncertified",
-    approved: "Approved",
+    accepted: "Accepted",
     submitted: "Submitted",
     published: "Published",
   };
@@ -177,11 +176,50 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
       }
       return null;
     },
-    selectFormStatuses: (state) =>
-      Object.entries(state.reportStatus).map(([stateCode, status]) => ({
-        state: statesArray.find(({ value }) => value === stateCode)?.label,
-        stateCode,
-        status: STATUS_MAPPING[status],
-      })),
+    selectFormStatuses: (state) => {
+      let returnObject = [];
+
+      const allReportStatuses = Object.entries(state.reportStatus);
+
+      // This is the default value so when the page loads before the records are populated, it will crash without this check
+      if (
+        allReportStatuses.length > 0 &&
+        allReportStatuses[0][0] !== "status"
+      ) {
+        returnObject = Object.entries(state.reportStatus).map(
+          // eslint-disable-next-line
+          ([{}, { status, year, stateCode, lastChanged, username }]) => ({
+            state: statesArray.find(({ value }) => value === stateCode)?.label,
+            stateCode,
+            status: STATUS_MAPPING[status],
+            year,
+            lastChanged,
+            username,
+          })
+        );
+      } else {
+        // Need to return something before records are populated so the page doesn't crash
+        returnObject = Object.entries(state.reportStatus).map(
+          ([stateCode]) => ({
+            state: statesArray.find(({ value }) => value === stateCode)?.label,
+            stateCode,
+          })
+        );
+      }
+
+      return returnObject;
+    },
   };
 })();
+
+export const selectYears = () => {
+  let yearArray = [];
+  for (
+    let x = 2020;
+    x <= 2022;
+    x++ // 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
+  ) {
+    yearArray.push({ label: x, value: x });
+  }
+  return yearArray;
+};

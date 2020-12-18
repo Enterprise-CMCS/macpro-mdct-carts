@@ -411,3 +411,30 @@ div[data-state="open"] .accordion-header .arrow:before {
   text-align: center;
   width: 80%;
 }
+
+.report-status {
+  & > div:nth-child(even) {
+    background-color: #efefef;
+  }
+}
+
+.filter-drop-down-state {
+  max-width: 30%;
+  min-width: 30%;
+  width: 30%;
+  display: inline-block;
+  margin: 15px;
+}
+.filter-drop-down-year-status {
+  max-width: 25%;
+  min-width: 25%;
+  width: 25%;
+  display: inline-block;
+  margin: 15px;
+}
+.filter-button {
+  margin: 15px;
+}
+.filter-div {
+  width: 100%;
+}

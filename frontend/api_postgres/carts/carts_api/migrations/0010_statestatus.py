@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                             ("started", "Started"),
                             ("certified", "Certified"),
                             ("uncertified", "Uncertified"),
-                            ("approved", "Approved"),
+                            ("accepted", "Accepted"),
                             ("submitted", "Submitted"),
                             ("published", "Published"),
                         ],
