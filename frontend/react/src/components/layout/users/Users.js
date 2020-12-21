@@ -65,6 +65,13 @@ const Users = () => {
         name: "Username",
         selector: "username",
         sortable: true,
+        cell: function editUser(e) {
+          return (
+            <span>
+              <a href={`/user/${e.id}`}>{e.username}</a>
+            </span>
+          );
+        },
       },
       {
         name: "First Name",

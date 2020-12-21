@@ -318,6 +318,20 @@
   width: 48%;
 }
 
+.dropdown-container {
+  max-width: 320px;
+
+  .dropdown-content {
+    z-index: 100;
+  }
+}
+
+.edit-user {
+  .multi-select {
+    width: 50%;
+  }
+}
+
 @media only screen and (min-width: 767px) {
   .autosave {
     text-align: left;

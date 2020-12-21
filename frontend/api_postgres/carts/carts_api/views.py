@@ -13,7 +13,7 @@ import random
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
-from django.http import HttpResponse  # type: ignore
+from django.http import HttpResponse, JsonResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from django.utils import timezone  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
@@ -574,6 +574,28 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
+def GetUser(request, id=None):
+    """
+    API endpoint for retrieving user info
+    """
+    assert id
+
+    try:
+        result = list(UserProfiles.objects.all().filter(id=id).values())
+    except ObjectDoesNotExist:
+        logging.error("User does not exist")
+
+    if result:
+        response = HttpResponse(json.dumps(result, cls=DjangoJSONEncoder))
+    else:
+        response = JsonResponse(
+            {"status": "false", "message": "User Not Found"}, status=500
+        )
+
+    return response
+
+
+@api_view(["GET"])
 def AddUser(request, eua_id=None, state_code=None, role=None):
     """
     API endpoint for creating a state user.
@@ -628,7 +650,90 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
         )
         result.status_code = 500
     # Note there is no .save() and it still saves to the db
+
     return result
+
+
+@api_view(["GET"])
+def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
+    assert id
+    assert state_codes
+    assert role
+    assert is_active
+
+    response = ""
+
+    ### Update auth_user table
+    try:
+        # Get user from auth_user table
+        user = User.objects.get(id=id)
+
+        # update is_active status
+        user.is_active = False
+        if is_active.lower() == "true":
+            user.is_active = True
+
+        # Save user data
+        user.save()
+    except:
+        response = JsonResponse(
+            {"status": "false", "message": "User Not Found"}, status=500
+        )
+
+    ### Update rolefromusername
+    try:
+
+        # Get user from rolefromusername table
+        userRole = RoleFromUsername.objects.get(username=user.username)
+    except:
+        userRole = False
+
+    if userRole:
+        # Set role
+        userRole.user_role = role.lower()
+
+        # Save
+        userRole.save()
+    else:
+        RoleFromUsername.objects.create(
+            user_role=role, username=user.username.upper()
+        )
+
+    ### Update statesfromusername
+    try:
+        userStates = StatesFromUsername.objects.filter(
+            username=user.username
+        ).last()
+    except:
+        userStates = False
+
+    if state_codes == "null":
+        state_codes_refined = "{}"
+    else:
+        # Create array from hyphen separated list
+        state_codes_array = state_codes.split("-")
+
+        # Convert all to uppercase
+        state_codes_upper = [x.upper() for x in state_codes_array]
+
+        # Alphabetize
+        state_codes_refined = sorted(state_codes_upper)
+
+    if userStates:
+        # Update states
+        userStates.state_codes = state_codes_refined
+        userStates.save()
+    else:
+        StatesFromUsername.objects.create(
+            username=user.username, state_codes=state_codes_refined
+        )
+
+    if response == "":
+        response = JsonResponse(
+            {"status": "true", "message": "User Updated"}, status=200
+        )
+
+    return response
 
 
 class SectionSchemaViewSet(viewsets.ModelViewSet):
