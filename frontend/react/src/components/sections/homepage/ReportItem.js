@@ -21,15 +21,14 @@ const ReportItem = ({
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
-  let theDateTime = ""
-  let tempTime = ""
-  let stateUser = false
-  if(userRole === "state_user")
-  {
-    stateUser = true
+  let theDateTime = "";
+  let tempTime = "";
+  let stateUser = false;
+  if (userRole === "state_user") {
+    stateUser = true;
   }
 
-  if(lastChanged && lastChanged.toString().includes("T")){
+  if (lastChanged && lastChanged.toString().includes("T")) {
     theDateTime = lastChanged.split("T");
     tempTime = theDateTime[1].split(":");
     if (Number(tempTime[0]) >= 12) {
@@ -54,9 +53,6 @@ const ReportItem = ({
       }
     }
   }
-  
-
-  
 
   const uncertify = () => {
     if (window.confirm("Are you sure to uncertify this record?")) {
@@ -78,56 +74,59 @@ const ReportItem = ({
 
   return (
     <>
-    {!stateUser && (
-    <div className="report-item ds-l-row">
-      
-      <div className="name ds-l-col--1">{year}</div>
-      <div className="name ds-l-col--2">{name}</div>
-      <div
-        className={`status ds-l-col--2 ${statusText === "Overdue" && `alert`}`}
-      >
-        {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-      </div>
-      <div className="actions ds-l-col--3">
-        {theDateTime[0]} at {theDateTime[1]} by {username}
-      </div>
-      <div className="actions ds-l-col--1">
-        <Link to={link1URL} target={anchorTarget}>
-          {link1Text}
-        </Link>
-      </div>
-      {(statusText === "Certified" && userRole === "co_user") ||
-      userRole === "bus_user" ? (
-        <div className="actions ds-l-col--1">
-          <Link onClick={uncertify} variation="primary">
-            Uncertify
-          </Link>
+      {!stateUser && (
+        <div className="report-item ds-l-row">
+          <div className="name ds-l-col--1">{year}</div>
+          <div className="name ds-l-col--2">{name}</div>
+          <div
+            className={`status ds-l-col--2 ${
+              statusText === "Overdue" && `alert`
+            }`}
+          >
+            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
+          </div>
+          <div className="actions ds-l-col--3">
+            {theDateTime[0]} at {theDateTime[1]} by {username}
+          </div>
+          <div className="actions ds-l-col--1">
+            <Link to={link1URL} target={anchorTarget}>
+              {link1Text}
+            </Link>
+          </div>
+          {(statusText === "Certified" && userRole === "co_user") ||
+          userRole === "bus_user" ? (
+            <div className="actions ds-l-col--1">
+              <Link onClick={uncertify} variation="primary">
+                Uncertify
+              </Link>
+            </div>
+          ) : null}
+          {statusText === "Certified" && userRole === "co_user" ? (
+            <div className="actions ds-l-col--1">
+              <Link onClick={accept} variation="primary">
+                Accept
+              </Link>
+            </div>
+          ) : null}
         </div>
-      ) : null}
-      {statusText === "Certified" && userRole === "co_user" ? (
-        <div className="actions ds-l-col--1">
-          <Link onClick={accept} variation="primary">
-            Accept
-          </Link>
+      )}
+      {stateUser && (
+        <div className="report-item ds-l-row">
+          <div className="name ds-l-col--2">{name}</div>
+          <div
+            className={`status ds-l-col--2 ${
+              statusText === "Overdue" && `alert`
+            }`}
+          >
+            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
+          </div>
+          <div className="actions ds-l-col--1">
+            <Link to={link1URL} target={anchorTarget}>
+              {link1Text}
+            </Link>
+          </div>
         </div>
-      ) : null}
-      
-    </div>)}
-    {stateUser && (
-    <div className="report-item ds-l-row">
-      
-      <div className="name ds-l-col--2">{name}</div>
-      <div
-        className={`status ds-l-col--2 ${statusText === "Overdue" && `alert`}`}
-      >
-        {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-      </div>
-      <div className="actions ds-l-col--1">
-        <Link to={link1URL} target={anchorTarget}>
-          {link1Text}
-        </Link>
-      </div>      
-    </div>)}
+      )}
     </>
   );
 };

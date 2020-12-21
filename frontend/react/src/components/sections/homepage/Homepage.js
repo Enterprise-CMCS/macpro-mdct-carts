@@ -62,6 +62,7 @@ const Homepage = ({ editable, status, currentYear }) => (
 Homepage.propTypes = {
   editable: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
+  currentYear: PropTypes.number.isRequired,
 };
 
 const mapState = (state) => ({
