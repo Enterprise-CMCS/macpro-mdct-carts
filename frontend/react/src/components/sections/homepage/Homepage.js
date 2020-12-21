@@ -33,7 +33,7 @@ const Homepage = ({ editable, status, currentYear }) => (
               name="2020"
               lastEditedTime="1:32pm"
               lastEditedDate="9/21/20"
-              link1URL={`/sections/${currentYear}/00`}
+              link1URL={`/sections/2020/00`}
               link1Text={editable ? "Edit" : "View"}
               link2URL="#"
               link2Text={null}

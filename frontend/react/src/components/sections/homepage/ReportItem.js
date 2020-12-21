@@ -116,7 +116,7 @@ const ReportItem = ({
     {stateUser && (
     <div className="report-item ds-l-row">
       
-      <div className="name ds-l-col--2">{year}</div>
+      <div className="name ds-l-col--2">{name}</div>
       <div
         className={`status ds-l-col--2 ${statusText === "Overdue" && `alert`}`}
       >
