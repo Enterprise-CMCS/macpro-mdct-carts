@@ -76,6 +76,7 @@ api_patterns = [
         "user/update/<int:id>/<str:state_codes>/<str:role>/<str:is_active>",
         views.UpdateUser,
     ),
+    path("sendemail", views.SendEmail),
 ]
 
 urlpatterns = [

@@ -16,6 +16,7 @@ from django.db import transaction  # type: ignore
 from django.http import HttpResponse, JsonResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from django.utils import timezone  # type: ignore
+from django.core.mail import send_mail
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -73,7 +74,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from django.core.serializers.json import DjangoJSONEncoder
-
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -977,6 +977,58 @@ def remove_uploaded_files(request):
 
     return HttpResponse(json.dumps(response))
 
+@api_view(["POST"])
+def SendEmail(request):
+    print("Started SendEmail")
+    if 'recipients' in request.data:
+        print("Recipients")
+#         recipientsDirty = request.POST.getlist('recipients')
+        recipients = [int(x) for x in request.POST.get('recipients', '').split(',')]
+
+        print(recipients)
+    else:
+        recipients = None
+
+    if 'subject' in request.data:
+        subject = request.data["subject"]
+    else:
+        subject = None
+
+    if 'message' in request.data:
+        message = request.data["message"]
+    else:
+        message = None
+
+    if 'sender' in request.data:
+        sender = request.data["sender"]
+    else:
+        sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
+
+    responseMessage = ""
+    # Exists checks for all
+    if recipients is None:
+        responseMessage += "Missing require data: recipients \n"
+    if not isinstance(recipients, list):
+        responseMessage += "Invalid type: recipients must be list/array \n"
+    if subject is None:
+        responseMessage += "Missing require data: subject \n"
+    if message is None:
+        responseMessage += "Missing require data: message \n"
+
+    if responseMessage is "":
+        print("ResponseMessage is ''")
+        try:
+            print(f"sender {sender}")
+            send_mail(subject, message, sender, recipients)
+
+        except:
+            jsonResponse = JsonResponse({"status": "false", "message": "Could not send email"}, status=500)
+        print("Mail sent")
+        jsonResponse = JsonResponse({"status": "true", "message": "Email(s) successfully sent"}, status=200)
+    else:
+        print("Response message is NOT ''")
+        jsonResponse = JsonResponse({"status": "false", "message": responseMessage}, status=422)
+    return jsonResponse
 
 def _id_from_chunks(year, *args):
     def fill(chunk):
