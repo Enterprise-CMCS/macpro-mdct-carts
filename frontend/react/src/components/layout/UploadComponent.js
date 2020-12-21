@@ -19,13 +19,14 @@ class UploadComponent extends Component {
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
     this.submitUpload = this.submitUpload.bind(this);
     this.viewUploaded = this.viewUploaded.bind(this);
     this.isFileTypeAllowed = this.isFileTypeAllowed.bind(this);
     this.deleteFile = this.deleteFile.bind(this);
+    await this.viewUploaded();
   };
 
   isFileTypeAllowed = (extension) => {
