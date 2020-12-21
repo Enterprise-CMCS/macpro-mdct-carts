@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                     ("in_progress", "In progress"),
                     ("certified", "Certified"),
                     ("uncertified", "Uncertified"),
-                    ("approved", "Approved"),
+                    ("accepted", "Accepted"),
                     ("submitted", "Submitted"),
                     ("published", "Published"),
                 ],

@@ -14,6 +14,7 @@ from carts.carts_api.models import (
     RoleFromUsername,
     RolesFromJobCode,
     StatesFromUsername,
+    User,
 )
 from carts.carts_api.model_utils import role_from_raw_ldap_job_codes
 from rest_framework.permissions import AllowAny
@@ -56,12 +57,29 @@ class JwtAuthentication(authentication.BaseAuthentication):
             print(f"\n\n%%%%>token verified: {kid}")
 
             user_info = fetch_user_info(token)
-            print(f"\n\n\ncreating user...", user_info)
+
+            # Check if user is_active in database, if not exit
+            if _is_user_active(user_info) == False:
+                print("username: ", user_info.preferred_username)
+                return
+
             user = _get_or_create_user(user_info)
 
             return (user, None)
         except Exception:
             raise exceptions.AuthenticationFailed("Authentication failed.")
+
+
+def _is_user_active(user_info):
+    """ Returns boolean of is_active column in auth_user table """
+    if User.objects.filter(username=user_info["preferred_username"]).exists():
+        response = User.objects.filter(
+            username=user_info["preferred_username"]
+        ).values_list("is_active", flat=True)[0]
+    else:
+        response = True
+
+    return response
 
 
 def _get_or_create_user(user_info):

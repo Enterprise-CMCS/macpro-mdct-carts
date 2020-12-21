@@ -32,7 +32,12 @@ const StateHome = ({ SecureRouteComponent: SecureRoute }) => (
       </SecureRoute>
       {/* Add routes from admin that should be unauthorized for state users */}
       <SecureRoute
-        path={["/role_user_assoc", "/state_assoc", "/role_jobcode_assoc"]}
+        path={[
+          "/role_user_assoc",
+          "/state_assoc",
+          "/role_jobcode_assoc",
+          "/users",
+        ]}
         component={Unauthorized}
       />
     </Switch>

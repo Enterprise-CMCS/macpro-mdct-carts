@@ -48,7 +48,8 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
     openid_discovery_url     = var.openid_discovery_url
     django_settings_module   = lookup(local.django_settings_module, terraform.workspace, "carts.settings"),
-    endpoint_ui              = local.endpoint_ui
+    endpoint_ui              = local.endpoint_ui,
+    uploads_bucket_name      = aws_s3_bucket.uploads.id
   })
 }
 
@@ -369,6 +370,14 @@ data "aws_s3_bucket" "webacl_s3" {
   bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
 }
 
+// ##Create S3 Sub-folder
+resource "aws_s3_bucket_object" "waf_bucket_folder" {
+    bucket = "${data.aws_s3_bucket.webacl_s3.id}"
+    acl    = "private"
+    ##key= "/Prefix/Sub-folder/"
+    key    = "CloudTrail/${terraform.workspace}/"
+    
+}
 # # ========================Create Kinesis firehose and role ========================
 resource "aws_kinesis_firehose_delivery_stream" "stream" {
   count = "${var.enable_log_waf_acl == true ? 1 : 0}"
@@ -378,7 +387,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = data.aws_s3_bucket.webacl_s3.arn
-    prefix ="cloudtrail/${terraform.workspace}/"
+    prefix ="CloudTrail/${terraform.workspace}/"
   }
 }
 
@@ -423,8 +432,8 @@ resource "aws_iam_role_policy" "firehose_policy" {
           "s3:PutObject"
           ],
         "Resource": [
-          "arn:aws:s3:::${"data.aws_s3_bucket.webacl_s3"}",
-          "arn:aws:s3:::${"data.aws_s3_bucket.webacl_s3"}/*"
+          "${data.aws_s3_bucket.webacl_s3.arn}",
+          "${data.aws_s3_bucket.webacl_s3.arn}/*"
         ]
       },
       {

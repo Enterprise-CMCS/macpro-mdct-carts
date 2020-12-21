@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
+import Users from "../layout/users/Users";
+import UserEdit from "../layout/users/UserEdit";
+import AddUser from "../Utils/AddUser";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
   <>
@@ -22,19 +25,13 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
           <div className="ds-l-row">
             <ul>
               <li>
-                <Link to="/state_assoc">
-                  Associate usernames (EUA IDs) to states
-                </Link>
+                <a href="/users">List users</a>
               </li>
               <li>
-                <Link to="/role_user_assoc">
-                  Associate usernames (EUA IDs) to CARTS roles
-                </Link>
+                <Link to="/add_user">Add user</Link>
               </li>
               <li>
-                <Link to="/role_jobcode_assoc">
-                  Associate EUA job codes to CARTS roles
-                </Link>
+                <Link to="/add_state_user">Add state user</Link>
               </li>
             </ul>
           </div>
@@ -52,6 +49,9 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
       path="/role_jobcode_assoc"
       component={JobCodeRoleAssociations}
     />
+    <SecureRoute exact path="/users" component={Users} />
+    <SecureRoute exact path="/add_user" component={AddUser} />
+    <SecureRoute exact path="/user/:id" component={UserEdit} />
   </>
 );
 AdminHome.propTypes = {

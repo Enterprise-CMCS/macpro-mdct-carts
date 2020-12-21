@@ -149,9 +149,18 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
  * @function shouldDisplay
  * @param {object} state - The application state from redux, the object required for jsonpath to query
  * @param {object} context - the context_data from a question
+ * @param {string} programType - program type of the user's state
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
-const shouldDisplay = (state, context) => {
+const shouldDisplay = (state, context, programType = null) => {
+  let program;
+  if (!programType) {
+    // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
+    program = state.stateUser.programType;
+  } else {
+    program = programType;
+  }
+
   if (
     !context ||
     (!context.conditional_display && !context.show_if_state_program_type_in)
@@ -162,9 +171,7 @@ const shouldDisplay = (state, context) => {
   // show_if_state_program_type_in: there is an array of acceptable values
   // displaying relies on that answer being included in the show_if_state_program_type_in array
   if (context.show_if_state_program_type_in) {
-    return context.show_if_state_program_type_in.includes(
-      state.stateUser.programType
-    );
+    return context.show_if_state_program_type_in.includes(program);
   }
 
   // hide_if: there is just one target (question) with a single answer

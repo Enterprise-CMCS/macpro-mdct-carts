@@ -5,11 +5,15 @@ from typing import (
     List,
     Union,
 )
+import boto3
+from botocore.config import Config
+import os
+import random
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
-from django.http import HttpResponse  # type: ignore
+from django.http import HttpResponse, JsonResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from django.utils import timezone  # type: ignore
 from jsonpath_ng.ext import parse  # type: ignore
@@ -60,11 +64,15 @@ from carts.carts_api.models import (
     State,
     StateStatus,
     StatesFromUsername,
+    UserProfiles,
+    UploadedFiles,
 )
 from carts.carts_api.model_utils import validate_status_change
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
+
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 # TODO: This should be absolutely stored elswhere.
@@ -75,7 +83,7 @@ STATE_INFO = {
 }
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -85,7 +93,19 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+@api_view(["POST"])
+def UserProfilesViewSet(request):
+    """
+    API endpoint that returns all user profile data.
+    """
+
+    # Get all users
+    users = list(UserProfiles.objects.all().order_by("username").values())
+
+    return HttpResponse(json.dumps(users, cls=DjangoJSONEncoder))
+
+
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
@@ -202,11 +222,9 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         state/year.
         We expect the post request to have state, year, and status; we get the
         user from request.user and we update last_changed ourselves.
-
         We've had some confusion over whether or not the name for a form in
         progress is "in progress" or "started", so we accommodate both below
         and turn the latter into the former.
-
         """
         state_code = request.data.get("state")
         year = request.data.get("year")
@@ -349,7 +367,7 @@ class SectionViewSet(viewsets.ModelViewSet):
                 can_save = status is None or status.status not in [
                     "certified",
                     "published",
-                    "approved",
+                    "accepted",
                 ]
 
                 if request.user.appuser.role != "state_user":
@@ -555,6 +573,169 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     serializer_class = SectionBaseSerializer
 
 
+@api_view(["GET"])
+def GetUser(request, id=None):
+    """
+    API endpoint for retrieving user info
+    """
+    assert id
+
+    try:
+        result = list(UserProfiles.objects.all().filter(id=id).values())
+    except ObjectDoesNotExist:
+        logging.error("User does not exist")
+
+    if result:
+        response = HttpResponse(json.dumps(result, cls=DjangoJSONEncoder))
+    else:
+        response = JsonResponse(
+            {"status": "false", "message": "User Not Found"}, status=500
+        )
+
+    return response
+
+
+@api_view(["GET"])
+def AddUser(request, eua_id=None, state_code=None, role=None):
+    """
+    API endpoint for creating a state user.
+    """
+    assert eua_id
+    assert state_code
+    assert role
+
+    result = HttpResponse()
+
+    try:
+
+        current = (
+            StatesFromUsername.objects.all()
+            .filter(username=eua_id.upper())
+            .last()
+        )
+
+        if current is not None:
+            print(f"\n\n\n User exists")
+            result.content = "User already exists"
+            result.status_code = 409
+
+        else:
+            """
+            The objects being created here is a new state via username and
+            role via username.
+            We expect the post request to have state and username.
+            """
+
+            # Create array from hyphen separated list
+            state_codes_array = state_code.split("-")
+
+            # Convert all to uppercase
+            state_codes_upper = [x.upper() for x in state_codes_array]
+
+            # Alphabetize
+            state_codes_refined = sorted(state_codes_upper)
+
+            newStateUser = StatesFromUsername.objects.create(
+                username=str(eua_id.upper()), state_codes=state_codes_refined
+            )
+            newRole = RoleFromUsername.objects.create(
+                user_role=role, username=eua_id.upper()
+            )
+            result.content = "State user sucessfully added"
+            result.status_code = 200
+
+    except:
+        result.content = (
+            "Failed to add a new state user. Please contact the help desk."
+        )
+        result.status_code = 500
+    # Note there is no .save() and it still saves to the db
+
+    return result
+
+
+@api_view(["GET"])
+def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
+    assert id
+    assert state_codes
+    assert role
+    assert is_active
+
+    response = ""
+
+    ### Update auth_user table
+    try:
+        # Get user from auth_user table
+        user = User.objects.get(id=id)
+
+        # update is_active status
+        user.is_active = False
+        if is_active.lower() == "true":
+            user.is_active = True
+
+        # Save user data
+        user.save()
+    except:
+        response = JsonResponse(
+            {"status": "false", "message": "User Not Found"}, status=500
+        )
+
+    ### Update rolefromusername
+    try:
+
+        # Get user from rolefromusername table
+        userRole = RoleFromUsername.objects.get(username=user.username)
+    except:
+        userRole = False
+
+    if userRole:
+        # Set role
+        userRole.user_role = role.lower()
+
+        # Save
+        userRole.save()
+    else:
+        RoleFromUsername.objects.create(
+            user_role=role, username=user.username.upper()
+        )
+
+    ### Update statesfromusername
+    try:
+        userStates = StatesFromUsername.objects.filter(
+            username=user.username
+        ).last()
+    except:
+        userStates = False
+
+    if state_codes == "null":
+        state_codes_refined = "{}"
+    else:
+        # Create array from hyphen separated list
+        state_codes_array = state_codes.split("-")
+
+        # Convert all to uppercase
+        state_codes_upper = [x.upper() for x in state_codes_array]
+
+        # Alphabetize
+        state_codes_refined = sorted(state_codes_upper)
+
+    if userStates:
+        # Update states
+        userStates.state_codes = state_codes_refined
+        userStates.save()
+    else:
+        StatesFromUsername.objects.create(
+            username=user.username, state_codes=state_codes_refined
+        )
+
+    if response == "":
+        response = JsonResponse(
+            {"status": "true", "message": "User Updated"}, status=200
+        )
+
+    return response
+
+
 class SectionSchemaViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -581,6 +762,26 @@ def report(request, year=None, state=None):
     }
     report_template = get_template("report.html")
     return HttpResponse(report_template.render(context=context))
+
+
+@api_view(["POST"])
+def UserActivateViewSet(request, user=None):
+    # Get user
+    current = User.objects.get(username=user)
+    current.is_active = True
+    current.save()
+
+    return HttpResponse("Activated User")
+
+
+@api_view(["POST"])
+def UserDeactivateViewSet(request, user=None):
+    # Get user
+    current = User.objects.get(username=user)
+    current.is_active = False
+    current.save()
+
+    return HttpResponse("Deactivated User")
 
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
@@ -658,6 +859,123 @@ def authenticate_user(request):
         },
     }
     return HttpResponse(json.dumps(user_data))
+
+
+@api_view(["POST"])
+def generate_upload_psurl(request):
+    file = request.data["uploadedFileName"]
+
+    # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
+    # that should yield enough entropy to never incur a collision
+    aws_filename = (
+        f"{request.user}_"
+        + str(random.randint(100, 100000)).zfill(7)
+        + "_"
+        + datetime.now().strftime("%Y%m%d_%H%M%S")
+        + f"_{file}"
+    )
+
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
+
+    uploadedFile = UploadedFiles.objects.create(
+        uploaded_username=f"{request.user}",
+        question_id=request.data["questionId"],
+        filename=file,
+        aws_filename=aws_filename,
+        uploaded_state=user_state,
+    )
+
+    uploadedFile.save()
+
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    region = os.environ.get("AWS_REGION")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
+
+    # Generate the URL to get 'key-name' from 'bucket-name'
+    parts = s3.generate_presigned_post(
+        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
+    )
+
+    generated_presigned_url = {
+        "psurl": parts["url"],
+        "psdata": parts["fields"],
+    }
+
+    return HttpResponse(json.dumps(generated_presigned_url))
+
+
+@api_view(["POST"])
+def generate_download_psurl(request):
+    aws_filename = request.data["awsFilename"]
+    filename = request.data["filename"]
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    region = os.environ.get("AWS_REGION")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
+    print(f"generating url")
+    presigned_url = s3.generate_presigned_url(
+        "get_object",
+        Params={
+            "Bucket": s3_bucket,
+            "Key": aws_filename,
+            "ResponseContentDisposition": f"attachment; filename = {filename}",
+        },
+        ExpiresIn=3600,
+    )
+    print(f"!!!!!DONE!!!!!")
+    generated_presigned_url = {"psurl": presigned_url}
+
+    return HttpResponse(json.dumps(generated_presigned_url))
+
+
+@api_view(["POST"])
+def view_uploaded_files(request):
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
+    uploaded_files = UploadedFiles.objects.filter(
+        uploaded_username=request.user,
+        uploaded_state=user_state,
+        question_id=request.data["questionId"],
+    ).values("filename", "aws_filename")
+
+    uploaded_file_list = []
+
+    for file in uploaded_files:
+        uploaded_file_list.append(f"{file}")
+
+    uploadedFiles = {"uploaded_files": uploaded_file_list}
+
+    return HttpResponse(json.dumps(uploadedFiles))
+
+
+@api_view(["POST"])
+def remove_uploaded_files(request):
+    aws_filename = request.data["awsFilename"]
+
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
+
+    UploadedFiles.objects.filter(
+        uploaded_state=user_state,
+        aws_filename=request.data["awsFilename"],
+    ).delete()
+
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    region = os.environ.get("AWS_REGION")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
+    response = s3.delete_object(Bucket=f"{s3_bucket}", Key=f"{aws_filename}")
+
+    print(f"\n\n\n\n~~~~~~~~deleted")
+
+    response = {"success": "true"}
+
+    return HttpResponse(json.dumps(response))
 
 
 def _id_from_chunks(year, *args):

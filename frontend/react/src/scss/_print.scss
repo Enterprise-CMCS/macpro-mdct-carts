@@ -3,13 +3,22 @@
  */
 
 .print-all {
+  textarea {
+    display: none !important;
+  }
+
   .ds-c-alert,
   .form-footer,
   .page-info {
     display: none;
   }
-  .print-only {
+  .print-only,
+  .print-helper {
     display: block;
+  }
+
+  .print-helper {
+    margin: 1.2rem 0;
   }
 
   .screen-only {
@@ -36,6 +45,9 @@
 }
 
 @media print {
+  textarea {
+    display: none !important;
+  }
   .action-buttons,
   .ds-c-alert,
   .footer,
@@ -48,8 +60,13 @@
     display: none;
   }
 
-  .print-only {
+  .print-only,
+  .print-helper {
     display: block;
+  }
+
+  .print-helper {
+    margin: 1.2rem 0;
   }
 
   .screen-only {

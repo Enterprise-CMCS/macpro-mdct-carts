@@ -69,7 +69,7 @@ class StateSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = State
-        fields = ["code", "name", "fmap_set", "acs_set"]
+        fields = ["program_type", "code", "name", "fmap_set", "acs_set"]
 
 
 class StatesFromUsernameSerializer(serializers.HyperlinkedModelSerializer):
