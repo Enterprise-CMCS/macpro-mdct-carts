@@ -8,7 +8,7 @@ import {
   selectIsFormEditable,
 } from "../../../store/selectors";
 
-const Homepage = ({ editable, status }) => (
+const Homepage = ({ editable, status, currentYear }) => (
   <div className="homepage">
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -33,13 +33,14 @@ const Homepage = ({ editable, status }) => (
               name="2020"
               lastEditedTime="1:32pm"
               lastEditedDate="9/21/20"
-              link1URL="/sections/2020/00"
+              link1URL={`/sections/2020/00`}
               link1Text={editable ? "Edit" : "View"}
               link2URL="#"
               link2Text={null}
               statusText={status}
               editor="karen.dalton@state.gov"
               userRole="state_user"
+              year={currentYear}
             />
           </div>
         </div>
@@ -61,11 +62,13 @@ const Homepage = ({ editable, status }) => (
 Homepage.propTypes = {
   editable: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
+  currentYear: PropTypes.number.isRequired,
 };
 
 const mapState = (state) => ({
   editable: selectIsFormEditable(state),
   status: selectFormStatus(state),
+  currentYear: state.global.formYear,
 });
 
 export default connect(mapState)(Homepage);

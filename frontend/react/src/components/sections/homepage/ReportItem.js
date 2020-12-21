@@ -21,28 +21,36 @@ const ReportItem = ({
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
-  const theDateTime = lastChanged.split("T");
-  const tempTime = theDateTime[1].split(":");
+  let theDateTime = "";
+  let tempTime = "";
+  let stateUser = false;
+  if (userRole === "state_user") {
+    stateUser = true;
+  }
 
-  if (Number(tempTime[0]) >= 12) {
-    // convert from military time
-    if (Number(tempTime[0] === "12")) {
-      theDateTime[1] = theDateTime[1].substring(0, 8) + " pm";
+  if (lastChanged && lastChanged.toString().includes("T")) {
+    theDateTime = lastChanged.split("T");
+    tempTime = theDateTime[1].split(":");
+    if (Number(tempTime[0]) >= 12) {
+      // convert from military time
+      if (Number(tempTime[0] === "12")) {
+        theDateTime[1] = theDateTime[1].substring(0, 8) + " pm";
+      } else {
+        theDateTime[1] =
+          String(Number(tempTime[0]) - 12) +
+          ":" +
+          tempTime[1] +
+          ":" +
+          tempTime[2].substring(0, 2) +
+          " pm";
+      }
     } else {
-      theDateTime[1] =
-        String(Number(tempTime[0]) - 12) +
-        ":" +
-        tempTime[1] +
-        ":" +
-        tempTime[2].substring(0, 2) +
-        " pm";
-    }
-  } else {
-    if (Number(tempTime[0] === "00")) {
-      theDateTime[1] =
-        "12" + ":" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
-    } else {
-      theDateTime[1] = theDateTime[1].substring(0, 8) + " am";
+      if (Number(tempTime[0] === "00")) {
+        theDateTime[1] =
+          "12" + ":" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
+      } else {
+        theDateTime[1] = theDateTime[1].substring(0, 8) + " am";
+      }
     }
   }
 
@@ -65,38 +73,61 @@ const ReportItem = ({
   };
 
   return (
-    <div className="report-item ds-l-row">
-      <div className="name ds-l-col--1">{year}</div>
-      <div className="name ds-l-col--2">{name}</div>
-      <div
-        className={`status ds-l-col--2 ${statusText === "Overdue" && `alert`}`}
-      >
-        {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-      </div>
-      <div className="actions ds-l-col--3">
-        {theDateTime[0]} at {theDateTime[1]} by {username}
-      </div>
-      <div className="actions ds-l-col--1">
-        <Link to={link1URL} target={anchorTarget}>
-          {link1Text}
-        </Link>
-      </div>
-      {(statusText === "Certified" && userRole === "co_user") ||
-      userRole === "bus_user" ? (
-        <div className="actions ds-l-col--1">
-          <Link onClick={uncertify} variation="primary">
-            Uncertify
-          </Link>
+    <>
+      {!stateUser && (
+        <div className="report-item ds-l-row">
+          <div className="name ds-l-col--1">{year}</div>
+          <div className="name ds-l-col--2">{name}</div>
+          <div
+            className={`status ds-l-col--2 ${
+              statusText === "Overdue" && `alert`
+            }`}
+          >
+            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
+          </div>
+          <div className="actions ds-l-col--3">
+            {theDateTime[0]} at {theDateTime[1]} by {username}
+          </div>
+          <div className="actions ds-l-col--1">
+            <Link to={link1URL} target={anchorTarget}>
+              {link1Text}
+            </Link>
+          </div>
+          {(statusText === "Certified" && userRole === "co_user") ||
+          userRole === "bus_user" ? (
+            <div className="actions ds-l-col--1">
+              <Link onClick={uncertify} variation="primary">
+                Uncertify
+              </Link>
+            </div>
+          ) : null}
+          {statusText === "Certified" && userRole === "co_user" ? (
+            <div className="actions ds-l-col--1">
+              <Link onClick={accept} variation="primary">
+                Accept
+              </Link>
+            </div>
+          ) : null}
         </div>
-      ) : null}
-      {statusText === "Certified" && userRole === "co_user" ? (
-        <div className="actions ds-l-col--1">
-          <Link onClick={accept} variation="primary">
-            Accept
-          </Link>
+      )}
+      {stateUser && (
+        <div className="report-item ds-l-row">
+          <div className="name ds-l-col--2">{name}</div>
+          <div
+            className={`status ds-l-col--2 ${
+              statusText === "Overdue" && `alert`
+            }`}
+          >
+            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
+          </div>
+          <div className="actions ds-l-col--1">
+            <Link to={link1URL} target={anchorTarget}>
+              {link1Text}
+            </Link>
+          </div>
         </div>
-      ) : null}
-    </div>
+      )}
+    </>
   );
 };
 
