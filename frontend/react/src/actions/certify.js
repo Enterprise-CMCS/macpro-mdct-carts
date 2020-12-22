@@ -25,4 +25,20 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
   }
+  try {
+    await axios
+      .post(`/api/v1/sendemail/statuschange`, {
+        subject: "CMS MDCT Carts",
+        sender: "aadcock@collabralink.com",
+        statecode: stateCode,
+        source: window.location.hostname,
+        status: "certify",
+      })
+      .then(function (response) {
+        window.alert(response.data.message.toString());
+        window.location.reload(false);
+      });
+  } catch (e) {
+    window.alert("Update failed, please contact helpdesk for support");
+  }
 };

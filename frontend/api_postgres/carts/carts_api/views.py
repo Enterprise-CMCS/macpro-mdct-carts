@@ -12,11 +12,13 @@ import random
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
+from django.db.models import Q
+from smtplib import SMTPException
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse, JsonResponse  # type: ignore
 from django.template.loader import get_template  # type: ignore
 from django.utils import timezone  # type: ignore
-from django.core.mail import send_mail
+from django.core.mail import send_mail, send_mass_mail
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -979,16 +981,12 @@ def remove_uploaded_files(request):
 
 @api_view(["POST"])
 def SendEmail(request):
-    print("Started SendEmail")
     if 'recipients' in request.data:
-        print("Recipients")
-#         recipientsDirty = request.POST.getlist('recipients')
-        recipients = [int(x) for x in request.POST.get('recipients', '').split(',')]
-
-        print(recipients)
+        # Expects comma separated list
+        recipients = request.data["recipients"].replace(" ", "").split(',')
     else:
         recipients = None
-
+    print("recipients is happy")
     if 'subject' in request.data:
         subject = request.data["subject"]
     else:
@@ -1016,19 +1014,109 @@ def SendEmail(request):
         responseMessage += "Missing require data: message \n"
 
     if responseMessage is "":
-        print("ResponseMessage is ''")
         try:
-            print(f"sender {sender}")
             send_mail(subject, message, sender, recipients)
-
+            jsonResponse = JsonResponse({"status": "true", "message": "Emails successfully sent"}, status=200)
         except:
             jsonResponse = JsonResponse({"status": "false", "message": "Could not send email"}, status=500)
-        print("Mail sent")
-        jsonResponse = JsonResponse({"status": "true", "message": "Email(s) successfully sent"}, status=200)
+
     else:
         print("Response message is NOT ''")
         jsonResponse = JsonResponse({"status": "false", "message": responseMessage}, status=422)
     return jsonResponse
+
+@api_view(["POST"])
+def SendEmailStatusChange(request):
+
+    if 'subject' in request.data:
+        subject = request.data["subject"]
+    else:
+        subject = None
+
+    if 'status' in request.data:
+        # Certify or Uncertify
+        status = request.data["status"]
+    else:
+        status = None
+    if 'source' in request.data:
+        # Hostname, eg https://mdctcarts.cms.gov
+        source = request.data["source"]
+    else:
+        source = None
+    if 'sender' in request.data:
+        sender = request.data["sender"]
+    else:
+        sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
+
+    if 'statecode' not in request.data:
+        # State abbreviation
+        statecode = None
+    else:
+        statecode = request.data["statecode"]
+
+        # Set recipients from statecode
+        users = _getUsersForStatusChange(statecode)
+
+        recipients = []
+        for user in users:
+            recipients.append(user.email)
+        print("Recipients")
+        print(recipients)
+
+    responseMessage = ""
+    # Exists checks for all
+    if subject is None:
+        responseMessage += "Missing require data: subject \n"
+    if statecode is None:
+        responseMessage += "Missing require data: statecode \n"
+    if status is None:
+        responseMessage += "Missing require data: status \n"
+    if source is None:
+        responseMessage += "Missing require data: source \n"
+
+    if responseMessage is "":
+
+        try:
+            subject = "CMS MDCT CARTS"
+
+            message = 'The ' + statecode + ' CARTS report is now in the ' + status.capitalize() + ' state. Please take action as necessary. \n\n'
+            message += 'Please visit the website at: <a href="' + source + '">' + source + '</a>.'
+
+            msg_plain = render_to_string('templates/email.txt', {'some_params': some_params})
+            msg_html = render_to_string('templates/email.html', {'some_params': some_params})
+            # Build tuple for send_mass_mail
+            datatuple = ()
+
+            for recipient in recipients:
+                if len(datatuple) == 0:
+                    datatuple = (subject, message, "aadcock@collabralink.com", [recipient]),
+                else:
+                    temptuple = (subject, message, "aadcock@collabralink.com", [recipient]),
+                    datatuple = datatuple + temptuple
+
+            send_mass_mail(datatuple, fail_silently=False)
+
+            jsonResponse = JsonResponse({"status": "true", "message": "Update successful"}, status=200)
+        except Exception as e:
+            print('Email error: ', e)
+            jsonResponse = JsonResponse({"status": "false", "message": "Could not send email"}, status=501)
+
+    else:
+        jsonResponse = JsonResponse({"status": "false", "message": responseMessage}, status=422)
+    return jsonResponse
+
+
+def _getUsersForStatusChange(statecode):
+    """ Get all users who recieve email updates from statusChange """
+    try:
+        users = UserProfiles.objects.all().filter(
+                Q(is_active=True),
+                Q(user_role="co_user") | Q(user_role="bus_user") | (Q(user_role="state_user") & Q(state_codes__icontains=statecode))
+            )
+
+    except Exception as e:
+        print(e)
+    return users
 
 def _id_from_chunks(year, *args):
     def fill(chunk):

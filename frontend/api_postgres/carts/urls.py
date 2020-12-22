@@ -77,6 +77,7 @@ api_patterns = [
         views.UpdateUser,
     ),
     path("sendemail", views.SendEmail),
+    path("sendemail/statuschange", views.SendEmailStatusChange),
 ]
 
 urlpatterns = [
