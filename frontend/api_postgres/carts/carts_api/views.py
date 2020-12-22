@@ -16,7 +16,7 @@ from django.db.models import Q
 from smtplib import SMTPException
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse, JsonResponse  # type: ignore
-from django.template.loader import get_template  # type: ignore
+from django.template.loader import get_template, render_to_string  # type: ignore
 from django.utils import timezone  # type: ignore
 from django.core.mail import send_mail, send_mass_mail
 from jsonpath_ng.ext import parse  # type: ignore
@@ -1079,22 +1079,12 @@ def SendEmailStatusChange(request):
         try:
             subject = "CMS MDCT CARTS"
 
-            message = 'The ' + statecode + ' CARTS report is now in the ' + status.capitalize() + ' state. Please take action as necessary. \n\n'
-            message += 'Please visit the website at: <a href="' + source + '">' + source + '</a>.'
+            msg_plain = render_to_string('../templates/emails/status-change.txt', {'statecode': statecode, 'status': status.capitalize(), 'source': source})
+            msg_html = render_to_string('../templates/emails/status-change.html', {'statecode': statecode, 'status': status.capitalize(), 'source': source})
 
-            msg_plain = render_to_string('templates/email.txt', {'some_params': some_params})
-            msg_html = render_to_string('templates/email.html', {'some_params': some_params})
-            # Build tuple for send_mass_mail
-            datatuple = ()
-
+            # For each email in recipients, send mail with plain and html versions
             for recipient in recipients:
-                if len(datatuple) == 0:
-                    datatuple = (subject, message, "aadcock@collabralink.com", [recipient]),
-                else:
-                    temptuple = (subject, message, "aadcock@collabralink.com", [recipient]),
-                    datatuple = datatuple + temptuple
-
-            send_mass_mail(datatuple, fail_silently=False)
+                send_mail(subject, msg_plain, sender, [recipient], html_message=msg_html, fail_silently=False)
 
             jsonResponse = JsonResponse({"status": "true", "message": "Update successful"}, status=200)
         except Exception as e:
