@@ -15,19 +15,19 @@ export const theUncertify = (stateCode, stateYear) => async (
   console.log("zzzzState", state);
 
   // created a new record in carts_api_statestatus that will label the state as uncertified
-  // dispatch({ type: UNCERTIFY });
-  // try {
-  //   await axios.post(`/state_status/`, {
-  //     last_changed: new Date(),
-  //     state: stateCode,
-  //     status: "in_progress",
-  //     user_name: userName,
-  //     year: stateYear,
-  //   });
-  //   dispatch({ type: UNCERTIFY_SUCCESS, stateCode: stateCode });
-  // } catch (e) {
-  //   dispatch({ type: UNCERTIFY_FAILURE, message: { e } });
-  // }
+  dispatch({ type: UNCERTIFY });
+  try {
+    await axios.post(`/state_status/`, {
+      last_changed: new Date(),
+      state: stateCode,
+      status: "in_progress",
+      user_name: userName,
+      year: stateYear,
+    });
+    dispatch({ type: UNCERTIFY_SUCCESS, stateCode: stateCode });
+  } catch (e) {
+    dispatch({ type: UNCERTIFY_FAILURE, message: { e } });
+  }
 
   try {
     await axios
