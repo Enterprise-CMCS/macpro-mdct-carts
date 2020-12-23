@@ -160,9 +160,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 EMAIL_BACKEND = "django_ses.SESBackend"
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
