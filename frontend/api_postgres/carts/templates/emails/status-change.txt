@@ -1,3 +1,3 @@
-The {{ statecode }} CARTS report is now in the {{status}} state. Please take action as necessary. \n\n
+The {{ statecode }} CARTS report is now {{status}}. Please take action as necessary. \n\n
 
 Please visit the website at: <a href="{{source}}">{{source}}</a>.
