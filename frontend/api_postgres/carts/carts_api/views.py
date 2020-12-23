@@ -979,25 +979,26 @@ def remove_uploaded_files(request):
 
     return HttpResponse(json.dumps(response))
 
+
 @api_view(["POST"])
 def SendEmail(request):
-    if 'recipients' in request.data:
+    if "recipients" in request.data:
         # Expects comma separated list
-        recipients = request.data["recipients"].replace(" ", "").split(',')
+        recipients = request.data["recipients"].replace(" ", "").split(",")
     else:
         recipients = None
     print("recipients is happy")
-    if 'subject' in request.data:
+    if "subject" in request.data:
         subject = request.data["subject"]
     else:
         subject = None
 
-    if 'message' in request.data:
+    if "message" in request.data:
         message = request.data["message"]
     else:
         message = None
 
-    if 'sender' in request.data:
+    if "sender" in request.data:
         sender = request.data["sender"]
     else:
         sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
@@ -1016,39 +1017,49 @@ def SendEmail(request):
     if responseMessage is "":
         try:
             send_mail(subject, message, sender, recipients)
-            jsonResponse = JsonResponse({"status": "true", "message": "Emails successfully sent"}, status=200)
+            jsonResponse = JsonResponse(
+                {"status": "true", "message": "Emails successfully sent"},
+                status=200,
+            )
         except:
-            jsonResponse = JsonResponse({"status": "false", "message": "Could not send email"}, status=500)
+            jsonResponse = JsonResponse(
+                {"status": "false", "message": "Could not send email"},
+                status=500,
+            )
 
     else:
         print("Response message is NOT ''")
-        jsonResponse = JsonResponse({"status": "false", "message": responseMessage}, status=422)
+        jsonResponse = JsonResponse(
+            {"status": "false", "message": responseMessage}, status=422
+        )
     return jsonResponse
+
 
 @api_view(["POST"])
 def SendEmailStatusChange(request):
-
-    if 'subject' in request.data:
+    print("zzzzzStarting SendEmailStatusChange")
+    if "subject" in request.data:
         subject = request.data["subject"]
     else:
         subject = None
 
-    if 'status' in request.data:
+    if "status" in request.data:
         # Certify or Uncertify
         status = request.data["status"]
     else:
         status = None
-    if 'source' in request.data:
+    if "source" in request.data:
         # Hostname, eg https://mdctcarts.cms.gov
         source = request.data["source"]
     else:
         source = None
-    if 'sender' in request.data:
+    if "sender" in request.data:
         sender = request.data["sender"]
     else:
         sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
+        sender = '"CMS MDCT CARTS" <aadcock@collabralink.com>'
 
-    if 'statecode' not in request.data:
+    if "statecode" not in request.data:
         # State abbreviation
         statecode = None
     else:
@@ -1079,20 +1090,48 @@ def SendEmailStatusChange(request):
         try:
             subject = "CMS MDCT CARTS"
 
-            msg_plain = render_to_string('../templates/emails/status-change.txt', {'statecode': statecode, 'status': status.capitalize(), 'source': source})
-            msg_html = render_to_string('../templates/emails/status-change.html', {'statecode': statecode, 'status': status.capitalize(), 'source': source})
+            msg_plain = render_to_string(
+                "../templates/emails/status-change.txt",
+                {
+                    "statecode": statecode,
+                    "status": status.capitalize(),
+                    "source": source,
+                },
+            )
+            msg_html = render_to_string(
+                "../templates/emails/status-change.html",
+                {
+                    "statecode": statecode,
+                    "status": status.capitalize(),
+                    "source": source,
+                },
+            )
 
             # For each email in recipients, send mail with plain and html versions
             for recipient in recipients:
-                send_mail(subject, msg_plain, sender, [recipient], html_message=msg_html, fail_silently=False)
+                send_mail(
+                    subject,
+                    msg_plain,
+                    sender,
+                    [recipient],
+                    html_message=msg_html,
+                    fail_silently=False,
+                )
 
-            jsonResponse = JsonResponse({"status": "true", "message": "Update successful"}, status=200)
+            jsonResponse = JsonResponse(
+                {"status": "true", "message": "Update successful"}, status=200
+            )
         except Exception as e:
-            print('Email error: ', e)
-            jsonResponse = JsonResponse({"status": "false", "message": "Could not send email"}, status=501)
+            print("Email error: ", e)
+            jsonResponse = JsonResponse(
+                {"status": "false", "message": "Could not send email"},
+                status=501,
+            )
 
     else:
-        jsonResponse = JsonResponse({"status": "false", "message": responseMessage}, status=422)
+        jsonResponse = JsonResponse(
+            {"status": "false", "message": responseMessage}, status=422
+        )
     return jsonResponse
 
 
@@ -1100,13 +1139,18 @@ def _getUsersForStatusChange(statecode):
     """ Get all users who recieve email updates from statusChange """
     try:
         users = UserProfiles.objects.all().filter(
-                Q(is_active=True),
-                Q(user_role="co_user") | Q(user_role="bus_user") | (Q(user_role="state_user") & Q(state_codes__icontains=statecode))
-            )
+            Q(is_active=True),
+            Q(user_role="co_user")
+            | Q(user_role="bus_user")
+            | (
+                Q(user_role="state_user") & Q(state_codes__icontains=statecode)
+            ),
+        )
 
     except Exception as e:
         print(e)
     return users
+
 
 def _id_from_chunks(year, *args):
     def fill(chunk):
