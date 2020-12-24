@@ -10,18 +10,20 @@ const Percentage = ({ onChange, question, ...props }) => {
 
     let sign = "";
     if (/^(\+|-)/.test(value)) {
+      // starts with a + or - sign; temporarily remove
       [sign] = value;
 
       value = value.substr(1);
     }
 
     const numericString = `${value}`;
+    // This strips everything but numbers and decimals
     const stripped = numericString.replace(/[^0-9.]/g, "");
 
     // Parsed will remove trailing '.'s as users type, so it is used just to validate
     const parsed = parseFloat(stripped);
 
-    //This regex allows for numbers with a single decimal
+    //This regex allows for numbers with ONLY a single decimal
     const regexTest = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
     const isNumberOrDecimal = regexTest.test(stripped);
 
