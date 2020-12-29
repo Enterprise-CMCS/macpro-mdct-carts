@@ -987,7 +987,7 @@ def SendEmail(request):
         recipients = request.data["recipients"].replace(" ", "").split(",")
     else:
         recipients = None
-    print("recipients is happy")
+
     if "subject" in request.data:
         subject = request.data["subject"]
     else:
@@ -1028,7 +1028,6 @@ def SendEmail(request):
             )
 
     else:
-        print("Response message is NOT ''")
         jsonResponse = JsonResponse(
             {"status": "false", "message": responseMessage}, status=422
         )
@@ -1051,6 +1050,7 @@ def SendEmailStatusChange(request):
         )
 
     if "subject" in request.data:
+        # Email subject
         subject = request.data["subject"]
     else:
         subject = None
@@ -1060,12 +1060,15 @@ def SendEmailStatusChange(request):
         status = request.data["status"]
     else:
         status = None
+
     if "source" in request.data:
         # Hostname, eg https://mdctcarts.cms.gov
         source = request.data["source"]
     else:
         source = None
+
     if "sender" in request.data:
+        # String: email of sender
         sender = request.data["sender"]
     else:
         sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
@@ -1084,7 +1087,7 @@ def SendEmailStatusChange(request):
             recipients.append(user.email)
 
     responseMessage = ""
-    # Exists checks for all
+    # Exists checks for all that are needed
     if subject is None:
         responseMessage += "Missing require data: subject \n"
     if statecode is None:

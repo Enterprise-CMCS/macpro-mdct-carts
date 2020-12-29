@@ -159,8 +159,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-EMAIL_BACKEND = "django_ses.SESBackend"
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
