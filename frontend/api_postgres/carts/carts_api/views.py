@@ -1069,7 +1069,6 @@ def SendEmailStatusChange(request):
         sender = request.data["sender"]
     else:
         sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
-        sender = '"CMS MDCT CARTS" <aadcock@collabralink.com>'
 
     if "statecode" not in request.data:
         # State abbreviation
