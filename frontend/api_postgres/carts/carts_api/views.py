@@ -1037,7 +1037,19 @@ def SendEmail(request):
 
 @api_view(["POST"])
 def SendEmailStatusChange(request):
-    print("zzzzzStarting SendEmailStatusChange")
+    # Disallow if not in Dev or Prod environments
+    if (
+        os.environ.get("ENVIRONMENT") != "dev"
+        and os.environ.get("ENVIRONMENT") != "prod"
+    ):
+        return JsonResponse(
+            {
+                "status": "false",
+                "message": "Could not send email from this environment",
+            },
+            status=501,
+        )
+
     if "subject" in request.data:
         subject = request.data["subject"]
     else:
@@ -1071,8 +1083,6 @@ def SendEmailStatusChange(request):
         recipients = []
         for user in users:
             recipients.append(user.email)
-        print("Recipients")
-        print(recipients)
 
     responseMessage = ""
     # Exists checks for all
