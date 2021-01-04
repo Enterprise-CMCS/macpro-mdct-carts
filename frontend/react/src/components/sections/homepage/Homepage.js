@@ -16,7 +16,7 @@ const Homepage = ({ editable, status, currentYear }) => (
           CHIP Annual Report Template System (CARTS)
         </h1>
       </div>
-      <DownloadDrawer show={false} />
+      <DownloadDrawer show={true} />
       <div className="ds-l-row">
         <div className="reports ds-l-col--12">
           <div className="carts-report preview__grid">

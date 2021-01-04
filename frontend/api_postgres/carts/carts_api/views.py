@@ -10,6 +10,10 @@ from botocore.config import Config
 import os
 import random
 
+import pdfkit
+import base64
+from zipfile import ZipFile
+
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
 from django.db import transaction  # type: ignore
@@ -976,6 +980,70 @@ def remove_uploaded_files(request):
     response = {"success": "true"}
 
     return HttpResponse(json.dumps(response))
+
+
+@api_view(["POST"])
+def download_template(request):
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.75in',
+        'margin-right': '0.75in',
+        'margin-bottom': '0.75in',
+        'margin-left': '0.75in',
+        'encoding': "UTF-8",
+    }
+
+    html = """<table>
+                <thead>
+                    <tr>
+                        <th>
+                            header cell 1
+                        </th>
+                        <th>
+                            header cell 1
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:solid 1px;">
+                            body cell 1
+                        </td>
+                        <td>
+                            body cell 1
+                        </td>
+                    </tr>
+                </tbody>
+            </table>"""
+
+
+    pdf_filename = f"template.pdf"
+    zip_filename = f"template.zip"
+
+    # generate a pdf string (internal pdf string format)
+    pdf = pdfkit.from_string(html, pdf_filename)
+
+    # encode a pdf string as base 64 to avoid decoding mismatches and collisions
+    #encoded_pdf = base64.b64encode(pdf)
+
+
+    # generate a zip file with newly generated pdf + some additional docs
+    with ZipFile(zip_filename, 'w') as zipObject:
+       zipObject.write(pdf_filename)
+       zipObject.write('requirements.txt')
+
+    # open created zip file in binary format ...
+    with open('test.zip', 'rb') as zipObject:
+        # ... and base64 encode the results to prevent decoding mismatches and collisions
+        encoded_zip = base64.b64encode(zipObject.read())
+
+    response = HttpResponse(encoded_zip, content_type='application/octet-stream')
+    response["savefile"] = f"{zip_filename}"
+
+    # return the content back as application/octet-stream as a 'catch-all' for all file types
+    return response
+
+
 
 
 def _id_from_chunks(year, *args):

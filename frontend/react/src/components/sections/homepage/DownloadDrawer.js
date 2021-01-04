@@ -1,7 +1,8 @@
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "../../../authenticatedAxios";
+import { saveAs } from "file-saver";
 /**
  * 
  * @param {boolean} show Only display download template text boolean is true. 
@@ -30,7 +31,8 @@ export const DownloadDrawer = ({ show }) => {
                 Welcome to CARTS! We’ve incorporated feedback from several states to bring you a better CARTS experience. Contact <a href="mailto:CARTSHELP@cms.hhs.gov?subject=CARTS Help request">CARTSHELP@cms.hhs.gov</a> with any questions.
                   </p>
               <div className="download">
-                <button className="ds-c-button ds-c-button--primary">
+                <button className="ds-c-button ds-c-button--primary"
+                 onClick={() => downloadTemplate("test.zip")}>
                   <span>Download template</span>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
@@ -42,4 +44,34 @@ export const DownloadDrawer = ({ show }) => {
       :
       <p className="ds-u-margin-bottom--2">Welcome to CARTS! We’ve incorporated feedback from several states to bring you a better CARTS experience. Contact <a href="mailto:CARTSHELP@cms.hhs.gov?subject=CARTS Help request">CARTSHELP@cms.hhs.gov</a> with any questions.</p>
   )
+}
+
+const downloadTemplate = async () =>{
+  const response = await axios.post(
+    `${window.env.API_POSTGRES_URL}/api/v1/download_template`
+  );
+
+  console.log(response);
+
+  saveAs(b64toBlob(response.data), 'test.zip');
+}
+
+const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
 }
