@@ -2,7 +2,7 @@
 
 const initialState = {
   formName: "CARTS FY",
-  formYear: new Date().getFullYear().toString(),
+  formYear: "2020",
   largeTextBoxHeight: 6,
   isFetching: false,
 };
