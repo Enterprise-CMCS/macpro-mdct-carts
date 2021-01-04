@@ -1039,7 +1039,8 @@ def SendEmailStatusChange(request):
     # Disallow if not in Dev or Prod environments
     if (
         os.environ.get("ENVIRONMENT") != "dev"
-        and os.environ.get("ENVIRONMENT") != "prod"
+    #1/4/2021: commenting out PROD for the moment since SES service has not been fully configured so emails cannot be sent
+    #    and os.environ.get("ENVIRONMENT") != "prod"
     ):
         return JsonResponse(
             {
