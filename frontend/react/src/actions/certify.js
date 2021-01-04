@@ -14,12 +14,29 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
 
   dispatch({ type: CERTIFY_AND_SUBMIT });
   try {
-    await axios.post(`/state_status/`, {
+    const stateStatus = axios.post(`/state_status/`, {
       last_changed: new Date(),
       state: stateCode,
       status: "certified",
       user_name: userName,
       year,
+    });
+
+    const statusChangeEmail = axios
+      .post(`/api/v1/sendemail/statuschange`, {
+        subject: "CMS MDCT Carts",
+        statecode: stateCode,
+        source: window.location.hostname,
+        status: "certify",
+      })
+      .then(function (response) {
+        window.alert(response.data.message.toString());
+        window.location.reload(false);
+      });
+
+    await axios.all([stateStatus, statusChangeEmail]).then(function (response) {
+      window.alert(response.data.message.toString());
+      window.location.reload(false);
     });
     dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });
   } catch (e) {
