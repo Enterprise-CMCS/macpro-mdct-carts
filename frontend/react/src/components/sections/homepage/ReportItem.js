@@ -93,8 +93,8 @@ const ReportItem = ({
               {link1Text}
             </Link>
           </div>
-          {(statusText === "Certified" && userRole === "co_user") ||
-          userRole === "bus_user" ? (
+          {statusText === "Certified" &&
+          (userRole === "co_user" || userRole === "bus_user") ? (
             <div className="actions ds-l-col--1">
               <Link onClick={uncertify} variation="primary">
                 Uncertify

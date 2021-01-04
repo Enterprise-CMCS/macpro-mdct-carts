@@ -16,3 +16,4 @@ pycparser
 cryptography
 toolz
 django-db-views
+django-ses
