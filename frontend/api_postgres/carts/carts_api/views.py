@@ -12,10 +12,13 @@ import random
 
 from datetime import datetime
 from django.contrib.auth.models import User, Group  # type: ignore
+from django.db.models import Q
+from smtplib import SMTPException
 from django.db import transaction  # type: ignore
 from django.http import HttpResponse, JsonResponse  # type: ignore
-from django.template.loader import get_template  # type: ignore
+from django.template.loader import get_template, render_to_string  # type: ignore
 from django.utils import timezone  # type: ignore
+from django.core.mail import send_mail, send_mass_mail
 from jsonpath_ng.ext import parse  # type: ignore
 from jsonpath_ng import DatumInContext  # type: ignore
 from rest_framework import viewsets  # type: ignore
@@ -73,7 +76,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from django.core.serializers.json import DjangoJSONEncoder
-
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -976,6 +978,190 @@ def remove_uploaded_files(request):
     response = {"success": "true"}
 
     return HttpResponse(json.dumps(response))
+
+
+@api_view(["POST"])
+def SendEmail(request):
+    if "recipients" in request.data:
+        # Expects comma separated list
+        recipients = request.data["recipients"].replace(" ", "").split(",")
+    else:
+        recipients = None
+
+    if "subject" in request.data:
+        subject = request.data["subject"]
+    else:
+        subject = None
+
+    if "message" in request.data:
+        message = request.data["message"]
+    else:
+        message = None
+
+    if "sender" in request.data:
+        sender = request.data["sender"]
+    else:
+        sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
+
+    responseMessage = ""
+    # Exists checks for all
+    if recipients is None:
+        responseMessage += "Missing require data: recipients \n"
+    if not isinstance(recipients, list):
+        responseMessage += "Invalid type: recipients must be list/array \n"
+    if subject is None:
+        responseMessage += "Missing require data: subject \n"
+    if message is None:
+        responseMessage += "Missing require data: message \n"
+
+    if responseMessage is "":
+        try:
+            send_mail(subject, message, sender, recipients)
+            jsonResponse = JsonResponse(
+                {"status": "true", "message": "Emails successfully sent"},
+                status=200,
+            )
+        except:
+            jsonResponse = JsonResponse(
+                {"status": "false", "message": "Could not send email"},
+                status=500,
+            )
+
+    else:
+        jsonResponse = JsonResponse(
+            {"status": "false", "message": responseMessage}, status=422
+        )
+    return jsonResponse
+
+
+@api_view(["POST"])
+def SendEmailStatusChange(request):
+    # Disallow if not in Dev or Prod environments
+    if (
+        os.environ.get("ENVIRONMENT") != "dev"
+        and os.environ.get("ENVIRONMENT") != "prod"
+    ):
+        return JsonResponse(
+            {
+                "status": "false",
+                "message": "Could not send email from this environment",
+            },
+            status=501,
+        )
+
+    if "subject" in request.data:
+        # Email subject
+        subject = request.data["subject"]
+    else:
+        subject = None
+
+    if "status" in request.data:
+        # Certify or Uncertify
+        status = request.data["status"]
+    else:
+        status = None
+
+    if "source" in request.data:
+        # Hostname, eg https://mdctcarts.cms.gov
+        source = request.data["source"]
+    else:
+        source = None
+
+    if "sender" in request.data:
+        # String: email of sender
+        sender = request.data["sender"]
+    else:
+        sender = '"CMS MDCT CARTS" <carts_noreply@cms.hss.gov>'
+
+    if "statecode" not in request.data:
+        # State abbreviation
+        statecode = None
+    else:
+        statecode = request.data["statecode"]
+
+        # Set recipients from statecode
+        users = _getUsersForStatusChange(statecode)
+
+        recipients = []
+        for user in users:
+            recipients.append(user.email)
+
+    responseMessage = ""
+    # Exists checks for all that are needed
+    if subject is None:
+        responseMessage += "Missing require data: subject \n"
+    if statecode is None:
+        responseMessage += "Missing require data: statecode \n"
+    if status is None:
+        responseMessage += "Missing require data: status \n"
+    if source is None:
+        responseMessage += "Missing require data: source \n"
+
+    if responseMessage is "":
+
+        try:
+            subject = "CMS MDCT CARTS"
+
+            msg_plain = render_to_string(
+                "../templates/emails/status-change.txt",
+                {
+                    "statecode": statecode,
+                    "status": status.capitalize(),
+                    "source": source,
+                },
+            )
+            msg_html = render_to_string(
+                "../templates/emails/status-change.html",
+                {
+                    "statecode": statecode,
+                    "status": status.capitalize(),
+                    "source": source,
+                },
+            )
+
+            # For each email in recipients, send mail with plain and html versions
+            for recipient in recipients:
+                send_mail(
+                    subject,
+                    msg_plain,
+                    sender,
+                    [recipient],
+                    html_message=msg_html,
+                    fail_silently=False,
+                )
+
+            jsonResponse = JsonResponse(
+                {"status": "true", "message": "Update successful"}, status=200
+            )
+        except Exception as e:
+            print("Email error: ", e)
+            jsonResponse = JsonResponse(
+                {"status": "false", "message": "Could not send email"},
+                status=501,
+            )
+
+    else:
+        jsonResponse = JsonResponse(
+            {"status": "false", "message": responseMessage}, status=422
+        )
+    return jsonResponse
+
+
+def _getUsersForStatusChange(statecode):
+    """ Get all users who recieve email updates from statusChange """
+    try:
+        users = UserProfiles.objects.all().filter(
+            Q(is_active=True),
+            Q(user_role="co_user")
+            | Q(user_role="bus_user")
+            | (
+                Q(user_role="state_user") & Q(state_codes__icontains=statecode)
+            ),
+        )
+
+    except Exception as e:
+        print(e)
+    return users
 
 
 def _id_from_chunks(year, *args):
