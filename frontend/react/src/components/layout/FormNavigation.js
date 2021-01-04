@@ -26,8 +26,11 @@ const FormNavigation = (props) => {
   // Pull year from current location
   const year = location.pathname.split("/")[2];
 
-  // Add certify and submit page to items array
-  items.push(`/sections/${year}/certify-and-submit`);
+  // If admin, DO NOT ADD
+  if (props.role !== "admin_user") {
+    // Add certify and submit page to items array
+    items.push(`/sections/${year}/certify-and-submit`);
+  }
 
   // Get current url
   const currentUrl = window.location.pathname;
@@ -82,8 +85,12 @@ FormNavigation.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   sections: PropTypes.object.isRequired,
+  role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,
 };
 
-const mapStateToProps = (state) => ({ sections: selectSectionsForNav(state) });
+const mapStateToProps = (state) => ({
+  sections: selectSectionsForNav(state),
+  role: state.stateUser?.currentUser?.role,
+});
 
 export default connect(mapStateToProps)(withRouter(FormNavigation));
