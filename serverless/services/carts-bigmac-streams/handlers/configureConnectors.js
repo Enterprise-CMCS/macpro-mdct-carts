@@ -5,7 +5,7 @@ var http = require('http');
 
 const connectors = [
   {
-    "name": "source.jdbc.carts-carts_api_section",
+    "name": "source.jdbc.postgres-1",
     "config": {
       "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
       "tasks.max":1,
@@ -15,25 +15,7 @@ const connectors = [
       "topic.prefix": 'aws.carts.chip.cdc.postgres-',
       "poll.interval.ms":2000,
       "batch.max.rows": 1000,
-      "table.whitelist": "carts_api_section",
-      "mode": "timestamp+incrementing",
-      "incrementing.column.name": "id",
-      "timestamp.column.name": "modified_on",
-      "validate.non.null": false
-    }
-  },
-  {
-    "name": "source.jdbc.carts-carts_api_statestatus",
-    "config": {
-      "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
-      "tasks.max":1,
-      "connection.user": process.env.postgresUser,
-      "connection.password": process.env.postgresPassword,
-      "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
-      "topic.prefix": 'aws.carts.chip.cdc.postgres-',
-      "poll.interval.ms":2000,
-      "batch.max.rows": 1000,
-      "table.whitelist": "carts_api_statestatus",
+      "table.whitelist": "carts_api_section, carts_api_statestatus",
       "mode": "timestamp+incrementing",
       "incrementing.column.name": "id",
       "timestamp.column.name": "modified_on",
