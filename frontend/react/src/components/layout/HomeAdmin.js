@@ -36,9 +36,6 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
               <li>
                 <Link to="/add_user">Add user</Link>
               </li>
-              <li>
-                <Link to="/add_state_user">Add state user</Link>
-              </li>
             </ul>
           </div>
           <div className="cmslist">
