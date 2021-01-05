@@ -33,16 +33,45 @@ const FormNavigation = (props) => {
   }
 
   // Get current url
-  const currentUrl = window.location.pathname;
+  let currentUrl = window.location.pathname;
+
+  // Get currentUrl if in format /views/sections/STATE/YEAR/SECTION
+  let currentArray = currentUrl.split("/");
+  let viewType = false;
+  let state;
+
+  // Get current url if views format
+  if (currentArray[1] === "views") {
+    // Set viewType to true for use in building next/prev links
+    viewType = true;
+    // Remove empty first (empty) item and "views"
+    currentArray.splice(0, 2);
+    // Store then remove state
+    state = currentArray[1];
+    currentArray.splice(1, 1);
+    // Create string
+    currentUrl = "/" + currentArray.join("/");
+  }
 
   // Get index of url in items array
   const currentIndex = items.indexOf(currentUrl);
 
   // Determine previous index
-  const previousUrl = items[currentIndex - 1];
+  let previousUrl = items[currentIndex - 1];
+
+  if (viewType === true && items[currentIndex - 1] !== undefined) {
+    let previousArray = items[currentIndex - 1].split("/");
+    previousArray.splice(1, 1, state);
+    previousUrl = "/views/sections" + previousArray.join("/");
+  }
 
   // Determine next index
-  const nextUrl = items[currentIndex + 1];
+  let nextUrl = items[currentIndex + 1];
+  if (viewType === true && items[currentIndex + 1] !== undefined) {
+    let nextArray = items[currentIndex + 1].split("/");
+    nextArray.splice(1, 1, state);
+    nextUrl = "/views/sections" + nextArray.join("/");
+  }
 
   return (
     <section className="nav-buttons">
