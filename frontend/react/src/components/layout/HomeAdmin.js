@@ -12,9 +12,11 @@ import CMSHomepage from "../sections/homepage/CMSHomepage";
 import InvokeSection from "../Utils/InvokeSection";
 import Sidebar from "./Sidebar";
 import { Switch } from "react-router";
+import ScrollToTop from "../Utils/ScrollToTop";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
   <>
+    <ScrollToTop />
     <SecureRoute exact path="/">
       <div className="homepage ds-l-col--12">
         <div className="ds-l-container">
