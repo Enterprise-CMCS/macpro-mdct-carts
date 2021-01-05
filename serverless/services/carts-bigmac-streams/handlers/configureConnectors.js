@@ -16,8 +16,9 @@ const connectors = [
       "poll.interval.ms":2000,
       "batch.max.rows": 1000,
       "table.whitelist": "carts_api_section",
-      "mode": "incrementing",
+      "mode": "timestamp+incrementing",
       "incrementing.column.name": "id",
+      "timestamp.column.name": "modified_on",
       "validate.non.null": false
     }
   },
@@ -35,7 +36,7 @@ const connectors = [
       "table.whitelist": "carts_api_statestatus",
       "mode": "timestamp+incrementing",
       "incrementing.column.name": "id",
-      "timestamp.column.name": "last_changed",
+      "timestamp.column.name": "modified_on",
       "validate.non.null": false
     }
   }
