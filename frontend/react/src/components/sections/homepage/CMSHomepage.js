@@ -13,7 +13,6 @@ const CMSHomepage = ({
   currentUserRole,
   stateList,
   yearList,
-  reportstate,
 }) => {
   const statusList = [
     { label: "Accepted", value: "accepted" },

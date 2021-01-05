@@ -322,7 +322,7 @@ class SectionViewSet(viewsets.ModelViewSet):
             # objects (e.g. if they're admins) the check occurs ony once.
             print("about to check object permissions", flush=True)
             if request.user.appuser.role != "admin_user":
-              self.check_object_permissions(request, section)
+                self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
             sections, many=True, context={"request": request}
