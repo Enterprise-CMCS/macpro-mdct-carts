@@ -48,13 +48,9 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _do_authenticate(self, token):
         try:
-            print(f"\n\n%%%%>got token: {token}")
             kid = extract_kid(token)
-            print(f"\n\n%%%%>kid extracted: {kid}")
             key = fetch_pub_key(kid)
-            print(f"\n\n%%%%>key extracted: {key}")
             verify_token(token, key)
-            print(f"\n\n%%%%>token verified: {kid}")
 
             user_info = fetch_user_info(token)
 

@@ -210,15 +210,7 @@ def role_from_raw_ldap_job_codes_and_role_data(
     entry: str,  # Raw string from Okta about user job codes.
 ) -> Union[bool, str]:
 
-    print(f"\n\n~~~~roles: {roles}")
-    print(f"\n\n~~~~role_code_map: {role_code_map}")
-    print(f"\n\n~~~~db_role_map: {db_role_map}")
-    print(f"\n\n~~~~db_username_map: {db_username_map}")
-    print(f"\n\n~~~~entry: {entry}")
-
     codes = parse_raw_ldap_job_codes(entry)
-
-    print(f"\n\n~~~~got codes: {codes}")
 
     return get_role_from_job_codes(
         roles, role_code_map, db_role_map, db_username_map, codes

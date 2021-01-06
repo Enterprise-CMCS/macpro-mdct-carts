@@ -288,7 +288,7 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         if user.appuser.role == "state_user":
             state = user.appuser.states.all()[0]
             return StateStatus.objects.filter(state=state)
-        elif user.appuser.role in ("bus_user", "co_user"):
+        elif user.appuser.role in ("bus_user", "co_user", "admin_user"):
             return StateStatus.objects.all()
 
 
@@ -321,7 +321,8 @@ class SectionViewSet(viewsets.ModelViewSet):
             # TODO: streamline this so if users have access to all of the
             # objects (e.g. if they're admins) the check occurs ony once.
             print("about to check object permissions", flush=True)
-            self.check_object_permissions(request, section)
+            if request.user.appuser.role != "admin_user":
+                self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
             sections, many=True, context={"request": request}
