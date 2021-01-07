@@ -607,10 +607,10 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
     assert state_code
     assert role
 
-    result = HttpResponse()
+    # result = HttpResponse()
+    # result = JsonResponse({})
 
     try:
-
         current = (
             StatesFromUsername.objects.all()
             .filter(username=eua_id.upper())
@@ -619,8 +619,11 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
 
         if current is not None:
             print(f"\n\n\n User exists")
-            result.content = "User already exists"
-            result.status_code = 409
+            # result.content = "User already exists"
+            # result.status_code = 409
+            result = JsonResponse(
+                data={"content": "User already exists", "status":"false"}, safe=False, status=409
+            )
 
         else:
             """
@@ -644,14 +647,21 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
             newRole = RoleFromUsername.objects.create(
                 user_role=role, username=eua_id.upper()
             )
-            result.content = "State user sucessfully added"
-            result.status_code = 200
+            result = JsonResponse(
+                data={"content": "State user sucessfully added","status":"false"}, safe=False, status=200
+            )
+            # result.content = "State user sucessfully added"
+            # result.status_code = 200
 
     except:
-        result.content = (
-            "Failed to add a new state user. Please contact the help desk."
+        print("zzzzzZZZZZZZZZZZ", "IT FAILED ALEXIS")
+        result = JsonResponse( 
+            data={"content": "Failed to add a new state user. Please contact the help desk.","status":"false"}, safe=False, status=500
         )
-        result.status_code = 500
+        # result.content = (
+        #     "Failed to add a new state user. Please contact the help desk."
+        # )
+        # result.status_code = 500
     # Note there is no .save() and it still saves to the db
 
     return result
