@@ -621,8 +621,6 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
             print(f"\n\n\n User exists")
             result.content = "User already exists"
             result.status_code = 200
-            print(result)
-            return result
 
         else:
             """
