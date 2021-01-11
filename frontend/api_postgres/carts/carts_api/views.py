@@ -620,7 +620,7 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
         if current is not None:
             print(f"\n\n\n User exists")
             result.content = "User already exists"
-            result.status_code = 409
+            result.status_code = 200
 
         else:
             """
