@@ -1,0 +1,25 @@
+{% load filter %}
+
+    {% for x1 in objective.questions %}
+        {% with x1.id|split_last:"-" as id2 %}
+            ID: {{id2}}
+            {%if id2 == "02"%}
+                {% for repeatables in x1.questions %}
+                    {% with repeatables.id|split_last:"-" as goal_id %}
+                            Goal # {{ goal_id }}<br>
+                    {%endwith%}
+                    {% for repeatable in repeatables.questions %}
+                        <br/>
+                        {% include "reports/question.html" with question=repeatable state=state %}
+                        </br>
+                    {%endfor%}
+                {%endfor%}
+                
+            {%else%}
+                NO 02
+            {%endif%}
+        {%endwith%}
+        
+    {% endfor %}
+
+

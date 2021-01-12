@@ -34,4 +34,7 @@
                 </dl>
             </answer>
     </question>
+    {% if question.questions|length > 0%}
+        {% include "reports/question.html" with question=question.questions state=state %}
+    {%endif%}
 {% endif %}

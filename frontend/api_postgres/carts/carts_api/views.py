@@ -81,6 +81,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from django.core.serializers.json import DjangoJSONEncoder
 
+from datetime import date
+
+
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
     "AK": {"program_type": "medicaid_exp_chip"},
@@ -669,7 +672,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
 
     response = ""
 
-    ### Update auth_user table
+    # Update auth_user table
     try:
         # Get user from auth_user table
         user = User.objects.get(id=id)
@@ -686,7 +689,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             {"status": "false", "message": "User Not Found"}, status=500
         )
 
-    ### Update rolefromusername
+    # Update rolefromusername
     try:
 
         # Get user from rolefromusername table
@@ -705,7 +708,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             user_role=role, username=user.username.upper()
         )
 
-    ### Update statesfromusername
+    # Update statesfromusername
     try:
         userStates = StatesFromUsername.objects.filter(
             username=user.username
@@ -1181,32 +1184,27 @@ def download_template(request):
         'encoding': "UTF-8",
     }
 
-    html = """<table>
-                <thead>
-                    <tr>
-                        <th>
-                            header cell 1
-                        </th>
-                        <th>
-                            header cell 1
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border:solid 1px;">
-                            body cell 1
-                        </td>
-                        <td>
-                            body cell 1
-                        </td>
-                    </tr>
-                </tbody>
-            </table>"""
+    today = datetime.now()
+    pdf_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") +".pdf"
+    zip_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") +".zip"
+    year = 2020
+    state = "DC"
+    sections = Section.objects.all().filter(
+        contents__section__year=year, contents__section__state=state,
+    )
 
-
-    pdf_filename = f"template.pdf"
-    zip_filename = f"template.zip"
+    ordered = sorted(
+        [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
+    )
+    template = get_template("../templates/report.html")
+    # data is the context data that is sent to the html file to render the output.
+    # context = Context({"data": data})
+    context = {
+        "sections": ordered,
+        "state": state,
+        "l": len(ordered),
+    }
+    html = template.render(context)
 
     # generate a pdf string (internal pdf string format)
     pdf = pdfkit.from_string(html, pdf_filename)
@@ -1214,23 +1212,22 @@ def download_template(request):
     # encode a pdf string as base 64 to avoid decoding mismatches and collisions
     #encoded_pdf = base64.b64encode(pdf)
 
-
     # generate a zip file with newly generated pdf + some additional docs
     with ZipFile(zip_filename, 'w') as zipObject:
-       zipObject.write(pdf_filename)
-       zipObject.write('requirements.txt')
+        zipObject.write(pdf_filename)
+        zipObject.write('requirements.txt')
 
     # open created zip file in binary format ...
-    with open('test.zip', 'rb') as zipObject:
+    with open('template'+today.strftime("%d_%m_%Y %H_%M_%S") + '.zip', 'rb') as zipObject:
         # ... and base64 encode the results to prevent decoding mismatches and collisions
         encoded_zip = base64.b64encode(zipObject.read())
 
-    response = HttpResponse(encoded_zip, content_type='application/octet-stream')
+    response = HttpResponse(
+        encoded_zip, content_type='application/octet-stream')
     response["savefile"] = f"{zip_filename}"
 
     # return the content back as application/octet-stream as a 'catch-all' for all file types
     return response
-
 
 
 
