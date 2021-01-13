@@ -5,7 +5,7 @@ var http = require('http');
 
 const connectors = [
   {
-    "name": "source.jdbc.postgres-1",
+    "name": `${process.env.connectorPrefix}source.jdbc.postgres-1`,
     "config": {
       "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
       "tasks.max":1,
