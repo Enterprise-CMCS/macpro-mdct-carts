@@ -1,7 +1,6 @@
-
 service: debug
 
-frameworkVersion: '2'
+frameworkVersion: "2"
 
 plugins:
   - serverless-plugin-scripts
@@ -45,8 +44,8 @@ resources:
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
-          - ""
-          - ${self:custom.iamPermissionsBoundaryPolicy}
+            - ""
+            - ${self:custom.iamPermissionsBoundaryPolicy}
   Parameters:
     pLatestAmiId:
       Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -56,10 +55,9 @@ resources:
       Type: AWS::IAM::Role
       Properties:
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-            -
-              Effect: Allow
+            - Effect: Allow
               Principal:
                 Service:
                   - ec2.amazonaws.com
@@ -95,8 +93,8 @@ resources:
             Ebs:
               VolumeType: gp2
               VolumeSize: 10
-              DeleteOnTermination: 'false'
-              Encrypted: 'true'
+              DeleteOnTermination: "false"
+              Encrypted: "true"
         HibernationOptions:
           Configured: true
         IamInstanceProfile: !Ref Ec2InstanceProfile
@@ -135,7 +133,7 @@ resources:
         IpProtocol: tcp
         FromPort: 5432
         ToPort: 5432
-        SourceSecurityGroupId: !Sub '${Ec2SecurityGroup}'
+        SourceSecurityGroupId: !Sub "${Ec2SecurityGroup}"
   Outputs:
     Ec2Id:
       Description: The Id of the EC2 debug instance

@@ -1,7 +1,6 @@
-
 service: carts-bigmac-streams
 
-frameworkVersion: '2'
+frameworkVersion: "2"
 
 package:
   individually: true
@@ -59,11 +58,11 @@ resources:
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
-          - ""
-          - ${self:custom.iamPermissionsBoundaryPolicy}
+            - ""
+            - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
     KafkaConnectWorkerLogGroup:
-      Type: 'AWS::Logs::LogGroup'
+      Type: "AWS::Logs::LogGroup"
       Properties:
         LogGroupName: /aws/fargate/${self:service}-${self:custom.stage}-kafka-connect
     KafkaConnectWorkerSecurityGroup:
@@ -78,35 +77,35 @@ resources:
         IpProtocol: tcp
         FromPort: 5432
         ToPort: 5432
-        SourceSecurityGroupId: !Sub '${KafkaConnectWorkerSecurityGroup}'
+        SourceSecurityGroupId: !Sub "${KafkaConnectWorkerSecurityGroup}"
     KafkaConnectWorkerSecurityGroupIngressLambda:
       Type: AWS::EC2::SecurityGroupIngress
       Properties:
-        GroupId: !Sub '${KafkaConnectWorkerSecurityGroup}'
+        GroupId: !Sub "${KafkaConnectWorkerSecurityGroup}"
         IpProtocol: tcp
         FromPort: 8083
         ToPort: 8083
-        SourceSecurityGroupId: !Sub '${LambdaConfigureConnectorsSecurityGroup}'
+        SourceSecurityGroupId: !Sub "${LambdaConfigureConnectorsSecurityGroup}"
     KafkaConnectWorkerSecurityGroupIngressCluster:
       Type: AWS::EC2::SecurityGroupIngress
       Properties:
-        GroupId: !Sub '${KafkaConnectWorkerSecurityGroup}'
+        GroupId: !Sub "${KafkaConnectWorkerSecurityGroup}"
         IpProtocol: tcp
         FromPort: 8083
         ToPort: 8083
-        SourceSecurityGroupId: !Sub '${KafkaConnectWorkerSecurityGroup}'
+        SourceSecurityGroupId: !Sub "${KafkaConnectWorkerSecurityGroup}"
     KafkaConnectWorkerRole:
-      Type: 'AWS::IAM::Role'
+      Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service:
-                - 'ecs.amazonaws.com'
-                - 'ecs-tasks.amazonaws.com'
-            Action: 'sts:AssumeRole'
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "ecs.amazonaws.com"
+                  - "ecs-tasks.amazonaws.com"
+              Action: "sts:AssumeRole"
         Path: ${self:custom.iamPath}
         PermissionsBoundary:
           Fn::If:
@@ -116,22 +115,22 @@ resources:
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
     KafkaConnectWorkerTaskDefinition:
-      Type: 'AWS::ECS::TaskDefinition'
+      Type: "AWS::ECS::TaskDefinition"
       Properties:
         ContainerDefinitions:
           - Name: ${self:service}-${self:custom.stage}-worker
-            Image: 'confluentinc/cp-kafka-connect:5.2.4'
+            Image: "confluentinc/cp-kafka-connect:5.2.4"
             Memory: 4096
             Cpu: 2048
             Command:
               - bash
               - "-c"
               - |
-                  export CONNECT_REST_HOST_NAME=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
-                  export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
-                  curl -k -SL -o /etc/kafka-connect/jars/postgresql-42.2.18.jar "https://jdbc.postgresql.org/download/postgresql-42.2.18.jar" &&
-                  chmod +x /etc/kafka-connect/jars/postgresql-42.2.18.jar &&
-                  /etc/confluent/docker/run
+                export CONNECT_REST_HOST_NAME=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
+                export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
+                curl -k -SL -o /etc/kafka-connect/jars/postgresql-42.2.18.jar "https://jdbc.postgresql.org/download/postgresql-42.2.18.jar" &&
+                chmod +x /etc/kafka-connect/jars/postgresql-42.2.18.jar &&
+                /etc/confluent/docker/run
             Environment:
               - Name: CONNECT_BOOTSTRAP_SERVERS
                 Value: >-
@@ -171,8 +170,8 @@ resources:
             LogConfiguration:
               LogDriver: awslogs
               Options:
-                awslogs-region: !Sub '${AWS::Region}'
-                awslogs-group: !Sub '${KafkaConnectWorkerLogGroup}'
+                awslogs-region: !Sub "${AWS::Region}"
+                awslogs-group: !Sub "${KafkaConnectWorkerLogGroup}"
                 awslogs-stream-prefix: fargate
         Family: ${self:service}-${self:custom.stage}-kafka-connect-worker
         NetworkMode: awsvpc
@@ -183,23 +182,23 @@ resources:
         Memory: 4GB
         Cpu: 2048
     KafkaConnectCluster:
-      Type: 'AWS::ECS::Cluster'
+      Type: "AWS::ECS::Cluster"
     KafkaConnectService:
-      Type: 'AWS::ECS::Service'
+      Type: "AWS::ECS::Service"
       Properties:
-        Cluster: !Sub '${KafkaConnectCluster}'
+        Cluster: !Sub "${KafkaConnectCluster}"
         DeploymentConfiguration:
           MaximumPercent: 100
           MinimumHealthyPercent: 0
         LaunchType: FARGATE
         ServiceName: kafka-connect
         DesiredCount: 1
-        TaskDefinition: !Sub '${KafkaConnectWorkerTaskDefinition}'
+        TaskDefinition: !Sub "${KafkaConnectWorkerTaskDefinition}"
         NetworkConfiguration:
           AwsvpcConfiguration:
             AssignPublicIp: DISABLED
             SecurityGroups:
-              - !Sub '${KafkaConnectWorkerSecurityGroup}'
+              - !Sub "${KafkaConnectWorkerSecurityGroup}"
             Subnets: ${self:custom.privateSubnets}
     LambdaConfigureConnectorsSecurityGroup:
       Type: AWS::EC2::SecurityGroup
@@ -207,15 +206,15 @@ resources:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
     LambdaConfigureConnectorsRole:
-      Type: 'AWS::IAM::Role'
+      Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-            Action: 'sts:AssumeRole'
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
         Path: ${self:custom.iamPath}
         PermissionsBoundary:
           Fn::If:
@@ -223,31 +222,31 @@ resources:
             - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
             - Ref: AWS::NoValue
         Policies:
-          - PolicyName: 'LambdaRolePolicy'
+          - PolicyName: "LambdaRolePolicy"
             PolicyDocument:
-              Version: '2012-10-17'
+              Version: "2012-10-17"
               Statement:
-              - Effect: 'Allow'
-                Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                Resource: 'arn:aws:logs:*:*:*'
-              - Effect: 'Allow'
-                Action:
-                - ec2:CreateNetworkInterface
-                - ec2:DeleteNetworkInterface
-                - ec2:DetachNetworkInterface
-                - ec2:DescribeNetworkInterfaces
-                - ec2:DescribeSecurityGroups
-                - ec2:DescribeSubnets
-                - ec2:DescribeVpcs
-                Resource: '*'
-              - Effect: 'Allow'
-                Action:
-                - ecs:ListTasks
-                - ecs:DescribeTasks
-                Resource: '*'
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - ec2:CreateNetworkInterface
+                    - ec2:DeleteNetworkInterface
+                    - ec2:DetachNetworkInterface
+                    - ec2:DescribeNetworkInterfaces
+                    - ec2:DescribeSecurityGroups
+                    - ec2:DescribeSubnets
+                    - ec2:DescribeVpcs
+                  Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - ecs:ListTasks
+                    - ecs:DescribeTasks
+                  Resource: "*"
   Outputs:
     KafkaConnectWorkerSecurityGroupId:
       Description: |
