@@ -295,3 +295,175 @@ resource "aws_dms_event_subscription" "notification-instance" {
     Env         = var.environment-name
   }
 }
+
+############### Adding codes for the automated trigger of DMS event
+/*
+DMS event subscription 
+Creates the DMS event subscription that monitors "state change" of a replication task & sends the event to the 1st SNS topic 
+*/
+resource "aws_dms_event_subscription" "seds-statechange-notification" {
+  enabled          = true
+  event_categories = ["state change"]
+  name             = "dms-event-statechange-${var.application}-${terraform.workspace}-seds"
+  sns_topic_arn    = aws_sns_topic.seds_statechange_topic.arn
+  source_ids       = [aws_dms_replication_task.replication-task-seds.replication_task_id]
+  source_type      = "replication-task"
+
+  tags = {
+    Name        = "${var.team_name} Replication StateChange Notifications"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+
+/*
+1st SNS Topic
+Receives event from the DMS event subscription on status change & triggers a 1st lambda function
+*/
+resource "aws_sns_topic" "seds_statechange_topic" {
+  name = "topic-${var.application}-${terraform.workspace}-lambda-seds"
+
+  tags = {
+    Name        = "${var.team_name} Replication StateChange"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+resource "aws_sns_topic_subscription" "seds_sns_topic_sub" {
+  topic_arn = aws_sns_topic.seds_statechange_topic.arn
+  protocol = "lambda"
+  endpoint = aws_lambda_function.dms_event_lambda.arn
+}
+resource "aws_lambda_permission" "seds_allow_sns_lambda" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.dms_event_lambda.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.seds_statechange_topic.arn
+}
+
+/*
+Lambda Function Role
+Has the Lambda basic execution policy attached to it, so it can send its logs to CWLogs
+*/
+resource "aws_iam_role" "seds_lambda_role" {
+  name = "lambda"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+resource "aws_iam_role_policy_attachment" "dms_event_lambda_attachment" {
+  role       = aws_iam_role.seds_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+/*
+1st Lambda Function
+is triggered by the 1st SNS Topic, and prints out the events/logs to CWLogs (/aws/lambda/dms_event_lambda)
+*/
+resource "aws_lambda_function" "dms_event_lambda" {
+  filename      = "./dms_event_lambda.zip"
+  function_name = "dms_event_lambda"
+  role          = aws_iam_role.seds_lambda_role.arn
+  handler       = "dms_event_lambda.handler"
+  runtime = "python3.8"
+}
+/*
+Log Group for the 1st lambda
+*/
+resource "aws_cloudwatch_log_group" "dms_event_lambda_lg" {
+  name = "/aws/lambda/dms_event_lambda"
+}
+
+/*
+Metric Filter
+Creates a metric filter from the CWlogs(/aws/lambda/dms_event_lambda) of the 1st Lmabda function, using "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED" as filter pattern
+*/
+resource "aws_cloudwatch_log_metric_filter" "seds_full_load_filter" {
+  name           = "Full Load Complete"
+  pattern        = "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED"
+  log_group_name = "/aws/lambda/dms_event_lambda"
+  depends_on = [aws_cloudwatch_log_group.dms_event_lambda_lg]
+  
+  metric_transformation {
+    name      = "full_load_complete"
+    namespace = "dms_migration_task"
+    value     = "1"
+  }
+}
+
+/*
+Metric Alarm
+Creates an alarm using the metric filter, it goes to alarm state when there is a value of full load complete.
+the alarm triggers a notifies another SNS Topic (alarm_sns_topic)
+*/
+resource "aws_cloudwatch_metric_alarm" "seds_full_load_alarm" {
+  alarm_name                = "full_load_complete_alarm"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        = "1"
+  metric_name               = "full_load_complete"
+  namespace                 = "dms_migration_task"
+  period                    = "60"
+  statistic                 = "Sum"
+  threshold                 = "0"
+  alarm_description         = "This metric monitors the when FULL LOAD is complete"
+  alarm_actions = [aws_sns_topic.alarm_sns_topic.arn]
+  treat_missing_data = "notBreaching"
+}
+
+/*
+2nd SNS Topic
+is Triggered when the Metric Alarm is in alarm state, that a full load is complete & in turn triggers a lambda function that starts the next DMS migration task
+*/
+resource "aws_sns_topic" "alarm_sns_topic" {
+  name = "topic-${var.application}-${terraform.workspace}-alarm-seds"
+
+  tags = {
+    Name        = "${var.team_name} Replication SNS Alarm"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+resource "aws_sns_topic_subscription" "alarm_sns_topic_subscription" {
+  topic_arn = aws_sns_topic.alarm_sns_topic.arn
+  protocol = "lambda"
+  endpoint = aws_lambda_function.start_dms_lambda.arn
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCW"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.start_dms_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_sns_topic.alarm_sns_topic.arn
+}
+/*
+2nd Lambda Function
+is triggered by the 2nd SNS Topic, and starts the next DMS migration task
+*/
+resource "aws_lambda_function" "start_dms_lambda" {
+  filename      = "./start_dms.zip"
+  function_name = "start_dms"
+  role          = aws_iam_role.seds_lambda_role.arn
+  handler       = "start_dms.handler"
+  runtime = "nodejs12.x"
+}
