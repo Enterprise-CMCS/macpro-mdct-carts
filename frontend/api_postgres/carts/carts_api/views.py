@@ -1022,7 +1022,7 @@ def SendEmail(request):
     if message is None:
         responseMessage += "Missing require data: message \n"
 
-    if responseMessage is "":
+    if responseMessage == "":
         try:
             send_mail(subject, message, sender, recipients)
             jsonResponse = JsonResponse(
@@ -1107,7 +1107,7 @@ def SendEmailStatusChange(request):
     if source is None:
         responseMessage += "Missing require data: source \n"
 
-    if responseMessage is "":
+    if responseMessage == "":
 
         try:
             subject = "CMS MDCT CARTS"
@@ -1213,10 +1213,34 @@ def download_template(request):
     # encode a pdf string as base 64 to avoid decoding mismatches and collisions
     #encoded_pdf = base64.b64encode(pdf)
 
+    # obtain list of files uploaded by user
+    user_state = StatesFromUsername.objects.filter(
+        username=request.user
+    ).values_list("state_codes", flat=True)[0][0]
+
+    uploaded_files = UploadedFiles.objects.filter(
+        uploaded_username=request.user,
+        uploaded_state=user_state,
+    ).values("filename", "aws_filename")
+
+    uploaded_file_list = []
+
+    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+    region = os.environ.get("AWS_REGION")
+    session = boto3.session.Session()
+    s3 = session.client("s3", f"{region}")
+
+    for file in uploaded_files:
+        with open(file.aws_filename, 'wb') as f:
+            s3.download_fileobj(s3_bucket, file.filename, f)
+
     # generate a zip file with newly generated pdf + some additional docs
     with ZipFile(zip_filename, 'w') as zipObject:
         zipObject.write(pdf_filename)
-        zipObject.write('requirements.txt')
+        os.remove(pdf_filename)
+        for file in uploaded_files:
+            zipObject.write(file.filename)
+            os.remove(file.filename)
 
     # open created zip file in binary format ...
     with open('template'+today.strftime("%d_%m_%Y %H_%M_%S") + '.zip', 'rb') as zipObject:
