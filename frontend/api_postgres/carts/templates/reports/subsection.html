@@ -1,11 +1,13 @@
-{{subsections|length}}
-{% for subsection in subsections %}
-    
-    <subsection id="{{subsection.id}}">
-        <strong>Subsection {{subsection.title}}</strong>
-        <h2> {{subsection.id}}</h2>
-        <p class="subsection_text">{{subsection.text}}</p>
-        {% include "reports/part.html" with parts=subsection.parts state=state %}
-    </subsection>
+{% comment %} {{subsections|length}} {% endcomment %}
+{% load filter %}
 
+{% for subsection in subsections %}
+    {% with subsection.id|split_last:"-" as id %}
+        <subsection id="{{subsection.id}}">
+            <strong>Subsection {{ id }}: {{subsection.title}}</strong>
+            {% comment %} <h2> {{subsection.id}}</h2> {% endcomment %}
+            <p class="subsection_text">{{subsection.text}}</p>
+            {% include "reports/part.html" with parts=subsection.parts state=state %}
+        </subsection>
+    {% endwith %}
 {% endfor %}

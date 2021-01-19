@@ -1,40 +1,41 @@
-{% if question.answer.options.items|length == 2 and question.answer.options.No == 'no' and question.answer.options.Yes == 'yes' %}
-    {% include "reports/radio_yesno.html" with question=question state=state %}
-{% else %}
-    <question id={{question.id}}>
-            <answer>
-                <dl class="text_answer">
-
-                    <div class="text_answer_dl">
-                        <dt class="question_text">{{question.label}}</dt>
-                        <dd class="answer">
-                        {% if question.answer.entry is None %}
-                            <em>Unanswered</em>
-
-                        {% else %}
-                            {% for k, v in question.answer.options.items %}
-                                {% if v == question.answer.entry %}
-                                    <p>Answer:</p>
-                                    <ul>
-                                        <li>{{k}}
-                                    </ul>
-                                {% endif %}
-                            {% endfor %}
-                                    Options not chosen:
-                            {% for k, v in question.answer.options.items %}
-                                    <ul>
-                                {% if not v == question.answer.entry %}
-                                    <li>{{k}}</li>
-                                {% endif %}
-                                    </ul>
-                            {% endfor %}
-                        {% endif %}
-                        </dd>
-                    </div>
-                </dl>
-            </answer>
-    </question>
-    {% if question.questions|length > 0%}
-        {% include "reports/question.html" with question=question.questions state=state %}
-    {%endif%}
-{% endif %}
+<question id={{question.id}}>
+        <answer>
+            <dl class="text_answer">
+                <div class="text_answer_dl">
+                    <dt class="question_text">{{question.label}}</dt>
+                    <dd class="answer">
+                    {% if question.answer.entry is None %}
+                        <em><i>Unanswered</i></em>
+                        {% for temp_option in question.answer.options %}
+                                <ul>
+                            {% if not temp_option.value == question.answer.entry %}
+                                <li>{{temp_option.label}}</li>
+                            {% endif %}
+                                </ul>
+                        {% endfor %}
+                    {% else %}
+                        {% for temp_option in question.answer.options %}
+                            {% if temp_option.value == question.answer.entry %}
+                                <p>Answer:</p>
+                                <ul>
+                                    <li>{{temp_option.label}}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                                Options not chosen:
+                        {% for temp_option in question.answer.options %}
+                                <ul>
+                            {% if not temp_option.value == question.answer.entry %}
+                                <li>{{temp_option.label}}</li>
+                            {% endif %}
+                                </ul>
+                        {% endfor %}
+                    {% endif %}
+                    </dd>
+                </div>
+            </dl>
+        </answer>
+</question>
+{% if question.questions|length > 0%}
+    {% include "reports/question.html" with question=question.questions state=state %}
+{%endif%}

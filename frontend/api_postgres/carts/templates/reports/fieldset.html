@@ -1,9 +1,11 @@
-length {{question.questions|length}}
+
 {% load filter %}
 {{question.label}}
 {% for temp_question in question.questions %}    
     {% with temp_question.id|split_last:"-" as id %}
-         # {{ id }}<br>
+        {%if id%}
+            <br># {{ id }}<br>
+        {%endif%}
     {% endwith %}   
     {% if temp_question.type == "text" %}
         {% include "reports/text_short.html" with question=temp_question state=state %}
@@ -15,8 +17,8 @@ length {{question.questions|length}}
         {% include "reports/money.html" with question=temp_question state=state %}
     {% elif temp_question.type == "radio" %}
         {% include "reports/radio.html" with question=temp_question state=state %}
-    {% elif question2.type == "percentage" %}
-        {% include "reports/percentage.html" with question=question2 state=state %}
+    {% elif temp_question.type == "percentage" %}
+        {% include "reports/percentage.html" with question=temp_question state=state %}
     {% elif temp_question.type == "email" %}
         {% include "reports/email.html" with question=temp_question state=state %}
     {% elif temp_question.type == "mailing_address" %}
@@ -37,10 +39,13 @@ length {{question.questions|length}}
         {% include "reports/email.html" with question=temp_question state=state %}
     {% elif temp_question.type == "file_upload" %}
         {% include "reports/file_upload.html" with question=temp_question state=state %}
+    {% elif temp_question.type == "ranges" %}
+        {% include "reports/ranges.html" with question=temp_question state=state %}
+    {% elif question.fieldset_type == "synthesized_table" %}
+        synthesized_table
     {% else %}
-        <h2>UNKNOWN fieldset</h2>
-        id {{temp_question.id}}
-        type {{temp_question.type}}
-        <pre>{{ temp_question.hint }}</pre>
+        {%if temp_question.questions|length > 0%}
+            {% include "reports/question.html" with question=temp_question state=state %}
+        {%endif%}
     {% endif %}
 {% endfor %}

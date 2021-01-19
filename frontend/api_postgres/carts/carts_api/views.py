@@ -1183,7 +1183,7 @@ def download_template(request):
         'margin-left': '0.75in',
         'encoding': "UTF-8",
     }
-
+    
     today = datetime.now()
     pdf_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") +".pdf"
     zip_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") +".zip"
@@ -1192,18 +1192,22 @@ def download_template(request):
     sections = Section.objects.all().filter(
         contents__section__year=year, contents__section__state=state,
     )
-
+   
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
     template = get_template("../templates/report.html")
-    # data is the context data that is sent to the html file to render the output.
-    # context = Context({"data": data})
+    # Pulling out the program type here
+    temp_program_type = str(ordered[0]).split("'2020-00-a-01-02', 'type': 'radio', 'label': 'Program type:', 'answer': {'entry':")[1]
+    program_type = temp_program_type.split(", 'options': [{'label': 'Both Medicaid Expansion CHIP and Separate CHIP'")[0].replace("'","")
+
     context = {
         "sections": ordered,
         "state": state,
+        "program_type":program_type,
         "l": len(ordered),
     }
+    
     html = template.render(context)
 
     # generate a pdf string (internal pdf string format)

@@ -1,7 +1,9 @@
 {% load filter %}
 {% if question.type and question.type != "fieldset"%}
     {% with question.id|split_last:"-" as id %}
+        {%if id%}
             # {{ id }}<br>
+        {%endif%}
     {% endwith %}
 {%endif%}
 {% if question.type == "fieldset" %}
@@ -41,11 +43,12 @@
 {% elif question.type == "text" %}
     {% include "reports/text_short.html" with question=question state=state %}
 {% else %}
-    <h2>UNKNOWN TYPE 1</h2>
     {% for question2 in question %}
-        {%if question.id%}
+        {%if question2.id%}
             {% with question2.id|split_last:"-" as id %}
-                # {{ id }}<br>
+                {%if id%}
+                    # {{ id }}<br>
+                {%endif%}
             {% endwith %}
         {%endif%}
         {% if question2.type == "fieldset" %}
@@ -85,7 +88,7 @@
         {% elif question2.type == "text" %}
             {% include "reports/text_short.html" with question=question2 state=state %}
         {% else %}
-            again
+            unknown fieldset subquestion
         {%endif%}
     {% endfor %}
 {% endif %}
