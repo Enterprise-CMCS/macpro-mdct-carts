@@ -34,7 +34,7 @@
     {% elif temp_question.type == "checkbox" %}
         {% include "reports/checkbox.html" with question=temp_question state=state %}
     {% elif temp_question.type == "daterange" %}
-        {% include "reports/daterange.html" with question=temp_question state=state %}
+        {% include "reports/ranges.html" with question=temp_question state=state %}
     {% elif temp_question.type == "email" %}
         {% include "reports/email.html" with question=temp_question state=state %}
     {% elif temp_question.type == "file_upload" %}

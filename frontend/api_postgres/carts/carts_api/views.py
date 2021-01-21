@@ -1199,8 +1199,8 @@ def download_template(request):
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split("'2020-00-a-01-02', 'type': 'radio', 'label': 'Program type:', 'answer': {'entry':")[1]
-    program_type = temp_program_type.split(", 'options': [{'label': 'Both Medicaid Expansion CHIP and Separate CHIP'")[0].replace("'","")
-
+    program_type = temp_program_type.split(", 'options': [{'label': 'Both Medicaid Expansion CHIP and Separate CHIP'")[0]#.replace("'","")
+        
     context = {
         "sections": ordered,
         "state": state,
@@ -1212,7 +1212,10 @@ def download_template(request):
 
     # generate a pdf string (internal pdf string format)
     pdf = pdfkit.from_string(html, pdf_filename)
-
+    
+    # might need to set text type to utf8
+    
+    
     # encode a pdf string as base 64 to avoid decoding mismatches and collisions
     #encoded_pdf = base64.b64encode(pdf)
 

@@ -1,25 +1,25 @@
 {% load filter %}
-
-    {% for x1 in objective.questions %}
-        {% with x1.id|split_last:"-" as id2 %}
-            ID: {{id2}}
-            {%if id2 == "02"%}
-                {% for repeatables in x1.questions %}
-                    {% with repeatables.id|split_last:"-" as goal_id %}
-                            Goal # {{ goal_id }}<br>
-                    {%endwith%}
-                    {% for repeatable in repeatables.questions %}
-                        <br/>
-                        {% include "reports/question.html" with question=repeatable state=state %}
-                        </br>
-                    {%endfor%}
+{% for repeatables in objective.questions %}
+    {% with repeatables.id|split_last:"-" as id2 %}
+        {%if id2 == "02"%}
+            {% for repeatable in repeatables.questions %}
+                {% with repeatable.id|split_last:"-" as goal_id %}
+                        <br>Goal # {{ goal_id }}<br>
+                {%endwith%}
+                {% for repeatable_question in repeatable.questions %}
+                    <br/>
+                    {% include "reports/question.html" with question=repeatable_question state=state %}
+                    </br>
                 {%endfor%}
-                
+            {%endfor%}
+         {%else%} {% comment %} Displays answers for each objective {% endcomment %}
+            {%if repeatables.answer.entry %}
+                {{repeatables.answer.entry}}<br>
             {%else%}
-                NO 02
+                {{repeatables.answer.default_entry}}
             {%endif%}
-        {%endwith%}
-        
-    {% endfor %}
+        {%endif%}
+    {%endwith%}
+{% endfor %}
 
 

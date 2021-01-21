@@ -8,6 +8,8 @@
 {%endif%}
 {% if question.type == "fieldset" %}
     {% include "reports/fieldset.html" with question=question state=state %}
+{% elif question.type == "repeatables" %}
+    {% include "reports/repeatables.html" with question=question.questions state=state %}
 {% elif question.type == "checkbox" %}
     {% include "reports/checkbox.html" with question=question state=state %}
 {% elif question.type == "daterange" %}

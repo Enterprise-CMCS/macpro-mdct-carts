@@ -5,7 +5,8 @@
                     <dt class="question_text">{{question.label}}</dt>
                     <dd class="answer">
                     {% if question.answer.entry is None %}
-                        <em><i>Unanswered</i></em>
+                        <em><i>Unanswered</i></em><br>
+                         Options not chosen:
                         {% for temp_option in question.answer.options %}
                                 <ul>
                             {% if not temp_option.value == question.answer.entry %}

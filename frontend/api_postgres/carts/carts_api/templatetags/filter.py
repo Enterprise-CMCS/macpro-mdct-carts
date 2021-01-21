@@ -26,3 +26,15 @@ def replace_html(the_string):
         return the_string.replace('â€™',"'")
     except:
         return None
+
+@register.filter(name='build_month_year')
+def build_month_year(the_string):
+    try:
+        tempdate = the_string.split("-")
+        return tempdate[1]+'-'+tempdate[0]
+    except:
+        return None
+
+@register.filter(name='get_type_of')
+def get_type_of(obj):
+    return obj.__class__.__name__
