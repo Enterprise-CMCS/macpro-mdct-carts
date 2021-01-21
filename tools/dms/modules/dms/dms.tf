@@ -383,87 +383,47 @@ resource "aws_lambda_function" "dms_event_lambda" {
   function_name = "dms_event_lambda"
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "dms_event_lambda.handler"
-  runtime = "python3.8"
+  runtime = "python3.7"
 }
+
+locals {
+  lg_name = "/aws/lambda/${aws_lambda_function.dms_event_lambda.function_name}"
+}
+
 /*
 Log Group for the 1st lambda
 */
 resource "aws_cloudwatch_log_group" "dms_event_lambda_lg" {
-  name = "/aws/lambda/dms_event_lambda"
+  name = local.lg_name
 }
 
-/*
-Metric Filter
-Creates a metric filter from the CWlogs(/aws/lambda/dms_event_lambda) of the 1st Lmabda function, using "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED" as filter pattern
-*/
-resource "aws_cloudwatch_log_metric_filter" "seds_full_load_filter" {
-  name           = "Full Load Complete"
-  pattern        = "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED"
-  log_group_name = "/aws/lambda/dms_event_lambda"
-  depends_on = [aws_cloudwatch_log_group.dms_event_lambda_lg]
-  
-  metric_transformation {
-    name      = "full_load_complete"
-    namespace = "dms_migration_task"
-    value     = "1"
-  }
-}
-
-/*
-Metric Alarm
-Creates an alarm using the metric filter, it goes to alarm state when there is a value of full load complete.
-the alarm triggers a notifies another SNS Topic (alarm_sns_topic)
-*/
-resource "aws_cloudwatch_metric_alarm" "seds_full_load_alarm" {
-  alarm_name                = "full_load_complete_alarm"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = "1"
-  metric_name               = "full_load_complete"
-  namespace                 = "dms_migration_task"
-  period                    = "60"
-  statistic                 = "Sum"
-  threshold                 = "0"
-  alarm_description         = "This metric monitors the when FULL LOAD is complete"
-  alarm_actions = [aws_sns_topic.alarm_sns_topic.arn]
-  treat_missing_data = "notBreaching"
-}
-
-/*
-2nd SNS Topic
-is Triggered when the Metric Alarm is in alarm state, that a full load is complete & in turn triggers a lambda function that starts the next DMS migration task
-*/
-resource "aws_sns_topic" "alarm_sns_topic" {
-  name = "topic-${var.application}-${terraform.workspace}-alarm-seds"
-
-  tags = {
-    Name        = "${var.team_name} Replication SNS Alarm"
-    Owner       = var.team_name
-    Application = var.application
-    Description = "Managed by Terraform"
-    Env         = var.environment-name
-  }
-}
-resource "aws_sns_topic_subscription" "alarm_sns_topic_subscription" {
-  topic_arn = aws_sns_topic.alarm_sns_topic.arn
-  protocol = "lambda"
-  endpoint = aws_lambda_function.start_dms_lambda.arn
-}
-
-resource "aws_lambda_permission" "allow_cloudwatch" {
-  statement_id  = "AllowExecutionFromCW"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.start_dms_lambda.function_name
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_sns_topic.alarm_sns_topic.arn
-}
 /*
 2nd Lambda Function
-is triggered by the 2nd SNS Topic, and starts the next DMS migration task
+is triggered by the CloudWatch Logs Subscription filter and starts the next DMS migration task
 */
 resource "aws_lambda_function" "start_dms_lambda" {
   filename      = "./start_dms.zip"
   function_name = "start_dms"
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "start_dms.handler"
-  runtime = "nodejs12.x"
+  runtime = "python3.7"
+}
+
+# Permission for cloudwatch to trigger the 2nd Lambda function
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCW"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.start_dms_lambda.function_name
+  principal     = "logs.amazonaws.com"
+  source_arn = "${aws_cloudwatch_log_group.dms_event_lambda_lg.arn}:*"
+}
+/*
+CloudWatch Logs Subscription Filters
+*/
+resource "aws_cloudwatch_log_subscription_filter" "lambdafunction_logfilter" {
+  depends_on = [aws_lambda_permission.allow_cloudwatch]
+  name            = "dms-full-load"
+  log_group_name  = local.lg_name
+  filter_pattern  = "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED."
+  destination_arn = aws_lambda_function.start_dms_lambda.arn
 }
