@@ -406,7 +406,7 @@ resource "aws_lambda_function" "start_dms_lambda" {
   function_name = "start_dms"
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "start_dms.handler"
-  runtime = "python3.7"
+  runtime = "nodejs10.x"
 }
 
 # Permission for cloudwatch to trigger the 2nd Lambda function
