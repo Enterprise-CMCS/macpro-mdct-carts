@@ -19,9 +19,9 @@ const SynthesizedTable = ({ question, rows }) => {
           </thead>
         )}
         <tbody>
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 {row.map((cell, index) => (
                   <td key={index}>{cell.contents}</td>
                 ))}
