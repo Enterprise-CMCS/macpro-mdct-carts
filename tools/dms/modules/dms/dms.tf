@@ -369,9 +369,35 @@ resource "aws_iam_role" "seds_lambda_role" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "ssm_policy" {
+  name = "get_ssm_parameters"
+  path = "/"
+  description = "gives permission to get ssm parameters"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ssm:GetParameters"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "dms_event_lambda_attachment" {
   role       = aws_iam_role.seds_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
+  role       = aws_iam_role.seds_lambda_role.name
+  policy_arn = aws_iam_policy.ssm_policy.arn
 }
 
 /*
