@@ -1196,10 +1196,12 @@ def download_template(request):
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
+    
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split("'2020-00-a-01-02', 'type': 'radio', 'label': 'Program type:', 'answer': {'entry':")[1]
     program_type = temp_program_type.split(", 'options': [{'label': 'Both Medicaid Expansion CHIP and Separate CHIP'")[0].replace("'","").replace(" ","")
+
 
     # saving synthesized table values
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-02-01', 'hint':")[1]
@@ -1219,16 +1221,12 @@ def download_template(request):
     var_2020_03_c_02_04 = temp_answer.split("'}},")[0]
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-02', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
+    temp_answer5 = temp_question.split("'answer': {'entry': '")[1]
     var_2020_03_c_03_02 = temp_answer.split("'}},")[0]
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-03', 'type':")[1]
     temp_answer = temp_question.split("'answer': {'entry': '")[1]
     var_2020_03_c_03_03 = temp_answer.split("'}},")[0]
-
-    temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_04 = temp_answer.split("'},")[0]
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04', 'hint':")[1]
     temp_answer = temp_question.split("'answer': {'entry': '")[1]
@@ -1245,10 +1243,6 @@ def download_template(request):
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04-c', 'type':")[1]
     temp_answer = temp_question.split("'answer': {'entry': '")[1]
     var_2020_03_c_03_04_c = temp_answer.split("'}}]},")[0]
-
-    temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04-c', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_02 = temp_answer.split("'}}]},")[0]
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-02', 'type':")[1]
     temp_answer = temp_question.split("'answer': {'entry': '")[1]

@@ -19,6 +19,15 @@ def list_item(the_array, i):
         return the_array[i]
     except:
         return None
+
+@register.filter(name='split_and_index_at')
+def list_item(the_string,split_and_index):
+    try:
+        split = split_and_index.split(",")[0]
+        index = split_and_index.split(",")[1]
+        return the_string.split(split_symbol)[index]
+    except:
+        return None
 # doesn't work properly because the incoming string doesn't have the issue just yet
 @register.filter(name='replace_html_symbol')
 def replace_html(the_string):
