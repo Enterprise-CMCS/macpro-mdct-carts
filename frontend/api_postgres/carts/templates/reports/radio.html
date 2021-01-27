@@ -6,30 +6,24 @@
                     <dd class="answer">
                     {% if question.answer.entry is None %}
                         <em><i>Unanswered</i></em><br>
-                         Options not chosen:
+                         Options not chosen:<br>
                         {% for temp_option in question.answer.options %}
-                                <ul>
                             {% if not temp_option.value == question.answer.entry %}
-                                <li>{{temp_option.label}}</li>
+                                &#9675;{{temp_option.label}}<br>
                             {% endif %}
-                                </ul>
                         {% endfor %}
                     {% else %}
                         {% for temp_option in question.answer.options %}
                             {% if temp_option.value == question.answer.entry %}
                                 <p>Answer:</p>
-                                <ul>
-                                    <li>{{temp_option.label}}
-                                </ul>
+                                &#9679;{{temp_option.label}}<br>
                             {% endif %}
                         {% endfor %}
-                                Options not chosen:
+                                <br>Options not chosen:<br>
                         {% for temp_option in question.answer.options %}
-                                <ul>
                             {% if not temp_option.value == question.answer.entry %}
-                                <li>{{temp_option.label}}</li>
+                                &#9675;{{temp_option.label}}<br>
                             {% endif %}
-                                </ul>
                         {% endfor %}
                     {% endif %}
                     </dd>

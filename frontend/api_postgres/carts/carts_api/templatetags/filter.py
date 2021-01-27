@@ -35,6 +35,13 @@ def build_month_year(the_string):
     except:
         return None
 
+@register.filter(name='calculate_percent')
+def get_type_of(denominator,numerator):
+    try:
+        return str((float(numerator)/float(denominator))*100)[0:5]
+    except:
+        return None
+
 @register.filter(name='get_type_of')
 def get_type_of(obj):
     return obj.__class__.__name__

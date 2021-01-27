@@ -1,25 +1,17 @@
 {% load filter %}
 {% for part in parts %}
     <part id="{{part.id}}">
-    {%with program_type|get_type_of as programTypeOf%}
-        {%with part.context_data.show_if_state_program_type_in.0|get_type_of as programTypeOf2%}
-            to1 {{programTypeOf}}<br>
-            to2{{programTypeOf2}}<br>
-        {%endwith%}
-    {%endwith%}
-    
     {% if not part.context_data and not part_context_data.show_if_state_program_type_in %}
         <h2>Part {{forloop.counter}}: {{part.title}}</h2>
         <p class="part_text">{{part.text}}</p>
         {% include "reports/questions.html" with questions=part.questions state=state %}
     {% else %}
-        {% if program_type == part.context_data.show_if_state_program_type_in.0 or program_type == part.context_data.show_if_state_program_type_in.1 or program_type == part.context_data.show_if_state_program_type_in.2%}
-            yes 0 or 1
+        {% comment %} If a 4th program type is added then below needs to be updated to include .2 {% endcomment %}
+        {% if program_type == part.context_data.show_if_state_program_type_in.0 or program_type == part.context_data.show_if_state_program_type_in.1%}
             <h2>Part {{forloop.counter}}: {{part.title}}</h2>
             <p class="part_text">{{part.text}}</p>
             {% include "reports/questions.html" with questions=part.questions state=state %}
         {% elif not program_type in part.context_data.show_if_state_program_type_in %}
-        not in at all
             <p class="skip">{{part.context_data.skip_text}}</p>
             <h2>Part {{forloop.counter}}: {{part.title}}</h2>
             <p class="part_text">{{part.text}}</p>
@@ -27,6 +19,5 @@
         {% endif %}
     {% endif %}
     </part>
-
 {% endfor %}
 
