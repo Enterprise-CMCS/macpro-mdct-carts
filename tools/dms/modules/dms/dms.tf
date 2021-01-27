@@ -381,7 +381,7 @@ resource "aws_iam_policy" "ssm_policy" {
   "Statement": [
     {
       "Action": [
-        "ssm:GetParameters"
+        "ssm:Get*"
       ],
       "Effect": "Allow",
       "Resource": "*"
