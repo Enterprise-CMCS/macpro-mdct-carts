@@ -1202,72 +1202,91 @@ def download_template(request):
     temp_program_type = str(ordered[0]).split("'2020-00-a-01-02', 'type': 'radio', 'label': 'Program type:', 'answer': {'entry':")[1]
     program_type = temp_program_type.split(", 'options': [{'label': 'Both Medicaid Expansion CHIP and Separate CHIP'")[0].replace("'","").replace(" ","")
 
-
+    print(ordered[3])
     # saving synthesized table values
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-02-01', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_02_01 = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_02_01 = temp_answer.split("}},")[0].replace("'","")
     
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-02-02', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_02_02 = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_02_02 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-02-03', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_02_03 = temp_answer.split("'},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_02_03 = temp_answer.split("},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-02-04', 'type'")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_02_04 = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_02_04 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-02', 'type':")[1]
-    temp_answer5 = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_02 = temp_answer.split("'}},")[0]
+    temp_answer5 = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_03_02 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-03', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_03 = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_03_03 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_04 = temp_answer.split("'},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_03_04 = temp_answer.split("'},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04-a', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_04_a = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_03_04_a = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04-b', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_04_b = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_03_04_b = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-04-c', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_03_04_c = temp_answer.split("'}}]},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_03_04_c = temp_answer.split("}}]},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-02', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_02 = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_04_02 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-03', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_03 = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_04_03 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-04', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_04 = temp_answer.split("'},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_04_04 = temp_answer.split("},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-04-a', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_04_a = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_04_04_a = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-04-b', 'hint':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_04_b = temp_answer.split("'}},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_04_04_b = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-04-04-c', 'type':")[1]
-    temp_answer = temp_question.split("'answer': {'entry': '")[1]
-    var_2020_03_c_04_04_c = temp_answer.split("'}}]},")[0]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_c_04_04_c = temp_answer.split("}}]},")[0].replace("'","")
 
+    temp_question =  str(ordered[3]).split("{'id': '2020-03-e-02-08', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_e_02_08 = temp_answer.split("}},")[0].replace("'","")
+
+    temp_question =  str(ordered[3]).split("{'id': '2020-03-e-02-09', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_e_02_09 = temp_answer.split("}},")[0].replace("'","")
+
+    temp_question =  str(ordered[3]).split("{'id': '2020-03-e-02-10', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_e_02_10 = temp_answer.split("}}]},")[0].replace("'","")
+
+    temp_question =  str(ordered[3]).split("{'id': '2020-03-g-01-07-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_g_01_07_a = temp_answer.split("}},")[0].replace("'","")
+
+    temp_question =  str(ordered[3]).split("{'id': '2020-03-g-01-07-b', 'hint':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_03_g_01_07_b = temp_answer.split("}},")[0].replace("'","")
 
     context = {
         "sections": ordered,
@@ -1290,6 +1309,11 @@ def download_template(request):
         "var_2020_03_c_04_04_a":var_2020_03_c_04_04_a,
         "var_2020_03_c_04_04_b":var_2020_03_c_04_04_b,
         "var_2020_03_c_04_04_c":var_2020_03_c_04_04_c,
+        "var_2020_03_e_02_08":var_2020_03_e_02_08,
+        "var_2020_03_e_02_09": var_2020_03_e_02_09,
+        "var_2020_03_e_02_10":var_2020_03_e_02_10,
+        "var_2020_03_g_01_07_a":var_2020_03_g_01_07_a,
+        "var_2020_03_g_01_07_b":var_2020_03_g_01_07_b,
         
     }
     

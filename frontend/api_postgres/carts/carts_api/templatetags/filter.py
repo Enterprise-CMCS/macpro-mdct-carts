@@ -23,9 +23,9 @@ def list_item(the_array, i):
 @register.filter(name='split_and_index_at')
 def list_item(the_string,split_and_index):
     try:
-        split = split_and_index.split(",")[0]
-        index = split_and_index.split(",")[1]
-        return the_string.split(split_symbol)[index]
+        the_split = split_and_index.split(",")[0]
+        the_index = int(split_and_index.split(",")[1])
+        return the_string.split(the_split)[the_index]
     except:
         return None
 # doesn't work properly because the incoming string doesn't have the issue just yet

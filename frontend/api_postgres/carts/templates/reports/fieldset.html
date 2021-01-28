@@ -44,9 +44,10 @@
         {% elif temp_question.type == "ranges" %}
             {% include "reports/ranges.html" with question=temp_question state=state %}
         {% elif temp_question.fieldset_type == "synthesized_table" %}
-            synthesized_table
+            {% include "reports/synthesizedtable.html" with question=temp_question state=state %}
         {%elif temp_question.fieldset_info%}
-            another table
+            another table<br>
+            {{temp_question}}
         {% else %}
             {%if temp_question.questions|length > 0%}
                 {% include "reports/question.html" with question=temp_question state=state %}
@@ -55,157 +56,6 @@
     {% endfor %}
 {%else%}
     {%if question.fieldset_info %}
-    {% comment %} table 1 {% endcomment %}
-        {%with question.fieldset_info.rows.0.0.targets|split_and_index_at:"-,2" as subsectionId %}
-            {%if subsectionId == "c"%}
-                <table>
-                        <tr>
-                            <th></th>
-                            <th>Number</th>
-                            <th>Percent</th>
-                        </tr>
-                {%if question.label == "Table: CHIP Eligibility Denials (Not Redetermination)"%}
-                    <tr>
-                        <td>{{question.fieldset_info.rows.0.0.contents}}</td>
-                        <td>{{var_2020_03_c_02_01}}</td>
-                        {%with var_2020_03_c_02_01|calculate_percent:var_2020_03_c_02_01 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.1.0.contents}}</td>
-                        <td>{{var_2020_03_c_02_02}}</td>
-                        {%with var_2020_03_c_02_01|calculate_percent:var_2020_03_c_02_02 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
-                        <td>{{var_2020_03_c_02_03}}</td>
-                        {%with var_2020_03_c_02_01|calculate_percent:var_2020_03_c_02_03 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
-                        <td>{{var_2020_03_c_02_04}}</td>
-                        {%with var_2020_03_c_02_01|calculate_percent:var_2020_03_c_02_04 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                {%elif question.label == "Table: Redetermination in CHIP "%}
-                {% comment %} table 2 {% endcomment %}
-                        <tr>
-                            <td>{{question.fieldset_info.rows.0.0.contents}}</td>
-                            <td>{{var_2020_03_c_03_02}}</td>
-                            {%with var_2020_03_c_03_02|calculate_percent:var_2020_03_c_03_02 as temp_percentage%}
-                                <td>{{temp_percentage}}%</td>
-                            {%endwith%}
-                        </tr>
-                        <tr>
-                            <td>{{question.fieldset_info.rows.1.0.contents}}</td>
-                            <td>{{var_2020_03_c_03_03}}</td>
-                            {%with var_2020_03_c_03_02|calculate_percent:var_2020_03_c_03_03 as temp_percentage%}
-                                <td>{{temp_percentage}}%</td>
-                            {%endwith%}
-                        </tr>
-                        <tr>
-                            <td>{{question.fieldset_info.rows.2.0.contents}}</td>
-                            <td>{{var_2020_03_c_03_04}}</td>
-                            {%with var_2020_03_c_03_02|calculate_percent:var_2020_03_c_03_04 as temp_percentage%}
-                                <td>{{temp_percentage}}%</td>
-                            {%endwith%}
-                        </tr>
-                {%elif question.label == "Table: Disenrollment in CHIP after Redetermination"%}
-                {% comment %} table 3 {% endcomment %}
-                    <tr>
-                        <td>{{question.fieldset_info.rows.0.0.contents}}</td>
-                        <td>{{var_2020_03_c_03_04}}</td>
-                        {%with var_2020_03_c_03_04|calculate_percent:var_2020_03_c_03_04 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.1.0.contents}}</td>
-                        <td>{{var_2020_03_c_03_04_a}}</td>
-                        {%with var_2020_03_c_03_04|calculate_percent:var_2020_03_c_03_04_a as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
-                        <td>{{var_2020_03_c_03_04_b}}</td>
-                        {%with var_2020_03_c_03_04|calculate_percent:var_2020_03_c_03_04_b as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.3.0.contents}}</td>
-                        <td>{{var_2020_03_c_03_04_c}}</td>
-                        {%with var_2020_03_c_03_04|calculate_percent:var_2020_03_c_03_04_c as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                {%elif question.label == "Table: Redetermination in Medicaid "%}
-                {% comment %} table 4 {% endcomment %}
-                    <tr>
-                        <td>{{question.fieldset_info.rows.0.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_02}}</td>
-                        {%with var_2020_03_c_04_02|calculate_percent:var_2020_03_c_04_02 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.1.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_03}}</td>
-                        {%with var_2020_03_c_04_02|calculate_percent:var_2020_03_c_04_03 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_04}}</td>
-                        {%with var_2020_03_c_04_02|calculate_percent:var_2020_03_c_04_04 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                {%elif question.label == "Table: Disenrollment in Medicaid after Redetermination"%}
-                {% comment %} table 5 {% endcomment %}
-                    <tr>
-                        <td>{{question.fieldset_info.rows.0.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_04}}</td>
-                        {%with var_2020_03_c_04_04|calculate_percent:var_2020_03_c_04_04 as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.1.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_04_a}}</td>
-                        {%with var_2020_03_c_04_04|calculate_percent:var_2020_03_c_04_04_a as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_04_b}}</td>
-                        {%with var_2020_03_c_04_04|calculate_percent:var_2020_03_c_04_04_b as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                    <tr>
-                        <td>{{question.fieldset_info.rows.3.0.contents}}</td>
-                        <td>{{var_2020_03_c_04_04_c}}</td>
-                        {%with var_2020_03_c_04_04|calculate_percent:var_2020_03_c_04_04_c as temp_percentage%}
-                            <td>{{temp_percentage}}%</td>
-                        {%endwith%}
-                    </tr>
-                {%endif%}
-                </table>
-            {%elif subsectionId == "d"%}
-                section d
-            {%endif%}
-        {%endwith%}
+        {% include "reports/synthesizedtable.html" with question=question state=state %}
     {%endif%}
 {%endif%}
-
-Table: Coverage breakdown
