@@ -395,6 +395,10 @@ resource "aws_iam_role_policy_attachment" "dms_event_lambda_attachment" {
   role       = aws_iam_role.seds_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+resource "aws_iam_role_policy_attachment" "vpc_access_lambda_attachment" {
+  role       = aws_iam_role.seds_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
 resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
   role       = aws_iam_role.seds_lambda_role.name
   policy_arn = aws_iam_policy.ssm_policy.arn
@@ -433,6 +437,10 @@ resource "aws_lambda_function" "start_dms_lambda" {
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "start_dms.handler"
   runtime = "nodejs10.x"
+  vpc_config {
+    subnet_ids         = var.subnet_ids
+    security_group_ids = [aws_security_group.start_dms_lambda_sg.id]
+  }
 }
 
 # Permission for cloudwatch to trigger the 2nd Lambda function
@@ -452,4 +460,29 @@ resource "aws_cloudwatch_log_subscription_filter" "lambdafunction_logfilter" {
   log_group_name  = local.lg_name
   filter_pattern  = "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED."
   destination_arn = aws_lambda_function.start_dms_lambda.arn
+}
+
+resource "aws_security_group" "start_dms_lambda_sg" {
+  name   = "start_dms_lambda-${terraform.workspace}"
+  vpc_id = var.vpc_id
+}
+
+# # Outbound, for target (postgres)
+resource "aws_security_group_rule" "start_dms_lambda_outbound" {
+  type              = "egress"
+  from_port         = 5432
+  to_port           = 5432
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.start_dms_lambda_sg.id
+}
+
+# # Inbound, for source (Start DMS Lambda)
+resource "aws_security_group_rule" "start_dms_lambda_inbound" {
+  type              = "ingress"
+  from_port         = var.source_database_port
+  to_port           = var.source_database_port
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.start_dms_lambda_sg.id
 }
