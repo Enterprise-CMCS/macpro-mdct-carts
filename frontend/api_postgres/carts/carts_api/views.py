@@ -1188,7 +1188,7 @@ def download_template(request):
     pdf_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") +".pdf"
     zip_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") +".zip"
     year = 2020
-    state = "DC"
+    state = "MA"
     sections = Section.objects.all().filter(
         contents__section__year=year, contents__section__state=state,
     )
@@ -1202,7 +1202,6 @@ def download_template(request):
     temp_program_type = str(ordered[0]).split("'2020-00-a-01-02', 'type': 'radio', 'label': 'Program type:', 'answer': {'entry':")[1]
     program_type = temp_program_type.split(", 'options': [{'label': 'Both Medicaid Expansion CHIP and Separate CHIP'")[0].replace("'","").replace(" ","")
 
-    print(ordered[3])
     # saving synthesized table values
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-02-01', 'hint':")[1]
     temp_answer = temp_question.split("'answer': {'entry': ")[1]
@@ -1221,7 +1220,7 @@ def download_template(request):
     var_2020_03_c_02_04 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-02', 'type':")[1]
-    temp_answer5 = temp_question.split("'answer': {'entry': ")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
     var_2020_03_c_03_02 = temp_answer.split("}},")[0].replace("'","")
 
     temp_question =  str(ordered[3]).split("{'id': '2020-03-c-03-03', 'type':")[1]
@@ -1287,7 +1286,167 @@ def download_template(request):
     temp_question =  str(ordered[3]).split("{'id': '2020-03-g-01-07-b', 'hint':")[1]
     temp_answer = temp_question.split("'answer': {'entry': ")[1]
     var_2020_03_g_01_07_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-01-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_01_a = temp_answer.split("},")[0].replace("'","")
 
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-01-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_01_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-01-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_01_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-02-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_02_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-02-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_02_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-02-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_02_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-03-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_03_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-03-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_03_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-03-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_03_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-04-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_04_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-04-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_04_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-01-04-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_01_04_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-01-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_01_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-01-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_01_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-01-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_01_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-02-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_02_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-02-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_02_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-02-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_02_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-03-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_03_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-03-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_03_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-03-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_03_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-04-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_04_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-04-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_04_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-04-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_04_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-05-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_05_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-05-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_05_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-05-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_05_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-06-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_06_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-06-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_06_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-06-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_06_c = temp_answer.split("}}],")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-07-a', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_07_a = temp_answer.split("},")[0].replace("'","")
+
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-07-b', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_07_b = temp_answer.split("}},")[0].replace("'","")
+    
+    temp_question =  str(ordered[5]).split("{'id': '2020-05-a-02-07-c', 'type':")[1]
+    temp_answer = temp_question.split("'answer': {'entry': ")[1]
+    var_2020_05_a_02_07_c = temp_answer.split("}}],")[0].replace("'","")
+
+    var_2020_05_a_01_SUM_a = ''
+    var_2020_05_a_01_SUM_b = ''
+    var_2020_05_a_01_SUM_c = ''
+    var_2020_05_a_02_SUM_a = ''
+    var_2020_05_a_02_SUM_b = ''
+    var_2020_05_a_02_SUM_c = ''
+    var_2020_05_a_02_FORMULA_a = ''
+    var_2020_05_a_02_FORMULA_b = ''
+    var_2020_05_a_02_FORMULA_c = ''
+
+    if var_2020_05_a_01_01_a != 'None' and var_2020_05_a_01_02_a != 'None' and var_2020_05_a_01_03_a != 'None' and var_2020_05_a_01_04_a !='None':
+        var_2020_05_a_01_SUM_a = int(var_2020_05_a_01_01_a) + int(var_2020_05_a_01_02_a) + int(var_2020_05_a_01_03_a)+ int(var_2020_05_a_01_04_a)
+    if var_2020_05_a_01_01_b != 'None' and var_2020_05_a_01_02_b != 'None' and var_2020_05_a_01_03_b != 'None' and var_2020_05_a_01_04_b != 'None':        
+        var_2020_05_a_01_SUM_b = int(var_2020_05_a_01_01_b) + int(var_2020_05_a_01_02_b) + int(var_2020_05_a_01_03_b)+ int(var_2020_05_a_01_04_b)
+    if var_2020_05_a_01_01_c != 'None' and var_2020_05_a_01_02_c != 'None' and var_2020_05_a_01_03_c != 'None' and var_2020_05_a_01_04_c != 'None':
+        var_2020_05_a_01_SUM_c = int(var_2020_05_a_01_01_c) + int(var_2020_05_a_01_02_c) + int(var_2020_05_a_01_03_c)+ int(var_2020_05_a_01_04_c)
+
+    if var_2020_05_a_02_01_a != 'None' and var_2020_05_a_02_02_a != 'None' and var_2020_05_a_02_03_a != 'None' and var_2020_05_a_02_04_a != 'None' and var_2020_05_a_02_05_a != 'None' and var_2020_05_a_02_06_a != 'None' and var_2020_05_a_02_07_a != 'None':
+        var_2020_05_a_02_SUM_a = int(var_2020_05_a_02_01_a) + int(var_2020_05_a_02_02_a) +int(var_2020_05_a_02_03_a) +int(var_2020_05_a_02_04_a) +int(var_2020_05_a_02_05_a) +int(var_2020_05_a_02_06_a) +int(var_2020_05_a_02_07_a)
+        var_2020_05_a_02_FORMULA_a = "%.2f" % (((int(var_2020_05_a_02_01_a)+ int(var_2020_05_a_02_02_a) + int(var_2020_05_a_02_03_a) - int(var_2020_05_a_02_04_a))/9)* 100)
+    if var_2020_05_a_02_01_b != 'None' and var_2020_05_a_02_02_b != 'None' and var_2020_05_a_02_03_b != 'None' and var_2020_05_a_02_04_b != 'None' and var_2020_05_a_02_05_b != 'None' and var_2020_05_a_02_06_b != 'None' and var_2020_05_a_02_07_b != 'None':
+        var_2020_05_a_02_SUM_b = int(var_2020_05_a_02_01_b) + int(var_2020_05_a_02_02_b) +int(var_2020_05_a_02_03_b) +int(var_2020_05_a_02_04_b) +int(var_2020_05_a_02_05_b) +int(var_2020_05_a_02_06_b) +int(var_2020_05_a_02_07_b)
+        var_2020_05_a_02_FORMULA_b = "%.2f" % (((int(var_2020_05_a_02_01_b)+ int(var_2020_05_a_02_02_b) + int(var_2020_05_a_02_03_b) - int(var_2020_05_a_02_04_b))/9)* 100)
+    if var_2020_05_a_02_01_c != 'None' and var_2020_05_a_02_02_c != 'None' and var_2020_05_a_02_03_c != 'None' and var_2020_05_a_02_04_c != 'None' and var_2020_05_a_02_05_c != 'None' and var_2020_05_a_02_06_c != 'None' and var_2020_05_a_02_07_c != 'None':
+        var_2020_05_a_02_SUM_c = int(var_2020_05_a_02_01_c) + int(var_2020_05_a_02_02_c) +int(var_2020_05_a_02_03_c) +int(var_2020_05_a_02_04_c) +int(var_2020_05_a_02_05_c) +int(var_2020_05_a_02_06_c) +int(var_2020_05_a_02_07_c)
+        var_2020_05_a_02_FORMULA_c = "%.2f" % (((int(var_2020_05_a_02_01_c)+ int(var_2020_05_a_02_02_c) + int(var_2020_05_a_02_03_c) - int(var_2020_05_a_02_04_c))/9)* 100)
+
+    print (var_2020_03_c_03_02)
     context = {
         "sections": ordered,
         "state": state,
@@ -1303,8 +1462,8 @@ def download_template(request):
         "var_2020_03_c_03_04_a":var_2020_03_c_03_04_a,
         "var_2020_03_c_03_04_b":var_2020_03_c_03_04_b,
         "var_2020_03_c_03_04_c":var_2020_03_c_03_04_c,
-        "var_2020_03_c_04_02":var_2020_03_c_03_02,
-        "var_2020_03_c_04_03":var_2020_03_c_03_03,
+        "var_2020_03_c_04_02":var_2020_03_c_04_02,
+        "var_2020_03_c_04_03":var_2020_03_c_04_03,
         "var_2020_03_c_04_04":var_2020_03_c_04_04,
         "var_2020_03_c_04_04_a":var_2020_03_c_04_04_a,
         "var_2020_03_c_04_04_b":var_2020_03_c_04_04_b,
@@ -1314,6 +1473,49 @@ def download_template(request):
         "var_2020_03_e_02_10":var_2020_03_e_02_10,
         "var_2020_03_g_01_07_a":var_2020_03_g_01_07_a,
         "var_2020_03_g_01_07_b":var_2020_03_g_01_07_b,
+        "var_2020_05_a_01_01_a":var_2020_05_a_01_01_a,
+        "var_2020_05_a_01_01_b":var_2020_05_a_01_01_b,
+        "var_2020_05_a_01_01_c":var_2020_05_a_01_01_c,
+        "var_2020_05_a_01_02_a":var_2020_05_a_01_02_a,
+        "var_2020_05_a_01_02_b":var_2020_05_a_01_02_b,
+        "var_2020_05_a_01_02_c":var_2020_05_a_01_02_c,
+        "var_2020_05_a_01_03_a":var_2020_05_a_01_03_a,
+        "var_2020_05_a_01_03_b":var_2020_05_a_01_03_b,
+        "var_2020_05_a_01_03_c":var_2020_05_a_01_03_c,
+        "var_2020_05_a_01_04_a":var_2020_05_a_01_04_a,
+        "var_2020_05_a_01_04_b":var_2020_05_a_01_04_b,
+        "var_2020_05_a_01_04_c":var_2020_05_a_01_04_c,
+        "var_2020_05_a_01_SUM_a":var_2020_05_a_01_SUM_a,
+        "var_2020_05_a_01_SUM_b":var_2020_05_a_01_SUM_b,
+        "var_2020_05_a_01_SUM_c":var_2020_05_a_01_SUM_c,
+        "var_2020_05_a_02_01_a":var_2020_05_a_02_01_a,
+        "var_2020_05_a_02_01_b":var_2020_05_a_02_01_b,
+        "var_2020_05_a_02_01_c":var_2020_05_a_02_01_c,
+        "var_2020_05_a_02_02_a":var_2020_05_a_02_02_a,
+        "var_2020_05_a_02_02_b":var_2020_05_a_02_02_b,
+        "var_2020_05_a_02_02_c":var_2020_05_a_02_02_c,
+        "var_2020_05_a_02_03_a":var_2020_05_a_02_03_a,
+        "var_2020_05_a_02_03_b":var_2020_05_a_02_03_b,
+        "var_2020_05_a_02_03_c":var_2020_05_a_02_03_c,
+        "var_2020_05_a_02_04_a":var_2020_05_a_02_04_a,
+        "var_2020_05_a_02_04_b":var_2020_05_a_02_04_b,
+        "var_2020_05_a_02_04_c":var_2020_05_a_02_04_c,
+        "var_2020_05_a_02_05_a":var_2020_05_a_02_05_a,
+        "var_2020_05_a_02_05_b":var_2020_05_a_02_05_b,
+        "var_2020_05_a_02_05_c":var_2020_05_a_02_05_c,
+        "var_2020_05_a_02_06_a":var_2020_05_a_02_06_a,
+        "var_2020_05_a_02_06_b":var_2020_05_a_02_06_b,
+        "var_2020_05_a_02_06_c":var_2020_05_a_02_06_c,
+        "var_2020_05_a_02_07_a":var_2020_05_a_02_07_a,
+        "var_2020_05_a_02_07_b":var_2020_05_a_02_07_b,
+        "var_2020_05_a_02_07_c":var_2020_05_a_02_07_c,
+        "var_2020_05_a_02_SUM_a":var_2020_05_a_02_SUM_a,
+        "var_2020_05_a_02_SUM_b":var_2020_05_a_02_SUM_b,
+        "var_2020_05_a_02_SUM_c":var_2020_05_a_02_SUM_c,
+        "var_2020_05_a_02_FORMULA_a":var_2020_05_a_02_FORMULA_a,
+        "var_2020_05_a_02_FORMULA_b":var_2020_05_a_02_FORMULA_b,
+        "var_2020_05_a_02_FORMULA_c":var_2020_05_a_02_FORMULA_c,
+
         
     }
     

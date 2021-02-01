@@ -4,8 +4,6 @@
 {%if question.fieldset_info %}
 {% comment %} table 1 {% endcomment %}
     {%with question.fieldset_info.rows.0.1.targets.0|split_and_index_at:"-,2" as subsectionId %}
-    <br>@@--{{question.fieldset_info}}--<br>
-    @@--{{subsectionId}}--
         {%if subsectionId == "c"%}
             <table>
                     <tr>
@@ -165,7 +163,7 @@
                 </tr>
             </table>
         {%elif subsectionId == "g"%}
-        {% comment %} table 6 {% endcomment %}
+        {% comment %} table 7 {% endcomment %}
             <table>
                 <tr>
                     <th>{{question.fieldset_info.headers.0.contents}}</th>
@@ -175,9 +173,137 @@
                 <tr>
                     <td>{{var_2020_03_g_01_07_a}}</td>
                     <td>{{var_2020_03_g_01_07_b}}</td>
-                    {%with var_2020_03_g_01_07_a|calculate_percent:var_2020_03_g_01_07_b as temp_percentage%}
+                    {%with var_2020_03_g_01_07_b|calculate_percent:var_2020_03_g_01_07_a as temp_percentage%}
                         <td>{{temp_percentage}}%</td>
                     {%endwith%}
+                </tr>
+            </table>
+        {%elif subsectionId == "a"%}
+        {% comment %} table 8 {% endcomment %}
+            {%if question.fieldset_info.rows.0.0.contents == "Managed Care"%}
+            {{question.fieldset_info.rows.4.0.contents}}
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>{{question.fieldset_info.headers.1.contents}}</th>
+                        <th>{{question.fieldset_info.headers.2.contents}}</th>
+                        <th>{{question.fieldset_info.headers.3.contents}}</th>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.0.0.contents}}</td>
+                        <td>{{var_2020_05_a_01_01_a}}</td>
+                        <td>{{var_2020_05_a_01_01_b}}</td>
+                        <td>{{var_2020_05_a_01_01_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.1.0.contents}}</td>
+                        <td>{{var_2020_05_a_01_02_a}}</td>
+                        <td>{{var_2020_05_a_01_02_b}}</td>
+                        <td>{{var_2020_05_a_01_02_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
+                        <td>{{var_2020_05_a_01_03_a}}</td>
+                        <td>{{var_2020_05_a_01_03_b}}</td>
+                        <td>{{var_2020_05_a_01_03_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.3.0.contents}}</td>
+                        <td>{{var_2020_05_a_01_04_a}}</td>
+                        <td>{{var_2020_05_a_01_04_b}}</td>
+                        <td>{{var_2020_05_a_01_04_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.4.0.contents}}</td>
+                        <td>{{var_2020_05_a_01_SUM_a}}</td>
+                        <td>{{var_2020_05_a_01_SUM_b}}</td>
+                        <td>{{var_2020_05_a_01_SUM_c}}</td>
+                    </tr>
+                </table>
+            {%elif question.fieldset_info.rows.0.0.contents == "Personnel"%}
+            {% comment %} table 9 {% endcomment %}
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>{{question.fieldset_info.headers.1.contents}}</th>
+                        <th>{{question.fieldset_info.headers.2.contents}}</th>
+                        <th>{{question.fieldset_info.headers.3.contents}}</th>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.0.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_01_a}}</td>
+                        <td>{{var_2020_05_a_02_01_b}}</td>
+                        <td>{{var_2020_05_a_02_01_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.1.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_02_a}}</td>
+                        <td>{{var_2020_05_a_02_02_b}}</td>
+                        <td>{{var_2020_05_a_02_02_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.2.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_03_a}}</td>
+                        <td>{{var_2020_05_a_02_03_b}}</td>
+                        <td>{{var_2020_05_a_02_03_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.3.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_04_a}}</td>
+                        <td>{{var_2020_05_a_02_04_b}}</td>
+                        <td>{{var_2020_05_a_02_04_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.4.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_05_a}}</td>
+                        <td>{{var_2020_05_a_02_05_b}}</td>
+                        <td>{{var_2020_05_a_02_05_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.5.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_06_a}}</td>
+                        <td>{{var_2020_05_a_02_06_b}}</td>
+                        <td>{{var_2020_05_a_02_06_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.6.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_07_a}}</td>
+                        <td>{{var_2020_05_a_02_07_b}}</td>
+                        <td>{{var_2020_05_a_02_07_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.7.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_SUM_a}}</td>
+                        <td>{{var_2020_05_a_02_SUM_b}}</td>
+                        <td>{{var_2020_05_a_02_SUM_c}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{question.fieldset_info.rows.8.0.contents}}</td>
+                        <td>{{var_2020_05_a_02_FORMULA_a}}%</td>
+                        <td>{{var_2020_05_a_02_FORMULA_b}}%</td>
+                        <td>{{var_2020_05_a_02_FORMULA_c}}%</td>
+                    </tr>
+                </table>
+            {%endif%}
+        {%elif question.fieldset_info.rows.0.0 == "Medicaid Expansion CHIP"%}
+            <table>
+                <tr>
+                    <th>{{ question.fieldset_info.headers.0}}</th>
+                    <th>{{ question.fieldset_info.headers.1}}</th>
+                    <th>{{ question.fieldset_info.headers.2}}</th>
+                    <th>{{ question.fieldset_info.headers.3}}</th>
+                </tr>
+                <tr>
+                    <td>{{question.fieldset_info.rows.0.0}}</td>
+                    <td>{{question.fieldset_info.rows.0.1}}</td>
+                    <td>{{question.fieldset_info.rows.0.2}}</td>
+                    <td>{{question.fieldset_info.rows.0.3}}%</td>
+                </tr>
+                <tr>
+                    <td>{{question.fieldset_info.rows.1.0}}</td>
+                    <td>{{question.fieldset_info.rows.1.1}}</td>
+                    <td>{{question.fieldset_info.rows.1.2}}</td>
+                    <td>{{question.fieldset_info.rows.1.3}}%</td>
                 </tr>
             </table>
         {%endif%}

@@ -46,8 +46,7 @@
         {% elif temp_question.fieldset_type == "synthesized_table" %}
             {% include "reports/synthesizedtable.html" with question=temp_question state=state %}
         {%elif temp_question.fieldset_info%}
-            another table<br>
-            {{temp_question}}
+            {% comment %} another table here but just lists of entries {% endcomment %}
         {% else %}
             {%if temp_question.questions|length > 0%}
                 {% include "reports/question.html" with question=temp_question state=state %}

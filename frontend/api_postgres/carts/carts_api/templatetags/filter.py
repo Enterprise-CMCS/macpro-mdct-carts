@@ -40,7 +40,7 @@ def replace_html(the_string):
 def build_month_year(the_string):
     try:
         tempdate = the_string.split("-")
-        return tempdate[1]+'-'+tempdate[0]
+        return tempdate[1]+'/'+tempdate[0]
     except:
         return None
 
