@@ -66,15 +66,18 @@ const CMSHomepage = ({
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
-        <div className="ds-l-row ds-u-padding-left--2">
-          <h1 className="page-title ds-u-margin-bottom--0">
-            CHIP Annual Report Template System (CARTS)
-          </h1>
-        </div>
-        <div className="page-info ds-u-padding-left--2">
-          <div className="edit-info">CMS user</div>
-        </div>
-
+        {currentUserRole !== "admin_user" ? (
+          <>
+            <div className="ds-l-row ds-u-padding-left--2">
+              <h1 className="page-title ds-u-margin-bottom--0">
+                CHIP Annual Report Template System (CARTS)
+              </h1>
+            </div>
+            <div className="page-info ds-u-padding-left--2">
+              <div className="edit-info">CMS user</div>
+            </div>
+          </>
+        ) : null}
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
             <div className="carts-report preview__grid">
@@ -194,6 +197,7 @@ CMSHomepage.propTypes = {
   currentUserRole: PropTypes.string.isRequired,
   stateList: PropTypes.object.isRequired,
   yearList: PropTypes.object.isRequired,
+  reportState: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
