@@ -1,67 +1,58 @@
 {% load filter %}
 <html>
-    <head>
-        <style type="text/css">
-            section {
-                display: block;
-                border: 2px dotted red;
-                padding: 2px;
-            }
-            subsection {
-                display: block;
-                border: 2px dotted orange;
-                padding: 2px;
-            }
-            part {
-                display: block;
-                border: 2px solid yellow;
-                padding: 2px;
-            }
-            question {
-                display: block;
-                border: 2px dotted green;
-                padding: 2px;
-            }
-            answer {
-                display: block;
-                border: 2px dotted blue;
-                padding: 2px;
-            }
-            dl.text_answer.radio>div {
-                display: flex;
-                flex-wrap: wrap;
-            }
-            dl.text_answer.radio dt {
-                display: flex;
-                width: 33%;
-            }
-            dl.text_answer.radio dd {
-                display: flex;
-                margin-left: auto;
-                width: 66%;
-            }
+  <head>
+    <style type="text/css">
+      section {
+        display: block;
+        border: 2px dotted red;
+        padding: 2px;
+      }
+      subsection {
+        display: block;
+        border: 2px dotted orange;
+        padding: 2px;
+      }
+      part {
+        display: block;
+        border: 2px solid yellow;
+        padding: 2px;
+      }
+      question {
+        display: block;
+        border: 2px dotted green;
+        padding: 2px;
+      }
+      answer {
+        display: block;
+        border: 2px dotted blue;
+        padding: 2px;
+      }
+      dl.text_answer.radio > div {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      dl.text_answer.radio dt {
+        display: flex;
+        width: 33%;
+      }
+      dl.text_answer.radio dd {
+        display: flex;
+        margin-left: auto;
+        width: 66%;
+      }
+    </style>
+  </head>
 
-
-
-
-        </style>
-</head>
-
-    <body>
-        <report>
-            {% for section in sections %}
-                <section id="{{section.id}}">
-                    {% with section.id|split_last:"-" as id %}        
-                        <h1>Section 
-                        {%if id != "00"%}
-                            {{id}}
-                        {%endif%}
-                        : {{section.title}}</h1>
-                    {%endwith%}
-                    {% include "reports/subsection.html" with subsections=section.subsections state=state %}
-                </section>
-            {% endfor %}
-        </report>
-    </body>
+  <body>
+    <report>
+      {% for section in sections %}
+      <section id="{{section.id}}">
+        {% with section.id|split_last:"-" as id %}
+        <h1>Section {%if id != "00"%} {{id}} {%endif%} : {{section.title}}</h1>
+        {%endwith%} {% include "reports/subsection.html" with
+        subsections=section.subsections state=state %}
+      </section>
+      {% endfor %}
+    </report>
+  </body>
 </html>
-

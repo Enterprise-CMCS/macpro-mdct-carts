@@ -58,7 +58,9 @@ export const DownloadDrawer = ({ show }) => {
     </p>
   );
 };
-
+DownloadDrawer.propTypes = {
+  show: PropTypes.any,
+};
 const downloadTemplate = async () => {
   const response = await axios.post(
     `${window.env.API_POSTGRES_URL}/api/v1/download_template`

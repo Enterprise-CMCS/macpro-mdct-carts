@@ -2,112 +2,55 @@
 <question id="{{question.id}}">
   <dl class="text_answer">
     <div class="text_answer_dl">{{question.label}}</div>
-      -{{question.answer.header}}<br>
-       {%if question.answer.range_categories|length == 2%}{% comment %} handles range categories count = 2. Need to add elif for count = 3, etc  {% endcomment %}
-        {%if question.answer.entry|length == 0 %}
-          <br><i>Unanswered</i>
-        {%else%}
-          {% for questionGroup in question.answer.entry %}
-            Entry # {{forloop.counter}}<br>
-            {% with question.answer.range_categories|array_value_at_index:0 as questionlabel %}
-              {% with question.answer.range_categories|array_value_at_index:1 as questionlabel2 %}
-                {% with questionlabel|array_value_at_index:0 as first_question %}
-                  {% with questionlabel|array_value_at_index:1 as second_question %}
-                    {% with questionlabel2|array_value_at_index:0 as first_question2 %}
-                      {% with questionlabel2|array_value_at_index:1 as second_question2 %}  
-                        {%for answerArray in questionGroup%}
-                          {%with question.answer.range_type|array_value_at_index:0 as range_type1%}
-                            {%with question.answer.range_type|array_value_at_index:1 as range_type2%}
-                              {%if forloop.counter == 1%}  
-                                {% with answerArray|array_value_at_index:0 as first_answer %}
-                                  {% with answerArray|array_value_at_index:1 as second_answer %}
-                                    {{first_question}} - {{second_question}}<br>
-                                    {%if range_type1 == "money"%}
-                                      $
-                                    {%endif%}
-                                    {{first_answer}}
-                                    {%if range_type1 == "percentage"%}
-                                      &#37;
-                                    {%endif%}
-                                     - 
-                                    {%if range_type1 == "money"%}
-                                      $
-                                    {%endif%}
-                                    {{second_answer}}
-                                    {%if range_type1 == "percentage"%}
-                                       &#37;
-                                    {%endif%}
-                                    <br>
-                                  {%endwith%}
-                                {%endwith%}
-                              {%else%}
-                                {% with answerArray|array_value_at_index:0 as first_answer %}
-                                  {% with answerArray|array_value_at_index:1 as second_answer %}
-                                    {{first_question2}} - {{second_question2}}<br>
-                                    {%if range_type2 == "money"%}
-                                      $
-                                    {%endif%}
-                                    {{first_answer}}
-                                    {%if range_type2 == "percentage"%}
-                                      &#37;
-                                    {%endif%} - 
-                                    {%if range_type2 == "money"%}
-                                      $
-                                    {%endif%}
-                                    {{second_answer}}
-                                    {%if range_type2 == "percentage"%}
-                                      &#37;
-                                    {%endif%}<br><br>
-                                  {%endwith%}
-                                {%endwith%}
-                              {%endif%}
-                            {%endwith%}  
-                          {%endwith%}    
-                        {%endfor%}
-                      {%endwith%}
-                    {%endwith%}
-                  {%endwith%}
-                {%endwith%}
-              {%endwith%}
-            {%endwith%}
-          {%endfor%}
-        {%endif%}
-      {%else%}{% comment %} handles range categories count = 1  {% endcomment %}
-        {%if question.answer.entry|length == 0 %}
-          <br><i>Unanswered</i>
-        {%else%}
-          {% for questionGroup in question.answer.entry %}
-            {% with question.answer.range_categories|array_value_at_index:0 as questionlabel %}
-              {% with questionlabel|array_value_at_index:0 as first_question %}
-                {% with questionlabel|array_value_at_index:1 as second_question %}
-                  {%for answerArray in questionGroup%}
-                    {%with question.answer.range_type|array_value_at_index:0 as range_type1%}
-                      {% with answerArray|array_value_at_index:0 as first_answer %}
-                        {% with answerArray|array_value_at_index:1 as second_answer %}
-                          <br>{{first_question}} - {{second_question}}<br>
-                            {%if range_type1 == "money"%}
-                              $
-                            {%endif%}
-                            {{first_answer}}
-                            {%if range_type1 == "percentage"%}
-                              &#37;
-                            {%endif%}         - 
-                            {%if range_type1 == "money"%}
-                              $
-                            {%endif%}
-                            {{second_answer}}
-                            {%if range_type1 == "percentage"%}
-                              &#37;
-                            {%endif%}<br><br>
-                        {%endwith%}
-                      {%endwith%}
-                    {%endwith%}
-                  {%endfor%}
-                {%endwith%}
-              {%endwith%}
-            {%endwith%}
-          {%endfor%}
-        {%endif%}
-      {%endif%}
+    -{{question.answer.header}}<br />
+    {%if question.answer.range_categories|length == 2%}{% comment %} handles
+    range categories count = 2. Need to add elif for count = 3, etc {%
+    endcomment %} {%if question.answer.entry|length == 0 %}
+    <br /><i>Unanswered</i> {%else%} {% for questionGroup in
+    question.answer.entry %} Entry # {{forloop.counter}}<br />
+    {% with question.answer.range_categories|array_value_at_index:0 as
+    questionlabel %} {% with
+    question.answer.range_categories|array_value_at_index:1 as questionlabel2 %}
+    {% with questionlabel|array_value_at_index:0 as first_question %} {% with
+    questionlabel|array_value_at_index:1 as second_question %} {% with
+    questionlabel2|array_value_at_index:0 as first_question2 %} {% with
+    questionlabel2|array_value_at_index:1 as second_question2 %} {%for
+    answerArray in questionGroup%} {%with
+    question.answer.range_type|array_value_at_index:0 as range_type1%} {%with
+    question.answer.range_type|array_value_at_index:1 as range_type2%} {%if
+    forloop.counter == 1%} {% with answerArray|array_value_at_index:0 as
+    first_answer %} {% with answerArray|array_value_at_index:1 as second_answer
+    %} {{first_question}} - {{second_question}}<br />
+    {%if range_type1 == "money"%} $ {%endif%} {{first_answer}} {%if range_type1
+    == "percentage"%} &#37; {%endif%} - {%if range_type1 == "money"%} $
+    {%endif%} {{second_answer}} {%if range_type1 == "percentage"%} &#37;
+    {%endif%}
+    <br />
+    {%endwith%} {%endwith%} {%else%} {% with answerArray|array_value_at_index:0
+    as first_answer %} {% with answerArray|array_value_at_index:1 as
+    second_answer %} {{first_question2}} - {{second_question2}}<br />
+    {%if range_type2 == "money"%} $ {%endif%} {{first_answer}} {%if range_type2
+    == "percentage"%} &#37; {%endif%} - {%if range_type2 == "money"%} $
+    {%endif%} {{second_answer}} {%if range_type2 == "percentage"%} &#37;
+    {%endif%}<br /><br />
+    {%endwith%} {%endwith%} {%endif%} {%endwith%} {%endwith%} {%endfor%}
+    {%endwith%} {%endwith%} {%endwith%} {%endwith%} {%endwith%} {%endwith%}
+    {%endfor%} {%endif%} {%else%}{% comment %} handles range categories count =
+    1 {% endcomment %} {%if question.answer.entry|length == 0 %}
+    <br /><i>Unanswered</i>
+    {%else%} {% for questionGroup in question.answer.entry %} {% with
+    question.answer.range_categories|array_value_at_index:0 as questionlabel %}
+    {% with questionlabel|array_value_at_index:0 as first_question %} {% with
+    questionlabel|array_value_at_index:1 as second_question %} {%for answerArray
+    in questionGroup%} {%with question.answer.range_type|array_value_at_index:0
+    as range_type1%} {% with answerArray|array_value_at_index:0 as first_answer
+    %} {% with answerArray|array_value_at_index:1 as second_answer %}
+    <br />{{first_question}} - {{second_question}}<br />
+    {%if range_type1 == "money"%} $ {%endif%} {{first_answer}} {%if range_type1
+    == "percentage"%} &#37; {%endif%} - {%if range_type1 == "money"%} $
+    {%endif%} {{second_answer}} {%if range_type1 == "percentage"%} &#37;
+    {%endif%}<br /><br />
+    {%endwith%} {%endwith%} {%endwith%} {%endfor%} {%endwith%} {%endwith%}
+    {%endwith%} {%endfor%} {%endif%} {%endif%}
   </dl>
 </question>
