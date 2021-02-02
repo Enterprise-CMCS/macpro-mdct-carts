@@ -16,7 +16,11 @@ const Homepage = ({ editable, status, currentYear, tempState }) => (
           CHIP Annual Report Template System (CARTS)
         </h1>
       </div>
-      <DownloadDrawer show={true} currentYear={currentYear} tempState={tempState}/>
+      <DownloadDrawer
+        show={true}
+        currentYear={currentYear}
+        tempState={tempState}
+      />
       <div className="ds-l-row">
         <div className="reports ds-l-col--12">
           <div className="carts-report preview__grid">
@@ -63,13 +67,14 @@ Homepage.propTypes = {
   editable: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
   currentYear: PropTypes.number.isRequired,
+  tempState: PropTypes.string.isRequired,
 };
 
 const mapState = (state) => ({
   editable: selectIsFormEditable(state),
   status: selectFormStatus(state),
   currentYear: state.global.formYear,
-  tempState:state.stateUser.abbr
+  tempState: state.stateUser.abbr,
 });
 
 export default connect(mapState)(Homepage);

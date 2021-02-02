@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
  * @param {boolean} show Only display download template text boolean is true.
  * Otherwise show default text.
  */
-export const DownloadDrawer = ({ show,currentYear, tempState }) => {
+export const DownloadDrawer = ({ show, currentYear, tempState }) => {
   return show ? (
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
@@ -38,7 +38,7 @@ export const DownloadDrawer = ({ show,currentYear, tempState }) => {
             <div className="download">
               <button
                 className="ds-c-button ds-c-button--primary"
-                onClick={() => downloadTemplate(tempState,currentYear)}
+                onClick={() => downloadTemplate(tempState, currentYear)}
               >
                 <span>Download template</span>
                 <FontAwesomeIcon icon={faPlus} />
@@ -64,12 +64,13 @@ DownloadDrawer.propTypes = {
   currentYear: PropTypes.any,
   tempState: PropTypes.any,
 };
-const downloadTemplate = async (tempState,currentYear) => {
+const downloadTemplate = async (tempState, currentYear) => {
   const response = await axios.post(
-    `${window.env.API_POSTGRES_URL}/api/v1/download_template`,{
-        'tempState':tempState,
-        'currentYear':currentYear,
-      }
+    `${window.env.API_POSTGRES_URL}/api/v1/download_template`,
+    {
+      tempState: tempState,
+      currentYear: currentYear,
+    }
   );
 
   console.log(response);

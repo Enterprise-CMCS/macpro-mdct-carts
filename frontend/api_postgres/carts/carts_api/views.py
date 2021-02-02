@@ -1175,7 +1175,7 @@ def _getUsersForStatusChange(statecode):
 
 @api_view(["POST"])
 def download_template(request):
-    
+
     options = {
         "page-size": "A4",
         "margin-top": "0.75in",
@@ -1191,7 +1191,7 @@ def download_template(request):
     today = datetime.now()
     pdf_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") + ".pdf"
     zip_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") + ".zip"
-    
+
     sections = Section.objects.all().filter(
         contents__section__year=year,
         contents__section__state=state,
