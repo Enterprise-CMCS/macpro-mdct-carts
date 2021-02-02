@@ -463,26 +463,43 @@ resource "aws_cloudwatch_log_subscription_filter" "lambdafunction_logfilter" {
 }
 
 resource "aws_security_group" "start_dms_lambda_sg" {
-  name   = "start_dms_lambda-${terraform.workspace}"
+  name   = "start_dms_lambda-${terraform.workspace}-sg"
   vpc_id = var.vpc_id
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
-# # Outbound, for target (postgres)
-resource "aws_security_group_rule" "start_dms_lambda_outbound" {
-  type              = "egress"
-  from_port         = 5432
-  to_port           = 5432
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.start_dms_lambda_sg.id
+# # VPC Endpoint, for SSM
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.us-east-1.ssm"
+  vpc_endpoint_type = "Interface"
+  security_group_ids = [aws_security_group.ssm_vpc_endpoint_sg.id]
+  subnet_ids = var.subnet_ids
+  private_dns_enabled = true
 }
 
-# # Inbound, for source (Start DMS Lambda)
-resource "aws_security_group_rule" "start_dms_lambda_inbound" {
-  type              = "ingress"
-  from_port         = var.source_database_port
-  to_port           = var.source_database_port
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.start_dms_lambda_sg.id
+resource "aws_security_group" "ssm_vpc_endpoint_sg" {
+  name   = "ssm_vpc_endpoint-${terraform.workspace}-sg"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    security_groups = [aws_security_group.start_dms_lambda_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
