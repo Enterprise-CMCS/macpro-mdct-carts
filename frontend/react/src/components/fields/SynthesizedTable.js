@@ -10,18 +10,20 @@ const SynthesizedTable = ({ question, rows }) => {
         {question.fieldset_info.headers && (
           <thead>
             <tr>
-              {question.fieldset_info.headers.map((header) => (
-                <th scope="col">{header.contents}</th>
+              {question.fieldset_info.headers.map((header, index) => (
+                <th scope="col" key={index}>
+                  {header.contents}
+                </th>
               ))}
             </tr>
           </thead>
         )}
         <tbody>
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             return (
-              <tr>
-                {row.map((cell) => (
-                  <td>{cell.contents}</td>
+              <tr key={index}>
+                {row.map((cell, index) => (
+                  <td key={index}>{cell.contents}</td>
                 ))}
               </tr>
             );

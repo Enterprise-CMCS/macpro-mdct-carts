@@ -194,8 +194,11 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
   let returnValue = "";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
-    // Get stateUser state
-    const stateAbbr = state.stateUser.abbr;
+    // if admin, grab the state from the URL
+    const stateFromURL = window.location.pathname.split("/")[3];
+
+    // Get stateUser state or fallback to the URL, if an admin
+    const stateAbbr = state.stateUser.abbr || stateFromURL;
 
     // Filter for only matching state
     const stateData = state.allStatesData.filter(
