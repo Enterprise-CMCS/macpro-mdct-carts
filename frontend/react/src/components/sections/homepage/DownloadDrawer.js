@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "../../../authenticatedAxios";
 import { saveAs } from "file-saver";
+import PropTypes from "prop-types";
 /**
  *
  * @param {boolean} show Only display download template text boolean is true.
