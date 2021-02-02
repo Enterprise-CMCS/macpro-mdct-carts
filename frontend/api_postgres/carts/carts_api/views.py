@@ -1175,6 +1175,7 @@ def _getUsersForStatusChange(statecode):
 
 @api_view(["POST"])
 def download_template(request):
+    
     options = {
         "page-size": "A4",
         "margin-top": "0.75in",
@@ -1184,11 +1185,13 @@ def download_template(request):
         "encoding": "UTF-8",
     }
 
+    state = request.data.get("tempState")
+    year = int(request.data.get("currentYear"))
+
     today = datetime.now()
     pdf_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") + ".pdf"
     zip_filename = f"template" + today.strftime("%d_%m_%Y %H_%M_%S") + ".zip"
-    year = 2020
-    state = "MA"
+    
     sections = Section.objects.all().filter(
         contents__section__year=year,
         contents__section__state=state,
@@ -1197,7 +1200,7 @@ def download_template(request):
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
-
+    print(ordered[0])
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split(

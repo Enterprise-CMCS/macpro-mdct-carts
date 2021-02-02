@@ -8,7 +8,7 @@ import {
   selectIsFormEditable,
 } from "../../../store/selectors";
 
-const Homepage = ({ editable, status, currentYear }) => (
+const Homepage = ({ editable, status, currentYear, tempState }) => (
   <div className="homepage">
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -16,7 +16,7 @@ const Homepage = ({ editable, status, currentYear }) => (
           CHIP Annual Report Template System (CARTS)
         </h1>
       </div>
-      <DownloadDrawer show={true} />
+      <DownloadDrawer show={true} currentYear={currentYear} tempState={tempState}/>
       <div className="ds-l-row">
         <div className="reports ds-l-col--12">
           <div className="carts-report preview__grid">
@@ -69,6 +69,7 @@ const mapState = (state) => ({
   editable: selectIsFormEditable(state),
   status: selectFormStatus(state),
   currentYear: state.global.formYear,
+  tempState:state.stateUser.abbr
 });
 
 export default connect(mapState)(Homepage);
