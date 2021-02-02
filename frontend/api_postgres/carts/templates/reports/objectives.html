@@ -1,2 +1,7 @@
-objectives
-<pre>{{ question }}</pre>
+{% load filter %}
+{% for objective in question.questions %}
+    {% with objective.id|split_last:"-" as id %}
+          Objective # {{ id }}<br>
+    {% endwith %}        
+        {% include "reports/goals.html" with question=objective.questions state=state %}
+{% endfor %}
