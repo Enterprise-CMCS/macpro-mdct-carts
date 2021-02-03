@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "../../../authenticatedAxios";
 import { saveAs } from "file-saver";
 import PropTypes from "prop-types";
 /**
- * 
- * @param {boolean} show Only display download template text boolean is true. 
+ *
+ * @param {boolean} show Only display download template text boolean is true.
  * Otherwise show default text.
  */
 export const DownloadDrawer = ({ show, currentYear, tempState }) => {
@@ -19,7 +19,7 @@ export const DownloadDrawer = ({ show, currentYear, tempState }) => {
             <div className="icon-inner">
               <FontAwesomeIcon icon={faFileAlt} />
             </div>
-            </div>
+          </div>
           <div className="update-contents ds-l-col--10">
             <div className="title-date ds-l-row">
               <div className="title ds-l-col--7">
@@ -47,7 +47,7 @@ export const DownloadDrawer = ({ show, currentYear, tempState }) => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   ) : (
     <p className="ds-u-margin-bottom--2">
       Welcome to CARTS! We’ve incorporated feedback from several states to bring

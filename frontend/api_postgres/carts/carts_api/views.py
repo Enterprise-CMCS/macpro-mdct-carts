@@ -1166,6 +1166,7 @@ def _getUsersForStatusChange(statecode):
         print(e)
     return users
 
+
 @api_view(["POST"])
 def download_template(request):
 
@@ -1793,7 +1794,8 @@ def download_template(request):
 
     # return the content back as application/octet-stream as a 'catch-all' for all file types
     return response
-    
+
+
 def _id_from_chunks(year, *args):
     def fill(chunk):
         chunk = str(chunk).lower()
