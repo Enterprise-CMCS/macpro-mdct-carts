@@ -1,7 +1,5 @@
-{% load filter %}
 <html>
     <head>
-    <meta charset="utf-8">
         <style type="text/css">
             section {
                 display: block;
@@ -50,15 +48,11 @@
 
     <body>
         <report>
+            length: {{l}}
             {% for section in sections %}
                 <section id="{{section.id}}">
-                    {% with section.id|split_last:"-" as id %}        
-                        <h1>Section 
-                        {%if id != "00"%}
-                            {{id}}
-                        {%endif%}
-                        : {{section.title}}</h1>
-                    {%endwith%}
+                    <h1>Section {{forloop.counter}}: {{section.title}}</h1>
+                    <p>{{section.id}}, {{section.year}}, {{section.state}}, {{section.ordinal}}</p>
                     {% include "reports/subsection.html" with subsections=section.subsections state=state %}
                 </section>
             {% endfor %}
