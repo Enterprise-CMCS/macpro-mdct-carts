@@ -66,6 +66,7 @@ api_patterns = [
     path("view_uploaded", views.view_uploaded_files),
     path("remove_uploaded", views.remove_uploaded_files),
     path("psurl_download", views.generate_download_psurl),
+    path("download_template", views.download_template),
     path("appusers/<slug:username>", views.fake_user_data),
     path("userprofiles", views.UserProfilesViewSet),
     path("user/activate/<str:user>", views.UserActivateViewSet),

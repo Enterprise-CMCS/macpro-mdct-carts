@@ -50,8 +50,12 @@ COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
+RUN apk --no-cache add wkhtmltopdf xvfb
+
 # TD 20201012 install dependencies needed to generate pre-signed urls
 RUN pip install boto3 --no-cache
+RUN pip install pdfkit --no-cache
+
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh $APP_HOME
