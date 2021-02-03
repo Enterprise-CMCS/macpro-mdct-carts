@@ -1195,11 +1195,10 @@ def download_template(request):
         contents__section__state=state,
     )
 
-
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
-    
+
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split(
@@ -1675,7 +1674,7 @@ def download_template(request):
             )
             * 100
         )
-        
+
     context = {
         "sections": ordered,
         "state": state,
@@ -1745,12 +1744,12 @@ def download_template(request):
         "var_2020_05_a_02_FORMULA_b": var_2020_05_a_02_FORMULA_b,
         "var_2020_05_a_02_FORMULA_c": var_2020_05_a_02_FORMULA_c,
     }
-    
+
     html = template.render(context)
-    
+
     # generate a pdf string (internal pdf string format)
     pdf = pdfkit.from_string(html, pdf_filename)
-    
+
     # might need to set text type to utf8
 
     # encode a pdf string as base 64 to avoid decoding mismatches and collisions
@@ -1772,7 +1771,6 @@ def download_template(request):
     region = os.environ.get("AWS_REGION")
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
-
 
     for file in uploaded_files:
         with open(file.aws_filename, "wb") as f:
@@ -1797,7 +1795,7 @@ def download_template(request):
         encoded_zip, content_type="application/octet-stream"
     )
     response["savefile"] = f"{zip_filename}"
-    
+
     # return the content back as application/octet-stream as a 'catch-all' for all file types
     return response
 
