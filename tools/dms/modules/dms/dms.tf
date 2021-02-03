@@ -298,8 +298,8 @@ resource "aws_dms_event_subscription" "notification-instance" {
 
 ############### Adding codes for the automated trigger of DMS event
 /*
-DMS event subscription 
-Creates the DMS event subscription that monitors "state change" of a replication task & sends the event to the 1st SNS topic 
+DMS event subscription
+Creates the DMS event subscription that monitors "state change" of a replication task & sends the event to the 1st SNS topic
 */
 resource "aws_dms_event_subscription" "seds-statechange-notification" {
   enabled          = true
@@ -410,7 +410,7 @@ is triggered by the 1st SNS Topic, and prints out the events/logs to CWLogs (/aw
 */
 resource "aws_lambda_function" "dms_event_lambda" {
   filename      = "./dms_event_lambda.zip"
-  function_name = "dms_event_lambda"
+  function_name = "${terraform.workspace}_dms_event_lambda"
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "dms_event_lambda.handler"
   runtime = "python3.7"
@@ -433,10 +433,12 @@ is triggered by the CloudWatch Logs Subscription filter and starts the next DMS 
 */
 resource "aws_lambda_function" "start_dms_lambda" {
   filename      = "./start_dms.zip"
-  function_name = "start_dms"
+  function_name = "${terraform.workspace}_start_dms"
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "start_dms.handler"
-  runtime = "nodejs10.x"
+  timeout       = 60
+  memorySize    = 512
+  runtime = "nodejs12.x"
   vpc_config {
     subnet_ids         = var.subnet_ids
     security_group_ids = [aws_security_group.start_dms_lambda_sg.id]
@@ -465,7 +467,7 @@ resource "aws_cloudwatch_log_subscription_filter" "lambdafunction_logfilter" {
 resource "aws_security_group" "start_dms_lambda_sg" {
   name   = "start_dms_lambda-${terraform.workspace}-sg"
   vpc_id = var.vpc_id
-  
+
   egress {
     from_port   = 0
     to_port     = 0
