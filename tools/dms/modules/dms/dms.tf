@@ -503,3 +503,13 @@ resource "aws_security_group" "ssm_vpc_endpoint_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# Modify target security group to allow inbound traffic from lambda (postgres)
+resource "aws_security_group_rule" "postgres_ingress_from_start_dms_lambda" {
+  type                     = "ingress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.start_dms_lambda_sg.id
+  security_group_id        = data.aws_ssm_parameter.postgres_security_group.value
+}
