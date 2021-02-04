@@ -437,7 +437,7 @@ resource "aws_lambda_function" "start_dms_lambda" {
   role          = aws_iam_role.seds_lambda_role.arn
   handler       = "start_dms.handler"
   timeout       = 60
-  memorySize    = 512
+  memory_size    = 512
   runtime = "nodejs12.x"
   vpc_config {
     subnet_ids         = var.subnet_ids
@@ -451,7 +451,7 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.start_dms_lambda.function_name
   principal     = "logs.amazonaws.com"
-  source_arn = "${aws_cloudwatch_log_group.dms_event_lambda_lg.arn}:*"
+  source_arn = "${aws_cloudwatch_log_group.dms_event_lambda_lg.arn}"
 }
 /*
 CloudWatch Logs Subscription Filters
