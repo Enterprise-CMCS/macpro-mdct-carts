@@ -165,7 +165,7 @@ class UploadComponent extends Component {
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
-      uploadedFiles: response ? response.data["uploaded_files"] : [],
+      uploadedFiles: response.data["uploaded_files"],
     });
   };
 

@@ -1,0 +1,13 @@
+{% load filter %}
+{% for repeatable in question %}
+    {% with repeatable.id|split_last:"-" as goal_id %}
+            <br>HSI Program # {{ goal_id }}<br>
+    {%endwith%}
+    {% for repeatable_question in repeatable.questions %}
+        <br/>
+        {% include "reports/question.html" with question=repeatable_question state=state %}
+        </br>
+    {%endfor%}
+{%endfor%}
+         
+
