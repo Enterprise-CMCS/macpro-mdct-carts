@@ -351,7 +351,7 @@ Lambda Function Role
 Has the Lambda basic execution policy attached to it, so it can send its logs to CWLogs
 */
 resource "aws_iam_role" "seds_lambda_role" {
-  name = "lambda"
+  name = "${terraform.workspace}_dms_lambda_role"
 
   assume_role_policy = <<EOF
 {
@@ -371,7 +371,7 @@ EOF
 }
 
 resource "aws_iam_policy" "ssm_policy" {
-  name = "get_ssm_parameters"
+  name = "get_ssm_parameters_${terraform.workspace}"
   path = "/"
   description = "gives permission to get ssm parameters"
 
