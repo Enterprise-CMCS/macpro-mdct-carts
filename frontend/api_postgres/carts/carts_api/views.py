@@ -1759,6 +1759,8 @@ def download_template(request):
         username=request.user
     ).values_list("state_codes", flat=True)[0][0]
 
+    print("blank uploaded files")
+
     uploaded_files = UploadedFiles.objects.filter(
         uploaded_username=request.user,
         uploaded_state=user_state,
@@ -1766,15 +1768,20 @@ def download_template(request):
 
     uploaded_file_list = []
 
+    print("pre s3 setup")
+
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
     region = os.environ.get("AWS_REGION")
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
 
+    print("before file")
+
     for file in uploaded_files:
         with open(file.aws_filename, "wb") as f:
             s3.download_fileobj(s3_bucket, file.filename, f)
 
+    print("with zip files")
     # generate a zip file with newly generated pdf + some additional docs
     with ZipFile(zip_filename, "w") as zipObject:
         zipObject.write(pdf_filename)
@@ -1783,12 +1790,16 @@ def download_template(request):
             zipObject.write(file.filename)
             os.remove(file.filename)
 
+    print("building zip")
+
     # open created zip file in binary format ...
     with open(
         "template" + today.strftime("%d_%m_%Y %H_%M_%S") + ".zip", "rb"
     ) as zipObject:
         # ... and base64 encode the results to prevent decoding mismatches and collisions
         encoded_zip = base64.b64encode(zipObject.read())
+
+    print("build response")
 
     response = HttpResponse(
         encoded_zip, content_type="application/octet-stream"
