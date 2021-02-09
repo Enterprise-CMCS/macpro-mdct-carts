@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "uilqxg&r93npq*zt3^h+f4te8#%jh^noc7_r3@&t_ad(8lsr7n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Need to provide the url from terraform before we get specific here... * until then
 # ALLOWED_HOSTS = [
