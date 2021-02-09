@@ -9,9 +9,9 @@ import boto3
 from botocore.config import Config
 import os
 import random
-
-import pdfkit
 import base64
+import pdfkit
+
 from zipfile import ZipFile
 
 from datetime import datetime
@@ -80,9 +80,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from django.core.serializers.json import DjangoJSONEncoder
-
-from datetime import date
-
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -295,7 +292,7 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         if user.appuser.role == "state_user":
             state = user.appuser.states.all()[0]
             return StateStatus.objects.filter(state=state)
-        elif user.appuser.role in ("bus_user", "co_user"):
+        elif user.appuser.role in ("bus_user", "co_user", "admin_user"):
             return StateStatus.objects.all()
 
 
@@ -328,7 +325,8 @@ class SectionViewSet(viewsets.ModelViewSet):
             # TODO: streamline this so if users have access to all of the
             # objects (e.g. if they're admins) the check occurs ony once.
             print("about to check object permissions", flush=True)
-            self.check_object_permissions(request, section)
+            if request.user.appuser.role != "admin_user":
+                self.check_object_permissions(request, section)
 
         serializer = SectionSerializer(
             sections, many=True, context={"request": request}
@@ -626,7 +624,7 @@ def AddUser(request, eua_id=None, state_code=None, role=None):
         if current is not None:
             print(f"\n\n\n User exists")
             result.content = "User already exists"
-            result.status_code = 409
+            result.status_code = 200
 
         else:
             """
@@ -672,7 +670,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
 
     response = ""
 
-    # Update auth_user table
+    ### Update auth_user table
     try:
         # Get user from auth_user table
         user = User.objects.get(id=id)
@@ -689,7 +687,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             {"status": "false", "message": "User Not Found"}, status=500
         )
 
-    # Update rolefromusername
+    ### Update rolefromusername
     try:
 
         # Get user from rolefromusername table
@@ -708,7 +706,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             user_role=role, username=user.username.upper()
         )
 
-    # Update statesfromusername
+    ### Update statesfromusername
     try:
         userStates = StatesFromUsername.objects.filter(
             username=user.username
@@ -1021,7 +1019,7 @@ def SendEmail(request):
     if message is None:
         responseMessage += "Missing require data: message \n"
 
-    if responseMessage == "":
+    if responseMessage is "":
         try:
             send_mail(subject, message, sender, recipients)
             jsonResponse = JsonResponse(
@@ -1106,7 +1104,7 @@ def SendEmailStatusChange(request):
     if source is None:
         responseMessage += "Missing require data: source \n"
 
-    if responseMessage == "":
+    if responseMessage is "":
 
         try:
             subject = "CMS MDCT CARTS"
@@ -1200,7 +1198,11 @@ def download_template(request):
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 61b84d24657d715d0706ded5d702a42799e71d4a
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split(
