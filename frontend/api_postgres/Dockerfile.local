@@ -20,6 +20,7 @@ RUN apk add --update openssl && \
     rm -rf /var/cache/apk/*
 
 RUN apk --no-cache add wkhtmltopdf xvfb
+
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt /usr/src/app/requirements.txt

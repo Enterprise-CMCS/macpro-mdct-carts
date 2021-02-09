@@ -3,9 +3,10 @@
   <dl class="text_answer">
     <div class="text_answer_dl">{{question.label}}</div>
       -{{question.answer.header}}<br>
+      <dd class="answer">
        {%if question.answer.range_categories|length == 2%}{% comment %} handles range categories count = 2. Need to add elif for count = 3, etc  {% endcomment %}
         {%if question.answer.entry|length == 0 %}
-          <br><i>Unanswered</i>
+          <br>&emsp;<i>Unanswered</i>
         {%else%}
           {% for questionGroup in question.answer.entry %}
             Entry # {{forloop.counter}}<br>
@@ -74,7 +75,7 @@
         {%endif%}
       {%else%}{% comment %} handles range categories count = 1  {% endcomment %}
         {%if question.answer.entry|length == 0 %}
-          <br><i>Unanswered</i>
+          <br>&emsp;<i>Unanswered</i>
         {%else%}
           {% for questionGroup in question.answer.entry %}
             {% with question.answer.range_categories|array_value_at_index:0 as questionlabel %}
@@ -109,5 +110,6 @@
           {%endfor%}
         {%endif%}
       {%endif%}
+    </dd>
   </dl>
 </question>

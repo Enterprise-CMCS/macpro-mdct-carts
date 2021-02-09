@@ -56,7 +56,6 @@ RUN apk --no-cache add wkhtmltopdf xvfb
 RUN pip install boto3 --no-cache
 RUN pip install pdfkit --no-cache
 
-
 # copy entrypoint.sh
 COPY ./entrypoint.sh $APP_HOME
 

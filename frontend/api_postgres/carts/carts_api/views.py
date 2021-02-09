@@ -324,7 +324,7 @@ class SectionViewSet(viewsets.ModelViewSet):
         for section in sections:
             # TODO: streamline this so if users have access to all of the
             # objects (e.g. if they're admins) the check occurs ony once.
-            print("about to check object permissions", flush=True)
+            # print("about to check object permissions", flush=True)
             if request.user.appuser.role != "admin_user":
                 self.check_object_permissions(request, section)
 
@@ -1198,7 +1198,6 @@ def download_template(request):
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
-
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split(
@@ -1253,7 +1252,7 @@ def download_template(request):
         1
     ]
     temp_answer = temp_question.split("'answer': {'entry': ")[1]
-    var_2020_03_c_03_04 = temp_answer.split("'},")[0].replace("'", "")
+    var_2020_03_c_03_04 = temp_answer.split("},")[0].replace("'", "")
 
     temp_question = str(ordered[3]).split(
         "{'id': '2020-03-c-03-04-a', 'hint':"
@@ -1612,7 +1611,6 @@ def download_template(request):
                 )
                 / 9
             )
-            * 100
         )
     if (
         var_2020_05_a_02_01_b != "None"
@@ -1642,7 +1640,6 @@ def download_template(request):
                 )
                 / 9
             )
-            * 100
         )
     if (
         var_2020_05_a_02_01_c != "None"
@@ -1672,7 +1669,6 @@ def download_template(request):
                 )
                 / 9
             )
-            * 100
         )
 
     context = {
@@ -1760,6 +1756,8 @@ def download_template(request):
         username=request.user
     ).values_list("state_codes", flat=True)[0][0]
 
+    print("blank uploaded files")
+
     uploaded_files = UploadedFiles.objects.filter(
         uploaded_username=request.user,
         uploaded_state=user_state,
@@ -1767,15 +1765,21 @@ def download_template(request):
 
     uploaded_file_list = []
 
+    print("pre s3 setup")
+
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
     region = os.environ.get("AWS_REGION")
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
 
+    print("uploaded files")
+    print(f"{uploaded_files}")
+
     for file in uploaded_files:
         with open(file.aws_filename, "wb") as f:
             s3.download_fileobj(s3_bucket, file.filename, f)
 
+    print("with zip files")
     # generate a zip file with newly generated pdf + some additional docs
     with ZipFile(zip_filename, "w") as zipObject:
         zipObject.write(pdf_filename)
@@ -1784,12 +1788,16 @@ def download_template(request):
             zipObject.write(file.filename)
             os.remove(file.filename)
 
+    print("building zip")
+
     # open created zip file in binary format ...
     with open(
         "template" + today.strftime("%d_%m_%Y %H_%M_%S") + ".zip", "rb"
     ) as zipObject:
         # ... and base64 encode the results to prevent decoding mismatches and collisions
         encoded_zip = base64.b64encode(zipObject.read())
+
+    print("build response")
 
     response = HttpResponse(
         encoded_zip, content_type="application/octet-stream"

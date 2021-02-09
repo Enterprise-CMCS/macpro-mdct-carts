@@ -33,8 +33,12 @@ Submit.propTypes = { certify: PropTypes.func.isRequired };
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
   const [showAlert, setShowAlert] = useState(true);
 
-  const survey =
-    "https://docs.google.com/forms/d/1HTOqQ4-gVw8OSRg7Whyjn-FQUoFYKWUogWeG69lR7cQ/edit?ts=5fb6f4d6&gxids=7628";
+  const surveyOptions = [
+    "https://docs.google.com/forms/d/1HTOqQ4-gVw8OSRg7Whyjn-FQUoFYKWUogWeG69lR7cQ/edit?ts=5fb6f4d6&gxids=7628",
+    "https://docs.google.com/forms/d/1c8DN_GDuD4vfYBcAAGFa-JEK4b3KqcC8oYvjUjzVaZM/edit?ts=5fb6f4ed&gxids=7628",
+  ];
+  // This will randomly be assigned to the number 1 or 2
+  const oddOrEven = Math.floor(Math.random() * 10) % 2;
 
   return (
     <>
@@ -58,7 +62,7 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
             <p className="ds-c-alert__text">
               We would appreciate your feedback on the CARTS 2020 Redesign.
               Follow this link to participate in a brief survey
-              <a href={survey}> Google Forms</a>
+              <a href={surveyOptions[oddOrEven]}> Google Forms</a>
             </p>
             <Button
               className="hide-alert-button"
