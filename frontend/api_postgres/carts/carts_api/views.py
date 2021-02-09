@@ -324,7 +324,7 @@ class SectionViewSet(viewsets.ModelViewSet):
         for section in sections:
             # TODO: streamline this so if users have access to all of the
             # objects (e.g. if they're admins) the check occurs ony once.
-            print("about to check object permissions", flush=True)
+            # print("about to check object permissions", flush=True)
             if request.user.appuser.role != "admin_user":
                 self.check_object_permissions(request, section)
 
@@ -1198,11 +1198,6 @@ def download_template(request):
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 61b84d24657d715d0706ded5d702a42799e71d4a
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split(
@@ -1777,7 +1772,8 @@ def download_template(request):
     session = boto3.session.Session()
     s3 = session.client("s3", f"{region}")
 
-    print("before file")
+    print("uploaded files")
+    print(f"{uploaded_files}")
 
     for file in uploaded_files:
         with open(file.aws_filename, "wb") as f:
