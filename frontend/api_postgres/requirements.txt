@@ -13,7 +13,7 @@ pytest-django
 requests
 cffi
 pycparser
-cryptography==3.1.1
+cryptography==3.2
 toolz
 django-db-views
 django-ses
