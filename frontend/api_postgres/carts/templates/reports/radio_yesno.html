@@ -5,7 +5,7 @@
                 <dd class="answer">
                     <answer>
                 {% if question.answer.entry is None %}
-                    <em>Unanswered</em>
+                    &emsp;<i>Unanswered</i>
                 {% else %}
                     {% for k, v in question.answer.options.items %}
                         {% if v == question.answer.entry %}

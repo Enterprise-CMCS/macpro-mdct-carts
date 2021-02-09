@@ -1200,7 +1200,7 @@ def download_template(request):
     ordered = sorted(
         [_.contents["section"] for _ in sections], key=lambda s: s["ordinal"]
     )
-    print(ordered[0])
+    
     template = get_template("../templates/report.html")
     # Pulling out the program type here
     temp_program_type = str(ordered[0]).split(
@@ -1255,7 +1255,7 @@ def download_template(request):
         1
     ]
     temp_answer = temp_question.split("'answer': {'entry': ")[1]
-    var_2020_03_c_03_04 = temp_answer.split("'},")[0].replace("'", "")
+    var_2020_03_c_03_04 = temp_answer.split("},")[0].replace("'", "")
 
     temp_question = str(ordered[3]).split(
         "{'id': '2020-03-c-03-04-a', 'hint':"
@@ -1614,7 +1614,6 @@ def download_template(request):
                 )
                 / 9
             )
-            * 100
         )
     if (
         var_2020_05_a_02_01_b != "None"
@@ -1644,7 +1643,6 @@ def download_template(request):
                 )
                 / 9
             )
-            * 100
         )
     if (
         var_2020_05_a_02_01_c != "None"
@@ -1674,7 +1672,6 @@ def download_template(request):
                 )
                 / 9
             )
-            * 100
         )
 
     context = {
