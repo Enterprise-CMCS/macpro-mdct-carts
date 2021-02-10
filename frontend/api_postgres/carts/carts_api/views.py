@@ -1776,8 +1776,8 @@ def download_template(request):
     print(f"{uploaded_files}")
 
     for file in uploaded_files:
-        with open(file.aws_filename, "wb") as f:
-            s3.download_fileobj(s3_bucket, file.filename, f)
+        with open(file.filename, "wb") as f:
+            s3.download_fileobj(s3_bucket, file.aws_filename, f)
 
     print("with zip files")
     # generate a zip file with newly generated pdf + some additional docs
