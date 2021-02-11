@@ -1785,8 +1785,8 @@ def download_template(request):
     for file in uploaded_file_list:
         print(f"\n\n\n====>")
         print(f"{file}")
-        with open(file.filename, "wb") as f:
-            s3.download_fileobj(s3_bucket, file.aws_filename, f)
+        with open(file['filename'], "wb") as f:
+            s3.download_fileobj(s3_bucket, file['aws_filename'], f)
 
     print("with zip files")
     # generate a zip file with newly generated pdf + some additional docs
@@ -1794,8 +1794,8 @@ def download_template(request):
         zipObject.write(pdf_filename)
         os.remove(pdf_filename)
         for file in uploaded_files:
-            zipObject.write(file.aws_filename)
-            os.remove(file.aws_filename)
+            zipObject.write(file['filename'])
+            os.remove(file['aws_filename'])
 
     print("building zip")
 
