@@ -1776,11 +1776,11 @@ def download_template(request):
     uploaded_file_list = []
 
     for file in uploaded_files:
-        uploaded_file_list.append(f"{file}")
+        uploaded_file_list.append(file)
         print(f"\n\n\n====>")
         print(f"{file}")
 
-    uploadedFiles = {"uploaded_files": uploaded_file_list}
+    # uploadedFiles = {"uploaded_files": uploaded_file_list}
 
     for file in uploaded_file_list:
         print(f"\n\n\n====>")
