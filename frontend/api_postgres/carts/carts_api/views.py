@@ -1776,7 +1776,7 @@ def download_template(request):
     print(f"{uploaded_files}")
 
     for file in uploaded_files:
-        with open(file.filename, "wb") as f:
+        with open(file.aws_filename, "wb") as f:
             s3.download_fileobj(s3_bucket, file.aws_filename, f)
 
     print("with zip files")
@@ -1785,8 +1785,8 @@ def download_template(request):
         zipObject.write(pdf_filename)
         os.remove(pdf_filename)
         for file in uploaded_files:
-            zipObject.write(file.filename)
-            os.remove(file.filename)
+            zipObject.write(file.aws_filename)
+            os.remove(file.aws_filename)
 
     print("building zip")
 
