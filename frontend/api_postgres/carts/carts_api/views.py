@@ -1785,7 +1785,7 @@ def download_template(request):
     for file in uploaded_file_list:
         print(f"\n\n\n====>")
         print(f"{file}")
-        with open(file.file, "wb") as f:
+        with open(file.filename, "wb") as f:
             s3.download_fileobj(s3_bucket, file.aws_filename, f)
 
     print("with zip files")
