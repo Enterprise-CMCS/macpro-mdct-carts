@@ -1795,7 +1795,7 @@ def download_template(request):
         os.remove(pdf_filename)
         for file in uploaded_files:
             zipObject.write(file["filename"])
-            # os.remove(file["filename"])
+            os.remove(file["filename"])
 
     print("building zip")
 
