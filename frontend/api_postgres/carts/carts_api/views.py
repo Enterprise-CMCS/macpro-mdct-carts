@@ -1763,8 +1763,6 @@ def download_template(request):
         uploaded_state=user_state,
     ).values("filename", "aws_filename")
 
-    uploaded_file_list = []
-
     print("pre s3 setup")
 
     s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
@@ -1775,8 +1773,19 @@ def download_template(request):
     print("uploaded files")
     print(f"{uploaded_files}")
 
+    uploaded_file_list = []
+
     for file in uploaded_files:
-        with open(file.aws_filename, "wb") as f:
+        uploaded_file_list.append(f"{file}")
+        print(f"\n\n\n====>")
+        print(f"{file}")
+
+    uploadedFiles = {"uploaded_files": uploaded_file_list}
+
+    for file in uploaded_file_list:
+        print(f"\n\n\n====>")
+        print(f"{file}")
+        with open(file.file, "wb") as f:
             s3.download_fileobj(s3_bucket, file.aws_filename, f)
 
     print("with zip files")
