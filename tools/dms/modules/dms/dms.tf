@@ -295,3 +295,223 @@ resource "aws_dms_event_subscription" "notification-instance" {
     Env         = var.environment-name
   }
 }
+
+############### Adding codes for the automated trigger of DMS event
+/*
+DMS event subscription
+Creates the DMS event subscription that monitors "state change" of a replication task & sends the event to the 1st SNS topic
+*/
+resource "aws_dms_event_subscription" "seds-statechange-notification" {
+  enabled          = true
+  event_categories = ["state change"]
+  name             = "dms-event-statechange-${var.application}-${terraform.workspace}-seds"
+  sns_topic_arn    = aws_sns_topic.seds_statechange_topic.arn
+  source_ids       = [aws_dms_replication_task.replication-task-seds.replication_task_id]
+  source_type      = "replication-task"
+
+  tags = {
+    Name        = "${var.team_name} Replication StateChange Notifications"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+
+/*
+1st SNS Topic
+Receives event from the DMS event subscription on status change & triggers a 1st lambda function
+*/
+resource "aws_sns_topic" "seds_statechange_topic" {
+  name = "topic-${var.application}-${terraform.workspace}-lambda-seds"
+
+  tags = {
+    Name        = "${var.team_name} Replication StateChange"
+    Owner       = var.team_name
+    Application = var.application
+    Description = "Managed by Terraform"
+    Env         = var.environment-name
+  }
+}
+resource "aws_sns_topic_subscription" "seds_sns_topic_sub" {
+  topic_arn = aws_sns_topic.seds_statechange_topic.arn
+  protocol = "lambda"
+  endpoint = aws_lambda_function.dms_event_lambda.arn
+}
+resource "aws_lambda_permission" "seds_allow_sns_lambda" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.dms_event_lambda.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.seds_statechange_topic.arn
+}
+
+/*
+Lambda Function Role
+Has the Lambda basic execution policy attached to it, so it can send its logs to CWLogs
+*/
+resource "aws_iam_role" "seds_lambda_role" {
+  name = "${terraform.workspace}_dms_lambda_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "ssm_policy" {
+  name = "get_ssm_parameters_${terraform.workspace}"
+  path = "/"
+  description = "gives permission to get ssm parameters"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ssm:Get*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "dms_event_lambda_attachment" {
+  role       = aws_iam_role.seds_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+resource "aws_iam_role_policy_attachment" "vpc_access_lambda_attachment" {
+  role       = aws_iam_role.seds_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
+  role       = aws_iam_role.seds_lambda_role.name
+  policy_arn = aws_iam_policy.ssm_policy.arn
+}
+
+/*
+1st Lambda Function
+is triggered by the 1st SNS Topic, and prints out the events/logs to CWLogs (/aws/lambda/dms_event_lambda)
+*/
+resource "aws_lambda_function" "dms_event_lambda" {
+  filename      = "./dms_event_lambda.zip"
+  function_name = "${terraform.workspace}_dms_event_lambda"
+  role          = aws_iam_role.seds_lambda_role.arn
+  handler       = "dms_event_lambda.handler"
+  runtime = "python3.7"
+}
+
+locals {
+  lg_name = "/aws/lambda/${aws_lambda_function.dms_event_lambda.function_name}"
+}
+
+/*
+Log Group for the 1st lambda
+*/
+resource "aws_cloudwatch_log_group" "dms_event_lambda_lg" {
+  name = local.lg_name
+}
+
+/*
+2nd Lambda Function
+is triggered by the CloudWatch Logs Subscription filter and starts the next DMS migration task
+*/
+resource "aws_lambda_function" "start_dms_lambda" {
+  filename      = "./start_dms.zip"
+  function_name = "${terraform.workspace}_start_dms"
+  role          = aws_iam_role.seds_lambda_role.arn
+  handler       = "start_dms.handler"
+  timeout       = 60
+  memory_size    = 512
+  runtime = "nodejs12.x"
+  vpc_config {
+    subnet_ids         = var.subnet_ids
+    security_group_ids = [aws_security_group.start_dms_lambda_sg.id]
+  }
+}
+
+# Permission for cloudwatch to trigger the 2nd Lambda function
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCW"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.start_dms_lambda.function_name
+  principal     = "logs.amazonaws.com"
+  source_arn = "${aws_cloudwatch_log_group.dms_event_lambda_lg.arn}"
+}
+/*
+CloudWatch Logs Subscription Filters
+*/
+resource "aws_cloudwatch_log_subscription_filter" "lambdafunction_logfilter" {
+  depends_on = [aws_lambda_permission.allow_cloudwatch]
+  name            = "dms-full-load"
+  log_group_name  = local.lg_name
+  filter_pattern  = "Replication task has stopped. Stop Reason FULL_LOAD_ONLY_FINISHED."
+  destination_arn = aws_lambda_function.start_dms_lambda.arn
+}
+
+resource "aws_security_group" "start_dms_lambda_sg" {
+  name   = "start_dms_lambda-${terraform.workspace}-sg"
+  vpc_id = var.vpc_id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+}
+
+# # VPC Endpoint, for SSM
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.us-east-1.ssm"
+  vpc_endpoint_type = "Interface"
+  security_group_ids = [aws_security_group.ssm_vpc_endpoint_sg.id]
+  subnet_ids = var.subnet_ids
+  private_dns_enabled = true
+}
+
+resource "aws_security_group" "ssm_vpc_endpoint_sg" {
+  name   = "ssm_vpc_endpoint-${terraform.workspace}-sg"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    security_groups = [aws_security_group.start_dms_lambda_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Modify target security group to allow inbound traffic from lambda (postgres)
+resource "aws_security_group_rule" "postgres_ingress_from_start_dms_lambda" {
+  type                     = "ingress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.start_dms_lambda_sg.id
+  security_group_id        = data.aws_ssm_parameter.postgres_security_group.value
+}
