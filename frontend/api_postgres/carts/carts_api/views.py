@@ -1607,7 +1607,7 @@ def download_template(request):
                     int(var_2020_05_a_01_01_a)
                     + int(var_2020_05_a_01_02_a)
                     + int(var_2020_05_a_01_03_a)
-                    - int(var_2020_05_a_0_04_a)
+                    - int(var_2020_05_a_01_04_a)
                 )
                 / 9
             )
