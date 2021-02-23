@@ -34,7 +34,7 @@ custom:
     hooks:
       deploy:finalize: |
         serverless invoke --stage ${self:custom.stage} --function configureEmail
- 
+
   functions:
     configureEmail:
       handler: handlers/configureEmail.handler
@@ -88,9 +88,8 @@ resources:
               Statement:
                 - Effect: "Allow"
                   Resource: "arn:aws:iam::aws:policy/AmazonSESFullAccess"
-                  Action: [
-                     "ses:SendEmail",
-                     "ses:SendTemplatedEmail",
-                     "ses:SendRawEmail",
-                     "ses:SendBulkTemplatedEmail"
-                  ]
+                  Action:
+                    - "ses:SendEmail"
+                    - "ses:SendTemplatedEmail"
+                    - "ses:SendRawEmail"
+                    - "ses:SendBulkTemplatedEmail"
