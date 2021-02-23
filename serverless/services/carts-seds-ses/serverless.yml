@@ -4,10 +4,12 @@ frameworkVersion: "2"
 
 package:
   individually: true
+
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -32,23 +34,24 @@ custom:
     hooks:
       deploy:finalize: |
         serverless invoke --stage ${self:custom.stage} --function configureEmail
-        functions:
-configureEmail
-    handler: handlers/configureEmail.handler
-    role: LambdaConfigureConnectorsRole
-    environment:
-      postgresHost: ${self:custom.postgresHost}
-      postgresDb: ${self:custom.postgresDb}
-      postgresUser: ${self:custom.postgresUser}
-      postgresPassword: ${self:custom.postgresPassword}
-      cluster: !Ref KafkaConnectCluster
-      connectorPrefix: carts-${self:custom.stage}-
-    maximumRetryAttempts: 2
-    timeout: 120
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaConfigureConnectorsSecurityGroup
-      subnetIds: ${self:custom.privateSubnets}
+ 
+  functions:
+    configureEmail:
+      handler: handlers/configureEmail.handler
+      role: LambdaConfigureConnectorsRole
+      environment:
+        postgresHost: ${self:custom.postgresHost}
+        postgresDb: ${self:custom.postgresDb}
+        postgresUser: ${self:custom.postgresUser}
+        postgresPassword: ${self:custom.postgresPassword}
+        cluster: !Ref KafkaConnectCluster
+        connectorPrefix: carts-${self:custom.stage}-
+      maximumRetryAttempts: 2
+      timeout: 120
+      vpc:
+        securityGroupIds:
+          - Ref: LambdaConfigureConnectorsSecurityGroup
+        subnetIds: ${self:custom.privateSubnets}
 resources:
   Conditions:
     CreatePermissionsBoundary:
@@ -90,4 +93,4 @@ resources:
                      "ses:SendTemplatedEmail",
                      "ses:SendRawEmail",
                      "ses:SendBulkTemplatedEmail"
-                 ]
+                  ]
