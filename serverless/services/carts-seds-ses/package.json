@@ -1,0 +1,14 @@
+{
+  "name": "carts-seds-ses",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "serverless-bundle": "^3.1.0",
+    "serverless-dotenv-plugin": "^3.0.0",
+    "serverless-plugin-scripts": "^1.0.2",
+    "serverless-plugin-warmup": "^4.9.0"
+  }
+}
