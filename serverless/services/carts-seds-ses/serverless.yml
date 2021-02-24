@@ -38,7 +38,6 @@ custom:
 functions:
   configureEmail:
     handler: handlers/configureEmail.handler
-    role: LambdaConfigureConnectorsRole
     environment:
       postgresHost: ${self:custom.postgresHost}
       postgresDb: ${self:custom.postgresDb}
