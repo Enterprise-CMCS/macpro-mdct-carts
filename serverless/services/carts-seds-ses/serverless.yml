@@ -44,7 +44,6 @@ functions:
       postgresDb: ${self:custom.postgresDb}
       postgresUser: ${self:custom.postgresUser}
       postgresPassword: ${self:custom.postgresPassword}
-      cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
     maximumRetryAttempts: 2
     timeout: 120
