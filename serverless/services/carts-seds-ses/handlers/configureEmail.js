@@ -87,4 +87,3 @@ const executeTask = () => {
 exports.handler = (event, context, callback) => {
   executeTask();
 };
-

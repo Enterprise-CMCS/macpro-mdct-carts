@@ -1,20 +1,19 @@
 service: carts-seds-ses
-​
+
 frameworkVersion: "2"
-​
+
 package:
   individually: true
-​
+
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
-​
+
 provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
-​
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
@@ -35,23 +34,24 @@ custom:
     hooks:
       deploy:finalize: |
         serverless invoke --stage ${self:custom.stage} --function configureEmail
-        functions:
-configureEmail
-    handler: handlers/configureEmail.handler
-    role: LambdaConfigureConnectorsRole
-    environment:
-      postgresHost: ${self:custom.postgresHost}
-      postgresDb: ${self:custom.postgresDb}
-      postgresUser: ${self:custom.postgresUser}
-      postgresPassword: ${self:custom.postgresPassword}
-      cluster: !Ref KafkaConnectCluster
-      connectorPrefix: carts-${self:custom.stage}-
-    maximumRetryAttempts: 2
-    timeout: 120
-    vpc:
-      securityGroupIds:
-        - Ref: LambdaConfigureConnectorsSecurityGroup
-      subnetIds: ${self:custom.privateSubnets}
+
+  functions:
+    configureEmail:
+      handler: handlers/configureEmail.handler
+      role: LambdaConfigureConnectorsRole
+      environment:
+        postgresHost: ${self:custom.postgresHost}
+        postgresDb: ${self:custom.postgresDb}
+        postgresUser: ${self:custom.postgresUser}
+        postgresPassword: ${self:custom.postgresPassword}
+        cluster: !Ref KafkaConnectCluster
+        connectorPrefix: carts-${self:custom.stage}-
+      maximumRetryAttempts: 2
+      timeout: 120
+      vpc:
+        securityGroupIds:
+          - Ref: LambdaConfigureConnectorsSecurityGroup
+        subnetIds: ${self:custom.privateSubnets}
 resources:
   Conditions:
     CreatePermissionsBoundary:
@@ -88,9 +88,8 @@ resources:
               Statement:
                 - Effect: "Allow"
                   Resource: "arn:aws:iam::aws:policy/AmazonSESFullAccess"
-                  Action: [
-                     "ses:SendEmail",
-                     "ses:SendTemplatedEmail",
-                     "ses:SendRawEmail",
-                     "ses:SendBulkTemplatedEmail"
-                 ]
+                  Action:
+                    - "ses:SendEmail"
+                    - "ses:SendTemplatedEmail"
+                    - "ses:SendRawEmail"
+                    - "ses:SendBulkTemplatedEmail"
