@@ -38,6 +38,7 @@ custom:
 functions:
   configureEmail:
     handler: handlers/configureEmail.handler
+    role: LambdaConfigureRole
     environment:
       postgresHost: ${self:custom.postgresHost}
       postgresDb: ${self:custom.postgresDb}
@@ -49,7 +50,7 @@ functions:
     timeout: 120
     vpc:
       securityGroupIds:
-        - Ref: LambdaConfigureConnectorsSecurityGroup
+        - Ref: LambdaConfigureSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
 
 resources:
