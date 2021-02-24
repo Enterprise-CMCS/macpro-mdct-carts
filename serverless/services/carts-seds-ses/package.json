@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "serverless-bundle": "^3.1.0",
