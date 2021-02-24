@@ -5,11 +5,6 @@ frameworkVersion: "2"
 package:
   individually: true
 
-plugins:
-  - serverless-bundle
-  - serverless-dotenv-plugin
-  - serverless-plugin-scripts
-
 provider:
   name: aws
   runtime: nodejs12.x

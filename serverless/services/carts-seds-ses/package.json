@@ -6,11 +6,5 @@
     "lodash": "^4.17.20",
     "pg": "^8.5.1",
     "pg-native": "^3.0.0"
-  },
-  "devDependencies": {
-    "serverless-bundle": "^3.1.0",
-    "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-plugin-scripts": "^1.0.2",
-    "serverless-plugin-warmup": "^4.9.0"
   }
 }
