@@ -118,6 +118,6 @@ resources:
               Version: "2012-10-17"
               Statement:
                 - Effect: "Allow"
-                  Action: 
+                  Action:
                     - rds-db:connect
                   Resource: "arn:aws:rds-db:*:dbuser:*/*"
