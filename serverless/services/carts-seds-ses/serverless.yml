@@ -82,12 +82,10 @@ resources:
               Version: "2012-10-17"
               Statement:
                 - Effect: "Allow"
-                  Resource: "arn:aws:iam::aws:policy/AmazonSESFullAccess"
+                  Resource: "*"
                   Action:
                     - "ses:SendEmail"
-                    - "ses:SendTemplatedEmail"
                     - "ses:SendRawEmail"
-                    - "ses:SendBulkTemplatedEmail"
           - PolicyName: "LambdaRolePolicy"
             PolicyDocument:
               Version: "2012-10-17"

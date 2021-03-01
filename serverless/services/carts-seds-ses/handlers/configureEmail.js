@@ -3,7 +3,7 @@
 //
 const AWS = require("aws-sdk");
 const { Client } = require("pg");
-var ses = new AWS.SES({ region: "us-east-1" });
+const ses = new AWS.SES({ region: "us-east-1" });
 
 const issueQuery = (
   username = process.env.postgresUser,
@@ -22,31 +22,26 @@ const issueQuery = (
   };
   const client = new Client(clientConfig);
   console.log("config", clientConfig);
-  client.on("connect", (err) => {
-    console.error("something bad has happened!", err.stack);
-  });
-  client.connect();
-  console.log("did I connect?");
 
-  client.query(
-    "select now()",
-    //    "select usename, valuntil from pg_user where valuntil != 'infinity' and valuntil < now() + interval '25' day",
-    (err, resp) => {
-      console.log("RESPONSE", resp);
-      if (err) {
-        client.end();
-        return console.error("error running query", err);
-      } else {
-        var numrows = resp.rows.length;
-        console.log("Numrows:", numrows);
-        // if (numrows > 0) emailOutput(resp.rows);
-        client.end();
-      }
+  client.connect();
+  //const query = 'select now()';
+  //const query = 'select usename, valuntil from pg_user where valuntil != \'infinity\' and valuntil < now() + interval \'25\' day';
+
+  const query = "select usename, valuntil from pg_user";
+  client.query(query, (err, resp) => {
+    if (err) {
+      client.end();
+      return console.error("error running query", err);
+    } else {
+      var numrows = resp.rows.length;
+      if (numrows > 0) emailOutput(resp.rows);
+      client.end();
     }
-  );
+  });
 };
+
 const emailOutput = (result) => {
-  console.log("Did I make it to the email function?", result);
+  console.log("DB Records:", result);
   var params = {
     Destination: {
       ToAddresses: ["bdavenport@collabralink.com"],
@@ -64,9 +59,7 @@ const emailOutput = (result) => {
     else console.log(data);
   });
 };
-const executeTask = () => {
-  issueQuery();
-};
+
 exports.handler = (event, context, callback) => {
-  executeTask();
+  issueQuery();
 };
