@@ -48,9 +48,9 @@ const emailOutput = (result) => {
     },
     Message: {
       Body: {
-        Text: { Data: JSON.stringify(result) },
+        Text: { Data: JSON.stringify(result, null, '\t') },
       },
-      Subject: { Data: "Test email from Lambda function" },
+      Subject: { Data: "Password expiry notification from Lambda function" },
     },
     Source: "mkalkar@collabralink.com",
   };
