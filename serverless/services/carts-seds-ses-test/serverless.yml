@@ -28,11 +28,11 @@ custom:
   scripts:
     hooks:
       deploy:finalize: |
-        serverless invoke --stage ${self:custom.stage} --function configureEmail
+        serverless invoke --stage ${self:custom.stage} --function configureTestEmail
 
 functions:
-  configureEmail:
-    handler: handlers/configureEmail.handler
+  configureTestEmail:
+    handler: handlers/configureTestEmail.handler
     role: LambdaConfigureRole
     environment:
       postgresHost: ${self:custom.postgresHost}
