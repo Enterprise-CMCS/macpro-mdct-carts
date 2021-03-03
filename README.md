@@ -2,6 +2,10 @@
 
 18F/CMS CARTS &amp; SEDS redevelopment
 
+## Architecture
+
+![Architecture Diagram](./.images/architecture.svg?raw=true)
+
 # Some development approach notes
 
 Development will be done on feature/bugfix branches that will be submitted as PRs. Accepted PRs will be merged to the `master` branch. The `master` branch reflects our latest product. On merge to `master`, the dev environment is deployed and tested in Amazon. When the `master` build succeeds, the commit on `master` is tagged in git as a candidate release version.
