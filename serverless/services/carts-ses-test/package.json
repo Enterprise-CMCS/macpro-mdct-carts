@@ -1,0 +1,10 @@
+{
+  "name": "carts-ses-test",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "pg": "^8.5.1",
+    "pg-native": "^3.0.0"
+  }
+}

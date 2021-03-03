@@ -1,0 +1,121 @@
+service: carts-ses-test
+
+frameworkVersion: "2"
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
+  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
+  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
+  privateSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id~true, ssm:/configuration/default/vpc/subnets/private/a/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id~true, ssm:/configuration/default/vpc/subnets/private/b/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id~true, ssm:/configuration/default/vpc/subnets/private/c/id~true}
+  postgresHost: ${ssm:/${self:custom.stage}/postgres_host~true}
+  postgresDb: ${ssm:/${self:custom.stage}/postgres_db~true}
+  postgresUser: ${ssm:/${self:custom.stage}/postgres_user~true}
+  postgresPassword: ${ssm:/${self:custom.stage}/postgres_password~true}
+  postgresSecurityGroupId: ${ssm:/${self:custom.stage}/postgres_security_group~true}
+  scripts:
+    hooks:
+      deploy:finalize: |
+        serverless invoke --stage ${self:custom.stage} --function configureEmail
+
+functions:
+  configureEmail:
+    handler: handlers/configureEmail.handler
+    role: LambdaConfigureRole
+    environment:
+      postgresHost: ${self:custom.postgresHost}
+      postgresDb: ${self:custom.postgresDb}
+      postgresUser: ${self:custom.postgresUser}
+      postgresPassword: ${self:custom.postgresPassword}
+      connectorPrefix: carts-${self:custom.stage}-
+    maximumRetryAttempts: 2
+    timeout: 120
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaConfigureSecurityGroup
+      subnetIds: ${self:custom.privateSubnets}
+
+resources:
+  Conditions:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
+            - ""
+            - ${self:custom.iamPermissionsBoundaryPolicy}
+  Resources:
+    LambdaConfigureSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security Group for configuring the connector.
+        VpcId: ${self:custom.vpcId}
+    LambdaConfigureRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: "SESRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Resource: "*"
+                  Action:
+                    - "ses:SendEmail"
+                    - "ses:SendRawEmail"
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - ec2:CreateNetworkInterface
+                    - ec2:DeleteNetworkInterface
+                    - ec2:DetachNetworkInterface
+                    - ec2:DescribeNetworkInterfaces
+                    - ec2:DescribeSecurityGroups
+                    - ec2:DescribeSubnets
+                    - ec2:DescribeVpcs
+                  Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - ecs:ListTasks
+                    - ecs:DescribeTasks
+                  Resource: "*"
+          - PolicyName: "RDSRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - rds-db:connect
+                  Resource: "arn:aws:rds-db:*:dbuser:*/*"
