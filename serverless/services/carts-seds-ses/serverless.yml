@@ -60,6 +60,15 @@ resources:
       Properties:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
+    AllowLambdaInboundToPostgres:
+      Type: AWS::EC2::SecurityGroupIngress
+      Properties:
+        Description: Add a SG rule to Postgres' security group; this rule allows traffic from the lambda function's security group.
+        FromPort: 5432
+        ToPort: 5432
+        GroupId: ${self:custom.postgresSecurityGroupId}
+        IpProtocol: tcp
+        SourceSecurityGroupId: !Ref LambdaConfigureSecurityGroup
     LambdaConfigureRole:
       Type: "AWS::IAM::Role"
       Properties:
