@@ -25,7 +25,8 @@ const issueQuery = (
 
   client.connect();
   //const query = "select usename, valuntil from pg_user";
-  const query = 'select usename, valuntil from pg_user where valuntil < now() + interval \'15\' day';
+  const query =
+    "select usename, valuntil from pg_user where valuntil < now() + interval '15' day";
   client.query(query, (err, resp) => {
     if (err) {
       client.end();
@@ -42,7 +43,7 @@ const emailOutput = (result) => {
   console.log("DB Records:", result);
   var params = {
     Destination: {
-	    ToAddresses: ["bdavenport@collabralink.com", "mkalkar@collabralink.com"],
+      ToAddresses: ["bdavenport@collabralink.com", "mkalkar@collabralink.com"],
     },
     Message: {
       Body: {
