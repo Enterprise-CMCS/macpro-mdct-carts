@@ -46,6 +46,8 @@ functions:
       securityGroupIds:
         - Ref: LambdaConfigureSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
+    events:
+      schedule: cron(0 * ? * 3 *)
 
 resources:
   Conditions:
