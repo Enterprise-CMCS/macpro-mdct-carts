@@ -1,3 +1,4 @@
+[cms-carts-seds](https://github.com/CMSgov/cms-carts-seds) [![Maintainability](https://api.codeclimate.com/v1/badges/20361ef7d636d7b63cec/maintainability)](https://codeclimate.com/github/CMSgov/cms-carts-seds/maintainability)
 ## cms-carts-seds
 
 18F/CMS CARTS &amp; SEDS redevelopment
