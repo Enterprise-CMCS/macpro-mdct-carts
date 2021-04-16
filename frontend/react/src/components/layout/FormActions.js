@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { connect } from "react-redux"
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -9,16 +10,17 @@ import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
  * @returns {JSX.Element}
  * @constructor
  */
-const FormActions = () => {
+const FormActions = (props) => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
-
+  const {currentState, currentState2} = props;
   /**
    * Print dialogue box state
    * Defaults to false
    */
   const [printShow, setPrintShow] = useState(false);
-
+  console.log("currentState", currentState)
+  console.log("currentState2", currentState2)
   /**
    * If click occurs outside component, setPrintShow to false
    */
@@ -98,13 +100,13 @@ const FormActions = () => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href="/print"
+                href={'/print/'+currentState}
                 title="Entire Form"
-                target="_blank"
                 onClick={togglePrintDiaglogue}
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
+
             </div>
           </div>
         </div>
@@ -113,4 +115,10 @@ const FormActions = () => {
   );
 };
 
-export default FormActions;
+
+const mapStateToProps = (state) => ({
+  currentState: state.stateUser.abbr,
+  currentState2: state.stateUser.currentUser.state.id
+});
+
+export default connect(mapStateToProps)(FormActions);

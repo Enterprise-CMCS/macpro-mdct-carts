@@ -21,7 +21,7 @@ const printWindow = (event) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const Print = ({ currentUser, state }) => {
+const Print = ({ currentUser, formData },selectedState) => {
   const dispatch = useDispatch();
 
   // Load formData via side effect
@@ -29,9 +29,17 @@ const Print = ({ currentUser, state }) => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
-      const { stateUser } = state;
-      const stateCode = stateUser.abbr;
+      //const { stateUser } = state;
+      console.log("currentUserzzz start of print use effect",currentUser)
+      let stateCode
+      if(currentUser.abbr === null){
+        stateCode = selectedState
+      }
+      else{
+        stateCode = currentUser.abbr;
+      }
 
+      console.log("state Codez use effect", stateCode)
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
@@ -51,7 +59,6 @@ const Print = ({ currentUser, state }) => {
   const sections = [];
 
   // Check if formData has values
-  const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
@@ -106,13 +113,13 @@ const Print = ({ currentUser, state }) => {
 };
 
 Print.propTypes = {
-  state: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
+  formData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.stateUser,
-  state,
+  currentUser: state.stateUser || "",
+  formData: state.formData || undefined
 });
 
 export default connect(mapStateToProps)(Print);

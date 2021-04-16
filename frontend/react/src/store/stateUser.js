@@ -2,9 +2,24 @@
 const STATE_INFO = "STATE_INFO";
 const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
+const NONSTATEUSER_UPDATE_STATE = "NONSTATEUSER_UPDATE_STATE";
+
+//THUNKS
+
+export const setNonStateUserState = (selectedState) => (dispatch) => {
+    dispatch(nonStateUserStateUpdate(selectedState))
+}
 
 // ACTION CREATORS
+export const nonStateUserStateUpdate = (selectedState) => {
+  return{
+    type:NONSTATEUSER_UPDATE_STATE,
+    selectedState:selectedState
+  }
+}
+
 export const getUserData = (userObject) => {
+  console.log("USER in action creator", userObject)
   return {
     type: USER_INFO,
     userObject,
@@ -26,15 +41,15 @@ export const getStateData = (stateObject) => ({
 });
 
 const initialState = {
-  name: "New York",
-  abbr: "NY",
+  name: null,
+  abbr: "",
   programType: "combo", // values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
   imageURI: `${process.env.PUBLIC_URL}/img/states/ny.svg`,
   formName: "CARTS FY",
   currentUser: {
     role: false,
-    state: { id: "", name: "" },
+    state: { id: null, name: "" },
     username: "",
   },
 };
@@ -62,6 +77,15 @@ export default (state = initialState, action) => {
         programType: action.programType,
         programName: action.programName,
         formName: action.formName,
+      };
+    case NONSTATEUSER_UPDATE_STATE:
+      return {
+        ...state,
+        currentUser: {...state.currentUser,
+        state:{
+          id:action.selectedState,
+        }},
+        abbr:action.selectedState,
       };
     default:
       return state;

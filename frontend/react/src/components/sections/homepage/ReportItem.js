@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { theAccept } from "../../../actions/accept";
+import {setNonStateUserState} from "../../../store/stateUser"
 
 const ReportItem = ({
   link1Text,
@@ -17,6 +18,7 @@ const ReportItem = ({
   year,
   username,
   lastChanged,
+  setNonStateUserState:setStateAction,
 }) => {
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
@@ -62,6 +64,13 @@ const ReportItem = ({
       window.location.reload(false); // Added because above wasn't consistently reloading
     }
   };
+  const setState = () => {
+    if (!stateUser) {
+      setStateAction(stateCode);
+    }
+  };
+
+
   const accept = () => {
     if (window.confirm("Are you sure to accept this record?")) {
       acceptAction(stateCode, stateYear);
@@ -89,7 +98,7 @@ const ReportItem = ({
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
           <div className="actions ds-l-col--1">
-            <Link to={link1URL} target={anchorTarget}>
+            <Link to={link1URL} target={anchorTarget} onClick={() => {setState(stateUser,stateCode)}}>
               {link1Text}
             </Link>
           </div>
@@ -155,6 +164,7 @@ const mapState = (state) => ({
   user: state.reportStatus.userName,
 });
 
-const mapDispatch = { theUncertify, theAccept };
+const mapDispatch = { theUncertify, theAccept,setNonStateUserState
+};
 
 export default connect(mapState, mapDispatch)(ReportItem);
