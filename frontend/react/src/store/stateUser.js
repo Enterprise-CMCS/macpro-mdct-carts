@@ -37,7 +37,7 @@ const initialState = {
   name: null,
   abbr: "",
   programType: "combo", // values can be combo, medicaid_exp_chip, or separate_chip
-  programName: "NY Combo Program",/* eslint-disable-next-line no-undef*/
+  programName: "NY Combo Program" /* eslint-disable-next-line no-undef*/,
   imageURI: `${process.env.PUBLIC_URL}/img/states/ny.svg`,
   formName: "CARTS FY",
   currentUser: {
