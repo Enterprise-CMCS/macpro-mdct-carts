@@ -4,12 +4,6 @@ const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
 const NONSTATEUSER_UPDATE_STATE = "NONSTATEUSER_UPDATE_STATE";
 
-//THUNKS
-
-export const setNonStateUserState = (selectedState) => (dispatch) => {
-  dispatch(nonStateUserStateUpdate(selectedState));
-};
-
 // ACTION CREATORS
 export const nonStateUserStateUpdate = (selectedState) => {
   return {

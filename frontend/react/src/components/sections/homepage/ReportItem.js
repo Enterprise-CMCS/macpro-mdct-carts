@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { theAccept } from "../../../actions/accept";
-import { setNonStateUserState } from "../../../store/stateUser";
+import { nonStateUserStateUpdate } from "../../../store/stateUser";
 
 const ReportItem = ({
   link1Text,
@@ -18,7 +18,7 @@ const ReportItem = ({
   year,
   username,
   lastChanged,
-  setNonStateUserState: setStateAction,
+  nonStateUserStateUpdate: setStateAction,
 }) => {
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
@@ -168,6 +168,14 @@ const mapState = (state) => ({
   user: state.reportStatus.userName,
 });
 
-const mapDispatch = { theUncertify, theAccept, setNonStateUserState };
+const mapDispatch = (dispatch) => {
+  return {
+    theUncertify,
+    theAccept,
+    nonStateUserStateUpdate: (selectedState) => {
+      dispatch(nonStateUserStateUpdate(selectedState));
+    },
+  };
+};
 
 export default connect(mapState, mapDispatch)(ReportItem);
