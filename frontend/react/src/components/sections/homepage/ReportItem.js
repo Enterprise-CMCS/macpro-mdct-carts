@@ -147,6 +147,7 @@ const ReportItem = ({
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
   theAccept: PropTypes.func.isRequired,
+  nonStateUserStateUpdate: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.string.isRequired,

@@ -28,7 +28,7 @@ const Print = ({ stateUser, formData }) => {
   useEffect(() => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
-      // Get user details
+      /* eslint-disable-line */
       const stateCode = stateUser.abbr;
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
@@ -103,7 +103,7 @@ const Print = ({ stateUser, formData }) => {
 };
 
 Print.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  stateUser: PropTypes.object.isRequired,
   formData: PropTypes.object.isRequired,
 };
 
