@@ -7,19 +7,18 @@ const NONSTATEUSER_UPDATE_STATE = "NONSTATEUSER_UPDATE_STATE";
 //THUNKS
 
 export const setNonStateUserState = (selectedState) => (dispatch) => {
-    dispatch(nonStateUserStateUpdate(selectedState))
-}
+  dispatch(nonStateUserStateUpdate(selectedState));
+};
 
 // ACTION CREATORS
 export const nonStateUserStateUpdate = (selectedState) => {
-  return{
-    type:NONSTATEUSER_UPDATE_STATE,
-    selectedState:selectedState
-  }
-}
+  return {
+    type: NONSTATEUSER_UPDATE_STATE,
+    selectedState: selectedState,
+  };
+};
 
 export const getUserData = (userObject) => {
-  console.log("USER in action creator", userObject)
   return {
     type: USER_INFO,
     userObject,
@@ -81,11 +80,8 @@ export default (state = initialState, action) => {
     case NONSTATEUSER_UPDATE_STATE:
       return {
         ...state,
-        currentUser: {...state.currentUser,
-        state:{
-          id:action.selectedState,
-        }},
-        abbr:action.selectedState,
+        currentUser: { ...state.currentUser },
+        abbr: action.selectedState,
       };
     default:
       return state;

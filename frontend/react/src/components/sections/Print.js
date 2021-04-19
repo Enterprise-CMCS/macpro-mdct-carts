@@ -21,7 +21,7 @@ const printWindow = (event) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const Print = ({ currentUser, formData },selectedState) => {
+const Print = ({ stateUser, formData }) => {
   const dispatch = useDispatch();
 
   // Load formData via side effect
@@ -29,23 +29,13 @@ const Print = ({ currentUser, formData },selectedState) => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
-      //const { stateUser } = state;
-      console.log("currentUserzzz start of print use effect",currentUser)
-      let stateCode
-      if(currentUser.abbr === null){
-        stateCode = selectedState
-      }
-      else{
-        stateCode = currentUser.abbr;
-      }
-
-      console.log("state Codez use effect", stateCode)
+      const stateCode = stateUser.abbr;
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
       // Pull data based on user details
       await Promise.all([
-        dispatch(loadSections({ userData: currentUser, stateCode })),
+        dispatch(loadSections({ userData: stateUser, stateCode })),
       ]);
 
       // End isFetching for spinner
@@ -54,7 +44,7 @@ const Print = ({ currentUser, formData },selectedState) => {
 
     // Call async function to load data
     retrieveUserData();
-  }, [currentUser]);
+  }, [stateUser]);
 
   const sections = [];
 
@@ -118,8 +108,8 @@ Print.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.stateUser || "",
-  formData: state.formData || undefined
+  stateUser: state.stateUser || "",
+  formData: state.formData || undefined,
 });
 
 export default connect(mapStateToProps)(Print);

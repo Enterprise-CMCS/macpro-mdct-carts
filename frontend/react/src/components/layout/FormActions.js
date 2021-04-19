@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { connect } from "react-redux"
+import { Redirect } from "react-router-dom";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -10,17 +10,18 @@ import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
  * @returns {JSX.Element}
  * @constructor
  */
-const FormActions = (props) => {
+const FormActions = () => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
-  const {currentState, currentState2} = props;
   /**
    * Print dialogue box state
    * Defaults to false
    */
   const [printShow, setPrintShow] = useState(false);
-  console.log("currentState", currentState)
-  console.log("currentState2", currentState2)
+  const [printEntireFormClicked, setPrintEntireFormPrintClicked] = useState(
+    false
+  );
+
   /**
    * If click occurs outside component, setPrintShow to false
    */
@@ -50,7 +51,9 @@ const FormActions = (props) => {
   const togglePrintDiaglogue = () => {
     setPrintShow(!printShow);
   };
-
+  const redirectToPrint = () => {
+    setPrintEntireFormPrintClicked(true);
+  };
   /**
    * Opens print dialogue for current view
    *
@@ -100,25 +103,25 @@ const FormActions = (props) => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href={'/print/'+currentState}
                 title="Entire Form"
-                onClick={togglePrintDiaglogue}
+                onClick={redirectToPrint}
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
-
             </div>
           </div>
         </div>
+      ) : null}
+      {printEntireFormClicked ? (
+        <Redirect
+          push
+          to={{
+            pathname: "/print",
+          }}
+        ></Redirect>
       ) : null}
     </section>
   );
 };
 
-
-const mapStateToProps = (state) => ({
-  currentState: state.stateUser.abbr,
-  currentState2: state.stateUser.currentUser.state.id
-});
-
-export default connect(mapStateToProps)(FormActions);
+export default FormActions;
