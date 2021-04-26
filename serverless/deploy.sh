@@ -7,6 +7,7 @@ stage=${1:-dev}
 services=(
   'carts-bigmac-streams'
   'carts-seds-ses'
+  'uploads-scan'
 )
 
 install_deps() {
