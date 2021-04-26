@@ -106,7 +106,7 @@ pipeline {
       }
     }
 
-    state("Deploy Uploads Scan") {
+    stage("Deploy Uploads Scan") {
       when {
         expression { env.DEPLOY == "true"}
       }
