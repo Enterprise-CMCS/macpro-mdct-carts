@@ -81,52 +81,7 @@ resources:
             - ""
             - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
-    AttachmentsBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
-        CorsConfiguration: # Set the CORS policy
-          CorsRules:
-            - AllowedOrigins:
-                - "*"
-              AllowedHeaders:
-                - "*"
-              AllowedMethods:
-                - GET
-                - PUT
-                - POST
-                - DELETE
-                - HEAD
-              MaxAge: 3000
-        NotificationConfiguration:
-          LambdaConfigurations:
-            - Event: s3:ObjectCreated:Put
-              Function: !GetAtt AvScanLambdaFunction.Arn
-      DependsOn: LambdaInvokePermission
-    AttachmentsBucketPolicy:
-      Type: AWS::S3::BucketPolicy
-      Properties:
-        Bucket: !Ref AttachmentsBucket
-        PolicyDocument:
-          Statement:
-            - Action:
-                - "s3:GetObject"
-              Effect: "Deny"
-              Resource: !Sub ${AttachmentsBucket.Arn}/*
-              Principal: "*"
-              Condition:
-                StringNotEquals:
-                  s3:ExistingObjectTag/virusScanStatus:
-                    - "CLEAN"
-                  aws:PrincipalArn: !GetAtt BucketAVScanRole.Arn
-    LambdaInvokePermission:
-      Type: AWS::Lambda::Permission
-      Properties:
-        FunctionName: !GetAtt AvScanLambdaFunction.Arn
-        Action: lambda:InvokeFunction
-        Principal: s3.amazonaws.com
-        SourceAccount: !Sub ${AWS::AccountId}
-        SourceArn: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+
     ClamDefsBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -168,11 +123,11 @@ resources:
                     - s3:PutObjectTagging
                     - s3:PutObjectVersionTagging
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*
+                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
                 - Effect: "Allow"
                   Action:
                     - s3:GetObject
@@ -219,9 +174,7 @@ resources:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
   Outputs:
-    AttachmentsBucketName: # Print out the name of the bucket that is created
-      Value: !Ref AttachmentsBucket
-    AttachmentsBucketArn:
-      Value: !GetAtt AttachmentsBucket.Arn
+    AvScanArn:
+      Value: !GetAtt AvScanLambdaFunction.Arn
     Region:
       Value: !Sub ${AWS::Region}
