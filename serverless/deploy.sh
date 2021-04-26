@@ -7,7 +7,7 @@ stage=${1:-dev}
 services=(
   'carts-bigmac-streams'
   'carts-seds-ses'
-  'uploads-scan'
+  # 'uploads' we deployed this independently earlier on, because uploads needs to deploy before teraform but the rest of the services must deploy after
 )
 
 install_deps() {
