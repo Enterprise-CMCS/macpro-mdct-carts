@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Redirect } from "react-router-dom";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -13,14 +12,12 @@ import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 const FormActions = () => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
+
   /**
    * Print dialogue box state
    * Defaults to false
    */
   const [printShow, setPrintShow] = useState(false);
-  const [printEntireFormClicked, setPrintEntireFormPrintClicked] = useState(
-    false
-  );
 
   /**
    * If click occurs outside component, setPrintShow to false
@@ -51,9 +48,7 @@ const FormActions = () => {
   const togglePrintDiaglogue = () => {
     setPrintShow(!printShow);
   };
-  const redirectToPrint = () => {
-    setPrintEntireFormPrintClicked(true);
-  };
+
   /**
    * Opens print dialogue for current view
    *
@@ -103,22 +98,16 @@ const FormActions = () => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
+                href="/print"
                 title="Entire Form"
-                onClick={redirectToPrint}
+                target="_blank"
+                onClick={togglePrintDiaglogue}
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
             </div>
           </div>
         </div>
-      ) : null}
-      {printEntireFormClicked ? (
-        <Redirect
-          push
-          to={{
-            pathname: "/print",
-          }}
-        ></Redirect>
       ) : null}
     </section>
   );
