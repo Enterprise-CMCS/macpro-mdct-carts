@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { theAccept } from "../../../actions/accept";
+import { nonStateUserStateUpdate } from "../../../store/stateUser";
 
 const ReportItem = ({
   link1Text,
@@ -17,6 +18,7 @@ const ReportItem = ({
   year,
   username,
   lastChanged,
+  nonStateUserStateUpdate: setStateAction,
 }) => {
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
@@ -62,12 +64,17 @@ const ReportItem = ({
       window.location.reload(false); // Added because above wasn't consistently reloading
     }
   };
+  const setState = () => {
+    if (!stateUser) {
+      setStateAction(stateCode);
+    }
+  };
+
   const accept = () => {
     if (window.confirm("Are you sure to accept this record?")) {
       acceptAction(stateCode, stateYear);
       // Need to send out a notification ticket #OY2-2416
 
-      //Getting the new statuses to update the page
       window.location.reload(false);
     }
   };
@@ -89,7 +96,13 @@ const ReportItem = ({
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
           <div className="actions ds-l-col--1">
-            <Link to={link1URL} target={anchorTarget}>
+            <Link
+              to={link1URL}
+              target={anchorTarget}
+              onClick={() => {
+                setState(stateUser, stateCode);
+              }}
+            >
               {link1Text}
             </Link>
           </div>
@@ -134,6 +147,7 @@ const ReportItem = ({
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
   theAccept: PropTypes.func.isRequired,
+  nonStateUserStateUpdate: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -155,6 +169,14 @@ const mapState = (state) => ({
   user: state.reportStatus.userName,
 });
 
-const mapDispatch = { theUncertify, theAccept };
+const mapDispatch = (dispatch) => {
+  return {
+    theUncertify,
+    theAccept,
+    nonStateUserStateUpdate: (selectedState) => {
+      dispatch(nonStateUserStateUpdate(selectedState));
+    },
+  };
+};
 
 export default connect(mapState, mapDispatch)(ReportItem);
