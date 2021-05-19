@@ -81,7 +81,6 @@ resources:
             - ""
             - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
-
     ClamDefsBucket:
       Type: AWS::S3::Bucket
       Properties:
