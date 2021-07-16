@@ -25,7 +25,6 @@ pipeline {
           jenkinsUtils.installEcsCli()
           jenkinsUtils.installTerraform("0.12.28")
 
-          env.DEPLOY_DATA = jenkinsUtils.pathHasChanges("data") || jenkinsUtils.pathHasChanges(".jenkins")
           env.DEPLOY_FRONTEND = jenkinsUtils.pathHasChanges("frontend") || env.DEPLOY_DATA
         }
       }

@@ -1,4 +1,5 @@
 [cms-carts-seds](https://github.com/CMSgov/cms-carts-seds) [![Maintainability](https://api.codeclimate.com/v1/badges/20361ef7d636d7b63cec/maintainability)](https://codeclimate.com/github/CMSgov/cms-carts-seds/maintainability)
+
 ## cms-carts-seds
 
 18F/CMS CARTS &amp; SEDS redevelopment
@@ -95,3 +96,13 @@ To associate users to states, the most convenient process is most likely: (this 
 2. Launch the test runner in interactive watch mode.
    1. Run `npm test`
    2. Press `a` to run all tests.
+
+### To run data deployments
+
+1. Set the `DEPLOY_DATA = 'true'` environment variable in the environment section of the appropriate jenkinsfile.
+
+```groovy
+environment {
+  DEPLOY_DATA = 'true'
+}
+```
