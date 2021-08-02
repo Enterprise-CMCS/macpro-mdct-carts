@@ -38,9 +38,9 @@ class Footer extends Component {
                 Email{" "}
                 <a
                   data-test="attribute-email"
-                  href="mailto:cartshelp@cms.hhs.gov"
+                  href="mailto:mdct_helpdesk@cms.hhs.gov"
                 >
-                  CARTSHELP@cms.hhs.gov
+                  mdct_helpdesk@cms.hhs.gov
                 </a>{" "}
                 for help or feedback.
               </div>
