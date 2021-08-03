@@ -11,7 +11,7 @@ const BrowserIssue = () => (
     </p>
     <p>
       If you feel this is an error, please contact the helpdesk{" "}
-      <a href="mailto:mdct_helpdesk@cms.hhs.gov">mdct_helpdesk@cms.hhs.gov</a>
+      <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>
     </p>
   </div>
 );

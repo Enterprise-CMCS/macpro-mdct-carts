@@ -30,8 +30,8 @@ export const DownloadDrawer = ({ show, currentYear, tempState }) => {
             <p>
               Welcome to CARTS! We’ve incorporated feedback from several states
               to bring you a better CARTS experience. Contact{" "}
-              <a href="mailto:mdct_helpdesk@cms.hhs.gov?subject=CARTS Help request">
-                mdct_helpdesk@cms.hhs.gov
+              <a href="mailto:mdct_help@cms.hhs.gov?subject=CARTS Help request">
+                mdct_help@cms.hhs.gov
               </a>{" "}
               with any questions.
             </p>
@@ -52,8 +52,8 @@ export const DownloadDrawer = ({ show, currentYear, tempState }) => {
     <p className="ds-u-margin-bottom--2">
       Welcome to CARTS! We’ve incorporated feedback from several states to bring
       you a better CARTS experience. Contact{" "}
-      <a href="mailto:mdct_helpdesk@cms.hhs.gov?subject=CARTS Help request">
-        mdct_helpdesk@cms.hhs.gov
+      <a href="mailto:mdct_help@cms.hhs.gov?subject=CARTS Help request">
+        mdct_help@cms.hhs.gov
       </a>{" "}
       with any questions.
     </p>
