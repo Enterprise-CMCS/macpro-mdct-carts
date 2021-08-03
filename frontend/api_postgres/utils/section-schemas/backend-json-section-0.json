@@ -16,7 +16,7 @@
             "id": "2020-00-a-01",
             "type": "part",
             "title": "Welcome!",
-            "text": "We already have some information about your state from our records.\nIf any information is incorrect, please contact the [CARTS Help Desk](mailto:cartshelp@cms.hhs.gov).",
+            "text": "We already have some information about your state from our records.\nIf any information is incorrect, please contact the [CARTS Help Desk](mailto:mdct_helpdesk@cms.hhs.gov).",
             "questions": [
               {
                 "id": "2020-00-a-01-01",

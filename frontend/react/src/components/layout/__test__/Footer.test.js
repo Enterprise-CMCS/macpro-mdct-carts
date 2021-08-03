@@ -12,7 +12,7 @@ import { shallow } from "enzyme";
  * @param {any} state - Initial state for setup
  * @returns {ShallowWrapper}
  */
-const setup = (props = {}, state = null) => {
+const setup = (props = {}) => {
   return shallow(<Footer {...props} />);
 };
 
@@ -34,7 +34,7 @@ describe("Footer Component (shallow)", () => {
   });
 
   it("includes contact email address", () => {
-    const email = wrapper.find({ href: "mailto:cartshelp@cms.hhs.gov" });
+    const email = wrapper.find({ href: "mailto:mdct_helpdesk@cms.hhs.gov" });
     expect(email.length).toBe(1);
   });
 

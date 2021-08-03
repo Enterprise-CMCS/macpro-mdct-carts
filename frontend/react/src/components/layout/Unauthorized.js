@@ -9,7 +9,7 @@ const Unauthorized = () => (
     </p>
     <p>
       If you feel this is an error, please contact the helpdesk{" "}
-      <a href="mailto:cartshelp@cms.hhs.gov">cartshelp@cms.hhs.gov</a>
+      <a href="mailto:mdct_helpdesk@cms.hhs.gov">mdct_helpdesk@cms.hhs.gov</a>
     </p>
   </div>
 );
