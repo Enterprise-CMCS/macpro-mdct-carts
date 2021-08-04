@@ -58,7 +58,7 @@ class Header extends Component {
                   </ul>
                   <ul className="menu-block" id="menu-block">
                     <li className="helpdesk">
-                      <a href="mailto:mdct_helpdesk@cms.hhs.gov">Helpdesk</a>
+                      <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
                     </li>
 
                     <li className="manage-account">

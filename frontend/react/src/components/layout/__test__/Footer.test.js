@@ -34,7 +34,7 @@ describe("Footer Component (shallow)", () => {
   });
 
   it("includes contact email address", () => {
-    const email = wrapper.find({ href: "mailto:mdct_helpdesk@cms.hhs.gov" });
+    const email = wrapper.find({ href: "mailto:mdct_help@cms.hhs.gov" });
     expect(email.length).toBe(1);
   });
 
