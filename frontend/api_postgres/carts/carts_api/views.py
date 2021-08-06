@@ -1019,7 +1019,7 @@ def SendEmail(request):
     if message is None:
         responseMessage += "Missing require data: message \n"
 
-    if responseMessage is "":
+    if responseMessage == "":
         try:
             send_mail(subject, message, sender, recipients)
             jsonResponse = JsonResponse(
@@ -1104,7 +1104,7 @@ def SendEmailStatusChange(request):
     if source is None:
         responseMessage += "Missing require data: source \n"
 
-    if responseMessage is "":
+    if responseMessage == "":
 
         try:
             subject = "CMS MDCT CARTS"

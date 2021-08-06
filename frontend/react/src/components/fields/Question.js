@@ -100,7 +100,6 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
             label={question.label}
           />
         )}
-
         <Component
           {...props}
           question={question}
