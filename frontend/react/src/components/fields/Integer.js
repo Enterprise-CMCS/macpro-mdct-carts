@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
 
-const Integer = ({ onChange, question, ...props }) => {
+const Integer = ({ onChange, question, prevYearValue, ...props }) => {
   const [error, setError] = useState(false);
-
   const change = ({ target: { name, value } }) => {
     const stripped = value.replace(/[^0-9]+/g, "");
     const parsed = parseFloat(stripped);
@@ -25,7 +24,8 @@ const Integer = ({ onChange, question, ...props }) => {
       name={question.id}
       numeric
       onChange={change}
-      value={question.answer.entry || ""}
+      value={prevYearValue || question.answer.entry || ""}
+      disabled={prevYearValue}
       {...props}
     />
   );
@@ -33,6 +33,7 @@ const Integer = ({ onChange, question, ...props }) => {
 Integer.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
+  prevYearValue: PropTypes.any,
 };
 
 export { Integer };

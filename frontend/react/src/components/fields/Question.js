@@ -60,7 +60,14 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
+const Question = ({
+  hideNumber,
+  question,
+  readonly,
+  setAnswer,
+  prevYearValue,
+  ...props
+}) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -111,6 +118,7 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
             (question.answer && question.answer.readonly) ||
             false
           }
+          prevYearValue={prevYearValue}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -133,6 +141,7 @@ Question.propTypes = {
   question: PropTypes.object.isRequired,
   readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
+  prevYearValue: PropTypes.any,
 };
 Question.defaultProps = {
   hideNumber: false,

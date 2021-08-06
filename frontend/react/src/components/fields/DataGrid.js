@@ -12,79 +12,91 @@ const DataGrid = ({ question, year, state }) => {
       ? `subquestion ds-u-padding-left--2`
       : `ds-u-margin-top--0`;
 
+  const getDataFromLastYear = async () => {
+    const { data } = await axios.get(`/api/v1/sections/2019/AK/3`);
+    return data;
+  };
+
   useEffect(() => {
     const generateRenderQuestions = () => {
       const questionsToSet = [];
 
+      // Loop through all questions (passed in)
       question.questions.map(async (item) => {
         // If there is no id, exit
         if (!item.id) {
-          return;
+          return item;
         }
-        // Get questionID
-        const id = item.id.split("-");
+        const splitID = item.id.split("-");
 
-        const prevYearValue = await getValueFromLastYear(
-          id,
-          year,
-          state
-        ).then();
-        console.log("zzzprevYearValue", prevYearValue);
+        if (
+          splitID[1] === "03" &&
+          splitID[2] === "c" &&
+          splitID[3] === "06" &&
+          parseInt(splitID[4]) > 2 &&
+          parseInt(splitID[4]) < 10
+        ) {
+          // Set year to last year
+          splitID[0] = parseInt(splitID[0]) - 1;
+          const lastYearId = splitID.join("-");
+          splitID.pop();
+          const fieldsetId = splitID.join("-");
 
-        questionsToSet.push({
-          hideNumber: item.type !== "fieldset",
-          question: item,
-          prevYearValue,
-        });
+          let lastYearAnswer;
+          let data = await getDataFromLastYear();
+          let prevYearValue = await getValueFromLastYear(data, fieldsetId);
+          // let prevYearValue = 22;
+          console.log("prevYearValue", prevYearValue);
+
+          questionsToSet.push({
+            hideNumber: true,
+            question: item,
+            prevYearValue: parseInt(prevYearValue),
+          });
+        } else {
+          // Add values to render array
+          questionsToSet.push({
+            hideNumber: true,
+            question: item,
+          });
+        }
+
+        return item;
       });
 
-      console.log("zzzQuestionsToSet", questionsToSet);
+      // Save new questions to local state
       setRenderQuestions(questionsToSet);
     };
     generateRenderQuestions();
   }, []);
-  const getValueFromLastYear = async (id) => {
-    if (
-      id[1] !== "03" ||
-      id[2] !== "c" ||
-      id[3] !== "06" ||
-      parseInt(id[4]) < 3 ||
-      parseInt(id[4]) > 9
-    ) {
-      console.log("If Check - Passed");
-      return;
-    }
-    console.log("If Check - failed");
-
-    id[0] = parseInt(id[0]) - 1;
-    const lastYearId = id.join("-");
-    id.pop();
-    const fieldsetId = id.join("-");
-
+  const getValueFromLastYear = async (data, fieldsetId) => {
     let lastYearAnswer;
-    let { data } = await axios.get(`/api/v1/sections/2019/AK/3`);
-    // Get section 3c part 6
     const questions = data.contents.section.subsections[2].parts[5].questions;
 
     let matchingQuestion = questions.filter(
       (question) => fieldsetId === question?.fieldset_info?.id
     );
+
     if (matchingQuestion[0])
+      // REVIEW FOR ACCURACY
       lastYearAnswer = matchingQuestion[0].questions[0].answer.entry;
 
-    // If no value, send true
-    return lastYearAnswer;
+    // console.log("zzzLastYearAnswer", lastYearAnswer ?? 0);
+    return lastYearAnswer ?? 0;
   };
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
-      {console.log("zzzRenderQuetsions", renderQuestions)}
-      {renderQuestions.map((item, index) => {
+      {/*{console.log("zzzRenderQuestions", renderQuestions)}*/}
+      {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>
-            {console.log("renderQuestionsWorking")}
-            <h1>Test</h1>
-            <Question hideNumber={item.hideNumber} question={item.question} />
+            {/*{console.log("zzzquestion.question", question)}*/}
+            <Question
+              hideNumber={question.hideNumber}
+              question={question.question}
+              prevYearValue={question.prevYearValue}
+            />
           </div>
         );
       })}
