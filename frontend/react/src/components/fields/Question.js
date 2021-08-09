@@ -65,7 +65,7 @@ const Question = ({
   question,
   readonly,
   setAnswer,
-  prevYearValue,
+  prevYear,
   ...props
 }) => {
   let Component = Text;
@@ -118,7 +118,7 @@ const Question = ({
             (question.answer && question.answer.readonly) ||
             false
           }
-          prevYearValue={prevYearValue}
+          prevYear={prevYear}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -141,7 +141,7 @@ Question.propTypes = {
   question: PropTypes.object.isRequired,
   readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
-  prevYearValue: PropTypes.any,
+  prevYear: PropTypes.object,
 };
 Question.defaultProps = {
   hideNumber: false,

@@ -17,8 +17,13 @@ const DataGrid = ({ question, year, state }) => {
     if (!item.id) {
       return;
     }
+
     const splitID = item.id.split("-");
     const lastYear = parseInt(splitID[0]) - 1;
+
+    // the subquestion id (a, b, c, etc)
+    const questionId = splitID[5];
+    let a;
     await axios
       .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
       .then((data) => {
@@ -26,7 +31,11 @@ const DataGrid = ({ question, year, state }) => {
           return item;
         }
 
+        // Even years get inputs, odd years get previous year data
+        const shouldGetPriorYear = splitID[0] % 2;
+
         if (
+          shouldGetPriorYear &&
           splitID[1] === "03" &&
           splitID[2] === "c" &&
           splitID[3] === "06" &&
@@ -41,12 +50,14 @@ const DataGrid = ({ question, year, state }) => {
           getDataFromLastYear(fieldsetId);
           if (data) {
             let prevYearValue =
-              parseInt(getValueFromLastYear(data.data, fieldsetId)) || 0;
+              parseInt(
+                getValueFromLastYear(data.data, fieldsetId, questionId)
+              ) || 0;
 
             const temp = questionsToSet.push({
               hideNumber: true,
               question: item,
-              prevYearValue: prevYearValue,
+              prevYear: { value: prevYearValue, disabled: true },
             });
             setQuestionsToSet(temp);
           }
@@ -77,7 +88,7 @@ const DataGrid = ({ question, year, state }) => {
     generateRenderQuestions();
   }, []);
 
-  const getValueFromLastYear = (data, fieldsetId) => {
+  const getValueFromLastYear = (data, fieldsetId, itemId) => {
     let lastYearAnswer;
     // Get questions from last years JSON
     const questions = data.contents.section.subsections[2].parts[5].questions;
@@ -86,9 +97,13 @@ const DataGrid = ({ question, year, state }) => {
       (question) => fieldsetId === question?.fieldset_info?.id
     );
 
-    if (matchingQuestion[0])
-      lastYearAnswer = matchingQuestion[0].questions[0].answer.entry;
-
+    if (matchingQuestion[0]) {
+      // Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
+      // and subtract 97 to get the question index number
+      const index = itemId.toLowerCase().charCodeAt(0) - 97;
+      lastYearAnswer =
+        matchingQuestion[0].questions[1].questions[index].answer.entry;
+    }
     return lastYearAnswer ?? 0;
   };
 
@@ -102,7 +117,7 @@ const DataGrid = ({ question, year, state }) => {
             <Question
               hideNumber={question.hideNumber}
               question={question.question}
-              prevYearValue={question.prevYearValue}
+              prevYear={question.prevYear}
             />
           </div>
         );
