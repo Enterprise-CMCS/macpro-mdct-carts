@@ -6,28 +6,25 @@ import axios from "../../authenticatedAxios";
 
 const DataGrid = ({ question, year, state }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
+  const [questionsToSet, setQuestionsToSet] = useState([]);
 
   const rowStyle =
     question.questions.length > 5
       ? `subquestion ds-u-padding-left--2`
       : `ds-u-margin-top--0`;
 
-  const getDataFromLastYear = async () => {
-    const { data } = await axios.get(`/api/v1/sections/2019/AK/3`);
-    return data;
-  };
-
-  useEffect(() => {
-    const generateRenderQuestions = () => {
-      const questionsToSet = [];
-
-      // Loop through all questions (passed in)
-      question.questions.map(async (item) => {
-        // If there is no id, exit
+  const getDataFromLastYear = async (item) => {
+    if (!item.id) {
+      return;
+    }
+    const splitID = item.id.split("-");
+    const lastYear = parseInt(splitID[0]) - 1;
+    await axios
+      .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
+      .then((data) => {
         if (!item.id) {
           return item;
         }
-        const splitID = item.id.split("-");
 
         if (
           splitID[1] === "03" &&
@@ -38,39 +35,51 @@ const DataGrid = ({ question, year, state }) => {
         ) {
           // Set year to last year
           splitID[0] = parseInt(splitID[0]) - 1;
-          const lastYearId = splitID.join("-");
           splitID.pop();
           const fieldsetId = splitID.join("-");
 
-          let lastYearAnswer;
-          let data = await getDataFromLastYear();
-          let prevYearValue = await getValueFromLastYear(data, fieldsetId);
-          // let prevYearValue = 22;
-          console.log("prevYearValue", prevYearValue);
+          getDataFromLastYear(fieldsetId);
+          if (data) {
+            let prevYearValue =
+              parseInt(getValueFromLastYear(data.data, fieldsetId)) || 0;
 
-          questionsToSet.push({
-            hideNumber: true,
-            question: item,
-            prevYearValue: parseInt(prevYearValue),
-          });
+            const temp = questionsToSet.push({
+              hideNumber: true,
+              question: item,
+              prevYearValue: prevYearValue,
+            });
+            setQuestionsToSet(temp);
+          }
         } else {
           // Add values to render array
-          questionsToSet.push({
+          const temp = questionsToSet.push({
             hideNumber: true,
             question: item,
           });
+          setQuestionsToSet(temp);
         }
-
-        return item;
       });
 
-      // Save new questions to local state
+    if (questionsToSet.length > 0) {
+      console.log("zzzquestionsToSet", JSON.stringify(questionsToSet));
       setRenderQuestions(questionsToSet);
+    }
+  };
+
+  useEffect(() => {
+    const generateRenderQuestions = () => {
+      // Loop through all questions (passed in)
+      question.questions.map(async (item) => {
+        await getDataFromLastYear(item);
+      });
     };
+
     generateRenderQuestions();
   }, []);
-  const getValueFromLastYear = async (data, fieldsetId) => {
+
+  const getValueFromLastYear = (data, fieldsetId) => {
     let lastYearAnswer;
+    // Get questions from last years JSON
     const questions = data.contents.section.subsections[2].parts[5].questions;
 
     let matchingQuestion = questions.filter(
@@ -78,20 +87,18 @@ const DataGrid = ({ question, year, state }) => {
     );
 
     if (matchingQuestion[0])
-      // REVIEW FOR ACCURACY
       lastYearAnswer = matchingQuestion[0].questions[0].answer.entry;
 
-    // console.log("zzzLastYearAnswer", lastYearAnswer ?? 0);
     return lastYearAnswer ?? 0;
   };
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
-      {/*{console.log("zzzRenderQuestions", renderQuestions)}*/}
+      {console.log("zzzRenderQuestions", renderQuestions)}
       {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>
-            {/*{console.log("zzzquestion.question", question)}*/}
+            {console.log("zzzquestion.question", question)}
             <Question
               hideNumber={question.hideNumber}
               question={question.question}

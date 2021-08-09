@@ -345,8 +345,6 @@ class SectionViewSet(viewsets.ModelViewSet):
         serializer = SectionSerializer(section, context={"request": request})
         return Response(serializer.data)
 
-    transaction.atomic
-
     def update_sections(self, request):
         try:
             state_id = False
