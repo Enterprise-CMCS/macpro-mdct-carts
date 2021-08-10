@@ -43,7 +43,7 @@ const DataGrid = ({ question, state }) => {
       await axios
         .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
         .then((data) => {
-          getDataFromLastYear(fieldsetId);
+          // getDataFromLastYear(fieldsetId);
           if (data) {
             let prevYearValue =
               parseInt(
@@ -69,7 +69,6 @@ const DataGrid = ({ question, state }) => {
       setQuestionsToSet(temp);
     }
     if (questionsToSet.length > 0) {
-      console.log("zzzquestionsToSet", JSON.stringify(questionsToSet));
       setRenderQuestions(questionsToSet);
     }
   };
@@ -106,11 +105,9 @@ const DataGrid = ({ question, state }) => {
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
-      {console.log("zzzRenderQuestions", renderQuestions)}
       {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>
-            {console.log("zzzquestion.question", question)}
             <Question
               hideNumber={question.type !== "fieldset"}
               question={question.question}
