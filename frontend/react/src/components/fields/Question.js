@@ -73,8 +73,9 @@ const Question = ({
     Component = questionTypes.get(question.type);
   }
 
+  const prevYearDisabled = prevYear ? prevYear.disabled : false;
+
   const onChange = ({ target: { name: id, value } }) => {
-    let a;
     setAnswer(id, value);
   };
 
@@ -115,6 +116,7 @@ const Question = ({
           name={question.id}
           onChange={onChange}
           disabled={
+            prevYearDisabled ||
             pageDisable ||
             readonly ||
             (question.answer && question.answer.readonly) ||
@@ -143,7 +145,6 @@ Question.propTypes = {
   question: PropTypes.object.isRequired,
   readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
-  prevYear: PropTypes.object,
 };
 Question.defaultProps = {
   hideNumber: false,

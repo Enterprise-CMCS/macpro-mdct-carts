@@ -65,6 +65,7 @@ const DataGrid = ({ question, state }) => {
         hideNumber: true,
         question: item,
       });
+
       setQuestionsToSet(temp);
     }
     if (questionsToSet.length > 0) {
@@ -101,7 +102,7 @@ const DataGrid = ({ question, state }) => {
     };
 
     generateRenderQuestions();
-  }, [question]);
+  }, []);
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
