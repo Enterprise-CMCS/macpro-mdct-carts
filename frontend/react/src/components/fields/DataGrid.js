@@ -4,7 +4,7 @@ import Question from "./Question";
 import { connect } from "react-redux";
 import axios from "../../authenticatedAxios";
 
-const DataGrid = ({ question, year, state }) => {
+const DataGrid = ({ question, state }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
 
@@ -14,7 +14,7 @@ const DataGrid = ({ question, year, state }) => {
       : `ds-u-margin-top--0`;
 
   const getDataFromLastYear = async (item) => {
-    if (!item.id) {
+    if (!item.id || !Array.isArray(questionsToSet)) {
       return;
     }
 
@@ -28,7 +28,7 @@ const DataGrid = ({ question, year, state }) => {
     const shouldGetPriorYear = splitID[0] % 2;
     let a;
     if (
-      shouldGetPriorYear &&
+      !shouldGetPriorYear &&
       splitID[1] === "03" &&
       splitID[2] === "c" &&
       splitID[3] === "06" &&
@@ -55,6 +55,7 @@ const DataGrid = ({ question, year, state }) => {
               question: item,
               prevYear: { value: prevYearValue, disabled: true },
             });
+
             setQuestionsToSet(temp);
           }
         });
@@ -71,17 +72,6 @@ const DataGrid = ({ question, year, state }) => {
       setRenderQuestions(questionsToSet);
     }
   };
-
-  useEffect(() => {
-    const generateRenderQuestions = () => {
-      // Loop through all questions (passed in)
-      question.questions.map(async (item) => {
-        await getDataFromLastYear(item);
-      });
-    };
-
-    generateRenderQuestions();
-  }, []);
 
   const getValueFromLastYear = (data, fieldsetId, itemId) => {
     let lastYearAnswer;
@@ -102,6 +92,17 @@ const DataGrid = ({ question, year, state }) => {
     return lastYearAnswer ?? 0;
   };
 
+  useEffect(() => {
+    const generateRenderQuestions = () => {
+      // Loop through all questions (passed in)
+      question.questions.map(async (item) => {
+        await getDataFromLastYear(item);
+      });
+    };
+
+    generateRenderQuestions();
+  }, [question]);
+
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {console.log("zzzRenderQuestions", renderQuestions)}
@@ -110,7 +111,7 @@ const DataGrid = ({ question, year, state }) => {
           <div className="ds-l-col" key={index}>
             {console.log("zzzquestion.question", question)}
             <Question
-              hideNumber={question.hideNumber}
+              hideNumber={question.type !== "fieldset"}
               question={question.question}
               prevYear={question.prevYear}
             />
