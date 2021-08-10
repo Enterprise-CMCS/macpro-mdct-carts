@@ -23,30 +23,26 @@ const DataGrid = ({ question, year, state }) => {
 
     // the subquestion id (a, b, c, etc)
     const questionId = splitID[5];
+
+    // Even years get inputs, odd years get previous year data
+    const shouldGetPriorYear = splitID[0] % 2;
     let a;
-    await axios
-      .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
-      .then((data) => {
-        if (!item.id) {
-          return item;
-        }
+    if (
+      shouldGetPriorYear &&
+      splitID[1] === "03" &&
+      splitID[2] === "c" &&
+      splitID[3] === "06" &&
+      parseInt(splitID[4]) > 2 &&
+      parseInt(splitID[4]) < 10
+    ) {
+      // Set year to last year
+      splitID[0] = parseInt(splitID[0]) - 1;
+      splitID.pop();
+      const fieldsetId = splitID.join("-");
 
-        // Even years get inputs, odd years get previous year data
-        const shouldGetPriorYear = splitID[0] % 2;
-
-        if (
-          shouldGetPriorYear &&
-          splitID[1] === "03" &&
-          splitID[2] === "c" &&
-          splitID[3] === "06" &&
-          parseInt(splitID[4]) > 2 &&
-          parseInt(splitID[4]) < 10
-        ) {
-          // Set year to last year
-          splitID[0] = parseInt(splitID[0]) - 1;
-          splitID.pop();
-          const fieldsetId = splitID.join("-");
-
+      await axios
+        .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
+        .then((data) => {
           getDataFromLastYear(fieldsetId);
           if (data) {
             let prevYearValue =
@@ -61,16 +57,15 @@ const DataGrid = ({ question, year, state }) => {
             });
             setQuestionsToSet(temp);
           }
-        } else {
-          // Add values to render array
-          const temp = questionsToSet.push({
-            hideNumber: true,
-            question: item,
-          });
-          setQuestionsToSet(temp);
-        }
+        });
+    } else {
+      // Add values to render array
+      const temp = questionsToSet.push({
+        hideNumber: true,
+        question: item,
       });
-
+      setQuestionsToSet(temp);
+    }
     if (questionsToSet.length > 0) {
       console.log("zzzquestionsToSet", JSON.stringify(questionsToSet));
       setRenderQuestions(questionsToSet);

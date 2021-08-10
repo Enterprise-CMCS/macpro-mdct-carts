@@ -74,6 +74,7 @@ const Question = ({
   }
 
   const onChange = ({ target: { name: id, value } }) => {
+    let a;
     setAnswer(id, value);
   };
 
@@ -107,6 +108,7 @@ const Question = ({
             label={question.label}
           />
         )}
+
         <Component
           {...props}
           question={question}
