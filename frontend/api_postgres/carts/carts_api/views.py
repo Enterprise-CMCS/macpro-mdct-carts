@@ -1153,7 +1153,7 @@ def SendEmailStatusChange(request):
 
 
 def _getUsersForStatusChange(statecode):
-    """ Get all users who recieve email updates from statusChange """
+    """Get all users who recieve email updates from statusChange"""
     try:
         users = UserProfiles.objects.all().filter(
             Q(is_active=True),
