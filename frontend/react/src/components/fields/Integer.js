@@ -7,7 +7,6 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
   const [answer, setAnswer] = useState(question.answer.entry);
 
   const change = ({ target: { name, value } }) => {
-    let a;
     const stripped = value.replace(/[^0-9]+/g, "");
     const parsed = parseFloat(stripped);
 

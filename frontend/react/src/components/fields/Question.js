@@ -146,6 +146,7 @@ Question.propTypes = {
   question: PropTypes.object.isRequired,
   readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
+  prevYear: PropTypes.object,
 };
 Question.defaultProps = {
   hideNumber: false,
