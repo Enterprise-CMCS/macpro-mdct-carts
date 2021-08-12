@@ -13,12 +13,16 @@ const DataGrid = ({ question, state }) => {
       ? `subquestion ds-u-padding-left--2`
       : `ds-u-margin-top--0`;
 
+  // Pull data from last year
   const getDataFromLastYear = async (item) => {
     if (!item.id || !Array.isArray(questionsToSet)) {
       return;
     }
 
+    // Split and create array from id
     const splitID = item.id.split("-");
+
+    // Get last year value (e.g. 2019) from splitID
     const lastYear = parseInt(splitID[0]) - 1;
 
     // the subquestion id (a, b, c, etc)
@@ -26,9 +30,9 @@ const DataGrid = ({ question, state }) => {
 
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
-    let a;
+
     if (
-      !shouldGetPriorYear &&
+      shouldGetPriorYear &&
       splitID[1] === "03" &&
       splitID[2] === "c" &&
       splitID[3] === "06" &&
@@ -43,19 +47,21 @@ const DataGrid = ({ question, state }) => {
       await axios
         .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
         .then((data) => {
-          // getDataFromLastYear(fieldsetId);
+          // If data exists, decipher value from return result (data)
           if (data) {
             let prevYearValue =
               parseInt(
                 getValueFromLastYear(data.data, fieldsetId, questionId)
-              ) || 0;
+              ) || "";
 
+            // Add new entry to questionsToSet Array
             const temp = questionsToSet.push({
               hideNumber: true,
               question: item,
               prevYear: { value: prevYearValue, disabled: true },
             });
 
+            // Set cumulative array of questions to local state
             setQuestionsToSet(temp);
           }
         });
@@ -68,20 +74,26 @@ const DataGrid = ({ question, state }) => {
 
       setQuestionsToSet(temp);
     }
+
+    // Don't add empty arrays
     if (questionsToSet.length > 0) {
       setRenderQuestions(questionsToSet);
     }
   };
 
+  // Takes in a section, fieldset ID, and item id to determine which value matches from larger data set
   const getValueFromLastYear = (data, fieldsetId, itemId) => {
     let lastYearAnswer;
+
     // Get questions from last years JSON
     const questions = data.contents.section.subsections[2].parts[5].questions;
 
+    // Filter down to specific question
     let matchingQuestion = questions.filter(
       (question) => fieldsetId === question?.fieldset_info?.id
     );
 
+    // The first will always be correct
     if (matchingQuestion[0]) {
       // Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
       // and subtract 97 to get the question index number
@@ -89,7 +101,7 @@ const DataGrid = ({ question, state }) => {
       lastYearAnswer =
         matchingQuestion[0].questions[1].questions[index].answer.entry;
     }
-    return lastYearAnswer ?? 0;
+    return lastYearAnswer ?? null;
   };
 
   useEffect(() => {
