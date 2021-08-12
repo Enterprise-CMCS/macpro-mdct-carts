@@ -20,7 +20,8 @@ import { Radio } from "./Radio";
 import { Ranges } from "./Ranges";
 import { Repeatables } from "./Repeatables";
 import { SkipText } from "./SkipText";
-import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
+import Text from "./Text";
+import { TextMedium, TextMultiline, TextSmall } from "./TextOther";
 
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
