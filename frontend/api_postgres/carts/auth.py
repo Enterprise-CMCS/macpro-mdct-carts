@@ -24,7 +24,7 @@ from datetime import datetime
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         raw_token = self._extract_token(request)
-        print("+++++++++raw token: " + raw_token)
+        print("+++++++++raw token:  " + raw_token)
         try:
             return self._do_authenticate(raw_token)
         except Exception as e:
