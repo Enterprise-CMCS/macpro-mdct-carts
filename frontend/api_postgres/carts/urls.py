@@ -30,6 +30,7 @@ section_update = views.SectionViewSet.as_view({"put": "update_sections"})
 
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
+router.register(r"formtemplates", views.FormTemplateViewSet)
 router.register(r"groups", views.GroupViewSet)
 router.register(r"sections", views.SectionViewSet)
 router.register(r"sectionbases", views.SectionBaseViewSet)

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group  # type: ignore
 from rest_framework import serializers  # type: ignore
 from carts.carts_api.models import (
+    FormTemplate,
     RoleFromUsername,
     RoleFromJobCode,
     RolesFromJobCode,
@@ -44,6 +45,10 @@ class SectionSchemaSerializer(serializers.HyperlinkedModelSerializer):
         model = SectionSchema
         fields = ["year", "contents"]
 
+class FormTemplateSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = FormTemplate
+        fields = ["year", "section", "contents"]
 
 class FMAPSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

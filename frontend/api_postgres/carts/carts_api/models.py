@@ -40,6 +40,21 @@ class Section(models.Model):
         super(Section, self).save(*args, **kwargs)
 
 
+class FormTemplate(models.Model):
+    year = models.IntegerField()
+    section = models.IntegerField()
+    contents = JSONField()
+
+    def clean(self):
+        schema_object = FormTemplate.objects.first()
+        schema = schema_object.contents
+        jsonschema.validate(instance=self.contents, schema=schema)
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(Section, self).save(*args, **kwargs)
+
+
 class State(models.Model):
     """
     A model to hold and reference state specific information
