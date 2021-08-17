@@ -98,7 +98,7 @@ resource "aws_security_group_rule" "api_postgres_egress_ecr_pull" {
 #########################################
 
 resource "aws_iam_role" "scheduled_task_cloudwatch" {
-  name = "generate_form-aws-${terraform.workspace}"
+  name = "generate_form-role-${terraform.workspace}"
 
   assume_role_policy = <<DOC
   {
@@ -118,14 +118,14 @@ resource "aws_iam_role" "scheduled_task_cloudwatch" {
 }
 
 resource "aws_cloudwatch_event_rule" "generate_form_rule" {
-  name                = "scheduled-ecs-event-rule"
-  description         = "Schedule trigger for run every day at midnight"
+  name                = "generate_form-event-rule-${terraform.workspace}"
+  description         = "Schedule trigger for Sept 15th every year"
   schedule_expression = "cron(0 0 15 9 ? *)"
   is_enabled          = true
 }
 
 resource "aws_cloudwatch_event_target" "generate_form_target" {
-  target_id = "$scheduled-ecs-target"
+  target_id = "generate_form-ecs-target-${terraform.workspace}"
   rule      = aws_cloudwatch_event_rule.scheduled_task.name
   arn       = aws_ecs_cluster.frontend.id
   role_arn  = aws_iam_role.scheduled_task_cloudwatch.arn
