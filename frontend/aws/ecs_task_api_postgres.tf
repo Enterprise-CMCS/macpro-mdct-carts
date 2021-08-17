@@ -93,6 +93,59 @@ resource "aws_security_group_rule" "api_postgres_egress_ecr_pull" {
   security_group_id = aws_security_group.api_postgres.id
 }
 
+########################################
+# CloudWatch Event Cron
+#########################################
+
+resource "aws_iam_role" "scheduled_task_cloudwatch" {
+  name = "generate_form-aws-${terraform.workspace}"
+
+  assume_role_policy = <<DOC
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "events.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  }
+  DOC
+}
+
+resource "aws_cloudwatch_event_rule" "generate_form_rule" {
+  name                = "scheduled-ecs-event-rule"
+  description         = "Schedule trigger for run every day at midnight"
+  schedule_expression = "cron(0 0 15 9 ? *)"
+  is_enabled          = true
+}
+
+resource "aws_cloudwatch_event_target" "generate_form_target" {
+  target_id = "$scheduled-ecs-target"
+  rule      = aws_cloudwatch_event_rule.scheduled_task.name
+  arn       = aws_ecs_cluster.frontend.id
+  role_arn  = aws_iam_role.scheduled_task_cloudwatch.arn
+
+  ecs_target {
+    task_count          = 1
+    task_definition_arn = aws_ecs_task_definition.api_postgres.arn
+    launch_type         = "FARGATE"
+    network_configuration {
+      subnets         = data.aws_subnet_ids.private.ids
+      assign_public_ip = false
+      security_groups = [aws_security_group.api_postgres.id]
+    }
+  }
+
+  depends_on = [
+    aws_ecs_cluster.frontend
+  ]
+}
+
 resource "aws_ecs_service" "api_postgres" {
   name            = "api_postgres"
   cluster         = aws_ecs_cluster.frontend.id
