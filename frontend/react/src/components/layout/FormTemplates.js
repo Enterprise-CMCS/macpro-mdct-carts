@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
+import global from "../../store/globalVariables";
 /**
  * Display all users with options
  *
@@ -20,9 +21,9 @@ const FormTemplates = () => {
     dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
     try {
-      console.log("before axios call");
-      let { data } = await axios.get(`/api/v1/formtemplates/${2020}`);
-      console.log("zzzData", data);
+      /* TODO:  get from Global Redux Store */
+      const currentYear = "2020";
+      let { data } = await axios.get(`/api/v1/formtemplates/${currentYear}`);
       let a;
       setFormTemplates(data);
     } catch (e) {
