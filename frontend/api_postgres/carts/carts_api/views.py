@@ -121,108 +121,6 @@ class FormTemplateViewSet(viewsets.ModelViewSet):
             relation.delete()
         return super().create(request)
 
-    def get_formtemplates_by_year(self, request, year):
-        formtemplates = self.get_queryset().filter(
-            contents__section__year=year,
-        )
-
-        for formtemplate in formtemplates:
-            # TODO: streamline this so if users have access to all of the
-            # objects (e.g. if they're admins) the check occurs ony once.
-            # print("about to check object permissions", flush=True)
-            if request.user.appuser.role != "admin_user":
-                self.check_object_permissions(request, formtemplate)
-
-        serializer = FormTemplateSerializer(
-            formtemplates, many=True, context={"request": request}
-        )
-        return Response(serializer.data)
-
-    def get_formtemplate_by_year_and_section(self, request, year, section):
-        template = FormTemplate.objects.get(
-            contents__section__year=year,
-            contents__section__ordinal=section,
-        )
-
-        self.check_object_permissions(request, section)
-
-        serializer = FormTemplateSerializer(section, context={"request": request})
-        return Response(serializer.data)
-
-    transaction.atomic
-
-    def update_formtemplate(self, request):
-        try:
-            section = False
-            year = False
-
-            for entry in request.data:
-                section_id = entry["contents"]["section"]["id"]
-                template_state = "AA"
-                state_id = template_state
-                year = entry["contents"]["section"]["year"]
-
-                formtemplate = FormTemplate.objects.get(
-                    contents__section__id=section_id,
-                    contents__section__year=year,
-                )
-
-                self.check_object_permissions(request, section)
-
-                status = (
-                    StateStatus.objects.all()
-                    .filter(state_id=state_id, year=year)
-                    .order_by("last_changed")
-                    .last()
-                )
-                can_save = status is None or status.status not in [
-                    "certified",
-                    "published",
-                    "accepted",
-                ]
-
-                if request.user.appuser.role != "state_user":
-                    can_save = False
-
-                if not can_save:
-                    return HttpResponse(
-                        f"cannot save {status} report", status=400
-                    )
-
-                formtemplate.contents = entry["contents"]
-                formtemplate.save()
-
-            status = (
-                StateStatus.objects.all()
-                .filter(state_id=template_state, year=year)
-                .order_by("last_changed")
-                .last()
-            )
-
-            if status.status == "in_progress":
-                status.last_changed = datetime.now(tz=timezone.utc)
-                status.save()
-            else:
-                # if the form is being changed, it must be in progress:
-                state = State.objects.get(code=template_state.upper())
-                updated = StateStatus.objects.create(
-                    state=None,
-                    year=year,
-                    status="in_progress",
-                    last_changed=datetime.now(tz=timezone.utc),
-                    user_name=request.user.username,
-                )
-                updated.save()
-
-            return HttpResponse(status=204)
-
-        except PermissionDenied:
-            raise
-        except Exception as e:
-            raise ValidationError(
-                "There is a problem with the provided data.", 400
-            ) from e
-
     def get_permissions(self):
         permission_classes_by_action = {
             "get_sections_by_year_and_state": [StateViewSectionPermission],
@@ -243,6 +141,93 @@ class FormTemplateViewSet(viewsets.ModelViewSet):
 
 
 
+
+@api_view(["GET"])
+def get_formtemplates_by_year(request, year):
+
+    formtemplates = list(FormTemplate.objects.filter(year = year).order_by("section").values())
+
+    return HttpResponse(json.dumps(formtemplates, cls=DjangoJSONEncoder))
+
+
+@api_view(["GET"])
+def get_formtemplate_by_year_and_section(self, request, year, section):
+    formtemplate = list(FormTemplate.objects.filter(year = year).first().values())
+
+    return HttpResponse(json.dumps(formtemplate, cls=DjangoJSONEncoder))
+
+@api_view(["POST"])
+def update_formtemplate(self, request, year, section):
+    try:
+        section = False
+        year = False
+
+        for entry in request.data:
+            section_id = entry["contents"]["section"]["id"]
+            template_state = "AA"
+            state_id = template_state
+            year = entry["contents"]["section"]["year"]
+
+            formtemplate = FormTemplate.objects.get(
+                section=section_id,
+                year=year,
+            )
+
+            self.check_object_permissions(request, section)
+
+            status = (
+                StateStatus.objects.all()
+                .filter(state_id=state_id, year=year)
+                .order_by("last_changed")
+                .last()
+            )
+            can_save = status is None or status.status not in [
+                "certified",
+                "published",
+                "accepted",
+            ]
+
+            if request.user.appuser.role != "state_user":
+                can_save = False
+
+            if not can_save:
+                return HttpResponse(
+                    f"cannot save {status} report", status=400
+                )
+
+            formtemplate.contents = entry["contents"]
+            formtemplate.save()
+
+        status = (
+            StateStatus.objects.all()
+            .filter(state_id=template_state, year=year)
+            .order_by("last_changed")
+            .last()
+        )
+
+        if status.status == "in_progress":
+            status.last_changed = datetime.now(tz=timezone.utc)
+            status.save()
+        else:
+            # if the form is being changed, it must be in progress:
+            state = State.objects.get(code=template_state.upper())
+            updated = StateStatus.objects.create(
+                state=None,
+                year=year,
+                status="in_progress",
+                last_changed=datetime.now(tz=timezone.utc),
+                user_name=request.user.username,
+            )
+            updated.save()
+
+        return HttpResponse(status=204)
+
+    except PermissionDenied:
+        raise
+    except Exception as e:
+        raise ValidationError(
+            "There is a problem with the provided data.", 400
+        ) from e
 
 
 

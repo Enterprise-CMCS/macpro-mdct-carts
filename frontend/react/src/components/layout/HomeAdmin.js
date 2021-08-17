@@ -6,6 +6,7 @@ import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
 import Users from "../layout/users/Users";
+import FormTemplates from "./FormTemplates";
 import UserEdit from "../layout/users/UserEdit";
 import AddUser from "../Utils/AddUser";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
@@ -35,6 +36,9 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
               </li>
               <li>
                 <Link to="/add_user">Add user</Link>
+              </li>
+              <li>
+                <Link to="/templates">Form Templates</Link>
               </li>
             </ul>
           </div>
@@ -71,6 +75,7 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
       <SecureRoute exact path="/add_user" component={AddUser} />
       <SecureRoute exact path="/user/:id" component={UserEdit} />
       <SecureRoute exact path="/state-reports" component={CMSHomepage} />
+      <SecureRoute exact path="/templates" component={FormTemplates} />
     </Switch>
   </>
 );
