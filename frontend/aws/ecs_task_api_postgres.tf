@@ -97,7 +97,7 @@ resource "aws_security_group_rule" "api_postgres_egress_ecr_pull" {
 # CloudWatch Event Cron
 #########################################
 
-resource "aws_iam_role" "scheduled_task_cloudwatch" {
+resource "aws_iam_role" "generate_form_scheduled_task_role" {
   name = "generate_form-role-${terraform.workspace}"
 
   assume_role_policy = <<DOC
