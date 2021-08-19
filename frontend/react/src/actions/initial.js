@@ -121,12 +121,12 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
   }
 };
 
-export const loadSections = ({ userData, stateCode }) => {
+export const loadSections = ({ userData, stateCode, year }) => {
   const state = stateCode || userData.abbr;
 
   return async (dispatch) => {
     const { data } = await axios
-      .get(`/api/v1/sections/2020/${state}`)
+      .get(`/api/v1/sections/${year}/${state}`)
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
         // it in the console, at least.

@@ -29,7 +29,7 @@ const Print = ({ currentUser, state }) => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
-      const { stateUser } = state;
+      const { stateUser, selectedYear } = state;
       const stateCode = stateUser.abbr;
 
       // Start Spinner
@@ -37,7 +37,7 @@ const Print = ({ currentUser, state }) => {
 
       // Pull data based on user details
       await Promise.all([
-        dispatch(loadSections({ userData: currentUser, stateCode })),
+        dispatch(loadSections({ userData: currentUser, stateCode, selectedYear })),
       ]);
 
       // End isFetching for spinner
