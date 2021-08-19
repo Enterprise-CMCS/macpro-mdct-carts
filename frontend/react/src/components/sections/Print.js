@@ -29,8 +29,9 @@ const Print = ({ currentUser, state }) => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
-      const { stateUser, selectedYear } = state;
+      const { stateUser, global } = state;
       const stateCode = stateUser.abbr;
+      const selectedYear = global.formYear;
 
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });

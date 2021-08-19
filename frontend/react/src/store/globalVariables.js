@@ -1,5 +1,5 @@
 // Storing global variables that will be the same regardless of users
-
+// TODO Question do we want to make formYear updatable.
 const initialState = {
   formName: "CARTS FY",
   formYear: "2020",
