@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-import global from "../../store/globalVariables";
+import { connect } from "react-redux";
+
 /**
  * Display all users with options
  *
@@ -13,7 +14,7 @@ import global from "../../store/globalVariables";
  * @constructor
  */
 
-const FormTemplates = () => {
+const FormTemplates = ({formYear}) => {
   const dispatch = useDispatch();
   const [formTemplates, setFormTemplates] = useState([]);
 
@@ -22,8 +23,7 @@ const FormTemplates = () => {
 
     try {
       /* TODO:  get from Global Redux Store */
-      const currentYear = "2020";
-      let { data } = await axios.get(`/api/v1/formtemplates/${currentYear}`);
+      let { data } = await axios.get(`/api/v1/formtemplates/${formYear}?dev=dev-admin`);
       let a;
       setFormTemplates(data);
     } catch (e) {
@@ -37,10 +37,14 @@ const FormTemplates = () => {
   }, []);
 
   const updateField = (event, index) => {
-    console.log("zzzEvent", event);
+    // TODO: Work in progress need to make change to DB.
     let newForms = [...formTemplates];
     // newForms[index].contents = event.target.value;
-    newForms[index].contents = JSON.parse(event.target.value);
+    let section = document.getElementById("ft-0")
+    let jsonparse = JSON.parse(section.textContent)
+    let re = new RegExp(`${jsonparse.section["year"]}`, 'g');
+    section.textContent = section.textContent.replace(re, event.target.value)
+    newForms.push(section.textContent)
     setFormTemplates(newForms);
   };
   const handleSave = () => {
@@ -50,11 +54,17 @@ const FormTemplates = () => {
   return (
     <div className="form-templates">
       <h1>Form Templates</h1>
-      <h3>Year Selector</h3>
+      <h3>Year Selector: {formYear}</h3>
+      <select name="selectedYear" id="selectedYear" onChange={updateField}>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
       {formTemplates.map((item, index) => (
         <div className="form-template-input" key={index}>
           <label for={`ft-${index}`}>Section {item.section}:</label>
-          <textarea id={`ft-${index}`} onChange={(e) => updateField(e, index)}>
+          <textarea id={`ft-${index}`} rows="24" cols="60" onChange={(e) => updateField(e, index)}>
             {JSON.stringify(item.contents, null, 2)}
           </textarea>
         </div>
@@ -70,4 +80,8 @@ const FormTemplates = () => {
   );
 };
 
-export default FormTemplates;
+const mapState = (state) => ({
+  formYear: state.global.formYear
+});
+
+export default connect(mapState)(FormTemplates);

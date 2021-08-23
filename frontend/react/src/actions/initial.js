@@ -121,12 +121,11 @@ export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
   }
 };
 
-export const loadSections = ({ userData, stateCode }) => {
+export const loadSections = ({ userData, stateCode, selectedYear }) => {
   const state = stateCode || userData.abbr;
-
   return async (dispatch) => {
     const { data } = await axios
-      .get(`/api/v1/sections/2020/${state}`)
+      .get(`/api/v1/sections/${selectedYear}/${state}?dev=dev-ak`)
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
         // it in the console, at least.
@@ -176,14 +175,15 @@ export const loadUser = (userToken) => async (dispatch) => {
 };
 
 export const loadForm = (state) => async (dispatch, getState) => {
-  const { stateUser } = getState();
+  const { stateUser, global } = getState();
   const stateCode = state ?? stateUser.currentUser.state.id;
+  const selectedYear = global["formYear"];
 
   // Start isFetching for spinner
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
   try {
-    await dispatch(loadSections({ userData: stateUser, stateCode }));
+    await dispatch(loadSections({ userData: stateUser, stateCode, selectedYear }));
   } finally {
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
