@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 const FormTemplates = ({formYear}) => {
   const dispatch = useDispatch();
   const [formTemplates, setFormTemplates] = useState([]);
+  const [newFormYear, setNewFormYear] = useState(2020)
 
   const loadFormTemplateData = async () => {
     dispatch({ type: "CONTENT_FETCHING_STARTED" });
@@ -38,17 +39,28 @@ const FormTemplates = ({formYear}) => {
 
   const updateField = (event, index) => {
     // TODO: Work in progress need to make change to DB.
-    let newForms = [...formTemplates];
-    // newForms[index].contents = event.target.value;
-    let section = document.getElementById("ft-0")
-    let jsonparse = JSON.parse(section.textContent)
-    let re = new RegExp(`${jsonparse.section["year"]}`, 'g');
-    section.textContent = section.textContent.replace(re, event.target.value)
-    newForms.push(section.textContent)
-    setFormTemplates(newForms);
+
+    setNewFormYear(event.target.value)
+    console.log("[DEBUG]: Current Form Year:" + newFormYear)
+    //setFormTemplates(newForms);
   };
   const handleSave = () => {
-    console.log("save triggered");
+    console.log("[DEBUG: save triggered");
+    let newForms = [...formTemplates];
+    // newForms[index].contents = event.target.value;
+    //let section = document.getElementById("ft-0")
+   // let jsonparse = JSON.parse(section.textContent)
+    let newFormTemplates = [];
+    newForms.map((item, index) =>
+    {
+     // console.log(JSON.stringify(item["contents"]).replace("2020","2323"))
+      let re = new RegExp(`2021`, 'g');
+      let item2 = JSON.parse(JSON.stringify(item).replace(re,newFormYear))
+      let re2 = new RegExp(`2020`, 'g');
+      let item3 = JSON.parse(JSON.stringify(item2).replace(re2,newFormYear-2))
+      newFormTemplates.push(item3)
+    });
+    console.log(JSON.stringify(newFormTemplates))
   };
 
   return (
@@ -60,7 +72,7 @@ const FormTemplates = ({formYear}) => {
         <option value="2022">2022</option>
         <option value="2023">2023</option>
         <option value="2024">2024</option>
-      </select>
+      </select> {newFormYear}
       {formTemplates.map((item, index) => (
         <div className="form-template-input" key={index}>
           <label for={`ft-${index}`}>Section {item.section}:</label>
