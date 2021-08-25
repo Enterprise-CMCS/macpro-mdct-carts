@@ -139,27 +139,43 @@ class FormTemplateViewSet(viewsets.ModelViewSet):
         except:
             return [permission() for permission in self.permission_classes]
 
+# Function to convert
+def listToString(s):
+
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele
+
+    # return string
+    return str1
+
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
 
-   year=request.data.get("year")
-   formtemplates = list(FormTemplate.objects.filter(year = year).order_by("section").values())
-   print(formtemplates[0])
-   newSectionBase ={ 'title': 'Basic State Information', 'valid': '', 'ordinal': 0, 'subsections': [] }
-   try:
+   year=int(request.data.get("year"))
+   results = []
+   nextId = 15
+   formtemplates = list(FormTemplate.objects.filter(year = year - 1).order_by("section").values())
+   for template in formtemplates:
+       tmpStr = str(template['contents']).replace("-999",str(year + 1))
+       #TODO:  Find next id from Section Base
+       nextId = nextId + 1
+       newYear = str(template['year'] + 1)
+       contents = tmpStr.replace("-998",str(year))
+       section = str(template['section'])
+       newSectionBase = "{'id':" + str(nextId) + ",'year':" + newYear  + ",'section':" + section + ",'content':" + contents + " } "
 
-     updated = SectionBase.objects.create(contents=newSectionBase)
-     updated.save()
+       try:
+           updated = SectionBase.objects.create(contents=newSectionBase)
+           updated.save()
+       except:
+            print("An exception occurred")
+            return HttpResponse(json.dumps("{'CREATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
 
-   except:
-        print("An exception occurred")
-        return HttpResponse(json.dumps("{'CREATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-
-   #ZAC
-   print("Request Data:(")
-   print(year)
-   print (")")
-   return HttpResponse(request.data)
+   return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
 @api_view(["GET"])
 def get_formtemplates_by_year(request, year):
