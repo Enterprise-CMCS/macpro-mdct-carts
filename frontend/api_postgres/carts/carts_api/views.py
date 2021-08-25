@@ -139,8 +139,27 @@ class FormTemplateViewSet(viewsets.ModelViewSet):
         except:
             return [permission() for permission in self.permission_classes]
 
+@api_view(["POST"])
+def update_formtemplates_by_year(request):
 
+   year=request.data.get("year")
+   formtemplates = list(FormTemplate.objects.filter(year = year).order_by("section").values())
+   print(formtemplates[0])
+   newSectionBase ={ 'title': 'Basic State Information', 'valid': '', 'ordinal': 0, 'subsections': [] }
+   try:
 
+     updated = SectionBase.objects.create(contents=newSectionBase)
+     updated.save()
+
+   except:
+        print("An exception occurred")
+        return HttpResponse(json.dumps("{'CREATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
+
+   #ZAC
+   print("Request Data:(")
+   print(year)
+   print (")")
+   return HttpResponse(request.data)
 
 @api_view(["GET"])
 def get_formtemplates_by_year(request, year):
@@ -743,6 +762,15 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionBase.objects.all()
     serializer_class = SectionBaseSerializer
+
+    def create(self, request):
+            # We want there only to be one entry per username, and for the new
+            # entry to overwrite.
+            contents = request.data.get("contents")
+            existing = StatesFromUsername.objects.filter(contents=contents)
+            for relation in existing:
+                relation.delete()
+            return super().create(request)
 
 
 @api_view(["GET"])

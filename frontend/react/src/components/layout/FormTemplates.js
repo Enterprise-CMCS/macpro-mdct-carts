@@ -51,14 +51,16 @@ const FormTemplates = ({formYear}) => {
     //let section = document.getElementById("ft-0")
    // let jsonparse = JSON.parse(section.textContent)
     let newFormTemplates = [];
-    newForms.map((item, index) =>
-    {
-     // console.log(JSON.stringify(item["contents"]).replace("2020","2323"))
+    newForms.map(async (item, index) => {
+      // console.log(JSON.stringify(item["contents"]).replace("2020","2323"))
       let re = new RegExp(`2021`, 'g');
-      let item2 = JSON.parse(JSON.stringify(item).replace(re,newFormYear))
+      let item2 = JSON.parse(JSON.stringify(item).replace(re, newFormYear))
       let re2 = new RegExp(`2020`, 'g');
-      let item3 = JSON.parse(JSON.stringify(item2).replace(re2,newFormYear-2))
-      newFormTemplates.push(item3)
+      let updatedFormTemplate = JSON.parse(JSON.stringify(item2).replace(re2, newFormYear - 2))
+      newFormTemplates.push(updatedFormTemplate)
+      let {data} = await axios.post(`/api/v1/updateformtemplates/?dev=dev-admin`, {
+        updatedFormTemplate,
+      });
     });
     console.log(JSON.stringify(newFormTemplates))
   };

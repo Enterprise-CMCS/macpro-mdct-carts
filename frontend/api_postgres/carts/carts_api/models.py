@@ -17,16 +17,6 @@ class SectionSchema(models.Model):
 class SectionBase(models.Model):
     contents = JSONField()
 
-    def clean(self):
-        schema_object = SectionSchema.objects.first()
-        schema = schema_object.contents
-        jsonschema.validate(instance=self.contents, schema=schema)
-
-    def save(self, *args, **kwargs):
-        self.clean()
-        super(SectionBase, self).save(*args, **kwargs)
-
-
 class Section(models.Model):
     contents = JSONField()
 
@@ -43,16 +33,7 @@ class Section(models.Model):
 class FormTemplate(models.Model):
     year = models.IntegerField()
     section = models.IntegerField()
-    contents = JSONField()
-
-    def clean(self):
-        schema_object = FormTemplate.objects.first()
-        schema = schema_object.contents
-        jsonschema.validate(instance=self.contents, schema=schema)
-
-    def save(self, *args, **kwargs):
-        self.clean()
-        super(Section, self).save(*args, **kwargs)
+    contents = JSONField(null=True)
 
 
 class State(models.Model):

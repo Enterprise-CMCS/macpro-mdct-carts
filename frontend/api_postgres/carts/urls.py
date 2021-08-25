@@ -40,6 +40,9 @@ router.register(r"roles_assoc", views.RolesFromJobCodeViewSet)
 router.register(r"role_user_assoc", views.RoleFromUsernameViewSet)
 router.register(r"state_assoc", views.StatesFromUsernameViewSet)
 router.register(r"state_status", views.StateStatusViewSet)
+router.register(r"updateformtemplates", views.SectionBaseViewSet)
+
+
 
 api_patterns = [
     path("sections/<int:year>/<str:state>", section_list),
@@ -79,7 +82,10 @@ api_patterns = [
     ),
     path("sendemail", views.SendEmail),
     path("sendemail/statuschange", views.SendEmailStatusChange),
-    path("formtemplates/<int:year>", views.get_formtemplates_by_year)
+    path("formtemplates/<int:year>", views.get_formtemplates_by_year),
+    path("updateformtemplates", views.update_formtemplates_by_year)
+
+
 ]
 
 urlpatterns = [
