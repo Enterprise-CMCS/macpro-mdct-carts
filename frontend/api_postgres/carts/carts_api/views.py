@@ -161,7 +161,7 @@ def update_formtemplates_by_year(request):
    global newSectionContents
    global debugThis
    #
-   #  Update Year Section
+   #  Update Year State Status
    #
    allUsers = StateStatus.objects.all()
    for newStateStatus in allUsers.iterator():
@@ -175,7 +175,9 @@ def update_formtemplates_by_year(request):
        except:
          print("WARNING: StateStatus Create Failed for user: " + newStateStatus.user_name + " and State Code: " + newStateStatus.state_id +  " and Year: " + str(year))
 
-
+   #
+   #  Update Section List with not_started
+   #
    formtemplates = list(FormTemplate.objects.filter(year = year - 1).order_by("section").values())
    for template in formtemplates:
        templateContents = str(template['contents']).replace("-999",str(year)).replace("-888",str(year+1).replace("-555",str(year+2)))
@@ -191,20 +193,15 @@ def update_formtemplates_by_year(request):
              newSectionContents = json.loads(debugThis)
              try:
                  templateExists = Section.objects.filter(contents=newSectionContents)
+                 console.log("DEBUG: " + str(len(templateExists)))
                  if (len(templateExists) == 0):
                      updated = Section.objects.create(contents=newSectionContents)
                      updated.save()
              except:
                  return HttpResponse(json.dumps("{'ERROR: -> TEMPLATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
            except:
-              print(templateSection)
-              print(debugThis)
-              print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-              # print(templateContents)
-              print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+              print("WARNING: Json Error On Section Base Template Section# : " + str(template['section']) + " for Year: " + str(year) )
 
-             # print(newSectionContents)
-              #print(json.dumps("{'WARNING':'JSON LOADS ERROR update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
