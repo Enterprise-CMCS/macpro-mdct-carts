@@ -14,17 +14,19 @@ import { connect } from "react-redux";
  * @constructor
  */
 
-const FormTemplates = ({formYear}) => {
+const FormTemplates = ({ formYear }) => {
   const dispatch = useDispatch();
   const [formTemplates, setFormTemplates] = useState([]);
-  const [newFormYear, setNewFormYear] = useState(2020)
+  const [newFormYear, setNewFormYear] = useState(2020);
 
   const loadFormTemplateData = async () => {
     dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
     try {
       /* TODO:  get from Global Redux Store */
-      let { data } = await axios.get(`/api/v1/formtemplates/${formYear}?dev=dev-admin`);
+      let { data } = await axios.get(
+        `/api/v1/formtemplates/${formYear}?dev=dev-admin`
+      );
       let a;
       setFormTemplates(data);
     } catch (e) {
@@ -40,8 +42,8 @@ const FormTemplates = ({formYear}) => {
   const updateField = (event, index) => {
     // TODO: Work in progress need to make change to DB.
 
-    setNewFormYear(event.target.value)
-    console.log("[DEBUG]: Current Form Year:" + newFormYear)
+    setNewFormYear(event.target.value);
+    console.log("[DEBUG]: Current Form Year:" + newFormYear);
     //setFormTemplates(newForms);
   };
   const handleSave = () => {
@@ -49,20 +51,25 @@ const FormTemplates = ({formYear}) => {
     let newForms = [...formTemplates];
     // newForms[index].contents = event.target.value;
     //let section = document.getElementById("ft-0")
-   // let jsonparse = JSON.parse(section.textContent)
+    // let jsonparse = JSON.parse(section.textContent)
     let newFormTemplates = [];
     newForms.map(async (item, index) => {
       // console.log(JSON.stringify(item["contents"]).replace("2020","2323"))
-      let re = new RegExp(`2021`, 'g');
-      let item2 = JSON.parse(JSON.stringify(item).replace(re, newFormYear))
-      let re2 = new RegExp(`2020`, 'g');
-      let updatedFormTemplate = JSON.parse(JSON.stringify(item2).replace(re2, newFormYear - 2))
-      newFormTemplates.push(updatedFormTemplate)
-      let {data} = await axios.post(`/api/v1/updateformtemplates/?dev=dev-admin`, {
-        updatedFormTemplate,
-      });
+      let re = new RegExp(`2021`, "g");
+      let item2 = JSON.parse(JSON.stringify(item).replace(re, newFormYear));
+      let re2 = new RegExp(`2020`, "g");
+      let updatedFormTemplate = JSON.parse(
+        JSON.stringify(item2).replace(re2, newFormYear - 2)
+      );
+      newFormTemplates.push(updatedFormTemplate);
+      let { data } = await axios.post(
+        `/api/v1/updateformtemplates/?dev=dev-admin`,
+        {
+          updatedFormTemplate,
+        }
+      );
     });
-    console.log(JSON.stringify(newFormTemplates))
+    console.log(JSON.stringify(newFormTemplates));
   };
 
   return (
@@ -74,11 +81,17 @@ const FormTemplates = ({formYear}) => {
         <option value="2022">2022</option>
         <option value="2023">2023</option>
         <option value="2024">2024</option>
-      </select> {newFormYear}
+      </select>{" "}
+      {newFormYear}
       {formTemplates.map((item, index) => (
         <div className="form-template-input" key={index}>
           <label for={`ft-${index}`}>Section {item.section}:</label>
-          <textarea id={`ft-${index}`} rows="24" cols="60" onChange={(e) => updateField(e, index)}>
+          <textarea
+            id={`ft-${index}`}
+            rows="24"
+            cols="60"
+            onChange={(e) => updateField(e, index)}
+          >
             {JSON.stringify(item.contents, null, 2)}
           </textarea>
         </div>
@@ -95,7 +108,7 @@ const FormTemplates = ({formYear}) => {
 };
 
 const mapState = (state) => ({
-  formYear: state.global.formYear
+  formYear: state.global.formYear,
 });
 
 export default connect(mapState)(FormTemplates);

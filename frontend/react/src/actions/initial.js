@@ -21,105 +21,105 @@ export const getAllStatesData = () => {
   };
 };
 
-export const getAllStateStatuses = (
-  selectedYears = [],
-  selectedStates = [],
-  selectedStatus = []
-) => async (dispatch) => {
-  const { data } = await axios.get(`/state_status/`);
+export const getAllStateStatuses =
+  (selectedYears = [], selectedStates = [], selectedStatus = []) =>
+  async (dispatch) => {
+    const { data } = await axios.get(`/state_status/`);
 
-  let yearFilter = () => {};
-  let stateFilter = () => {};
-  let statusFilter = () => {};
+    let yearFilter = () => {};
+    let stateFilter = () => {};
+    let statusFilter = () => {};
 
-  selectedYears.length > 0
-    ? (yearFilter = (record) => selectedYears.includes(record.year))
-    : (yearFilter = () => 1 === 1);
+    selectedYears.length > 0
+      ? (yearFilter = (record) => selectedYears.includes(record.year))
+      : (yearFilter = () => 1 === 1);
 
-  selectedStates.length > 0
-    ? (stateFilter = (record) => selectedStates.includes(record.state))
-    : (stateFilter = () => 1 === 1);
+    selectedStates.length > 0
+      ? (stateFilter = (record) => selectedStates.includes(record.state))
+      : (stateFilter = () => 1 === 1);
 
-  selectedStatus.length > 0
-    ? (statusFilter = (record) => selectedStatus.includes(record.status))
-    : (statusFilter = () => 1 === 1);
+    selectedStatus.length > 0
+      ? (statusFilter = (record) => selectedStatus.includes(record.status))
+      : (statusFilter = () => 1 === 1);
 
-  const payload = data
-    .filter(yearFilter)
-    .filter(stateFilter)
-    .filter(statusFilter)
-    .sort((a, b) => {
-      const dateA = new Date(a.last_changed);
-      const dateB = new Date(b.last_changed);
+    const payload = data
+      .filter(yearFilter)
+      .filter(stateFilter)
+      .filter(statusFilter)
+      .sort((a, b) => {
+        const dateA = new Date(a.last_changed);
+        const dateB = new Date(b.last_changed);
 
-      if (dateA > dateB) {
-        return 1;
-      }
-      if (dateA < dateB) {
-        return -1;
-      }
-      return 0;
-    })
-    .filter(
-      (status, index, original) =>
-        original
-          .slice(index + 1)
-          .findIndex(
-            (el) => el.state === status.state && el.year === status.year
-          ) < 0
-    )
-    .reduce(
-      (out, record) => ({
-        ...out,
-        [record.state + record.year]: {
-          status: record.status,
-          year: record.year,
-          stateCode: record.state,
-          lastChanged: record.last_changed,
-          username: record.user_name,
-        },
-      }),
-      {}
-    );
-  dispatch({ type: SET_STATE_STATUSES, payload });
-};
+        if (dateA > dateB) {
+          return 1;
+        }
+        if (dateA < dateB) {
+          return -1;
+        }
+        return 0;
+      })
+      .filter(
+        (status, index, original) =>
+          original
+            .slice(index + 1)
+            .findIndex(
+              (el) => el.state === status.state && el.year === status.year
+            ) < 0
+      )
+      .reduce(
+        (out, record) => ({
+          ...out,
+          [record.state + record.year]: {
+            status: record.status,
+            year: record.year,
+            stateCode: record.state,
+            lastChanged: record.last_changed,
+            username: record.user_name,
+          },
+        }),
+        {}
+      );
+    dispatch({ type: SET_STATE_STATUSES, payload });
+  };
 
-export const getStateStatus = ({ stateCode }) => async (dispatch, getState) => {
-  const { data } = await axios.get(`/state_status/`);
-  const year = +getState().global.formYear;
+export const getStateStatus =
+  ({ stateCode }) =>
+  async (dispatch, getState) => {
+    const { data } = await axios.get(`/state_status/`);
+    const year = +getState().global.formYear;
 
-  // Get the latest status for this state.
-  const payload = data
-    .filter((status) => status.state === stateCode && status.year === year)
-    .sort((a, b) => {
-      const dateA = new Date(a.last_changed);
-      const dateB = new Date(b.last_changed);
+    // Get the latest status for this state.
+    const payload = data
+      .filter((status) => status.state === stateCode && status.year === year)
+      .sort((a, b) => {
+        const dateA = new Date(a.last_changed);
+        const dateB = new Date(b.last_changed);
 
-      if (dateA > dateB) {
-        return 1;
-      }
-      if (dateA < dateB) {
-        return -1;
-      }
-      return 0;
-    })
-    .pop();
+        if (dateA > dateB) {
+          return 1;
+        }
+        if (dateA < dateB) {
+          return -1;
+        }
+        return 0;
+      })
+      .pop();
 
-  if (payload) {
-    dispatch({
-      type: SET_STATE_STATUS,
-      payload,
-    });
-  } else {
-    const { data: newData } = await axios.post(`/state_status/`, {
-      last_changed: new Date(),
-      state: stateCode,
-      status: "in_progress",
-      year,
-    });
-    dispatch({ type: SET_STATE_STATUS, payload: newData });
-  }
-};
+    if (payload) {
+      dispatch({
+        type: SET_STATE_STATUS,
+        payload,
+      });
+    } else {
+      const { data: newData } = await axios.post(`/state_status/`, {
+        last_changed: new Date(),
+        state: stateCode,
+        status: "in_progress",
+        year,
+      });
+      dispatch({ type: SET_STATE_STATUS, payload: newData });
+    }
+  };
 
 export const loadSections = ({ userData, stateCode, selectedYear }) => {
   const state = stateCode || userData.abbr;
@@ -183,7 +183,9 @@ export const loadForm = (state) => async (dispatch, getState) => {
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
   try {
-    await dispatch(loadSections({ userData: stateUser, stateCode, selectedYear }));
+    await dispatch(
+      loadSections({ userData: stateUser, stateCode, selectedYear })
+    );
   } finally {
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
