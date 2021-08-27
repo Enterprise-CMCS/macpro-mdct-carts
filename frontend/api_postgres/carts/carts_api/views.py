@@ -1,5 +1,6 @@
 import json
 import string
+from django.core import serializers
 from typing import (
     Dict,
     List,
@@ -156,31 +157,48 @@ def listToString(s):
 def update_formtemplates_by_year(request):
 
    year=int(request.data.get("year"))
-   results = []
-   nextId = 15
+   templateArr = []
+   global newSectionContents
+   global debugThis
+   #
+   #  Update Year Section
+   #
+   allStateStatus = StateStatus.objects.all()
+
    formtemplates = list(FormTemplate.objects.filter(year = year - 1).order_by("section").values())
    for template in formtemplates:
-       tmpStr = str(template['contents']).replace("-999",str(year + 1))
-       #TODO:  Find next id from Section Base
-       nextId = nextId + 1
-       newYear = str(template['year'] + 1)
-       contents = tmpStr.replace("-998",str(year))
-       section = str(template['section'])
-       newSectionBase = "{'id':" + str(nextId) + ",'year':" + newYear  + ",'section':" + section + ",'content':" + contents + " } "
+       templateContents = str(template['contents']).replace("-999",str(year)).replace("-888",str(year+1).replace("-555",str(year+2)))
+       templateSection = str(template['section'])
+       #
+       # Update State Code and Name Section
+       #
+       sectionsList = State.objects.all()
+       for sectionByState in sectionsList.iterator():
+           try:
 
-       try:
-           updated = SectionBase.objects.create(contents=newSectionBase)
-           updated.save()
-       except:
-            print("An exception occurred")
-            return HttpResponse(json.dumps("{'CREATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
+             debugThis = templateContents.replace("-REPLACE-STATE-CODE-",sectionByState.code).replace("-REPLACE-STATE-FULLNAME-",sectionByState.name).replace("'","\"").replace("None", "\"\"").replace("True","true").replace("False","false").replace("-REPLACE-NNN-","None")
+             newSectionContents = json.loads(debugThis)
+             try:
+                 updated = Section.objects.create(contents=newSectionContents)
+                 updated.save()
+             except:
+                 return HttpResponse(json.dumps("{'ERROR: -> TEMPLATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
+           except:
+              print(templateSection)
+              print(debugThis)
+              print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+              # print(templateContents)
+              print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+
+             # print(newSectionContents)
+              #print(json.dumps("{'WARNING':'JSON LOADS ERROR update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
 @api_view(["GET"])
 def get_formtemplates_by_year(request, year):
 
-    formtemplates = list(FormTemplate.objects.filter(year = year).order_by("section").values())
+    formtemplates = list(FormTemplate.objects.filter(year = year).order_by("section"))
 
     return HttpResponse(json.dumps(formtemplates, cls=DjangoJSONEncoder))
 
