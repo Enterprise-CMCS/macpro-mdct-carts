@@ -181,6 +181,7 @@ def update_formtemplates_by_year(request):
    #
 
    existsAlready = list(Section.objects.filter(contents__section__year = year))
+   print(" XXXX : " + str(len(existsAlready)))
    if (len(existsAlready) == 0):
      currentSectionsByYear = list(Section.objects.filter(contents__section__year = year - 1))
      for currentSection in currentSectionsByYear:
