@@ -167,10 +167,11 @@ def update_formtemplates_by_year(request):
    for newStateStatus in allUsers.iterator():
        try:
          stateExists = StateStatus.objects.filter(state=newStateStatus.state_id, year=year)
-
          if len(stateExists) == 0:
            createdStateStatus = StateStatus.objects.create(year=year,state_id=newStateStatus.state_id, user_name=newStateStatus.user_name, last_changed=datetime.now(tz=timezone.utc))
            createdStateStatus.save()
+         else:
+           print("Warning: Ignore create - State Status - Already Exists")
 
        except:
          print("WARNING: StateStatus Create Failed for user: " + newStateStatus.user_name + " and State Code: " + newStateStatus.state_id +  " and Year: " + str(year))
@@ -178,29 +179,26 @@ def update_formtemplates_by_year(request):
    #
    #  Update Section List with not_started
    #
-   formtemplates = list(FormTemplate.objects.filter(year = year - 1).order_by("section").values())
-   for template in formtemplates:
-       templateContents = str(template['contents']).replace("-999",str(year)).replace("-888",str(year+1).replace("-555",str(year+2)))
-       templateSection = str(template['section'])
-       #
-       # Update State Code and Name Section
-       #
-       sectionsList = State.objects.all()
-       for sectionByState in sectionsList.iterator():
-           try:
 
-             debugThis = templateContents.replace("-REPLACE-STATE-CODE-",sectionByState.code).replace("-REPLACE-STATE-FULLNAME-",sectionByState.name).replace("'","\"").replace("None", "\"\"").replace("True","true").replace("False","false").replace("-REPLACE-NNN-","None")
-             newSectionContents = json.loads(debugThis)
-             try:
-                 templateExists = Section.objects.filter(contents=newSectionContents)
-                 console.log("DEBUG: " + str(len(templateExists)))
-                 if (len(templateExists) == 0):
-                     updated = Section.objects.create(contents=newSectionContents)
-                     updated.save()
-             except:
-                 return HttpResponse(json.dumps("{'ERROR: -> TEMPLATE_ERROR_006': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-           except:
-              print("WARNING: Json Error On Section Base Template Section# : " + str(template['section']) + " for Year: " + str(year) )
+   existsAlready = list(Section.objects.filter(contents__section__year = year))
+   if (len(existsAlready) == 0):
+     currentSectionsByYear = list(Section.objects.filter(contents__section__year = year - 1))
+     for currentSection in currentSectionsByYear:
+
+       tmpJson = json.dumps(currentSection.contents)
+       tmpContents = str(tmpJson).replace(str(year+1),str(year+2)).replace(str(year),str(year+1)).replace(str(year-1),str(year)).replace("'","&#8218;")
+       newContents = json.loads(tmpContents)
+       #
+       #  Name Section
+       #
+       try:
+
+             updated = Section.objects.create(contents=newContents)
+             updated.save()
+
+       except:
+
+           return HttpResponse(json.dumps("{'ERROR: -> Section_Create_ERROR_008': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
 
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))

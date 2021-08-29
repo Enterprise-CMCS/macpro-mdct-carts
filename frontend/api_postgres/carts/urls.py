@@ -40,7 +40,7 @@ router.register(r"roles_assoc", views.RolesFromJobCodeViewSet)
 router.register(r"role_user_assoc", views.RoleFromUsernameViewSet)
 router.register(r"state_assoc", views.StatesFromUsernameViewSet)
 router.register(r"state_status", views.StateStatusViewSet)
-router.register(r"updateformtemplates", views.FormTemplateViewSet)
+router.register(r"updateformtemplates", views.SectionViewSet)
 
 
 
