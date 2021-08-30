@@ -193,16 +193,19 @@ def update_formtemplates_by_year(request):
              updated.save()
        except:
           return HttpResponse(json.dumps("{'ERROR: -> SectionBase_Create_ERROR_007': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-   
+
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
 @api_view(["GET"])
 def get_formtemplates_by_year(request, year):
-
-    formtemplates = list(FormTemplate.objects.filter(year = year).order_by("section"))
-
-    return HttpResponse(json.dumps(formtemplates, cls=DjangoJSONEncoder))
+#ZAC
+    try:
+       data = SectionBase.objects.get(contents__section__year=year, contents__section__ordinal=00)
+       serializer = SectionBaseSerializer(data)
+       return Response(serializer.data)
+    except SectionBase.DoesNotExist:
+       return HttpResponse(status=404)
 
 
 @api_view(["GET"])
