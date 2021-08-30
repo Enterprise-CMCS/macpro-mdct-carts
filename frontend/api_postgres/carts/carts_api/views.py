@@ -193,18 +193,7 @@ def update_formtemplates_by_year(request):
              updated.save()
        except:
           return HttpResponse(json.dumps("{'ERROR: -> SectionBase_Create_ERROR_007': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-   #
-   # Delete last year Section Base
-   #
-   SectionBaseList = list(SectionBase.objects.filter(contents__section__year = year - 1))
-   print("LEN: " + str(len(SectionBaseList)))
-   if (len(SectionBaseList) > 0):
-      try:
-        deleteSectionBase = SectionBase.objects.filter(contents__section__year = year - 1).delete()
-        print("SAVE:")
-        deleteSectionBase.save()
-      except:
-        print("WARNING: ")
+   
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
