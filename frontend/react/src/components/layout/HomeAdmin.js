@@ -38,7 +38,7 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => (
                 <Link to="/add_user">Add user</Link>
               </li>
               <li>
-                <Link to="/templates">Form Templates</Link>
+                <Link to="/templates">Generate Form Base Templates</Link>
               </li>
             </ul>
           </div>

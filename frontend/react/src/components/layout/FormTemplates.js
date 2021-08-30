@@ -21,8 +21,8 @@ const FormTemplates = ({ formYear }) => {
 
   return (
     <div className="form-templates">
-      <h1>Generate Section Forms</h1>
-      <h3>Select Year for Form Generation</h3>
+      <h1>Generate Form Base Templates</h1>
+      <h3>Select Year</h3>
       <select  className="ds-c-field" name="selectedYear" id="selectedYear" >
         <option value="2021">2021</option>
         <option value="2022">2022</option>

@@ -176,9 +176,7 @@ def update_formtemplates_by_year(request):
        except:
          print("WARNING: StateStatus Create Failed for user: " + newStateStatus.user_name + " and State Code: " + newStateStatus.state_id +  " and Year: " + str(year))
 
-   #
-   #  TODO: Is this needed ???  Ticket only updates SectionBase https://qmacbis.atlassian.net/browse/OY2-10903
-   #
+
    existsAlready = list(SectionBase.objects.filter(contents__section__year = year))
    if (len(existsAlready) == 0):
      currentSectionsByYear = list(SectionBase.objects.filter(contents__section__year = year - 1))
@@ -188,42 +186,25 @@ def update_formtemplates_by_year(request):
        tmpContents = str(tmpJson).replace(str(year+1),str(year+2)).replace(str(year),str(year+1)).replace(str(year-1),str(year)).replace("'","&#8218;")
        newContents = json.loads(tmpContents)
        #
-       #  Name Section
+       #  Add Section Base for this Year
        #
        try:
-
              updated = SectionBase.objects.create(contents=newContents)
              updated.save()
-
-
        except:
           return HttpResponse(json.dumps("{'ERROR: -> SectionBase_Create_ERROR_007': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-
-
+   #
+   # Delete last year Section Base
+   #
    SectionBaseList = list(SectionBase.objects.filter(contents__section__year = year - 1))
+   print("LEN: " + str(len(SectionBaseList)))
    if (len(SectionBaseList) > 0):
-      deleteSectionBase = SectionBase.objects.filter(contents__section__year = year - 1) #.delete()
-      deleteSectionBase.save()
-
-   existsAlready = list(Section.objects.filter(contents__section__year = year))
-   if (len(existsAlready) == 0):
-     currentSectionsByYear = list(Section.objects.filter(contents__section__year = year - 1))
-     for currentSection in currentSectionsByYear:
-
-       tmpJson = json.dumps(currentSection.contents)
-       tmpContents = str(tmpJson).replace(str(year+1),str(year+2)).replace(str(year),str(year+1)).replace(str(year-1),str(year)).replace("'","&#8218;")
-       newContents = json.loads(tmpContents)
-       #
-       #  Name Section
-       #
-       try:
-
-             updated = Section.objects.create(contents=newContents)
-             updated.save()
-
-       except:
-           return HttpResponse(json.dumps("{'ERROR: -> Section_Create_ERROR_008': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-
+      try:
+        deleteSectionBase = SectionBase.objects.filter(contents__section__year = year - 1).delete()
+        print("SAVE:")
+        deleteSectionBase.save()
+      except:
+        print("WARNING: ")
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
