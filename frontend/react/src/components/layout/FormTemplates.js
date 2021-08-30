@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "../../authenticatedAxios";
 import "react-data-table-component-extensions/dist/index.css";
 import { Button } from "@cmsgov/design-system-core";
+import {useHistory} from "react-router-dom";
 
 const FormTemplates = ({ formYear }) => {
-
+  const history = useHistory();
   const handleSave = async () => {
 
     var selectedYear = document.getElementById("selectedYear");
@@ -15,6 +16,7 @@ const FormTemplates = ({ formYear }) => {
         }
     )
     window.alert("Request Completed")
+    history.push("/");
   };
 
   return (
