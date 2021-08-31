@@ -1,35 +1,28 @@
-<question id={{question.id}}>
-    <answer>
-        <dl class="text_answer">
-
-            <div class="text_answer_dl">
-                <dt class="question_text">{{question.label}}</dt>
-                <dd class="answer">
-                {% if question.answer.entry is None %}
-                    <i>Unanswered</i><br>
-                        Options not chosen:<br>
-                    {% for temp_option in question.answer.options %}
-                        {% if not temp_option.value == question.answer.entry %}
-                            &#x2610;{{temp_option.label}}<br>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <p>Answer:</p>
-                    {% for temp_option in question.answer.options %}
-                        {% if temp_option.value in question.answer.entry %}
-                                &#9745;{{temp_option.label}}<br>
-                        {% endif %}
-                    {% endfor %}
-                            <br>Options not chosen:<br>
-                    {% for temp_option in question.answer.options %}
-                        {% if not temp_option.value in question.answer.entry %}
-                            &#x2610;{{temp_option.label}}<br>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                </dd>
-            </div>
-        </dl>
-    </answer>
+<question id="{{question.id}}">
+  <answer>
+    <dl class="text_answer">
+      <div class="text_answer_dl">
+        <dt class="question_text">{{question.label}}</dt>
+        <dd class="answer">
+          {% if question.answer.entry is None %}
+          <i>Unanswered</i><br />
+          Options not chosen:<br />
+          {% for temp_option in question.answer.options %} {% if not
+          temp_option.value == question.answer.entry %}
+          &#x2610;{{temp_option.label}}<br />
+          {% endif %} {% endfor %} {% else %}
+          <p>Answer:</p>
+          {% for temp_option in question.answer.options %} {% if
+          temp_option.value in question.answer.entry %}
+          &#9745;{{temp_option.label}}<br />
+          {% endif %} {% endfor %}
+          <br />Options not chosen:<br />
+          {% for temp_option in question.answer.options %} {% if not
+          temp_option.value in question.answer.entry %}
+          &#x2610;{{temp_option.label}}<br />
+          {% endif %} {% endfor %} {% endif %}
+        </dd>
+      </div>
+    </dl>
+  </answer>
 </question>
-

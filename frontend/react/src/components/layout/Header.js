@@ -39,7 +39,6 @@ class Header extends Component {
         <div className="ds-l-container">
           <div className="ds-l-row header-row">
             <div className="site-title ds-l-col--4 ds-u-padding--2">
-
               <a href="/?dev=dev-admin">Carts</a>
             </div>
             <div className="user-details ds-l-col--8 ds-u-padding--2">

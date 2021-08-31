@@ -1,25 +1,22 @@
-<question id={{question.id}}>
-        <dl class="text_answer radio">
-            <div class="text_answer_dl">
-                <dt class="question_text">{{question.label}} <strong>(Yes/No)</strong></dt>
-                <dd class="answer">
-                    <answer>
-                {% if question.answer.entry is None %}
-                    &emsp;<i>Unanswered</i>
-                {% else %}
-                    {% for k, v in question.answer.options.items %}
-                        {% if v == question.answer.entry %}
-                            <ul>
-                                <li><strong>{{k}}</strong></li>
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                    </answer>
-                </dd>
-            </div>
-        </dl>
+<question id="{{question.id}}">
+  <dl class="text_answer radio">
+    <div class="text_answer_dl">
+      <dt class="question_text">
+        {{question.label}} <strong>(Yes/No)</strong>
+      </dt>
+      <dd class="answer">
+        <answer>
+          {% if question.answer.entry is None %} &emsp;<i>Unanswered</i>
+          {% else %} {% for k, v in question.answer.options.items %} {% if v ==
+          question.answer.entry %}
+          <ul>
+            <li><strong>{{k}}</strong></li>
+          </ul>
+          {% endif %} {% endfor %} {% endif %}
+        </answer>
+      </dd>
+    </div>
+  </dl>
 </question>
-{% if question.questions|length > 0%}
-    {% include "reports/question.html" with question=question.questions state=state %}
-{%endif%}  
+{% if question.questions|length > 0%} {% include "reports/question.html" with
+question=question.questions state=state %} {%endif%}

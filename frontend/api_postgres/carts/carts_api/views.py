@@ -197,11 +197,12 @@ def update_formtemplates_by_year(request):
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
-@api_view(["GET"])
+@api_view(["POST"])
 def get_formtemplates_by_year(request, year):
 #ZAC
+    section=int(request.data.get("section"))
     try:
-       data = SectionBase.objects.get(contents__section__year=year, contents__section__ordinal=00)
+       data = SectionBase.objects.get(contents__section__year=year, contents__section__ordinal=section)
        serializer = SectionBaseSerializer(data)
        return Response(serializer.data)
     except SectionBase.DoesNotExist:

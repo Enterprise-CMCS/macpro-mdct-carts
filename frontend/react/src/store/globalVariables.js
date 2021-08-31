@@ -10,7 +10,7 @@ const initialState = {
 export const updateFormYear = (year) => {
   return {
     type: "UPDATE_FORM_YEAR",
-   year,
+    year,
   };
 };
 
@@ -25,7 +25,7 @@ export default function global(state = initialState, action) {
   if (action.type === "CONTENT_FETCHING_FINISHED") {
     return { ...state, isFetching: false };
   } else if (action.type === "UPDATE_FORM_YEAR") {
-    return {...state, formYear: action.year, isFetching: false }
+    return { ...state, formYear: action.year, isFetching: false };
   }
   return state;
 }
