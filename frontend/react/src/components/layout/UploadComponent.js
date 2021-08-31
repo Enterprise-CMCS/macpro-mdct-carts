@@ -154,7 +154,7 @@ class UploadComponent extends Component {
       uploadedFilesRetrieved: false,
     });
 
-    const response = []
+    const response = [];
     /*await axios
       .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
         questionId,
