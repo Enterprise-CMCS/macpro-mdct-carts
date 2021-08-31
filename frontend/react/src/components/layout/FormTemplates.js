@@ -26,18 +26,17 @@ const FormTemplates = () => {
   };
 
   const handleUpdateSection = async () => {
-
     var selectedYear = document.getElementById("selectedYear").value;
     var selectedSection = document.getElementById("selectedSection").value;
     var sectionJSONEditor = document.getElementById("sectionJSONEditor");
 
     // TODO: Remove dev-admin demo test code.
     let { data } = await axios.post(
-        `/api/v1/updateformsection/${selectedYear}?dev=dev-admin`,
-        {
-          section: selectedSection,
-          contents: sectionJSONEditor.innerText
-        }
+      `/api/v1/updateformsection/${selectedYear}?dev=dev-admin`,
+      {
+        section: selectedSection,
+        contents: sectionJSONEditor.innerText,
+      }
     );
     setFormSectionBase(data);
     window.alert("Request Completed");
@@ -69,28 +68,25 @@ const FormTemplates = () => {
     <>
       <div>
         <h1>Generate Form Base Templates</h1>
-          <h3>Select Year</h3>
-          <select
-            className="ds-c-field"
-            name="selectedYear"
-            id="selectedYear"
-            // onChange={loadSectionBaseBySection}
-          >
-            <option value="2020" selected>
-              2020
-            </option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-          </select>
-          <Button
-            type="button"
-            className="ds-c-button ds-c-button--primary"
-            onClick={handleUpdateTemplates}
-          >
-            Generate New Section Forms
-          </Button>
+        <h3>Select Year</h3>
+        <select
+          className="ds-c-field"
+          name="selectedYear"
+          id="selectedYear"
+          // onChange={loadSectionBaseBySection}
+        >
+          <option value="2021" selected>2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
+        <Button
+          type="button"
+          className="ds-c-button ds-c-button--primary"
+          onClick={handleUpdateTemplates}
+        >
+          Generate New Section Forms
+        </Button>
       </div>
     </>
   );

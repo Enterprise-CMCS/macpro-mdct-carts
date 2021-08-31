@@ -163,59 +163,50 @@ def update_formtemplates_by_year(request):
    #
    #  Update Year State Status
    #
+
+   templateExists = list(SectionBase.objects.filter(contents__section__year = year))
+
+
+   if len(templateExists) == 0:
+     formtemplates = FormTemplate.objects.all()
+     for template in formtemplates.iterator():
+       tmpContents = json.dumps(template.contents)
+       tmpJsonString = str(tmpContents).replace(str(-111),str(year))\
+       .replace(str(-222),str(year-2))\
+       .replace(str(-333),str(year-3))\
+       .replace(str(-444),str(year-4))\
+       .replace(str(-555),str(year-5))\
+       .replace(str(-999),str(year+1))\
+       .replace(str(-888),str(year+2))
+
+       try:
+           updated = SectionBase.objects.create(contents=json.loads(tmpJsonString))
+           updated.save()
+           existsAlready = list(Section.objects.filter(contents__section__year = year, contents__section__ordinal=template.section))
+           print(len(existsAlready))
+           if len(existsAlready) == 0:
+               currentStates = State.objects.all()
+               for currentState in currentStates.iterator():
+
+                   sectionString = tmpJsonString.replace("-REPLACE-STATE-", currentState.code )
+                   updated = Section.objects.create(contents=json.loads(sectionString))
+                   updated.save()
+       except:
+             return HttpResponse(json.dumps("{'ERROR: -> FormTemplate_Create_ERROR_007': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
+
+   #
+   # Update State Status
+   #
    allUsers = StateStatus.objects.all()
    for newStateStatus in allUsers.iterator():
        try:
          stateExists = StateStatus.objects.filter(state=newStateStatus.state_id, year=year)
+
          if len(stateExists) == 0:
            createdStateStatus = StateStatus.objects.create(year=year,state_id=newStateStatus.state_id, user_name=newStateStatus.user_name, last_changed=datetime.now(tz=timezone.utc))
            createdStateStatus.save()
-         else:
-           print("Warning: Ignore create - State Status - Already Exists")
-
        except:
          print("WARNING: StateStatus Create Failed for user: " + newStateStatus.user_name + " and State Code: " + newStateStatus.state_id +  " and Year: " + str(year))
-
-#  Add Section for each State from Last year not-started
-   #
-   #
-   #  TODO: Is this needed ???  Ticket only updates SectionBase https://qmacbis.atlassian.net/browse/OY2-10903
-   #
-   existsAlready = list(Section.objects.filter(contents__section__year = year))
-   if (len(existsAlready) == 0):
-     currentSectionsByYear = list(Section.objects.filter(contents__section__year = year - 1))
-     for currentSection in currentSectionsByYear:
-
-       tmpJson = json.dumps(currentSection.contents)
-       tmpContents = str(tmpJson).replace(str(year+1),str(year+2)).replace(str(year),str(year+1)).replace(str(year-1),str(year)).replace("'","&#8218;")
-       newContents = json.loads(tmpContents)
-       #
-       #  Name Section
-       #
-       try:
-             updated = Section.objects.create(contents=newContents)
-             updated.save()
-
-       except:
-           return HttpResponse(json.dumps("{'ERROR: -> Section_Create_ERROR_008': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-
-   existsAlready = list(SectionBase.objects.filter(contents__section__year = year))
-   if (len(existsAlready) == 0):
-     currentSectionsByYear = list(SectionBase.objects.filter(contents__section__year = year - 1))
-     for currentSection in currentSectionsByYear:
-
-       tmpJson = json.dumps(currentSection.contents)
-       tmpContents = str(tmpJson).replace(str(year+1),str(year+2)).replace(str(year),str(year+1)).replace(str(year-1),str(year)).replace("'","&#8218;")
-       newContents = json.loads(tmpContents)
-       #
-       #  Add Section Base for this Year
-       #
-       try:
-             updated = SectionBase.objects.create(contents=newContents)
-             updated.save()
-       except:
-          return HttpResponse(json.dumps("{'ERROR: -> SectionBase_Create_ERROR_007': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
-
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
 
