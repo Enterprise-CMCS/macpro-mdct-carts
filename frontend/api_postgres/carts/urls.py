@@ -83,8 +83,8 @@ api_patterns = [
     path("sendemail", views.SendEmail),
     path("sendemail/statuschange", views.SendEmailStatusChange),
     path("formtemplates/<int:year>", views.get_formtemplates_by_year),
-    path("updateformtemplates", views.update_formtemplates_by_year)
-
+    path("updateformtemplates", views.update_formtemplates_by_year),
+    path("updateformsection/<int:year>", views.update_form_section_by_year),
 
 ]
 

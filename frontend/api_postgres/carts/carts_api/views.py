@@ -176,6 +176,28 @@ def update_formtemplates_by_year(request):
        except:
          print("WARNING: StateStatus Create Failed for user: " + newStateStatus.user_name + " and State Code: " + newStateStatus.state_id +  " and Year: " + str(year))
 
+#  Add Section for each State from Last year not-started
+   #
+   #
+   #  TODO: Is this needed ???  Ticket only updates SectionBase https://qmacbis.atlassian.net/browse/OY2-10903
+   #
+   existsAlready = list(Section.objects.filter(contents__section__year = year))
+   if (len(existsAlready) == 0):
+     currentSectionsByYear = list(Section.objects.filter(contents__section__year = year - 1))
+     for currentSection in currentSectionsByYear:
+
+       tmpJson = json.dumps(currentSection.contents)
+       tmpContents = str(tmpJson).replace(str(year+1),str(year+2)).replace(str(year),str(year+1)).replace(str(year-1),str(year)).replace("'","&#8218;")
+       newContents = json.loads(tmpContents)
+       #
+       #  Name Section
+       #
+       try:
+             updated = Section.objects.create(contents=newContents)
+             updated.save()
+
+       except:
+           return HttpResponse(json.dumps("{'ERROR: -> Section_Create_ERROR_008': 'update_formtemplates_by_year' }", cls=DjangoJSONEncoder))
 
    existsAlready = list(SectionBase.objects.filter(contents__section__year = year))
    if (len(existsAlready) == 0):
@@ -196,6 +218,22 @@ def update_formtemplates_by_year(request):
 
 
    return HttpResponse(json.dumps("{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder))
+
+@api_view(["POST"])
+def update_form_section_by_year(request, year):
+
+    section=int(request.data.get("section"))
+    contents=request.data.get("contents").replace("\n", "")
+
+    try:
+       data = SectionBase.objects.get(contents__section__year=year, contents__section__ordinal=section)
+      # data.contents=contents
+      # data.save()
+       serializer = SectionBaseSerializer(data)
+       return Response(serializer.data)
+    except SectionBase.DoesNotExist:
+       return HttpResponse(status=404)
+
 
 @api_view(["POST"])
 def get_formtemplates_by_year(request, year):
