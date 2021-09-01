@@ -1,12 +1,9 @@
 import React from "react";
-import { Provider } from "react-redux";
-import renderer from "react-test-renderer";
-import { shallow, ShallowWrapper, render } from "enzyme";
+import { shallow } from "enzyme";
 import {
   storeFactory,
   findByTestAttribute,
   mockInitialState,
-  checkProps,
 } from "../../testUtils";
 
 import DateRange from "./DateRange";

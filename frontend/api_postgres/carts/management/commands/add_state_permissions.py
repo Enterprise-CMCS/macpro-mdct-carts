@@ -108,6 +108,7 @@ def _create_permissions_for_co_users() -> None:
     models = (
         "acs",
         "fmap",
+        "formtemplate",
         "section",
         "sectionbase",
         "sectionschema",
@@ -132,6 +133,7 @@ def _create_permissions_for_business_owners() -> None:
     models = (
         "acs",
         "fmap",
+        "formtemplate",
         "section",
         "sectionbase",
         "sectionschema",

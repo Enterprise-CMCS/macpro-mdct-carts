@@ -1,5 +1,6 @@
 import json
 import string
+from django.core import serializers
 from typing import (
     Dict,
     List,
@@ -50,6 +51,7 @@ from carts.permissions import (
 )
 from carts.carts_api.serializers import (
     UserSerializer,
+    FormTemplateSerializer,
     GroupSerializer,
     RoleFromUsernameSerializer,
     RoleFromJobCodeSerializer,
@@ -62,6 +64,7 @@ from carts.carts_api.serializers import (
     StatesFromUsernameSerializer,
 )
 from carts.carts_api.models import (
+    FormTemplate,
     RoleFromUsername,
     RoleFromJobCode,
     RolesFromJobCode,
@@ -87,6 +90,276 @@ STATE_INFO = {
     "AZ": {"program_type": "separate_chip"},
     "MA": {"program_type": "combo"},
 }
+
+
+class FormTemplateViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows FormTemplates to be viewed or edited.
+    """
+
+    queryset = FormTemplate.objects.all()
+    serializer_class = FormTemplateSerializer
+    permission_classes = [
+        StateViewSectionPermission,
+        StateChangeSectionPermission,
+    ]
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = FormTemplateSerializer(
+            queryset, many=True, context={"request": request}
+        )
+        return Response(serializer.data)
+
+    def create(self, request):
+        # We want there only to be one entry per year and section, and for the new
+        # entry to overwrite.
+        year = request.data.get("year")
+        section = request.data.get("section")
+        existing = FormTemplate.objects.filter(year=year, section=section)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
+
+    def get_permissions(self):
+        permission_classes_by_action = {
+            "get_sections_by_year_and_state": [StateViewSectionPermission],
+            "get_section_by_year_and_state": [StateViewSectionPermission],
+            "update_sections": [
+                StateViewSectionPermission,
+                StateChangeSectionPermission,
+            ],
+        }
+
+        try:
+            return [
+                permission()
+                for permission in permission_classes_by_action[self.action]
+            ]
+        except:
+            return [permission() for permission in self.permission_classes]
+
+
+# Function to convert
+def listToString(s):
+
+    # initialize an empty string
+    str1 = ""
+
+    # traverse in the string
+    for ele in s:
+        str1 += ele
+
+    # return string
+    return str1
+
+
+@api_view(["POST"])
+def update_formtemplates_by_year(request):
+
+    year = int(request.data.get("year"))
+    templateArr = []
+    global newSectionContents
+    global debugThis
+    #
+    #  Update Year State Status
+    #
+
+    templateExists = list(
+        SectionBase.objects.filter(contents__section__year=year)
+    )
+    if len(templateExists) == 0:
+        formtemplates = FormTemplate.objects.all()
+        for template in formtemplates.iterator():
+            tmpContents = json.dumps(template.contents)
+            tmpJsonString = (
+                str(tmpContents)
+                .replace(str(-111), str(year))
+                .replace(str(-222), str(year - 2))
+                .replace(str(-333), str(year - 3))
+                .replace(str(-444), str(year - 4))
+                .replace(str(-555), str(year - 5))
+                .replace(str(-999), str(year + 1))
+                .replace(str(-888), str(year + 2))
+            )
+
+            try:
+                updated = SectionBase.objects.create(
+                    contents=json.loads(tmpJsonString)
+                )
+                updated.save()
+                existsAlready = list(
+                    Section.objects.filter(
+                        contents__section__year=year,
+                        contents__section__ordinal=template.section,
+                    )
+                )
+                print(len(existsAlready))
+                if len(existsAlready) == 0:
+                    currentStates = State.objects.all()
+                    for currentState in currentStates.iterator():
+
+                        sectionString = tmpJsonString.replace(
+                            "-REPLACE-STATE-", currentState.code
+                        )
+                        updated = Section.objects.create(
+                            contents=json.loads(sectionString)
+                        )
+                        updated.save()
+            except:
+                return HttpResponse(
+                    json.dumps(
+                        "{'ERROR: -> FormTemplate_Create_ERROR_007': 'update_formtemplates_by_year' }",
+                        cls=DjangoJSONEncoder,
+                    )
+                )
+
+    #
+    # Update State Status
+    #
+    allUsers = StateStatus.objects.all()
+    for newStateStatus in allUsers.iterator():
+        try:
+            stateExists = StateStatus.objects.filter(
+                state=newStateStatus.state_id, year=year
+            )
+
+            if len(stateExists) == 0:
+                createdStateStatus = StateStatus.objects.create(
+                    year=year,
+                    state_id=newStateStatus.state_id,
+                    user_name=newStateStatus.user_name,
+                    last_changed=datetime.now(tz=timezone.utc),
+                )
+                createdStateStatus.save()
+        except:
+            print(
+                "WARNING: StateStatus Create Failed for user: "
+                + newStateStatus.user_name
+                + " and State Code: "
+                + newStateStatus.state_id
+                + " and Year: "
+                + str(year)
+            )
+
+    return HttpResponse(
+        json.dumps(
+            "{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder
+        )
+    )
+
+
+@api_view(["POST"])
+def update_form_section_by_year(request, year):
+
+    section = int(request.data.get("section"))
+    contents = request.data.get("contents").replace("\n", "")
+
+    try:
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
+        data.contents = contents
+        data.save()
+        serializer = SectionBaseSerializer(data)
+        return Response(serializer.data)
+    except SectionBase.DoesNotExist:
+        return HttpResponse(status=404)
+
+
+@api_view(["POST"])
+def get_formtemplates_by_year(request, year):
+
+    section = int(request.data.get("section"))
+    try:
+        data = SectionBase.objects.get(
+            contents__section__year=year, contents__section__ordinal=section
+        )
+        serializer = SectionBaseSerializer(data)
+        return Response(serializer.data)
+    except SectionBase.DoesNotExist:
+        return HttpResponse(status=404)
+
+
+@api_view(["GET"])
+def get_formtemplate_by_year_and_section(self, request, year, section):
+    formtemplate = list(
+        FormTemplate.objects.filter(year=year).first().values()
+    )
+
+    return HttpResponse(json.dumps(formtemplate, cls=DjangoJSONEncoder))
+
+
+@api_view(["POST"])
+def update_formtemplate(self, request, year, section):
+    try:
+        section = False
+        year = False
+
+        for entry in request.data:
+            section_id = entry["contents"]["section"]["id"]
+            template_state = "AA"
+            state_id = template_state
+            year = entry["contents"]["section"]["year"]
+
+            formtemplate = FormTemplate.objects.get(
+                section=section_id,
+                year=year,
+            )
+
+            self.check_object_permissions(request, section)
+
+            status = (
+                StateStatus.objects.all()
+                .filter(state_id=state_id, year=year)
+                .order_by("last_changed")
+                .last()
+            )
+            can_save = status is None or status.status not in [
+                "certified",
+                "published",
+                "accepted",
+            ]
+
+            if request.user.appuser.role != "state_user":
+                can_save = False
+
+            if not can_save:
+                return HttpResponse(f"cannot save {status} report", status=400)
+
+            formtemplate.contents = entry["contents"]
+            formtemplate.save()
+
+        status = (
+            StateStatus.objects.all()
+            .filter(state_id=template_state, year=year)
+            .order_by("last_changed")
+            .last()
+        )
+
+        if status.status == "in_progress":
+            status.last_changed = datetime.now(tz=timezone.utc)
+            status.save()
+        else:
+            # if the form is being changed, it must be in progress:
+            state = State.objects.get(code=template_state.upper())
+            updated = StateStatus.objects.create(
+                state=None,
+                year=year,
+                status="in_progress",
+                last_changed=datetime.now(tz=timezone.utc),
+                user_name=request.user.username,
+            )
+            updated.save()
+
+        return HttpResponse(status=204)
+
+    except PermissionDenied:
+        raise
+    except Exception as e:
+        raise ValidationError(
+            "There is a problem with the provided data.", 400
+        ) from e
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -578,6 +851,15 @@ class SectionBaseViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = SectionBase.objects.all()
     serializer_class = SectionBaseSerializer
+
+    def create(self, request):
+        # We want there only to be one entry per username, and for the new
+        # entry to overwrite.
+        contents = request.data.get("contents")
+        existing = StatesFromUsername.objects.filter(contents=contents)
+        for relation in existing:
+            relation.delete()
+        return super().create(request)
 
 
 @api_view(["GET"])
@@ -1155,7 +1437,7 @@ def SendEmailStatusChange(request):
 
 
 def _getUsersForStatusChange(statecode):
-    """ Get all users who recieve email updates from statusChange """
+    """Get all users who recieve email updates from statusChange"""
     try:
         users = UserProfiles.objects.all().filter(
             Q(is_active=True),

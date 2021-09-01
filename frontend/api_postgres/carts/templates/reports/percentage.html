@@ -3,10 +3,8 @@
     <div class="text_answer_dl">
       <dt class="question_text">{{question.label}}</dt>
       <dd class="answer">
-        {%if question.answer.entry %}
-          {{question.answer.entry}}%
-        {%else%}
-          &emsp;<i>Unanswered</i>
+        {%if question.answer.entry %} {{question.answer.entry}}% {%else%}
+        &emsp;<i>Unanswered</i>
         {%endif%}
       </dd>
     </div>

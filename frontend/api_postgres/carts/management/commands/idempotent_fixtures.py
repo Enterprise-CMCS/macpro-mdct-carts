@@ -3,6 +3,7 @@ from django.core.management.base import BaseCommand  # type: ignore
 from carts.carts_api.models import (
     ACS,
     FMAP,
+    FormTemplate,
     Section,
     SectionBase,
     SectionSchema,
@@ -90,6 +91,28 @@ class Command(BaseCommand):
                 state = fixture["fields"]["contents"]["section"].get("state")
                 try:
                     existing = Section.objects.filter(
+                        contents__section__year=year,
+                        contents__section__ordinal=ordinal,
+                        contents__section__state=state,
+                    )
+                    if overwrite:
+                        existing.delete()
+                        is_new = True
+                except Section.DoesNotExist:
+                    is_new = True
+                try:
+                    validate(schema, fixture)
+                    validating = True
+                except jsonschema.exceptions.ValidationError:
+                    print(path, "failed validation")
+            elif fixture["model"] == "carts_api.formtemplate":
+                year = fixture["fields"]["contents"]["section"].get("year")
+                ordinal = fixture["fields"]["contents"]["section"].get(
+                    "ordinal"
+                )
+                state = fixture["fields"]["contents"]["section"].get("state")
+                try:
+                    existing = FormTemplate.objects.filter(
                         contents__section__year=year,
                         contents__section__ordinal=ordinal,
                         contents__section__state=state,

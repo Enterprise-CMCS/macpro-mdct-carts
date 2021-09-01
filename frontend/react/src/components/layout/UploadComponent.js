@@ -154,7 +154,7 @@ class UploadComponent extends Component {
       uploadedFilesRetrieved: false,
     });
 
-    const response = await axios
+    await axios
       .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
         questionId,
       })
@@ -165,7 +165,7 @@ class UploadComponent extends Component {
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
-      uploadedFiles: response.data["uploaded_files"],
+      uploadedFiles: [], //response.data["uploaded_files"],
     });
   };
 
