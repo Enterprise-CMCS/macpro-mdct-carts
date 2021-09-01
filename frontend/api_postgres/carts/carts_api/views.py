@@ -165,8 +165,6 @@ def update_formtemplates_by_year(request):
    #
 
    templateExists = list(SectionBase.objects.filter(contents__section__year = year))
-
-
    if len(templateExists) == 0:
      formtemplates = FormTemplate.objects.all()
      for template in formtemplates.iterator():
@@ -218,17 +216,16 @@ def update_form_section_by_year(request, year):
 
     try:
        data = SectionBase.objects.get(contents__section__year=year, contents__section__ordinal=section)
-      # data.contents=contents
-      # data.save()
+       data.contents=contents
+       data.save()
        serializer = SectionBaseSerializer(data)
        return Response(serializer.data)
     except SectionBase.DoesNotExist:
        return HttpResponse(status=404)
 
-
 @api_view(["POST"])
 def get_formtemplates_by_year(request, year):
-#ZAC
+
     section=int(request.data.get("section"))
     try:
        data = SectionBase.objects.get(contents__section__year=year, contents__section__ordinal=section)
@@ -236,7 +233,6 @@ def get_formtemplates_by_year(request, year):
        return Response(serializer.data)
     except SectionBase.DoesNotExist:
        return HttpResponse(status=404)
-
 
 @api_view(["GET"])
 def get_formtemplate_by_year_and_section(self, request, year, section):

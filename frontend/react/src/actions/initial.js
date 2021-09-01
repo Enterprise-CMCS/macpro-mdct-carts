@@ -124,9 +124,9 @@ export const getStateStatus =
 export const loadSections = ({ userData, stateCode, selectedYear }) => {
   const state = stateCode || userData.abbr;
   return async (dispatch) => {
-    // TODO: Remove dev-ak demo test code.
+
     const { data } = await axios
-      .get(`/api/v1/sections/${selectedYear}/${state}?dev=dev-admin`)
+      .get(`/api/v1/sections/${selectedYear}/${state}`)
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
         // it in the console, at least.

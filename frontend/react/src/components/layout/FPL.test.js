@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { storeFactory, findByTestAttribute } from "../../testUtils";
+import { findByTestAttribute } from "../../testUtils";
 
 import FPL from "../layout/FPL";
 
@@ -11,13 +11,13 @@ import FPL from "../layout/FPL";
  * @param {any} state - Initial state for setup
  * @returns {ShallowWrapper}
  */
-const setup = (props = {}, state = null) => {
+const setup = (props = {} ) => {
   return shallow(<FPL {...props} />);
 };
 
 describe("FPL Component, static render checks ", () => {
   const component = setup();
-  const instance = component.instance();
+  //const instance = component.instance();
 
   it("renders", () => {
     expect(component.exists()).toBe(true);
