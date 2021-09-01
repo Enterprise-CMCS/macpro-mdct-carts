@@ -13,6 +13,10 @@ data "aws_ssm_parameter" "postgres_password" {
   name = "/${terraform.workspace}/postgres_password"
 }
 
+data "aws_ssm_parameter" "postgres_password_manual" {
+  name = "/${terraform.workspace}/postgres_password_manual"
+}
+
 data "aws_ssm_parameter" "postgres_host" {
   name = "/${terraform.workspace}/postgres_host"
 }
@@ -42,7 +46,7 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_host            = data.aws_ssm_parameter.postgres_host.value,
     postgres_db              = data.aws_ssm_parameter.postgres_db.value,
     postgres_user            = data.aws_ssm_parameter.postgres_user.value,
-    postgres_password        = data.aws_ssm_parameter.postgres_password.value,
+    postgres_password        = try(data.aws_ssm_parameter.postgres_password_manual, data.aws_ssm_parameter.postgres_password.value),
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
     cloudwatch_stream_prefix = "api_postgres",
     postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,

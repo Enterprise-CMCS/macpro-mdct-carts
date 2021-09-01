@@ -42,8 +42,8 @@ module "db" {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
-  family                          = "postgres9.6"
-  major_engine_version            = "9.6"
+  family                          = "postgres12"
+  major_engine_version            = "12.7"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
@@ -71,7 +71,7 @@ resource "aws_security_group_rule" "vpn" {
 resource "aws_db_parameter_group" "db_param_group" {
   name   = "rds-pg-${terraform.workspace}"
 
-  family = "postgres9.6"
+  family = "postgres12"
 
   parameter {
     name  = "pgaudit.role"
