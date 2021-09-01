@@ -69,7 +69,7 @@ resource "aws_security_group_rule" "vpn" {
 }
 
 resource "aws_db_parameter_group" "db_param_group" {
-  name   = "rds-pg-${terraform.workspace}"
+  name   = "rds-pg-12-${terraform.workspace}"
 
   family = "postgres12"
 
