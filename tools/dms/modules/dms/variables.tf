@@ -15,8 +15,8 @@ variable "engine_type" {
 }
 
 variable "engine_version" {
-  description = "The engine version to use e.g. 12.7"
-  default     = "12.7"
+  description = "The engine version to use e.g. 9.6"
+  default     = "9.6"
 }
 
 variable "instance_type" {
