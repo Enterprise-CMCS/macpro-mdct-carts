@@ -11,7 +11,7 @@ import FPL from "../layout/FPL";
  * @param {any} state - Initial state for setup
  * @returns {ShallowWrapper}
  */
-const setup = (props = {} ) => {
+const setup = (props = {}) => {
   return shallow(<FPL {...props} />);
 };
 

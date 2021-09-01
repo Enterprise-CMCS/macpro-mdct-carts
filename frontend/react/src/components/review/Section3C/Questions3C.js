@@ -1,13 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TextField, ChoiceList, Choice } from "@cmsgov/design-system-core";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from "@reach/accordion";
-import FillForm from "../../layout/FillForm";
+import { Choice } from "@cmsgov/design-system-core";
 
 class Questions3C extends Component {
   constructor(props) {
@@ -32,6 +25,7 @@ class Questions3C extends Component {
       p2_q4: "",
       p2_q5: "",
       p2_q6: "",
+      // eslint-disable-next-line react/prop-types
       previousYear: this.props.previousYear,
       previousp1_q3: "last year's text Q3",
       previousp1_q4: "last year's text q4",
@@ -82,9 +76,9 @@ class Questions3C extends Component {
     el.target.classList.toggle("active");
 
     // Boolean, Set values on active
-    let isActive = el.target.classList.contains("active");
+    //let isActive = el.target.classList.contains("active");
 
-    const elementName = el.target.name;
+    //const elementName = el.target.name;
     //This dynamically updates the element with last years response. Need to figure out a way to get all sub elements
     if (el.target.type === "textField") {
       var newstate = {};
@@ -129,6 +123,7 @@ class Questions3C extends Component {
                 type="radio"
                 value="yes"
                 defaultChecked={
+                  // eslint-disable-next-line react/prop-types
                   this.props.previousEntry === "true"
                     ? this.state.previous_p1_q1 === "yes"
                       ? true
@@ -182,6 +177,7 @@ class Questions3C extends Component {
                 type="radio"
                 value="yes"
                 defaultChecked={
+                  // eslint-disable-next-line react/prop-types
                   this.props.previousYear === "true"
                     ? this.state.previous_p1_q2__1 === "yes"
                       ? true
@@ -197,6 +193,7 @@ class Questions3C extends Component {
                 type="radio"
                 value="no"
                 defaultChecked={
+                  // eslint-disable-next-line react/prop-types
                   this.props.previousYear === "true"
                     ? this.state.previous_p1_q2__1 === "no"
                       ? true
@@ -217,6 +214,7 @@ class Questions3C extends Component {
                 type="radio"
                 value="yes"
                 defaultChecked={
+                  // eslint-disable-next-line react/prop-types
                   this.props.previousYear === "true"
                     ? this.state.previous_p1_q2__2 === "yes"
                       ? true
@@ -232,6 +230,7 @@ class Questions3C extends Component {
                 type="radio"
                 value="no"
                 defaultChecked={
+                  // eslint-disable-next-line react/prop-types
                   this.props.previousYear === "true"
                     ? this.state.previous_p1_q2__2 === "no"
                       ? true
@@ -344,6 +343,7 @@ class Questions3C extends Component {
         <div className="question-container">
           <legend className="ds-c-label">
             6. Did you run into any limitations when collecting data? Anything
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
             else you'd like to add about this section that wasn't already
             covered?
           </legend>

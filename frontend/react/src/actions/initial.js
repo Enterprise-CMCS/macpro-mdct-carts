@@ -124,7 +124,6 @@ export const getStateStatus =
 export const loadSections = ({ userData, stateCode, selectedYear }) => {
   const state = stateCode || userData.abbr;
   return async (dispatch) => {
-
     const { data } = await axios
       .get(`/api/v1/sections/${selectedYear}/${state}`)
       .catch((err) => {
