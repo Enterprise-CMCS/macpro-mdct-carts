@@ -25,8 +25,9 @@ module "db" {
   version                 = "~> 2.0"
   identifier              = "postgres-rf-${terraform.workspace}"
   engine                  = "postgres"
-  engine_version          = "12.7"
-  allow_major_version_upgrade = true
+  #engine_version          = "12.7"
+  engine_version          = "9.6"
+  #allow_major_version_upgrade = true
   instance_class          = "db.t3.small"
   parameter_group_name    = aws_db_parameter_group.db_param_group.id
   allocated_storage       = 50
@@ -43,8 +44,10 @@ module "db" {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
-  family                          = "postgres12"
-  major_engine_version            = "12.7"
+  #family                          = "postgres12"
+  family                          = "postgres9.6"
+  #major_engine_version            = "12.7"
+  major_engine_version            = "9.6"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
@@ -70,9 +73,10 @@ resource "aws_security_group_rule" "vpn" {
 }
 
 resource "aws_db_parameter_group" "db_param_group" {
-  name   = "rds-pg-12-${terraform.workspace}"
+  name   = "rds-pg-${terraform.workspace}"
 
-  family = "postgres12"
+  #family = "postgres12"
+  family = "postgres9.6"
 
   parameter {
     name  = "pgaudit.role"
