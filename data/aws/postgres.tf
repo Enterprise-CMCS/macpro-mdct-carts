@@ -42,7 +42,7 @@ module "db" {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
-  family                          = "postgres12.7"
+  family                          = "postgres12"
   major_engine_version            = "12.7"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
