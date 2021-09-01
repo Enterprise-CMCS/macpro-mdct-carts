@@ -5,17 +5,14 @@
     <div class="text_answer_dl">
       <dd class="answer">
         {%if question.answer.entry|length == 0 %}
-          <br>&emsp;<i>Unanswered</i>
-        {%else%}
-          {% comment %} This builds the date ranges so they can be easily understood by the user  {% endcomment %}
-          {% with question.answer.entry.0|build_month_year as first_answer %} 
-            {% with question.answer.entry.1|build_month_year as second_answer %}
-              <br>Start - End<br>
-                {{first_answer}} - {{second_answer}}
-            {%endwith%}
-          {%endwith%} 
-        {%endif%}
-      </dd>  
+        <br />&emsp;<i>Unanswered</i>
+        {%else%} {% comment %} This builds the date ranges so they can be easily
+        understood by the user {% endcomment %} {% with
+        question.answer.entry.0|build_month_year as first_answer %} {% with
+        question.answer.entry.1|build_month_year as second_answer %}
+        <br />Start - End<br />
+        {{first_answer}} - {{second_answer}} {%endwith%} {%endwith%} {%endif%}
+      </dd>
     </div>
   </dl>
 </question>

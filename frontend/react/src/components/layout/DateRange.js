@@ -82,12 +82,8 @@ class DateRange extends Component {
   // This method checks all 4 fields to confirm that the start range is before the end range
   checkChronology() {
     const { onChange, question } = this.props;
-    const {
-      yearStart,
-      yearEnd,
-      startErrorMessage,
-      endErrorMessage,
-    } = this.state;
+    const { yearStart, yearEnd, startErrorMessage, endErrorMessage } =
+      this.state;
     const errorCheck = [...startErrorMessage, ...endErrorMessage]; // Array of all input errors in state
 
     let { monthStart, monthEnd } = this.state;

@@ -7,6 +7,7 @@ from carts.carts_api.models import (
     ACS,
     FMAP,
     AppUser,
+    FormTemplate,
     Section,
     SectionBase,
     SectionSchema,
@@ -14,10 +15,11 @@ from carts.carts_api.models import (
 )
 
 # Register your models here.
-admin.site.register(SectionSchema)
 admin.site.register(ACS)
 admin.site.register(FMAP)
 admin.site.register(AppUser)
+admin.site.register(FormTemplate)
+admin.site.register(SectionSchema)
 admin.site.register(State)
 
 
