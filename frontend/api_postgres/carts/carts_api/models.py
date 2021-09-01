@@ -17,6 +17,7 @@ class SectionSchema(models.Model):
 class SectionBase(models.Model):
     contents = JSONField()
 
+
 class Section(models.Model):
     contents = JSONField()
 

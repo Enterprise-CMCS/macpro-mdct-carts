@@ -43,7 +43,6 @@ router.register(r"state_status", views.StateStatusViewSet)
 router.register(r"updateformtemplates", views.SectionViewSet)
 
 
-
 api_patterns = [
     path("sections/<int:year>/<str:state>", section_list),
     path("sections/<int:year>/<str:state>/<int:section>", section_single),
@@ -85,7 +84,6 @@ api_patterns = [
     path("formtemplates/<int:year>", views.get_formtemplates_by_year),
     path("updateformtemplates", views.update_formtemplates_by_year),
     path("updateformsection/<int:year>", views.update_form_section_by_year),
-
 ]
 
 urlpatterns = [

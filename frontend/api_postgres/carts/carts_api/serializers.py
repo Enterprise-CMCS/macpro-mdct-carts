@@ -45,10 +45,12 @@ class SectionSchemaSerializer(serializers.HyperlinkedModelSerializer):
         model = SectionSchema
         fields = ["year", "contents"]
 
+
 class FormTemplateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FormTemplate
         fields = ["year", "section", "contents"]
+
 
 class FMAPSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
