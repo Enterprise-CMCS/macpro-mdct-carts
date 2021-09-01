@@ -71,7 +71,7 @@ resource "aws_security_group_rule" "vpn" {
 resource "aws_db_parameter_group" "db_param_group" {
   name   = "rds-pg-${terraform.workspace}"
 
-  family = "postgres12.7"
+  family = "postgres12"
 
   parameter {
     name  = "pgaudit.role"
