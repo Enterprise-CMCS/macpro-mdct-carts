@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectSectionsForNav } from "../../store/selectors";
 
-const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
+const idToUrl = (id) => `/sections/${id.replace(/-/g, "/?dev=dev-ak")}`;
 
 const FormNavigation = (props) => {
   const { history, location, sections } = props;
@@ -60,17 +60,17 @@ const FormNavigation = (props) => {
   let previousUrl = items[currentIndex - 1];
 
   if (viewType === true && items[currentIndex - 1] !== undefined) {
-    let previousArray = items[currentIndex - 1].split("/");
+    let previousArray = items[currentIndex - 1].split("/?dev=dev-ak");
     previousArray.splice(1, 1, state);
-    previousUrl = "/views/sections" + previousArray.join("/");
+    previousUrl = "/views/sections" + previousArray.join("/?dev=dev-ak");
   }
 
   // Determine next index
   let nextUrl = items[currentIndex + 1];
   if (viewType === true && items[currentIndex + 1] !== undefined) {
-    let nextArray = items[currentIndex + 1].split("/");
+    let nextArray = items[currentIndex + 1].split("/?dev=dev-ak");
     nextArray.splice(1, 1, state);
-    nextUrl = "/views/sections" + nextArray.join("/");
+    nextUrl = "/views/sections" + nextArray.join("/?dev=dev-ak");
   }
 
   return (

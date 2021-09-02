@@ -200,7 +200,7 @@ def update_formtemplates_by_year(request):
                     for currentState in currentStates.iterator():
 
                         sectionString = tmpJsonString.replace(
-                            "-REPLACE-STATE-", currentState.code
+                            "-REPLACE-STATE-CODE-", currentState.code
                         )
                         updated = Section.objects.create(
                             contents=json.loads(sectionString)

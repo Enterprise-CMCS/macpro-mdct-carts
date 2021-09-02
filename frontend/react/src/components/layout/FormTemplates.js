@@ -10,7 +10,7 @@ const FormTemplates = () => {
   const handleUpdateTemplates = async () => {
     var selectedYear = document.getElementById("selectedYear");
 
-    // TODO: Remove dev-admin demo test code.
+    // TODO: Remove ?dev=dev-admin after local testing before merging to DEV
     await axios.post(`/api/v1/updateformtemplates?dev=dev-admin`, {
       year: selectedYear.value,
     });

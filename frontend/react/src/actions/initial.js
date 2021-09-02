@@ -124,8 +124,9 @@ export const getStateStatus =
 export const loadSections = ({ userData, stateCode, selectedYear }) => {
   const state = stateCode || userData.abbr;
   return async (dispatch) => {
+      // TODO: Remove ?dev=dev-admin after local testing before merging to DEV
     const { data } = await axios
-      .get(`/api/v1/sections/${selectedYear}/${state}`)
+      .get(`/api/v1/sections/${selectedYear}/${state}?dev=dev-admin`)
       .catch((err) => {
         // Error-handling would go here. For now, just log it so we can see
         // it in the console, at least.
@@ -151,8 +152,9 @@ const getCookie = (key) => {
 
 export const loadUser = (userToken) => async (dispatch) => {
   if (getCookie("csrftoken") === null) {
+      // TODO: Remove ?dev=dev-admin after local testing before merging to DEV
     await axios
-      .get("/api/v1/initiate", { withCredentials: true })
+      .get("/api/v1/initiate?dev=dev-admin", { withCredentials: true })
       .then(function (result) {
         console.log("!!!!Django session initialted successfully!!! ", result);
       })
@@ -161,9 +163,10 @@ export const loadUser = (userToken) => async (dispatch) => {
       });
   }
 
+  // TODO: Remove ?dev=dev-admin after local testing before merging to DEV
   const { data } = userToken
-    ? await axios.get(`/api/v1/appusers/${userToken}`)
-    : await axios.post(`/api/v1/appusers/auth`);
+    ? await axios.get(`/api/v1/appusers/${userToken}?dev=dev-admin`)
+    : await axios.post(`/api/v1/appusers/auth?dev=dev-admin`);
 
   await Promise.all([
     dispatch(getUserData(data.currentUser)),
