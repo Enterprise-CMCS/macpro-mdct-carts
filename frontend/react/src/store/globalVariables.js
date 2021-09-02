@@ -2,7 +2,6 @@
 
 const initialState = {
   formName: "CARTS FY",
-  formYear: "2020",
   largeTextBoxHeight: 6,
   isFetching: false,
 };
@@ -17,6 +16,9 @@ export const updateFormYear = (year) => {
 // Global REDUCER
 export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
+  if ( state.formYear == undefined ) {
+     state.formYear = 2020
+  }
   if (action.type === "CONTENT_FETCHING_STARTED") {
     return { ...state, isFetching: true };
   }
