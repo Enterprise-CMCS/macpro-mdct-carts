@@ -26,10 +26,9 @@ export const updateFormYear = (year) => {
 export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
   state.url = document.location.pathname
-
+ 
   for (let activeYear in activeYears) {
-
-    if ( document.location.href.includes(activeYear) )
+    if ( document.location.pathname.includes(activeYear) )
         state.formYear = activeYears[activeYear];
   }
   console.log(state.formYear)
