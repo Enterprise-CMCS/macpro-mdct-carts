@@ -99,7 +99,7 @@ resource "aws_db_parameter_group" "db_param_group" {
 }
 
 resource "aws_db_parameter_group" "db_param_group_13" {
-  name   = "rds-pg-${terraform.workspace}"
+  name   = "rds-pg-13-${terraform.workspace}"
 
   family = "postgres13"
 
