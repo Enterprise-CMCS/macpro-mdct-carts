@@ -24,7 +24,7 @@ module "db" {
   source                  = "terraform-aws-modules/rds/aws"
   version                 = "~> 2.0"
   identifier              = "postgres-rf-${terraform.workspace}"
-  engine                  = "postgres9.6"
+  engine                  = "postgres"
   engine_version          = "9.6"
   instance_class          = "db.t3.small"
   parameter_group_name    = aws_db_parameter_group.db_param_group.id
