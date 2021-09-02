@@ -1,5 +1,5 @@
 // Storing global variables that will be the same regardless of users
-const activeYears = [2020,2021,2022,2023,2024]
+const activeYears = ["2020","2021","2022","2023","2024"]
 String.prototype.containsAny = String.prototype.containsAny || function(arr) {
   for (var i = 0; i < arr.length; i++) {
     if (this.indexOf(arr[i]) > -1) {
@@ -25,13 +25,14 @@ export const updateFormYear = (year) => {
 // Global REDUCER
 export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
-  state.url = document.location.pathname
- 
+  state.url = document.location.pathname.toString()
+
   for (let activeYear in activeYears) {
-    if ( document.location.pathname.includes(activeYear) )
-        state.formYear = activeYears[activeYear];
+    if ( state.url.indexOf(activeYears[activeYear]) != -1 ) {
+         state.formYear = activeYears[activeYear];
+      break;
+    }
   }
-  console.log(state.formYear)
 
   if ( state.formYear == undefined ) {
      state.formYear = 2020

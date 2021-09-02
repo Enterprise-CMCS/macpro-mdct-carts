@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 
 const StateHome = ({ SecureRouteComponent: SecureRoute }) => {
     const dispatch = useDispatch();
-    dispatch(updateFormYear(document.getElementById("selectedYear")))
+
     return (
         <>
             <div>
