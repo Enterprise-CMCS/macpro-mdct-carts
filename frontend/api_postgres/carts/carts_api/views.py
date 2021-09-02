@@ -174,13 +174,15 @@ def update_formtemplates_by_year(request):
             tmpContents = json.dumps(template.contents)
             tmpJsonString = (
                 str(tmpContents)
-                .replace(str(-111), str(year))
+                .replace(str(-111), str(year - 1))
                 .replace(str(-222), str(year - 2))
                 .replace(str(-333), str(year - 3))
                 .replace(str(-444), str(year - 4))
                 .replace(str(-555), str(year - 5))
-                .replace(str(-999), str(year + 1))
-                .replace(str(-888), str(year + 2))
+                .replace(str(-999), str(year))
+                .replace(str(-888), str(year + 1))
+                .replace("-REPLACE-STATE-FULLNAME-", '')
+                .replace("-REPLACE-STATE-CODE-", '')
             )
 
             try:
