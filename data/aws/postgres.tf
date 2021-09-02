@@ -27,7 +27,7 @@ module "db" {
   engine                  = "postgres"
   engine_version          = "12.7"
   instance_class          = "db.t3.small"
-  parameter_group_name    = aws_db_parameter_group.db_param_group_13.id
+  parameter_group_name    = aws_db_parameter_group.db_param_group_12.id
   allocated_storage       = 50
   storage_encrypted       = true
   name                    = var.postgres_db
