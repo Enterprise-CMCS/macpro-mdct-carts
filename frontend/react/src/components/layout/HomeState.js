@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 
 const StateHome = ({ SecureRouteComponent: SecureRoute }) => {
     const dispatch = useDispatch();
+    dispatch(updateFormYear(document.getElementById("selectedYear")))
     return (
         <>
             <div>
@@ -24,7 +25,10 @@ const StateHome = ({ SecureRouteComponent: SecureRoute }) => {
                     id="selectedYear"
                     onChange={(e) => dispatch(updateFormYear(e.target.value))}
                 >
-                    <option value="2020" selected>
+                    <option >
+                        Choose Form Year
+                    </option>
+                    <option value="2020" >
                         2020
                     </option>
                     <option value="2021">2021</option>

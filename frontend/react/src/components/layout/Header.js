@@ -81,6 +81,7 @@ class Header extends Component {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
+  formYear: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

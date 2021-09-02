@@ -15,10 +15,11 @@ import Sidebar from "./Sidebar";
 import { Switch } from "react-router";
 import ScrollToTop from "../Utils/ScrollToTop";
 import { updateFormYear } from "../../store/globalVariables";
-import { useDispatch } from "react-redux";
+import { useDispatch,connect } from "react-redux";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
   const dispatch = useDispatch();
+
   return (
     <>
       <ScrollToTop />
@@ -49,9 +50,11 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
                   className="ds-c-field"
                   name="selectedYear"
                   id="selectedYear"
-                  onChange={(e) => dispatch(updateFormYear(e.target.value))}
-                >
-                  <option value="2020" selected>
+                  onChange={(e) => dispatch(updateFormYear(e.target.value))}>
+                  <option >
+                    Choose Form Year
+                  </option>
+                  <option value="2020" >
                     2020
                   </option>
                   <option value="2021">2021</option>
@@ -101,6 +104,12 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
 };
 AdminHome.propTypes = {
   SecureRouteComponent: PropTypes.element.isRequired,
+  formYear: PropTypes.object.isRequired,
 };
 
-export default AdminHome;
+export const mapStateToProps = (state) => ({
+  currentUser: state.stateUser.currentUser,
+  formYear: state.global.formYear,
+});
+
+export default connect(mapStateToProps)(AdminHome);
