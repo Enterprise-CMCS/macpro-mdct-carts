@@ -25,7 +25,7 @@ module "db" {
   version                 = "~> 2.0"
   identifier              = "postgres-rf-${terraform.workspace}"
   engine                  = "postgres"
-  engine_version          = "13.1"
+  engine_version          = "12.7"
   instance_class          = "db.t3.small"
   parameter_group_name    = aws_db_parameter_group.db_param_group_13.id
   allocated_storage       = 50
@@ -42,8 +42,8 @@ module "db" {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
-  family                          = "postgres13"
-  major_engine_version            = "13.1"
+  family                          = "postgres12"
+  major_engine_version            = "12.7"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
@@ -98,10 +98,10 @@ resource "aws_db_parameter_group" "db_param_group" {
   }
 }
 
-resource "aws_db_parameter_group" "db_param_group_13" {
-  name   = "rds-pg-13-${terraform.workspace}"
+resource "aws_db_parameter_group" "db_param_group_12" {
+  name   = "rds-pg-12-${terraform.workspace}"
 
-  family = "postgres13"
+  family = "postgres12"
 
   parameter {
     name  = "pgaudit.role"
