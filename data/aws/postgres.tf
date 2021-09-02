@@ -25,9 +25,9 @@ module "db" {
   version                 = "~> 2.0"
   identifier              = "postgres-rf-${terraform.workspace}"
   engine                  = "postgres"
-  engine_version          = "9.6"
+  engine_version          = "13.1"
   instance_class          = "db.t3.small"
-  parameter_group_name    = aws_db_parameter_group.db_param_group.id
+  parameter_group_name    = aws_db_parameter_group.db_param_group_13.id
   allocated_storage       = 50
   storage_encrypted       = true
   name                    = var.postgres_db
@@ -42,8 +42,8 @@ module "db" {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
-  family                          = "postgres9.6"
-  major_engine_version            = "9.6"
+  family                          = "postgres13"
+  major_engine_version            = "13.1"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
@@ -72,6 +72,36 @@ resource "aws_db_parameter_group" "db_param_group" {
   name   = "rds-pg-${terraform.workspace}"
 
   family = "postgres9.6"
+
+  parameter {
+    name  = "pgaudit.role"
+    value = "rds_pgaudit"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "pgaudit.log"
+    value = "ALL"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "shared_preload_libraries"
+    value = "pg_stat_statements, pgaudit"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "10000"
+    apply_method = "pending-reboot"
+  }
+}
+
+resource "aws_db_parameter_group" "db_param_group_13" {
+  name   = "rds-pg-${terraform.workspace}"
+
+  family = "postgres13"
 
   parameter {
     name  = "pgaudit.role"
