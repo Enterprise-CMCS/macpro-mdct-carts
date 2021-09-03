@@ -14,8 +14,8 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
 
   dispatch({ type: CERTIFY_AND_SUBMIT });
   try {
-    // TODO: Remove ?dev=dev-admin after local testing before merging to DEV
-    const stateStatus = axios.post(`/state_status?dev=dev-ak`, {
+
+    const stateStatus = axios.post(`/state_status`, {
       last_changed: new Date(),
       state: stateCode,
       status: "certified",

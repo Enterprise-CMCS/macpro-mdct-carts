@@ -182,7 +182,7 @@ def update_formtemplates_by_year(request):
                 .replace(str(-999), str(year))
                 .replace(str(-888), str(year + 1))
                 .replace("-REPLACE-STATE-FULLNAME-", '')
-                .replace("-REPLACE-STATE-CODE-", '')
+                .replace("-REPLACE-STATE-CODE-", '""')
             )
 
             try:
