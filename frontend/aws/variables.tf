@@ -24,3 +24,6 @@ variable "enable_log_waf_acl" {
   description = "Should logging be enabled on WAF ACL or not? Default is FALSE to not create"
   default = true
 }
+variable "postgres_master_password" {
+  default = "/${terraform.workspace}/postgres_password"
+}

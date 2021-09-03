@@ -158,7 +158,8 @@ pipeline {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
-                "vpc_name": env.VPC_NAME
+                "vpc_name": env.VPC_NAME,
+                "postgres_master_password": env.POSTGRES_MASTER_PASSWORD
               ]
             )
           }

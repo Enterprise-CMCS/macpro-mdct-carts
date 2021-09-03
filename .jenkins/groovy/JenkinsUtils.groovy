@@ -129,7 +129,7 @@ void terraformApply(String stateBucket, String workspace, String action, Map tfv
   terraformInit(stateBucket)
   terraformSelectWorkspace(workspace)
   varString = ""
-  tfvars.each { k, v -> varString += " -var " + k + "=" + v }
+  tfvars.each { k, v -> if(v != "") {varString += " -var " + k + "=" + v }}
   sh """
     PATH=~/.local/bin:$PATH
     terraform $action ${varString} -input=false -auto-approve

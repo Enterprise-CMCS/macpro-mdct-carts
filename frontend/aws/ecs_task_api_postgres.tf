@@ -10,7 +10,7 @@ data "aws_ssm_parameter" "postgres_user" {
 }
 
 data "aws_ssm_parameter" "postgres_password" {
-  name = "/${terraform.workspace}/postgres_password"
+  name = var.postgres_master_password
 }
 
 data "aws_ssm_parameter" "postgres_host" {
