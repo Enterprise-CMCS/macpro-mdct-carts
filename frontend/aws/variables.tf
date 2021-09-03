@@ -25,5 +25,5 @@ variable "enable_log_waf_acl" {
   default = true
 }
 variable "postgres_master_password" {
-  default = "/${terraform.workspace}/postgres_password"
+  default = ""
 }

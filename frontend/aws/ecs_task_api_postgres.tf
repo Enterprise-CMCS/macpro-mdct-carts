@@ -1,4 +1,5 @@
 locals {
+  postgres_password = var.postgres_master_password == "" ? "/${terraform.workspace}/postgres_password" : var.postgres_master_password
   endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}:8000" : "https://${var.acm_certificate_domain_api_postgres}"
   django_settings_module = {
     "prod" : "carts.settings"
@@ -10,7 +11,7 @@ data "aws_ssm_parameter" "postgres_user" {
 }
 
 data "aws_ssm_parameter" "postgres_password" {
-  name = var.postgres_master_password
+  name = local.postgres_password
 }
 
 data "aws_ssm_parameter" "postgres_host" {
