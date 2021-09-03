@@ -27,7 +27,7 @@ module "db" {
   engine                  = "postgres"
   engine_version          = "9.6"
   allow_major_version_upgrade = true
-  create_parameter_group  = false
+  create_db_parameter_group  = false
   instance_class          = "db.t3.small"
   parameter_group_name    = aws_db_parameter_group.db_param_group.id
   allocated_storage       = 50
