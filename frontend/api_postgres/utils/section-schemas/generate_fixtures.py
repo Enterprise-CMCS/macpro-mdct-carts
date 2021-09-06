@@ -217,15 +217,13 @@ def load_acs_data(here, there):
 
 def load_formtemplate_data(here, there):
     csv.field_size_limit(sys.maxsize)
-    csvf = open(Path(here, "formtemplate2021.csv"), "r")
+    csvf = open(Path(here, "formstemplate2021.json"), "r")
     reader = csv.DictReader(csvf, delimiter="\t")
     formtemplates = []
     for row in reader:
         obj = {
             "model": "carts_api.formtemplate",
             "fields": {
-                "year": row["year"],
-                "section": row["section"],
                 "contents": row["contents"],
             },
         }

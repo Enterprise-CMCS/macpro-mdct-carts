@@ -15,7 +15,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
   dispatch({ type: CERTIFY_AND_SUBMIT });
   try {
 
-    const stateStatus = axios.post(`/state_status`, {
+    const stateStatus = axios.post(`/state_status/`, {
       last_changed: new Date(),
       state: stateCode,
       status: "certified",

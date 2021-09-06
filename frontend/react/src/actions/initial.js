@@ -152,7 +152,6 @@ const getCookie = (key) => {
 
 export const loadUser = (userToken) => async (dispatch) => {
   if (getCookie("csrftoken") === null) {
-      // TODO: Remove ?dev=dev-admin after local testing before merging to DEV
     await axios
       .get("/api/v1/initiate", { withCredentials: true })
       .then(function (result) {
@@ -165,7 +164,7 @@ export const loadUser = (userToken) => async (dispatch) => {
 
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
-    : await axios.post(`/api/v1/appusers/auth?dev=dev-admin`);
+    : await axios.post(`/api/v1/appusers/auth`);
 
   await Promise.all([
     dispatch(getUserData(data.currentUser)),
