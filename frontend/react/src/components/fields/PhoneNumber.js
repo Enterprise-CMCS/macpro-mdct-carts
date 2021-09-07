@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Text } from "./Text";
+import Text from "./Text";
 
 const PhoneNumber = ({ onChange, question, ...props }) => {
   const [phone, setPhone] = useState(question.answer.entry);
