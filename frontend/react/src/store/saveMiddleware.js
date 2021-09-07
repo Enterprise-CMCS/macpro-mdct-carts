@@ -85,18 +85,19 @@ const saveMiddleware = (store) => {
     }, 300);
   };
 
-  return (next, { runSave = doSave } = {}) => (action) => {
-    const result = next(action);
-    switch (action.type) {
-      case QUESTION_ANSWERED:
-      case SET_FRAGMENT:
-        runSave(action);
-        break;
-      default:
-        break;
-    }
-    return result;
-  };
+  return (next, { runSave = doSave } = {}) =>
+    (action) => {
+      const result = next(action);
+      switch (action.type) {
+        case QUESTION_ANSWERED:
+        case SET_FRAGMENT:
+          runSave(action);
+          break;
+        default:
+          break;
+      }
+      return result;
+    };
 };
 
 export default saveMiddleware;

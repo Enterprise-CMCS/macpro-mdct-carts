@@ -33,7 +33,6 @@ class Header extends Component {
   render() {
     const { currentUser } = this.props;
     const { email } = currentUser;
-
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">

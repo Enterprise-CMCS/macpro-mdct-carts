@@ -7,6 +7,13 @@ const initialState = {
   isFetching: false,
 };
 
+export const updateFormYear = (year) => {
+  return {
+    type: "UPDATE_FORM_YEAR",
+    year,
+  };
+};
+
 // Global REDUCER
 export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
@@ -17,7 +24,8 @@ export default function global(state = initialState, action) {
   // Triggers isFetching which deactivates Spinner.js (reactRouter.js)
   if (action.type === "CONTENT_FETCHING_FINISHED") {
     return { ...state, isFetching: false };
+  } else if (action.type === "UPDATE_FORM_YEAR") {
+    return { ...state, formYear: action.year, isFetching: false };
   }
-
   return state;
 }
