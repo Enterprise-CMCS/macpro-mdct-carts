@@ -81,7 +81,7 @@ pipeline {
 
     stage("Deploy Data Layer") {
       when {
-        expression { env.SKIP_DATA_DEPLOY != "true" && (env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true") }
+        expression { env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true" }
       }
       steps {
         script {

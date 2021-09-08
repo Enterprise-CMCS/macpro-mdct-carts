@@ -58,6 +58,7 @@ resource "aws_security_group_rule" "db_ingress" {
 }
 
 resource "aws_ecs_service" "postgres_deployer" {
+  count           = var.skip_data_deployment ? 0 : 1 
   name            = "postgres_deployer"
   cluster         = aws_ecs_cluster.database.id
   task_definition = aws_ecs_task_definition.postgres_deployer.arn
@@ -74,14 +75,15 @@ resource "aws_ecs_service" "postgres_deployer" {
 }
 
 resource "null_resource" "wait_for_ecs_stability_postgres_deployer" {
+  count           = var.skip_data_deployment ? 0 : 1
   triggers = {
     ecs_task_def_id = aws_ecs_task_definition.postgres_deployer.id
-    ecs_service     = aws_ecs_service.postgres_deployer.id
+    ecs_service     = aws_ecs_service.postgres_deployer[0].id
   }
   provisioner "local-exec" {
-    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.database.name} --services ${aws_ecs_service.postgres_deployer.name}"
+    command = "aws ecs wait services-stable --cluster ${aws_ecs_cluster.database.name} --services ${aws_ecs_service.postgres_deployer[0].name}"
   }
-  depends_on = [aws_ecs_service.postgres_deployer]
+  depends_on = [aws_ecs_service.postgres_deployer[0]]
 }
 
 ####################################################################################################
