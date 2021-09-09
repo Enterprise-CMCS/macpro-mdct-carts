@@ -4,7 +4,7 @@ import Question from "./Question";
 import { connect } from "react-redux";
 import axios from "../../authenticatedAxios";
 
-const DataGrid = ({ question, state }) => {
+const DataGrid = ({ question, state, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
 
@@ -14,7 +14,7 @@ const DataGrid = ({ question, state }) => {
       : `ds-u-margin-top--0`;
 
   // Pull data from last year
-  const getDataFromLastYear = async (item) => {
+  const getDataFromLastYear = (item) => {
     if (!item.id || !Array.isArray(questionsToSet)) {
       return;
     }
@@ -24,6 +24,7 @@ const DataGrid = ({ question, state }) => {
 
     // Get last year value (e.g. 2019) from splitID
     const lastYear = parseInt(splitID[0]) - 1;
+
 
     // the subquestion id (a, b, c, etc)
     const questionId = splitID[5];
@@ -44,27 +45,25 @@ const DataGrid = ({ question, state }) => {
       splitID.pop();
       const fieldsetId = splitID.join("-");
 
-      await axios
-        .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
-        .then((data) => {
-          // If data exists, decipher value from return result (data)
-          if (data) {
-            let prevYearValue =
-              parseInt(
-                getValueFromLastYear(data.data, fieldsetId, questionId)
-              ) || "";
+      console.log(JSON.stringify(lastYearFormData[0]))
 
-            // Add new entry to questionsToSet Array
-            const temp = questionsToSet.push({
-              hideNumber: true,
-              question: item,
-              prevYear: { value: prevYearValue, disabled: true },
-            });
+      /*
+      let prevYearValue =
+          parseInt(
+              getValueFromLastYear(lastYearFormData, fieldsetId, questionId)
+          ) || "";
 
-            // Set cumulative array of questions to local state
-            setQuestionsToSet(temp);
-          }
-        });
+      // Add new entry to questionsToSet Array
+      const temp = questionsToSet.push({
+        hideNumber: true,
+        question: item,
+        prevYear: {value: prevYearValue, disabled: true},
+      });
+
+      // Set cumulative array of questions to local state
+      setQuestionsToSet(temp);
+*/
+
     } else {
       // Add values to render array
       const temp = questionsToSet.push({
@@ -104,16 +103,11 @@ const DataGrid = ({ question, state }) => {
     return lastYearAnswer ?? null;
   };
 
-  useEffect(() => {
-    const generateRenderQuestions = () => {
-      // Loop through all questions (passed in)
-      question.questions.map(async (item) => {
-        await getDataFromLastYear(item);
-      });
-    };
-
-    generateRenderQuestions();
-  }, []);
+  if (lastYearFormData ) {
+    question.questions.map(async (item) => {
+      getDataFromLastYear(item);
+    });
+  }
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
@@ -136,11 +130,13 @@ DataGrid.propTypes = {
   question: PropTypes.object.isRequired,
   year: PropTypes.number.isRequired,
   state: PropTypes.string.isRequired,
+  lastYearFormData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   year: state.formData[0].contents.section.year,
   state: state.formData[0].contents.section.state,
+  lastYearFormData: state.lastYearFormData,
 });
 
 export default connect(mapStateToProps)(DataGrid);
