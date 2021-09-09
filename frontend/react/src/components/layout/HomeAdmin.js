@@ -45,23 +45,6 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
                 <li>
                   <Link to="/templates">Generate Form Base Templates</Link>
                 </li>
-                Select Form Year:{" "}
-                <select
-                  className="ds-c-field"
-                  name="selectedYear"
-                  id="selectedYear"
-                  onChange={(e) => dispatch(updateFormYear(e.target.value))}>
-                  <option >
-                    Choose Form Year
-                  </option>
-                  <option value="2020" >
-                    2020
-                  </option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                </select>
               </ul>
             </div>
             <div className="cmslist">
