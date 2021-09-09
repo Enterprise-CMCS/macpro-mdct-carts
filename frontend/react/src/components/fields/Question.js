@@ -20,7 +20,8 @@ import { Radio } from "./Radio";
 import { Ranges } from "./Ranges";
 import { Repeatables } from "./Repeatables";
 import { SkipText } from "./SkipText";
-import { Text, TextMedium, TextMultiline, TextSmall } from "./Text";
+import Text from "./Text";
+import { TextMedium, TextMultiline, TextSmall } from "./TextOther";
 
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
@@ -60,11 +61,20 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
+const Question = ({
+  hideNumber,
+  question,
+  readonly,
+  setAnswer,
+  prevYear,
+  ...props
+}) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
   }
+
+  const prevYearDisabled = prevYear ? prevYear.disabled : false;
 
   const onChange = ({ target: { name: id, value } }) => {
     setAnswer(id, value);
@@ -107,11 +117,13 @@ const Question = ({ hideNumber, question, readonly, setAnswer, ...props }) => {
           name={question.id}
           onChange={onChange}
           disabled={
+            prevYearDisabled ||
             pageDisable ||
             readonly ||
             (question.answer && question.answer.readonly) ||
             false
           }
+          prevYear={prevYear}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -134,6 +146,7 @@ Question.propTypes = {
   question: PropTypes.object.isRequired,
   readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
+  prevYear: PropTypes.object,
 };
 Question.defaultProps = {
   hideNumber: false,

@@ -20,7 +20,7 @@ Currently, there is a staging environment and a prod environment.
 On master build success, the staging job is automatically deployed with the latest release.
 Prod is not automatically triggered, but is instead released ad hoc as warranted by the business. The release is affected by starting the prod job and specifying the desired version when prompted.
 
-A PR must be reviewed and approved by someone other than the submitter. When the reviewer(s) accept the PR, they are responsible for merging it to `master`. However, the submitter is still responsible if that merge causes anything to go wrong.
+A PR must be reviewed and approved by someone other than the submitter. When the reviewer(s) accept the PR, they are responsible for merging it to `master`. However, the submitter is still responsible if that merge causes anything to go wrong
 
 Remember: Run `npx prettier --write /path/to/file` on your files before submitting your PR!
 

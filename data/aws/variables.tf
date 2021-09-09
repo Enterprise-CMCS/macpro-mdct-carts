@@ -10,3 +10,7 @@ variable "postgres_user" {
 variable "postgres_db" {
   default = "postgres"
 }
+
+variable "skip_data_deployment" {
+  default = false
+}
