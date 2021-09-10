@@ -6,6 +6,7 @@ export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
 export const SET_STATE_STATUS = "SET_STATE_STATUS";
 export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
+export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
 
 /* eslint-disable no-underscore-dangle, no-console */
 
@@ -138,6 +139,24 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
       });
 
     dispatch({ type: LOAD_SECTIONS, data });
+    const lastYear = parseInt(selectedYear) - 1;
+    if (lastYear % 2 == 0) {
+      const data = await axios
+        .get(`/api/v1/sections/${lastYear}/${state}`)
+        .catch((err) => {
+          // Error-handling would go here. For now, just log it so we can see
+          // it in the console, at least.
+          console.log("--- ERROR LOADING SECTIONS ---");
+          console.log(err);
+          // Without the following too many things break, because the
+          // entire app is too dependent on section data being present.
+          dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
+          throw err;
+        });
+      //
+
+      dispatch({ type: LOAD_LASTYEAR_SECTIONS, data });
+    }
   };
 };
 

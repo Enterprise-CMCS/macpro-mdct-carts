@@ -22,7 +22,6 @@ def main() -> None:
     write_states(here, there)
     load_acs_data(here, there)
     load_fmap_data(here, there)
-    load_formtemplate_data(here, there)
 
 
 def write_state_section_json(here: Path, states: Path) -> None:
@@ -213,25 +212,6 @@ def load_acs_data(here, there):
             acs_data.append(obj)
     outputpath = Path(there, "acs.json")
     outputpath.write_text(json.dumps(acs_data))
-
-
-def load_formtemplate_data(here, there):
-    csv.field_size_limit(sys.maxsize)
-    csvf = open(Path(here, "formtemplates2021.csv"), "r")
-    reader = csv.DictReader(csvf, delimiter="\t")
-    formtemplates = []
-    for row in reader:
-        obj = {
-            "model": "carts_api.formtemplate",
-            "fields": {
-                "year": row["year"],
-                "section": row["section"],
-                "contents": row["contents"],
-            },
-        }
-        formtemplates.append(obj)
-    outputpath = Path(there, "2020-formtemplate.json")
-    outputpath.write_text(json.dumps(formtemplates))
 
 
 def load_fmap_data(here, there):
