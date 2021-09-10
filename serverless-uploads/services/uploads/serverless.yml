@@ -110,7 +110,7 @@ resources:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
                 SSEAlgorithm: AES256
-      DependsOn: LambdaInvokePermission
+      # DependsOn: LambdaInvokePermission
     # Policy to allow public read access to all attachments
     S3CMSReadBucketPolicy:
       Type: AWS::S3::BucketPolicy
@@ -243,6 +243,9 @@ resources:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
   Outputs:
+    AttachmentsBucketName:
+      Value:
+        Ref: AttachmentsBucket
     BucketAVScanRoleArn:
       Value: !GetAtt BucketAVScanRole.Arn
     AvScanArn:
