@@ -110,7 +110,7 @@ resources:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
                 SSEAlgorithm: AES256
-      # DependsOn: LambdaInvokePermission
+      DependsOn: LambdaInvokePermission
     # Policy to allow public read access to all attachments
     S3CMSReadBucketPolicy:
       Type: AWS::S3::BucketPolicy
@@ -192,11 +192,11 @@ resources:
                     - s3:PutObjectTagging
                     - s3:PutObjectVersionTagging
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*
+                  Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
+                  Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
                 - Effect: "Allow"
                   Action:
                     - s3:GetObject
