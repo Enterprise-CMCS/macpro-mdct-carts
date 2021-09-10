@@ -81,54 +81,75 @@ resources:
             - ""
             - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
-     AttachmentsBucket:	
-      Type: AWS::S3::Bucket	
-      Properties:	
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}	
-        # Set the CORS policy	
-        CorsConfiguration:	
-          CorsRules:	
-            - AllowedOrigins:	
-                - "*"	
-              AllowedHeaders:	
-                - "*"	
-              AllowedMethods:	
-                - GET	
-                - PUT	
-                - POST	
-                - DELETE	
-                - HEAD	
-              ExposedHeaders:	
-                - ETag	
-              MaxAge: 3000	
-        NotificationConfiguration:	
-          LambdaConfigurations:	
-            - Event: s3:ObjectCreated:*	
-              Function: !GetAtt AvScanLambdaFunction.Arn	
-        #Set at rest encryption	
-        BucketEncryption:	
-          ServerSideEncryptionConfiguration:	
-            - ServerSideEncryptionByDefault:	
-                SSEAlgorithm: AES256	
-      DependsOn: LambdaInvokePermission	
-    # Policy to allow public read access to all attachments	
-    S3CMSReadBucketPolicy:	
-      Type: AWS::S3::BucketPolicy	
-      Properties:	
-        Bucket:	
-          Ref: AttachmentsBucket	
-        PolicyDocument:	
-          Statement:                 	
-            - Effect: "Allow"	
-              Action: "s3:PutObject"	
-              Principal: "*"	
-    LambdaInvokePermission:	
-      Type: AWS::Lambda::Permission	
-      Properties:	
-        FunctionName: !GetAtt AvScanLambdaFunction.Arn	
-        Action: lambda:InvokeFunction	
-        Principal: s3.amazonaws.com	
-        SourceAccount: !Sub ${AWS::AccountId}	
+    AttachmentsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: !Sub ${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+        # Set the CORS policy
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              ExposedHeaders:
+                - ETag
+              MaxAge: 3000
+        NotificationConfiguration:
+          LambdaConfigurations:
+            - Event: s3:ObjectCreated:*
+              Function: !GetAtt AvScanLambdaFunction.Arn
+        #Set at rest encryption
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+      DependsOn: LambdaInvokePermission
+    # Policy to allow public read access to all attachments
+    S3CMSReadBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: AttachmentsBucket
+        PolicyDocument:
+          Statement:
+            - Effect: Deny
+              Action: "s3:PutObject"
+              Principal: "*"
+              NotResource:
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.bmp
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.csv
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.doc
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.docx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.gif
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.jpg
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.jpeg
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.odp
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.ods
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.odt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.png
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.pdf
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.ppt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.pptx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.rtf
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.tif
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.tiff
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.txt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xls
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xlsx
+    LambdaInvokePermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName: !GetAtt AvScanLambdaFunction.Arn
+        Action: lambda:InvokeFunction
+        Principal: s3.amazonaws.com
+        SourceAccount: !Sub ${AWS::AccountId}
         SourceArn: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
     ClamDefsBucket:
       Type: AWS::S3::Bucket
