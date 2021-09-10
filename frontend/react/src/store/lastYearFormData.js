@@ -1,5 +1,5 @@
 import _ from "underscore";
-import {LOAD_LASTYEAR_SECTIONS} from "../actions/initial";
+import { LOAD_LASTYEAR_SECTIONS } from "../actions/initial";
 import jsonpath from "../util/jsonpath";
 import idLetterMarkers from "../util/idLetterMarkers";
 

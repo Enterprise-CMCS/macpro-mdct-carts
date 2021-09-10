@@ -154,8 +154,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
  */
 const shouldDisplay = (state, context, programType = null) => {
   let program;
-  if (state.stateUser.currentUser.role === "admin_user")
-    return true;
+  if (state.stateUser.currentUser.role === "admin_user") return true;
   if (!programType) {
     // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
     program = state.stateUser.programType;
