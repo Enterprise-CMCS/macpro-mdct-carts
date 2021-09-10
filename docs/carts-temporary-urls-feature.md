@@ -12,29 +12,29 @@ CARTS state users often need to request information from colleagues who don't ha
 
 The system would support a special type of user account that would:
 
--   Not require any account information, such as name or email address.
--   Only be active for a limited period, likely seven days.
--   Have randomly-generated usernames.   
--   Store the email address/name of the user who generated them.
- -   Not display their usernames, but where users would typically see their own details, the system would display something like Temporary account, valid until [date], created by [state user].
--   Have permissions that specified access to a particular section, and denied access to any other parts of the system.
-  
+- Not require any account information, such as name or email address.
+- Only be active for a limited period, likely seven days.
+- Have randomly-generated usernames.
+- Store the email address/name of the user who generated them.
+- Not display their usernames, but where users would typically see their own details, the system would display something like Temporary account, valid until [date], created by [state user].
+- Have permissions that specified access to a particular section, and denied access to any other parts of the system.
+
 The feature from the state user perspective would include the following:
 
--   State users would see a UI, probably visible from each section, allowing them to generate a temporary URL.  
--   In order to generate a temporary URL, state users would have to enter the email address of the user they intend to send the temporary URL to. The system would not do the sending, and thus could not guarantee that the state user sends it to that email address.
--   Only one temporary URL per section would be permitted at one time, to minimize potential input conflicts.
--   Once a state user generates a temporary URL, that state user would no longer be able to edit sections that have active temporary URLs, but could see them, and would see information in the UI reminding them that they had generated the temporary URL.
--   State users would be able to cancel the temporary URL via the UI. If the temporary user submits the URL, this would deactivate the temporary URL and the state user would receive an email notification.
+- State users would see a UI, probably visible from each section, allowing them to generate a temporary URL.
+- In order to generate a temporary URL, state users would have to enter the email address of the user they intend to send the temporary URL to. The system would not do the sending, and thus could not guarantee that the state user sends it to that email address.
+- Only one temporary URL per section would be permitted at one time, to minimize potential input conflicts.
+- Once a state user generates a temporary URL, that state user would no longer be able to edit sections that have active temporary URLs, but could see them, and would see information in the UI reminding them that they had generated the temporary URL.
+- State users would be able to cancel the temporary URL via the UI. If the temporary user submits the URL, this would deactivate the temporary URL and the state user would receive an email notification.
 
 ## Security Rationale
 
--   The potential for data leakage is low.
--   The worst-case scenario is both unlikely and not particularly severe.
--   The data in question is all going to be public later anyway.
--   This approach should be able to support at least a weak audit trail.
--   The focus should be on the security of the overall system, not just security of the website.
--   Not providing functionality along these lines means the overall system is weaker in terms of convenience, data integrity, and security.
+- The potential for data leakage is low.
+- The worst-case scenario is both unlikely and not particularly severe.
+- The data in question is all going to be public later anyway.
+- This approach should be able to support at least a weak audit trail.
+- The focus should be on the security of the overall system, not just security of the website.
+- Not providing functionality along these lines means the overall system is weaker in terms of convenience, data integrity, and security.
 
 ### The potential for data leakage is low.
 
