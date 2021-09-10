@@ -158,7 +158,6 @@ def listToString(s):
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
 
-
     templateArr = []
     global newSectionContents
     global debugThis
@@ -206,7 +205,8 @@ def update_formtemplates_by_year(request):
                 return HttpResponse(
                     json.dumps(
                         "{'ERROR: -> FormTemplate_Create_ERROR_007': 'update_formtemplates_by_year' }",
-                        cls=DjangoJSONEncoder,status=500
+                        cls=DjangoJSONEncoder,
+                        status=500,
                     )
                 )
 

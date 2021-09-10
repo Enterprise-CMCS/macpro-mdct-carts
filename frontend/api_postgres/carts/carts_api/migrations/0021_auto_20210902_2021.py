@@ -7,13 +7,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('carts_api', '0020_formtemplate'),
+        ("carts_api", "0020_formtemplate"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='formtemplate',
-            name='contents',
+            model_name="formtemplate",
+            name="contents",
             field=django.contrib.postgres.fields.jsonb.JSONField(null=True),
         ),
     ]

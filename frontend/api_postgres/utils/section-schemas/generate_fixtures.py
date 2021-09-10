@@ -24,7 +24,6 @@ def main() -> None:
     load_fmap_data(here, there)
 
 
-
 def write_state_section_json(here: Path, states: Path) -> None:
     state_list = load_csv(here / "state-fixture-data.csv")
     state_data = {_["State abbreviation"]: _ for _ in state_list}
@@ -213,6 +212,7 @@ def load_acs_data(here, there):
             acs_data.append(obj)
     outputpath = Path(there, "acs.json")
     outputpath.write_text(json.dumps(acs_data))
+
 
 def load_fmap_data(here, there):
     csvf = open(Path(here, "2020-fmap-data.csv"), "r")
