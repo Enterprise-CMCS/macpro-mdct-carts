@@ -14,12 +14,9 @@ import InvokeSection from "../Utils/InvokeSection";
 import Sidebar from "./Sidebar";
 import { Switch } from "react-router";
 import ScrollToTop from "../Utils/ScrollToTop";
-import { updateFormYear } from "../../store/globalVariables";
-import { useDispatch, connect } from "react-redux";
+import { connect } from "react-redux";
 
 const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
-  const dispatch = useDispatch();
-
   return (
     <>
       <ScrollToTop />
