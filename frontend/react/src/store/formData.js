@@ -1,8 +1,8 @@
 import _ from "underscore";
 import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
-import { SET_FRAGMENT } from "../actions/repeatables"; // eslint-disable-line import/no-cycle
+import { SET_FRAGMENT } from "../actions/repeatables";
 import jsonpath from "../util/jsonpath";
-import { selectQuestion } from "./selectors"; // eslint-disable-line import/no-cycle
+import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
 
 const sortByOrdinal = (sectionA, sectionB) => {
@@ -21,9 +21,9 @@ const sortByOrdinal = (sectionA, sectionB) => {
 const initialState = [];
 
 export default (state = initialState, action) => {
+  const updatedData = action.data.sort(sortByOrdinal);
   switch (action.type) {
     case LOAD_SECTIONS:
-      let updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
         updatedData[3].contents.section.subsections[2].parts[5] = JSON.parse(
