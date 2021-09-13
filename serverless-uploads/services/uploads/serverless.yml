@@ -84,7 +84,7 @@ resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+        BucketName: !Sub cartscms-uploads-${self:custom.stage}
         # Set the CORS policy
         CorsConfiguration:
           CorsRules:
@@ -123,26 +123,26 @@ resources:
               Action: "s3:PutObject"
               Principal: "*"
               NotResource:
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.bmp
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.csv
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.doc
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.docx
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.gif
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.jpg
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.jpeg
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.odp
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.ods
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.odt
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.png
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.pdf
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.ppt
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.pptx
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.rtf
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.tif
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.tiff
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.txt
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xls
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xlsx
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.bmp
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.csv
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.doc
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.docx
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.gif
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.jpg
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.jpeg
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.odp
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.ods
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.odt
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.png
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.pdf
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.ppt
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.pptx
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.rtf
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.tif
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.tiff
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.txt
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.xls
+                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.xlsx
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
@@ -150,7 +150,7 @@ resources:
         Action: lambda:InvokeFunction
         Principal: s3.amazonaws.com
         SourceAccount: !Sub ${AWS::AccountId}
-        SourceArn: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+        SourceArn: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
     ClamDefsBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -192,11 +192,11 @@ resources:
                     - s3:PutObjectTagging
                     - s3:PutObjectVersionTagging
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*
+                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
                 - Effect: "Allow"
                   Action:
                     - s3:GetObject
