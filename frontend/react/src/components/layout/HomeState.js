@@ -11,7 +11,6 @@ import Sidebar from "./Sidebar";
 import Unauthorized from "./Unauthorized";
 
 const StateHome = ({ SecureRouteComponent: SecureRoute }) => {
-
   return (
     <>
       <SecureRoute path="/" />
