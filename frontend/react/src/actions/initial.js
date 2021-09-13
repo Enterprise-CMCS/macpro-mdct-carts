@@ -138,8 +138,8 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
         throw err;
       });
 
-    dispatch({ type: LOAD_SECTIONS, data });
     const lastYear = parseInt(selectedYear) - 1;
+    let lastYearData = undefined;
     if (lastYear % 2 == 0) {
       const data = await axios
         .get(`/api/v1/sections/${lastYear}/${state}`)
@@ -150,13 +150,13 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
           console.log(err);
           // Without the following too many things break, because the
           // entire app is too dependent on section data being present.
-          dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
+          //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
           throw err;
         });
-      //
-
-      dispatch({ type: LOAD_LASTYEAR_SECTIONS, data });
+      lastYearData = data;
+      //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data });
     }
+    dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
 };
 
