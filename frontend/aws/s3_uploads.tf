@@ -53,6 +53,36 @@ resource "aws_s3_bucket_policy" "b" {
           }
         }
       },
+      {
+        Sid = "RestrictFiles"
+        Effect = "Deny"
+        Principal="*",
+        Action=[
+          "s3:PutObject"
+          ]
+      "NotResource": [
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.bmp",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.csv",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.doc",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.docx",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.gif",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.jpg",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.jpeg",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.odp",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.ods",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.odt",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.png",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.pdf",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.ppt",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.pptx",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.rtf",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.tif",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.tiff",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.txt",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.xls",
+        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.xlsx"
+        ]
+      }
     ]
   })
 }
