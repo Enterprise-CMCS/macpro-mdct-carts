@@ -1,6 +1,5 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/ccc447a00640e708538b/maintainability)](https://codeclimate.com/repos/6102dd981f91b059fd002f56/maintainability)
 
-xz
 ## cms-carts-seds
 
 18F/CMS CARTS &amp; SEDS redevelopment
