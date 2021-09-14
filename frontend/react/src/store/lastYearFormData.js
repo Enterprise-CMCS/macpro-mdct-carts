@@ -1,56 +1,14 @@
 import _ from "underscore";
-import { LOAD_SECTIONS, QUESTION_ANSWERED } from "../actions/initial";
-import { SET_FRAGMENT } from "../actions/repeatables";
+import { LOAD_LASTYEAR_SECTIONS } from "../actions/initial";
 import jsonpath from "../util/jsonpath";
-import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
-
-const sortByOrdinal = (sectionA, sectionB) => {
-  const a = sectionA.contents.section.ordinal;
-  const b = sectionB.contents.section.ordinal;
-
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
-};
 
 const initialState = [];
 
 export default (state = initialState, action) => {
-  const updatedData = action.data.sort(sortByOrdinal);
   switch (action.type) {
-    case LOAD_SECTIONS:
-      if (action.lastYearData) {
-        let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[3].contents.section.subsections[2].parts[5] = JSON.parse(
-          JSON.stringify(
-            lastYearData[3].contents.section.subsections[2].parts[5]
-          ).replace("2021", "2020")
-        );
-        updatedData[3].contents.section.subsections[2].parts[4] = JSON.parse(
-          JSON.stringify(
-            lastYearData[3].contents.section.subsections[2].parts[4]
-          ).replace("2021", "2020")
-        );
-
-        //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-        //console.log(JSON.stringify(lastYearData[3].contents.section.subsections[2]))
-      }
-      return updatedData;
-    case QUESTION_ANSWERED: {
-      const fragment = selectQuestion({ formData: state }, action.fragmentId);
-      fragment.answer.entry = action.data;
-      return JSON.parse(JSON.stringify(state));
-    }
-    case SET_FRAGMENT:
-      jsonpath.apply(state, `$..*[?(@.id==='${action.id}')]`, () => {
-        return action.value;
-      });
-      return JSON.parse(JSON.stringify(state));
+    case LOAD_LASTYEAR_SECTIONS:
+      return action.data.data;
     default:
       return state;
   }
