@@ -5,6 +5,13 @@ import jsonpath from "../util/jsonpath";
 import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
 
+const replacePartsLastYear = (year, lastYearData) => {
+  return JSON.parse(
+    JSON.stringify(lastYearData).replace(year),
+    (year - 1).toString()
+  );
+};
+
 const sortByOrdinal = (sectionA, sectionB) => {
   const a = sectionA.contents.section.ordinal;
   const b = sectionB.contents.section.ordinal;
@@ -21,24 +28,22 @@ const sortByOrdinal = (sectionA, sectionB) => {
 const initialState = [];
 
 export default (state = initialState, action) => {
-  const updatedData = action.data.sort(sortByOrdinal);
+ let updatedData = undefined;
   switch (action.type) {
     case LOAD_SECTIONS:
+      updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[3].contents.section.subsections[2].parts[5] = JSON.parse(
-          JSON.stringify(
-            lastYearData[3].contents.section.subsections[2].parts[5]
-          ).replace("2021", "2020")
-        );
-        updatedData[3].contents.section.subsections[2].parts[4] = JSON.parse(
-          JSON.stringify(
+        updatedData[3].contents.section.subsections[2].parts[4] =
+          replacePartsLastYear(
+            updatedData[3].contents.section.year,
             lastYearData[3].contents.section.subsections[2].parts[4]
-          ).replace("2021", "2020")
-        );
-
-        //console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-        //console.log(JSON.stringify(lastYearData[3].contents.section.subsections[2]))
+          );
+        updatedData[3].contents.section.subsections[2].parts[5] =
+          replacePartsLastYear(
+            updatedData[3].contents.section.year,
+            lastYearData[3].contents.section.subsections[2].parts[5]
+          );
       }
       return updatedData;
     case QUESTION_ANSWERED: {
