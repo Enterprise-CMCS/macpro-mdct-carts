@@ -151,10 +151,10 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
           // Without the following too many things break, because the
           // entire app is too dependent on section data being present.
           //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
+          dispatch({ type: LOAD_SECTIONS, data, lastYearData });
           throw err;
         });
-      lastYearData = data;
-      //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data });
+      if (data.data.length > 0 ) lastYearData = data;
     }
     dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
