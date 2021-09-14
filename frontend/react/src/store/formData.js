@@ -21,10 +21,10 @@ const sortByOrdinal = (sectionA, sectionB) => {
 const initialState = [];
 
 export default (state = initialState, action) => {
-
+  let updatedData = undefined;
   switch (action.type) {
     case LOAD_SECTIONS:
-      const updatedData = action.data.sort(sortByOrdinal);
+      updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
         updatedData[3].contents.section.subsections[2].parts[5] = JSON.parse(
@@ -37,7 +37,6 @@ export default (state = initialState, action) => {
             lastYearData[3].contents.section.subsections[2].parts[4]
           ).replace("2021", "2020")
         );
-
       }
       return updatedData;
     case QUESTION_ANSWERED: {
