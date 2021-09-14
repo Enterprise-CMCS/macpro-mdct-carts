@@ -81,76 +81,76 @@ resources:
             - ""
             - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
-    AttachmentsBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: !Sub cartscms-uploads-${self:custom.stage}
-        # Set the CORS policy
-        CorsConfiguration:
-          CorsRules:
-            - AllowedOrigins:
-                - "*"
-              AllowedHeaders:
-                - "*"
-              AllowedMethods:
-                - GET
-                - PUT
-                - POST
-                - DELETE
-                - HEAD
-              ExposedHeaders:
-                - ETag
-              MaxAge: 3000
-        NotificationConfiguration:
-          LambdaConfigurations:
-            - Event: s3:ObjectCreated:*
-              Function: !GetAtt AvScanLambdaFunction.Arn
-        #Set at rest encryption
-        BucketEncryption:
-          ServerSideEncryptionConfiguration:
-            - ServerSideEncryptionByDefault:
-                SSEAlgorithm: AES256
-      DependsOn: LambdaInvokePermission
-    # Policy to allow public read access to all attachments
-    S3CMSReadBucketPolicy:
-      Type: AWS::S3::BucketPolicy
-      Properties:
-        Bucket:
-          Ref: AttachmentsBucket
-        PolicyDocument:
-          Statement:
-            - Effect: Deny
-              Action: "s3:PutObject"
-              Principal: "*"
-              NotResource:
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.bmp
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.csv
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.doc
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.docx
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.gif
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.jpg
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.jpeg
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.odp
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.ods
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.odt
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.png
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.pdf
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.ppt
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.pptx
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.rtf
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.tif
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.tiff
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.txt
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.xls
-                - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.xlsx
-    LambdaInvokePermission:
-      Type: AWS::Lambda::Permission
-      Properties:
-        FunctionName: !GetAtt AvScanLambdaFunction.Arn
-        Action: lambda:InvokeFunction
-        Principal: s3.amazonaws.com
-        SourceAccount: !Sub ${AWS::AccountId}
-        SourceArn: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
+    # AttachmentsBucket:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     BucketName: !Sub cartscms-uploads-${self:custom.stage}
+    #     # Set the CORS policy
+    #     CorsConfiguration:
+    #       CorsRules:
+    #         - AllowedOrigins:
+    #             - "*"
+    #           AllowedHeaders:
+    #             - "*"
+    #           AllowedMethods:
+    #             - GET
+    #             - PUT
+    #             - POST
+    #             - DELETE
+    #             - HEAD
+    #           ExposedHeaders:
+    #             - ETag
+    #           MaxAge: 3000
+    #     NotificationConfiguration:
+    #       LambdaConfigurations:
+    #         - Event: s3:ObjectCreated:*
+    #           Function: !GetAtt AvScanLambdaFunction.Arn
+    #     #Set at rest encryption
+    #     BucketEncryption:
+    #       ServerSideEncryptionConfiguration:
+    #         - ServerSideEncryptionByDefault:
+    #             SSEAlgorithm: AES256
+    #   DependsOn: LambdaInvokePermission
+    # # Policy to allow public read access to all attachments
+    # S3CMSReadBucketPolicy:
+    #   Type: AWS::S3::BucketPolicy
+    #   Properties:
+    #     Bucket:
+    #       Ref: !Sub cartscms-uploads-${self:custom.stage}
+    #     PolicyDocument:
+    #       Statement:
+    #         - Effect: Deny
+    #           Action: "s3:PutObject"
+    #           Principal: "*"
+    #           NotResource:
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.bmp
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.csv
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.doc
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.docx
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.gif
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.jpg
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.jpeg
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.odp
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.ods
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.odt
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.png
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.pdf
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.ppt
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.pptx
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.rtf
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.tif
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.tiff
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.txt
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.xls
+    #             - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*.xlsx
+    # LambdaInvokePermission:
+    #   Type: AWS::Lambda::Permission
+    #   Properties:
+    #     FunctionName: !GetAtt AvScanLambdaFunction.Arn
+    #     Action: lambda:InvokeFunction
+    #     Principal: s3.amazonaws.com
+    #     SourceAccount: !Sub ${AWS::AccountId}
+    #     SourceArn: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
     ClamDefsBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -243,9 +243,6 @@ resources:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
   Outputs:
-    AttachmentsBucketName:
-      Value:
-        Ref: AttachmentsBucket
     BucketAVScanRoleArn:
       Value: !GetAtt BucketAVScanRole.Arn
     AvScanArn:

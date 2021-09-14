@@ -8,6 +8,24 @@ resource "aws_s3_bucket" "uploads" {
   force_destroy = terraform.workspace == "prod" ? false : true
 }
 
+resource "aws_lambda_permission" "allow_bucket" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
+  principal     = "s3.amazonaws.com"
+  source_arn    = aws_s3_bucket.uploads.arn
+}
+
+resource "aws_s3_bucket_notification" "avscan" {
+  bucket = aws_s3_bucket.uploads.id
+
+  lambda_function {
+    lambda_function_arn = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
+    events              = ["s3:ObjectCreated:*"]
+  }
+
+  depends_on = [aws_lambda_permission.allow_bucket]
+}
 resource "aws_s3_bucket_policy" "b" {
   bucket = aws_s3_bucket.uploads.id
 
