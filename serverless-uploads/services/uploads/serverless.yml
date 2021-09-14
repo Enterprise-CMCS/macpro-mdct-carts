@@ -173,9 +173,6 @@ resources:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
   Outputs:
-    AttachmentsBucketName:
-      Value:
-        Ref: AttachmentsBucket
     BucketAVScanRoleArn:
       Value: !GetAtt BucketAVScanRole.Arn
     AvScanArn:
