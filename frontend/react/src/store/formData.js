@@ -28,7 +28,7 @@ const sortByOrdinal = (sectionA, sectionB) => {
 const initialState = [];
 
 export default (state = initialState, action) => {
- let updatedData = undefined;
+  let updatedData = undefined;
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
