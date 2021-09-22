@@ -54,7 +54,7 @@ const Homepage = ({ editable, status, currentYear, tempState, reportStatus}) => 
             </div>
 
             {Object.keys(reportStatus).map((k,i) => formatStateStatus(reportStatus[k], editable) ) }
-            
+
           </div>
         </div>
       </div>
