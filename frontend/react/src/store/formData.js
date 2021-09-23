@@ -6,9 +6,19 @@ import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
 
 const replacePartsLastYear = (year, lastYearData) => {
+  console.log("culkdljwlojwdloqijdpjqpiodjqwpoifjpqojfpqwoj");
+  console.log(year);
   return JSON.parse(
     JSON.stringify(lastYearData).replace(year),
     (year - 1).toString()
+  );
+};
+const replacePartsCurrentYear = (year, lastYearData) => {
+  console.log("culkdljwlojwdloqijdpjqpiodjqwpoifjpqojfpqwoj");
+  console.log(year);
+  return JSON.parse(
+    JSON.stringify(lastYearData).replace(year - 1),
+    year.toString()
   );
 };
 
@@ -46,10 +56,12 @@ export default (state = initialState, action) => {
             updatedData[3].contents.section.year,
             lastYearData[3].contents.section.subsections[2].parts[5]
           );
-        updatedData[3].contents.section.subsections[6] = replacePartsLastYear(
-          updatedData[3].contents.section.year,
-          lastYearData[3].contents.section.subsections[6]
-        );
+        updatedData[3].contents.section.subsections[6].parts[0].questions[2] =
+          replacePartsCurrentYear(
+            updatedData[3].contents.section.year,
+            lastYearData[3].contents.section.subsections[6].parts[0]
+              .questions[2]
+          );
       }
       return updatedData;
     case QUESTION_ANSWERED: {
