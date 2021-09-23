@@ -43,6 +43,13 @@ resource "aws_cloudfront_origin_access_identity" "s3_origin_access_identity" {
   comment = "carts s3 OAI"
 }
 
+resource "aws_cloudfront_function" "hsts_cloudfront_function" {
+  name    = "hsts-${terraform.workspace}"
+  runtime = "cloudfront-js-1.0"
+  comment = "This function adds headers to implement HSTS"
+  publish = true
+  code    = file("${path.module}/hsts.js")
+}
 
 resource "aws_cloudfront_distribution" "www_distribution" {
   origin {
@@ -88,6 +95,10 @@ resource "aws_cloudfront_distribution" "www_distribution" {
       cookies {
         forward = "none"
       }
+    }
+    function_association {
+      event_type   = "viewer-response"
+      function_arn = aws_cloudfront_function.hsts_cloudfront_function.arn
     }
   }
   restrictions {
@@ -233,3 +244,4 @@ resource "aws_wafv2_web_acl" "uiwaf" {
     }
   }
 }
+
