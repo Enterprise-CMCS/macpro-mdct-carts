@@ -7,12 +7,11 @@ import {
   selectFormStatus,
   selectIsFormEditable,
 } from "../../../store/selectors";
-import reportStatus from "../../../store/reportStatus";
 
 function formatStateStatus(item, editable) {
   if (item) {
-
-    return   <ReportItem
+    return (
+      <ReportItem
         name={item.year}
         lastEditedTime="1:32pm"
         lastEditedDate="9/21/20"
@@ -24,11 +23,12 @@ function formatStateStatus(item, editable) {
         editor="karen.dalton@state.gov"
         userRole="state_user"
         year={item.year}
-    />
+      />
+    );
   }
 }
 
-const Homepage = ({ editable, status, currentYear, tempState, reportStatus}) => (
+const Homepage = ({ editable, currentYear, tempState, reportStatus }) => (
   <div className="homepage">
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -53,8 +53,9 @@ const Homepage = ({ editable, status, currentYear, tempState, reportStatus}) => 
               <div className="actions ds-l-col--4">Actions</div>
             </div>
 
-            {Object.keys(reportStatus).map((k,i) => formatStateStatus(reportStatus[k], editable) ) }
-
+            {Object.keys(reportStatus).map((k) =>
+              formatStateStatus(reportStatus[k], editable)
+            )}
           </div>
         </div>
       </div>
@@ -80,7 +81,7 @@ Homepage.propTypes = {
   reportStatus: PropTypes.object.isRequired,
 };
 
-const mapState = (state, reportStatus) => ({
+const mapState = (state) => ({
   editable: selectIsFormEditable(state),
   status: selectFormStatus(state),
   currentYear: state.global.formYear,

@@ -191,7 +191,7 @@ def update_formtemplates_by_year(request):
                 if len(existsAlready) == 0:
                     currentStates = State.objects.all()
                     for currentState in currentStates.iterator():
-                        #print(currentState.code)
+                        # print(currentState.code)
                         sectionString = tmpJsonString.replace(
                             "~XX~", currentState.code
                         )
