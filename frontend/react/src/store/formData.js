@@ -46,6 +46,10 @@ export default (state = initialState, action) => {
             updatedData[3].contents.section.year,
             lastYearData[3].contents.section.subsections[2].parts[5]
           );
+        updatedData[3].contents.section.subsections[6] = replacePartsLastYear(
+          updatedData[3].contents.section.year,
+          lastYearData[3].contents.section.subsections[6]
+        );
       }
       return updatedData;
     case QUESTION_ANSWERED: {
