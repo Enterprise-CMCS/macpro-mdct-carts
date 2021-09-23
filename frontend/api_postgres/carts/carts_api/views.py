@@ -224,7 +224,7 @@ def update_formtemplates_by_year(request):
                 createdStateStatus = StateStatus.objects.create(
                     year=year,
                     state_id=newStateStatus.state_id,
-                    user_name=newStateStatus.user_name,
+                    user_name="pguser",
                     last_changed=datetime.now(tz=timezone.utc),
                 )
                 createdStateStatus.save()
