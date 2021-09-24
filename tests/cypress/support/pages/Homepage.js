@@ -1,4 +1,4 @@
-import { createYield } from "typescript";
+
 
 const logoAtTopLeft = 'img[alt="QMR Logo"]';
 const loginButton = 'a#loginButton';

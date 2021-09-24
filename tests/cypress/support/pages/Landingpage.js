@@ -1,4 +1,4 @@
-import { createYield } from "typescript";
+
 
 const logoAtTopLeft = 'img[alt="QMR Logo"]';
 const myAccountButton = 'a#User';
@@ -10,7 +10,7 @@ const federalLogo = "img[alt='Department of Health and Human Services logo']";
 const addressBottomRight = '.footer-bottom-container > div > div:nth-of-type(2)';
 
 
-export class Homepage {
+export class Landingpage {
 
 
     launch() 
