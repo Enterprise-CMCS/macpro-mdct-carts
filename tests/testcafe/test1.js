@@ -1,8 +1,7 @@
-import { Selector } from 'testcafe';
+import { Selector } from "testcafe";
 
-fixture `Getting Started`
-    .page `${process.env.APPLICATION_ENDPOINT}`;
+fixture`Getting Started`.page`${process.env.APPLICATION_ENDPOINT}`;
 
-test('My first test', async t => {
-    // Test code
+test("My first test", async (t) => {
+  // Test code
 });

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 /**
  * Display available options for form (print)
@@ -9,9 +11,10 @@ import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
  * @returns {JSX.Element}
  * @constructor
  */
-const FormActions = () => {
+const FormActions = (props) => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
+  const { formYear } = props;
 
   /**
    * Print dialogue box state
@@ -98,7 +101,7 @@ const FormActions = () => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href="/print"
+                href={`/print?year=${formYear}`}
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDiaglogue}
@@ -113,4 +116,14 @@ const FormActions = () => {
   );
 };
 
-export default FormActions;
+FormActions.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  formYear: PropTypes.object.isRequired,
+};
+
+export const mapStateToProps = (state) => ({
+  currentUser: state.stateUser.currentUser,
+  formYear: state.global.formYear,
+});
+
+export default connect(mapStateToProps)(FormActions);

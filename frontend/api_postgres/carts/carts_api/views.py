@@ -156,8 +156,8 @@ def listToString(s):
 
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
-
     year = int(request.data.get("year"))
+
     templateArr = []
     global newSectionContents
     global debugThis
@@ -169,19 +169,12 @@ def update_formtemplates_by_year(request):
         SectionBase.objects.filter(contents__section__year=year)
     )
     if len(templateExists) == 0:
-        formtemplates = FormTemplate.objects.all()
+
+        formtemplates = FormTemplate.objects.filter(year=year)
         for template in formtemplates.iterator():
+
             tmpContents = json.dumps(template.contents)
-            tmpJsonString = (
-                str(tmpContents)
-                .replace(str(-111), str(year))
-                .replace(str(-222), str(year - 2))
-                .replace(str(-333), str(year - 3))
-                .replace(str(-444), str(year - 4))
-                .replace(str(-555), str(year - 5))
-                .replace(str(-999), str(year + 1))
-                .replace(str(-888), str(year + 2))
-            )
+            tmpJsonString = str(tmpContents)
 
             try:
                 updated = SectionBase.objects.create(
@@ -194,23 +187,26 @@ def update_formtemplates_by_year(request):
                         contents__section__ordinal=template.section,
                     )
                 )
-                print(len(existsAlready))
+
                 if len(existsAlready) == 0:
                     currentStates = State.objects.all()
                     for currentState in currentStates.iterator():
-
+                        # print(currentState.code)
                         sectionString = tmpJsonString.replace(
-                            "-REPLACE-STATE-", currentState.code
+                            "~XX~", currentState.code
                         )
                         updated = Section.objects.create(
                             contents=json.loads(sectionString)
                         )
                         updated.save()
             except:
+                print("DEBUG: ERROR\n" + tmpJsonString + "\nERROR: DEBUG END")
+
                 return HttpResponse(
                     json.dumps(
                         "{'ERROR: -> FormTemplate_Create_ERROR_007': 'update_formtemplates_by_year' }",
                         cls=DjangoJSONEncoder,
+                        status=500,
                     )
                 )
 
@@ -228,7 +224,7 @@ def update_formtemplates_by_year(request):
                 createdStateStatus = StateStatus.objects.create(
                     year=year,
                     state_id=newStateStatus.state_id,
-                    user_name=newStateStatus.user_name,
+                    user_name="pguser",
                     last_changed=datetime.now(tz=timezone.utc),
                 )
                 createdStateStatus.save()
@@ -617,8 +613,6 @@ class SectionViewSet(viewsets.ModelViewSet):
 
         serializer = SectionSerializer(section, context={"request": request})
         return Response(serializer.data)
-
-    transaction.atomic
 
     def update_sections(self, request):
         try:
@@ -1301,7 +1295,7 @@ def SendEmail(request):
     if message is None:
         responseMessage += "Missing require data: message \n"
 
-    if responseMessage is "":
+    if responseMessage == "":
         try:
             send_mail(subject, message, sender, recipients)
             jsonResponse = JsonResponse(
@@ -1386,7 +1380,7 @@ def SendEmailStatusChange(request):
     if source is None:
         responseMessage += "Missing require data: source \n"
 
-    if responseMessage is "":
+    if responseMessage == "":
 
         try:
             subject = "CMS MDCT CARTS"

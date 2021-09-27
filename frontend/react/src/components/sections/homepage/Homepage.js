@@ -8,7 +8,27 @@ import {
   selectIsFormEditable,
 } from "../../../store/selectors";
 
-const Homepage = ({ editable, status, currentYear, tempState }) => (
+function formatStateStatus(item, editable) {
+  if (item) {
+    return (
+      <ReportItem
+        name={item.year}
+        lastEditedTime="1:32pm"
+        lastEditedDate="9/21/20"
+        link1URL={`/sections/${item.year}/00`}
+        link1Text={editable ? "Edit" : "View"}
+        link2URL="#"
+        link2Text={null}
+        statusText={item.status}
+        editor="karen.dalton@state.gov"
+        userRole="state_user"
+        year={item.year}
+      />
+    );
+  }
+}
+
+const Homepage = ({ editable, currentYear, tempState, reportStatus }) => (
   <div className="homepage">
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -33,19 +53,9 @@ const Homepage = ({ editable, status, currentYear, tempState }) => (
               <div className="actions ds-l-col--4">Actions</div>
             </div>
 
-            <ReportItem
-              name="2020"
-              lastEditedTime="1:32pm"
-              lastEditedDate="9/21/20"
-              link1URL={`/sections/2020/00`}
-              link1Text={editable ? "Edit" : "View"}
-              link2URL="#"
-              link2Text={null}
-              statusText={status}
-              editor="karen.dalton@state.gov"
-              userRole="state_user"
-              year={currentYear}
-            />
+            {Object.keys(reportStatus).map((k) =>
+              formatStateStatus(reportStatus[k], editable)
+            )}
           </div>
         </div>
       </div>
@@ -68,6 +78,7 @@ Homepage.propTypes = {
   status: PropTypes.string.isRequired,
   currentYear: PropTypes.number.isRequired,
   tempState: PropTypes.string.isRequired,
+  reportStatus: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
@@ -75,6 +86,7 @@ const mapState = (state) => ({
   status: selectFormStatus(state),
   currentYear: state.global.formYear,
   tempState: state.stateUser.abbr,
+  reportStatus: state.reportStatus,
 });
 
 export default connect(mapState)(Homepage);

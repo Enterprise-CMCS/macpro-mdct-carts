@@ -6,7 +6,7 @@ import { faPlus, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { Money } from "./Money";
 import { Percentage } from "./Percentage";
-import { Text } from "./Text";
+import Text from "./Text";
 
 const inputs = new Map([
   ["money", Money],

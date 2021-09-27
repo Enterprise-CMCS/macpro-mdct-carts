@@ -8,11 +8,10 @@ const FormTemplates = () => {
   const history = useHistory();
 
   const handleUpdateTemplates = async () => {
-    var selectedYear = document.getElementById("selectedYear");
+    var selectedYear = document.getElementById("selectedYear").value;
 
-    // TODO: Remove dev-admin demo test code.
-    await axios.post(`/api/v1/updateformtemplates?dev=dev-admin`, {
-      year: selectedYear.value,
+    await axios.post(`/api/v1/updateformtemplates`, {
+      year: selectedYear,
     });
     window.alert("Request Completed");
     history.push("/");
@@ -32,9 +31,6 @@ const FormTemplates = () => {
           <option value="2021" selected>
             2021
           </option>
-          <option value="2022">2022</option>
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
         </select>
         <Button
           type="button"
