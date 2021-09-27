@@ -154,7 +154,7 @@ class UploadComponent extends Component {
       uploadedFilesRetrieved: false,
     });
 
-    await axios
+    const response = await axios
       .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
         questionId,
       })
@@ -165,7 +165,7 @@ class UploadComponent extends Component {
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
-      uploadedFiles: [], //response.data["uploaded_files"],
+      uploadedFiles: response.data["uploaded_files"],
     });
   };
 
@@ -250,20 +250,20 @@ class UploadComponent extends Component {
 
         {this.state.loadedFiles
           ? this.state.loadedFiles.map((element) => (
-              <div key={element.name}>
-                <a href={element.name} download>
-                  {" "}
-                  {element.name}{" "}
-                </a>
-                <Button
-                  name={element.name}
-                  onClick={this.removeFile}
-                  size="small"
-                >
-                  x
-                </Button>
-              </div>
-            ))
+            <div key={element.name}>
+              <a href={element.name} download>
+                {" "}
+                {element.name}{" "}
+              </a>
+              <Button
+                name={element.name}
+                onClick={this.removeFile}
+                size="small"
+              >
+                x
+              </Button>
+            </div>
+          ))
           : null}
 
         <Button
