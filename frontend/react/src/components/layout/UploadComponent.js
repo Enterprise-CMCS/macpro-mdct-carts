@@ -251,20 +251,20 @@ class UploadComponent extends Component {
 
         {this.state.loadedFiles
           ? this.state.loadedFiles.map((element) => (
-            <div key={element.name}>
-              <a href={element.name} download>
-                {" "}
-                {element.name}{" "}
-              </a>
-              <Button
-                name={element.name}
-                onClick={this.removeFile}
-                size="small"
-              >
-                x
-              </Button>
-            </div>
-          ))
+              <div key={element.name}>
+                <a href={element.name} download>
+                  {" "}
+                  {element.name}{" "}
+                </a>
+                <Button
+                  name={element.name}
+                  onClick={this.removeFile}
+                  size="small"
+                >
+                  x
+                </Button>
+              </div>
+            ))
           : null}
 
         <Button
