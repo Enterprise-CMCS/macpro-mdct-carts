@@ -162,10 +162,11 @@ class UploadComponent extends Component {
         console.log("!!!Error downloading files: ", error);
       });
 
+    const uploadedFiles = response ? response.data["uploaded_files"] : [];
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
-      uploadedFiles: response.data["uploaded_files"],
+      uploadedFiles: uploadedFiles,
     });
   };
 
