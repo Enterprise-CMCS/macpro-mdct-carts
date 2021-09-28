@@ -47,7 +47,7 @@ functions:
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
       sinkTopics: aws.mdct.seds.cdc.state-forms
-      sinkFunctionArn: !GetAtt SinkDynamoDBEnrollmentCounts.Arn
+      sinkFunctionArn: !GetAtt SinkDynamoDBEnrollmentCountsLambdaFunction.Arn
       sinkFunctionRegion: ${self:custom.region}
     maximumRetryAttempts: 2
     timeout: 120
@@ -213,6 +213,43 @@ resources:
       Properties:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
+    SinkDynamoDBEnrollmentCountsRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
+            - Ref: AWS::NoValue
+        ManagedPolicyArns:
+          - !Sub arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+        Policies:
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - "ec2:CreateNetworkInterface"
+                    - "ec2:DescribeNetworkInterfaces"
+                    - "ec2:DetachNetworkInterface"
+                    - "ec2:DeleteNetworkInterface"
+                    - "ec2:DescribeSecurityGroups"
+                  Resource: "*"
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"
       Properties:
