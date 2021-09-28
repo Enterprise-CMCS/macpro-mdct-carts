@@ -129,7 +129,8 @@ resources:
               Statement:
                 - Effect: "Allow"
                   Action:
-                    - "lambda:*"
+                    - "lambda:InvokeAsync"
+                    - "lambda:InvokeFunction"
                   Resource: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
     KafkaConnectWorkerTaskDefinition:
       Type: "AWS::ECS::TaskDefinition"
