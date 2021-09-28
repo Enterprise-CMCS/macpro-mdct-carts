@@ -46,13 +46,21 @@ functions:
       postgresPassword: ${self:custom.postgresPassword}
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
+      sinkTopics: aws.mdct.seds.cdc.state-forms
+      sinkFunctionArn: !GetAtt SinkDynamoDBEnrollmentCounts.Arn
+      sinkFunctionRegion: ${self:custom.region}
     maximumRetryAttempts: 2
     timeout: 120
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
-
+  sinkDynamoDBEnrollmentCounts:
+    handler: handlers/sinkDynamoDBEnrollmentCounts.handler
+    role: SinkDynamoDBEnrollmentCountsRole
+    environment:
+      BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
+      STAGE: ${self:custom.stage}
 resources:
   Conditions:
     CreatePermissionsBoundary:
