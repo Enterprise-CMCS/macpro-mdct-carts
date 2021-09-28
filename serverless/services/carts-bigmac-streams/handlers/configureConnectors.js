@@ -21,6 +21,22 @@ const connectors = [
       "validate.non.null": false,
     },
   },
+  {
+    name: `${process.env.connectorPrefix}sink.lambda.enrollmentcounts`,
+    config: {
+      "tasks.max": "1",
+      "connector.class":
+        "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
+      topics: process.env.sinkTopics,
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "aws.region": process.env.sinkFunctionRegion,
+      "aws.lambda.function.arn": process.env.sinkFunctionArn,
+      "aws.lambda.batch.enabled": "false",
+      "aws.credentials.provider.class":
+        " com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
+    },
+  },
 ];
 
 function myHandler(event, context, callback) {
