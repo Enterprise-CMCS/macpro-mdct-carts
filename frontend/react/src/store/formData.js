@@ -5,23 +5,6 @@ import jsonpath from "../util/jsonpath";
 import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
 
-const replacePartsLastYear = (year, lastYearData) => {
-  console.log("culkdljwlojwdloqijdpjqpiodjqwpoifjpqojfpqwoj");
-  console.log(year);
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year),
-    (year - 1).toString()
-  );
-};
-const replacePartsCurrentYear = (year, lastYearData) => {
-  console.log("culkdljwlojwdloqijdpjqpiodjqwpoifjpqojfpqwoj");
-  console.log(year);
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year - 1),
-    year.toString()
-  );
-};
-
 const sortByOrdinal = (sectionA, sectionB) => {
   const a = sectionA.contents.section.ordinal;
   const b = sectionB.contents.section.ordinal;
@@ -42,9 +25,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
-      if (action.lastYearData) {
-        let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-      }
+
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
