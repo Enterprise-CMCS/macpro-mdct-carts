@@ -127,7 +127,7 @@ resources:
       Properties:
         ContainerDefinitions:
           - Name: ${self:service}-${self:custom.stage}-worker
-            Image: "confluentinc/cp-kafka-connect:5.2.4"
+            Image: "confluentinc/cp-kafka-connect:6.2.0"
             Memory: 4096
             Cpu: 2048
             Command:
@@ -138,6 +138,10 @@ resources:
                 export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
                 curl -k -SL -o /etc/kafka-connect/jars/postgresql-42.2.18.jar "https://jdbc.postgresql.org/download/postgresql-42.2.18.jar" &&
                 chmod +x /etc/kafka-connect/jars/postgresql-42.2.18.jar &&
+                curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-lambda-1.2.2.jar "https://github.com/Nordstrom/kafka-connect-lambda/releases/download/v1.2.2/kafka-connect-lambda-1.2.2.jar" &&
+                chmod +x /etc/kafka-connect/jaras/kafka-connect-lambda-1.2.2.jar
+                curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-jdbc-10.2.0.jar "https://packages.confluent.io/maven/io/confluent/kafka-connect-jdbc/10.2.0/kafka-connect-jdbc-10.2.0.jar" &&
+                chmod +x /etc/kafka-connect/jars/kafka-connect-jdbc-10.2.0.jar &&
                 /etc/confluent/docker/run
             Environment:
               - Name: CONNECT_BOOTSTRAP_SERVERS
