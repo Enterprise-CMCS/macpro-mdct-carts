@@ -32,14 +32,14 @@ class Header extends Component {
 
   render() {
     const { currentUser } = this.props;
-    const { currentYear } = this.props;
+    const { formYear } = this.props;
     const { email } = currentUser;
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
           <div className="ds-l-row header-row">
             <div className="site-title ds-l-col--4 ds-u-padding--2">
-              <a href="/">Carts-{currentYear}</a>
+              <a href="/">Carts-{formYear}</a>
             </div>
             <div className="user-details ds-l-col--8 ds-u-padding--2">
               <div className="ds-l-row">
@@ -81,12 +81,12 @@ class Header extends Component {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentYear: PropTypes.object.isRequired,
+  formYear: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
-  currentYear: state.global.currentYear,
+  formYear: state.global.formYear,
 });
 
 export default connect(mapStateToProps)(Header);
