@@ -44,24 +44,6 @@ export default (state = initialState, action) => {
       updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[0].contents.section.subsections =
-          lastYearData[0].contents.section.subsections;
-        updatedData[3].contents.section.subsections[2].parts[4] =
-          replacePartsLastYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[2].parts[4]
-          );
-        updatedData[3].contents.section.subsections[2].parts[5] =
-          replacePartsLastYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[2].parts[5]
-          );
-        updatedData[3].contents.section.subsections[6].parts[0].questions[2] =
-          replacePartsCurrentYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[6].parts[0]
-              .questions[2]
-          );
       }
       return updatedData;
     case QUESTION_ANSWERED: {
