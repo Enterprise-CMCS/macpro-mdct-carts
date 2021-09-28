@@ -47,7 +47,7 @@ functions:
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
       sinkTopics: aws.mdct.seds.cdc.state-forms
-      sinkFunctionArn: !GetAtt SinkDynamoDBEnrollmentCountsLambdaFunction.Arn
+      sinkFunctionArn: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
       sinkFunctionRegion: ${self:custom.region}
     maximumRetryAttempts: 2
     timeout: 120
@@ -55,9 +55,9 @@ functions:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
-  sinkDynamoDBEnrollmentCounts:
-    handler: handlers/sinkDynamoDBEnrollmentCounts.handler
-    role: SinkDynamoDBEnrollmentCountsRole
+  sinkEnrollmentCounts:
+    handler: handlers/sinkEnrollmentCounts.handler
+    role: SinkEnrollmentCountsRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
       STAGE: ${self:custom.stage}
@@ -213,7 +213,7 @@ resources:
       Properties:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
-    SinkDynamoDBEnrollmentCountsRole:
+    SinkEnrollmentCountsRole:
       Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
