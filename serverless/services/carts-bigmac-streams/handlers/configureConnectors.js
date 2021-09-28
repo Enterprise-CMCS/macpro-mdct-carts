@@ -30,8 +30,8 @@ const connectors = [
       "connection.password": process.env.postgresPassword,
       "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
       "insert.mode": "insert",
-    }
-  }
+    },
+  },
 ];
 
 function myHandler(event, context, callback) {
