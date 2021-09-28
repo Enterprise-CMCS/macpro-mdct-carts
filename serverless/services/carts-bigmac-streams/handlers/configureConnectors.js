@@ -21,6 +21,17 @@ const connectors = [
       "validate.non.null": false,
     },
   },
+  {
+    name: `${process.env.connectorPrefix}sink.jdbc.postgres-1`,
+    config: {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": 1,
+      "connection.user": process.env.postgresUser,
+      "connection.password": process.env.postgresPassword,
+      "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
+      "insert.mode": "insert",
+    }
+  }
 ];
 
 function myHandler(event, context, callback) {
