@@ -135,7 +135,7 @@ resources:
               Statement:
                 - Effect: "Allow"
                   Action:
-                    - "lambda:*"
+                    - "lambda:InvokeFunction"
                   Resource: "*"
     KafkaConnectWorkerTaskDefinition:
       Type: "AWS::ECS::TaskDefinition"
