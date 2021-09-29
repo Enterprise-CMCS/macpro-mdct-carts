@@ -61,6 +61,12 @@ functions:
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
       STAGE: ${self:custom.stage}
+    maximumRetryAttempts: 2
+    timeout: 120
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaConfigureConnectorsSecurityGroup
+      subnetIds: ${self:custom.privateSubnets}
 resources:
   Conditions:
     CreatePermissionsBoundary:
@@ -129,8 +135,7 @@ resources:
               Statement:
                 - Effect: "Allow"
                   Action:
-                    - "lambda:InvokeAsync"
-                    - "lambda:InvokeFunction"
+                    - "lambda:*"
                   Resource: "*"
     KafkaConnectWorkerTaskDefinition:
       Type: "AWS::ECS::TaskDefinition"
