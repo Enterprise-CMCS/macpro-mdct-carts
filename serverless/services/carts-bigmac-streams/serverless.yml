@@ -120,6 +120,10 @@ resources:
                   - "ecs.amazonaws.com"
                   - "ecs-tasks.amazonaws.com"
               Action: "sts:AssumeRole"
+            - Effect: "Allow"
+              Action:
+                - "lambda:InvokeFunction"
+              Resource: "*"
         Path: ${self:custom.iamPath}
         PermissionsBoundary:
           Fn::If:
