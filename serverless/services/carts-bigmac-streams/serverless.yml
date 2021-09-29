@@ -264,6 +264,10 @@ resources:
                     - "ec2:DeleteNetworkInterface"
                     - "ec2:DescribeSecurityGroups"
                   Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - "lambda:*"
+                  Resource: "!GetAtt SinkEnrollmentCountsLambdaFunction.Arn"
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"
       Properties:
