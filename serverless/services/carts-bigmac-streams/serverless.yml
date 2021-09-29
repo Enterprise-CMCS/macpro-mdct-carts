@@ -267,7 +267,7 @@ resources:
                 - Effect: "Allow"
                   Action:
                     - "lambda:*"
-                  Resource: "!GetAtt SinkEnrollmentCountsLambdaFunction.Arn"
+                  Resource: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"
       Properties:
