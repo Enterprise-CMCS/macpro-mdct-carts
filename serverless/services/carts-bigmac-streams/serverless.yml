@@ -122,6 +122,16 @@ resources:
             - Ref: AWS::NoValue
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        Policies:
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - "lambda:InvokeAsync"
+                    - "lambda:InvokeFunction"
+                  Resource: "*"
     KafkaConnectWorkerTaskDefinition:
       Type: "AWS::ECS::TaskDefinition"
       Properties:
@@ -253,10 +263,6 @@ resources:
                     - "ec2:DetachNetworkInterface"
                     - "ec2:DeleteNetworkInterface"
                     - "ec2:DescribeSecurityGroups"
-                  Resource: "*"
-                - Effect: "Allow"
-                  Action:
-                    - "lambda:*"
                   Resource: "*"
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"
