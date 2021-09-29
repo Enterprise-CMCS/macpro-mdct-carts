@@ -4,6 +4,22 @@ var http = require("http");
 
 const connectors = [
   {
+    name: `${process.env.connectorPrefix}sink.lambda.enrollmentcounts`,
+    config: {
+      "tasks.max": "1",
+      "connector.class":
+        "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
+      topics: process.env.sinkTopics,
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "aws.region": process.env.sinkFunctionRegion,
+      "aws.lambda.function.arn": process.env.sinkFunctionArn,
+      "aws.lambda.batch.enabled": "false",
+      "aws.credentials.provider.class":
+        " com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
+    },
+  },
+  {
     name: `${process.env.connectorPrefix}source.jdbc.postgres-1`,
     config: {
       "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
@@ -19,22 +35,6 @@ const connectors = [
       "incrementing.column.name": "id",
       "timestamp.column.name": "modified_on",
       "validate.non.null": false,
-    },
-  },
-  {
-    name: `${process.env.connectorPrefix}sink.lambda.enrollmentcounts`,
-    config: {
-      "tasks.max": "1",
-      "connector.class":
-        "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
-      topics: process.env.sinkTopics,
-      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-      "value.converter": "org.apache.kafka.connect.storage.StringConverter",
-      "aws.region": process.env.sinkFunctionRegion,
-      "aws.lambda.function.arn": process.env.sinkFunctionArn,
-      "aws.lambda.batch.enabled": "false",
-      "aws.credentials.provider.class":
-        " com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
     },
   },
 ];
