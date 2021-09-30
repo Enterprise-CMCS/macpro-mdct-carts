@@ -6,6 +6,7 @@ from typing import (
     List,
     Union,
 )
+
 import boto3
 from botocore.config import Config
 import os
@@ -157,6 +158,8 @@ def listToString(s):
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
+    StateStatus.objects.filter(year__gte=year).delete()
+    Section.objects.filter(contents__section__year__gte=year).delete()
 
     templateArr = []
     global newSectionContents
@@ -210,33 +213,33 @@ def update_formtemplates_by_year(request):
                     )
                 )
 
-    #
-    # Update State Status
-    #
-    allUsers = StateStatus.objects.all()
-    for newStateStatus in allUsers.iterator():
-        try:
-            stateExists = StateStatus.objects.filter(
-                state=newStateStatus.state_id, year=year
-            )
+            #
+            # Update State Status
+            #
+            allUsers = StateStatus.objects.all()
+            for newStateStatus in allUsers.iterator():
+                try:
+                    stateExists = StateStatus.objects.filter(
+                        state=newStateStatus.state_id, year=year
+                    )
 
-            if len(stateExists) == 0:
-                createdStateStatus = StateStatus.objects.create(
-                    year=year,
-                    state_id=newStateStatus.state_id,
-                    user_name="pguser",
-                    last_changed=datetime.now(tz=timezone.utc),
-                )
-                createdStateStatus.save()
-        except:
-            print(
-                "WARNING: StateStatus Create Failed for user: "
-                + newStateStatus.user_name
-                + " and State Code: "
-                + newStateStatus.state_id
-                + " and Year: "
-                + str(year)
-            )
+                    if len(stateExists) == 0:
+                        createdStateStatus = StateStatus.objects.create(
+                            year=year,
+                            state_id=newStateStatus.state_id,
+                            user_name="pguser",
+                            last_changed=datetime.now(tz=timezone.utc),
+                        )
+                        createdStateStatus.save()
+                except:
+                    print(
+                        "WARNING: StateStatus Create Failed for user: "
+                        + newStateStatus.user_name
+                        + " and State Code: "
+                        + newStateStatus.state_id
+                        + " and Year: "
+                        + str(year)
+                    )
 
     return HttpResponse(
         json.dumps(
@@ -560,7 +563,7 @@ class StateStatusViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.appuser.role == "state_user":
             state = user.appuser.states.all()[0]
-            return StateStatus.objects.filter(state=state)
+            return StateStatus.objects.filter(state=state, year__lte=2021)
         elif user.appuser.role in ("bus_user", "co_user", "admin_user"):
             return StateStatus.objects.all()
 
