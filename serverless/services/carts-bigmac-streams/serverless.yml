@@ -47,7 +47,7 @@ functions:
       postgresPassword: ${self:custom.postgresPassword}
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
-      sinkTopics: aws.mdct.seds.cdc.state-forms
+      sinkTopics: aws.mdct.seds.cdc.state-forms.v0
       sinkFunctionArn: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
       sinkFunctionRegion: ${self:custom.region}
     maximumRetryAttempts: 2
