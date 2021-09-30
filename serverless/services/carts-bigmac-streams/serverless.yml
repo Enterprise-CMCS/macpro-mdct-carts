@@ -62,6 +62,7 @@ functions:
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
       STAGE: ${self:custom.stage}
+      TOPIC: aws.mdct.seds.cdc.enrollment-counts.v0
     maximumRetryAttempts: 2
     timeout: 120
     vpc:

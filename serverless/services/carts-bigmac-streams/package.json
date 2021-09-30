@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "kafkajs": "^1.15.0",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
