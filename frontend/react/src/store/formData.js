@@ -18,19 +18,6 @@ const sortByOrdinal = (sectionA, sectionB) => {
   return 0;
 };
 
-const replacePartsLastYear = (year, lastYearData) => {
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year),
-    (year - 1).toString()
-  );
-};
-const replacePartsCurrentYear = (year, lastYearData) => {
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year - 1),
-    year.toString()
-  );
-};
-
 const initialState = [];
 
 export default (state = initialState, action) => {

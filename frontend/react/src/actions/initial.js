@@ -255,7 +255,7 @@ export const loadUser = (userToken) => async (dispatch) => {
 };
 
 export const loadForm = (state) => async (dispatch, getState) => {
-  const { stateUser, global } = getState();
+  const { stateUser } = getState();
   const stateCode = state ?? stateUser.currentUser.state.id;
   let selectedYear = window.location.pathname.split("/")[2];
   if (window.location.pathname.includes("views")) {
