@@ -28,8 +28,8 @@ export default (state = initialState, action) => {
       console.log(JSON.stringify(action));
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[0].contents.section.subsections =
-          lastYearData[0].contents.section.subsections;
+        updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
+          lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
       }
       return updatedData;
     case QUESTION_ANSWERED: {
