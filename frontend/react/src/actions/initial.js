@@ -257,8 +257,10 @@ export const loadUser = (userToken) => async (dispatch) => {
 export const loadForm = (state) => async (dispatch, getState) => {
   const { stateUser, global } = getState();
   const stateCode = state ?? stateUser.currentUser.state.id;
-  const selectedYear =
-    global.formYear ?? window.location.pathname.split("/")[2];
+  let selectedYear = window.location.pathname.split("/")[2];
+  if (window.location.pathname.includes("views")) {
+    selectedYear = window.location.pathname.split("/")[4];
+  }
 
   // Start isFetching for spinner
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
