@@ -29,9 +29,14 @@ const Logout = () => {
   const localLogout = () => {
     localStorage.removeItem("loginInfo");
     window.location.reload();
-  }
+  };
   return (
-    <Button type="button" inversed variation="transparent" onClick={isOktaAuth? logout : localLogout}>
+    <Button
+      type="button"
+      inversed
+      variation="transparent"
+      onClick={isOktaAuth ? logout : localLogout}
+    >
       <FontAwesomeIcon icon={faSignOutAlt} />
       Log out
     </Button>

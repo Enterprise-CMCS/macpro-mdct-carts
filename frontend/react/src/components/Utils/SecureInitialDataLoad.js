@@ -11,7 +11,6 @@ const SecureInitialDataLoad = () => {
   const { authState, authService } = useOktaAuth() ?? {};
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     // useOktaAuth() will return null if this component is rendered outside
     // of an Okta-provided <Security> component. Because that can happen in dev,

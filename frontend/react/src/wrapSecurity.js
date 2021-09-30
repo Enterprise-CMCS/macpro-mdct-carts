@@ -42,13 +42,12 @@ const WrappedSecurity = () => {
   const loginInfo = localStorage.getItem("loginInfo") || "";
   const isLocalOkta = loginInfo === "local-okta";
   const localUserPrefix = "localLoggedin-";
-  let localLogin = (env.FEATURE_BRANCH === "true" && !isLocalOkta) ? true : false;
-  if(
-    localLogin 
-    && loginInfo.indexOf(localUserPrefix) >= 0
-    && loginInfo.length > localUserPrefix.length
-    )
-  {
+  let localLogin = env.FEATURE_BRANCH === "true" && !isLocalOkta ? true : false;
+  if (
+    localLogin &&
+    loginInfo.indexOf(localUserPrefix) >= 0 &&
+    loginInfo.length > localUserPrefix.length
+  ) {
     const userName = loginInfo.replace(localUserPrefix);
     dispatch(loadUser(userName));
   }
@@ -73,10 +72,10 @@ const WrappedSecurity = () => {
         {VisibleHeader}
         <Spinner />
         <Router>
-        <SecureInitialDataLoad stateCode={stateCode} />
-        {!localLogin? (
-          <Route path={config.callback} component={LoginCallback} />
-        ) : null}
+          <SecureInitialDataLoad stateCode={stateCode} />
+          {!localLogin ? (
+            <Route path={config.callback} component={LoginCallback} />
+          ) : null}
           <Home SecureRouteComponent={SecureRoute} localLogin={localLogin} />
           {/* These routes are available to everyone, so define them here */}
           <SecureRoute exact path="/userinfo" component={Userinfo} />

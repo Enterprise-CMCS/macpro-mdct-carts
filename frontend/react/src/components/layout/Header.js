@@ -55,33 +55,33 @@ class Header extends Component {
   }
 }
 function renderMenu(toggleUserNav, email) {
-  return(
+  return (
     <div className="nav-user" id="nav-user">
-    <ul className="user-email-button">
-      <li>
-        <a
-          href="#menu"
-          className="nav--dropdown__trigger"
-          onClick={toggleUserNav}
-        >
-          {email}
-        </a>
-      </li>
-    </ul>
-    <ul className="menu-block" id="menu-block">
-      <li className="helpdesk">
-        <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
-      </li>
+      <ul className="user-email-button">
+        <li>
+          <a
+            href="#menu"
+            className="nav--dropdown__trigger"
+            onClick={toggleUserNav}
+          >
+            {email}
+          </a>
+        </li>
+      </ul>
+      <ul className="menu-block" id="menu-block">
+        <li className="helpdesk">
+          <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
+        </li>
 
-      <li className="manage-account">
-        <a href="/user/profile">Manage account</a>
-      </li>
+        <li className="manage-account">
+          <a href="/user/profile">Manage account</a>
+        </li>
 
-      <li className="logout">
-        <Logout />
-      </li>
-    </ul>
-  </div>
+        <li className="logout">
+          <Logout />
+        </li>
+      </ul>
+    </div>
   );
 }
 Header.propTypes = {

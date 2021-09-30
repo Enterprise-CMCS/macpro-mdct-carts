@@ -14,8 +14,8 @@ export const setToken = (token, localUserType) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    if(localUserType){
-      config.url += "?dev="+localUserType;
+    if (localUserType) {
+      config.url += "?dev=" + localUserType;
     }
 
     /* eslint-disable-line */

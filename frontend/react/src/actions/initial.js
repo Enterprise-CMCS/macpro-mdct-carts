@@ -184,8 +184,8 @@ export const loadUser = (userToken) => async (dispatch) => {
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
-    setToken(null, userToken);
-    await Promise.all([
+  setToken(null, userToken);
+  await Promise.all([
     dispatch(getUserData(data.currentUser)),
     dispatch(getStateData(data)),
     dispatch(getProgramData(data)),

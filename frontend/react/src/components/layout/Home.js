@@ -7,7 +7,7 @@ import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
 import LocalLogins from "../sections/login/LocalLogins";
 
-const Home = ({ role,loggedIn, SecureRouteComponent }) => {
+const Home = ({ role, loggedIn, SecureRouteComponent }) => {
   let content = null;
   switch (role) {
     case "admin_user":
@@ -22,9 +22,9 @@ const Home = ({ role,loggedIn, SecureRouteComponent }) => {
       break;
     default:
       const loginInfo = localStorage.getItem("loginInfo") || "";
-      if(!loggedIn && loginInfo.indexOf("localLoggedin-user") >= -1){
-        content = <LocalLogins />
-      }else{
+      if (!loggedIn && loginInfo.indexOf("localLoggedin-user") >= -1) {
+        content = <LocalLogins />;
+      } else {
         content = <Unauthorized />;
       }
       break;

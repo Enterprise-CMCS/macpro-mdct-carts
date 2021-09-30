@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 
 export default function LocalAuthenticatedRoute({ children, ...rest }) {
   const { pathname, search } = useLocation();
-  const isAuthenticated = useSelector((state) => state.stateUser?.currentUser?.username);
+  const isAuthenticated = useSelector(
+    (state) => state.stateUser?.currentUser?.username
+  );
   return (
     <Route {...rest}>
       {isAuthenticated ? (
