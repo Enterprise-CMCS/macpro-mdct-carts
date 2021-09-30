@@ -34,6 +34,7 @@ class Header extends Component {
     const { currentUser } = this.props;
     const { formYear } = this.props;
     const { email } = currentUser;
+    const isLoggedIn = !!currentUser.username;
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
@@ -66,7 +67,7 @@ class Header extends Component {
                     </li>
 
                     <li className="logout">
-                      <Logout />
+                      {isLoggedIn ? <Logout /> : null}
                     </li>
                   </ul>
                 </div>

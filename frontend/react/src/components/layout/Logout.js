@@ -10,32 +10,32 @@ const redirectUri = `${window.location.origin}`;
 // Basic component with logout button
 const Logout = () => {
   const isOktaAuth = useOktaAuth();
-
-  if (isOktaAuth) {
+  const logout = async () => {
     const { authState, authService } = isOktaAuth;
+    // Read idToken before local session is cleared
+    const { idToken } = authState;
+    localStorage.removeItem("loginInfo");
+    await authService.logout("/");
 
-    const logout = async () => {
-      // Read idToken before local session is cleared
-      const { idToken } = authState;
-      await authService.logout("/");
+    // Clear remote session
+    if (idToken) {
+      window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
+    } else {
+      /* eslint-disable no-undef */
+      window.location.href = `${window.env.OIDC_ISSUER_URL}/login/signout?fromURI=${redirectUri}`;
+    }
+  };
 
-      // Clear remote session
-      if (idToken) {
-        window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
-      } else {
-        /* eslint-disable no-undef */
-        window.location.href = `${window.env.OIDC_ISSUER_URL}/login/signout?fromURI=${redirectUri}`;
-      }
-    };
-
-    return (
-      <Button type="button" inversed variation="transparent" onClick={logout}>
-        <FontAwesomeIcon icon={faSignOutAlt} />
-        Log out
-      </Button>
-    );
+  const localLogout = () => {
+    localStorage.removeItem("loginInfo");
+    window.location.reload();
   }
-  return <span>Not Okta User</span>;
+  return (
+    <Button type="button" inversed variation="transparent" onClick={isOktaAuth? logout : localLogout}>
+      <FontAwesomeIcon icon={faSignOutAlt} />
+      Log out
+    </Button>
+  );
 };
 
 export default Logout;

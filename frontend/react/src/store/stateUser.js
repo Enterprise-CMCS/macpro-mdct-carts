@@ -37,6 +37,7 @@ const initialState = {
     state: { id: "", name: "" },
     username: "",
   },
+  localLogin: false
 };
 
 // STATE USER REDUCER
@@ -52,10 +53,10 @@ export default (state = initialState, action) => {
           : null,
       };
     case USER_INFO:
-      return {
-        ...state,
-        currentUser: action.userObject,
-      };
+        return {
+          ...state,
+          currentUser: action.userObject,
+        };
     case PROGRAM_INFO:
       return {
         ...state,
