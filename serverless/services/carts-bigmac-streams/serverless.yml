@@ -136,7 +136,7 @@ resources:
                 - Effect: "Allow"
                   Action:
                     - "lambda:*"
-                  Resource: !GetAtt SinkEnrollmentCounts.Arn
+                  Resource: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
     KafkaConnectWorkerTaskDefinition:
       Type: "AWS::ECS::TaskDefinition"
       Properties:
