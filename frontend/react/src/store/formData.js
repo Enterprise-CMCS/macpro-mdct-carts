@@ -25,6 +25,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
+      console.log(JSON.stringify(action));
+      if (action.lastYearData) {
+        let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
+        updatedData[0].contents.section.subsections =
+          lastYearData[0].contents.section.subsections;
+      }
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
