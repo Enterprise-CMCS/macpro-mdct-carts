@@ -431,7 +431,7 @@ class Section2a extends Component {
                     </tbody>
                   </table>
                   <p></p>
-                  <table className="t3-percent-change-table" className="ds-c-table">
+                  <table className="t3-percent-change-table ds-c-table">
                     <tbody>
                       <tr>
                         <th scope="row">
