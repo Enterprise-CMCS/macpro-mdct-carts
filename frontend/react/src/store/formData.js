@@ -29,6 +29,8 @@ export default (state = initialState, action) => {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
         updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
           lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
+        updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
+            lastYearData[0].contents.section.subsections[0].parts[0].questions[1];
       }
       return updatedData;
     case QUESTION_ANSWERED: {
