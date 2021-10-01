@@ -5,23 +5,6 @@ import jsonpath from "../util/jsonpath";
 import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
 
-const replacePartsLastYear = (year, lastYearData) => {
-  console.log("culkdljwlojwdloqijdpjqpiodjqwpoifjpqojfpqwoj");
-  console.log(year);
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year),
-    (year - 1).toString()
-  );
-};
-const replacePartsCurrentYear = (year, lastYearData) => {
-  console.log("culkdljwlojwdloqijdpjqpiodjqwpoifjpqojfpqwoj");
-  console.log(year);
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year - 1),
-    year.toString()
-  );
-};
-
 const sortByOrdinal = (sectionA, sectionB) => {
   const a = sectionA.contents.section.ordinal;
   const b = sectionB.contents.section.ordinal;
@@ -34,7 +17,6 @@ const sortByOrdinal = (sectionA, sectionB) => {
   }
   return 0;
 };
-
 const initialState = [];
 
 export default (state = initialState, action) => {
@@ -42,26 +24,13 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
+
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[0].contents.section.subsections =
-          lastYearData[0].contents.section.subsections;
-        updatedData[3].contents.section.subsections[2].parts[4] =
-          replacePartsLastYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[2].parts[4]
-          );
-        updatedData[3].contents.section.subsections[2].parts[5] =
-          replacePartsLastYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[2].parts[5]
-          );
-        updatedData[3].contents.section.subsections[6].parts[0].questions[2] =
-          replacePartsCurrentYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[6].parts[0]
-              .questions[2]
-          );
+        updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
+          lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
+        updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
+          lastYearData[0].contents.section.subsections[0].parts[0].questions[1];
       }
       return updatedData;
     case QUESTION_ANSWERED: {
