@@ -42,7 +42,8 @@ const WrappedSecurity = () => {
   const loginInfo = localStorage.getItem("loginInfo") || "";
   const isLocalOkta = loginInfo === "local-okta";
   const localUserPrefix = "localLoggedin-";
-  let localLogin = env.FEATURE_BRANCH === "true" && !isLocalOkta ? true : false;
+  let localLogin =
+    env.ENABLE_LOCAL_LOGIN === "true" && !isLocalOkta ? true : false;
   if (
     localLogin &&
     loginInfo.indexOf(localUserPrefix) >= 0 &&
