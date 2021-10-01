@@ -21,11 +21,14 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
       content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
       break;
     default:
-      const loginInfo = localStorage.getItem("loginInfo") || "";
-      if (!loggedIn && loginInfo.indexOf("localLoggedin-user") >= -1) {
-        content = <LocalLogins />;
-      } else {
-        content = <Unauthorized />;
+      {
+        const loginInfo = localStorage.getItem("loginInfo") || "";
+        content =
+          !loggedIn && loginInfo.indexOf("localLoggedin-user") >= -1 ? (
+            <LocalLogins />
+          ) : (
+            <Unauthorized />
+          );
       }
       break;
   }
@@ -38,6 +41,7 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
 Home.propTypes = {
   role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,
   SecureRouteComponent: PropTypes.element.isRequired,
+  loggedIn: PropTypes.element.isRequired,
 };
 
 const mapState = (state) => ({

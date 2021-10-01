@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -17,3 +18,7 @@ export default function LocalAuthenticatedRoute({ children, ...rest }) {
     </Route>
   );
 }
+
+LocalAuthenticatedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};

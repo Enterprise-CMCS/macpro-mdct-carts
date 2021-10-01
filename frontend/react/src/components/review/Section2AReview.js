@@ -108,7 +108,7 @@ class Section2a extends Component {
                   </p>
 
                   {/* SEDS Data Table */}
-                  <table className="t1-seds-data-table" class="ds-c-table">
+                  <table className="t1-seds-data-table" className="ds-c-table">
                     <thead>
                       <tr>
                         <th scope="col">Program</th>
@@ -243,20 +243,20 @@ class Section2a extends Component {
                     Tables with Irregular Headers: https://www.w3.org/WAI/tutorials/tables/irregular/ */}
                   <table
                     className="t2-american-community-survey-table"
-                    class="ds-c-table"
+                    className="ds-c-table"
                   >
                     <thead>
                       <colgroup span="1"></colgroup>
                       <colgroup span="2"></colgroup>
                       <colgroup span="2"></colgroup>
                       <tr>
-                        <th scope="col" rowspan="2">
+                        <th scope="col" rowSpan="2">
                           Year
                         </th>
-                        <th scope="col" colspan="2" scope="colgroup">
+                        <th scope="col" colSpan="2" scope="colgroup">
                           Estimated number of uninsured children
                         </th>
-                        <th scope="col" colspan="2" scope="colgroup">
+                        <th scope="col" colSpan="2" scope="colgroup">
                           Uninsured children as a percent of total children
                         </th>
                       </tr>
@@ -431,7 +431,7 @@ class Section2a extends Component {
                     </tbody>
                   </table>
                   <p></p>
-                  <table className="t3-percent-change-table" class="ds-c-table">
+                  <table className="t3-percent-change-table" className="ds-c-table">
                     <tbody>
                       <tr>
                         <th scope="row">
