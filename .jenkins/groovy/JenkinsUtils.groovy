@@ -111,7 +111,7 @@ def pathHasChanges(path) {
 void terraformInit(String stateBucket) {
   sh """
     PATH=~/.local/bin:$PATH
-    terraform init -backend-config="bucket=${stateBucket}" -input=false
+    terraform init -backend-config="bucket=${stateBucket}" -input=false -reconfigure  
   """
 }
 

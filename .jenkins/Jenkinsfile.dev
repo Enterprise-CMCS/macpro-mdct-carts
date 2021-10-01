@@ -136,11 +136,6 @@ pipeline {
               ]
             )
           }
-          dir('frontend/aws'){
-             sh '''
-            terraform init -reconfigure
-          '''
-          }
         }
       }
       post {
