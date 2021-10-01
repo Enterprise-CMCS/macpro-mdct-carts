@@ -8,14 +8,17 @@ const medicaidLogo = "img[alt='Medicaid.gov logo']";
 const emailBottomLeft = '.footer-email';
 const federalLogo = "img[alt='Department of Health and Human Services logo']";
 const addressBottomRight = '.footer-bottom-container > div > div:nth-of-type(2)';
-
+const reportRow = '.ds-l-row.report-header';
+const editLink = "//a[text()='Edit']";
+const reportEditPageBanner = '//h1';
+const pageBanner = "//h1[text()='CHIP Annual Report Template System (CARTS)']";
 
 export class Landingpage {
 
 
     launch() 
     {
-        cy.visit('https://mdctqmrdev.cms.gov/');
+        cy.visit('https://mdctcartsdev.cms.gov/');
     }
 
     validateCoreSetReportingIcon() 
@@ -56,6 +59,25 @@ export class Landingpage {
     validateAddress()
     {
         cy.get(addressBottomRight).contains('7500 Security Boulevard Baltimore, MD 21244'); 
+    }
+
+    validateLandingPageTitle()
+    {
+        cy.xpath(pageBanner).should('be.visible');
+    }
+
+    validateReport()
+    {
+        cy.get(reportRow).should('be.visible');
+    }
+
+    clickEditLink()
+    {
+        cy.xpath(editLink).click();
+    }
+
+    verifyReportPageVisibility() {
+        cy.xpath(reportEditPageBanner).contains('Connecticut');
     }
     
    

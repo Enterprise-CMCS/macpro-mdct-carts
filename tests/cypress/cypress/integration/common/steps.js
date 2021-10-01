@@ -1,14 +1,78 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import Homepage from '../../../support/pages/Homepage';
-import LoginPage from '../../../support/pages/LoginPage';
-import Landingpage from "../../../support/pages/Landingpage";
 
+//     '../../../support/pages/';
+import BasicStateInformationpage from '../../../support/pages/BasicStateInformationpage';
+import Homepage from '../../../support/pages/Homepage';
+import Landingpage from "../../../support/pages/Landingpage";
+import LoginPage from '../../../support/pages/LoginPage';
+import Section1Page from '../../../support/pages/Section1page';
+import Section2Page from '../../../support/pages/Section2page';
+import Section3APage from '../../../support/pages/Section3Apage';
+import Section3BPage from '../../../support/pages/Section3Bpage';
+import Section3CPage from  '../../../support/pages/Section3Cpage';
+import Section3DPage from  '../../../support/pages/Section3Dpage';
+import Section3EPage from  '../../../support/pages/Section3Epage';
+import Section3FPage from  '../../../support/pages/Section3Fpage';
+import Section3GPage from  '../../../support/pages/Section3Gpage';
+import Section3HPage from  '../../../support/pages/Section3Hpage';
+import Section3IPage from  '../../../support/pages/Section3Ipage';
+import Section4Page from  '../../../support/pages/Section4page';
+import Section5Page from  '../../../support/pages/Section5page';
+import Section6Page from  '../../../support/pages/Section6page';
+
+// Page object declaration
+const basicStateInfoPage = new BasicStateInformationpage();
 const homePage = new Homepage();
-const loginPage = new LoginPage();
 const landingPage = new Landingpage();
+const loginPage = new LoginPage();
+const section1Page = new Section1Page();
+const section2Page = new Section2Page();
+const section3aPage = new Section3APage();
+const section3bPage = new Section3BPage();
+const section3cPage = new Section3CPage();
+const section3dPage = new Section3DPage();
+const section3ePage = new Section3EPage();
+const section3fPage = new Section3FPage();
+const section3gPage = new Section3GPage();
+const section3hPage = new Section3HPage();
+const section3iPage = new Section3IPage();
+const section4Page = new Section4Page();
+const section5Page = new Section5Page();
+const section6Page = new Section6Page();
+
+
+
 
 Given('user visits QMR home page', ()=>{
    homePage.launch();
+})
+
+Given('user visits Carts home page', ()=>{
+   landingPage.launch();
+})
+
+When('logins with valid username and password', ()=>{
+   loginPage.enterUserName();
+   loginPage.enterPassword();
+   loginPage.clickAgreeTermAndConditions();
+   loginPage.clickSignIn();
+})
+
+Then('user can see Carts landing page', ()=>{
+   landingPage.validateLandingPageTitle();
+})
+
+
+Given('user sees the 2020 report', ()=>{
+   landingPage.validateReport();
+})
+
+When('user clicks on the Edit link',()=>{
+    landingPage.clickEditLink();
+})
+
+Then('user sees report edit page',()=>{
+    landingPage.verifyReportPageVisibility();
 })
 
 When('QMR home page is displayed to the user',()=>{
@@ -61,16 +125,3 @@ And('user click "Sign In" button', ()=>{
 Then('user should see the QMR home page', ()=>{
   
 })
-
-
-// ---- hints -----------
-//  cy.get(submitBTN).click();                                       -- clicking 
-//  cy.xpath(respondToRAI).click();                                  -- clicking xpath
-//  cy.get(AdditionalInformationBox).type('This is just a test');    -- typing
-//  cy.get(errorMessageForWaiverNumber).should('be.visible');        -- visible
-//  cy.xpath(submissionList).should('be.visible')                    -- visible xpath
-//  cy.get(errorMessageForWaiverNumber).should('not.exist');         -- assert not visible
-//  cy.get(waiverNumberInputBox).clear();                            -- clear text
-//  cy.get(successMessage).contains('Submission Completed');         -- text assertion 
-//  cy.xpath(location).contains('word');                             -- text assertion xpath
-//  cy.wait(5000);                                                   -- waiting
