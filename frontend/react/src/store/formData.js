@@ -17,7 +17,6 @@ const sortByOrdinal = (sectionA, sectionB) => {
   }
   return 0;
 };
-
 const initialState = [];
 
 export default (state = initialState, action) => {
