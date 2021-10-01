@@ -29,6 +29,7 @@ const connectors = [
       "connection.user": process.env.postgresUser,
       "connection.password": process.env.postgresPassword,
       "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
+      "topics": "aws.mdct.seds.cdc.enrollment-counts.v0",
       "insert.mode": "insert",
     },
   },
