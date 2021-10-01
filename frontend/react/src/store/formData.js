@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
-      
+
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
         updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
