@@ -129,6 +129,9 @@ pipeline {
         script {
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('data/aws') {
+            sh '''
+            terraform init -reconfigure
+          '''
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
               [
                 "application_version": env.BUILD_TAG,
