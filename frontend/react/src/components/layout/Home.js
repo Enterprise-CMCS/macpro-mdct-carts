@@ -7,6 +7,7 @@ import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
 import LocalLogins from "../sections/login/LocalLogins";
 
+const { env } = window;
 const Home = ({ role, loggedIn, SecureRouteComponent }) => {
   let content = null;
   switch (role) {
@@ -22,9 +23,8 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
       break;
     default:
       {
-        const loginInfo = localStorage.getItem("loginInfo") || "";
         content =
-          !loggedIn && loginInfo.indexOf("localLoggedin-user") >= -1 ? (
+          !loggedIn && env.ENABLE_LOCAL_LOGIN === "true" ? (
             <LocalLogins />
           ) : (
             <Unauthorized />
@@ -32,11 +32,7 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
       }
       break;
   }
-  return (
-    <div className="ds-l-container">
-      <div>{content}</div>
-    </div>
-  );
+  return <div className="ds-l-container">{content}</div>;
 };
 Home.propTypes = {
   role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,

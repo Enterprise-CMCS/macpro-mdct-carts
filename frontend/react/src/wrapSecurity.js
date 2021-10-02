@@ -73,9 +73,11 @@ const WrappedSecurity = () => {
         {VisibleHeader}
         <Spinner />
         <Router>
-          <SecureInitialDataLoad stateCode={stateCode} />
           {!localLogin ? (
-            <Route path={config.callback} component={LoginCallback} />
+            <>
+              <SecureInitialDataLoad stateCode={stateCode} />
+              <Route path={config.callback} component={LoginCallback} />
+            </>
           ) : null}
           <Home SecureRouteComponent={SecureRoute} localLogin={localLogin} />
           {/* These routes are available to everyone, so define them here */}

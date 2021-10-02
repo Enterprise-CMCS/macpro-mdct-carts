@@ -10,6 +10,8 @@ const redirectUri = `${window.location.origin}`;
 // Basic component with logout button
 const Logout = () => {
   const isOktaAuth = useOktaAuth();
+  const localUserPrefix = "localLoggedin-";
+  const loginInfo = localStorage.getItem("loginInfo") || "";
   const logout = async () => {
     const { authState, authService } = isOktaAuth;
     // Read idToken before local session is cleared
@@ -35,7 +37,7 @@ const Logout = () => {
       type="button"
       inversed
       variation="transparent"
-      onClick={isOktaAuth ? logout : localLogout}
+      onClick={loginInfo.indexOf(localUserPrefix) >= 0 ? localLogout : logout}
     >
       <FontAwesomeIcon icon={faSignOutAlt} />
       Log out
