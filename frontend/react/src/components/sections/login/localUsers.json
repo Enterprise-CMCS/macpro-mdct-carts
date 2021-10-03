@@ -51,7 +51,7 @@
         "id": null,
         "name": "MD"
       },
-      "username": "mdct_test",
+      "username": "dev-bus",
       "email": "MACPro_CARTS_Support@collabralink.com",
       "group": "Business users"
     }
@@ -70,7 +70,7 @@
         "id": null,
         "name": "MD"
       },
-      "username": "co_user",
+      "username": "dev-co_user",
       "email": "MACPro_CARTS_Support@collabralink.com",
       "group": "Central Office Users"
     }
