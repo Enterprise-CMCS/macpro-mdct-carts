@@ -158,8 +158,9 @@ def listToString(s):
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
-    #StateStatus.objects.filter(year__gte=year).delete()
-    #Section.objects.filter(contents__section__year__gte=year).delete()
+    StateStatus.objects.filter(year__gte=year).delete()
+    Section.objects.filter(contents__section__year__gte=year).delete()
+    SectionBase.objects.filter(contents__section__year__gte=year).delete()
 
     templateArr = []
     global newSectionContents
