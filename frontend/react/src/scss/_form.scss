@@ -4,10 +4,13 @@
 .errors,
 .error {
   color: #e31c3d;
+  position: absolute;
+  top: -24px;
 }
 
 .ds-c-label {
   max-width: 100%;
+  position: relative;
 }
 
 .ds-l-col fieldset .ds-c-label {
