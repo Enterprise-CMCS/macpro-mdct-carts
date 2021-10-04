@@ -159,7 +159,7 @@ def listToString(s):
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
     StateStatus.objects.filter(year__gte=year).delete()
-    Section.objects.filter(contents__section__year__gte=year).delete()
+    # Section.objects.filter(contents__section__year__gte=year).delete()
     SectionBase.objects.filter(contents__section__year__gte=year).delete()
 
     templateArr = []
@@ -181,28 +181,31 @@ def update_formtemplates_by_year(request):
             tmpJsonString = str(tmpContents)
 
             try:
+
                 updated = SectionBase.objects.create(
                     contents=json.loads(tmpJsonString)
                 )
                 updated.save()
-                existsAlready = list(
-                    Section.objects.filter(
+
+                currentStates = State.objects.all()
+                for currentState in currentStates.iterator():
+
+                    sectionString = tmpJsonString.replace(
+                        "~XX~", currentState.code
+                    )
+                    findSection = Section.objects.filter(
                         contents__section__year=year,
                         contents__section__ordinal=template.section,
+                        contents__section__state=currentState.code,
                     )
-                )
-
-                if len(existsAlready) == 0:
-                    currentStates = State.objects.all()
-                    for currentState in currentStates.iterator():
-                        # print(currentState.code)
-                        sectionString = tmpJsonString.replace(
-                            "~XX~", currentState.code
-                        )
+                    if len(findSection) == 0:
                         updated = Section.objects.create(
                             contents=json.loads(sectionString)
                         )
                         updated.save()
+                    else:
+                        findSection[0].contents = json.loads(sectionString)
+                        findSection[0].save()
             except:
                 print("DEBUG: ERROR\n" + tmpJsonString + "\nERROR: DEBUG END")
 
