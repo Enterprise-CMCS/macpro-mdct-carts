@@ -51,27 +51,76 @@ Given('user visits Carts home page', ()=>{
    landingPage.launch();
 })
 
-When('logins with valid username and password', ()=>{
+And('logins with valid username and password', ()=>{
    loginPage.enterUserName();
    loginPage.enterPassword();
    loginPage.clickAgreeTermAndConditions();
    loginPage.clickSignIn();
+   cy.wait(5000); 
 })
 
-Then('user can see Carts landing page', ()=>{
+And('user can see Carts landing page', ()=>{
    landingPage.validateLandingPageTitle();
 })
 
-
 Given('user sees the 2020 report', ()=>{
    landingPage.validateReport();
+})
+
+Then('user sees the Welcome title',()=>{
+   basicStateInfoPage.validateWelcomeBanner();
+})
+
+
+And('verify "Both medicaid Expansion CHIP and Separate CHIP" is selected for Program type',()=>{
+   basicStateInfoPage.verifyProgramType();
+})
+
+And('verify "Alabama" is entered for state territory name',()=>{
+   basicStateInfoPage.verifyStateTeritoryName();
+})
+
+And('verify "ALL Kids" is entered for CHIP program name',()=>{
+   basicStateInfoPage.verifyCHIPprogramNameInput();
+})
+
+And('verify "Teela Sanders" is entered for Contact name',()=>{
+   basicStateInfoPage.verifyContactNameInput();
+})
+
+And('verify "Director" is entered for Job title',()=>{
+   basicStateInfoPage.verifyJobTitleInput();
+})
+
+And('verify "teela.sanders@adph.state.al.us" is entered for Email',()=>{
+   basicStateInfoPage.verifyEmailInput();
+})
+
+And('verify "Alabama Department of Public Health, CHIP PO Box 303017 Montgomery, AL 36130" is entered for Full mailling address',()=>{
+   basicStateInfoPage.verifyFullMailingAddressInput();
+})
+
+And('verify "334-206-5568" is entered for Phone number',()=>{
+   basicStateInfoPage.verifyPhoneNumberInput();
+})
+
+And('verify PRA Disclosure Statement is presented',()=>{
+   basicStateInfoPage.verifyDisclosureStatement();
+})
+
+And('verify Next button is presented',()=>{
+   basicStateInfoPage.verifyNextButton();
 })
 
 When('user clicks on the Edit link',()=>{
     landingPage.clickEditLink();
 })
 
-Then('user sees report edit page',()=>{
+And('user clicks on the Basic State Information link',()=>{
+   landingPage.clickBasicStateInfoTab();
+})
+
+And('user sees report edit page',()=>{
     landingPage.verifyReportPageVisibility();
 })
 

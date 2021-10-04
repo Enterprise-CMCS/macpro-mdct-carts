@@ -8,10 +8,14 @@ const medicaidLogo = "img[alt='Medicaid.gov logo']";
 const emailBottomLeft = '.footer-email';
 const federalLogo = "img[alt='Department of Health and Human Services logo']";
 const addressBottomRight = '.footer-bottom-container > div > div:nth-of-type(2)';
-const reportRow = '.ds-l-row.report-header';
-const editLink = "//a[text()='Edit']";
+const reportRow2020 = "//div[text()='2020']";
+const editLink = "//a[contains(@href, '2020')]";
 const reportEditPageBanner = '//h1';
 const pageBanner = "//h1[text()='CHIP Annual Report Template System (CARTS)']";
+
+// tab section elements
+const basicStateInfoTab = "//a[text()='Basic State Information']";
+const section1Tab = '';
 
 export class Landingpage {
 
@@ -19,6 +23,7 @@ export class Landingpage {
     launch() 
     {
         cy.visit('https://mdctcartsdev.cms.gov/');
+        cy.wait(5000);
     }
 
     validateCoreSetReportingIcon() 
@@ -68,18 +73,39 @@ export class Landingpage {
 
     validateReport()
     {
-        cy.get(reportRow).should('be.visible');
+        cy.reload();
+        cy.xpath(reportRow2020).should('be.visible');
     }
 
     clickEditLink()
     {
         cy.xpath(editLink).click();
+        cy.wait(3000);
     }
 
     verifyReportPageVisibility() {
-        cy.xpath(reportEditPageBanner).contains('Connecticut');
+        cy.xpath(reportEditPageBanner).contains('CARTS FY2020');
     }
     
+    clickBasicStateInfoTab() 
+    {
+        cy.xpath(basicStateInfoTab).click();
+    }
+
+    clickSection1Tab()
+    {
+
+    }
+
+    clickSection2Tab()
+    {
+
+    }
+
+    clickSection3ATab() 
+    {
+
+    }
    
 }
 export default Landingpage;

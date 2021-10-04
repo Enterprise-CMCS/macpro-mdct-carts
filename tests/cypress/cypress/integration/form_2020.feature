@@ -1,13 +1,16 @@
 Feature: User verify 2020 form
 
+    # done
     Scenario: User can edit 2020 in progress report
         Given user sees the 2020 report
         When  user clicks on the Edit link
         Then  user sees report edit page
 
+    # done
     Scenario: User verify Basic State Information page
-        Given user see the 2020 report
-        When  user clicks on the Basic State Information link
+        Given user sees the 2020 report
+        When  user clicks on the Edit link
+        And  user clicks on the Basic State Information link
         Then  user sees the Welcome title
         And   verify "Alabama" is entered for state territory name
         And   verify "Both medicaid Expansion CHIP and Separate CHIP" is selected for Program type
