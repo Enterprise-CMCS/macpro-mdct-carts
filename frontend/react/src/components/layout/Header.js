@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import Autosave from "./Autosave";
 import Logout from "./Logout";
 
