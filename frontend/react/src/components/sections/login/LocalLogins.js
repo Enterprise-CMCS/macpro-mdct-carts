@@ -3,7 +3,6 @@ import { getRoleLabel, roles } from "../../Utils/RoleHelper";
 import { default as users } from "./localUsers.json";
 import { useDispatch } from "react-redux";
 import { loadUser } from "../../../actions/initial";
-import { render } from "enzyme";
 
 function LocalLogins() {
   const dispatch = useDispatch();
