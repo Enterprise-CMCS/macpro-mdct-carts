@@ -158,8 +158,8 @@ def listToString(s):
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
-    StateStatus.objects.filter(year__gte=year).delete()
-    Section.objects.filter(contents__section__year__gte=year).delete()
+    #StateStatus.objects.filter(year__gte=year).delete()
+    #Section.objects.filter(contents__section__year__gte=year).delete()
 
     templateArr = []
     global newSectionContents
@@ -240,6 +240,19 @@ def update_formtemplates_by_year(request):
                         + " and Year: "
                         + str(year)
                     )
+    else:
+
+       currentSections = Section.objects.filter(contents__section__year=year)
+       print(str(len(currentSections)))
+       for currentSection in currentSections.iterator():
+
+            tmpContents = json.dumps(currentSection.contents)
+            currentState = str(currentSection.contents['section']['state'])
+            print(currentState + " XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
+            # TODO sectionString = { "works": "now" }
+            #print(type(sectionString))
+            #currentSection.contents = sectionString
+            #currentSection.save();
 
     return HttpResponse(
         json.dumps(
