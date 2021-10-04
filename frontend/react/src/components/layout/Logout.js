@@ -4,6 +4,7 @@ import { Button } from "@cmsgov/design-system-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import config from "../../auth-config";
+import { func } from "prop-types";
 
 const redirectUri = `${window.location.origin}`;
 
@@ -18,7 +19,6 @@ const Logout = () => {
     const { idToken } = authState;
     localStorage.removeItem("loginInfo");
     await authService.logout("/");
-
     // Clear remote session
     if (idToken) {
       window.location.href = `${config.oidc.issuer}/v1/logout?id_token_hint=${idToken}&post_logout_redirect_uri=${redirectUri}`;
@@ -26,14 +26,6 @@ const Logout = () => {
       /* eslint-disable no-undef */
       window.location.href = `${window.env.OIDC_ISSUER_URL}/login/signout?fromURI=${redirectUri}`;
     }
-  };
-
-  const localLogout = () => {
-    localStorage.removeItem("loginInfo");
-    window.location.href = window.location.href.replace(
-      window.location.pathname,
-      ""
-    );
   };
   return (
     <Button
@@ -47,5 +39,8 @@ const Logout = () => {
     </Button>
   );
 };
-
+function localLogout() {
+  localStorage.removeItem("loginInfo");
+  window.location.replace(window.location.origin);
+}
 export default Logout;

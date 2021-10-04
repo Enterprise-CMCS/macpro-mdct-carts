@@ -72,11 +72,9 @@ function renderMenu(toggleUserNav, email) {
         <li className="helpdesk">
           <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
         </li>
-
         <li className="manage-account">
           <a href="/user/profile">Manage account</a>
         </li>
-
         <li className="logout">
           <Logout />
         </li>
