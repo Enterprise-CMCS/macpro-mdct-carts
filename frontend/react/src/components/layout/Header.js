@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import Autosave from "./Autosave";
 import Logout from "./Logout";
 
@@ -57,17 +57,7 @@ class Header extends Component {
 function renderMenu(toggleUserNav, email) {
   return (
     <div className="nav-user" id="nav-user">
-      <ul className="user-email-button">
-        <li>
-          <a
-            href="#menu"
-            className="nav--dropdown__trigger"
-            onClick={toggleUserNav}
-          >
-            {email}
-          </a>
-        </li>
-      </ul>
+      {renderEmailMenuItem(toggleUserNav, email)}
       <ul className="menu-block" id="menu-block">
         <li className="helpdesk">
           <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
@@ -82,6 +72,20 @@ function renderMenu(toggleUserNav, email) {
     </div>
   );
 }
+function renderEmailMenuItem(toggleUserNav, email) {
+  <ul className="user-email-button">
+    <li>
+      <a
+        href="#menu"
+        className="nav--dropdown__trigger"
+        onClick={toggleUserNav}
+      >
+        {email}
+      </a>
+    </li>
+  </ul>;
+}
+
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
   formYear: PropTypes.object.isRequired,

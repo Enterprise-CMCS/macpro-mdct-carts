@@ -3,6 +3,7 @@ import { getRoleLabel, roles } from "../../Utils/RoleHelper";
 import { default as users } from "./localUsers.json";
 import { useDispatch } from "react-redux";
 import { loadUser } from "../../../actions/initial";
+import { render } from "enzyme";
 
 function LocalLogins() {
   const dispatch = useDispatch();
@@ -11,12 +12,7 @@ function LocalLogins() {
       <h3 className="local-login-title">Local Login</h3>
       <section className="ds-l-container preview__grid">
         <div className="ds-l-row">
-          <div className="ds-l-col--6">
-            {loginAs(roles.admiUser, dispatch)}
-            {loginAs(roles.businessUser, dispatch)}
-            {loginAs(roles.centralOfficeUser, dispatch)}
-            {loginAs(roles.stateUser, dispatch)}
-          </div>
+          {renderLogins(dispatch)}
           <div className="ds-l-col--6">
             <div className="ds-u-justify-content--center ds-u-padding--1 ds-u-margin-y--2">
               <div className="ds-l-col--12">
@@ -34,7 +30,16 @@ function LocalLogins() {
     </div>
   );
 }
-
+function renderLogins(dispatch) {
+  return (
+    <div className="ds-l-col--6">
+      {loginAs(roles.admiUser, dispatch)}
+      {loginAs(roles.businessUser, dispatch)}
+      {loginAs(roles.centralOfficeUser, dispatch)}
+      {loginAs(roles.stateUser, dispatch)}
+    </div>
+  );
+}
 async function handleLogin(role, users, dispatch) {
   const data = users.filter((user) => user.currentUser.role === role)[0];
   localStorage.setItem(
