@@ -8,7 +8,23 @@ async function myHandler(event, _context, _callback) {
       const { producer } = await kafkaConnect();
       await producer.send({
         topic: "aws.mdct.seds.cdc.enrollment-counts.v0",
-        messages: [event],
+        messages: [{
+          schema: {
+            type: "struct",
+            optional: false,
+            name: "test", 
+            fields: [
+              {
+                type: "string",
+                optional: false,
+                field: "test",
+              }
+            ],
+          },
+          payload: {
+            test: "hello world",
+          },
+        }],
       });
       await producer.disconnect();
     } catch(error) {
