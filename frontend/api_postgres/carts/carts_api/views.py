@@ -241,19 +241,6 @@ def update_formtemplates_by_year(request):
                         + " and Year: "
                         + str(year)
                     )
-    else:
-
-       currentSections = Section.objects.filter(contents__section__year=year)
-       print(str(len(currentSections)))
-       for currentSection in currentSections.iterator():
-
-            tmpContents = json.dumps(currentSection.contents)
-            currentState = str(currentSection.contents['section']['state'])
-            print(currentState + " XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
-            # TODO sectionString = { "works": "now" }
-            #print(type(sectionString))
-            #currentSection.contents = sectionString
-            #currentSection.save();
 
     return HttpResponse(
         json.dumps(
