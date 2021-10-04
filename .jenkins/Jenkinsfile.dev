@@ -26,10 +26,163 @@ pipeline {
 
           def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           jenkinsUtils.installAwsCli()
+          jenkinsUtils.installEcsCli()
+          jenkinsUtils.installTerraform("0.12.28")
 
           if( env.BUILD_NUMBER == "1" ) {
             env.DEPLOY = true
             env.RUN_TESTS = true
+          }
+        }
+      }
+    }
+
+    stage("Destroy at the start") {
+      when {
+        expression { env.DESTROY_AT_THE_START == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+          dir('data/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+        }
+      }
+    }
+    stage("Build and Push Artifacts") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          lock('docker_socket') {
+            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
+          }
+        }
+        dir('frontend/react') {
+          sh '''
+            docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+            tar -zcvf cartsbuild.tar.gz build
+            aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
+            rm -rf cartsbuild.tar.gz
+          '''
+        }
+      }
+    }
+    stage("Scan Images") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          jenkinsUtils.fetchEcrScanResult("postgres_deployer", env.BUILD_TAG)
+          jenkinsUtils.fetchEcrScanResult("postgres_django", env.BUILD_TAG)
+
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'ecr_scan_*.json'
+          }
+        }
+      }
+    }
+
+    stage("Deploy Uploads Scan") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
+      steps {
+        script {
+          dir('serverless-uploads') {
+            sh '''
+              docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh ${JOB_BASE_NAME}"
+            '''
+          }
+        }
+      }
+    }
+
+    stage("Deploy Data Layer") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('data/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'data/aws/log*'
+          }
+        }
+      }
+    }
+
+    stage("Deploy Frontend Layer") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "apply",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+
+          dir('frontend/aws') {
+            env.CLOUDFRONT_DISTRIBUTION_ID = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "cloudfront_distribution_id")
+            env.S3_BUCKET_NAME = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "s3_bucket_name")
+            env.API_POSTGRES_URL = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "api_postgres_endpoint")
+          }
+          sh '''
+            aws s3 cp s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz cartsbuild.tar.gz
+            tar -xvzf cartsbuild.tar.gz
+            #Populate the static archive with the API_POSTGRES_URL before you sync it to the host bucket
+            cd build  && ./env.sh  && cd ..
+            aws s3 sync build s3://${S3_BUCKET_NAME}
+            # Cloudfront cache invalidation
+            aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+          '''
+        }
+      }
+      post {
+        always {
+          script {
+            archiveArtifacts allowEmptyArchive: true, artifacts: 'frontend/aws/log*'
           }
         }
       }
@@ -41,6 +194,26 @@ pipeline {
           dir('serverless') {
             sh '''
               docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh ${JOB_BASE_NAME}"
+            '''
+          }
+        }
+      }
+    }
+
+    stage("Test") {
+      when {
+        expression { env.RUN_TESTS == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            env.APPLICATION_ENDPOINT = jenkinsUtils.terraformOutput(env.APPLICATION_BUCKET, env.BRANCH_NAME, "application_endpoint")
+          }
+          dir('tests') {
+            sh '''
+              set -e
+              docker run --rm -e APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT -v $(pwd)/testcafe:/tests testcafe/testcafe chromium /tests/**/*.js
             '''
           }
         }
@@ -85,6 +258,32 @@ pipeline {
     }
     */
 
+    stage("Destroy at the end") {
+      when {
+        expression { env.DESTROY_AT_THE_END == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+          dir('data/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+        }
+      }
+    }
   }
 }
 
