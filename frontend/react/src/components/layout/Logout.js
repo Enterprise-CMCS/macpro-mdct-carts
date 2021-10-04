@@ -30,7 +30,10 @@ const Logout = () => {
 
   const localLogout = () => {
     localStorage.removeItem("loginInfo");
-    window.location.reload();
+    window.location.href = window.location.href.replace(
+      window.location.pathname,
+      ""
+    );
   };
   return (
     <Button
