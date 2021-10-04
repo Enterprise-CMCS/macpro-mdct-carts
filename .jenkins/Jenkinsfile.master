@@ -171,6 +171,7 @@ pipeline {
         }
       }
     }
+    /*
     stage("Run Inspec Scans") {
       when {
         expression { env.SKIP_SCANS != "true" }
@@ -206,6 +207,7 @@ pipeline {
         }
       }
     }
+    */
   }
 
   post {
