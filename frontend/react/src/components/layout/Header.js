@@ -73,17 +73,19 @@ function renderMenu(toggleUserNav, email) {
   );
 }
 function renderEmailMenuItem(toggleUserNav, email) {
-  <ul className="user-email-button">
-    <li>
-      <a
-        href="#menu"
-        className="nav--dropdown__trigger"
-        onClick={toggleUserNav}
-      >
-        {email}
-      </a>
-    </li>
-  </ul>;
+  return (
+    <ul className="user-email-button">
+      <li>
+        <a
+          href="#menu"
+          className="nav--dropdown__trigger"
+          onClick={toggleUserNav}
+        >
+          {email}
+        </a>
+      </li>
+    </ul>
+  );
 }
 
 Header.propTypes = {
