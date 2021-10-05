@@ -1,0 +1,51 @@
+{
+    "name": "macpro-quickstart-serverless",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "directories": {
+      "test": "tests"
+    },
+    "scripts": {
+      "test": "cd tests/cypress && npm test && cd -",
+      "test:ci": "cd tests/cypress && npm test:ci && cd -"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/CMSgov/cms-carts-seds.git"
+    },
+    "author": "",
+    "license": "CC0-1.0",
+    "bugs": {
+      "url": "https://github.com/CMSgov/cms-carts-seds.git"
+    },
+    "homepage": "",
+    "devDependencies": {
+      "@types/dotenv": "^8.2.0",
+      "@types/node": "^14.14.6",
+      "@types/yargs": "^15.0.10",
+      "aws-sdk": "^2.923.0",
+      "cypress": "^8.4.0",
+      "cypress-cucumber-preprocessor": "^4.2.0",
+      "cypress-tests": "file:tests/cypress",
+      "dotenv": "^8.2.0",
+      "prettier": "^2.3.2",
+      "serverless": "^2.43.1",
+      "serverless-bundle": "^5.0.1",
+      "serverless-dotenv-plugin": "^3.0.0",
+      "serverless-iam-helper": "./plugins/serverless-iam-helper",
+      "serverless-idempotency-helper": "./plugins/serverless-idempotency-helper",
+      "serverless-offline": "^6.8.0",
+      "serverless-plugin-scripts": "^1.0.2",
+      "serverless-plugin-warmup": "^5.3.1",
+      "serverless-s3-bucket-helper": "./plugins/serverless-s3-bucket-helper",
+      "serverless-stack-termination-protection": "^1.0.4",
+      "typescript": "^4.0.5",
+      "yargs": "^16.1.1"
+    },
+    "dependencies": {},
+    "cypress-cucumber-preprocessor": {
+      "nonGlobalStepDefinitions": true
+    }
+  }
