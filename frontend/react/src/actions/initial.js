@@ -1,6 +1,5 @@
 import axios from "../authenticatedAxios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
-import { setToken } from "../authenticatedAxios";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
@@ -245,7 +244,7 @@ export const loadUser = (userToken) => async (dispatch) => {
   const { data } = userToken
     ? await axios.get(`/api/v1/appusers/${userToken}`)
     : await axios.post(`/api/v1/appusers/auth`);
-  setToken(null, userToken);
+
   await Promise.all([
     dispatch(getUserData(data.currentUser)),
     dispatch(getStateData(data)),
