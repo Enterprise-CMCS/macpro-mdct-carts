@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
+import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { ChoiceList, TextField } from "@cmsgov/design-system-core";
+import PageInfo from "../layout/PageInfo";
 import FormNavigation from "../layout/FormNavigation";
-import PropTypes from "prop-types";
-
+import FormActions from "../layout/FormActions";
 class Section2a extends Component {
   constructor(props) {
     super(props);
@@ -107,7 +108,7 @@ class Section2a extends Component {
                   </p>
 
                   {/* SEDS Data Table */}
-                  <table className="t1-seds-data-table ds-c-table">
+                  <table className="t1-seds-data-table" class="ds-c-table">
                     <thead>
                       <tr>
                         <th scope="col">Program</th>
@@ -221,8 +222,8 @@ class Section2a extends Component {
                       <div>
                         {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
                         <p>
-                          Since your percent change didn&apos;t exceed 10%, you
-                          can skip to the next question.
+                          Since your percent change didn't exceed 10%, you can
+                          skip to the next question.
                         </p>
                       </div>
                     )}
@@ -240,19 +241,22 @@ class Section2a extends Component {
 
                   {/* American Community Survey Table
                     Tables with Irregular Headers: https://www.w3.org/WAI/tutorials/tables/irregular/ */}
-                  <table className="t2-american-community-survey-table ds-c-table">
+                  <table
+                    className="t2-american-community-survey-table"
+                    class="ds-c-table"
+                  >
                     <thead>
                       <colgroup span="1"></colgroup>
                       <colgroup span="2"></colgroup>
                       <colgroup span="2"></colgroup>
                       <tr>
-                        <th scope="col" rowSpan="2">
+                        <th scope="col" rowspan="2">
                           Year
                         </th>
-                        <th scope="col colgroup" colSpan="2">
+                        <th scope="col" colspan="2" scope="colgroup">
                           Estimated number of uninsured children
                         </th>
-                        <th scope="col colgroup" colSpan="2">
+                        <th scope="col" colspan="2" scope="colgroup">
                           Uninsured children as a percent of total children
                         </th>
                       </tr>
@@ -427,7 +431,7 @@ class Section2a extends Component {
                     </tbody>
                   </table>
                   <p></p>
-                  <table className="t3-percent-change-table ds-c-table">
+                  <table className="t3-percent-change-table" class="ds-c-table">
                     <tbody>
                       <tr>
                         <th scope="row">
@@ -480,8 +484,8 @@ class Section2a extends Component {
                       <div>
                         {/* Show if Number of Estimated number of uninsured children percent change is less than a 10% change */}
                         <p>
-                          Since your percent change didn&apos;t exceed 10%, you
-                          can skip to the next question.
+                          Since your percent change didn't exceed 10%, you can
+                          skip to the next question.
                         </p>
                       </div>
                     )}
@@ -490,8 +494,8 @@ class Section2a extends Component {
                   <div className="question-container">
                     <div className="question">
                       2. Are there any reasons why the American Community Survey
-                      estimates wouldn&apos;t be an accurate representation of
-                      the number of uninsured children in your state?
+                      estimates wouldn't be an accurate representation of the
+                      number of uninsured children in your state?
                     </div>
                     <div id="p2_q2">
                       <ChoiceList
@@ -672,9 +676,5 @@ const mapStateToProps = (state) => ({
   formName: state.stateUser.formName,
   formYear: state.global.formYear,
 });
-
-Section2a.propTypes = {
-  formYear: PropTypes.func.isRequired,
-};
 
 export default connect(mapStateToProps)(Section2a);

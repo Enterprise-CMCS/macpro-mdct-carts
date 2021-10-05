@@ -27,7 +27,6 @@ class JwtDevAuthentication(JwtAuthentication):
 
             roles = {
                 "admin": "admin_user",
-                "bus": "bus_user",
                 "co_user": "co_user",
                 "ak": "state_user",
                 "az": "state_user",
