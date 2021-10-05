@@ -116,12 +116,169 @@ When('user clicks on the Edit link',()=>{
     landingPage.clickEditLink();
 })
 
+When('user clicks on the Section 1: Program Fees and Policy Changes link',()=>{
+     section1Page.clickOnSection1();
+})
+
+Then('user sees the Program Fees and Policy Changes title',()=>{
+     section1Page.verifytheTitle();
+})
+
+And('verify information in Part 1',()=>{
+     section1Page.verifyInformationPart1();
+})
+
+And('verify information in Part 2',()=>{
+      section1Page.verifyInformationPart2();
+})
+
+And('verify information in Part 3',()=>{
+      section1Page.verifyInformationPart3();
+})
+
+And('verify information in Part 4',()=>{
+      section1Page.verifyInformationPart4();
+})
+
+And('verify Next button is presented',()=>{
+      section1Page.verifyPreviousButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section1Page.verifyNextButton();
+})
+
+When('user clicks on the Section 2: Enrollment and Uninsured Data',()=>{
+      section2Page.clickOnSection2();
+})
+
+Then('user sees the Enrollment and Uninsured Data title',()=>{
+      section2Page.verifytheSection2Title();
+})
+
+And('verify information in Part 1',()=>{
+      section2Page.verifyInformationPart1();
+})
+
+And('verify information in Part 2',()=>{
+      section2Page.verifyInformationPart2();
+})
+
+And('verify Next button is presented',()=>{
+      section2Page.verifyPreviousButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section2Page.verifyNextButton();
+})
+
 And('user clicks on the Basic State Information link',()=>{
    landingPage.clickBasicStateInfoTab();
 })
 
 And('user sees report edit page',()=>{
     landingPage.verifyReportPageVisibility();
+})
+
+When('user clicks on the Section 3B: Substitution of Coverage',()=>{
+     section3bPage.clickSection3BLink();
+})
+
+Then('user sees the Substitution of Coverage title',()=>{
+   section3bPage.verifySection3Title();
+})
+
+And('verify selected No for question 1',()=>{
+   section3bPage.verifyQuestion1();
+})
+
+And('verify selected No for question 2',()=>{
+   section3bPage.verifyQuestion2();
+})
+
+And('verify data enter box for question 3',()=>{
+   section3bPage.verifyQuestion3();
+})
+
+And('verify text is entered in question 5',()=>{
+   section3bPage.verifyQuestion5();
+})
+
+And('verify Choose Files button is presented in question 6',()=>{
+   section3bPage.verifyFileUploadButton();
+})
+
+And('verify Hide Uploaded button is presented in question 6',()=>{
+   section3bPage.verifyHideUploadButton();
+})
+
+And('verify Next button is presented',()=>{
+   section3bPage.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+   section3bPage.verifyPreviousButton();
+})
+
+When('user clicks on the Section 3D: Cost Sharing (Out-of-Pocket Costs)',()=>{
+   section3dPage.clickSection3D();
+})
+
+Then('user sees the Cost Sharing (Out-of-Pocket Costs) title',()=>{
+   section3dPage.verify3dtitle();
+})
+
+And('verify text under title',()=>{
+   section3dPage.verifyText();
+})
+
+And('verify Next button is presented',()=>{
+   section3dPage.verifyPreviousButton();
+})
+
+And('verify Previous button is presented',()=>{
+   section3dPage.verifyNextButton();
+})
+
+
+When('user clicks on the Section 3A: Program Outreach',()=>{
+    section3aPage.clickOnSection3a();
+})
+
+Then('user sees the Program Outreach title',()=>{
+   section3aPage.verifytheTitle();
+})
+
+And('verify selected No for question 1',()=>{
+   section3aPage.verifyQuestion1();
+})
+
+And('verify selected No for question 2',()=>{
+   section3aPage.verifyQuestion2();
+})
+
+And('verify text is entered in question 3',()=>{
+   section3aPage.verifyQuestion3();
+})
+
+And('verify text is entered in question 4',()=>{
+   section3aPage.verifyQuestion4();
+})
+
+And('verify Choose Files button is presented in Part2 question 5',()=>{
+   section3aPage.verifyChooseFileButton();
+})
+
+And('verify Hide Uploaded button is presented in Part2 question 5',()=>{
+   section3aPage.verifyhideUploadButton();
+})
+
+And('verify Next button is presented',()=>{
+   section3aPage.verifyPreviousButton();
+})
+
+And('verify Previous button is presented',()=>{
+   section3aPage.verifyNextButton();
 })
 
 When('QMR home page is displayed to the user',()=>{

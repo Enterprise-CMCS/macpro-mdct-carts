@@ -1,5 +1,7 @@
 
 //const all_radio_button = "//label[contains(@for, 'radio')]";
+const section1_prgramFee = "//a[@class='ds-c-vertical-nav__label ds-c-vertical-nav__label--current']";
+const section1_title = "(//h2)[2]";
 const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
 const radio_button2 = "(//label[contains(@for, 'radio')])[4]";
 const radio_button3 = "(//label[contains(@for, 'radio')])[6]";
@@ -66,20 +68,157 @@ const radio_buttonPartFour21= "(//label[contains(@for, 'radio')])[87]";
 const button_previous = "//button[@class='ds-c-button ds-c-button']";
 const button_next = "//button[@class='ds-c-button ds-c-button ds-c-button--primary']";
 
-
-
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const radio_button1 = "(//label[contains(@for, 'radio')])[2]";
-const all_textarea = "//textarea[@class='ds-c-field']";
-const all_checkbox_button = "//label[contains(@for, 'checkbox')]";
+//const all_textarea = "//textarea[@class='ds-c-field']";
+//const all_checkbox_button = "//label[contains(@for, 'checkbox')]";
 
 export class Section1page {
+    clickOnSection1(){
+        cy.xpath(section1_prgramFee).click();
+    }
 
-    verifyAllCh
+    verifytheTitle(){
+        cy.xpath(section1_title).should('be.visible');
+    }
+
+    verifyInformationPart1(){
+        cy.xpath(radio_button1).should('be.checked');
+        cy.xpath(radio_button2).should('be.checked');
+        cy.xpath(radio_button3).scrollIntoView();
+        cy.xpath(radio_button3).should('be.checked');
+        cy.xpath(text_input3b).scrollIntoView();
+        cy.xpath(text_input3b).should('be.visible');
+        cy.xpath(text_area4).scrollIntoView();
+        cy.xpath(text_area4).should('be.visible');
+        cy.xpath(checkbox5).scrollIntoView();
+        cy.xpath(checkbox5).should('be.checked');
+        cy.xpath(text_area6).scrollIntoView();
+        cy.xpath(text_area6).should('be.visible');
+    }
+
+    verifyInformationPart2(){
+        cy.xpath(radio_buttonPartTwo1).scrollIntoView();
+        cy.xpath(radio_buttonPartTwo1).should('be.checked');
+        cy.xpath(radio_buttonPartTwo2).scrollIntoView();
+        cy.xpath(radio_buttonPartTwo2).should('be.checked');
+        cy.xpath(radio_buttonPartTwo2a).scrollIntoView();
+        cy.xpath(radio_buttonPartTwo2a).should('be.checked');
+        cy.xpath(data_enterPartTwo2bFPL1).scrollIntoView();
+        cy.xpath(data_enterPartTwo2bFPL1).should('be.visible');
+        cy.xpath(data_enterPartTwo2bFPL2).should('be.visible');
+        cy.xpath(data_enterPartTwo2bPremium1).should('be.visible');
+        cy.xpath(data_enterPartTwo2bPremium2).should('be.visible');
+        cy.xpath(add_anotherButton1).scrollIntoView();
+        cy.xpath(add_anotherButton1).should('be.visible');
+        cy.xpath(radio_buttonPartTwo3).scrollIntoView();
+        cy.xpath(radio_buttonPartTwo3).should('be.visible');
+        cy.xpath(data_enterPartTwo3aFPL1).scrollIntoView();
+        cy.xpath(data_enterPartTwo3aFPL1).should('be.visible');
+        cy.xpath(data_enterPartTwo3aFPL2).should('be.visible');
+        cy.xpath(data_enterPartTwo3aPremium1).should('be.visible');
+        cy.xpath(data_enterPartTwo3aPremium2).should('be.visible');
+        cy.xpath(add_anotherButton2).scrollIntoView();
+        cy.xpath(text_areaPartTwo4).scrollIntoView();
+        cy.xpath(text_areaPartTwo4).should('be.visible');
+        cy.xpath(checkboxPartTwo5).scrollIntoView();
+        cy.xpath(checkboxPartTwo5).should('be.checked');
+        cy.xpath(text_areaPartTwo6).scrollIntoView();
+        cy.xpath(text_areaPartTwo6).should('be.visible');
+    }
+
+    verifyInformationPart3(){
+        cy.xpath(radio_buttonPartThree1).scrollIntoView();
+        cy.xpath(radio_buttonPartThree1).should('be.checked');
+        cy.xpath(radio_buttonPartThree2).scrollIntoView();
+        cy.xpath(radio_buttonPartThree2).should('be.checked');
+        cy.xpath(radio_buttonPartThree3).scrollIntoView();
+        cy.xpath(radio_buttonPartThree3).should('be.checked');
+        cy.xpath(radio_buttonPartThree4).scrollIntoView();
+        cy.xpath(radio_buttonPartThree4).should('be.checked');
+        cy.xpath(radio_buttonPartThree5).scrollIntoView();
+        cy.xpath(radio_buttonPartThree5).should('be.checked');
+        cy.xpath(radio_buttonPartThree6).scrollIntoView();
+        cy.xpath(radio_buttonPartThree6).should('be.checked');
+        cy.xpath(radio_buttonPartThree7).scrollIntoView();
+        cy.xpath(radio_buttonPartThree7).should('be.checked');
+        cy.xpath(radio_buttonPartThree8).scrollIntoView();
+        cy.xpath(radio_buttonPartThree8).should('be.checked');
+        cy.xpath(radio_buttonPartThree9).scrollIntoView();
+        cy.xpath(radio_buttonPartThree9).should('be.checked');
+        cy.xpath(radio_buttonPartThree10).scrollIntoView();
+        cy.xpath(radio_buttonPartThree10).should('be.checked');
+        cy.xpath(radio_buttonPartThree11).scrollIntoView();
+        cy.xpath(radio_buttonPartThree11).should('be.checked');
+        cy.xpath(radio_buttonPartThree12).scrollIntoView();
+        cy.xpath(radio_buttonPartThree12).should('be.checked');
+        cy.xpath(radio_buttonPartThree13).scrollIntoView();
+        cy.xpath(radio_buttonPartThree13).should('be.checked');
+        cy.xpath(radio_buttonPartThree14).scrollIntoView();
+        cy.xpath(radio_buttonPartThree14).should('be.checked');
+        cy.xpath(radio_buttonPartThree15).scrollIntoView();
+        cy.xpath(radio_buttonPartThree15).should('be.checked');
+        cy.xpath(radio_buttonPartThree16).scrollIntoView();
+        cy.xpath(radio_buttonPartThree16).should('be.checked');
+        cy.xpath(text_areaPartThree17).scrollIntoView();
+        cy.xpath(text_areaPartThree17).should('be.visible');
+        cy.xpath(radio_buttonPartThree18).scrollIntoView();
+        cy.xpath(radio_buttonPartThree18).should('be.checked');
+    }
+
+    verifyInformationPart4(){
+        cy.xpath(radio_buttonPartFour1).scrollIntoView();
+        cy.xpath(radio_buttonPartFour1).should('be.checked');
+        cy.xpath(radio_buttonPartFour2).scrollIntoView();
+        cy.xpath(radio_buttonPartFour2).should('be.checked');
+        cy.xpath(radio_buttonPartFour3).scrollIntoView();
+        cy.xpath(radio_buttonPartFour3).should('be.checked');
+        cy.xpath(radio_buttonPartFour4).scrollIntoView();
+        cy.xpath(radio_buttonPartFour4).should('be.checked');
+        cy.xpath(radio_buttonPartFour5).scrollIntoView();
+        cy.xpath(radio_buttonPartFour5).should('be.checked');
+        cy.xpath(radio_buttonPartFour6).scrollIntoView();
+        cy.xpath(radio_buttonPartFour6).should('be.checked');
+        cy.xpath(radio_buttonPartFour7).scrollIntoView();
+        cy.xpath(radio_buttonPartFour7).should('be.checked');
+        cy.xpath(radio_buttonPartFour8).scrollIntoView();
+        cy.xpath(radio_buttonPartFour8).should('be.checked');
+        cy.xpath(radio_buttonPartFour9).scrollIntoView();
+        cy.xpath(radio_buttonPartFour9).should('be.checked');
+        cy.xpath(radio_buttonPartFour10).scrollIntoView();
+        cy.xpath(radio_buttonPartFour10).should('be.checked');
+        cy.xpath(radio_buttonPartFour11).scrollIntoView();
+        cy.xpath(radio_buttonPartFour11).should('be.checked');
+        cy.xpath(radio_buttonPartFour12).scrollIntoView();
+        cy.xpath(radio_buttonPartFour12).should('be.checked');
+        cy.xpath(radio_buttonPartFour13).scrollIntoView();
+        cy.xpath(radio_buttonPartFour13).should('be.checked');
+        cy.xpath(radio_buttonPartFour14).scrollIntoView();
+        cy.xpath(radio_buttonPartFour14).should('be.checked');
+        cy.xpath(radio_buttonPartFour15).scrollIntoView();
+        cy.xpath(radio_buttonPartFour15).should('be.checked');
+        cy.xpath(radio_buttonPartFour16).scrollIntoView();
+        cy.xpath(radio_buttonPartFour16).should('be.checked');
+        cy.xpath(radio_buttonPartFour17).scrollIntoView();
+        cy.xpath(radio_buttonPartFour17).should('be.checked');
+        cy.xpath(radio_buttonPartFour18).scrollIntoView();
+        cy.xpath(radio_buttonPartFour18).should('be.checked');
+        cy.xpath(radio_buttonPartFour19).scrollIntoView();
+        cy.xpath(radio_buttonPartFour19).should('be.checked');
+        cy.xpath(text_areaPartFour20).scrollIntoView();
+        cy.xpath(text_areaPartFour20).should('be.visible');
+        cy.xpath(radio_buttonPartFour21).scrollIntoView();
+        cy.xpath(radio_buttonPartFour21).should('be.checked');
+    }
+
+    verifyPreviousButton(){
+        cy.xpath(button_previous).scrollIntoView();
+        cy.xpath(button_previous).should('be.visible');
+    }
+
+    verifyNextButton(){
+        cy.xpath(button_next).scrollIntoView();
+        cy.xpath(button_next).should('be.visible');
+    }
+
+    
 }
 export default Section1page;
