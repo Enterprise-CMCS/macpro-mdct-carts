@@ -15,6 +15,7 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
       setAnswer(parsed);
       setError(false);
     } else {
+      setAnswer(parsed);
       setError("Please enter whole numbers only");
     }
   };
