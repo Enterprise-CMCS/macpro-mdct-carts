@@ -1,15 +1,15 @@
 {
-    "nodeVersion": "system",
-    "baseUrl": "https://mdctcartsdev.cms.gov/",
-    "redirectionLimit": 20,
-    "retries": 5,
-    "watchForFileChanges": true,
-    "testFiles": "**/*.feature",
-    "fixturesFolder": "fixtures",
-    "pluginsFile": "plugins/index.js",
-    "screenshotsFolder": "screenshots",
-    "videosFolder": "videos",
-    "downloadsFolder": "downloads",
-    "supportFile": "support/index.js",
-    "defaultCommandTimeout": 15000
-  }
+  "nodeVersion": "system",
+  "baseUrl": "https://mdctcartsdev.cms.gov/",
+  "redirectionLimit": 20,
+  "retries": 5,
+  "watchForFileChanges": true,
+  "testFiles": "**/*.feature",
+  "fixturesFolder": "fixtures",
+  "pluginsFile": "plugins/index.js",
+  "screenshotsFolder": "screenshots",
+  "videosFolder": "videos",
+  "downloadsFolder": "downloads",
+  "supportFile": "support/index.js",
+  "defaultCommandTimeout": 15000
+}
