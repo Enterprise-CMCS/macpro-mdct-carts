@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
@@ -34,7 +33,8 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
             <div className="ds-l-row">
               <ul>
                 <li>
-                  <a href="/users">List users</a>
+                  {/* <a href="/users">List users</a> */}
+                  <Link to="/users">List users</Link>
                 </li>
                 <li>
                   <Link to="/add_user">Add user</Link>
