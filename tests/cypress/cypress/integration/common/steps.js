@@ -172,12 +172,260 @@ And('verify Previous button is presented',()=>{
       section2Page.verifyNextButton();
 })
 
+When('user clicks on the Section 3F: Program Integrity',()=>{
+      section3fPage.clickSection3fLink();
+})
+
+Then('user sees the Program Integrity title',()=>{
+      section3fPage.verifySection3title();
+})
+
+And('verify selected No for question 1',()=>{
+      section3fPage.verifyQuestion1();
+})
+
+And('verify selected No for question 2',()=>{
+      section3fPage.verifyQuestion2();
+})
+
+And('verify selected No for question 3',()=>{
+       section3fPage.verifyQuestion3();
+})
+
+And('verify text is entered in question 4',()=>{
+       section3fPage.verifyQuestion4();
+})
+
+And('verify N/A is selected in question 5',()=>{
+       section3fPage.verifyQuestion5();
+})
+
+And('verify data is entered for question 6',()=>{
+       section3fPage.verifyQuestion6();
+})
+
+And('verify data is entered for question 7',()=>{
+      section3fPage.verifyQuestion7();
+})
+
+And('verify data is entered for question 8',()=>{
+      section3fPage.verifyQuestion8();
+})
+
+And('verify data is entered for question 9',()=>{
+      section3fPage.verifyQuestion9();
+})
+
+And('verify data is entered for question 10',()=>{
+      section3fPage.verifyQuestion10();
+})
+
+And('verify data is entered for question 11',()=>{
+      section3fPage.verifyQuestion11();
+})
+
+And('verify data is entered for question 12',()=>{
+      section3fPage.verifyQuestion12();
+})
+
+And('verify data is entered for question 13',()=>{
+      section3fPage.verifyQuestion13();
+})
+
+And('verify Medicaid and CHIP combined is selected for question 14',()=>{
+      section3fPage.verifyQuestion14();
+})
+
+And('verify selected Yes for question 15',()=>{
+      section3fPage.verifyQuestion15();
+})
+
+And('verify text is entered in question 15a',()=>{
+      section3fPage.verifyQuestion15a();
+})
+
+And('verify selected No for question 16',()=>{
+      section3fPage.verifyQuestion16();
+})
+
+And('verify text is entered in question 17',()=>{
+     section3fPage.verifyQuestion17();
+})
+
+And('verify Choose Files button is presented in question 18',()=>{
+     section3fPage.verifyChooseFileButton();
+})
+
+And('verify Hide Uploaded button is presented in question 18',()=>{
+      section3fPage.verifyhideUploadButton();
+})
+
+And('verify Next button is presented',()=>{
+      section3fPage.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section3fPage.verifyPreviousButton();
+})
+
 And('user clicks on the Basic State Information link',()=>{
    landingPage.clickBasicStateInfoTab();
 })
 
 And('user sees report edit page',()=>{
     landingPage.verifyReportPageVisibility();
+})
+
+When('user clicks on the Section 3G: Dental Benefits',()=>{
+     section3gPage.clickSection3Link();
+})
+
+Then('user sees the Dental Benefits title',()=>{
+     section3gPage.verifySection3title();
+})
+
+And('verify selected Yes for question 1',()=>{
+     section3gPage.verifyQuestion1();
+})
+
+And('verify data is entered for question 2',()=>{
+     section3gPage.verifyQuestion2();
+})
+
+And('verify data is entered for question 3',()=>{
+     section3gPage.verifyQuestion3();
+})
+
+And('verify data is entered for question 4',()=>{
+     section3gPage.verifyQuestion4();
+})
+
+And('verify data is entered for question 5',()=>{
+     section3gPage.verifyQuestion5();
+})
+
+And('verify data is entered for question 6',()=>{
+     section3gPage.verifyQuestion6();
+})
+
+And('verify selected No for question 7',()=>{
+     section3gPage.verifyQuestion7();
+})
+
+And('verify text is entered in question 8',()=>{
+      section3gPage.verifyQuestion8();
+})
+
+And('verify Choose Files button is presented in question 9',()=>{
+      section3gPage.verifyQuestion9_1();
+})
+
+And('verify Hide Uploaded button is presented in question 9',()=>{
+      section3gPage.verifyQuestion9_2();
+})
+
+And('verify Next button is presented',()=>{
+      section3gPage.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section3gPage.verifyPreviousButton();
+})
+
+When('user clicks on the Section 3H: CAHPS Survey Results',()=>{
+      section3hPage.clickSection3hLink();
+})
+
+Then('user sees the CAHPS Survey Results title',()=>{
+      section3hPage.verifySection3hTitle();
+})
+
+And('verify selected Yes for Part1 question 1',()=>{
+      section3hPage.verifyQuestion1();
+})
+
+And('verify selected Yes for Part1 question 1a',()=>{
+      section3hPage.verifyQuestion1a();
+})
+
+And('verify Choose Files button is presented in Part2 question 1',()=>{
+      section3hPage.verifyChooseFile();
+})
+
+And('verify Hide Uploaded button is presented in Part2 question 2',()=>{
+      section3hPage.verifyHideUpload();
+})
+
+And('erify Separate CHIP is selected for Part2 question 2',()=>{
+      section3hPage.verifyQuestion2();
+})
+
+And('verify CAHPS 5.0H is selected for Part2 question 3',()=>{
+      section3hPage.verifyQuestion3();
+})
+
+And('verify Children with Chronic Conditions is selected for Part2 question 4',()=>{
+      section3hPage.verifyQuestion4();
+})
+
+And('verify NCQA HEDIS CAHPS 5.0H is selected for Part2 question 5',()=>{
+      section3hPage.verifyQuestion5();
+})
+
+And('verify text is entered for Part2 question 6',()=>{
+      section3hPage.verifyQuestion6();
+})
+
+And('verify Next button is presented',()=>{
+      section3hPage.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section3hPage.verifyPreviousButton();
+})
+
+When('user clicks on the Section 3D: Cost Sharing (Out-of-Pocket Costs)',()=>{
+     section3dPage.clickSection3D();
+})
+
+Then('user sees the Cost Sharing (Out-of-Pocket Costs) title',()=>{
+     section3dPage.verify3dtitle();
+})
+
+And('verify text under title',()=>{
+      section3dPage.verifyText();
+})
+
+And('verify Next button is presented',()=>{
+      section3dPage.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section3dPage.verifyPreviousButton();
+})
+
+When('user clicks on the Section 3E: Employer Sponsored Insurance and Premium Assistance',()=>{
+      section3ePage.clickSection3ELink();
+})
+
+Then('user sees the Employer Sponsored Insurance and Premium Assistance title',()=>{
+      section3ePage.verifySection3Etitle();
+})
+
+And('verify selected No for Part1 question 1',()=>{
+      section3ePage.verifyPart1();
+})
+
+And('verify information in Part2',()=>{
+      section3ePage.verifyPart2Text();
+})
+
+And('erify Next button is presented',()=>{
+      section3ePage.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section3ePage.verifyPreviousButton();
 })
 
 When('user clicks on the Section 3B: Substitution of Coverage',()=>{

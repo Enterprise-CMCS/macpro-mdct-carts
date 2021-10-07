@@ -166,7 +166,6 @@ Feature: User verify 2020 form
         And   verify Children with Chronic Conditions is selected for Part2 question 4
         And   verify NCQA HEDIS CAHPS 5.0H is selected for Part2 question 5
         And   verify text is entered for Part2 question 6
-        And   verify the information in Part3
         And   verify Next button is presented
         And   verify Previous button is presented
 
