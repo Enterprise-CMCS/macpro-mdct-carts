@@ -8,15 +8,13 @@ export class LoginPage {
     cy.get(usernameInput).type("MDCT_Test");
   }
 
-    enterUserName()
-    {
-        cy.get(usernameInput).type("MDCT_Test");
-    }
+  enterUserName() {
+    cy.get(usernameInput).type("MDCT_Test");
+  }
 
-    enterPassword()
-    {
-        cy.get(passwordInput).type("C1a2r3t4!");
-    }
+  enterPassword() {
+    cy.get(passwordInput).type("C1a2r3t4!");
+  }
 
   clickAgreeTermAndConditions() {
     cy.get(agreeTermCondition).click();
