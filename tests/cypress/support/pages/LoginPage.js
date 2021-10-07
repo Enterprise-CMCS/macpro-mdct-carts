@@ -15,7 +15,7 @@ export class LoginPage {
 
     enterPassword()
     {
-        cy.get(passwordInput).type("QC1a2r3t4!");
+        cy.get(passwordInput).type("C1a2r3t4!");
     }
 
     clickAgreeTermAndConditions()
