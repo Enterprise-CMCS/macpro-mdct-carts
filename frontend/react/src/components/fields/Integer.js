@@ -9,7 +9,7 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
   const change = ({ target: { name, value } }) => {
     const stripped = value.replace(/[^0-9]+/g, "");
     const parsed = parseFloat(stripped);
-    
+
     if (!Number.isNaN(parsed)) {
       onChange({ target: { name, value: `${parsed}` } });
       setAnswer(parsed);
