@@ -20,5 +20,5 @@ export default function LocalAuthenticatedRoute({ children, ...rest }) {
 }
 
 LocalAuthenticatedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
