@@ -21,11 +21,8 @@ export const DownloadDrawer = ({ show, currentYear, tempState }) => {
             </div>
           </div>
           <div className="update-contents ds-l-col--10">
-            <div className="title-date ds-l-row">
-              <div className="title ds-l-col--7">
-                <h3>FY20 template is ready for download</h3>
-              </div>
-              <div className="date ds-l-col--">AUG, 15, 2019</div>
+            <div className="title">
+              <h3>FY20 template is ready for download</h3>
             </div>
             <p>
               Welcome to CARTS! We’ve incorporated feedback from several states
@@ -72,8 +69,6 @@ const downloadTemplate = async (tempState, currentYear) => {
       currentYear: currentYear,
     }
   );
-
-  console.log(response);
 
   saveAs(b64toBlob(response.data), "template.zip");
 };
