@@ -4,7 +4,7 @@ import Question from "./Question";
 import { connect } from "react-redux";
 import axios from "../../authenticatedAxios";
 
-const DataGrid = ({ question, state }) => {
+const DataGrid = ({ question, state, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
 
@@ -44,15 +44,10 @@ const DataGrid = ({ question, state }) => {
       splitID.pop();
       const fieldsetId = splitID.join("-");
 
-      await axios
-        .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
-        .then((data) => {
-          // If data exists, decipher value from return result (data)
-          if (data) {
-            let prevYearValue =
-              parseInt(
-                getValueFromLastYear(data.data, fieldsetId, questionId)
-              ) || "";
+      let prevYearValue =
+          parseInt(
+              getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
+          ) || "";
 
             // Add new entry to questionsToSet Array
             const temp = questionsToSet.push({
@@ -63,14 +58,14 @@ const DataGrid = ({ question, state }) => {
 
             // Set cumulative array of questions to local state
             setQuestionsToSet(temp);
-          }
-        });
+
+
     } else if (
       shouldGetPriorYear &&
       splitID[1] === "03" &&
       splitID[2] === "c" &&
       splitID[3] === "05" &&
-      parseInt(splitID[4]) > 2 &&
+      parseInt(splitID[4]) > 0 &&
       parseInt(splitID[4]) < 10
     ) {
       // Set year to last year
@@ -78,21 +73,16 @@ const DataGrid = ({ question, state }) => {
       splitID.pop();
       const fieldsetId = splitID.join("-");
 
-      await axios
-        .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
-        .then((data) => {
-          console.log("zac was here!", data);
-          // If data exists, decipher value from return result (data)
-          if (data) {
-            console.log("I got here");
-            // 2021-03-c-05-04-b
-            let prevYearValue =
-              parseInt(
-                getValueFromLastYear(data.data, fieldsetId, questionId)
-              ) || "";
+      let prevYearValue = 999
 
-            // Add new entry to questionsToSet Array
-            const temp = questionsToSet.push({
+      prevYearValue =
+          parseInt(
+              getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 4)
+          ) || "";
+
+
+      // Add new entry to questionsToSet Array
+          const temp = questionsToSet.push({
               hideNumber: true,
               question: item,
               prevYear: { value: prevYearValue, disabled: true },
@@ -100,14 +90,7 @@ const DataGrid = ({ question, state }) => {
 
             // Set cumulative array of questions to local state
             setQuestionsToSet(temp);
-          }
-        });
-      // const temp = questionsToSet.push({
-      //   hideNumber: true,
-      //   question: item,
-      //   prevYear: { value: 100, disabled: true },
-      // });
-      // setQuestionsToSet(temp);
+
     } else {
       // Add values to render array
       const temp = questionsToSet.push({
@@ -125,11 +108,11 @@ const DataGrid = ({ question, state }) => {
   };
 
   // Takes in a section, fieldset ID, and item id to determine which value matches from larger data set
-  const getValueFromLastYear = (data, fieldsetId, itemId) => {
+  const getValueFromLastYear = (data, fieldsetId, itemId, partNumber) => {
     let lastYearAnswer;
 
     // Get questions from last years JSON
-    const questions = data.contents.section.subsections[2].parts[5].questions;
+    const questions = data.contents.section.subsections[2].parts[partNumber].questions;
 
     // Filter down to specific question
     let matchingQuestion = questions.filter(
@@ -179,11 +162,13 @@ DataGrid.propTypes = {
   question: PropTypes.object.isRequired,
   year: PropTypes.number.isRequired,
   state: PropTypes.string.isRequired,
+  lastYearFormData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   year: state.formData[0].contents.section.year,
   state: state.formData[0].contents.section.state,
+  lastYearFormData: state.lastYearFormData,
 });
 
 export default connect(mapStateToProps)(DataGrid);
