@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Question from "./Question";
 import { connect, useDispatch, useSelector } from "react-redux";
-import axios from "../../authenticatedAxios";
-import { SET_LAST_YEAR_TOTALS, ADD_TO_TOTAL } from "../../store/lastYearTotals";
+import { ADD_TO_TOTAL } from "../../store/lastYearTotals";
 let test = {};
-const DataGrid = ({ question, state, lastYearFormData }) => {
+const DataGrid = ({ question, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
   const [totalForSection, setTotalForSection] = useState(0);
@@ -26,9 +25,6 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
     console.log("the id is", item.id);
     // Split and create array from id
     const splitID = item.id.split("-");
-
-    // Get last year value (e.g. 2019) from splitID
-    const lastYear = parseInt(splitID[0]) - 1;
 
     // the subquestion id (a, b, c, etc)
     const questionId = splitID[5];
