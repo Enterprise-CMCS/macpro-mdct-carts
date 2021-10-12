@@ -1108,7 +1108,6 @@ def initiate_session(request):
 
 @api_view(["POST"])
 def authenticate_user(request):
-    print(f"request!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     user = request.user
     states = [*user.appuser.states.all()]
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
