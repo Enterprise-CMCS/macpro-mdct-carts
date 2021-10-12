@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Question from "./Question";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import axios from "../../authenticatedAxios";
-
+import { SET_LAST_YEAR_TOTALS, ADD_TO_TOTAL } from "../../store/lastYearTotals";
+let test = {};
 const DataGrid = ({ question, state, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
+  const [totalForSection, setTotalForSection] = useState(0);
+  const dispatch = useDispatch();
+  const lastYearTotals = useSelector((state) => state.lastYearTotals);
 
   const rowStyle =
     question.questions.length > 5
@@ -19,6 +23,7 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
       return;
     }
 
+    console.log("the id is", item.id);
     // Split and create array from id
     const splitID = item.id.split("-");
 
@@ -27,6 +32,7 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
 
     // the subquestion id (a, b, c, etc)
     const questionId = splitID[5];
+    console.log("zac", questionId);
 
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
@@ -45,21 +51,43 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
       const fieldsetId = splitID.join("-");
 
       let prevYearValue =
-          parseInt(
-              getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
-          ) || "";
+        parseInt(
+          getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
+        ) || "";
+      const itemId = item.id.slice(0, -2);
+      // test[itemId] = test[itemId]
+      //   ? prevYearValue + test[itemId]
+      //   : prevYearValue;
+      console.log("hi there", itemId);
+      const tempObj = {
+        ...lastYearTotals,
+      };
 
-            // Add new entry to questionsToSet Array
-            const temp = questionsToSet.push({
-              hideNumber: true,
-              question: item,
-              prevYear: { value: prevYearValue, disabled: true },
-            });
+      console.log("sam 24", tempObj);
 
-            // Set cumulative array of questions to local state
-            setQuestionsToSet(temp);
+      tempObj[itemId] = tempObj[itemId]
+        ? prevYearValue + tempObj[itemId]
+        : prevYearValue;
 
+      dispatch({
+        type: ADD_TO_TOTAL,
+        payload: {
+          id: itemId,
+          newValue: prevYearValue,
+        },
+      });
+      console.log("brian 2", lastYearTotals);
+      console.log("brian", test);
+      setTotalForSection(prevYearValue);
+      // Add new entry to questionsToSet Array
+      const temp = questionsToSet.push({
+        hideNumber: true,
+        question: item,
+        prevYear: { value: prevYearValue, disabled: true },
+      });
 
+      // Set cumulative array of questions to local state
+      setQuestionsToSet(temp);
     } else if (
       shouldGetPriorYear &&
       splitID[1] === "03" &&
@@ -73,24 +101,22 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
       splitID.pop();
       const fieldsetId = splitID.join("-");
 
-      let prevYearValue = 999
+      let prevYearValue;
 
       prevYearValue =
-          parseInt(
-              getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 4)
-          ) || "";
-
+        parseInt(
+          getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 4)
+        ) || "";
 
       // Add new entry to questionsToSet Array
-          const temp = questionsToSet.push({
-              hideNumber: true,
-              question: item,
-              prevYear: { value: prevYearValue, disabled: true },
-            });
+      const temp = questionsToSet.push({
+        hideNumber: true,
+        question: item,
+        prevYear: { value: prevYearValue, disabled: true },
+      });
 
-            // Set cumulative array of questions to local state
-            setQuestionsToSet(temp);
-
+      // Set cumulative array of questions to local state
+      setQuestionsToSet(temp);
     } else {
       // Add values to render array
       const temp = questionsToSet.push({
@@ -111,8 +137,13 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
   const getValueFromLastYear = (data, fieldsetId, itemId, partNumber) => {
     let lastYearAnswer;
 
+    console.log("zac", itemId);
+
+    // if(itemId === "a")
+
     // Get questions from last years JSON
-    const questions = data.contents.section.subsections[2].parts[partNumber].questions;
+    const questions =
+      data.contents.section.subsections[2].parts[partNumber].questions;
 
     // Filter down to specific question
     let matchingQuestion = questions.filter(
@@ -139,13 +170,14 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
     };
 
     generateRenderQuestions();
-  }, []);
+  }, [dispatch]);
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>
+            <h1>Sam {totalForSection} I am</h1>
             <Question
               hideNumber={question.type !== "fieldset"}
               question={question.question}
@@ -169,6 +201,7 @@ const mapStateToProps = (state) => ({
   year: state.formData[0].contents.section.year,
   state: state.formData[0].contents.section.state,
   lastYearFormData: state.lastYearFormData,
+  lastYearTotals: state.lastYearTotals,
 });
 
 export default connect(mapStateToProps)(DataGrid);
