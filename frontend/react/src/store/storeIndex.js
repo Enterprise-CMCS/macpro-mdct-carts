@@ -3,6 +3,7 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import formData from "./formData";
 import lastYearFormData from "./lastYearFormData";
+import { lastYearTotals } from "./lastYearTotals";
 import save from "./save";
 import stateUser from "./stateUser";
 import global from "./globalVariables";
@@ -19,6 +20,7 @@ export const reducer = combineReducers({
   allStatesData,
   reportStatus,
   lastYearFormData,
+  lastYearTotals,
 });
 
 // Consolidate middleware

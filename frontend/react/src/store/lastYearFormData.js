@@ -8,7 +8,7 @@ const initialState = [];
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_LASTYEAR_SECTIONS:
-      return action.data.data;
+      return action.data;
     default:
       return state;
   }
