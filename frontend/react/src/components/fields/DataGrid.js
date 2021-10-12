@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Question from "./Question";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ADD_TO_TOTAL } from "../../store/lastYearTotals";
-let test = {};
+
 const DataGrid = ({ question, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
-  const [totalForSection, setTotalForSection] = useState(0);
   const dispatch = useDispatch();
-  const lastYearTotals = useSelector((state) => state.lastYearTotals);
 
   const rowStyle =
     question.questions.length > 5
@@ -22,13 +20,11 @@ const DataGrid = ({ question, lastYearFormData }) => {
       return;
     }
 
-    console.log("the id is", item.id);
     // Split and create array from id
     const splitID = item.id.split("-");
 
     // the subquestion id (a, b, c, etc)
     const questionId = splitID[5];
-    console.log("zac", questionId);
 
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
@@ -51,19 +47,6 @@ const DataGrid = ({ question, lastYearFormData }) => {
           getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
         ) || "";
       const itemId = item.id.slice(0, -2);
-      // test[itemId] = test[itemId]
-      //   ? prevYearValue + test[itemId]
-      //   : prevYearValue;
-      console.log("hi there", itemId);
-      const tempObj = {
-        ...lastYearTotals,
-      };
-
-      console.log("sam 24", tempObj);
-
-      tempObj[itemId] = tempObj[itemId]
-        ? prevYearValue + tempObj[itemId]
-        : prevYearValue;
 
       dispatch({
         type: ADD_TO_TOTAL,
@@ -72,9 +55,6 @@ const DataGrid = ({ question, lastYearFormData }) => {
           newValue: prevYearValue,
         },
       });
-      console.log("brian 2", lastYearTotals);
-      console.log("brian", test);
-      setTotalForSection(prevYearValue);
       // Add new entry to questionsToSet Array
       const temp = questionsToSet.push({
         hideNumber: true,
@@ -96,6 +76,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
       splitID[0] = parseInt(splitID[0]) - 1;
       splitID.pop();
       const fieldsetId = splitID.join("-");
+      const itemId = item.id.slice(0, -2);
 
       let prevYearValue;
 
@@ -109,6 +90,14 @@ const DataGrid = ({ question, lastYearFormData }) => {
         hideNumber: true,
         question: item,
         prevYear: { value: prevYearValue, disabled: true },
+      });
+
+      dispatch({
+        type: ADD_TO_TOTAL,
+        payload: {
+          id: itemId,
+          newValue: prevYearValue,
+        },
       });
 
       // Set cumulative array of questions to local state
@@ -132,10 +121,6 @@ const DataGrid = ({ question, lastYearFormData }) => {
   // Takes in a section, fieldset ID, and item id to determine which value matches from larger data set
   const getValueFromLastYear = (data, fieldsetId, itemId, partNumber) => {
     let lastYearAnswer;
-
-    console.log("zac", itemId);
-
-    // if(itemId === "a")
 
     // Get questions from last years JSON
     const questions =
@@ -173,7 +158,6 @@ const DataGrid = ({ question, lastYearFormData }) => {
       {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>
-            <h1>Sam {totalForSection} I am</h1>
             <Question
               hideNumber={question.type !== "fieldset"}
               question={question.question}
