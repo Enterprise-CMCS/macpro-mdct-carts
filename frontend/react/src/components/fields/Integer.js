@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
+import { useSelector } from "react-redux";
 
 const Integer = ({ onChange, question, prevYear, ...props }) => {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(question.answer.entry);
-
+  const lastYearTotals = useSelector((state) => state.lastYearTotals);
+  const prevYearNumber =
+    lastYearTotals[question.id.substring(0, question.id.length - 2)];
   const change = ({ target: { name, value } }) => {
     const stripped = value.replace(/[^0-9]+/g, "");
     const parsed = parseFloat(stripped);
@@ -18,6 +21,21 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
       setError("Please enter whole numbers only");
     }
   };
+
+  if (prevYearNumber && question.id.indexOf("-a") > -1) {
+    return (
+      <TextField
+        className="ds-c-input"
+        errorMessage={error}
+        label=""
+        name={question.id}
+        numeric
+        onChange={change}
+        value={prevYearNumber}
+        {...props}
+      />
+    );
+  }
 
   return (
     <TextField

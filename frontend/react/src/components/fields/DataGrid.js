@@ -100,6 +100,7 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
       splitID[0] = parseInt(splitID[0]) - 1;
       splitID.pop();
       const fieldsetId = splitID.join("-");
+      const itemId = item.id.slice(0, -2);
 
       let prevYearValue;
 
@@ -113,6 +114,14 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
         hideNumber: true,
         question: item,
         prevYear: { value: prevYearValue, disabled: true },
+      });
+
+      dispatch({
+        type: ADD_TO_TOTAL,
+        payload: {
+          id: itemId,
+          newValue: prevYearValue,
+        },
       });
 
       // Set cumulative array of questions to local state
@@ -177,7 +186,6 @@ const DataGrid = ({ question, state, lastYearFormData }) => {
       {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>
-            <h1>Sam {totalForSection} I am</h1>
             <Question
               hideNumber={question.type !== "fieldset"}
               question={question.question}

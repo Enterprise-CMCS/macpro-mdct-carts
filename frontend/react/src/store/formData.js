@@ -31,6 +31,14 @@ export default (state = initialState, action) => {
           lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
         updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
           lastYearData[0].contents.section.subsections[0].parts[0].questions[1];
+        updatedData[3].contents.section.subsections[2].parts[4].questions[1].answer =
+          lastYearData[3].contents.section.subsections[2].parts[4].questions[1].answer;
+        updatedData[3].contents.section.subsections[2].parts[4].questions[2].answer =
+          lastYearData[3].contents.section.subsections[2].parts[4].questions[2].answer;
+        updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer;
+        updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer;
       }
       return updatedData;
     case QUESTION_ANSWERED: {
