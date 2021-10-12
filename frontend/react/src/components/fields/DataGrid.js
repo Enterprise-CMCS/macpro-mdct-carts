@@ -65,6 +65,49 @@ const DataGrid = ({ question, state }) => {
             setQuestionsToSet(temp);
           }
         });
+    } else if (
+      shouldGetPriorYear &&
+      splitID[1] === "03" &&
+      splitID[2] === "c" &&
+      splitID[3] === "05" &&
+      parseInt(splitID[4]) > 2 &&
+      parseInt(splitID[4]) < 10
+    ) {
+      // Set year to last year
+      splitID[0] = parseInt(splitID[0]) - 1;
+      splitID.pop();
+      const fieldsetId = splitID.join("-");
+
+      await axios
+        .get(`/api/v1/sections/${lastYear}/${state.toUpperCase()}/3`)
+        .then((data) => {
+          console.log("zac was here!", data);
+          // If data exists, decipher value from return result (data)
+          if (data) {
+            console.log("I got here");
+            // 2021-03-c-05-04-b
+            let prevYearValue =
+              parseInt(
+                getValueFromLastYear(data.data, fieldsetId, questionId)
+              ) || "";
+
+            // Add new entry to questionsToSet Array
+            const temp = questionsToSet.push({
+              hideNumber: true,
+              question: item,
+              prevYear: { value: prevYearValue, disabled: true },
+            });
+
+            // Set cumulative array of questions to local state
+            setQuestionsToSet(temp);
+          }
+        });
+      // const temp = questionsToSet.push({
+      //   hideNumber: true,
+      //   question: item,
+      //   prevYear: { value: 100, disabled: true },
+      // });
+      // setQuestionsToSet(temp);
     } else {
       // Add values to render array
       const temp = questionsToSet.push({
