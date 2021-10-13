@@ -89,7 +89,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
       const temp = questionsToSet.push({
         hideNumber: true,
         question: item,
-        prevYear: { value: prevYearValue, disabled: true },
+        prevYear: { value: prevYearValue, disabled: false },
       });
 
       dispatch({
@@ -152,7 +152,6 @@ const DataGrid = ({ question, lastYearFormData }) => {
 
     generateRenderQuestions();
   }, [dispatch]);
-
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {renderQuestions.map((question, index) => {
