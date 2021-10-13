@@ -17,7 +17,7 @@ resource "aws_lambda_permission" "allow_bucket" {
 }
 
 resource "aws_s3_bucket_notification" "avscan" {
-  bucket = "arn:aws:s3::${data.aws_caller_identity.current.account_id}:${aws_s3_bucket.uploads.bucket}"
+  bucket = aws_s3_bucket.uploads.bucket
 
   lambda_function {
     lambda_function_arn = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
