@@ -2,6 +2,10 @@ data "aws_cloudformation_stack" "uploads" {
   name = "uploads-${terraform.workspace}"
 }
 
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+}
+
 resource "aws_s3_bucket" "uploads" {
   bucket        = "cartscms-uploads-${terraform.workspace}"
   acl           = "private"
