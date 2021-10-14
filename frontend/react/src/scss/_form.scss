@@ -6,8 +6,18 @@
   color: #e31c3d;
 }
 
+.ds-u-color--error {
+  position: absolute;
+  top: -24px;
+}
+
+.ds-c-field--error {
+  border: 2px solid #e31c3d;
+}
+
 .ds-c-label {
   max-width: 100%;
+  position: relative;
 }
 
 .ds-l-col fieldset .ds-c-label {

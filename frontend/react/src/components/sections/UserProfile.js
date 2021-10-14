@@ -9,7 +9,7 @@ const UserProfile = ({ currentUser }) => {
         <h1>User Profile</h1>
         <div className="main">
           If any information is incorrect, please contact the{" "}
-          <a href="mailto:mdct_help@cms.hhs.gov">CARTS Help Desk</a>.
+          <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>.
           <div className="profile-information">
             <div>
               <div>EUA Id: </div>

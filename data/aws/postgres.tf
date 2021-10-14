@@ -25,10 +25,11 @@ module "db" {
   version                 = "~> 2.0"
   identifier              = "postgres-rf-${terraform.workspace}"
   engine                  = "postgres"
-  engine_version          = "9.6"
+  engine_version          = "12.7"
   allow_major_version_upgrade = true
   instance_class          = "db.t3.small"
-  parameter_group_name    = aws_db_parameter_group.db_param_group.id
+  parameter_group_name    = aws_db_parameter_group.db_param_group_12.id
+  create_db_parameter_group  = false
   allocated_storage       = 50
   storage_encrypted       = true
   name                    = var.postgres_db
@@ -37,14 +38,15 @@ module "db" {
   port                    = "5432"
   vpc_security_group_ids  = [aws_security_group.db.id]
   maintenance_window      = "Mon:00:00-Mon:03:00"
+  apply_immediately       = true
   backup_window           = "03:00-06:00"
   backup_retention_period = terraform.workspace == "prod"? 21:0
   tags = {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
-  family                          = "postgres9.6"
-  major_engine_version            = "9.6"
+  family                          = "postgres12"
+  major_engine_version            = "12"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
@@ -99,7 +101,35 @@ resource "aws_db_parameter_group" "db_param_group" {
   }
 }
 
+resource "aws_db_parameter_group" "db_param_group_12" {
+  name   = "rds-pg-12-${terraform.workspace}"
 
+  family = "postgres12"
+
+  parameter {
+    name  = "pgaudit.role"
+    value = "rds_pgaudit"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "pgaudit.log"
+    value = "ALL"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "shared_preload_libraries"
+    value = "pg_stat_statements, pgaudit"
+    apply_method = "pending-reboot"
+  }
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "10000"
+    apply_method = "pending-reboot"
+  }
+}
 
 resource "random_password" "postgres" {
   length           = 10

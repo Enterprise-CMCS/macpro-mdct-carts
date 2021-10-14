@@ -5,13 +5,6 @@ import jsonpath from "../util/jsonpath";
 import { selectQuestion } from "./selectors";
 import idLetterMarkers from "../util/idLetterMarkers";
 
-const replacePartsLastYear = (year, lastYearData) => {
-  return JSON.parse(
-    JSON.stringify(lastYearData).replace(year),
-    (year - 1).toString()
-  );
-};
-
 const sortByOrdinal = (sectionA, sectionB) => {
   const a = sectionA.contents.section.ordinal;
   const b = sectionB.contents.section.ordinal;
@@ -24,7 +17,6 @@ const sortByOrdinal = (sectionA, sectionB) => {
   }
   return 0;
 };
-
 const initialState = [];
 
 export default (state = initialState, action) => {
@@ -34,16 +26,18 @@ export default (state = initialState, action) => {
       updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[3].contents.section.subsections[2].parts[4] =
-          replacePartsLastYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[2].parts[4]
-          );
-        updatedData[3].contents.section.subsections[2].parts[5] =
-          replacePartsLastYear(
-            updatedData[3].contents.section.year,
-            lastYearData[3].contents.section.subsections[2].parts[5]
-          );
+        updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
+          lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
+        updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
+          lastYearData[0].contents.section.subsections[0].parts[0].questions[1];
+        updatedData[3].contents.section.subsections[2].parts[4].questions[1].answer =
+          lastYearData[3].contents.section.subsections[2].parts[4].questions[1].answer;
+        updatedData[3].contents.section.subsections[2].parts[4].questions[2].answer =
+          lastYearData[3].contents.section.subsections[2].parts[4].questions[2].answer;
+        updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer;
+        updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer;
       }
       return updatedData;
     case QUESTION_ANSWERED: {

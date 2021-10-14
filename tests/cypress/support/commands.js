@@ -27,7 +27,14 @@
 before(() => {
   // root-level hook
   // runs once before all tests
+<<<<<<< HEAD
   
   // waits up to 5 mins for serverless to boot up all services and web page
   cy.visit('/', { timeout: 60000 * 5 });
 })
+=======
+
+  // waits up to 5 mins for serverless to boot up all services and web page
+  cy.visit("/", { timeout: 60000 * 5 });
+});
+>>>>>>> master
