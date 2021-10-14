@@ -174,7 +174,7 @@ Feature: User verify 2020 form
         Given user see the 2020 report
         When  user clicks on the Section 3I: Health Services Initiative (HSI) Programs
         Then  user sees the Health Services Initiative (HSI) Programs title
-        And   verify selected No for Part1 question 1
+        And   verify Part1 question 1
         And   verify the information in Part2
         And   verify Next button is presented
         And   verify Previous button is presented
@@ -184,44 +184,25 @@ Feature: User verify 2020 form
         Given user see the 2020 report
         When  user clicks on the Section 4: State Plan Goals and Objectives
         Then  user sees the State Plan Goals and Objectives title
-        And   verify text is entered for Part1 Objective1 Goal1 question 1
-        And   verify Continuing goal is selected for Part1 Objective1 Goal1 question 2
-        And   verify text is entered for Part1 Objective1 Goal1 question 3
-        And   verify data is entered for Part1 Objective1 Goal1 question 4
-        And   verify text is entered for Part1 Objective1 Goal1 question 5
-        And   verify data is entered for Part1 Objective1 Goal1 question 6
-        And   verify data is entered for Part1 Objective1 Goal1 question 7
-        And   verify Eligibility or enrollment data is selected for Part1 Objective1 Goal1 question 8
-        And   verify text is entered for Part1 Objective1 Goal1 question 9
-        And   verify text is entered for Part1 Objective1 Goal1 question 10
-        And   verify text is entered for Part1 Objective1 Goal1 question 11
-        And   verify Choose Files button is presented in Part1 Objective1 Goal1 question 12
-        And   verify Hide Uploaded button is presented in Part1 Objective1 Goal1 question 12
-        And   verify Add another button is displayed
-        And   verify information in Part1 Objective2 question1
-        And   verify information in Part1 Objective2 Goal 1
-        And   verify information in Part1 Objective3 question1
-        And   verify information in Part1 Objective3 Goal 1
-        And   verify information in Part1 Objective4 question1
-        And   verify information in Part1 Objective4 Goal 1
-        And   verify information in Part1 Objective5 question1
-        And   verify information in Part1 Objective5 Goal 1
-        And   verify information in Part1 Objective6 question1
-        And   verify information in Part1 Objective6 Goal 1
-        And   verify information in Part2
-        And   verify Next button is presented
-        And   verify Previous button is presented
+        And   verify information in textarea 
+        And   verify information in text inputs
+        And   verify information in radio inputs
+        And   verify information in upload button 
+        And   verify information in hide upload button
+        And   verify information in delete last item button 
+        And   verify information in add another item button
+        And   verify information in all labels
 
 
     Scenario: User verify Section 5: Program Financing
         Given user see the 2020 report
         When  user clicks on the Section 5: Program Financing
         Then  user sees the Program Financing title
-        And   verify information in Part1
-        And   verify information in Part2
-        And   verify information in Part3
-        And   verify information in Part4
-        And   verify information in Part5
+        And   verify section 5 information in Part1
+        And   verify section 5 information in Part2
+        And   verify section 5 information in Part3
+        And   verify section 5 information in Part4
+        And   verify section 5 information in Part5
         And   verify Next button is presented
         And   verify Previous button is presented
 

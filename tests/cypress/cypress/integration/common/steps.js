@@ -19,6 +19,7 @@ import Section3IPage from  '../../../support/pages/Section3Ipage';
 import Section4Page from  '../../../support/pages/Section4page';
 import Section5Page from  '../../../support/pages/Section5page';
 import Section6Page from  '../../../support/pages/Section6page';
+import Section4ExPage from "../../../support/pages/Section4ExPage";
 
 // Page object declaration
 const basicStateInfoPage = new BasicStateInformationpage();
@@ -39,6 +40,7 @@ const section3iPage = new Section3IPage();
 const section4Page = new Section4Page();
 const section5Page = new Section5Page();
 const section6Page = new Section6Page();
+const section4expage = new Section4ExPage();
 
 
 
@@ -146,6 +148,82 @@ And('verify Next button is presented',()=>{
 
 And('verify Previous button is presented',()=>{
       section1Page.verifyNextButton();
+})
+
+When('user clicks on the Section 5: Program Financing',()=>{
+     section5Page.clickSection5();
+})
+
+Then('user sees the Program Financing title',()=>{
+     section5Page.verifySection5Title();
+})
+
+And('verify section 5 information in Part1',()=>{
+     section5Page.verifyPart1();
+})
+
+And('verify section 5 information in Part2',()=>{
+     section5Page.verifyPart2();
+})
+
+And('verify section 5 information in Part3',()=>{
+     section5Page.verifyPart3();
+})
+
+And('verify section 5 information in Part4',()=>{
+      section5Page.verifyPart4();
+})
+
+And('verify section 5 information in Part5',()=>{
+      section5Page.verifyPart5();
+})
+
+And('verify Next button is presented',()=>{
+     section5Page.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section5Page.verifyPreviousButton();
+})
+
+When('user clicks on the Section 4: State Plan Goals and Objectives',()=>{
+      section4expage.clickSection4link();
+})
+
+Then('user sees the State Plan Goals and Objectives title',()=>{
+      section4expage.verifySection4Title();
+})
+
+And('verify information in textarea ',()=>{
+      section4expage.verifyTextAreas();
+})
+
+And('verify information in text inputs',()=>{
+      section4expage.verifyTextInputs();
+})
+
+And('verify information in radio inputs',()=>{
+      section4expage.verifyRadioInputs();
+})
+
+And('verify information in upload button',()=>{
+      section4expage.verifyUploadButtons();
+})
+
+And('verify information in hide upload button',()=>{
+      section4expage.verifyHideUploadButtons();
+})
+
+And('verify information in delete last item button',()=>{
+      section4expage.verifyDeleteLastItemButtons();
+})
+
+And('verify information in add another item button',()=>{
+      section4expage.verifyAddAnotherItemButtons();
+})
+
+And('verify information in all labels',()=>{
+      section4expage.verifyAllLabels();
 })
 
 When('user clicks on the Section 2: Enrollment and Uninsured Data',()=>{
@@ -384,6 +462,84 @@ And('verify Previous button is presented',()=>{
       section3hPage.verifyPreviousButton();
 })
 
+When('user clicks on the Section 6: Challenges and Accomplishments',()=>{
+      section6Page.clickSection6();
+})
+
+Then('user sees the Challenges and Accomplishments title',()=>{
+      section6Page.verifySection6Title();
+})
+
+And('verify text in question 1',()=>{
+      section6Page.verifyOption1();
+})
+
+And('verify text in question 2',()=>{
+      section6Page.verifyOption2();
+})
+
+And('verify text in question 3',()=>{
+      section6Page.verifyOption3();
+})
+
+And('verify text in question 4',()=>{
+      section6Page.verifyOption4();
+})
+
+And('verify text in question 5',()=>{
+      section6Page.verifyOption5();
+})
+
+And('verify Choose Files button is presented in question 6',()=>{
+      section6Page.verifyOption6ChooseFile();
+})
+
+And('verify Hide Uploaded button is presented in question 6',()=>{
+      section6Page.verifyOption6HideUpload();
+})
+
+And('verify Next button is presented',()=>{
+      section6Page.verifyNextButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section6Page.verifyPreviousButton();
+})
+
+When('user clicks on the Section 3I: Health Services Initiative (HSI) Programs',()=>{
+      section3iPage.clickSection3iLink();
+})
+
+Then('user sees the Health Services Initiative (HSI) Programs title',()=>{
+      section3iPage.verifySection3iTitle();
+})
+
+And('verify Part1 question 1',()=>{
+      section3iPage.verifyPart1Question1();
+})
+
+And('verify the information in Part2',()=>{
+      section3iPage.verifyPart2Question1();
+      section3iPage.verifyPart2Question2();
+      section3iPage.verifyPart2Question3();
+      section3iPage.verifyPart2Question4();
+      section3iPage.verifyPart2Question5();
+      section3iPage.verifyPart2Question6();
+      section3iPage.verifyPart2Question7();
+      section3iPage.verifyPart2Question8();
+      section3iPage.verifyPart2Question9ChooseFile();
+      section3iPage.verifyPart2Question9HideUpload();
+      section3iPage.verifyPart2Question9AddAnother();
+})
+
+And('verify Next button is presented',()=>{
+      section3iPage.verifyPreviousButton();
+})
+
+And('verify Previous button is presented',()=>{
+      section3iPage.verifyNextButton();
+})
+
 When('user clicks on the Section 3D: Cost Sharing (Out-of-Pocket Costs)',()=>{
      section3dPage.clickSection3D();
 })
@@ -574,8 +730,4 @@ And('user enter username and password', ()=>{
 
 And('user click "Sign In" button', ()=>{
   loginPage.clickSignIn();
-})
-
-Then('user should see the QMR home page', ()=>{
-  
 })
