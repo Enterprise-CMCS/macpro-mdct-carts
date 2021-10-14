@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Question from "./Question";
 import { connect, useDispatch } from "react-redux";
-import { ADD_TO_TOTAL } from "../../store/lastYearTotals";
+import { ADD_TO_TOTAL, FINISH_CALCULATION } from "../../store/lastYearTotals";
 
 const DataGrid = ({ question, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
@@ -55,6 +55,11 @@ const DataGrid = ({ question, lastYearFormData }) => {
           newValue: prevYearValue,
         },
       });
+      if (parseInt(splitID[4]) === 8) {
+        dispatch({
+          type: FINISH_CALCULATION,
+        });
+      }
       // Add new entry to questionsToSet Array
       const temp = questionsToSet.push({
         hideNumber: true,
