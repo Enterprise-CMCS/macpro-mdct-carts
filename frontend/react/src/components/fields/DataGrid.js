@@ -64,44 +64,6 @@ const DataGrid = ({ question, lastYearFormData }) => {
 
       // Set cumulative array of questions to local state
       setQuestionsToSet(temp);
-    } else if (
-      shouldGetPriorYear &&
-      splitID[1] === "03" &&
-      splitID[2] === "c" &&
-      splitID[3] === "05" &&
-      parseInt(splitID[4]) > 0 &&
-      parseInt(splitID[4]) < 10
-    ) {
-      // Set year to last year
-      splitID[0] = parseInt(splitID[0]) - 1;
-      splitID.pop();
-      const fieldsetId = splitID.join("-");
-      const itemId = item.id.slice(0, -2);
-
-      let prevYearValue;
-
-      prevYearValue =
-        parseInt(
-          getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 4)
-        ) || "";
-
-      // Add new entry to questionsToSet Array
-      const temp = questionsToSet.push({
-        hideNumber: true,
-        question: item,
-        prevYear: { value: prevYearValue, disabled: false },
-      });
-
-      dispatch({
-        type: ADD_TO_TOTAL,
-        payload: {
-          id: itemId,
-          newValue: prevYearValue,
-        },
-      });
-
-      // Set cumulative array of questions to local state
-      setQuestionsToSet(temp);
     } else {
       // Add values to render array
       const temp = questionsToSet.push({
