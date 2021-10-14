@@ -32,7 +32,7 @@ class Command(BaseCommand):
                         f"New Form Template: Year= {row[1]} , Section = {row[2]}."
                     )
 
-                    tmpJsonString = json.loads(str(row[3]))
+                    tmpJsonString = json.loads(row[3])
 
                     newTemplate = FormTemplate.objects.create(
                         id=row[0],
