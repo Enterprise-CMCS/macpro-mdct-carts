@@ -1,6 +1,7 @@
 #
 # Load initial form templates
 #
+from pathlib import Path
 import os
 import sys
 import csv
@@ -13,8 +14,6 @@ from carts.carts_api.models import (
 
 field_size_limit = sys.maxsize
 csv.field_size_limit(field_size_limit)
-
-from pathlib import Path
 
 
 class Command(BaseCommand):
@@ -32,7 +31,7 @@ class Command(BaseCommand):
                         f"New Form Template: Year= {row[1]} , Section = {row[2]}."
                     )
 
-                    tmpJsonString = json.loads(str(row[3]))
+                    tmpJsonString = json.loads(row[3])
 
                     newTemplate = FormTemplate.objects.create(
                         id=row[0],
