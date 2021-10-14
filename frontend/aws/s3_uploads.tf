@@ -2,6 +2,8 @@ data "aws_cloudformation_stack" "uploads" {
   name = "uploads-${terraform.workspace}"
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_s3_bucket" "uploads" {
   bucket        = "cartscms-uploads-${terraform.workspace}"
   acl           = "private"
@@ -13,7 +15,7 @@ resource "aws_lambda_permission" "allow_bucket" {
   action        = "lambda:InvokeFunction"
   function_name = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
   principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.uploads.arn
+  source_arn    = "arn:aws:s3::730373213083:${aws_s3_bucket.uploads.bucket}"
 }
 
 resource "aws_s3_bucket_notification" "avscan" {
