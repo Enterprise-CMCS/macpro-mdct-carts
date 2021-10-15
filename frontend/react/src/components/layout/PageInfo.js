@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 
-const PageInfo = ({ lastSaved, name, status, formYear }) => (
+const PageInfo = ({ lastSaved, name, status, currentYear }) => (
   <div className="page-info">
     <div className="edit-info">
       {status ?? "draft"}
       {lastSaved.isValid() && ` | Last Edit: ${lastSaved.format("M/D/YYYY")}`}
     </div>
     <h1>
-      {name} CARTS{} FY{formYear}
+      {name} CARTS{} FY{currentYear}
     </h1>
   </div>
 );
@@ -18,14 +18,14 @@ PageInfo.propTypes = {
   lastSaved: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  formYear: PropTypes.object.isRequired,
+  currentYear: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   name: state.stateUser.name,
   lastSaved: moment(state.save.lastSave),
   status: state.reportStatus.status,
-  formYear: state.global.formYear,
+  currentYear: state.global.currentYear,
 });
 
 export default connect(mapStateToProps)(PageInfo);
