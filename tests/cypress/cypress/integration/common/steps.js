@@ -250,6 +250,39 @@ And('verify Previous button is presented',()=>{
       section2Page.verifyNextButton();
 })
 
+// ------ SECTION 3C -----------//
+
+When('user clicks on the Section 3C: Renewal Denials, and Retention',()=>{
+   section3cPage.clickSectionCfLink();
+})
+
+Then('user sees the Renewal Denials, and Retention title',()=>{
+   section3cPage.verifySection3CTitle();
+})
+
+And('verify section 3c information in textarea',()=>{
+   section3cPage.verifyAllTextareas();
+})
+
+And('verify section 3c disabled text inputs',()=>{
+   section3cPage.verifyAllDisabledTextInputs();
+})
+
+And('verify section 3c enabled text inputs',()=>{
+  section3cPage.verifyAllEnabledTextInputs(); 
+})
+
+And('verify section 3c tables',()=>{
+   section3cPage.verifyAllTables();
+})
+
+And('verify section 3c radio button lables',()=>{
+   section3cPage.verifyAllRadioBttnLables();
+})
+
+// ----------------//
+
+
 When('user clicks on the Section 3F: Program Integrity',()=>{
       section3fPage.clickSection3fLink();
 })

@@ -7,7 +7,6 @@ const hideUploadButtons = "//button[text()='Hide Uploaded']" // 15 of them
 const deleteLastItemButtons = "//button[contains(text(), 'Delete last')]";  // 4 of them 
 const addAnotherButtons = "//button[contains(text(), 'Add')]";     // 7 of them 
 const allLabels = "(//label[@class='ds-c-label'])";  // 275 of them 
-
 const section4Link = "//a[@class='ds-c-vertical-nav__label ds-c-vertical-nav__label--current']";
 const section4Title = "(//h2)[2]";
 
