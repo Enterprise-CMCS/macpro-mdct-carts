@@ -215,7 +215,10 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
           dispatch({ type: LOAD_SECTIONS, data, lastYearData });
           throw err;
         });
-      if (data.data.length > 0) lastYearData = data;
+      if (data.data.length > 0) {
+        lastYearData = data;
+        dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: data.data });
+      }
     }
     dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
@@ -255,10 +258,12 @@ export const loadUser = (userToken) => async (dispatch) => {
 };
 
 export const loadForm = (state) => async (dispatch, getState) => {
-  const { stateUser, global } = getState();
+  const { stateUser } = getState();
   const stateCode = state ?? stateUser.currentUser.state.id;
-  const selectedYear =
-    global.formYear ?? window.location.pathname.split("/")[2];
+  let selectedYear = window.location.pathname.split("/")[2];
+  if (window.location.pathname.includes("views")) {
+    selectedYear = window.location.pathname.split("/")[4];
+  }
 
   // Start isFetching for spinner
   dispatch({ type: "CONTENT_FETCHING_STARTED" });

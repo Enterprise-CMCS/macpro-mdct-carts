@@ -46,7 +46,7 @@ module "db" {
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
   family                          = "postgres12"
-  major_engine_version            = "12.7"
+  major_engine_version            = "12"
   final_snapshot_identifier       = "postgres-${terraform.workspace}"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
