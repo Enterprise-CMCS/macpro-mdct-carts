@@ -48,6 +48,7 @@ functions:
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
       sinkTopics: aws.mdct.seds.cdc.state-forms.v0
+      jdbcSinkTopics: aws.mdct.seds.cdc.enrollment-counts.v0
       sinkFunctionArn: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
       sinkFunctionRegion: ${self:custom.region}
     maximumRetryAttempts: 2

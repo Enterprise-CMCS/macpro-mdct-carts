@@ -19,6 +19,19 @@ const connectors = [
         " com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
     },
   },
+  {
+    name: `${process.env.connectorPrefix}sink.jdbc.postgres-1`,
+    config: {
+      "tasks.max": "1",
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      topics: process.env.jdbcSinkTopics,
+      "connection.user": process.env.postgresUser,
+      "connection.password": process.env.postgresPassword,
+      "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
+      "connection.table": "test_table",
+      "insert.mode": "upsert",
+    },
+  },
   // {
   //   name: `${process.env.connectorPrefix}source.jdbc.postgres-1`,
   //   config: {
