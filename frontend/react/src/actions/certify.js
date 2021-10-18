@@ -40,6 +40,8 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
     });
     dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });
   } catch (e) {
+    window.alert("ERROR: Certify Failed ! contact Help Desk.");
+    window.location.reload(false);
     dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
   }
 };
