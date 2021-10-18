@@ -26,7 +26,7 @@ async function myHandler(event, _context, _callback) {
                 ],
               },
               payload: {
-                test: "hello world",
+                test: "test data",
               },
             }),
           },
