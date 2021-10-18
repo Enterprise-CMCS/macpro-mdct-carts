@@ -1066,6 +1066,8 @@ def UserDeactivateViewSet(request, user=None):
 
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
+    print("username: ")
+    print(username)
     jwt_auth = JwtDevAuthentication()
     user, _ = jwt_auth.authenticate(request, username=username)
     state = user.appuser.states.all()[0] if user.appuser.states.all() else []
