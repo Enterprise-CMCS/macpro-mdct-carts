@@ -24,14 +24,21 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
-      console.log("work");
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
         updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
           lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
         updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
           lastYearData[0].contents.section.subsections[0].parts[0].questions[1];
+        updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer;
+        updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer;
       }
+      // Added mid year as a quick fix re: https://qmacbis.atlassian.net/browse/OY2-12744 Should be removed ASAP!!
+      updatedData[2].contents.section.subsections[0].parts[1].text =
+        "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";
+
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);

@@ -216,7 +216,10 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
           dispatch({ type: LOAD_SECTIONS, data, lastYearData });
           throw err;
         });
-      if (data.data.length > 0) lastYearData = data;
+      if (data.data.length > 0) {
+        lastYearData = data;
+        dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: data.data });
+      }
     }
     dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
