@@ -15,54 +15,54 @@ const option3_text = "input[name='2020-03-b-01-03']";
 const option5_text = "textarea[name='2020-03-b-01-05']";
 
 const option6_fileUpload = "[type='file']";
-const hideUpload_button = "//button[@class='ds-c-button ds-c-button--small margin-left-1em']";
+const hideUpload_button =
+  "//button[@class='ds-c-button ds-c-button--small margin-left-1em']";
 const button_previous = "//button[@class='ds-c-button ds-c-button']";
-const button_next = "//button[@class='ds-c-button ds-c-button ds-c-button--primary']";
+const button_next =
+  "//button[@class='ds-c-button ds-c-button ds-c-button--primary']";
 const section3Title = "(//h2)[3]";
-const section3bLink = "//a[@class='ds-c-vertical-nav__label ds-c-vertical-nav__label--current']";
-
+const section3bLink =
+  "//a[@class='ds-c-vertical-nav__label ds-c-vertical-nav__label--current']";
 
 export class Section3Bpage {
+  clickSection3BLink() {
+    cy.xpath(section3bLink).click();
+  }
 
-    clickSection3BLink(){
-        cy.xpath(section3bLink).click();
-    }
+  verifySection3Title() {
+    cy.xpath(section3Title).should("be.visible");
+  }
 
-    verifySection3Title(){
-        cy.xpath(section3Title).should('be.visible');
-    }
+  verifyQuestion1() {
+    cy.get(option1_no).should("be.checked");
+  }
 
-    verifyQuestion1(){
-        cy.get(option1_no).should('be.checked');
-    }
+  verifyQuestion2() {
+    cy.get(option2_no).should("be.checked");
+  }
 
-    verifyQuestion2(){
-        cy.get(option2_no).should('be.checked');
-    }
+  verifyQuestion3() {
+    cy.get(option3_text).should("be.visible");
+  }
 
-    verifyQuestion3(){
-        cy.get(option3_text).should('be.visible');
-    }
+  verifyQuestion5() {
+    cy.get(option5_text).should("be.visible");
+  }
 
-    verifyQuestion5(){
-        cy.get(option5_text).should('be.visible');
-    }
+  verifyFileUploadButton() {
+    cy.get(option6_fileUpload).should("be.visible");
+  }
 
-    verifyFileUploadButton(){
-        cy.get(option6_fileUpload).should('be.visible');
-    }
+  verifyHideUploadButton() {
+    cy.xpath(hideUpload_button).should("be.visible");
+  }
 
-    verifyHideUploadButton(){
-        cy.xpath(hideUpload_button).should('be.visible');
-    }
+  verifyPreviousButton() {
+    cy.xpath(button_previous).should("be.visible");
+  }
 
-    verifyPreviousButton(){
-        cy.xpath(button_previous).should('be.visible');
-    }
-
-    verifyNextButton(){
-        cy.xpath(button_next).should('be.visible');
-    }
-
+  verifyNextButton() {
+    cy.xpath(button_next).should("be.visible");
+  }
 }
 export default Section3Bpage;

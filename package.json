@@ -30,7 +30,7 @@
     "cypress-cucumber-preprocessor": "^4.2.0",
     "cypress-tests": "file:tests/cypress",
     "dotenv": "^8.2.0",
-    "prettier": "^2.3.2",
+    "prettier": "2.4.1",
     "serverless": "^2.43.1",
     "serverless-bundle": "^5.0.1",
     "serverless-dotenv-plugin": "^3.0.0",
