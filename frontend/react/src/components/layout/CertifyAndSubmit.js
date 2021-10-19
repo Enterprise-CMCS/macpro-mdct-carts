@@ -104,7 +104,7 @@ const CertifyAndSubmit = ({
 
   const doneClick = () => {
     history.push("/");
-    window.location.reload()
+    window.location.reload();
   };
 
   return (
