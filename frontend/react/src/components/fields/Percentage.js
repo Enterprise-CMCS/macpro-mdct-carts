@@ -24,12 +24,10 @@ const Percentage = ({ onChange, question, ...props }) => {
     const parsed = parseFloat(stripped);
 
     //This regex allows for numbers with ONLY a single decimal
-    const regexTest = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
+    const regexTest = /^\d*[0-9]?(|.\d*[0-9]|,\d*[0-9])?$/;
     const isNumberOrDecimal = regexTest.test(stripped);
 
     if (!Number.isNaN(parsed)) {
-      onChange({ target: { name, value: `${sign}${stripped}` } });
-
       // if a number has multiple decimals
       if (!isNumberOrDecimal) {
         setError("Please enter only numbers and decimals");
@@ -37,9 +35,15 @@ const Percentage = ({ onChange, question, ...props }) => {
         setError(false);
       }
     } else {
-      // if the input cannot be parsed into a number
-      setError("Please enter only numbers and decimals");
+      // if the input is an empty string
+      if (stripped === "") {
+        setError(false);
+      } else {
+        // if the input cannot be parsed into a number
+        setError("Please enter only numbers and decimals");
+      }
     }
+    onChange({ target: { name, value: `${sign}${stripped}` } });
   };
 
   let ref;
