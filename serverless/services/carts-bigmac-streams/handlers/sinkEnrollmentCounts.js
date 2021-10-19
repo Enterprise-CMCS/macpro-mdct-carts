@@ -11,7 +11,7 @@ async function myHandler(event, _context, _callback) {
         topic: "aws.mdct.seds.cdc.enrollment-counts.v0",
         messages: [
           {
-            key: Math.floor(Math.random() * 1000).toString(),
+            key: Math.floor(Math.random() * 1000 + 1).toString(),
             value: JSON.stringify({
               schema: {
                 type: "struct",
