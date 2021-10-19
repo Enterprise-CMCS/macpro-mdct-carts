@@ -14,7 +14,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
 
   dispatch({ type: CERTIFY_AND_SUBMIT });
   try {
-    const stateStatus = axios.post(`/state_status/`, {
+    axios.post(`/state_status/`, {
       last_changed: new Date(),
       state: stateCode,
       status: "certified",
@@ -30,8 +30,10 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
           source: window.location.hostname,
           status: "certify",
         })
-        .then(function (response) {});
-    } catch (ignore) {}
+        .then(function () {});
+    } catch (ignore) {
+      console.log(ignore);
+    }
 
     dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });
   } catch (e) {
