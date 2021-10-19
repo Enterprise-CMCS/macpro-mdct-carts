@@ -28,9 +28,11 @@ const connectors = [
       "connection.user": process.env.postgresUser,
       "connection.password": process.env.postgresPassword,
       "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
-      "connection.table": "test_table",
+      "table.name.format": "test_table",
       "insert.mode": "upsert",
+      "pk.mode": "record_key",
       "schemas.enable": false,
+      "auto.create": true,
     },
   },
   // {
