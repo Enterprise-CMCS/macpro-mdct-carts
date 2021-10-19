@@ -30,6 +30,7 @@ const connectors = [
       "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
       "connection.table": "test_table",
       "insert.mode": "upsert",
+      "schemas.enable": false,
     },
   },
   // {
