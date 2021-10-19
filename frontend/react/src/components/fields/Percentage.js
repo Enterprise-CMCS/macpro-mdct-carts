@@ -20,28 +20,14 @@ const Percentage = ({ onChange, question, ...props }) => {
     // This strips everything but numbers and decimals
     const stripped = numericString.replace(/[^0-9.]/g, "");
 
-    // Parsed will remove trailing '.'s as users type, so it is used just to validate
-    const parsed = parseFloat(stripped);
-
     //This regex allows for numbers with ONLY a single decimal
     const regexTest = /^\d*[0-9]?(|.\d*[0-9]|,\d*[0-9])?$/;
     const isNumberOrDecimal = regexTest.test(stripped);
 
-    if (!Number.isNaN(parsed)) {
-      // if a number has multiple decimals
-      if (!isNumberOrDecimal) {
-        setError("Please enter only numbers and decimals");
-      } else {
-        setError(false);
-      }
+    if (!isNumberOrDecimal) {
+      setError("Please enter only numbers and decimals");
     } else {
-      // if the input is an empty string
-      if (stripped === "") {
-        setError(false);
-      } else {
-        // if the input cannot be parsed into a number
-        setError("Please enter only numbers and decimals");
-      }
+      setError(false);
     }
     onChange({ target: { name, value: `${sign}${stripped}` } });
   };
