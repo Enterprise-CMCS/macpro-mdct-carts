@@ -33,12 +33,14 @@ services:
     build:
       context: ./api_postgres
       dockerfile: Dockerfile.dev
-    # command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     command:
       - gunicorn
       - carts.wsgi:application
       - --bind
       - 0.0.0.0:8000
+      - --workers=3
+      - --timeout=120
       - --log-level=debug
       - --access-logfile
       - '-'
