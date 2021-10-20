@@ -1218,7 +1218,6 @@ def view_uploaded_files(request):
         username=request.user
     ).values_list("state_codes", flat=True)[0][0]
     uploaded_files = UploadedFiles.objects.filter(
-        uploaded_username=request.user,
         uploaded_state=user_state,
         question_id=request.data["questionId"],
     ).values("filename", "aws_filename")
