@@ -3,7 +3,7 @@
     "name": "api_postgres",
     "image": "${image}",
     "essential": true,
-    "command": ["gunicorn", "carts.wsgi:application", "--bind", "0.0.0.0:8000", "--log-level debug", "--access-logfile", "'-'"],
+    "command": ["gunicorn", "carts.wsgi:application", "--bind", "0.0.0.0:8000"],
     "environment": [
       {
         "name": "POSTGRES_HOST",
