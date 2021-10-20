@@ -195,8 +195,9 @@ def update_formtemplates_by_year(request):
                         )
                         updated.save()
                     else:
-                        findSection[0].contents = json.loads(sectionString)
-                        findSection[0].save()
+                        print("exists - ignore action !")
+                        #findSection[0].contents = json.loads(sectionString)
+                        #findSection[0].save()
             except:
                 print("DEBUG: ERROR\n" + tmpJsonString + "\nERROR: DEBUG END")
 
