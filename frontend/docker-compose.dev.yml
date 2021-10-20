@@ -29,10 +29,22 @@ services:
       - ./react:/app
       - /app/node_modules
   api_postgres:
+    # image: 730373213083.dkr.ecr.us-east-1.amazonaws.com/postgres_django:dev-no-okta.0026a8a309e05a574bc5c25fc34127958c97eedb
     build:
       context: ./api_postgres
       dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
+    command:
+      - gunicorn
+      - carts.wsgi:application
+      - --bind
+      - 0.0.0.0:8000
+      - --log-level=debug
+      - --access-logfile
+      - '-'
+
+      # - --log-file FILE
+      # - '-'
     ports:
       - 8000:8000
     networks:
