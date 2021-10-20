@@ -14,7 +14,14 @@ services:
     build:
       context: ./api_postgres
       dockerfile: Dockerfile
-    command: gunicorn carts.wsgi:application --bind 0.0.0.0:8000
+    command:
+      - gunicorn
+      - carts.wsgi:application
+      - --bind
+      - 0.0.0.0:8000
+      - --log-level debug
+      - --access-logfile
+      - '-'
     ports:
       - 8000:8000
     networks:
