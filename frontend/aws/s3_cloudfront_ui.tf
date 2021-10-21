@@ -43,13 +43,13 @@ resource "aws_cloudfront_origin_access_identity" "s3_origin_access_identity" {
   comment = "carts s3 OAI"
 }
 
-#resource "aws_cloudfront_function" "hsts_cloudfront_function" {
-#  name    = "hsts-${terraform.workspace}"
-#  runtime = "cloudfront-js-1.0"
-#  comment = "This function adds headers to implement HSTS"
-#  publish = true
-#  code    = file("${path.module}/hsts.js")
-#}
+resource "aws_cloudfront_function" "hsts_cloudfront_function" {
+  name    = "hsts-${terraform.workspace}"
+  runtime = "cloudfront-js-1.0"
+  comment = "This function adds headers to implement HSTS"
+  publish = true
+  code    = file("${path.module}/hsts.js")
+}
 
 resource "aws_cloudfront_distribution" "www_distribution" {
   origin {
@@ -78,7 +78,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
   default_cache_behavior {
     # If the API is http, we will accept all traffic (including http) on cloudfront
     # This swerves the 'Mixed Content:' errors that occur when reaching the UI over
-    #   https but asking the browser to hit the api over http
+    # https but asking the browser to hit the api over http
     # This allows the end user to hit the UI over http
     viewer_protocol_policy = var.acm_certificate_domain_api_postgres == "" ? "allow-all" : "redirect-to-https"
     compress               = true
@@ -96,10 +96,10 @@ resource "aws_cloudfront_distribution" "www_distribution" {
         forward = "none"
       }
     }
-#    function_association {
-#      event_type   = "viewer-response"
-#      function_arn = aws_cloudfront_function.hsts_cloudfront_function.arn
-#    }
+    function_association {
+      event_type   = "viewer-response"
+      function_arn = aws_cloudfront_function.hsts_cloudfront_function.arn
+    }
   }
   restrictions {
     geo_restriction {
