@@ -9,6 +9,11 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+ENV DJANGO_SUPERUSER_USERNAME admin
+ENV DJANGO_SUPERUSER_PASSWORD admin
+ENV DJANGO_SUPERUSER_EMAIL test@gsa.gov
+ENV ENDPOINT_UI http://localhost:81
+
 # install psycopg2 dependencies
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
@@ -16,6 +21,7 @@ RUN apk add libffi-dev
 RUN apk add --update openssl && \
     rm -rf /var/cache/apk/*
 
+RUN apk --no-cache add wkhtmltopdf xvfb
 # lint
 RUN pip install --upgrade pip
 RUN pip install flake8
