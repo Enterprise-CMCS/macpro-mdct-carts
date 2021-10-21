@@ -10,7 +10,7 @@ import { selectSectionsForNav } from "../../store/selectors";
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
 const FormNavigation = (props) => {
-  const { history, location, sections } = props;
+  const { history, location, sections, role } = props;
 
   const items = [];
   sections.forEach((section) => {
@@ -27,7 +27,7 @@ const FormNavigation = (props) => {
   const year = location.pathname.split("/")[2];
 
   // If admin, DO NOT ADD
-  if (props.role !== "admin_user") {
+  if (role !== "admin_user" && role !== "bus_user" && role !== "co_user") {
     // Add certify and submit page to items array
     items.push(`/sections/${year}/certify-and-submit`);
   }
