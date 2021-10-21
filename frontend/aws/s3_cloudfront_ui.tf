@@ -96,10 +96,10 @@ resource "aws_cloudfront_distribution" "www_distribution" {
         forward = "none"
       }
     }
-    function_association {
-      event_type   = "viewer-response"
-      function_arn = aws_cloudfront_function.hsts_cloudfront_function.arn
-    }
+#    function_association {
+#      event_type   = "viewer-response"
+#      function_arn = aws_cloudfront_function.hsts_cloudfront_function.arn
+#    }
   }
   restrictions {
     geo_restriction {
