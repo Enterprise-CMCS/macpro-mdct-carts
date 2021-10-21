@@ -149,9 +149,6 @@ def listToString(s):
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
-    StateStatus.objects.filter(year__gte=year).delete()
-    # Section.objects.filter(contents__section__year__gte=year).delete()
-    SectionBase.objects.filter(contents__section__year__gte=year).delete()
 
     templateArr = []
     global newSectionContents
@@ -195,8 +192,9 @@ def update_formtemplates_by_year(request):
                         )
                         updated.save()
                     else:
-                        findSection[0].contents = json.loads(sectionString)
-                        findSection[0].save()
+                        print("exists - ignore action !")
+                        # findSection[0].contents = json.loads(sectionString)
+                        # findSection[0].save()
             except:
                 print("DEBUG: ERROR\n" + tmpJsonString + "\nERROR: DEBUG END")
 
