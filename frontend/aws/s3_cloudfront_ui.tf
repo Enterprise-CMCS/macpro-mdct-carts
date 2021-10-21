@@ -48,7 +48,7 @@ resource "aws_cloudfront_function" "hsts_cloudfront_function" {
   runtime = "cloudfront-js-1.0"
   comment = "This function adds headers to implement HSTS"
   publish = true
-  code    = file("${path.module}/hsts.js")
+  code    = file("${path.module}/${var.acm_certificate_domain_api_postgres == "" ? "use-" :"no-"}hsts.js")
 }
 
 resource "aws_cloudfront_distribution" "www_distribution" {
