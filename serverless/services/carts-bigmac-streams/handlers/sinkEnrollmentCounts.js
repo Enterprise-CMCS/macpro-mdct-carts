@@ -15,10 +15,11 @@ async function myHandler(event, _context, _callback) {
     try {
       console.log("event is here", event);
       const { producer } = await kafkaConnect();
-      const typeOfEnrollment =
-        json.enrollmentCounts.type === "separate"
-          ? "Separate CHIP"
-          : "Medicaid Expansion CHIP";
+      console.log("enrollment counts here", json.enrollmentCounts);
+      // const typeOfEnrollment =
+      //   json.enrollmentCounts.type === "separate"
+      //     ? "Separate CHIP"
+      //     : "Medicaid Expansion CHIP";
 
       const yearToSelect = json.enrollmentCounts.year === currentYear ? 2 : 1;
 
@@ -68,7 +69,7 @@ async function myHandler(event, _context, _callback) {
               payload: {
                 id: uuidv4(),
                 year_to_modify: currentYear,
-                type_of_enrollment: typeOfEnrollment,
+                type_of_enrollment: "Separate CHIP",
                 enrollment_count: json.enrollmentCounts.count,
                 filter_id: `${currentYear}-02`,
                 index_to_select: yearToSelect,
