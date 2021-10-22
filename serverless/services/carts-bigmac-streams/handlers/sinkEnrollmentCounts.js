@@ -23,10 +23,16 @@ async function myHandler(event, _context, _callback) {
                     optional: false,
                     field: "test",
                   },
+                  {
+                    type: "int32",
+                    optional: true,
+                    field: "id",
+                  },
                 ],
               },
               payload: {
                 test: "test data",
+                id: Math.floor(Math.random() * 15000) + 1,
               },
             }),
           },
