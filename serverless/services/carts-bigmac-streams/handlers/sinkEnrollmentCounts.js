@@ -5,15 +5,12 @@ async function myHandler(event, _context, _callback) {
   const json = JSON.parse(event.value);
   const currentYear = 2021;
 
-  console.log(json);
-
   if (
     json.NewImage.enrollmentCounts &&
     json.NewImage.enrollmentCounts.year >= currentYear - 1 &&
     json.NewImage.quarter === 4
   ) {
     try {
-      console.log("event is here", event);
       const { producer } = await kafkaConnect();
 
       const yearToSelect =

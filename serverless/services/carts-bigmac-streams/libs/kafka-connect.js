@@ -1,7 +1,6 @@
-import { Kafka } from 'kafkajs';
+import { Kafka } from "kafkajs";
 
 export const kafkaConnect = async () => {
-  console.log('hello');
   try {
     const kafka = new Kafka({
       clientId: `carts-${process.env.STAGE}`,
@@ -22,8 +21,7 @@ export const kafkaConnect = async () => {
     return {
       producer,
     };
-  } catch(error) {
-    console.log('hello world 1');
+  } catch (error) {
     console.log(error);
   }
 };
