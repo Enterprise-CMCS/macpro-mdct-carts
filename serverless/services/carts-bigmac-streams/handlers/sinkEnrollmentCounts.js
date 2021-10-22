@@ -1,4 +1,5 @@
 import { kafkaConnect } from "../libs/kafka-connect";
+import { v4 as uuidv4 } from "uuid";
 
 async function myHandler(event, _context, _callback) {
   const json = JSON.parse(event.value);
@@ -21,18 +22,42 @@ async function myHandler(event, _context, _callback) {
                   {
                     type: "string",
                     optional: false,
-                    field: "test",
+                    field: "id",
                   },
                   {
                     type: "int32",
-                    optional: true,
-                    field: "id",
+                    optional: false,
+                    field: "year_to_modify",
+                  },
+                  {
+                    type: "string",
+                    optional: false,
+                    field: "type_of_enrollment",
+                  },
+                  {
+                    type: "string",
+                    optional: false,
+                    field: "enrollment_count",
+                  },
+                  {
+                    type: "string",
+                    optional: false,
+                    field: "filter_id",
+                  },
+                  {
+                    type: "int32",
+                    optional: false,
+                    field: "index_to_select",
                   },
                 ],
               },
               payload: {
-                test: "test data",
-                id: Math.floor(Math.random() * 15000) + 1,
+                id: uuidv4(),
+                year_to_modify: 2021,
+                type_of_enrollment: "",
+                enrollment_count: 0,
+                filter_id: "2021-02",
+                index_to_select: 3,
               },
             }),
           },
