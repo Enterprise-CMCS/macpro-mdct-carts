@@ -35,7 +35,7 @@ async function myHandler(event, _context, _callback) {
                     field: "type_of_enrollment",
                   },
                   {
-                    type: "string",
+                    type: "int32",
                     optional: false,
                     field: "enrollment_count",
                   },
