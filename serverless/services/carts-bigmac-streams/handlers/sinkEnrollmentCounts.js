@@ -15,6 +15,13 @@ async function myHandler(event, _context, _callback) {
     try {
       console.log("event is here", event);
       const { producer } = await kafkaConnect();
+      const typeOfEnrollment =
+        json.enrollmentCounts.type === "separate"
+          ? "Separate CHIP"
+          : "Medicaid Expansion CHIP";
+
+      const yearToSelect = json.enrollmentCounts.year === currentYear ? 2 : 1;
+
       await producer.send({
         topic: "aws.mdct.seds.cdc.enrollment-counts.v0",
         messages: [
@@ -60,11 +67,11 @@ async function myHandler(event, _context, _callback) {
               },
               payload: {
                 id: uuidv4(),
-                year_to_modify: 2021,
-                type_of_enrollment: "",
-                enrollment_count: 0,
-                filter_id: "2021-02",
-                index_to_select: 3,
+                year_to_modify: currentYear,
+                type_of_enrollment: typeOfEnrollment,
+                enrollment_count: json.enrollmentCounts.count,
+                filter_id: `${currentYear}-02`,
+                index_to_select: yearToSelect,
               },
             }),
           },
