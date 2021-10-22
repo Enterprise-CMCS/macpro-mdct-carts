@@ -22,6 +22,8 @@ async function myHandler(event, _context, _callback) {
         json.NewImage.enrollmentCounts.type === "separate"
           ? "Separate CHIP"
           : "Medicaid Expansion CHIP";
+      const enrollmentCount = json.NewImage.enrollmentCounts.count;
+      const stateId = json.NewImage.state_id;
 
       await producer.send({
         topic: "aws.mdct.seds.cdc.enrollment-counts.v0",
@@ -64,15 +66,21 @@ async function myHandler(event, _context, _callback) {
                     optional: false,
                     field: "index_to_select",
                   },
+                  {
+                    type: "string",
+                    optional: false,
+                    field: "state_id",
+                  },
                 ],
               },
               payload: {
                 id: uuidv4(),
                 year_to_modify: currentYear,
                 type_of_enrollment: typeOfEnrollment,
-                enrollment_count: json.enrollmentCounts.count,
+                enrollment_count: enrollmentCount,
                 filter_id: `${currentYear}-02`,
                 index_to_select: yearToSelect,
+                state_id: stateId,
               },
             }),
           },
