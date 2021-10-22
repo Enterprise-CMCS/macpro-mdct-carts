@@ -45,7 +45,7 @@ class Header extends Component {
             <div className="user-details ds-l-col--8 ds-u-padding--2">
               <div className="ds-l-row">
                 <Autosave />
-                {isLoggedIn ? renderMenu(this.toggleUserNav, email) : null}
+                {isLoggedIn && renderMenu(this.toggleUserNav, email)}
               </div>
             </div>
           </div>

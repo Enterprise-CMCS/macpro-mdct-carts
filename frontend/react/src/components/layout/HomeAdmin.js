@@ -33,7 +33,6 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
             <div className="ds-l-row">
               <ul>
                 <li>
-                  {/* <a href="/users">List users</a> */}
                   <Link to="/users">List users</Link>
                 </li>
                 <li>

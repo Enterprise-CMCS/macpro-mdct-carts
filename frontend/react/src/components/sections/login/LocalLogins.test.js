@@ -38,6 +38,5 @@ describe("static local login button list", () => {
     expect(adminLogin).toBeVisible();
     expect(stateUserLogin).toBeVisible();
     expect(boLogin).toBeVisible();
-    fireEvent.click(adminLogin);
   });
 });

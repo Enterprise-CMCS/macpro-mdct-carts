@@ -5,6 +5,7 @@ import axios from "../../authenticatedAxios";
 import Searchable from "react-searchable-dropdown";
 import { TextField, Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
+import { roles } from "../Utils/RoleHelper";
 
 /**
  * Add a new record to carts_api_rolefromusername & carts_api_statesfromusername so that the user
@@ -30,13 +31,6 @@ const AddUser = ({ currentUser, stateList }) => {
       setError(true);
     }
   };
-
-  const roles = [
-    { value: "admin_user", label: "Admin User" },
-    { value: "bus_user", label: "Business User" },
-    { value: "co_user", label: "Central Office User" },
-    { value: "state_user", label: "State User" },
-  ];
 
   const [userId, setUserId] = useState();
   const [stateId, setStateId] = useState();

@@ -6,7 +6,7 @@ const authenticatedAxios = Axios.create({
   xsrfCookieName: "csrftoken",
 });
 
-export const setToken = (token, localUserType) => {
+export const setToken = (token, localUserType = false) => {
   /* eslint-disable-line */
   console.log("csrf token added");
   authenticatedAxios.interceptors.request.use((config) => {
