@@ -31,7 +31,7 @@ async function myHandler(event, _context, _callback) {
               schema: {
                 type: "struct",
                 optional: false,
-                name: "test",
+                name: "enrollment_counts",
                 fields: [
                   {
                     type: "string",

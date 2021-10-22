@@ -28,7 +28,7 @@ const connectors = [
       "connection.user": process.env.postgresUser,
       "connection.password": process.env.postgresPassword,
       "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
-      "table.name.format": "test_table",
+      "table.name.format": "stg_enrollment_counts",
       "key.converter": "org.apache.kafka.connect.storage.StringConverter",
       "key.converter.schemas.enable": true,
       "value.converter": "org.apache.kafka.connect.json.JsonConverter",
