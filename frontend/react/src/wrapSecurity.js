@@ -49,7 +49,7 @@ const WrappedSecurity = () => {
     loginInfo.indexOf(localUserPrefix) >= 0 &&
     loginInfo.length > localUserPrefix.length
   ) {
-    const userName = loginInfo.replace(localUserPrefix);
+    const userName = loginInfo.replace(localUserPrefix, "");
     dispatch(loadUser(userName));
   }
 
