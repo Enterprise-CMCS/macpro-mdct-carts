@@ -57,7 +57,7 @@ class Header extends Component {
 function renderMenu(toggleUserNav, email) {
   return (
     <div className="nav-user" id="nav-user">
-      {renderEmailMenuItem(toggleUserNav, email)}
+      <RenderEmailMenuItem toggleUserNav={toggleUserNav} email={email} />
       <ul className="menu-block" id="menu-block">
         <li className="helpdesk">
           <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
@@ -72,7 +72,7 @@ function renderMenu(toggleUserNav, email) {
     </div>
   );
 }
-function renderEmailMenuItem(toggleUserNav, email) {
+function RenderEmailMenuItem({ toggleUserNav, email }) {
   return (
     <ul className="user-email-button">
       <li>
@@ -91,6 +91,11 @@ function renderEmailMenuItem(toggleUserNav, email) {
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
+};
+
+RenderEmailMenuItem.propTypes = {
+  toggleUserNav: PropTypes.object.isRequired,
+  email: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
