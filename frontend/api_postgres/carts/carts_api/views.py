@@ -942,7 +942,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
 
     response = ""
 
-    ### Update auth_user table
+    # Update auth_user table
     try:
         # Get user from auth_user table
         user = User.objects.get(id=id)
@@ -959,7 +959,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             {"status": "false", "message": "User Not Found"}, status=500
         )
 
-    ### Update rolefromusername
+    # Update rolefromusername
     try:
 
         # Get user from rolefromusername table
@@ -978,7 +978,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             user_role=role, username=user.username.upper()
         )
 
-    ### Update statesfromusername
+    # Update statesfromusername
     try:
         userStates = StatesFromUsername.objects.filter(
             username=user.username
@@ -1071,7 +1071,6 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
     program_names = ", ".join(state.program_names) if state else None
     program_text = f"{state.code.upper} {program_names}" if state else None
-
     user_data = {
         "name": state.name if state else None,
         "abbr": state.code.upper() if state else None,
@@ -1091,7 +1090,6 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
             "group": groups,
         },
     }
-
     return HttpResponse(json.dumps(user_data))
 
 

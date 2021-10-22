@@ -48,7 +48,7 @@ resource "aws_cloudfront_function" "hsts_cloudfront_function" {
   runtime = "cloudfront-js-1.0"
   comment = "This function adds headers to implement HSTS"
   publish = true
-  code    = file("${path.module}/hsts.js")
+  code = file("${path.module}/hsts/${var.acm_certificate_domain_api_postgres == "" ? "use-" :"no-"}hsts.js")
 }
 
 resource "aws_cloudfront_distribution" "www_distribution" {
@@ -78,7 +78,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
   default_cache_behavior {
     # If the API is http, we will accept all traffic (including http) on cloudfront
     # This swerves the 'Mixed Content:' errors that occur when reaching the UI over
-    #   https but asking the browser to hit the api over http
+    # https but asking the browser to hit the api over http
     # This allows the end user to hit the UI over http
     viewer_protocol_policy = var.acm_certificate_domain_api_postgres == "" ? "allow-all" : "redirect-to-https"
     compress               = true
