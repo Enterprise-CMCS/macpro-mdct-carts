@@ -7,13 +7,12 @@ import PropTypes from "prop-types";
 function LocalLogins() {
   return (
     <div className="local-login">
-      <h3 className="local-login-title">Local Login</h3>
+      <h3 className="local-login-title"> Login Types </h3>
       <section className="ds-l-container preview__grid">
         <div className="ds-l-row">
-          <RenderLogins />
-          <div className="ds-l-col--6">
-            <div className="ds-u-justify-content--center ds-u-padding--1 ds-u-margin-y--2">
-              <div className="ds-l-col--12">
+          <div className="ds-l-col--12">
+            <div className="ds-l-row">
+              <div className="ds-u-justify-content--center ds-u-padding--1 ds-u-margin-y--2">
                 <button
                   onClick={() => oktaLogin()}
                   className="ds-c-button ds-c-button--primary"
@@ -22,6 +21,7 @@ function LocalLogins() {
                 </button>
               </div>
             </div>
+            <RenderLogins />
           </div>
         </div>
       </section>
@@ -31,11 +31,11 @@ function LocalLogins() {
 function RenderLogins() {
   const roleTypes = roles.map((r) => r.value);
   return (
-    <div className="ds-l-col--6">
+    <>
       {roleTypes.map((r) => (
         <LoginAs key={r} role={r} />
       ))}
-    </div>
+    </>
   );
 }
 
