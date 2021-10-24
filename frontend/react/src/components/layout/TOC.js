@@ -31,7 +31,7 @@ class TOC extends Component {
   };
 
   render() {
-    const { location, sections, userRole } = this.props;
+    const { location, sections, userRole, formYear } = this.props;
 
     const items = sections
       .map(({ id: sectionId, ordinal, subsections, title: sectionTitle }) => ({
@@ -72,8 +72,9 @@ class TOC extends Component {
         id: "certify-and-submit",
         label: "Certify and Submit",
         onClick: this.click,
-        selected: location.pathname === "/sections/2020/certify-and-submit",
-        url: "/sections/2020/certify-and-submit",
+        selected:
+          location.pathname === `/sections/${formYear}/certify-and-submit`,
+        url: `/sections/${formYear}/certify-and-submit`,
       });
     }
 
@@ -89,6 +90,7 @@ TOC.propTypes = {
   location: PropTypes.object.isRequired,
   sections: PropTypes.array.isRequired,
   userRole: PropTypes.string.isRequired,
+  formYear: PropTypes.string.isRequired,
 };
 
 const selectSectionsForNav = (state) => {
@@ -118,6 +120,7 @@ const selectSectionsForNav = (state) => {
 const mapStateToProps = (state) => ({
   sections: selectSectionsForNav(state),
   userRole: state.stateUser.currentUser.role,
+  formYear: state.global.formYear,
 });
 
 export default connect(mapStateToProps)(withRouter(TOC));
