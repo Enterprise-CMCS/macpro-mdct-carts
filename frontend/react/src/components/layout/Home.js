@@ -32,7 +32,11 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
       }
       break;
   }
-  return <div className="ds-l-container">{content}</div>;
+  return (
+    <div className="ds-l-container">
+      <div className="ds-l-row">{content}</div>
+    </div>
+  );
 };
 Home.propTypes = {
   role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,
