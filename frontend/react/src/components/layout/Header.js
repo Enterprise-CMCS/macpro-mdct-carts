@@ -34,6 +34,7 @@ class Header extends Component {
     const { currentUser } = this.props;
     const { currentYear } = this.props;
     const { email } = currentUser;
+    const isLoggedIn = !!currentUser.username;
     return (
       <div className="header" data-test="component-header">
         <div className="ds-l-container">
@@ -44,32 +45,7 @@ class Header extends Component {
             <div className="user-details ds-l-col--8 ds-u-padding--2">
               <div className="ds-l-row">
                 <Autosave />
-                <div className="nav-user" id="nav-user">
-                  <ul className="user-email-button">
-                    <li>
-                      <a
-                        href="#menu"
-                        className="nav--dropdown__trigger"
-                        onClick={this.toggleUserNav}
-                      >
-                        {email}
-                      </a>
-                    </li>
-                  </ul>
-                  <ul className="menu-block" id="menu-block">
-                    <li className="helpdesk">
-                      <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
-                    </li>
-
-                    <li className="manage-account">
-                      <a href="/user/profile">Manage account</a>
-                    </li>
-
-                    <li className="logout">
-                      <Logout />
-                    </li>
-                  </ul>
-                </div>
+                {isLoggedIn && renderMenu(this.toggleUserNav, email)}
               </div>
             </div>
           </div>
@@ -78,10 +54,48 @@ class Header extends Component {
     );
   }
 }
+function renderMenu(toggleUserNav, email) {
+  return (
+    <div className="nav-user" id="nav-user">
+      <RenderEmailMenuItem toggleUserNav={toggleUserNav} email={email} />
+      <ul className="menu-block" id="menu-block">
+        <li className="helpdesk">
+          <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
+        </li>
+        <li className="manage-account">
+          <a href="/user/profile">Manage account</a>
+        </li>
+        <li className="logout">
+          <Logout />
+        </li>
+      </ul>
+    </div>
+  );
+}
+function RenderEmailMenuItem({ toggleUserNav, email }) {
+  return (
+    <ul className="user-email-button">
+      <li>
+        <a
+          href="#menu"
+          className="nav--dropdown__trigger"
+          onClick={toggleUserNav}
+        >
+          {email}
+        </a>
+      </li>
+    </ul>
+  );
+}
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
+};
+
+RenderEmailMenuItem.propTypes = {
+  toggleUserNav: PropTypes.object.isRequired,
+  email: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

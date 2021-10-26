@@ -7,7 +7,6 @@ from carts.carts_api.models import AppUser, State, StatesFromUsername
 class JwtDevAuthentication(JwtAuthentication):
     def authenticate(self, request, username=None):
         dev_username = username
-
         try:
             if not dev_username:
                 if "dev" in request.query_params:
@@ -24,9 +23,9 @@ class JwtDevAuthentication(JwtAuthentication):
 
         if dev_username:
             _, suffix = dev_username.split("-")
-
             roles = {
                 "admin": "admin_user",
+                "bus": "bus_user",
                 "co_user": "co_user",
                 "ak": "state_user",
                 "az": "state_user",
@@ -34,7 +33,6 @@ class JwtDevAuthentication(JwtAuthentication):
             }
 
             role = roles[suffix]
-
             if role == "state_user":
                 state_codes = [suffix.upper()]
                 states = State.objects.filter(code__in=state_codes)
@@ -58,19 +56,23 @@ class JwtDevAuthentication(JwtAuthentication):
             dev_user.first_name = "DevFirst"
             dev_user.last_name = f"Dev{role}"
             dev_user.email = email
-
-            if role == "admin_user":
-                group = Group.objects.get(name="Admin users")
-                dev_user.groups.set([group])
-            # Once we have different permissions for co_users, add here.
-            elif role in ("bus_user", "co_user"):
-                group = Group.objects.get(name="Business owner users")
-                dev_user.groups.set([group])
-            elif role == "state_user":
-                group = Group.objects.get(
-                    name__endswith=f"{state_codes[0]} sections"
-                )
-                dev_user.groups.set([group])
+            try:
+                if role == "admin_user":
+                    group = Group.objects.get(name="Admin users")
+                    dev_user.groups.set([group])
+                # Once we have different permissions for co_users, add here.
+                elif role in ("bus_user", "co_user"):
+                    group = Group.objects.get(name="Business owner users")
+                    dev_user.groups.set([group])
+                elif role == "state_user":
+                    group = Group.objects.get(
+                        name__endswith=f"{state_codes[0]} sections"
+                    )
+                    dev_user.groups.set([group])
+            except Exception as err:
+                raise exceptions.AuthenticationFailed(
+                    "authentication failed"
+                ) from err
 
             app_user, _ = AppUser.objects.get_or_create(user=dev_user)
             app_user.states.set(states)
