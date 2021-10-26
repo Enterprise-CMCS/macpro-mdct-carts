@@ -39,6 +39,7 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
   ];
   // This will randomly be assigned to the number 1 or 2
   const oddOrEven = Math.floor(Math.random() * 10) % 2;
+  let linkYear = window.location.pathname.toString().split("/")[2];
 
   return (
     <>
@@ -60,8 +61,8 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
             heading="Optional User Feedback Survey"
           >
             <p className="ds-c-alert__text">
-              We would appreciate your feedback on the CARTS 2020 Redesign.
-              Follow this link to participate in a brief survey
+              We would appreciate your feedback on the CARTS {linkYear}{" "}
+              Redesign. Follow this link to participate in a brief survey
               <a href={surveyOptions[oddOrEven]}> Google Forms</a>
             </p>
             <Button
@@ -95,6 +96,7 @@ const CertifyAndSubmit = ({
   isCertified,
   lastSave,
   user,
+  currentUserRole,
 }) => {
   const history = useHistory();
 
@@ -111,7 +113,7 @@ const CertifyAndSubmit = ({
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
         <PageInfo />
-        <h2>Certify and Submit</h2>
+        {currentUserRole === "state_user" && <h2>Certify and Submit</h2>}
         {isCertified ? (
           <Thanks done={doneClick} lastSave={lastSave} user={user} />
         ) : (
@@ -127,6 +129,7 @@ CertifyAndSubmit.propTypes = {
   isCertified: PropTypes.bool.isRequired,
   lastSave: PropTypes.object.isRequired,
   user: PropTypes.oneOf([PropTypes.string, null]),
+  currentUserRole: PropTypes.string.isRequired,
 };
 CertifyAndSubmit.defaultProps = {
   user: null,
@@ -136,6 +139,7 @@ const mapState = (state) => ({
   isCertified: !selectIsFormEditable(state),
   lastSave: moment(state.save.lastSave),
   user: state.reportStatus.userName,
+  currentUserRole: state.stateUser.currentUser.role,
 });
 
 const mapDispatch = { certifyAndSubmit };
