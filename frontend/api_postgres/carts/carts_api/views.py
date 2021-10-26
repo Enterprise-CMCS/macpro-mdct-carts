@@ -1140,7 +1140,7 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
-    if RoleFromUsername.objects.get(username=request.user) == "state_user":
+    if request.user.appuser.role == "state_user":
 
         file = request.data["uploadedFileName"]
 
