@@ -1144,48 +1144,54 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
-    file = request.data["uploadedFileName"]
+    if RoleFromUsername.objects.get(username=request.user)=="state_user":
 
-    # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
-    # that should yield enough entropy to never incur a collision
-    aws_filename = (
-        f"{request.user}_"
-        + str(random.randint(100, 100000)).zfill(7)
-        + "_"
-        + datetime.now().strftime("%Y%m%d_%H%M%S")
-        + f"_{file}"
-    )
+        file = request.data["uploadedFileName"]
 
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
+        # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
+        # that should yield enough entropy to never incur a collision
+        aws_filename = (
+            f"{request.user}_"
+            + str(random.randint(100, 100000)).zfill(7)
+            + "_"
+            + datetime.now().strftime("%Y%m%d_%H%M%S")
+            + f"_{file}"
+        )
 
-    uploadedFile = UploadedFiles.objects.create(
-        uploaded_username=f"{request.user}",
-        question_id=request.data["questionId"],
-        filename=file,
-        aws_filename=aws_filename,
-        uploaded_state=user_state,
-    )
+        user_state = StatesFromUsername.objects.filter(
+            username=request.user
+        ).values_list("state_codes", flat=True)[0][0]
 
-    uploadedFile.save()
+        uploadedFile = UploadedFiles.objects.create(
+            uploaded_username=f"{request.user}",
+            question_id=request.data["questionId"],
+            filename=file,
+            aws_filename=aws_filename,
+            uploaded_state=user_state,
+        )
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
+        uploadedFile.save()
 
-    # Generate the URL to get 'key-name' from 'bucket-name'
-    parts = s3.generate_presigned_post(
-        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
-    )
+        s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+        region = os.environ.get("AWS_REGION")
+        session = boto3.session.Session()
+        s3 = session.client("s3", f"{region}")
 
-    generated_presigned_url = {
-        "psurl": parts["url"],
-        "psdata": parts["fields"],
-    }
+        # Generate the URL to get 'key-name' from 'bucket-name'
+        parts = s3.generate_presigned_post(
+            Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
+        )
 
-    return HttpResponse(json.dumps(generated_presigned_url))
+        generated_presigned_url = {
+            "psurl": parts["url"],
+            "psdata": parts["fields"],
+        }
+
+        return HttpResponse(json.dumps(generated_presigned_url))
+    else:
+        response = {"success": "false"}
+
+        return HttpResponse(json.dumps(response))
 
 
 @api_view(["POST"])
