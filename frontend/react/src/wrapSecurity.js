@@ -21,8 +21,6 @@ import Spinner from "./components/Utils/Spinner";
 import LocalAuthenticatedRoute from "./components/Utils/LocalAuthenticatedRoute";
 import { loadUser } from "./actions/initial";
 
-const { env } = window;
-
 const WrappedSecurity = () => {
   const dispatch = useDispatch();
   const VisibleHeader =

@@ -7,7 +7,6 @@ import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
 import LocalLogins from "../sections/login/LocalLogins";
 
-const { env } = window;
 const Home = ({ role, loggedIn, SecureRouteComponent }) => {
   let content = null;
   switch (role) {
