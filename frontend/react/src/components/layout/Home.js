@@ -23,8 +23,7 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
     default:
       {
         content =
-          window.location.origin !== "https://mdctcartsdev.cms.gov/" &&
-          !loggedIn ? (
+          !window.location.origin.includes("mdctcartsdev.cms") && !loggedIn ? (
             <LocalLogins />
           ) : (
             <Unauthorized />
