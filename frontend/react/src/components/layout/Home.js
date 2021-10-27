@@ -7,7 +7,6 @@ import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
 import LocalLogins from "../sections/login/LocalLogins";
 
-const { env } = window;
 const Home = ({ role, loggedIn, SecureRouteComponent }) => {
   let content = null;
   switch (role) {
@@ -24,7 +23,8 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
     default:
       {
         content =
-          !loggedIn && env.ENABLE_LOCAL_LOGIN === "true" ? (
+          window.location.origin !== "https://mdctcartsdev.cms.gov/" &&
+          !loggedIn ? (
             <LocalLogins />
           ) : (
             <Unauthorized />
