@@ -61,7 +61,7 @@ async function myHandler(event, _context, _callback) {
                   {
                     type: "int32",
                     optional: false,
-                    field: "index_to_select",
+                    field: "index_to_update",
                   },
                   {
                     type: "string",
@@ -76,7 +76,7 @@ async function myHandler(event, _context, _callback) {
                 type_of_enrollment: typeOfEnrollment,
                 enrollment_count: enrollmentCount,
                 filter_id: `${currentYear}-02`,
-                index_to_select: yearToSelect,
+                index_to_update: yearToSelect,
                 state_id: stateId,
               },
             }),
