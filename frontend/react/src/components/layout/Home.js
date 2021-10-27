@@ -24,7 +24,7 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
     default:
       {
         content =
-          !loggedIn && env.ENABLE_LOCAL_LOGIN === "true" ? (
+        window.location.origin !== 'https://mdctcartsdev.cms.gov/' && !loggedIn ? (
             <LocalLogins />
           ) : (
             <Unauthorized />
