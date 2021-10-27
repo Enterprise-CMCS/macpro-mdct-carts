@@ -41,7 +41,7 @@ const WrappedSecurity = () => {
   const isLocalOkta = loginInfo === "local-okta";
   const localUserPrefix = "localLoggedin-";
   let localLogin =
-    !window.location.origin.includes("mdctcartsdev.cms") && !isLocalOkta;
+    !window.location.origin.includes("mdctcarts.cms") && !isLocalOkta;
   if (
     localLogin &&
     loginInfo.indexOf(localUserPrefix) >= 0 &&
