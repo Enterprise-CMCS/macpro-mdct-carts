@@ -1216,9 +1216,12 @@ def generate_download_psurl(request):
 
 @api_view(["POST"])
 def view_uploaded_files(request):
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
+    if request.user.appuser.role == "state_user":
+        user_state = StatesFromUsername.objects.filter(
+            username=request.user
+        ).values_list("state_codes", flat=True)[0][0]
+    else:
+        user_state = request.data["stateCode"]
     uploaded_files = UploadedFiles.objects.filter(
         uploaded_state=user_state,
         question_id=request.data["questionId"],
