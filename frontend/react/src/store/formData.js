@@ -81,16 +81,6 @@ export default (state = initialState, action) => {
         ];
       }
 
-      updatedData[1].contents.section.subsections[0].parts[3].questions[19].questions[1].answer.options =
-        [
-          {
-            label: "Yes",
-            value: "yes",
-          },
-          { label: "No", value: "no" },
-          { label: "N/A", value: "n/a" },
-        ];
-
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
