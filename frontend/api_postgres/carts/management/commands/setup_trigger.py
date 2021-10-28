@@ -150,4 +150,4 @@ CREATE TRIGGER trg_stg_enrollment_counts
 class Command(BaseCommand):
     def handle(self, *args, **options):
         with connection.cursor() as cursor:
-            cursor.execute("select true;")
+            cursor.execute(query)
