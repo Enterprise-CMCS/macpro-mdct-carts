@@ -20,11 +20,6 @@ CREATE TABLE IF NOT EXISTS public.stg_enrollment_counts
     modified_by VARCHAR(20)
 );
 
-ALTER TABLE IF EXISTS public.stg_enrollment_counts OWNER to pguser;
-GRANT ALL ON TABLE public.stg_enrollment_counts TO pguser;
-REVOKE ALL ON TABLE public.stg_enrollment_counts FROM readwrite;
-GRANT DELETE, UPDATE, INSERT, SELECT ON TABLE public.stg_enrollment_counts TO readwrite;
-
 ---
 
 CREATE OR REPLACE FUNCTION public.upd_carts_api_section()
