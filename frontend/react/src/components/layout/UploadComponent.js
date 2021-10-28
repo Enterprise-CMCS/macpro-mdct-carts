@@ -158,7 +158,7 @@ class UploadComponent extends Component {
     const response = await axios
       .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
         questionId,
-        stateCode
+        stateCode,
       })
       .catch((error) => {
         console.log("!!!Error downloading files: ", error);
