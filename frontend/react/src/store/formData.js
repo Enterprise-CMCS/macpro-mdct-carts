@@ -43,7 +43,11 @@ export default (state = initialState, action) => {
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
-      fragment.answer.entry = action.data;
+      if (action.data === "") {
+        fragment.answer.entry = "";
+      } else {
+        fragment.answer.entry = action.data;
+      }
       return JSON.parse(JSON.stringify(state));
     }
     case SET_FRAGMENT:
