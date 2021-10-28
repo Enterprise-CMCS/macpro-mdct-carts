@@ -8,8 +8,8 @@ const Radio = ({ onChange, question, ...props }) => {
   const [checked, setChecked] = useState(question.answer.entry);
 
   const onCheck = (e) => {
-    if (checked === e.target.value) setChecked(false)
-    else  setChecked(e.target.value);
+    if (checked === e.target.value) setChecked(false);
+    else setChecked(e.target.value);
     onChange(e);
   };
 
@@ -29,7 +29,7 @@ const Radio = ({ onChange, question, ...props }) => {
     <Choice
       checked={checked === value}
       type="radio"
-      value={ !checked ? value : undefined}
+      value={!checked ? value : undefined}
       {...childProps}
       {...props}
       onClick={onCheck}
