@@ -40,6 +40,57 @@ export default (state = initialState, action) => {
           "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";
       }
 
+      const chgsection1 = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+      ];
+      for (let x in chgsection1) {
+        updatedData[1].contents.section.subsections[0].parts[2].questions[
+          x
+        ].answer.options = [
+          {
+            label: "Yes",
+            value: "yes",
+          },
+          { label: "No", value: "no" },
+          { label: "N/A", value: "n/a" },
+        ];
+      }
+      updatedData[1].contents.section.subsections[0].parts[2].questions[16].questions[1].answer.options =
+        [
+          {
+            label: "Yes",
+            value: "yes",
+          },
+          { label: "No", value: "no" },
+          { label: "N/A", value: "n/a" },
+        ];
+
+      const chgsection2 = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+      ];
+      for (let x in chgsection2) {
+        updatedData[1].contents.section.subsections[0].parts[3].questions[
+          x
+        ].answer.options = [
+          {
+            label: "Yes",
+            value: "yes",
+          },
+          { label: "No", value: "no" },
+          { label: "N/A", value: "n/a" },
+        ];
+      }
+
+      updatedData[1].contents.section.subsections[0].parts[3].questions[19].questions[1].answer.options =
+        [
+          {
+            label: "Yes",
+            value: "yes",
+          },
+          { label: "No", value: "no" },
+          { label: "N/A", value: "n/a" },
+        ];
+
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
