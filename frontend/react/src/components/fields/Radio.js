@@ -30,7 +30,7 @@ const Radio = ({ onChange, question, ...props }) => {
       key={value}
       checked={checked === value}
       type="radio"
-      value={!checked ? value : undefined}
+      value={checked ? value : undefined}
       {...childProps}
       {...props}
       onClick={onCheck}
