@@ -36,7 +36,6 @@ const connectors = [
       "insert.mode": "upsert",
       "pk.mode": "record_value",
       "pk.fields": "id",
-      "auto.create": true,
     },
   },
   {
