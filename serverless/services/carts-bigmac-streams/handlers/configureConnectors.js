@@ -4,6 +4,39 @@ var http = require("http");
 
 const connectors = [
   {
+    name: `${process.env.connectorPrefix}sink.lambda.enrollmentcounts`,
+    config: {
+      "tasks.max": "1",
+      "connector.class":
+        "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
+      topics: process.env.sinkTopics,
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "aws.region": process.env.sinkFunctionRegion,
+      "aws.lambda.function.arn": process.env.sinkFunctionArn,
+      "aws.lambda.batch.enabled": "false",
+      "aws.credentials.provider.class":
+        " com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
+    },
+  },
+  {
+    name: `${process.env.connectorPrefix}sink.jdbc.postgres-1`,
+    config: {
+      "tasks.max": "1",
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      topics: process.env.jdbcSinkTopics,
+      "connection.user": process.env.postgresUser,
+      "connection.password": process.env.postgresPassword,
+      "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
+      "table.name.format": "stg_enrollment_counts",
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "key.converter.schemas.enable": true,
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter.schemas.enable": true,
+      "insert.mode": "insert",
+    },
+  },
+  {
     name: `${process.env.connectorPrefix}source.jdbc.postgres-1`,
     config: {
       "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",

@@ -9,6 +9,7 @@ plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
+  - serverless-online
 
 provider:
   name: aws
@@ -46,13 +47,29 @@ functions:
       postgresPassword: ${self:custom.postgresPassword}
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
+      sinkTopics: aws.mdct.seds.cdc.state-forms.v0
+      jdbcSinkTopics: aws.mdct.seds.cdc.enrollment-counts.v0
+      sinkFunctionArn: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
+      sinkFunctionRegion: ${self:custom.region}
     maximumRetryAttempts: 2
     timeout: 120
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
-
+  sinkEnrollmentCounts:
+    handler: handlers/sinkEnrollmentCounts.handler
+    role: SinkEnrollmentCountsRole
+    environment:
+      BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
+      STAGE: ${self:custom.stage}
+      TOPIC: aws.mdct.seds.cdc.enrollment-counts.v0
+    maximumRetryAttempts: 2
+    timeout: 120
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaConfigureConnectorsSecurityGroup
+      subnetIds: ${self:custom.privateSubnets}
 resources:
   Conditions:
     CreatePermissionsBoundary:
@@ -114,12 +131,21 @@ resources:
             - Ref: AWS::NoValue
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        Policies:
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - "lambda:*"
+                  Resource: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
     KafkaConnectWorkerTaskDefinition:
       Type: "AWS::ECS::TaskDefinition"
       Properties:
         ContainerDefinitions:
           - Name: ${self:service}-${self:custom.stage}-worker
-            Image: "confluentinc/cp-kafka-connect:5.2.4"
+            Image: "confluentinc/cp-kafka-connect:6.2.0"
             Memory: 4096
             Cpu: 2048
             Command:
@@ -130,6 +156,10 @@ resources:
                 export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
                 curl -k -SL -o /etc/kafka-connect/jars/postgresql-42.2.18.jar "https://jdbc.postgresql.org/download/postgresql-42.2.18.jar" &&
                 chmod +x /etc/kafka-connect/jars/postgresql-42.2.18.jar &&
+                curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-lambda-1.2.2.jar "https://github.com/Nordstrom/kafka-connect-lambda/releases/download/v1.2.2/kafka-connect-lambda-1.2.2.jar" &&
+                chmod +x /etc/kafka-connect/jaras/kafka-connect-lambda-1.2.2.jar
+                curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-jdbc-10.2.0.jar "https://packages.confluent.io/maven/io/confluent/kafka-connect-jdbc/10.2.0/kafka-connect-jdbc-10.2.0.jar" &&
+                chmod +x /etc/kafka-connect/jars/kafka-connect-jdbc-10.2.0.jar &&
                 /etc/confluent/docker/run
             Environment:
               - Name: CONNECT_BOOTSTRAP_SERVERS
@@ -205,6 +235,43 @@ resources:
       Properties:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
+    SinkEnrollmentCountsRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
+            - Ref: AWS::NoValue
+        ManagedPolicyArns:
+          - !Sub arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+        Policies:
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - "ec2:CreateNetworkInterface"
+                    - "ec2:DescribeNetworkInterfaces"
+                    - "ec2:DetachNetworkInterface"
+                    - "ec2:DeleteNetworkInterface"
+                    - "ec2:DescribeSecurityGroups"
+                  Resource: "*"
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"
       Properties:
