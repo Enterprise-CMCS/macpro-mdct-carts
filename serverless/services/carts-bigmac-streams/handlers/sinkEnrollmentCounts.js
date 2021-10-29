@@ -63,11 +63,6 @@ async function myHandler(event, _context, _callback) {
                     optional: false,
                     field: "state_id",
                   },
-                  {
-                    type: "Timestamp",
-                    optional: false,
-                    field: "modified_on",
-                  },
                 ],
               },
               payload: {
@@ -77,7 +72,6 @@ async function myHandler(event, _context, _callback) {
                 filter_id: `${currentYear}-02`,
                 index_to_update: yearToSelect,
                 state_id: stateId,
-                modified_on: new Date().toISOString(),
               },
             }),
           },

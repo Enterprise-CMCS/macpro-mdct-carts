@@ -33,9 +33,7 @@ const connectors = [
       "key.converter.schemas.enable": true,
       "value.converter": "org.apache.kafka.connect.json.JsonConverter",
       "value.converter.schemas.enable": true,
-      "insert.mode": "upsert",
-      "pk.mode": "record_value",
-      "pk.fields": "id",
+      "insert.mode": "insert",
     },
   },
   {
