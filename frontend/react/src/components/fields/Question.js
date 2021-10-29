@@ -80,6 +80,14 @@ const Question = ({
     setAnswer(id, value);
   };
 
+  const onClick = (e) => {
+    if (e.target.checked) {
+      setAnswer(e.target.name, "");
+    } else if (e.target.checked !== undefined) {
+      setAnswer(e.target.name, e.target.value);
+    }
+  };
+
   const shouldRenderChildren =
     (question.type !== "fieldset" ||
       question.fieldset_type === "noninteractive_table") &&
@@ -116,6 +124,7 @@ const Question = ({
           question={question}
           name={question.id}
           onChange={onChange}
+          onClick={onClick}
           disabled={
             prevYearDisabled ||
             pageDisable ||
