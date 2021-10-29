@@ -21,7 +21,7 @@ const Percentage = ({ onChange, question, ...props }) => {
     const stripped = numericString.replace(/[^0-9.]/g, "");
 
     //This regex allows for numbers with ONLY a single decimal
-    const regexTest = /^\d*[0-9]?(|.\d*[0-9]|,\d*[0-9])?$/;
+    const regexTest = /^\d*[0-9]?(|.\d*[0-9]?|,\d*[0-9])?$/;
     const isNumberOrDecimal = regexTest.test(stripped);
 
     if (!isNumberOrDecimal) {
