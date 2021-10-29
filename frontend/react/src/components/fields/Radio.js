@@ -6,10 +6,8 @@ import Question from "./Question";
 
 const Radio = ({ onChange, onClick, question, ...props }) => {
   const [checked, setChecked] = useState(question.answer.entry);
-  const [unChecked, setUnChecked] = useState(question.answer.entry);
   const onCheck = (e) => {
     setChecked(e.target.value);
-    setUnChecked(checked);
     onChange(e);
   };
 
