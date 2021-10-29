@@ -34,11 +34,6 @@ async function myHandler(event, _context, _callback) {
                 name: "enrollment_counts",
                 fields: [
                   {
-                    type: "string",
-                    optional: false,
-                    field: "id",
-                  },
-                  {
                     type: "int32",
                     optional: false,
                     field: "year_to_modify",
@@ -68,16 +63,21 @@ async function myHandler(event, _context, _callback) {
                     optional: false,
                     field: "state_id",
                   },
+                  {
+                    type: "Timestamp",
+                    optional: false,
+                    field: "modified_on",
+                  },
                 ],
               },
               payload: {
-                id: uuidv4(),
                 year_to_modify: currentYear,
                 type_of_enrollment: typeOfEnrollment,
                 enrollment_count: enrollmentCount,
                 filter_id: `${currentYear}-02`,
                 index_to_update: yearToSelect,
                 state_id: stateId,
+                modified_on: new Date().toISOString(),
               },
             }),
           },
