@@ -37,6 +37,7 @@ const initialState = {
     state: { id: "", name: "" },
     username: "",
   },
+  localLogin: false,
 };
 
 // STATE USER REDUCER

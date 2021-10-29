@@ -34,15 +34,20 @@ export default (state = initialState, action) => {
           lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer;
         updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
           lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer;
+
+        // Added mid year as a quick fix for 2021 forms see: https://qmacbis.atlassian.net/browse/OY2-12744 Should be removed ASAP!!
+        updatedData[2].contents.section.subsections[0].parts[1].text =
+          "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";
       }
-      // Added mid year as a quick fix re: https://qmacbis.atlassian.net/browse/OY2-12744 Should be removed ASAP!!
-      updatedData[2].contents.section.subsections[0].parts[1].text =
-        "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";
 
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
-      fragment.answer.entry = action.data;
+      if (action.data === "") {
+        fragment.answer.entry = "";
+      } else {
+        fragment.answer.entry = action.data;
+      }
       return JSON.parse(JSON.stringify(state));
     }
     case SET_FRAGMENT:

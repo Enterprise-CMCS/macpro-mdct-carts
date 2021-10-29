@@ -4,19 +4,12 @@ import { useOktaAuth } from "@okta/okta-react";
 import { loadUser } from "../../actions/initial";
 import { setToken } from "../../authenticatedAxios";
 
-const SecureInitialDataLoad = ({ userData }) => {
+const SecureInitialDataLoad = () => {
   // If userData is false, then we're logging in with Okta. Otherwise, we're
   // logging in with a dev user that bypasses Okta.
 
   const { authState, authService } = useOktaAuth() ?? {};
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (userData !== false) {
-      setToken();
-      dispatch(loadUser(userData.userToken));
-    }
-  }, []);
 
   useEffect(() => {
     // useOktaAuth() will return null if this component is rendered outside
@@ -27,7 +20,6 @@ const SecureInitialDataLoad = ({ userData }) => {
     if (authState && authService) {
       if (!authState.isAuthenticated) {
         if (authState.error) {
-          // Logout if there is an error
           authService.logout("/");
         }
         if (!authState.isPending) {

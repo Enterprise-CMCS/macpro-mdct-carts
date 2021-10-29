@@ -149,9 +149,6 @@ def listToString(s):
 @api_view(["POST"])
 def update_formtemplates_by_year(request):
     year = int(request.data.get("year"))
-    StateStatus.objects.filter(year__gte=year).delete()
-    # Section.objects.filter(contents__section__year__gte=year).delete()
-    SectionBase.objects.filter(contents__section__year__gte=year).delete()
 
     templateArr = []
     global newSectionContents
@@ -195,8 +192,9 @@ def update_formtemplates_by_year(request):
                         )
                         updated.save()
                     else:
-                        findSection[0].contents = json.loads(sectionString)
-                        findSection[0].save()
+                        print("exists - ignore action !")
+                        # findSection[0].contents = json.loads(sectionString)
+                        # findSection[0].save()
             except:
                 print("DEBUG: ERROR\n" + tmpJsonString + "\nERROR: DEBUG END")
 
@@ -944,7 +942,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
 
     response = ""
 
-    ### Update auth_user table
+    # Update auth_user table
     try:
         # Get user from auth_user table
         user = User.objects.get(id=id)
@@ -961,7 +959,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             {"status": "false", "message": "User Not Found"}, status=500
         )
 
-    ### Update rolefromusername
+    # Update rolefromusername
     try:
 
         # Get user from rolefromusername table
@@ -980,7 +978,7 @@ def UpdateUser(request, id=None, state_codes=None, role=None, is_active=None):
             user_role=role, username=user.username.upper()
         )
 
-    ### Update statesfromusername
+    # Update statesfromusername
     try:
         userStates = StatesFromUsername.objects.filter(
             username=user.username
@@ -1073,7 +1071,6 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 
     program_names = ", ".join(state.program_names) if state else None
     program_text = f"{state.code.upper} {program_names}" if state else None
-
     user_data = {
         "name": state.name if state else None,
         "abbr": state.code.upper() if state else None,
@@ -1093,7 +1090,6 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
             "group": groups,
         },
     }
-
     return HttpResponse(json.dumps(user_data))
 
 
@@ -1144,48 +1140,54 @@ def authenticate_user(request):
 
 @api_view(["POST"])
 def generate_upload_psurl(request):
-    file = request.data["uploadedFileName"]
+    if request.user.appuser.role == "state_user":
 
-    # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
-    # that should yield enough entropy to never incur a collision
-    aws_filename = (
-        f"{request.user}_"
-        + str(random.randint(100, 100000)).zfill(7)
-        + "_"
-        + datetime.now().strftime("%Y%m%d_%H%M%S")
-        + f"_{file}"
-    )
+        file = request.data["uploadedFileName"]
 
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
+        # current pattern for aws filename alias is userid_0000000_YYYYMMDD_H_M_S_filename
+        # that should yield enough entropy to never incur a collision
+        aws_filename = (
+            f"{request.user}_"
+            + str(random.randint(100, 100000)).zfill(7)
+            + "_"
+            + datetime.now().strftime("%Y%m%d_%H%M%S")
+            + f"_{file}"
+        )
 
-    uploadedFile = UploadedFiles.objects.create(
-        uploaded_username=f"{request.user}",
-        question_id=request.data["questionId"],
-        filename=file,
-        aws_filename=aws_filename,
-        uploaded_state=user_state,
-    )
+        user_state = StatesFromUsername.objects.filter(
+            username=request.user
+        ).values_list("state_codes", flat=True)[0][0]
 
-    uploadedFile.save()
+        uploadedFile = UploadedFiles.objects.create(
+            uploaded_username=f"{request.user}",
+            question_id=request.data["questionId"],
+            filename=file,
+            aws_filename=aws_filename,
+            uploaded_state=user_state,
+        )
 
-    s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
-    region = os.environ.get("AWS_REGION")
-    session = boto3.session.Session()
-    s3 = session.client("s3", f"{region}")
+        uploadedFile.save()
 
-    # Generate the URL to get 'key-name' from 'bucket-name'
-    parts = s3.generate_presigned_post(
-        Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
-    )
+        s3_bucket = os.environ.get("S3_UPLOADS_BUCKET_NAME")
+        region = os.environ.get("AWS_REGION")
+        session = boto3.session.Session()
+        s3 = session.client("s3", f"{region}")
 
-    generated_presigned_url = {
-        "psurl": parts["url"],
-        "psdata": parts["fields"],
-    }
+        # Generate the URL to get 'key-name' from 'bucket-name'
+        parts = s3.generate_presigned_post(
+            Bucket=f"{s3_bucket}", Key=f"{aws_filename}"
+        )
 
-    return HttpResponse(json.dumps(generated_presigned_url))
+        generated_presigned_url = {
+            "psurl": parts["url"],
+            "psdata": parts["fields"],
+        }
+
+        return HttpResponse(json.dumps(generated_presigned_url))
+    else:
+        response = {"success": "false"}
+
+        return HttpResponse(json.dumps(response))
 
 
 @api_view(["POST"])
@@ -1214,11 +1216,13 @@ def generate_download_psurl(request):
 
 @api_view(["POST"])
 def view_uploaded_files(request):
-    user_state = StatesFromUsername.objects.filter(
-        username=request.user
-    ).values_list("state_codes", flat=True)[0][0]
+    if request.user.appuser.role == "state_user":
+        user_state = StatesFromUsername.objects.filter(
+            username=request.user
+        ).values_list("state_codes", flat=True)[0][0]
+    else:
+        user_state = request.data["stateCode"]
     uploaded_files = UploadedFiles.objects.filter(
-        uploaded_username=request.user,
         uploaded_state=user_state,
         question_id=request.data["questionId"],
     ).values("filename", "aws_filename")
