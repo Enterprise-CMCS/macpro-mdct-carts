@@ -24,9 +24,11 @@ variable "enable_log_waf_acl" {
   description = "Should logging be enabled on WAF ACL or not? Default is FALSE to not create"
   default = true
 }
-variable "postgres_custom_password" {
-  default = ""
+
+variable "use_custom_db_user_info" {
+  default = false
 }
-variable "postgres_custom_user" {
-  default = ""
+
+variable "use_custom_db_password_info" {
+  default = false
 }
