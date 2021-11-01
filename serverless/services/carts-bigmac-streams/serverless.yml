@@ -29,8 +29,8 @@ custom:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id~true, ssm:/configuration/default/vpc/subnets/private/c/id~true}
   postgresHost: ${ssm:/${self:custom.stage}/postgres_host~true}
   postgresDb: ${ssm:/${self:custom.stage}/postgres_db~true}
-  postgresUser: ${ssm:/${self:custom.stage}/custom_postgres_username~true, ssm:/${self:custom.stage}/postgres_user~true}
-  postgresPassword: ${ssm:/${self:custom.stage}/custom_postgres_password~true, ssm:/${self:custom.stage}/postgres_password~true}
+  postgresUser: ${ssm:/${self:custom.stage}/custom/postgres_custom_user~true, ssm:/${self:custom.stage}/postgres_user~true}
+  postgresPassword: ${ssm:/${self:custom.stage}/custom/postgres_custom_password~true, ssm:/${self:custom.stage}/postgres_password~true}
   postgresSecurityGroupId: ${ssm:/${self:custom.stage}/postgres_security_group~true}
   scripts:
     hooks:
