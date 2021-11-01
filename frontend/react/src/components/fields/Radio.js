@@ -4,13 +4,16 @@ import { Choice } from "@cmsgov/design-system-core";
 
 import Question from "./Question";
 
-const Radio = ({ onChange, question, ...props }) => {
+const Radio = ({ onChange, onClick, question, ...props }) => {
   const [checked, setChecked] = useState(question.answer.entry);
-
   const onCheck = (e) => {
-    if (checked === e.target.value) setChecked(false);
-    else setChecked(e.target.value);
+    setChecked(e.target.value);
     onChange(e);
+  };
+
+  const unCheck = (e) => {
+    setChecked("");
+    onClick(e);
   };
 
   const childProps = {};
@@ -30,10 +33,11 @@ const Radio = ({ onChange, question, ...props }) => {
       key={value}
       checked={checked === value}
       type="radio"
-      value={!checked ? value : undefined}
+      value={value}
       {...childProps}
       {...props}
-      onClick={onCheck}
+      onChange={onCheck}
+      onClick={unCheck}
     >
       {label}
     </Choice>
