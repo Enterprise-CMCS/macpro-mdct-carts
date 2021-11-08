@@ -20,11 +20,7 @@ const NoninteractiveTable = ({ question }) => {
                 percentLocation[count] = false;
               }
               return (
-                <th
-                  width={`${columnWidth}%`}
-                  name={`${header}`}
-                  key={`${header}`}
-                >
+                <th width={`${columnWidth}%`} name={`${header}`} key={header}>
                   {header}
                 </th>
               );
@@ -35,7 +31,7 @@ const NoninteractiveTable = ({ question }) => {
           {question.fieldset_info.rows.map((row) => {
             count = -1;
             return (
-              <tr key={`${count}`}>
+              <tr key={count}>
                 {row.map((value) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
