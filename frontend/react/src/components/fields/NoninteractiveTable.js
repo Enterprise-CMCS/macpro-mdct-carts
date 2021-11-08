@@ -50,7 +50,7 @@ const NoninteractiveTable = ({ question }) => {
                       )
                     ) {
                       // The percent change calculation times 100 to give the percent in the correct format
-                      let returnValue = ((row[1] - row[2]) / row[1]) * 100;
+                      let returnValue = ((row[2] - row[1]) / row[1]) * 100;
                       if (!returnValue) {
                         returnValue = 0;
                       }
