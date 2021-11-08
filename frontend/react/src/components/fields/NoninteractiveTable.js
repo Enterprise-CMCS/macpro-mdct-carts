@@ -20,7 +20,7 @@ const NoninteractiveTable = ({ question }) => {
                 percentLocation[count] = false;
               }
               return (
-                <th width={`${columnWidth}%`} name={`${header}`} key={header}>
+                <th width={`${columnWidth}%`} name={header} key={header}>
                   {header}
                 </th>
               );
