@@ -9,7 +9,7 @@ const getYear = () => {
   return linkYear;
 };
 
-const PageInfo = ({ lastSaved, name, status, currentYear }) => (
+const PageInfo = ({ lastSaved, name, status }) => (
   <div className="page-info">
     <div className="edit-info">
       {status ?? "draft"}
