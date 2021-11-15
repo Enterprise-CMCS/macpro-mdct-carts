@@ -18,7 +18,7 @@ PageInfo.propTypes = {
   lastSaved: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  currentYear: PropTypes.object.isRequired,
+  formYear: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
