@@ -3,6 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 
+
+//Dynamically get the year of the form by referencing the path
+const getYear = () => {
+  let linkYear = window.location.href.toString().split("/")[6];
+  return linkYear;
+}
+
 const PageInfo = ({ lastSaved, name, status, currentYear }) => (
   <div className="page-info">
     <div className="edit-info">
@@ -10,7 +17,7 @@ const PageInfo = ({ lastSaved, name, status, currentYear }) => (
       {lastSaved.isValid() && ` | Last Edit: ${lastSaved.format("M/D/YYYY")}`}
     </div>
     <h1>
-      {name} CARTS{} FY{currentYear}
+      {name} CARTS{} FY{getYear()}
     </h1>
   </div>
 );
