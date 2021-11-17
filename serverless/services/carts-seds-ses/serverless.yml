@@ -2,6 +2,9 @@ service: carts-seds-ses
 
 frameworkVersion: "2"
 
+plugins:
+  - serverless-s3-bucket-helper
+
 package:
   individually: true
 

@@ -10,6 +10,7 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
   - serverless-online
+  - serverless-s3-bucket-helper
 
 provider:
   name: aws
