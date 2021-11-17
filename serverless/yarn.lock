@@ -3486,6 +3486,10 @@ semver@^7.3.2, semver@^7.3.4:
   dependencies:
     lru-cache "^6.0.0"
 
+"serverless-s3-bucket-helper@https://github.com/cmsgov/serverless-s3-bucket-helper":
+  version "1.0.0"
+  resolved "https://github.com/cmsgov/serverless-s3-bucket-helper#f0f6d6a1ffe54e292f0afc93777764bce16a4037"
+
 serverless@^2.7.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/serverless/-/serverless-2.15.0.tgz#4ed4ef800695271ff687b0cef0e416299b5810e1"
