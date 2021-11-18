@@ -38,6 +38,11 @@ resource "aws_s3_bucket_policy" "www_bucket_policy" {
   policy = data.aws_iam_policy_document.s3_policy.json
 }
 
+resource "aws_s3_bucket_public_access_block" "www" {
+  bucket              = "cartsfrontendbucket-${terraform.workspace}"
+  block_public_acls   = true
+  block_public_policy = true
+}
 
 resource "aws_cloudfront_origin_access_identity" "s3_origin_access_identity" {
   comment = "carts s3 OAI"
