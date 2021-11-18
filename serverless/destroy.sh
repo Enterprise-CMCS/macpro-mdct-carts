@@ -1,32 +1,14 @@
 #!/bin/bash
 set -e
 
-echo """
-ERROR:  This destroy script has been disabled for CARTS.
-
-Due to the fact that CARTS operates in a crowded AWS account, we do not feel
-comfortable automating the tear down of multiple cloudformation stacks.
-The destroy script is specific in what it cleans up, however, there could be
-something in existence that could be tagged in a way that would cause problems.
-
-If you want to destroy a stage, you will need to do so manually.  Open this file,
-comment out this message, and run the script.
-The script will print out every bucket and Cloudformation stack that it will destroy.
-Review it carefully, and proceed or eject.
-
-Thanks
-"""
-exit 1
-
 if [[ $1 == "" ]] ; then
     echo 'ERROR:  You must pass a stage to destroy.  Ex. sh destroy.sh my-stage-name'
     exit 1
 fi
 stage=$1
 
-# A list of names commonly used for protected/important branches/environments/stages.
-# Update as appropriate.
-protected_stage_regex="(^develop$|^master$|^main$|^val$|^impl$|^production$|^prod$|prod)"
+# A list of protected/important branches/environments/stages.
+protected_stage_regex="(^master$|^val$|^production)"
 if [[ $stage =~ $protected_stage_regex ]] ; then
     echo """
       ---------------------------------------------------------------------------------------------
@@ -46,42 +28,25 @@ if [[ $stage =~ $protected_stage_regex ]] ; then
 fi
 echo "\nCollecting information on stage $stage before attempting a destroy... This can take a minute or two..."
 
-ssmParamList=(
-  /bigmac-config-$stage/mskConfigurationArn
-  /bigmac-$stage/bootstrapBrokerStringTls
-  /bigmac-$stage/clusterArn
-  /bigmac-$stage/zookeeperConnectString
-)
-filteredSsmParamList=()
-set +e
-for i in "${ssmParamList[@]}"
-do
-  paramName=`aws ssm describe-parameters --filter "Key=Name,Values=$i" --query Parameters[0].Name --output text`
-  if [ "$paramName" != "None" ]; then
-    filteredSsmParamList+=($i)
-  fi
-done
-set -e
-
-# Find buckets associated with stage
-# Unfortunately, I can't get all buckets and all associaged tags in a single CLI call (that I know of)
-# So this can be pretty slow, depending on how many buckets exist in the account
-# We get all bucket names, then find associated tags for each one-by-one
-bucketList=(`aws s3api list-buckets --output text --query 'Buckets[*].Name'` )
-filteredBucketList=()
-set +e
-for i in "${bucketList[@]}"
-do
-  stage_tag=`aws s3api get-bucket-tagging --bucket $i --output text --query 'TagSet[?Key==\`STAGE\`].Value' 2>/dev/null`
-  if [ "$stage_tag" == "$stage" ]; then
-    filteredBucketList+=($i)
-  fi
-done
 set -e
 
 # Find cloudformation stacks associated with stage
-filteredStackList=(`aws cloudformation describe-stacks | jq -r ".Stacks[] | select(.Tags[] | select(.Key==\"STAGE\") | select(.Value==\"$stage\")) | .StackName"`)
+stackList=(`aws cloudformation describe-stacks | jq -r ".Stacks[] | select(.Tags[] | select(.Key==\"STAGE\") | select(.Value==\"$stage\")) | .StackName"`)
 
+# Find buckets attached to any of the stages, so we can empty them before removal.
+bucketList=()
+set +e
+for i in "${stackList[@]}"
+do
+  buckets=(`aws cloudformation list-stack-resources --stack-name $i | jq -r ".StackResourceSummaries[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
+  for j in "${buckets[@]}"
+  do
+    # Sometimes a bucket has been deleted outside of CloudFormation; here we check that it exists.
+    if aws s3api head-bucket --bucket $j > /dev/null 2>&1; then
+      bucketList+=($j)
+    fi
+  done
+done
 
 echo """
 ********************************************************************************
@@ -89,15 +54,11 @@ echo """
 ********************************************************************************
 """
 
-echo "The following SSM Parameters will be deleted"
-printf '%s\n' "${filteredSsmParamList[@]}"
-printf '\n'
-
 echo "The following buckets will be emptied"
-printf '%s\n' "${filteredBucketList[@]}"
+printf '%s\n' "${bucketList[@]}"
 
-echo "\nThe following stacks will be destroyed:"
-printf '%s\n' "${filteredStackList[@]}"
+echo "The following stacks will be destroyed:"
+printf '%s\n' "${stackList[@]}"
 
 echo """
 ********************************************************************************
@@ -114,20 +75,42 @@ if [ "$CI" != "true" ]; then
   fi
 fi
 
-for i in "${filteredSsmParamList[@]}"
+for i in "${bucketList[@]}"
 do
   echo $i
-  aws ssm delete-parameter --name "$i"
-done
+  set -e
 
-for i in "${filteredBucketList[@]}"
-do
-  echo $i
+  # Suspend bucket versioning.
+  aws s3api put-bucket-versioning --bucket $i --versioning-configuration Status=Suspended
+
+  # Remove all bucket versions.
+  versions=`aws s3api list-object-versions \
+    --bucket "$i" \
+    --output=json \
+    --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'`
+  if ! echo $versions | grep -q '"Objects": null'; then
+    aws s3api delete-objects \
+      --bucket $i \
+      --delete "$versions" > /dev/null 2>&1
+  fi
+
+  # Remove all bucket delete markers.
+  markers=`aws s3api list-object-versions \
+    --bucket "$i" \
+    --output=json \
+    --query='{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId} }'`
+  if ! echo $markers | grep -q '"Objects": null'; then
+    aws s3api delete-objects \
+      --bucket $i \
+      --delete "$markers" > /dev/null 2>&1
+  fi
+
+  # Empty the bucket
   aws s3 rm s3://$i/ --recursive
 done
 
-
-for i in "${filteredStackList[@]}"
+# Trigger a delete for each cloudformation stack
+for i in "${stackList[@]}"
 do
   echo $i
   aws cloudformation delete-stack --stack-name $i
