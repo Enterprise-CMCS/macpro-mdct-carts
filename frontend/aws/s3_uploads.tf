@@ -8,8 +8,8 @@ resource "aws_s3_bucket" "uploads" {
   force_destroy = terraform.workspace == "prod" ? false : true
 }
 
-resource "aws_s3_bucket_public_access_block" "www" {
-  bucket              = "cartsfrontendbucket-${terraform.workspace}"
+resource "aws_s3_bucket_public_access_block" "uploads" {
+  bucket              = "cartscms-uploads-${terraform.workspace}"
   block_public_acls   = true
   block_public_policy = true
 }
