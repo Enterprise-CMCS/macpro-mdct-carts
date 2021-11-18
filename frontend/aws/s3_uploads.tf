@@ -24,7 +24,7 @@ resource "aws_s3_bucket_notification" "avscan" {
     events              = ["s3:ObjectCreated:*"]
   }
 
-  depends_on = [aws_lambda_permission.allow_bucket]
+  depends_on = [aws_lambda_permission.allow_bucket, aws_s3_bucket_policy.b]
 }
 resource "aws_s3_bucket_policy" "b" {
   bucket = aws_s3_bucket.uploads.id
