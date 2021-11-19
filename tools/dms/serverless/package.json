@@ -10,7 +10,7 @@
     "url": "https://github.com/18F/cms-carts-seds.git"
   },
   "devDependencies": {
-    "aws-sdk": "^2.655.0",
+    "aws-sdk": "^2.814.0",
     "serverless-s3-bucket-helper": "git+https://github.com/cmsgov/serverless-s3-bucket-helper.git"
   },
   "dependencies": {}
