@@ -42,6 +42,8 @@ set +e
 for i in "${stackList[@]}"
 do
   buckets=(`aws cloudformation --region us-east-1 list-stack-resources --stack-name $i | jq -r ".StackResourceSummaries[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
+  echo "Hello World\n"
+  echo $buckets
   for j in "${buckets[@]}"
   do
     # Sometimes a bucket has been deleted outside of CloudFormation; here we check that it exists.
