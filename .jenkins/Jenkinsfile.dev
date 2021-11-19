@@ -80,8 +80,7 @@ pipeline {
         script {
           dir('serverless') {
             sh '''
-              ls
-              "./destroy.sh ${BRANCH_NAME}"
+              ./destroy.sh ${BRANCH_NAME}
             '''
           }
         }
