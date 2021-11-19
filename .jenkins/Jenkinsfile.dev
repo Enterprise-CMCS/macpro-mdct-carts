@@ -80,7 +80,7 @@ pipeline {
         script {
           dir('serverless') {
             sh '''
-              docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./destroy.sh ${BRANCH_NAME}"
+              "./destroy.sh ${BRANCH_NAME}"
             '''
           }
         }
