@@ -48,7 +48,7 @@ do
   for j in "${buckets[@]}"
   do
     # Sometimes a bucket has been deleted outside of CloudFormation; here we check that it exists.
-    if aws s3api head-bucket --bucket $j > /dev/null 2>&1; then
+    if aws s3api --region us-east-1 head-bucket --bucket $j > /dev/null 2>&1; then
       bucketList+=($j)
     fi
   done
@@ -72,37 +72,37 @@ do
   set -e
 
   # Suspend bucket versioning.
-  aws s3api put-bucket-versioning --bucket $i --versioning-configuration Status=Suspended
+  aws s3api --region us-east-1 put-bucket-versioning --bucket $i --versioning-configuration Status=Suspended
 
   # Remove all bucket versions.
-  versions=`aws s3api list-object-versions \
+  versions=`aws s3api --region us-east-1 list-object-versions \
     --bucket "$i" \
     --output=json \
     --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'`
   if ! echo $versions | grep -q '"Objects": null'; then
-    aws s3api delete-objects \
+    aws s3api --region us-east-1 delete-objects \
       --bucket $i \
       --delete "$versions" > /dev/null 2>&1
   fi
 
   # Remove all bucket delete markers.
-  markers=`aws s3api list-object-versions \
+  markers=`aws s3api --region us-east-1 list-object-versions \
     --bucket "$i" \
     --output=json \
     --query='{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId} }'`
   if ! echo $markers | grep -q '"Objects": null'; then
-    aws s3api delete-objects \
+    aws s3api --region us-east-1 delete-objects \
       --bucket $i \
       --delete "$markers" > /dev/null 2>&1
   fi
 
   # Empty the bucket
-  aws s3 rm s3://$i/ --recursive
+  aws s3 --region us-east-1 rm s3://$i/ --recursive
 done
 
 # Trigger a delete for each cloudformation stack
 for i in "${stackList[@]}"
 do
   echo $i
-  aws cloudformation delete-stack --stack-name $i
+  aws cloudformation --region us-east-1 delete-stack --stack-name $i
 done
