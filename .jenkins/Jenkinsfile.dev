@@ -15,6 +15,7 @@ pipeline {
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_END', description: 'Destroy the environment at the end.')
   }
   environment {
+    CI="true"
     BUILD_TAG = resolveBuildTag()
     VPC_NAME = "macpro-dev"
     OIDC_CLIENT_ID = "0oa4juv4poiQ6nDB6297"
