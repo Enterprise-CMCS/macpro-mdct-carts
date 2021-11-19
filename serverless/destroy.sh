@@ -66,21 +66,6 @@ printf '%s\n' "${bucketList[@]}"
 echo "The following stacks will be destroyed:"
 printf '%s\n' "${stackList[@]}"
 
-echo """
-********************************************************************************
-- Scroll up and check carefully -
-********************************************************************************
-"""
-if [ "$CI" != "true" ]; then
-  read -p "Do you wish to continue?  Re-enter the stage name to continue:  " -r
-  echo
-  if [[ ! $REPLY == "$stage" ]]
-  then
-      echo "Stage name not re-entered.  Doing nothing and exiting."
-      exit 1
-  fi
-fi
-
 for i in "${bucketList[@]}"
 do
   echo $i
