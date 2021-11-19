@@ -251,6 +251,9 @@ pipeline {
     }
 
     stage("Serverless") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
       steps {
         script {
           dir('serverless') {
