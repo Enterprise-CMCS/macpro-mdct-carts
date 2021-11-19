@@ -14,6 +14,7 @@ resource "aws_lambda_permission" "allow_bucket" {
   function_name = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.uploads.arn
+  source_account = "730373213083"
 }
 
 resource "aws_s3_bucket_notification" "avscan" {
