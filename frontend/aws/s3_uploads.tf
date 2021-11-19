@@ -8,12 +8,6 @@ resource "aws_s3_bucket" "uploads" {
   force_destroy = terraform.workspace == "prod" ? false : true
 }
 
-resource "aws_s3_bucket_public_access_block" "uploads" {
-  bucket              = "cartscms-uploads-${terraform.workspace}"
-  block_public_acls   = true
-  block_public_policy = true
-}
-
 resource "aws_lambda_permission" "allow_bucket" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
