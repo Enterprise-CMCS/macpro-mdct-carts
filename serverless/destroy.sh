@@ -34,14 +34,14 @@ echo "\nCollecting information on stage $stage before attempting a destroy... Th
 set -e
 
 # Find cloudformation stacks associated with stage
-stackList=(`aws cloudformation describe-stacks | jq -r ".Stacks[] | select(.Tags[] | select(.Key==\"STAGE\") | select(.Value==\"$stage\")) | .StackName"`)
+stackList=(`aws cloudformation --region us-east-1 describe-stacks | jq -r ".Stacks[] | select(.Tags[] | select(.Key==\"STAGE\") | select(.Value==\"$stage\")) | .StackName"`)
 
 # Find buckets attached to any of the stages, so we can empty them before removal.
 bucketList=()
 set +e
 for i in "${stackList[@]}"
 do
-  buckets=(`aws cloudformation list-stack-resources --stack-name $i | jq -r ".StackResourceSummaries[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
+  buckets=(`aws cloudformation --region us-east-1 list-stack-resources --stack-name $i | jq -r ".StackResourceSummaries[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
   for j in "${buckets[@]}"
   do
     # Sometimes a bucket has been deleted outside of CloudFormation; here we check that it exists.
