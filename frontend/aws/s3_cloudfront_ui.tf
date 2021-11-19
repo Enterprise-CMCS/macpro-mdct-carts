@@ -38,7 +38,6 @@ resource "aws_s3_bucket_policy" "www_bucket_policy" {
   policy = data.aws_iam_policy_document.s3_policy.json
 }
 
-
 resource "aws_cloudfront_origin_access_identity" "s3_origin_access_identity" {
   comment = "carts s3 OAI"
 }
