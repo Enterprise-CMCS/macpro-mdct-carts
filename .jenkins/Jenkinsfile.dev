@@ -7,6 +7,9 @@ pipeline {
   }
   parameters {
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_START', description: 'Destroy the current environment at the start of the build')
+    booleanParam(defaultValue: false, name: 'DESTROY_SERVERLESS_AT_THE_START', description: 'Destroy serverless resources at the start of the build')
+    booleanParam(defaultValue: false, name: 'DESTROY_FRONTEND_AT_THE_START', description: 'Destroy the current environments frontend/api layer at the start of the build')
+    booleanParam(defaultValue: false, name: 'DESTROY_DATA_AT_THE_START', description: 'Destroy the current environments data layer at the start of the build')
     booleanParam(defaultValue: true, name: 'DEPLOY', description: 'Deploy the application to Amazon')
     booleanParam(defaultValue: false, name: 'RUN_TESTS', description: 'Run tests against the application')
     booleanParam(defaultValue: false, name: 'DESTROY_AT_THE_END', description: 'Destroy the environment at the end.')
@@ -37,7 +40,7 @@ pipeline {
       }
     }
 
-    stage("Destroy at the start") {
+    stage("Destroy everything at the start") {
       when {
         expression { env.DESTROY_AT_THE_START == "true"}
       }
@@ -52,6 +55,65 @@ pipeline {
               ]
             )
           }
+          dir('data/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+          dir('serverless') {
+            sh '''
+              sudo ./destroy.sh ${BRANCH_NAME}
+            '''
+          }
+        }
+      }
+    }
+
+    stage("Destroy Serverless at the start") {
+      when {
+        expression { env.DESTROY_SERVERLESS_AT_THE_START == "true"}
+      }
+      steps {
+        script {
+          dir('serverless') {
+            sh '''
+              sudo ./destroy.sh ${BRANCH_NAME}
+            '''
+          }
+        }
+      }
+    }
+
+    stage("Destroy Frontend/API Layer at the start") {
+      when {
+        expression { env.DESTROY_FRONTEND_AT_THE_START == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          dir('frontend/aws') {
+            jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
+              [
+                "application_version": env.BUILD_TAG,
+                "vpc_name": env.VPC_NAME
+              ]
+            )
+          }
+
+        }
+      }
+    }
+
+    stage("Destroy Data Layer at the start") {
+      when {
+        expression { env.DESTROY_DATA_AT_THE_START == "true"}
+      }
+      steps {
+        script {
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
           dir('data/aws') {
             jenkinsUtils.terraformApply(env.APPLICATION_BUCKET, env.BRANCH_NAME, "destroy",
               [
@@ -189,6 +251,9 @@ pipeline {
     }
 
     stage("Serverless") {
+      when {
+        expression { env.DEPLOY == "true"}
+      }
       steps {
         script {
           dir('serverless') {
