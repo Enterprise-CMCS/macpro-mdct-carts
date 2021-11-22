@@ -53,6 +53,7 @@ void installAwsCli() {
     if [ -z "${AWS_REGION}" ]; then AWS_REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`; fi
     aws configure set region $AWS_REGION
     aws configure set output json
+    echo $BRANCH_NAME
   '''
 }
 
