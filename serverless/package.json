@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/CMSgov/cms-bigmac#readme",
   "devDependencies": {
-    "serverless": "^2.7.0"
+    "serverless": "^2.7.0",
+    "serverless-s3-bucket-helper": "https://github.com/cmsgov/serverless-s3-bucket-helper"
   }
 }

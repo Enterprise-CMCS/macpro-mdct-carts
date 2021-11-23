@@ -40,6 +40,7 @@ module "db" {
   maintenance_window      = "Mon:00:00-Mon:03:00"
   apply_immediately       = true
   backup_window           = "03:00-06:00"
+  skip_final_snapshot     = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "false" : "true"
   backup_retention_period = terraform.workspace == "prod"? 21:0
   tags = {
     Environment = terraform.workspace
@@ -47,7 +48,7 @@ module "db" {
   subnet_ids                      = data.aws_subnet_ids.private.ids
   family                          = "postgres12"
   major_engine_version            = "12"
-  final_snapshot_identifier       = "postgres-${terraform.workspace}"
+  final_snapshot_identifier       = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "postgres-${terraform.workspace}" : "false"
   deletion_protection             = false
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }

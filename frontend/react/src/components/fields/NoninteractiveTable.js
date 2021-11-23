@@ -50,6 +50,14 @@ const NoninteractiveTable = ({ question }) => {
                       if (!returnValue) {
                         returnValue = 0;
                       }
+                      if (row[1] === 0 && row[2] > 0) {
+                        returnValue = "-";
+                        return (
+                          <td width={`${columnWidth}%`}>
+                            {returnValue.toLocaleString()}
+                          </td>
+                        );
+                      }
                       returnValue = Math.round(returnValue * 1000) / 1000;
                       return (
                         <td width={`${columnWidth}%`}>

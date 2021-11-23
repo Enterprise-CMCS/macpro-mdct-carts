@@ -1,6 +1,9 @@
 # We are only running the SEDS task nightly, not the CARTS task
 service: run-dms-task
 
+plugins:
+  - serverless-s3-bucket-helper
+
 # Create an optimized package for our functions
 package:
   individually: true
