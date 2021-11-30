@@ -31,7 +31,6 @@ const Submit = ({ certify }) => (
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
-
   return (
     <>
       <h3>Thank you for submitting your CARTS report!</h3>
