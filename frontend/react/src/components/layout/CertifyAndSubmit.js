@@ -31,7 +31,6 @@ const Submit = ({ certify }) => (
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
-  const [showAlert, setShowAlert] = useState(true);
 
   const surveyOptions = [
     "https://docs.google.com/forms/d/1HTOqQ4-gVw8OSRg7Whyjn-FQUoFYKWUogWeG69lR7cQ/edit?ts=5fb6f4d6&gxids=7628",
@@ -48,35 +47,6 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
         Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
         {lastSave.format("h:mm A")} by {user}.
       </p>
-
-      {showAlert ? (
-        <div
-          aria-live="polite"
-          aria-relevant="additions removals"
-          className="visibility"
-        >
-          <Alert
-            variation="success"
-            role="alertdialog"
-            heading="Optional User Feedback Survey"
-          >
-            <p className="ds-c-alert__text">
-              We would appreciate your feedback on the CARTS {linkYear}{" "}
-              Redesign. Follow this link to participate in a brief survey
-              <a href={surveyOptions[oddOrEven]}> Google Forms</a>
-            </p>
-            <Button
-              className="hide-alert-button"
-              variation="transparent"
-              onClick={() => setShowAlert(!showAlert)}
-            >
-              {" "}
-              No, thank you{" "}
-            </Button>
-          </Alert>
-        </div>
-      ) : null}
-
       <h3>What to expect next</h3>
       <p>You‘ll hear from CMS if they have any questions about your report.</p>
       <Button onClick={doneDispatch} variation="primary">
