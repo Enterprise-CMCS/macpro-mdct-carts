@@ -133,7 +133,7 @@ const formula = (targets, providedFormula, precision) => {
     Object.keys(manipulatedFormula).forEach((i) => {
       // Data in Database can get added commas which will break when used in formulas so we get rid of the commas
       if (typeof targets[i] == "string") {
-        targets[i] = targets[i].replace(",", "");
+        targets[i] = targets[i].replaceAll(",", "");
       }
       // Check if value has a string value
       if (!Number.isNaN(targets[i]) && targets[i] !== "") {
