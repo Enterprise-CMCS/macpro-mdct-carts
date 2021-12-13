@@ -132,6 +132,15 @@ const formula = (targets, providedFormula, precision) => {
     // Loop through formula as an object
     Object.keys(manipulatedFormula).forEach((i) => {
       // Check if value has a string value
+      if (
+        targets[i] !== null
+        && targets[i] !== undefined
+      ) {
+        try {
+          targets[i] = targets[i].replace(",", "");
+        } catch {
+        }
+      }
       if (!Number.isNaN(targets[i]) && targets[i] !== "") {
         const replaceValue = new RegExp(`<${i}>`, "g");
 
