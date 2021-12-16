@@ -134,6 +134,10 @@ const formula = (targets, providedFormula, precision) => {
       // Data in Database can get added commas which will break when used in formulas so we get rid of the commas
       if (typeof targets[i] == "string") {
         targets[i] = targets[i].replace(/,/g, "");
+        //Checks for alphabet characters and invalidates those values
+        if (!/^[0-9,.]*$/.test(targets[i])) {
+          targets[i] = "0";
+        }
       }
       // Check if value has a string value
       if (!Number.isNaN(targets[i]) && targets[i] !== "") {
