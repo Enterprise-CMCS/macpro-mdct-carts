@@ -52,7 +52,12 @@ const Print = ({ currentUser, state }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
-    const htmlString = document.querySelector("html").innerHTML;
+    const htmlString = document
+      .querySelector("html")
+      .innerHTML.replaceAll(
+        '<link href="',
+        `<link href="https://${window.location.host}/`
+      );
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
 
     const res = await axios.post(
