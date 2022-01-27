@@ -56,7 +56,7 @@ const Print = ({ currentUser, state }) => {
       .querySelector("html")
       .innerHTML.replaceAll(
         '<link href="',
-        `<link href="https://${window.location.host}/`
+        `<link href="https://${window.location.host}`
       );
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
 
