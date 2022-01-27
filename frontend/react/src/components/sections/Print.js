@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { renderToString } from "react-dom/server";
 import { connect, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -6,10 +7,15 @@ import { Button } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
+import axios from "axios";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+import store from "../../store/storeIndex";
 
 // Print page
 const printWindow = (event) => {
   event.preventDefault();
+  //send to server
   window.print();
 };
 
@@ -24,6 +30,40 @@ const printWindow = (event) => {
 const Print = ({ currentUser, state }) => {
   const dispatch = useDispatch();
 
+  const openPdf = (basePdf) => {
+    let byteCharacters = atob(basePdf);
+    let byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    let byteArray = new Uint8Array(byteNumbers);
+    let file = new Blob([byteArray], { type: "application/pdf;base64" });
+    let fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
+  };
+
+  const testFunction = async () => {
+    const htmlString1 = renderToString(
+      <Provider store={store}>
+        <Router>{sections}</Router>
+      </Provider>
+    );
+    console.log(htmlString1);
+    document.querySelectorAll("input").forEach((element) => {
+      element.style.height = "50px";
+    });
+    const htmlString = document.querySelector("html").innerHTML;
+    const base64String = btoa(unescape(encodeURIComponent(htmlString)));
+
+    const res = await axios.post(
+      "https://f6y1eb1jw5.execute-api.us-east-1.amazonaws.com/fiveoheight/prince",
+      base64String
+    );
+
+    console.log(res);
+
+    openPdf(res.data);
+  };
   // Load formData via side effect
   useEffect(() => {
     // Create function to call data to prevent return data from useEffect
@@ -83,6 +123,7 @@ const Print = ({ currentUser, state }) => {
       }
     }
   }
+  console.log({ sections });
 
   // Return sections with wrapper div and print dialogue box
   return (
@@ -91,7 +132,7 @@ const Print = ({ currentUser, state }) => {
         <p>Click below to print full CARTS report shown here</p>
         <Button
           className="ds-c-button--primary ds-c-button--large print-all-btn"
-          onClick={printWindow}
+          onClick={testFunction}
           title="Print"
         >
           <FontAwesomeIcon icon={faPrint} /> Print
