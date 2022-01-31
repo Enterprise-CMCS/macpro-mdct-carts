@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { renderToString } from "react-dom/server";
 import { connect, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +7,6 @@ import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 import axios from "axios";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import store from "../../store/storeIndex";
 
 // Print page
 const printWindow = (event) => {
@@ -42,13 +38,8 @@ const Print = ({ currentUser, state }) => {
     window.open(fileURL);
   };
 
-  const testFunction = async () => {
-    const htmlString1 = renderToString(
-      <Provider store={store}>
-        <Router>{sections}</Router>
-      </Provider>
-    );
-    console.log(htmlString1);
+  const getPdfFriendlyDocument = async () => {
+    document.querySelector("noscript").remove();
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
@@ -64,8 +55,6 @@ const Print = ({ currentUser, state }) => {
       "https://f6y1eb1jw5.execute-api.us-east-1.amazonaws.com/fiveoheight/prince",
       base64String
     );
-
-    console.log(res);
 
     openPdf(res.data);
   };
@@ -137,7 +126,7 @@ const Print = ({ currentUser, state }) => {
         <p>Click below to print full CARTS report shown here</p>
         <Button
           className="ds-c-button--primary ds-c-button--large print-all-btn"
-          onClick={testFunction}
+          onClick={getPdfFriendlyDocument}
           title="Print"
         >
           <FontAwesomeIcon icon={faPrint} /> Print
