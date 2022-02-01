@@ -39,7 +39,7 @@ const Print = ({ currentUser, state }) => {
   };
 
   const getPdfFriendlyDocument = async () => {
-    document.querySelector("noscript").remove();
+    document.querySelector("noscript")?.remove();
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
