@@ -5,6 +5,12 @@ locals {
   django_settings_module = {
     "prod" : "carts.settings"
   }
+  prince_api_ssm_path = substr(terraform.workspace, 0, 4) == "dev-" ? "/default/prince_api_endpoint"  : "/${terraform.workspace}/prince_api_endpoint"
+}
+
+
+data "aws_ssm_parameter" "prince_api_endpoint" {
+  name = local.prince_api_ssm_path
 }
 
 data "aws_ssm_parameter" "postgres_user" {

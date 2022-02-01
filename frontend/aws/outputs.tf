@@ -19,3 +19,7 @@ output "cloudfront_distribution_id" {
 output "s3_uploads_bucket_name" {
   value = aws_s3_bucket.uploads.id
 }
+
+output "prince_api_endpoint" {
+  value = data.aws_ssm_parameter.prince_api_endpoint.value
+}

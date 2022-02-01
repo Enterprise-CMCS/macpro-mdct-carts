@@ -6,7 +6,7 @@ import { Button } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
-import axios from "axios";
+import axios from "../../authenticatedAxios";
 
 // Print page
 const printWindow = (event) => {
@@ -50,11 +50,7 @@ const Print = ({ currentUser, state }) => {
         `<link href="https://${window.location.host}`
       );
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-
-    const res = await axios.post(
-      "https://f6y1eb1jw5.execute-api.us-east-1.amazonaws.com/fiveoheight/prince",
-      base64String
-    );
+    const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
 
     openPdf(res.data);
   };
