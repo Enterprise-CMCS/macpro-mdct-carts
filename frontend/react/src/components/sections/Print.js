@@ -39,7 +39,7 @@ const Print = ({ currentUser, state }) => {
   };
 
   const getPdfFriendlyDocument = async () => {
-    const noscriptTag = document.querySelector(".noscript");
+    const noscriptTag = document.querySelector("noscript");
     if (noscriptTag) {
       noscriptTag.remove();
     }
@@ -62,12 +62,17 @@ const Print = ({ currentUser, state }) => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
-      // const { stateUser } = state;
+      const { stateUser } = state;
       // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
-      const stateCode = urlParams.get("state");
+      let stateCode;
+      if (stateUser.currentUser.state.id) {
+        stateCode = stateUser.currentUser.state.id;
+      } else {
+        stateCode = urlParams.get("state");
+      }
 
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
