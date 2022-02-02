@@ -62,7 +62,7 @@ const Print = ({ currentUser, state }) => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
-      const { stateUser } = state;
+      // const { stateUser } = state;
       // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
@@ -75,7 +75,7 @@ const Print = ({ currentUser, state }) => {
       // Pull data based on user details
       await Promise.all([
         dispatch(
-          loadSections({ userData: currentUser, selectedState, selectedYear })
+          loadSections({ userData: currentUser, stateCode, selectedYear })
         ),
       ]);
 
