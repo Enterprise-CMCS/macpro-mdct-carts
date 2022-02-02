@@ -101,7 +101,9 @@ const FormActions = (props) => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href={`/print?year=${formYear}`}
+                href={`/print?year=${formYear}&state=${
+                  window.location.href.split("/")[5]
+                }`}
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDiaglogue}

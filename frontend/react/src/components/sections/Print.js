@@ -39,7 +39,10 @@ const Print = ({ currentUser, state }) => {
   };
 
   const getPdfFriendlyDocument = async () => {
-    document.querySelector("noscript").remove();
+    const noscriptTag = document.querySelector(".noscript");
+    if (noscriptTag) {
+      noscriptTag.remove();
+    }
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
@@ -64,6 +67,7 @@ const Print = ({ currentUser, state }) => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
+      const selectedState = urlParams.get("state");
 
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
@@ -71,7 +75,7 @@ const Print = ({ currentUser, state }) => {
       // Pull data based on user details
       await Promise.all([
         dispatch(
-          loadSections({ userData: currentUser, stateCode, selectedYear })
+          loadSections({ userData: currentUser, selectedState, selectedYear })
         ),
       ]);
 
