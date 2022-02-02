@@ -67,7 +67,7 @@ const Print = ({ currentUser, state }) => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
-      const selectedState = urlParams.get("state");
+      const stateCode = urlParams.get("state");
 
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
