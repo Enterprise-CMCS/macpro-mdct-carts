@@ -63,7 +63,7 @@ const Print = ({ currentUser, state }) => {
     const retrieveUserData = async () => {
       // Get user details
       const { stateUser } = state;
-      const stateCode = stateUser.abbr;
+      // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
