@@ -67,7 +67,7 @@ const Print = ({ currentUser, state }) => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
-      const selectedState = urlParams.get("state");
+      const stateCode = urlParams.get("state");
 
       // Start Spinner
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
@@ -75,7 +75,7 @@ const Print = ({ currentUser, state }) => {
       // Pull data based on user details
       await Promise.all([
         dispatch(
-          loadSections({ userData: currentUser, selectedState, selectedYear })
+          loadSections({ userData: currentUser, stateCode, selectedYear })
         ),
       ]);
 
