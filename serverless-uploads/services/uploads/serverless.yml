@@ -64,10 +64,10 @@ functions:
   avDownloadDefinitions:
     handler: src/download-definitions.lambdaHandleEvent
     events:
-      - schedule: cron(0 */6 * * ? *)
+      - schedule: cron(20 2 * * ? *)
     role: BucketAVDownloadRole
     timeout: 300 # 300 seconds = 5 minutes
-    memorySize: 1024
+    memorySize: 2048
     layers:
       - !Ref ClamDefsLambdaLayer
     environment:
