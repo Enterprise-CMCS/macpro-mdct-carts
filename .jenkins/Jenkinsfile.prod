@@ -5,6 +5,9 @@ pipeline {
     quietPeriod(0)
     ansiColor('xterm')
   }
+  environment {
+    SKIP_DATA_LAYER = 'true'
+  }
   parameters {
     string(
       name: 'VERSION',
@@ -69,7 +72,7 @@ pipeline {
 
     stage("Deploy Data Layer") {
       when {
-        expression { env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true" }
+        expression { (env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true") && env.SKIP_DATA_LAYER == "false"}
       }
       steps {
         script {
