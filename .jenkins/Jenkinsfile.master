@@ -7,7 +7,6 @@ pipeline {
   }
   environment {
     BUILD_TAG = resolveBuildTag()
-    SKIP_DATA_LAYER = 'true'
   }
   stages {
     stage("Prep Agent") {
@@ -82,7 +81,7 @@ pipeline {
 
     stage("Deploy Data Layer") {
       when {
-        expression { (env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true") && env.SKIP_DATA_LAYER == "false" }
+        expression { env.DEPLOY_DATA == "true" || env.FORCE_DEPLOY == "true" }
       }
       steps {
         script {
