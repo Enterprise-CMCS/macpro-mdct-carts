@@ -23,15 +23,7 @@ class JwtDevAuthentication(JwtAuthentication):
 
         if dev_username:
             _, suffix = dev_username.split("-")
-            roles = {
-                "admin": "admin_user",
-                "bus": "bus_user",
-                "co_user": "co_user",
-                "ak": "state_user",
-                "az": "state_user",
-                "ma": "state_user",
-            }
-
+            roles = {}
             role = roles[suffix]
             if role == "state_user":
                 state_codes = [suffix.upper()]
