@@ -96,9 +96,6 @@ Append `?format=json` to the URLs to get bare JSON.
 
 - `/sections/:year/:sectionOrdinal/:subsectionMarker` e.g. `http://localhost:81/sections/2020/3/c`
 - `/sections/:year/:sectionOrdinal/` e.g. `http://localhost:81/sections/2020/3`
-
-1. Okta authentication: add `?dev=dev-ak` to the URL in order to bypass the Okta authentication and view the application as a fake user from Alaska; `dev-az` and `dev-ma` are also supported values for the `dev` parameter that will provide fake users for those states.
-
 ### Running the React Test Suite
 
 1. Navigate to the front end
