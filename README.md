@@ -96,6 +96,7 @@ Append `?format=json` to the URLs to get bare JSON.
 
 - `/sections/:year/:sectionOrdinal/:subsectionMarker` e.g. `http://localhost:81/sections/2020/3/c`
 - `/sections/:year/:sectionOrdinal/` e.g. `http://localhost:81/sections/2020/3`
+
 ### Running the React Test Suite
 
 1. Navigate to the front end
