@@ -45,9 +45,9 @@ def get_or_create_fake_user(dev_username):
                 states = State.objects.filter(code__in=state_codes)
         except StatesFromUsername.DoesNotExist:
             pass
-        else:
-            states = []
-            email = f"{dev_username}@example.com"
+    else:
+        states = []
+        email = f"{dev_username}@example.com"
 
     dev_user, _ = User.objects.get_or_create(
         username=dev_username,
