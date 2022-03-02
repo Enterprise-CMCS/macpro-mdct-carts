@@ -80,6 +80,8 @@ MIDDLEWARE = [
     "carts.cors.CorsMiddleware",
 ]
 
+# testing
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "carts.auth.JwtAuthentication",
