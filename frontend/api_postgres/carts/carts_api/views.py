@@ -32,11 +32,7 @@ from rest_framework.permissions import (  # type: ignore
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-
-from carts.auth_fake import (
-    get_or_create_fake_user,
-    are_fake_users_allowed,
-)
+from carts.auth_dev import JwtDevAuthentication
 from carts.permissions import (
     AdminHideRoleFromUsername,
     AdminHideRoleFromJobCode,
@@ -1068,12 +1064,8 @@ def UserDeactivateViewSet(request, user=None):
 
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
-    if not are_fake_users_allowed():
-        return JsonResponse(
-            {"detail": "Fake Users Not Allowed"},
-            status=500,
-        )
-    user = get_or_create_fake_user(username)
+    jwt_auth = JwtDevAuthentication()
+    user, _ = jwt_auth.authenticate(request, username=username)
     state = user.appuser.states.all()[0] if user.appuser.states.all() else []
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
 
