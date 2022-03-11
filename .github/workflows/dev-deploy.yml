@@ -24,7 +24,9 @@ jobs:
           fi
       - uses: actions/checkout@v2
       - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
+        run: |
+          chmod +x .github/branchNameValidation.sh
+          ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values
@@ -125,27 +127,3 @@ jobs:
         with:
           name: image_scan_results
           path: ecr_scan_*.json
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
