@@ -24,8 +24,7 @@ jobs:
           fi
       - uses: actions/checkout@v2
       - name: Validate branch name
-        run: |
-          chmod +x .github/branchNameValidation.sh
+        run: .github/branchNameValidation.sh
           ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
@@ -45,7 +44,6 @@ jobs:
           TF_VAR_openid_discovery_url: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh $branch_name
         env:
