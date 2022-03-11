@@ -83,7 +83,6 @@ jobs:
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
           IMAGE_TAG: ${{env.branch_name}}.${{env.HASH}}
         run: |
-        #  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Build and push react artifacts.
