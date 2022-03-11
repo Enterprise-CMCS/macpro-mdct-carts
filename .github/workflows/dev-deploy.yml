@@ -65,8 +65,8 @@ jobs:
         id: postgres_deployer_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: $ECR_REPOSITORY_POSTGRESS_DEPLOYER
-          IMAGE_TAG: $BUILD_TAG
+          ECR_REPOSITORY: postgres_deployer
+          IMAGE_TAG: $branch_name.${GIT_COMMIT}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG data/postgres_deployer
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -75,7 +75,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: postgres_django
-          IMAGE_TAG: $BUILD_TAG
+          IMAGE_TAG: $branch_name.${GIT_COMMIT}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
