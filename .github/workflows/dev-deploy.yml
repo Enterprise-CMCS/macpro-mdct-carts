@@ -65,20 +65,21 @@ jobs:
         id: postgres_deployer_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: postgres_deployer
-          IMAGE_TAG: $branch_name.${GIT_COMMIT}
+        #  ECR_REPOSITORY: postgres_deployer
+        #  IMAGE_TAG: $branch_name.${GIT_COMMIT}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG data/postgres_deployer
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT} data/postgres_deployer
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT}
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: postgres_django
-          IMAGE_TAG: $branch_name.${GIT_COMMIT}
+        #  ECR_REPOSITORY: postgres_django
+        #  IMAGE_TAG: $branch_name.${GIT_COMMIT}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        #  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT} frontend/api_postgres
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT}
       - name: Build and push react artifacts.
         run: |
           cd frontend/react
@@ -121,13 +122,9 @@ jobs:
         run: |
           aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY_API_POSTGRESS --image-id imageTag=$BUILD_TAG
           aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY_API_POSTGRESS  --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
-      - name: Store test results
+      - name: Store ecr images scan results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: test_results
-          path: tests/nightwatch/tests_output
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: image_scan_results
           path: ecr_scan_*.json
