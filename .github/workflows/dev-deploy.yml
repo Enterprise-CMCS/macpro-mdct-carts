@@ -28,6 +28,14 @@ jobs:
           ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
+      - name: set commit HASH for image tagging
+        run: echo "HASH=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+      - name: Create env var for  postgress deployer ECR repo name
+        run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
+      - name: Create env var for  API postgress django ecr repo name
+        run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
+      - name: Create env var for  BUILD TAG
+        run:  echo "BUILD_TAG={{env.branch_name}}.${{env.HASH}}" >> "$GITHUB_ENV"            
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
@@ -37,7 +45,6 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
-          BUILD_TAG: $branch_name.${GIT_COMMIT}
           VPC_NAME: "macpro-dev"
           OIDC_CLIENT_ID: "0oa4juv4poiQ6nDB6297"
           OIDC_ISSUER: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
@@ -65,21 +72,21 @@ jobs:
         id: postgres_deployer_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        #  ECR_REPOSITORY: postgres_deployer
-        #  IMAGE_TAG: $branch_name.${GIT_COMMIT}
+          ECR_REPOSITORY: {{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER}}               #postgres_deployer
+          IMAGE_TAG: {{env.branch_name}}.${{env.HASH}}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT} data/postgres_deployer
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT}
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG data/postgres_deployer
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        #  ECR_REPOSITORY: postgres_django
-        #  IMAGE_TAG: $branch_name.${GIT_COMMIT}
+          ECR_REPOSITORY: {{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: {{env.branch_name}}.${{env.HASH}}
         run: |
         #  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT} frontend/api_postgres
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$branch_name.${GIT_COMMIT}
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Build and push react artifacts.
         run: |
           cd frontend/react
@@ -120,8 +127,8 @@ jobs:
           aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY_POSTGRESS_DEPLOYER  --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
       - name: Scan postgres_django(frontend/api_postgres) Docker image
         run: |
-          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY_API_POSTGRESS --image-id imageTag=$BUILD_TAG
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY_API_POSTGRESS  --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
+          aws ecr wait image-scan-complete --repository-name ${{env.ECR_REPOSITORY_API_POSTGRESS}} --image-id imageTag=$BUILD_TAG
+          aws ecr describe-image-scan-findings --repository-name ${{env.ECR_REPOSITORY_API_POSTGRESS}} --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
       - name: Store ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
