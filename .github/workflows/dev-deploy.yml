@@ -68,7 +68,7 @@ jobs:
           IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           pushd data/postgres_deployer
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           popd
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
