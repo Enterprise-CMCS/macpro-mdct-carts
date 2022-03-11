@@ -16,12 +16,7 @@ jobs:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
       - name: set branch_name
-        run: |
-          if [[ "$GITHUB_REF" =~ ^refs/heads/dependabot/.* ]]; then # Dependabot builds very long branch names.  This is a switch to make it shorter.
-            echo "branch_name=`echo ${GITHUB_REF#refs/heads/} | md5sum | head -c 10 | sed 's/^/x/'`" >> $GITHUB_ENV
-          else
-            echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-          fi
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV "$GITHUB_ENV"
       - uses: actions/checkout@v2
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
@@ -33,8 +28,6 @@ jobs:
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
         run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
-      - name: Create env var for  BUILD TAG
-        run:  echo "BUILD_TAG={{env.branch_name}}.${{env.HASH}}" >> "$GITHUB_ENV"
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
@@ -72,25 +65,27 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG: ${{env.branch_name}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}} data/postgres_deployer
-        #  docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}}
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG data/postgres_deployer
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.branch_name}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Build and push react artifacts.
+        env:
+          IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           cd frontend/react
           docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
           tar -zcvf cartsbuild.tar.gz build
-          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
+          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
           rm -rf cartsbuild.tar.gz
     #  - name: Scan postgres_deployer(data layer) Docker image
     #    id: postgres_deployer_scan
@@ -119,13 +114,23 @@ jobs:
     #      echo "${{ steps.postgres_django_scan.outputs.medium }} total vulnerabilities."
     #      echo "${{ steps.postgres_django_scan.outputs.low }} total vulnerabilities."
       - name: Scan postgres_deployer(data layer) Docker image
+        id: postgres_django_ecr_scan
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
-          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}  --image-id imageTag=$BUILD_TAG
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY_POSTGRESS_DEPLOYER  --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
       - name: Scan postgres_django(frontend/api_postgres) Docker image
+        id: postgres_django_ecr_scan
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
-          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$BUILD_TAG
-          aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
+          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
       - name: Store ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
