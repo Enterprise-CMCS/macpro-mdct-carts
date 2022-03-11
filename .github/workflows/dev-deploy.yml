@@ -68,6 +68,8 @@ jobs:
           IMAGE_TAG: ${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           pushd data/postgres_deployer
+          pwd
+          ls -la
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           popd
