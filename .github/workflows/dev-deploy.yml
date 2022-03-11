@@ -19,7 +19,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV "$GITHUB_ENV"
       - uses: actions/checkout@v2
       - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
+        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set commit HASH for image tagging
@@ -44,7 +44,7 @@ jobs:
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
       - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $branch_name
+        run: ./.github/github-lock.sh $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure AWS credentials
