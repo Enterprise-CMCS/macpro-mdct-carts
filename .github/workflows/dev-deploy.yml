@@ -1,0 +1,205 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - "actions-migration"
+    #  - "dev-*"
+    #  - "*"
+    #  - "dependabot/**"
+      - "!skipci*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - name: set branch_name
+        run: |
+          if [[ "$GITHUB_REF" =~ ^refs/heads/dependabot/.* ]]; then # Dependabot builds very long branch names.  This is a switch to make it shorter.
+            echo "branch_name=`echo ${GITHUB_REF#refs/heads/} | md5sum | head -c 10 | sed 's/^/x/'`" >> $GITHUB_ENV
+          else
+            echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          fi
+      - uses: actions/checkout@v2
+      - name: Validate branch name
+        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
+      - name: set branch specific variable names
+        run: ./.github/build_vars.sh set_names
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
+          BUILD_TAG: $branch_name.${GIT_COMMIT}
+          VPC_NAME: "macpro-dev"
+          OIDC_CLIENT_ID: "0oa4juv4poiQ6nDB6297"
+          OIDC_ISSUER: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
+          TF_VAR_openid_discovery_url: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
+          ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
+          ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
+
+      - name: lock this branch to prevent concurrent builds
+        run: ./.github/github-lock.sh $branch_name
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Terraform Installation
+        uses: hashicorp/setup-terraform@v1
+        with:
+            terraform_version: 0.13.4
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push postgres_deployer (data layer) image
+        id: postgres_deployer_build
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: $ECR_REPOSITORY_POSTGRESS_DEPLOYER
+          IMAGE_TAG: $BUILD_TAG
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG data/postgres_deployer
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      - name: Build, tag, and push postgres_django(frontend/api_postgres) image
+        id: postgres_django_build
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: postgres_django
+          IMAGE_TAG: $BUILD_TAG
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      - name: Build and push react artifacts.
+        run: |
+          cd frontend/react
+          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+          tar -zcvf cartsbuild.tar.gz build
+          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$BUILD_TAG/cartsbuild.tar.gz
+          rm -rf cartsbuild.tar.gz
+    #  - name: Scan postgres_deployer(data layer) Docker image
+    #    id: postgres_deployer_scan
+    #    uses: alexjurkiewicz/ecr-scan-image@v1.7.0
+    #    with:
+    #      repository: postgres_deployer
+    #      tag: ${{ steps.postgres_deployer_build.outputs.tag }}
+          #fail_threshold: high
+    #  - name: postgres_django (frontend/api_postgres) Docker image scan results
+    #    run: |
+    #      echo "${{ steps.postgres_deployer_scan.outputs.total }} total vulnerabilities."
+    #      echo "${{ steps.postgres_deployer_scan.outputs.critical }} total vulnerabilities."
+    #      echo "${{ steps.postgres_deployer_scan.outputs.high }} total vulnerabilities."
+    #      echo "${{ steps.postgres_deployer_scan.outputs.medium }} total vulnerabilities."
+    #      echo "${{ steps.postgres_deployer_scan.outputs.low }} total vulnerabilities."
+    #  - name: Scan postgres_django(frontend/api_postgres) Docker image
+    #    id: postgres_django_scan
+    #    uses: alexjurkiewicz/ecr-scan-image@v1.7.0
+    #      tag: ${{ steps.postgres_django_build.outputs.tag }}
+          #fail_threshold: high
+    #  - name: postgres_django (frontend/api_postgres) Docker image scan results
+    #    run: |
+    #      echo "${{ steps.postgres_django_scan.outputs.total }} total vulnerabilities."
+    #      echo "${{ steps.postgres_django_scan.outputs.critical }} total vulnerabilities."
+    #      echo "${{ steps.postgres_django_scan.outputs.high }} total vulnerabilities."
+    #      echo "${{ steps.postgres_django_scan.outputs.medium }} total vulnerabilities."
+    #      echo "${{ steps.postgres_django_scan.outputs.low }} total vulnerabilities."
+
+      - name: Scan postgres_deployer(data layer) Docker image
+        run: |
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY_POSTGRESS_DEPLOYER --image-id imageTag=$BUILD_TAG
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY_POSTGRESS_DEPLOYER  --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+      - name: Scan postgres_django(frontend/api_postgres) Docker image
+        run: |
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY_API_POSTGRESS --image-id imageTag=$BUILD_TAG
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY_API_POSTGRESS  --image-id imageTag=$BUILD_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
+      - name: Store test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test_results
+          path: tests/nightwatch/tests_output
+      - uses: actions/upload-artifact@v3
+        with:
+          name: image_scan_results
+          path: ecr_scan_*.json
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: run unit tests
+        run: ./test-unit.sh
+      - name: publish test coverage to code climate
+        if: env.CODE_CLIMATE_ID != ''
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/services/ui-src/coverage/lcov.info:lcov
+      - name: Store unit test reults
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit_test_results
+          path: ${{github.workspace}}/services/ui-src/coverage/lcov.info
+      - name: deploy
+        run: |
+          # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
+          # This can optionally be set as an GitHub Actions Secret
+          ./deploy.sh $STAGE_PREFIX$branch_name
+      - name: Run Nightwatch suite
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$branch_name`
+          popd
+          ./test.sh
+      - name: Store test reults
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test_results
+          path: tests/nightwatch/tests_output
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["master", "val", "production"]'), env.branch_name) && failure ()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_USERNAME: Destroy Alerts
+          SLACK_ICON_EMOJI: ":bell:"
+          SLACK_COLOR: ${{job.status}}
+          SLACK_FOOTER: ""
+          MSG_MINIMAL: actions url,commit,ref
