@@ -72,17 +72,17 @@ jobs:
         id: postgres_deployer_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}               #postgres_deployer
-          IMAGE_TAG: ${{ env.branch_name }}.${{ env.HASH }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
+          IMAGE_TAG: ${{env.branch_name}}.${{env.HASH}}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.BUILD_TAG }} data/postgres_deployer
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.BUILD_TAG }}
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}} data/postgres_deployer
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}}
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{ env.branch_name }}.${{ env.HASH }}
+          IMAGE_TAG: ${{env.branch_name}}.${{env.HASH}}
         run: |
         #  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG frontend/api_postgres
@@ -120,7 +120,6 @@ jobs:
     #      echo "${{ steps.postgres_django_scan.outputs.high }} total vulnerabilities."
     #      echo "${{ steps.postgres_django_scan.outputs.medium }} total vulnerabilities."
     #      echo "${{ steps.postgres_django_scan.outputs.low }} total vulnerabilities."
-
       - name: Scan postgres_deployer(data layer) Docker image
         run: |
           aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}  --image-id imageTag=$BUILD_TAG
