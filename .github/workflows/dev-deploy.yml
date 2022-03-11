@@ -28,6 +28,8 @@ jobs:
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
         run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
+      - name: set TAG
+        run: echo "TAG=${GITHUB_REF#refs/heads/}.${{ github.sha }}" >> $GITHUB_ENV "$GITHUB_ENV"
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
@@ -65,7 +67,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG: ${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.TAG}}          #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           pushd data/postgres_deployer
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
