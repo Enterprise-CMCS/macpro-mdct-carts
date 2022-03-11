@@ -24,7 +24,7 @@ jobs:
           fi
       - uses: actions/checkout@v2
       - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name      
+        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set commit HASH for image tagging
@@ -75,7 +75,7 @@ jobs:
           IMAGE_TAG: ${{env.branch_name}}.${{env.HASH}}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}} data/postgres_deployer
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}}
+        #  docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BUILD_TAG}}
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
