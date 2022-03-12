@@ -20,6 +20,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
+      - name: run installer
+        run: ./.github/installer.sh  
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set commit HASH for image tagging
@@ -67,8 +69,6 @@ jobs:
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
           IMAGE_TAG: ${{ github.sha }}        #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
-          ./.github/installer.sh
-          groovy -version
           pushd data/postgres_deployer
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
