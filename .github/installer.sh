@@ -9,5 +9,4 @@ groovy -version
 
 cd .jenkins/groovy
 groovy -version
-jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", env.BRANCH_NAME)
-jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
+jenkinsUtils.buildAndPushImageToEcr( data/postgres_deployer)
