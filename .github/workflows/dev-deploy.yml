@@ -67,7 +67,6 @@ jobs:
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
           IMAGE_TAG: ${{ github.sha }}        #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
-          groovy -version
           chmod +x installer.sh
           ./installer.sh
           groovy -version
