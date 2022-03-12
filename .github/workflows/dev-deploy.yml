@@ -21,7 +21,7 @@ jobs:
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
       - name: run installer
-        run: ./.github/installer.sh  
+        run: ./.github/installer.sh
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set commit HASH for image tagging
@@ -62,6 +62,11 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+      - name: testing jenkinsUtils
+        run: |
+          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+            jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
+            jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
       - name: Build, tag, and push postgres_deployer (data layer) image
         id: postgres_deployer_build
         env:
