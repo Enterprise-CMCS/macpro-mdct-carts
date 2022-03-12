@@ -59,16 +59,16 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.4
+      - name: testing jenkinsUtils
+        run: |
+          pushd .jenkins/groovy
+          groovy -version
+          jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", env.BRANCH_NAME)
+          jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
+          popd
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: testing jenkinsUtils
-        run: |
-          groovy -version
-          pushd .jenkins/groovy
-          jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", env.BRANCH_NAME)
-        #  jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
-          popd
       - name: Build, tag, and push postgres_deployer (data layer) image
         id: postgres_deployer_build
         env:
