@@ -64,9 +64,10 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: testing jenkinsUtils
         run: |
-          def jenkinsUtils = load ".jenkins/groovy/JenkinsUtils.groovy"
+          pushd .jenkins/groovy/JenkinsUtils.groovy
             jenkinsUtils.buildAndPushImageToEcr("data/postgres_deployer", "postgres_deployer", [env.BUILD_TAG, env.BRANCH_NAME])
             jenkinsUtils.buildAndPushImageToEcr("frontend/api_postgres", "postgres_django", [env.BUILD_TAG, env.BRANCH_NAME])
+          popd
       - name: Build, tag, and push postgres_deployer (data layer) image
         id: postgres_deployer_build
         env:
