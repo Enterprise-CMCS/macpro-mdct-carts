@@ -9,4 +9,4 @@ groovy -version
 
 cd .jenkins/groovy
 groovy -version
-jenkinsUtils.buildAndPushImageToEcr( data/postgres_deployer)
+jenkinsUtils.buildAndPushImageToEcr
