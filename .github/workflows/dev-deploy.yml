@@ -67,8 +67,7 @@ jobs:
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
           IMAGE_TAG: ${{ github.sha }}        #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
-          chmod +x installer.sh
-          ./installer.sh
+          ./.github/installer.sh
           groovy -version
           pushd data/postgres_deployer
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
