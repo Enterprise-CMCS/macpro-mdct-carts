@@ -185,14 +185,16 @@
         },
         "questions": {
           "type": "array",
-          "items": [
-            {
-              "$ref": "#/definitions/question"
-            },
-            {
-              "$ref": "#/definitions/repeatables"
-            }
-          ],
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/question"
+              },
+              {
+                "$ref": "#/definitions/repeatables"
+              }
+            ]
+          },
           "additionalItems": {
             "$ref": "#/definitions/repeatables"
           }
