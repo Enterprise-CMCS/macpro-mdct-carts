@@ -78,7 +78,6 @@ import requests
 
 from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
 
-
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
     "AK": {"program_type": "medicaid_exp_chip"},
@@ -246,17 +245,21 @@ def update_formtemplates_by_year(request):
 
 @api_view(["POST"])
 def prince_req(request):
-    print(os.environ.get('PRINCE_API_ENDPOINT'))
-    api_endpoint = 'https://y5pywiyrb7.execute-api.us-east-1.amazonaws.com/master/prince'
-    aws_host = api_endpoint.split('/')[-3]
+    print(os.environ.get("PRINCE_API_ENDPOINT"))
+    api_endpoint = (
+        "https://y5pywiyrb7.execute-api.us-east-1.amazonaws.com/master/prince"
+    )
+    aws_host = api_endpoint.split("/")[-3]
 
     try:
         auth = BotoAWSRequestsAuth(
             aws_host=aws_host,
-            aws_region='us-east-1',
-            aws_service='execute-api')
-        r = requests.post(url=api_endpoint,
-                          data=request.data['encodedHtml'], auth=auth)
+            aws_region="us-east-1",
+            aws_service="execute-api",
+        )
+        r = requests.post(
+            url=api_endpoint, data=request.data["encodedHtml"], auth=auth
+        )
     except Exception as e:
         print(e)
         return HttpResponse(status=400, message=e)
