@@ -85,7 +85,7 @@ jobs:
           popd
       - name: Build and push react artifacts.
         env:
-          IMAGE_TAG: $BRANCH_NAME${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
         run: |
           cd frontend/react
@@ -141,3 +141,4 @@ jobs:
         with:
           name: image_scan_results
           path: ecr_scan_*.json
+      - name: Deploy Uploads Scan
