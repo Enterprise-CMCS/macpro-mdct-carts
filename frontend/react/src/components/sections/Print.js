@@ -53,8 +53,10 @@ const Print = ({ currentUser, state }) => {
         `<link href="https://${window.location.host}`
       );
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
-
+    // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
+    const res = await axios.post("prince", {
+      encodedHtml: base64String,
+    });
     openPdf(res.data);
   };
   // Load formData via side effect

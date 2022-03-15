@@ -17,3 +17,4 @@ cryptography==3.1.1
 toolz
 django-db-views
 django-ses
+aws-requests-auth

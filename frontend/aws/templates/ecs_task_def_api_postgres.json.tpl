@@ -42,6 +42,10 @@
         "value": "${endpoint_ui}"
       },
       {
+        "name": "PRINCE_API_ENDPOINT",
+        "value": "${prince_api_endpoint}
+      },
+      {
         "name": "S3_UPLOADS_BUCKET_NAME",
         "value": "${uploads_bucket_name}"
       }
