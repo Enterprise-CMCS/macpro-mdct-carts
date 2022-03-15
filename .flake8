@@ -1,3 +1,0 @@
-[flake8]
-# Not ignoring these will clash with black
-ignore = E203, W503

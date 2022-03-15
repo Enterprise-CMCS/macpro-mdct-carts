@@ -1,2 +1,0 @@
-CREATE TABLESPACE schipdata LOCATION '/app/pgdata';
-ALTER DATABASE postgres SET DEFAULT_TABLESPACE TO schipdata;

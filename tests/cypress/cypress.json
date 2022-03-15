@@ -1,15 +1,16 @@
 {
-  "nodeVersion": "system",
-  "baseUrl": "https://mdctcartsdev.cms.gov/",
+  "baseUrl": "http://localhost:3000/",
+  "experimentalStudio": true,
   "redirectionLimit": 20,
-  "retries": 5,
+  "retries": 2,
   "watchForFileChanges": true,
-  "testFiles": "**/*.feature",
+  "testFiles": ["**/*.feature", "**/*.spec.js"],
   "fixturesFolder": "fixtures",
   "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshots",
   "videosFolder": "videos",
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
-  "defaultCommandTimeout": 15000
+  "defaultCommandTimeout": 15000,
+  "types": ["cypress", "cypress-axe"]
 }

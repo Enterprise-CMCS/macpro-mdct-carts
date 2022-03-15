@@ -1,106 +1,163 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/ccc447a00640e708538b/maintainability)](https://codeclimate.com/repos/6102dd981f91b059fd002f56/maintainability)
+# cms-mdct-carts
 
-# cms-carts-seds
+A serverless form submission application built and deployed to AWS with the Serverless Application Framework.
+
+## Release
+
+Our product is promoted through branches. Master is merged to val to affect a master release, and val is merged to production to affect a production release. Please use the buttons below to promote/release code to higher environments.<br />
 
 ## Architecture
 
 ![Architecture Diagram](./.images/architecture.svg?raw=true)
 
-## Required Tools
+## Local Dev
 
-You will need [Node](https://nodejs.org/en/) and to make things easier you should have [NVM](https://github.com/nvm-sh/nvm) installed
+Populate .env files in the root directory and in the `ui-src` directory.
 
-This project uses [Yarn](https://yarnpkg.com/) as a package manager. Make sure to install it globally. No not use npm or commit any package-lock files
+Run all the services locally with the command `./dev local`
 
-You will need docker installed. either with [homebrew](https://brew.sh/) or may we suggest the [docker desktop](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
+See the Requirements section if the command asks for any prerequisites you don't have installed.
 
-You will need [serverless](https://www.serverless.com/) installed globally. `npm install -g serverless`
+Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
 
-## Environments
+Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
 
-The `master` branch reflects our latest product. On merge to `master`, the dev environment is deployed and tested in Amazon. When the `master` build succeeds, the commit on `master` is tagged in git as a candidate release version.
+When run locally, auth bypasses Cognito. The frontend mimics login in local storage with a mock user and sends an id in the `cognito-identity-id` header on every request. `serverless-offline` expects that and sets it as the cognitoId in the requestContext for your lambdas, just like Cognito would in AWS.
 
-There are three primary environments
+### Prettier Linter
 
-- Production - [https://mdctcarts.cms.gov/](https://mdctcarts.cms.gov/)
-- Val (staging) - [https://mdctcartsval.cms.gov/](https://mdctcartsval.cms.gov/)
-- Dev - [https://mdctcartsdev.cms.gov/](https://mdctcartsdev.cms.gov/)
+We use Prettier to format all code. This runs as part of a Git Hook and changes to files will cause the deploy to fail.
 
-## Continuous Integration and Deployment
+Most IDEs have a Prettier plugin that can be configured to run on file save. You can also run the format check manually from the IDE or invoking Prettier on the command line.
 
-Jenkins is used to deploy the various releasses from master into their respective environments
+```
+npx prettier --write "**/*.tsx"
+```
 
-- [http://internal-jenkins-cartsseds-1894071124.us-east-1.elb.amazonaws.com/](http://internal-jenkins-cartsseds-1894071124.us-east-1.elb.amazonaws.com/)
+## Usage
 
-When a version needs to be deployed to staging or production select the desired pipeline and choose `deploy with parameters` inserting the release number you wish to deploy.
+This application is built and deployed via GitHub Actions.
 
-## Some development notes
+Want to deploy from your Mac?
 
-Development will be done on feature/bugfix branches that will be submitted as PRs. Accepted PRs will be merged to the `master` branch.
+- Create an AWS account
+- Install/configure the AWS CLI
+- npm install -g severless
+- brew install yarn
+- sh deploy.sh
 
-A PR must be reviewed and approved by someone other than the submitter. The submitting developer is responsible for merging it to `master` once the PR has been approved and all comments have been resolved.
+Building the app locally
 
-This project uses [Prettier](https://prettier.io/) for code formatting. Uee format_on_save functionality or run `npx prettier --write /path/to/file` on your files before submitting your PR
+- todo
 
-## Set up
+Running tests locally
 
-1. Clone this repository
-1. Navigate to the cloned repository
-   - `cd cms-carts-seds`
-1. Ensure you are in the `master` branch
+- npm test
 
-## Start Up Localhost with Django/Postgres Backend
+## Requirements
 
-1. Navigate to the 'frontend' subfolder
-   - `cd frontend`
-1. Connect a container to the network (only necessary on first build)
-   - `docker network create data_net`
-1. Build your services
+Node - we enforce using a specific version of node, specified in the file `.nvmrc`. This version matches the Lambda runtime. We recommend managing node versions using [NVM](https://github.com/nvm-sh/nvm#installing-and-updating).
 
-- `docker-compose -f docker-compose.dev.yml up --build`
+Serverless - Get help installing it here: [Serverless Getting Started page](https://www.serverless.com/framework/docs/providers/aws/guide/installation/)
 
-1. Access the project
+Yarn - in order to install dependencies, you need to [install yarn](https://classic.yarnpkg.com/en/docs/install/).
 
-- Visit the react frontend at http://localhost:81
-- Visit the Django api at http://localhost:8000
-- The local postgres db is available at localhost:5432
+AWS Account: You'll need an AWS account with appropriate IAM permissions (admin recommended) to deploy this app in Amazon.
 
-## Connect to db and Insert starter data
+If you are on a Mac, you should be able to install all the dependencies like so:
 
-Connect to the db running at localhost:5432 via a PostgreSQL admin tool such as [pgAdmin](https://www.pgadmin.org/). user: `postgres` password not required
-You will need to import some some additional data into your db:
+```
+# install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-- download this [file](https://qmacbis.atlassian.net/wiki/spaces/~46767958/pages/2803499013/CARTS+-+starter+db+data)
-- in your db admin tool choose the `public` schema
-- select the option to restore data from file
-- choose the file you just downloaded
-- in the restore options select to only import the data
-- the data should be imported into the existing tables. NOTE: the process may report as having failed but should still import the data
+# select the version specified in .nvmrc
+nvm install
+nvm use
 
-## Available Endpoints:
+# install yarn
+brew install yarn
 
-- `/api/v1/sections/<int:year>/<str:state>`: all the sections for a year and state, e.g. `/api/v1/sections/2020/ak`.
-- `/api/v1/sections/<int:year>/<str:state>/<int:section>`: the section for that year and state, e.g. `/api/v1/sections/2020/ak/1`.
-- `/api/v1/sections/<int:year>/<str:state>/<int:section>/<str:subsection>`: the subsection for that year and state, e.g. `/api/v1/sections/2020/az/3/c`.
-- `/api/v1/questions/<str:state>/<slug:id>`: e.g. `/api/v1/questions/ma/2020-03-c-01-01`.
-- `/api/v1/generic-sections/<int:year>`: all the default sections for a year e.g. `/api/v1/generic-sections/2020`.
-- `/api/v1/generic-sections/<int:year>/<int:section>`: the default section for that year e.g. `/api/v1/generic-sections/2020/1`.
-- `/api/v1/generic-sections/<int:year>/<int:section>/<str:subsection>`: the default subsection for that year e.g. `/api/v1/generic-sections/2020/1/a`.
-- `/api/v1/generic-questions/<slug:id>`: the default corresponding question, e.g. `/api/v1/generic-questions/2020-01-a-01`.
+# run dev
+./dev local
+```
 
-Currently only Sections 1, 2, 3 (incomplete) and 5 are available, and only mock data for AK, AZ, and MA is available.
+## DynamoDB locally
 
-Append `?format=json` to the URLs to get bare JSON.
+In order to run dynamodb locally you will need to have java installed on your system. If not currently installed go here: https://java.com/en/download/ to download the latest version.
 
-## Available Routes:
+If you want to a visual view of your dynamodb after the application is up and running you can install the dynamodb-admin tool from here: https://www.npmjs.com/package/dynamodb-admin
 
-- `/sections/:year/:sectionOrdinal/:subsectionMarker` e.g. `http://localhost:81/sections/2020/3/c`
-- `/sections/:year/:sectionOrdinal/` e.g. `http://localhost:81/sections/2020/3`
+- to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin` in a new terminal window
 
-### Running the React Test Suite
+## Testing
 
-1. Navigate to the front end
-   1. `cd frontend\react\src`
-2. Launch the test runner in interactive watch mode.
-   1. Run `npm test`
-   2. Press `a` to run all tests.
+### ui-src Unit Tests
+
+```
+cd services/ui-src/
+yarn test
+
+# live reload all tests
+yarn test --watch
+
+# specify test to run
+npx jest src/components --watch  # run all component tests and watch for changes
+```
+
+### Cypress Testing
+
+[See here](./tests/cypress/README.md)
+
+## Create New Branches and PRs for Tests
+
+When writing Cypress tests for an existing branch, create a new branch and write the tests there. For example, if the branch that needs tests is called `oy2-1234`, create a new branch called `oy2-1234test`.
+
+When the tests have been written, create a new PR for `oy2-1234test` and set its base to `oy2-1234`. Submit this PR for review.
+
+## Dependencies
+
+None.
+
+## Examples
+
+None.
+
+## Contributing / To-Do
+
+See current open [issues](https://github.com/mdial89f/quickstart-serverless/issues) or check out the [project board](https://github.com/mdial89f/quickstart-serverless/projects/1)
+
+Please feel free to open new issues for defects or enhancements.
+
+To contribute:
+
+- Fork this repository
+- Make changes in your fork
+- Open a pull request targetting this repository
+
+Pull requests are being accepted.
+
+## License
+
+[![License](https://img.shields.io/badge/License-CC0--1.0--Universal-blue.svg)](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
+
+See [LICENSE](LICENSE.md) for full details.
+
+```text
+As a work of the United States Government, this project is
+in the public domain within the United States.
+
+Additionally, we waive copyright and related rights in the
+work worldwide through the CC0 1.0 Universal public domain dedication.
+```
+
+### Contributors
+
+This project made possible by the [Serverless Stack](https://serverless-stack.com/) and its authors/contributors. The extremely detailed tutorial, code examples, and serverless pattern is where this project started. I can't recommend this resource enough.
+
+| [![Mike Dial][dial_avatar]][dial_homepage]<br/>[Mike Dial][dial_homepage] | [![Seth Sacher][sacher_avatar]][sacher_homepage]<br/>[Seth Sacher][sacher_homepage] |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+
+[dial_homepage]: https://github.com/mdial89f
+[dial_avatar]: https://avatars.githubusercontent.com/mdial89f?size=150
+[sacher_homepage]: https://github.com/sethsacher
+[sacher_avatar]: https://avatars.githubusercontent.com/sethsacher?size=150

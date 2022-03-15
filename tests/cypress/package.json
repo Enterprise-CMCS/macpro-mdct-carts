@@ -5,19 +5,23 @@
   "main": "index.js",
   "scripts": {
     "start": "cd ../../ && ./dev local && cd -",
-    "test:ci": "cypress run --browser chrome --headless",
+    "test:ci": "cypress install && cypress run --browser chrome --headless",
     "cypress": "cypress open",
     "test": "concurrently --kill-others \"npm start\" \"npm run cypress\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "axe-core": "^4.4.1",
     "concurrently": "^6.2.1",
-    "cypress": "^8.3.0",
-    "cypress-cucumber-preprocessor": "^4.2.0",
+    "cypress": "^9.4.1",
+    "cypress-axe": "^0.14.0",
     "cypress-xpath": "^1.6.2"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
+  },
+  "dependencies": {
+    "cypress-tags": "^0.3.0"
   }
 }

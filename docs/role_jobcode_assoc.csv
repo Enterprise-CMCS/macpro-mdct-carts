@@ -1,3 +1,0 @@
-job_code,user_role
-CARTS_Group_Prod,"bus_user,co_user,state_user"
-CARTS_Group_Prod_Admin,"bus_user,co_user,state_user,admin_user"
