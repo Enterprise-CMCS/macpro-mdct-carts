@@ -26,10 +26,8 @@ jobs:
   black:
     name: python files have been formatted
     runs-on: ubuntu-latest
-    container: python:3.8
     steps:
-      - uses: actions//checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - name: install black
-        run: pip install black
-      - name: run black
-        run: black --check --line-length 79 --skip-string-normalization $(git diff --diff-filter=ACMR --name-only --relative origin/master -- . | grep .py$ | xargs)
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - uses: psf/black@d038a24ca200da9dacc1dcb05090c9e5b45b7869
+        with:
+          options: --check --line-length 79 --skip-string-normalization

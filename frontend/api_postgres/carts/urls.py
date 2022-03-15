@@ -86,6 +86,7 @@ api_patterns = [
 ]
 
 urlpatterns = [
+    path("prince", views.prince_req),
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     path("report/<int:year>/<str:state>/", views.report),
