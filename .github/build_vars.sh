@@ -14,6 +14,7 @@ var_list=(
   'TF_VAR_openid_discovery_url'
   'ECR_REPOSITORY_POSTGRESS_DEPLOYER'
   'ECR_REPOSITORY_API_POSTGRESS'
+  'APPLICATION_BUCKET'
 )
 
 set_value() {
