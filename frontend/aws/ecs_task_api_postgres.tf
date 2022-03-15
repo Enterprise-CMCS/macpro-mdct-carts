@@ -51,7 +51,7 @@ resource "aws_ecs_task_definition" "api_postgres" {
     postgres_db              = data.aws_ssm_parameter.postgres_db.value,
     postgres_user            = data.aws_ssm_parameter.postgres_user.value,
     postgres_password        = data.aws_ssm_parameter.postgres_password.value,
-    prince_api_endpoint      = data.aws_ssm_parameter.prince_api_endpoint,
+    prince_api_endpoint      = data.aws_ssm_parameter.prince_api_endpoint.value,
     cloudwatch_log_group     = aws_cloudwatch_log_group.frontend.name,
     cloudwatch_stream_prefix = "api_postgres",
     postgres_api_url         = var.acm_certificate_domain_api_postgres == "" ? aws_alb.api_postgres.dns_name : var.acm_certificate_domain_api_postgres,
