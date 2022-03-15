@@ -20,10 +20,11 @@ install_deps() {
 
 deploy() {
   service=$1
-  pushd services/$service
+  #pushd services/$service
+  cd services/$service
   install_deps
   serverless deploy  --stage $stage
-  popd
+#  popd
 }
 
 install_deps
