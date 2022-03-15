@@ -212,17 +212,17 @@ def update_formtemplates_by_year(request):
             #
             # Update State Status
             #
-            allUsers = StateStatus.objects.all()
-            for newStateStatus in allUsers.iterator():
+            allStates = State.objects.all()
+            for state in allStates.iterator():
                 try:
                     stateExists = StateStatus.objects.filter(
-                        state=newStateStatus.state_id, year=year
+                        state=state.code, year=year
                     )
 
                     if len(stateExists) == 0:
                         createdStateStatus = StateStatus.objects.create(
                             year=year,
-                            state_id=newStateStatus.state_id,
+                            state=state,
                             user_name="pguser",
                             last_changed=datetime.now(tz=timezone.utc),
                         )
@@ -230,9 +230,9 @@ def update_formtemplates_by_year(request):
                 except:
                     print(
                         "WARNING: StateStatus Create Failed for user: "
-                        + newStateStatus.user_name
+                        + "pguser"
                         + " and State Code: "
-                        + newStateStatus.state_id
+                        + state.code
                         + " and Year: "
                         + str(year)
                     )
