@@ -143,6 +143,7 @@ jobs:
           path: ecr_scan_*.json
       - name: Deploy Uploads Scan
         run: |
-          pushd serverless-uploads
+          cd serverless-uploads
           docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
-          popd
+
+    #  - name: Deploy Data Layer    
