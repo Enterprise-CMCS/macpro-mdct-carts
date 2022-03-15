@@ -43,7 +43,7 @@
       },
       {
         "name": "PRINCE_API_ENDPOINT",
-        "value": "${prince_api_endpoint}
+        "value": "${prince_api_endpoint}"
       },
       {
         "name": "S3_UPLOADS_BUCKET_NAME",
