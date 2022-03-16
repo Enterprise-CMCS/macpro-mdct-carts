@@ -146,14 +146,27 @@ jobs:
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}          
-      - name: Deploy Uploads Scan
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-        run: |
-          cd serverless-uploads
-          docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      -uses: serverless/github-action@v3
+        with:
+          args: deploy
+          env:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          run: |
+            cd serverless-uploads
+            docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
+        # or if using AWS credentials directly
+        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #- name: Deploy Uploads Scan
+      #  env:
+      #    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #    aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      #  run: |
+      #    cd serverless-uploads
+      #    docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
 
     #  - name: Deploy Data Layer
