@@ -141,6 +141,12 @@ jobs:
         with:
           name: image_scan_results
           path: ecr_scan_*.json
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}          
       - name: Deploy Uploads Scan
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
