@@ -154,17 +154,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Deploy Uploads Scan
+        env:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-            cd serverless-uploads
-            docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
-
-      #- name: Deploy Uploads Scan
-      #  env:
-      #    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #    aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      #  run: |
-      #    cd serverless-uploads
-      #    docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
+          cd serverless-uploads
+          docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
 
     #  - name: Deploy Data Layer
