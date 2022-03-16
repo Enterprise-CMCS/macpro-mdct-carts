@@ -24,7 +24,6 @@ from datetime import datetime
 class JwtAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         raw_token = self._extract_token(request)
-        print("+++++++++raw token: " + raw_token)
         try:
             return self._do_authenticate(raw_token)
         except Exception as e:
@@ -48,19 +47,19 @@ class JwtAuthentication(authentication.BaseAuthentication):
 
     def _do_authenticate(self, token):
         try:
-            print(f"\n\n%%%%>got token: {token}")
+            print(f"\n\n%%%%>got token")
             kid = extract_kid(token)
-            print(f"\n\n%%%%>kid extracted: {kid}")
+            print(f"\n\n%%%%>kid extracted")
             key = fetch_pub_key(kid)
-            print(f"\n\n%%%%>key extracted: {key}")
+            print(f"\n\n%%%%>key extracted")
             verify_token(token, key)
-            print(f"\n\n%%%%>token verified: {kid}")
+            print(f"\n\n%%%%>token verified")
 
             user_info = fetch_user_info(token)
 
             # Check if user is_active in database, if not exit
             if _is_user_active(user_info) == False:
-                print("username: ", user_info.preferred_username)
+                print("user is not active")
                 return
 
             user = _get_or_create_user(user_info)
@@ -95,15 +94,13 @@ def _get_or_create_user(user_info):
     user.email = user_info["email"]
     user.last_login = datetime.now()
 
-    print(f"$$$$\n\nobtained user", user.email, "\n\n\n")
+    print(f"$$$$\n\nobtained user", "\n\n\n")
 
     role_map = [*RolesFromJobCode.objects.all()]
     print(f"$$$$\n\nhere's a role map", role_map, "\n\n\n")
-    print(f"\n\n      getting user with username: ", user.username)
+    print(f"\n\n      getting user")
 
     username_map = [*RoleFromUsername.objects.filter(username=user.username)]
-
-    print(f"\n\n    $$$$$username_map is: ", username_map)
 
     role = role_from_raw_ldap_job_codes(
         role_map, username_map, user_info["job_codes"]
