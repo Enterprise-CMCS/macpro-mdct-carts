@@ -147,7 +147,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      -uses: serverless/github-action@v3
+      - uses: serverless/github-action@v3
         with:
           args: deploy
         env:
