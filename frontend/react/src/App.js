@@ -4,6 +4,7 @@ import "./App.scss";
 import { BrowserRouter as Router } from "react-router-dom";
 import WrappedSecurity from "./wrapSecurity";
 
+// Add comment to force build frontend (will revert)
 function App() {
   return (
     <Router>
