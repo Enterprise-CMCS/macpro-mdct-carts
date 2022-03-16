@@ -6,11 +6,11 @@ import WrappedSecurity from "./wrapSecurity";
 
 // Add comment to force build frontend (will revert)
 function App() {
+  // This is where the react app gets kickstartedz
   return (
     <Router>
       <WrappedSecurity />
     </Router>
   );
 }
-
 export default App;
