@@ -60,13 +60,14 @@ This project uses [Prettier](https://prettier.io/) for code formatting. Uee form
 - `docker-compose -f docker-compose.local.yml down -v --rmi local`
 - `docker-compose -f docker-compose.local.yml up -d`
 
-*This will run in the console and then a few things happen in the background. There is a roughly a two minute time period from when the command completes and the ui is available to see the status you can do `docker-compose -f docker-compose.local.yml logs`*
+_This will run in the console and then a few things happen in the background. There is a roughly a two minute time period from when the command completes and the ui is available to see the status you can do `docker-compose -f docker-compose.local.yml logs`_
 
 1. Access the project
 
 - Visit the react frontend at http://localhost:81
 - Visit the Django api at http://localhost:8000
 - The local postgres db is available at localhost:5432
+
 ## Available Endpoints:
 
 - `/api/v1/sections/<int:year>/<str:state>`: all the sections for a year and state, e.g. `/api/v1/sections/2020/ak`.
