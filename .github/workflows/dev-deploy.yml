@@ -135,6 +135,6 @@ jobs:
     #      aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
           cd serverless-uploads
-          ./deploy.sh $GITHUB_JOB"
+          ./deploy.sh $GITHUB_JOB
 
     #  - name: Deploy Data Layer
