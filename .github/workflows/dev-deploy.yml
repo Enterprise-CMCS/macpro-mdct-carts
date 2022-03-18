@@ -48,6 +48,19 @@ jobs:
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -89,7 +102,7 @@ jobs:
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
         run: |
           cd frontend/react
-          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+          rm -rf build && npm ci && npm run build && cp env.sh .env build/
           tar -zcvf cartsbuild.tar.gz build
           aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
           rm -rf cartsbuild.tar.gz"
@@ -115,19 +128,6 @@ jobs:
         with:
           name: image_scan_results
           path: ecr_scan_*.json
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
-      - name: set path
-        run: |
-          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
       - name: Deploy Uploads Scan
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
