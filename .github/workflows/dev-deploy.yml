@@ -48,6 +48,19 @@ jobs:
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -92,33 +105,7 @@ jobs:
           docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
           tar -zcvf cartsbuild.tar.gz build
           aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
-          rm -rf cartsbuild.tar.gz
-    #  - name: Scan postgres_deployer(data layer) Docker image
-    #    id: postgres_deployer_scan
-    #    uses: alexjurkiewicz/ecr-scan-image@v1.7.0
-    #    with:
-    #      repository: postgres_deployer
-    #      tag: ${{ steps.postgres_deployer_build.outputs.tag }}
-          #fail_threshold: high
-    #  - name: postgres_django (frontend/api_postgres) Docker image scan results
-    #    run: |
-    #      echo "${{ steps.postgres_deployer_scan.outputs.total }} total vulnerabilities."
-    #      echo "${{ steps.postgres_deployer_scan.outputs.critical }} total vulnerabilities."
-    #      echo "${{ steps.postgres_deployer_scan.outputs.high }} total vulnerabilities."
-    #      echo "${{ steps.postgres_deployer_scan.outputs.medium }} total vulnerabilities."
-    #      echo "${{ steps.postgres_deployer_scan.outputs.low }} total vulnerabilities."
-    #  - name: Scan postgres_django(frontend/api_postgres) Docker image
-    #    id: postgres_django_scan
-    #    uses: alexjurkiewicz/ecr-scan-image@v1.7.0
-    #      tag: ${{ steps.postgres_django_build.outputs.tag }}
-          #fail_threshold: high
-    #  - name: postgres_django (frontend/api_postgres) Docker image scan results
-    #    run: |
-    #      echo "${{ steps.postgres_django_scan.outputs.total }} total vulnerabilities."
-    #      echo "${{ steps.postgres_django_scan.outputs.critical }} total vulnerabilities."
-    #      echo "${{ steps.postgres_django_scan.outputs.high }} total vulnerabilities."
-    #      echo "${{ steps.postgres_django_scan.outputs.medium }} total vulnerabilities."
-    #      echo "${{ steps.postgres_django_scan.outputs.low }} total vulnerabilities."
+          rm -rf cartsbuild.tar.gz"
       - name: Scan postgres_deployer(data layer) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -141,19 +128,6 @@ jobs:
         with:
           name: image_scan_results
           path: ecr_scan_*.json
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: serverless/github-action@v3
-        with:
-          args: deploy
-        env:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Deploy Uploads Scan
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -161,6 +135,6 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
           cd serverless-uploads
-          docker run --rm -w /app -v $(pwd):/app node:12.20.0 /bin/bash -c "./deploy.sh $GITHUB_JOB"
+          ./deploy.sh $GITHUB_JOB"
 
     #  - name: Deploy Data Layer
