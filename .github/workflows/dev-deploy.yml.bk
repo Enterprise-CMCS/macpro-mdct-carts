@@ -122,21 +122,19 @@ jobs:
         run: |
           aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
-      - name: Archive ecr images scan results
+      - name: Store ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: image_scan_results
           path: ecr_scan_*.json
       - name: Deploy Uploads Scan
+    #    env:
+    #      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #      aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
           cd serverless-uploads
           ./deploy.sh $GITHUB_JOB
-      - name: Deploy Data Layer
-        run: ./terraform.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply 'application_version=${{env.BRANCH_NAME}}' 'vpc_name=macpro'
-      - name: Archive aws logs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          path: data/aws/log*
-     #- name: Deploy Frontend Layer    
+
+    #  - name: Deploy Data Layer
