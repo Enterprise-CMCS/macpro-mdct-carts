@@ -143,7 +143,7 @@ jobs:
           name: data-aws-logs
           path: data/aws/log*
       - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
