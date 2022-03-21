@@ -57,25 +57,16 @@ This project uses [Prettier](https://prettier.io/) for code formatting. Uee form
    - `docker network create data_net`
 1. Build your services
 
-- `docker-compose -f docker-compose.dev.yml up --build`
+- `docker-compose -f docker-compose.local.yml down -v --rmi local`
+- `docker-compose -f docker-compose.local.yml up -d`
+
+_This will run in the console and then a few things happen in the background. There is a roughly a two minute time period from when the command completes and the ui is available to see the status you can do `docker-compose -f docker-compose.local.yml logs`_
 
 1. Access the project
 
 - Visit the react frontend at http://localhost:81
 - Visit the Django api at http://localhost:8000
 - The local postgres db is available at localhost:5432
-
-## Connect to db and Insert starter data
-
-Connect to the db running at localhost:5432 via a PostgreSQL admin tool such as [pgAdmin](https://www.pgadmin.org/). user: `postgres` password not required
-You will need to import some some additional data into your db:
-
-- download this [file](https://qmacbis.atlassian.net/wiki/spaces/~46767958/pages/2803499013/CARTS+-+starter+db+data)
-- in your db admin tool choose the `public` schema
-- select the option to restore data from file
-- choose the file you just downloaded
-- in the restore options select to only import the data
-- the data should be imported into the existing tables. NOTE: the process may report as having failed but should still import the data
 
 ## Available Endpoints:
 
