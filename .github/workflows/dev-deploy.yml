@@ -133,7 +133,7 @@ jobs:
           cd serverless-uploads
           ./deploy.sh $GITHUB_JOB
       - name: Deploy Data Layer
-        run: ./terraform.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{ github.sha }} vpc_name=macpro-dev
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{ github.sha }} vpc_name=macpro-dev
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -141,7 +141,7 @@ jobs:
           name: data-aws-logs
           path: data/aws/log*
       - name: Deploy Frontend Layer
-        run: ./terraform.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BRANCH_NAME}}-${{ github.sha }} vpc_name=macpro-dev
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BRANCH_NAME}}-${{ github.sha }} vpc_name=macpro-dev
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -151,4 +151,4 @@ jobs:
       - name: Serverless
         run: |
           cd serverless
-          ./deploy.sh $GITHUB_JOB   
+          ./deploy.sh $GITHUB_JOB
