@@ -8,8 +8,11 @@ stateBucket=${1}
 workspace=${2}
 action=${3}
 varString1=${4}
-varString1=${5}
+varString2=${5}
 
+
+echo "$varString1"
+echo "$varString2"
 #'application_versionenv.BUILD_TAG'
 #'vpc_name=env.VPC_NAME'
 

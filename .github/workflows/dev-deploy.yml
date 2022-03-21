@@ -133,10 +133,10 @@ jobs:
           cd serverless-uploads
           ./deploy.sh $GITHUB_JOB
       - name: Deploy Data Layer
-        run: ./terraform.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply 'application_version=${{env.BRANCH_NAME}}' 'vpc_name=macpro'
+        run: ./terraform.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BRANCH_NAME}} vpc_name=macpro-dev
       - name: Archive aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           path: data/aws/log*
-     #- name: Deploy Frontend Layer    
+     #- name: Deploy Frontend Layer
