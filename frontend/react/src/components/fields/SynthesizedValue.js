@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import Question from "./Question"; // eslint-disable-line import/no-cycle
+import Question from "./Question";
 import synthesizeValue from "../../util/synthesize";
 
 const SynthesizedValue = ({ question, value, ...props }) => {
