@@ -148,3 +148,7 @@ jobs:
         with:
           name: Frontend-aws-logs
           path: frontend/aws/log*
+      - name: Serverless
+        run: |
+          cd serverless
+          ./deploy.sh $GITHUB_JOB   
