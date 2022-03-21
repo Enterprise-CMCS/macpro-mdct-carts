@@ -21,4 +21,4 @@ repos:
     rev: v1.1.0
     hooks:
       - id: detect-secrets
-        args: ['--exclude-files', 'services/uploads/src/test.json']
+        args: ["--exclude-files", "services/uploads/src/test.json"]
