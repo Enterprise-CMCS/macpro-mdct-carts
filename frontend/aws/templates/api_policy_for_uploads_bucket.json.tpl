@@ -12,7 +12,7 @@
         {
             "Effect": "Allow",
             "Action": "execute-api:Invoke",
-            "Resource": "arn:aws:execute-api:us-east-1:635052997545:y5pywiyrb7/*/POST/prince"
+            "Resource": "*"
         }
     ]
 }
