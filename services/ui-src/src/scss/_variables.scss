@@ -1,0 +1,45 @@
+/**********************
+  Variables
+**********************/
+
+/* Colors */
+$black: #000;
+$white: #fff;
+
+$san-marino: #0872b9;
+$azure-radiance: #0077ff;
+$green-vogue: #112e51;
+$lily-white: #e1f3f8;
+
+$shuttle-gray: #5b616b;
+$bright-gray: #323c47;
+$masala: #3f3f3f;
+$alto: #d8d8d8;
+
+$brand-primary: $san-marino;
+$brand-secondary: $azure-radiance;
+$brand-tertiary: $green-vogue;
+
+$color-font: $black;
+$color-hint: $shuttle-gray;
+
+$color-gray: $masala;
+$color-gray-dark: $bright-gray;
+$color-gray-light: $shuttle-gray;
+$color-gray-lightest: #f1f1f1;
+
+$color-icon: #7b7b7b;
+
+/* Padding/Margin */
+$padding: 8px;
+$margin: 8px;
+
+/* Border */
+$border-width: 4px;
+$border-radius: 2px;
+
+/* Fonts */
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;

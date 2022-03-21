@@ -1,0 +1,27 @@
+/**********************
+  SIDEBAR
+**********************/
+
+.sidebar {
+  margin: ($margin * 3) 0;
+
+  .state-header {
+    margin-bottom: ($margin * 3);
+    position: relative;
+  }
+
+  .state-image {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+  }
+
+  .state-name {
+    font-size: 1.6rem;
+    font-weight: $font-weight-semi-bold;
+    line-height: 70px;
+    padding-left: 70px;
+  }
+}
