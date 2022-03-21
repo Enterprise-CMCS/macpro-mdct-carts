@@ -6,6 +6,7 @@ on:
       - "*"
       - "dependabot/**"
       - "!skipci*"
+      - "!main" #Inherited from QMR, needs vetted
 
 jobs:
   deploy:
