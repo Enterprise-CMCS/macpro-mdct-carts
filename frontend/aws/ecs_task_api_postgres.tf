@@ -5,8 +5,7 @@ locals {
   django_settings_module = {
     "prod" : "carts.settings"
   }
-  #prince_api_ssm_path = substr(terraform.workspace, 0, 4) == "dev-" ? "/default/prince_api_endpoint"  : "/${terraform.workspace}/prince_api_endpoint"
-  prince_api_ssm_path = substr(terraform.workspace, 0, 4) == "actions-" ? "/default/prince_api_endpoint"  : "/${terraform.workspace}/prince_api_endpoint"
+  prince_api_ssm_path = substr(terraform.workspace, 0, 4) == "acti" ? "/default/prince_api_endpoint"  : "/${terraform.workspace}/prince_api_endpoint"
 }
 
 
