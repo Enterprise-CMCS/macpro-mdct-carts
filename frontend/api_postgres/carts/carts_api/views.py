@@ -1,3 +1,4 @@
+from tokenize import String
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
@@ -245,10 +246,7 @@ def update_formtemplates_by_year(request):
 
 @api_view(["POST"])
 def prince_req(request):
-    print(os.environ.get("PRINCE_API_ENDPOINT"))
-    api_endpoint = (
-        "https://y5pywiyrb7.execute-api.us-east-1.amazonaws.com/master/prince"
-    )
+    api_endpoint = os.environ.get("PRINCE_API_ENDPOINT", "")
     aws_host = api_endpoint.split("/")[-3]
 
     try:
@@ -1128,7 +1126,6 @@ def fake_user_data(request, username=None):  # pylint: disable=unused-argument
 @ensure_csrf_cookie
 def initiate_session(request):
     print(f"\n\n\n!!!!!!!!!!!!!!!initiating session")
-    print("testing stuff")
     resultJson = {"transaction_result": "success"}
 
     return HttpResponse(json.dumps(resultJson))
