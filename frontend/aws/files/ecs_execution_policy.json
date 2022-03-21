@@ -9,8 +9,7 @@
         "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage",
         "logs:CreateLogStream",
-        "logs:PutLogEvents",
-        "execute-api:Invoke"
+        "logs:PutLogEvents"
       ],
       "Resource": "*"
     }
