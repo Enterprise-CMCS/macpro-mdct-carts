@@ -131,7 +131,7 @@ jobs:
       - name: Deploy Uploads Scan
         run: |
           cd serverless-uploads
-          ./deploy.sh $GITHUB_JOB
+          ./deploy.sh ${{env.BRANCH_NAME}}
       - name: Deploy Data Layer
         run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{ github.sha }} vpc_name=macpro-dev
       - name: Archive data aws logs
@@ -151,4 +151,4 @@ jobs:
       - name: Serverless
         run: |
           cd serverless
-          ./deploy.sh $GITHUB_JOB
+          ./deploy.sh ${{env.BRANCH_NAME}}
