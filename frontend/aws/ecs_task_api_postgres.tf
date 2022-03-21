@@ -173,7 +173,7 @@ resource "aws_alb" "api_postgres" {
 }
 
 resource "aws_alb_target_group" "api_postgres" {
-  name                 = "api-postgres-tg-${terraform.workspace}"
+  name                 = "api-postgres-${terraform.workspace}"
   port                 = 8000
   target_type          = "ip"
   protocol             = "HTTP"
@@ -384,7 +384,7 @@ resource "aws_s3_bucket_object" "waf_bucket_folder" {
     acl    = "private"
     ##key= "/Prefix/Sub-folder/"
     key    = "CloudTrail/${terraform.workspace}/"
-    
+
 }
 # # ========================Create Kinesis firehose and role ========================
 resource "aws_kinesis_firehose_delivery_stream" "stream" {
