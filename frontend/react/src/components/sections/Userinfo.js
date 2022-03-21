@@ -12,7 +12,7 @@ const Userinfo = ({ currentUser }) => {
       );
     }
     return (
-      <span>
+      <span key={key}>
         <strong>{key}</strong>: {value}
       </span>
     );
@@ -20,7 +20,7 @@ const Userinfo = ({ currentUser }) => {
   return (
     <ul>
       {info.map((item) => (
-        <li>{item}</li>
+        <li key={item.id}>{item}</li>
       ))}
     </ul>
   );
