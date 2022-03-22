@@ -155,3 +155,5 @@ jobs:
         run: |
           cd serverless
           ./deploy.sh ${{env.BRANCH_NAME}}
+      - name: Run Test
+        run: ./test_deploy.sh
