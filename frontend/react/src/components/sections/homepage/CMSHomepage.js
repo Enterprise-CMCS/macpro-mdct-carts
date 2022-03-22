@@ -118,14 +118,14 @@ const CMSHomepage = ({
                   <div>
                     <Button
                       type="button"
-                      className="ds-c-button ds-c-button--primary filter-button"
+                      class="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => filterReports()}
                     >
                       Filter
                     </Button>
                     <Button
                       type="button"
-                      className="ds-c-button ds-c-button--primary filter-button"
+                      class="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => clearFilter()}
                     >
                       Clear
