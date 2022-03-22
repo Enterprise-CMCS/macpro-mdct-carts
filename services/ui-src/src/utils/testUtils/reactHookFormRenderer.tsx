@@ -1,25 +1,22 @@
-import { render } from "@testing-library/react";
-import { FormProvider, useForm } from "react-hook-form";
+import { render } from '@testing-library/react'
+import { FormProvider, useForm } from 'react-hook-form'
 
 interface WrapperProps {
-  children: JSX.Element;
+  children: JSX.Element
 }
 
 interface AdditionalOptions {
-  defaultValues?: Object;
+  defaultValues?: Object
 }
 
-export const renderWithHookForm = (
-  ui: any,
-  { defaultValues = {} }: AdditionalOptions = {}
-) => {
+export const renderWithHookForm = (ui: any, { defaultValues = {} }: AdditionalOptions = {}) => {
   const Wrapper = ({ children }: WrapperProps) => {
-    const methods = useForm({ defaultValues });
+    const methods = useForm({ defaultValues })
 
-    return <FormProvider {...methods}>{children}</FormProvider>;
-  };
+    return <FormProvider {...methods}>{children}</FormProvider>
+  }
 
   return {
     ...render(ui, { wrapper: Wrapper }),
-  };
-};
+  }
+}

@@ -1,22 +1,19 @@
-import {
-  useGetMeasures,
-  useCreateMeasure
-} from "hooks/api";
+import { useGetMeasures, useCreateMeasure } from 'hooks/api'
 
 export const defaultMockValues = {
   useDeleteMeasuresValues: { mutate: jest.fn() },
   useGetMeasureValues: {
     data: {
       Item: {
-        compoundKey: "AL2021ACSAIF-HH",
-        coreSet: "ACS",
+        compoundKey: 'AL2021ACSAIF-HH',
+        coreSet: 'ACS',
         createdAt: 1642517935305,
-        description: "test description",
+        description: 'test description',
         lastAltered: 1642517935305,
-        lastAlteredBy: "undefined",
-        measure: "AIF-HH",
-        state: "AL",
-        status: "incomplete",
+        lastAlteredBy: 'undefined',
+        measure: 'AIF-HH',
+        state: 'AL',
+        status: 'incomplete',
         year: 2021,
       },
     },
@@ -32,15 +29,15 @@ export const defaultMockValues = {
     data: {
       Item: [
         {
-          compoundKey: "AL2021ACSIET-AD",
-          coreSet: "ACS",
+          compoundKey: 'AL2021ACSIET-AD',
+          coreSet: 'ACS',
           createdAt: 1642167976771,
           description:
-            "Initiation and Engagement of Alcohol and Other Drug Abuse or Dependence Treatment",
+            'Initiation and Engagement of Alcohol and Other Drug Abuse or Dependence Treatment',
           lastAltered: 1642167976771,
-          measure: "IET-AD",
-          state: "AL",
-          status: "incomplete",
+          measure: 'IET-AD',
+          state: 'AL',
+          status: 'incomplete',
           year: 2021,
         },
       ],
@@ -48,21 +45,21 @@ export const defaultMockValues = {
   },
   useUpdateMeasureValues: {
     useMutation: () => {
-      mutate: () => {};
+      mutate: () => {}
     },
   },
   useCreateMeasureValues: {
     data: {
       Item: {
-        compoundKey: "AL2021ACSAIF-HH",
-        coreSet: "ACS",
+        compoundKey: 'AL2021ACSAIF-HH',
+        coreSet: 'ACS',
         createdAt: 1642517935305,
-        description: "test description",
+        description: 'test description',
         lastAltered: 1642517935305,
-        lastAlteredBy: "undefined",
-        measure: "AIF-HH",
-        state: "AL",
-        status: "incomplete",
+        lastAlteredBy: 'undefined',
+        measure: 'AIF-HH',
+        state: 'AL',
+        status: 'incomplete',
         year: 2021,
       },
     },
@@ -70,17 +67,17 @@ export const defaultMockValues = {
     refetch: jest.fn(),
     isError: false,
     error: undefined,
-  }
-};
+  },
+}
 
 export const useApiMock = ({
   useGetMeasuresValues = defaultMockValues.useGetMeasuresValues,
   useCreateMeasureValues = defaultMockValues.useCreateMeasureValues,
 }) => {
-  (useGetMeasures as jest.Mock).mockReturnValue({
+  ;(useGetMeasures as jest.Mock).mockReturnValue({
     ...useGetMeasuresValues,
-  });
-  (useCreateMeasure as jest.Mock).mockReturnValue({
+  })
+  ;(useCreateMeasure as jest.Mock).mockReturnValue({
     ...useCreateMeasureValues,
-  });
-};
+  })
+}

@@ -23,7 +23,7 @@ const configToExport = {
     REDIRECT_SIGNIN: window._env_.COGNITO_REDIRECT_SIGNIN,
     REDIRECT_SIGNOUT: window._env_.COGNITO_REDIRECT_SIGNOUT,
   },
-  currentReportingYear: "2021",
-};
+  currentReportingYear: '2021',
+}
 
-export default configToExport;
+export default configToExport

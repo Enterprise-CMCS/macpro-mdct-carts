@@ -1,11 +1,11 @@
-import { UsaBanner } from "@cmsgov/design-system";
-import { Logo } from "components";
-import { Link } from "react-router-dom";
-import { FaQuestionCircle } from "react-icons/fa";
-import * as CUI from "@chakra-ui/react";
+import { UsaBanner } from '@cmsgov/design-system'
+import { Logo } from 'components'
+import { Link } from 'react-router-dom'
+import { FaQuestionCircle } from 'react-icons/fa'
+import * as CUI from '@chakra-ui/react'
 
 interface Props {
-  handleLogout: () => void;
+  handleLogout: () => void
 }
 
 export function Header({ handleLogout }: Props) {
@@ -24,14 +24,11 @@ export function Header({ handleLogout }: Props) {
               Logout
             </CUI.Button>
             <Link to="/faq">
-              <FaQuestionCircle
-                color="white"
-                style={{ fontSize: "1.4rem", margin: ".5rem" }}
-              />
+              <FaQuestionCircle color="white" style={{ fontSize: '1.4rem', margin: '.5rem' }} />
             </Link>
           </CUI.Flex>
         </CUI.Container>
       </CUI.Box>
     </CUI.Box>
-  );
+  )
 }

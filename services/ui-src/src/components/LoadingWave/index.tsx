@@ -1,12 +1,7 @@
-import * as CUI from "@chakra-ui/react";
+import * as CUI from '@chakra-ui/react'
 export const LoadingWave = () => (
   <CUI.Flex alignItems="center" justifyContent="center" flex={1}>
-    <svg
-      width={"72px"}
-      viewBox="0 0 135 140"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#2b6cb0"
-    >
+    <svg width={'72px'} viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" fill="#2b6cb0">
       <rect y="10" width="15" height="120" rx="6">
         <animate
           attributeName="height"
@@ -99,4 +94,4 @@ export const LoadingWave = () => (
       </rect>
     </svg>
   </CUI.Flex>
-);
+)

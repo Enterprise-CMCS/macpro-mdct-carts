@@ -1,5 +1,5 @@
-import { Route, Routes } from "react-router-dom";
-import * as Views from "views";
+import { Route, Routes } from 'react-router-dom'
+import * as Views from 'views'
 
 export function AppRoutes() {
   return (
@@ -9,5 +9,5 @@ export function AppRoutes() {
         <Route path="*" element={<Views.NotFound />} />
       </Routes>
     </main>
-  );
+  )
 }

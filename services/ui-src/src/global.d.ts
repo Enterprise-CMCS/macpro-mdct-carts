@@ -1,9 +1,9 @@
-import { RegisterOptions } from "react-hook-form";
+import { RegisterOptions } from 'react-hook-form'
 interface ControllerRules {
   rules?: Omit<
     RegisterOptions<TFieldValues, TName>,
-    "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
-  >;
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >
 }
 
-declare module "*.scss";
+declare module '*.scss'

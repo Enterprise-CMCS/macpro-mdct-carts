@@ -1,8 +1,8 @@
 interface Measure {
-  [year: number]: MeasureMetaData[];
+  [year: number]: MeasureMetaData[]
 }
 
 export interface MeasureMetaData {
-  description: string;
-  title: string;
+  description: string
+  title: string
 }

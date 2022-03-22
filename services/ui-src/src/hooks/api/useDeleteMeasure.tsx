@@ -1,12 +1,12 @@
-import { useMutation } from "react-query";
-import * as Api from "libs/api";
-import { CoreSetAbbr } from "types";
+import { useMutation } from 'react-query'
+import * as Api from 'libs/api'
+import { CoreSetAbbr } from 'types'
 
 interface DeleteMeasure {
-  state: string;
-  year: string;
-  coreSet: CoreSetAbbr;
-  measure: string;
+  state: string
+  year: string
+  coreSet: CoreSetAbbr
+  measure: string
 }
 
 const deleteMeasure = async ({ state, year, coreSet, measure }: DeleteMeasure) => {
@@ -14,10 +14,10 @@ const deleteMeasure = async ({ state, year, coreSet, measure }: DeleteMeasure) =
     state,
     year,
     coreSet,
-    measure
-  });
-};
+    measure,
+  })
+}
 
 export const useDeleteMeasure = () => {
-  return useMutation((data: DeleteMeasure) => deleteMeasure(data));
-};
+  return useMutation((data: DeleteMeasure) => deleteMeasure(data))
+}

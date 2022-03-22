@@ -1,20 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import * as CUI from "@chakra-ui/react";
-import { useFormFields } from "../../libs/hooksLib";
-import { Auth } from "aws-amplify";
+import { useNavigate } from 'react-router-dom'
+import * as CUI from '@chakra-ui/react'
+import { useFormFields } from '../../libs/hooksLib'
+import { Auth } from 'aws-amplify'
 
 const LocalLogin = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [fields, handleFieldChange] = useFormFields({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: '',
+  })
   async function handleLogin() {
     try {
-      await Auth.signIn(fields.email, fields.password);
-      navigate(`/`);
+      await Auth.signIn(fields.email, fields.password)
+      navigate(`/`)
     } catch (error) {
-      console.log("Error while logging in.", error);
+      console.log('Error while logging in.', error)
     }
   }
 
@@ -49,7 +49,7 @@ const LocalLogin = () => {
       <CUI.Button
         colorScheme="teal"
         onClick={() => {
-          handleLogin();
+          handleLogin()
         }}
         isFullWidth
         data-cy="login-with-cognito-button"
@@ -57,11 +57,11 @@ const LocalLogin = () => {
         Login with Cognito
       </CUI.Button>
     </CUI.Stack>
-  );
-};
+  )
+}
 
 interface Props {
-  loginWithIDM: () => void;
+  loginWithIDM: () => void
 }
 
 export const LocalLogins = ({ loginWithIDM }: Props) => {
@@ -69,7 +69,7 @@ export const LocalLogins = ({ loginWithIDM }: Props) => {
     <CUI.Container maxW="sm" h="full" my="auto">
       <CUI.Box textAlign="center" mb="6">
         <CUI.Heading mb="2" size="md" alignSelf="center">
-          Developer Login{" "}
+          Developer Login{' '}
         </CUI.Heading>
         <CUI.Divider />
       </CUI.Box>
@@ -80,5 +80,5 @@ export const LocalLogins = ({ loginWithIDM }: Props) => {
         <LocalLogin />
       </CUI.Stack>
     </CUI.Container>
-  );
-};
+  )
+}

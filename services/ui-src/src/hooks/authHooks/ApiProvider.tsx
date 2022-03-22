@@ -1,12 +1,12 @@
-import { ReactNode, useEffect, useMemo } from "react";
-import { API } from "aws-amplify";
-import config from "config";
-import { createContext } from "react";
+import { ReactNode, useEffect, useMemo } from 'react'
+import { API } from 'aws-amplify'
+import config from 'config'
+import { createContext } from 'react'
 
-export const ApiContext = createContext(null);
+export const ApiContext = createContext(null)
 
 interface Props {
-  children?: ReactNode;
+  children?: ReactNode
 }
 
 export const ApiProvider = ({ children }: Props) => {
@@ -14,15 +14,15 @@ export const ApiProvider = ({ children }: Props) => {
     API.configure({
       endpoints: [
         {
-          name: "coreSet",
+          name: 'coreSet',
           endpoint: config.apiGateway.URL,
           region: config.apiGateway.REGION,
         },
       ],
-    });
-  }, []);
+    })
+  }, [])
 
-  const values = useMemo(() => ({}), []);
+  const values = useMemo(() => ({}), [])
   // @ts-ignore
-  return <ApiContext.Provider value={values}>{children}</ApiContext.Provider>;
-};
+  return <ApiContext.Provider value={values}>{children}</ApiContext.Provider>
+}

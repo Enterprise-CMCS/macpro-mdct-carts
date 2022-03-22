@@ -1,10 +1,10 @@
-import { AppRoutes } from "./Routes";
-import * as QMR from "components";
-import { LocalLogins } from "components";
-import { useUser } from "hooks/authHooks";
+import { AppRoutes } from './Routes'
+import * as QMR from 'components'
+import { LocalLogins } from 'components'
+import { useUser } from 'hooks/authHooks'
 
 const App = () => {
-  const { logout, user, showLocalLogins, loginWithIDM } = useUser();
+  const { logout, user, showLocalLogins, loginWithIDM } = useUser()
 
   return (
     <div id="app-wrapper">
@@ -16,7 +16,7 @@ const App = () => {
       )}
       {!user && showLocalLogins && <LocalLogins loginWithIDM={loginWithIDM} />}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
