@@ -84,14 +84,8 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.26.0",
-    "husky": "^4.3.0",
     "jest-enzyme": "^7.1.2",
     "prettier": "^2.1.1"
   },
-  "prettier": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx prettier $(git diff --diff-filter=ACMR --cached --name-only --relative | xargs) --check --ignore-unknown"
-    }
-  }
+  "prettier": {}
 }
