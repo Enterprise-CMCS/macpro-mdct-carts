@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
-import Question from "./Question"; // eslint-disable-line import/no-cycle
+import Question from "./Question";
 
 const Objective = ({ headerRef, objective, objectiveNumber }) => {
   const first = objective.questions[0].answer.readonly === true;
@@ -26,8 +26,8 @@ const Objective = ({ headerRef, objective, objectiveNumber }) => {
       </div>
       <AccordionPanel>
         {children.map((q) => (
-          <div className="ds-c-choice__checkedChild">
-            <Question key={q.id} question={q} />
+          <div key={q.id} className="ds-c-choice__checkedChild">
+            <Question question={q} />
           </div>
         ))}
       </AccordionPanel>
