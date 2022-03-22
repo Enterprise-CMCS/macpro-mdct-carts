@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -70,11 +69,7 @@ const Autosave = ({ isSaving, lastSaved }) => {
 
 Autosave.propTypes = {
   isSaving: PropTypes.bool,
-  lastSaved: PropTypes.oneOfType([
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-    PropTypes.string,
-  ]).isRequired,
+  lastSaved: SaveMessage.propTypes.lastSaved,
 };
 
 const mapStateToProps = (state) => ({

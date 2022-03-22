@@ -20,7 +20,7 @@ const Userinfo = ({ currentUser }) => {
   return (
     <ul>
       {info.map((item) => (
-        <li key={item.id}>{item}</li>
+        <li key={item.key}>{item}</li>
       ))}
     </ul>
   );
