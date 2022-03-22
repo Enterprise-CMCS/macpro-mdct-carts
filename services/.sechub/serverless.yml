@@ -1,6 +1,6 @@
 service: sechub
 
-frameworkVersion: "2"
+frameworkVersion: "3"
 
 package:
   individually: true
