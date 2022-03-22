@@ -23,12 +23,12 @@ const CMSHomepage = ({
   ];
 
   // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
-  const [tempStates, setTempStates] = useState();
-  const [tempStatuses, setTempStatus] = useState();
-  const [tempYears, setTempYear] = useState();
-  const [stateIds, setStateIds] = useState();
-  const [yearIds, setYearIds] = useState();
-  const [statusIds, setStatusIds] = useState();
+  const [tempStates, setTempStates] = useState([]);
+  const [tempStatuses, setTempStatus] = useState([]);
+  const [tempYears, setTempYear] = useState([]);
+  const [stateIds, setStateIds] = useState([]);
+  const [yearIds, setYearIds] = useState([]);
+  const [statusIds, setStatusIds] = useState([]);
   let tempHolder = [];
   useEffect(() => {
     getStatuses();
@@ -118,14 +118,14 @@ const CMSHomepage = ({
                   <div>
                     <Button
                       type="button"
-                      class="ds-c-button ds-c-button--primary filter-button"
+                      className="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => filterReports()}
                     >
                       Filter
                     </Button>
                     <Button
                       type="button"
-                      class="ds-c-button ds-c-button--primary filter-button"
+                      className="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => clearFilter()}
                     >
                       Clear
