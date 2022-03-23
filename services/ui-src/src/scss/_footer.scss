@@ -1,0 +1,70 @@
+/**********************
+  FOOTER
+**********************/
+.footer {
+  background: $color-gray-lightest;
+  font-size: 0.85rem;
+  color: $color-gray;
+  margin-top: 2.2rem;
+  text-align: center;
+
+  @media only screen and (min-width: 768px) {
+    text-align: left;
+  }
+
+  .adverts {
+    padding: ($padding * 6) $padding;
+  }
+
+  .cms-logo {
+    display: inline-block;
+    width: 70px;
+  }
+
+  .cms-copy {
+    display: inline-block;
+    padding-left: ($padding * 2);
+    text-align: left;
+    vertical-align: top;
+    width: calc(100% - 86px);
+  }
+
+  .chip-info div {
+    display: inline-block;
+    max-width: calc(50% - 16px);
+    margin: $margin;
+    vertical-align: middle;
+  }
+
+  .chip-info div img {
+    max-height: 70px;
+    max-width: 92%;
+  }
+
+  .info {
+    background-color: $brand-tertiary;
+    color: $white;
+    padding: ($padding * 2) $padding;
+
+    a,
+    a:visited {
+      border-bottom: 1px dotted $white;
+      color: $white;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: darken($lily-white, 20);
+    }
+
+    .address {
+      margin-top: $margin;
+
+      @media only screen and (min-width: 768px) {
+        margin-top: 0;
+        text-align: right;
+      }
+    }
+  }
+}
