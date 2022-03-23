@@ -1,15 +1,8 @@
 name: Dev-destroy
 
 on: delete
-  delete:
-    branches:
-      - "actions-migration"
-    #  - "dev-*"
-    #  - "*"
-    #  - "dependabot/**"
-      - "!skipci*"
 jobs:
-  destroy:
+  delete:
     # Protected branches should be designated as such in the GitHub UI.
     # So, a protected branch should never have this workflow run, since the branch should never be deleted.
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
