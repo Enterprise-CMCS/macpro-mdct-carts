@@ -10,7 +10,7 @@ if [ ! -f .env ]; then
 fi
 
 # Add assignment
-echo "window._env_ = {" >> ./public/env-config.js
+echo "window.env = {" >> ./public/env-config.js
 
 # Read each line in .env file
 # Each line represents key=value pairs

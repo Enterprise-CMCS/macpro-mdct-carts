@@ -1,0 +1,71 @@
+/**********************
+  Layout
+**********************/
+
+.ds-base {
+  margin-left: 2em;
+}
+
+div[disabled] {
+  pointer-events: none;
+  opacity: 0.7;
+  background-color: lightgrey;
+}
+
+div[hidden] {
+  display: none;
+}
+
+@media only screen and (max-width: 767px) {
+  div[class*="ds-l-col--"] {
+    max-width: 100%;
+    padding: 0 ($margin * 2);
+    min-width: 100%;
+    width: 100%;
+  }
+}
+
+.ds-c-input .input-holder__percent {
+  // This max-width comes from the design system.
+  max-width: 460px;
+  position: relative;
+
+  &:after {
+    content: "%";
+    position: absolute;
+    right: 8px;
+    top: 8px;
+
+    // These values come from the design system.
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  input {
+    padding-right: 28px;
+  }
+}
+
+.user-profiles {
+  overflow-y: hidden;
+  margin: 2.2rem 0;
+
+  .MuiPaper-root {
+    border: 1px solid #aaa;
+  }
+
+  .status {
+    min-width: 80px;
+  }
+}
+
+.App.users {
+  .ds-l-container {
+    max-width: 1120px;
+    padding: 0;
+  }
+}
+
+.data-table-extensions {
+  min-height: 67px;
+}
