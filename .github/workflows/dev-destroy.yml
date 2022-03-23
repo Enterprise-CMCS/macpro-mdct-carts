@@ -1,7 +1,13 @@
 name: Dev-destroy
 
-on: delete
-
+on:
+  delete:
+    branches:
+      - "actions-migration"
+    #  - "dev-*"
+    #  - "*"
+    #  - "dependabot/**"
+      - "!skipci*"
 jobs:
   destroy:
     # Protected branches should be designated as such in the GitHub UI.
