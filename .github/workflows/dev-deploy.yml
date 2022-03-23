@@ -75,7 +75,7 @@ jobs:
           terraform_version: 0.13.4
           terraform_wrapper: false
       - name: Chrome setup
-        uses: browser-actions/setup-chrome@latest   
+        uses: browser-actions/setup-chrome@latest
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -157,5 +157,5 @@ jobs:
         run: |
           cd serverless
           ./deploy.sh ${{env.BRANCH_NAME}}
-      - name: Run Test
-        run: ./test_deploy.sh
+    #  - name: Run Test
+    #    run: ./test_deploy.sh
