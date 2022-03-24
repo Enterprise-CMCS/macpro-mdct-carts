@@ -1,15 +1,15 @@
-name: Dev-destroy
+name: Destroy
 
 on: delete
+
 jobs:
-  delete:
+  destroy:
     # Protected branches should be designated as such in the GitHub UI.
     # So, a protected branch should never have this workflow run, since the branch should never be deleted.
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
-    #if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "prod", "saf", "production"]'), github.event.ref)
-    if: github.event.ref_type == 'branch'
+    if: github.event.ref_type == 'branch' && contains(fromJson('["val", "actions-migration", "uctioning"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
