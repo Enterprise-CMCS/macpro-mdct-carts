@@ -1,7 +1,6 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import { useDispatch } from "react-redux";
-import "./App.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
   Security,
