@@ -65,7 +65,8 @@ class JwtAuthentication(authentication.BaseAuthentication):
             user = _get_or_create_user(user_info)
 
             return (user, None)
-        except Exception:
+        except Exception as e:
+            print(e)
             raise exceptions.AuthenticationFailed("Authentication failed.")
 
 

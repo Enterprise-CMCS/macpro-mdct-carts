@@ -8,6 +8,11 @@
                 "${uploads_bucket_arn}/*",
                 "${uploads_bucket_arn}"
             ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": "execute-api:Invoke",
+            "Resource": "*"
         }
     ]
 }

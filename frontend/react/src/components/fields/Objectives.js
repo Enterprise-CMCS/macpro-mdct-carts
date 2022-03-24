@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
-import { Objective } from "./Objective"; // eslint-disable-line import/no-cycle
+import { Objective } from "./Objective";
 import {
   createNewObjective,
   removeRepeatable,
