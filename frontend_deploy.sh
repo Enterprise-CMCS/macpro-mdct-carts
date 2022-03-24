@@ -39,7 +39,7 @@ PRINCE_API_ENDPOINT=$(terraform output prince_api_endpoint)
 aws s3 cp s3://${stateBucket}/artifacts/${varString3}/cartsbuild.tar.gz cartsbuild.tar.gz
 tar -xvzf cartsbuild.tar.gz
 #Populate the static archive with the API_POSTGRES_URL before you sync it to the host bucket
-cd build  && cat env.sh && ./env.sh  && cd ..
+cd build && ./env.sh  && cd ..
 aws s3 sync build s3://${S3_BUCKET_NAME}
 # Cloudfront cache invalidation
 aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
