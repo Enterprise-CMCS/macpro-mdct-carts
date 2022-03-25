@@ -21,14 +21,12 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
       content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
       break;
     default:
-      {
-        content =
-          !window.location.origin.includes("mdctcarts.cms") && !loggedIn ? (
-            <LocalLogins />
-          ) : (
-            <Unauthorized />
-          );
-      }
+      content =
+        !window.location.origin.includes("mdctcarts.cms") && !loggedIn ? (
+          <LocalLogins />
+        ) : (
+          <Unauthorized />
+        );
       break;
   }
   return (
