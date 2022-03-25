@@ -1,5 +1,6 @@
 // Storing global variables that will be the same regardless of users
 const activeYears = ["2020", "2021", "2022", "2023", "2024"];
+// eslint-disable-next-line no-extend-native
 String.prototype.containsAny =
   String.prototype.containsAny ||
   function (arr) {
