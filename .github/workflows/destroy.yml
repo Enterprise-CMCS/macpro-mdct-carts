@@ -1,0 +1,14 @@
+name: Destroy
+
+on: delete
+
+jobs:
+  destroy:
+    if: github.event.commits[message] == 'destroy-workflow' && !contains(fromJson('["stage", "master", "prod"]'), github.event.ref)
+    runs-on: ubuntu-latest
+    steps:
+      - name: set branch_name
+        run: echo "branch_name=${{ github.event.ref }}" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - name: set branch specific variable names
+        run: echo "running destroy workflow"

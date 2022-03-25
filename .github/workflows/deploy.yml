@@ -1,0 +1,22 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - "actions-migration"
+    #  - "dev-*"
+    #  - "*"
+    #  - "dependabot/**"
+      - "!skipci*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - name: set branch_name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v2
+      - name: Validate branch name
+        run: echo "this is a test branches"
