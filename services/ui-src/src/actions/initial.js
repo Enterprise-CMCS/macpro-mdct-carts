@@ -34,15 +34,15 @@ export const getAllStateStatuses =
 
     selectedYears.length > 0
       ? (yearFilter = (record) => selectedYears.includes(record.year))
-      : (yearFilter = () => 1 === 1);
+      : (yearFilter = () => true);
 
     selectedStates.length > 0
       ? (stateFilter = (record) => selectedStates.includes(record.state))
-      : (stateFilter = () => 1 === 1);
+      : (stateFilter = () => true);
 
     selectedStatus.length > 0
       ? (statusFilter = (record) => selectedStatus.includes(record.status))
-      : (statusFilter = () => 1 === 1);
+      : (statusFilter = () => true);
 
     const payload = data
       .filter(yearFilter)
@@ -95,15 +95,15 @@ export const getStateAllStatuses =
 
     selectedYears.length > 0
       ? (yearFilter = (record) => selectedYears.includes(record.year))
-      : (yearFilter = () => 1 === 1);
+      : (yearFilter = () => true);
 
     selectedStates.length > 0
       ? (stateFilter = (record) => selectedStates.includes(record.state))
-      : (stateFilter = () => 1 === 1);
+      : (stateFilter = () => true);
 
     selectedStatus.length > 0
       ? (statusFilter = (record) => selectedStatus.includes(record.status))
-      : (statusFilter = () => 1 === 1);
+      : (statusFilter = () => true);
 
     const payload = data
       .filter(yearFilter)
