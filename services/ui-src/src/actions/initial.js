@@ -202,7 +202,7 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
 
     const lastYear = parseInt(selectedYear) - 1;
     let lastYearData = undefined;
-    if (lastYear % 2 == 0) {
+    if (lastYear % 2 === 0) {
       const data = await axios
         .get(`/api/v1/sections/${lastYear}/${state}`)
         .catch((err) => {

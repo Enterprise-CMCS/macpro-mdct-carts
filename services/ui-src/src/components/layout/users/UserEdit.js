@@ -216,7 +216,7 @@ const UserEdit = ({ stateList }) => {
             </>
           </div>
           <div>
-            {role == "state_user" ? (
+            {role === "state_user" ? (
               <>
                 <label className="ds-c-label">State</label>
                 <br />
