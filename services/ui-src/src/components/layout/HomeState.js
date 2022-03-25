@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch } from "react-router";
-
+import { Route } from "react-router-dom";
 import CertifyAndSubmit from "./CertifyAndSubmit";
 import Homepage from "../sections/homepage/Homepage";
 import InvokeSection from "../Utils/InvokeSection";
@@ -10,29 +10,28 @@ import ScrollToTop from "../Utils/ScrollToTop";
 import Sidebar from "./Sidebar";
 import Unauthorized from "./Unauthorized";
 
-const StateHome = ({ SecureRouteComponent: SecureRoute }) => {
+const StateHome = () => {
   return (
     <>
-      <SecureRoute path="/" />
+      <Route path="/" />
       <SaveError />
       <ScrollToTop />
       <Switch>
-        <SecureRoute exact path="/" component={Homepage} />
-
-        <SecureRoute path="/sections/:year/certify-and-submit" exact>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/sections/:year/certify-and-submit" exact>
           <Sidebar />
           <CertifyAndSubmit />
-        </SecureRoute>
-        <SecureRoute path="/sections/:year/:sectionOrdinal/:subsectionMarker">
+        </Route>
+        <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker">
           <Sidebar />
           <InvokeSection />
-        </SecureRoute>
-        <SecureRoute path="/sections/:year/:sectionOrdinal">
+        </Route>
+        <Route path="/sections/:year/:sectionOrdinal">
           <Sidebar />
           <InvokeSection />
-        </SecureRoute>
+        </Route>
         {/* Add routes from admin that should be unauthorized for state users */}
-        <SecureRoute
+        <Route
           path={[
             "/role_user_assoc",
             "/state_assoc",
@@ -45,8 +44,4 @@ const StateHome = ({ SecureRouteComponent: SecureRoute }) => {
     </>
   );
 };
-StateHome.propTypes = {
-  SecureRouteComponent: PropTypes.element.isRequired,
-};
-
 export default StateHome;

@@ -5,29 +5,29 @@ import AdminHome from "./HomeAdmin";
 import CMSHome from "./HomeCMS";
 import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
-import LocalLogins from "../sections/login/LocalLogins";
+import { UserRoles } from "../../types";
 
-const Home = ({ role, loggedIn, SecureRouteComponent }) => {
+const Home = ({ user, role }) => {
+  // TODO: This is the spot that flickers in the app with unauthorized, find a way to resolve
   let content = null;
+  console.log(user)
+  console.log(role)
+
+  // TODO: Switch on user role
   switch (role) {
-    case "admin_user":
-      content = <AdminHome SecureRouteComponent={SecureRouteComponent} />;
+    case UserRoles.ADMIN:
+      content = <AdminHome />;
       break;
-    case "bus_user":
-    case "co_user":
-      content = <CMSHome SecureRouteComponent={SecureRouteComponent} />;
+    case UserRoles.BO:
+    case UserRoles.CO:
+      content = <CMSHome />;
       break;
-    case "state_user":
-      content = <StateHome SecureRouteComponent={SecureRouteComponent} />;
+    case UserRoles.STATE:
+      content = <StateHome />;
       break;
     default:
       {
-        content =
-          !window.location.origin.includes("mdctcarts.cms") && !loggedIn ? (
-            <LocalLogins />
-          ) : (
-            <Unauthorized />
-          );
+        content = <Unauthorized />;
       }
       break;
   }
@@ -38,14 +38,8 @@ const Home = ({ role, loggedIn, SecureRouteComponent }) => {
   );
 };
 Home.propTypes = {
-  role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,
-  SecureRouteComponent: PropTypes.element.isRequired,
-  loggedIn: PropTypes.element.isRequired,
+  user: PropTypes.object,
+  role: PropTypes.string,
 };
 
-const mapState = (state) => ({
-  role: state.stateUser?.currentUser?.role,
-  loggedIn: !!state.stateUser?.currentUser?.username,
-});
-
-export default connect(mapState)(Home);
+export default Home;

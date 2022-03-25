@@ -1,71 +1,79 @@
 import React from "react";
-import { getRoleLabel, getLocalUserName, roles } from "../../Utils/RoleHelper";
-import { useDispatch } from "react-redux";
-import { loadUser } from "../../../actions/initial";
-import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import { useFormFields } from "../../../hooks/useFormFields";
 
-function LocalLogins() {
+const LocalLogin = () => {
+  const history = useHistory();
+  const [fields, handleFieldChange] = useFormFields({
+    email: "",
+    password: "",
+  });
+  async function handleLogin() {
+    try {
+      await Auth.signIn(fields.email, fields.password);
+      history.push(`/`);
+    } catch (error) {
+      console.log("Error while logging in.", error);
+    }
+  }
+
   return (
-    <div className="local-login ds-l-col--12">
-      <div className="ds-l-row">
-        <h3 className="local-login-title"> Login Types </h3>
-      </div>
-      <div className="ds-l-row">
-        <div className="ds-l-col--6">
-          <RenderLogins />
-        </div>
-        <div className="ds-l-col--6">
-          <div className="ds-u-justify-content--center ds-u-padding--1 ds-u-margin-y--2">
-            <button
-              onClick={() => oktaLogin()}
-              className="ds-c-button ds-c-button--primary"
-            >
-              Okta Login
-            </button>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h1 alignSelf="center">
+        Login with Cognito
+      </h1>
+      <h2 mb="2" size="sm">
+        Email
+      </h2>
+      <input
+        className="field"
+        type="email"
+        id="email"
+        name="email"
+        value={fields.email}
+        onChange={handleFieldChange}
+      />
+      <h2 mb="2" size="sm">
+        Password
+      </h2>
+      <input
+        className="field"
+        type="password"
+        id="password"
+        name="password"
+        value={fields.password}
+        onChange={handleFieldChange}
+      />
+      <button
+        colorScheme="teal"
+        onClick={() => {
+          handleLogin();
+        }}
+        isFullWidth
+        data-cy="login-with-cognito-button"
+      >
+        Login with Cognito
+      </button>
     </div>
   );
-}
-function RenderLogins() {
-  const roleTypes = roles.map((r) => r.value);
-  return (
-    <>
-      {roleTypes.map((r) => (
-        <LoginAs key={r} role={r} />
-      ))}
-    </>
-  );
-}
-
-async function handleLogin(role, dispatch) {
-  const localUserName = getLocalUserName(role);
-  localStorage.setItem("loginInfo", `localLoggedin-${localUserName}`);
-  dispatch(loadUser(localUserName));
-}
-function LoginAs({ role }) {
-  const dispatch = useDispatch();
-  return (
-    <div className="ds-l-row">
-      <div className="ds-u-justify-content--center ds-u-padding--1 ds-u-margin-y--2">
-        <button
-          onClick={() => handleLogin(role, dispatch)}
-          className="ds-c-button ds-c-button--primary"
-        >
-          {getRoleLabel(role)}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function oktaLogin() {
-  localStorage.setItem("loginInfo", "local-okta");
-  window.location.reload();
-}
-
-LoginAs.propTypes = {
-  role: PropTypes.object.isRequired,
 };
-export default LocalLogins;
+
+export const LocalLogins = ({ loginWithIDM }) => {
+  return (
+    <div maxW="sm" h="full" my="auto">
+      <div textAlign="center" mb="6">
+        <h1 mb="2" size="md" alignSelf="center">
+          Developer Login{" "}
+        </h1>
+        <br />
+      </div>
+      <div spacing={8}>
+        <button colorScheme="teal" onClick={loginWithIDM} isFullWidth>
+          Login with IDM
+        </button>
+        <LocalLogin />
+      </div>
+    </div>
+  );
+};

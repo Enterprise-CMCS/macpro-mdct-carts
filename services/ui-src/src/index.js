@@ -7,6 +7,7 @@ import store from "./store/storeIndex";
 import BrowserIssue from "./components/layout/BrowserIssue";
 
 import App from "./App";
+import { UserProvider, ApiProvider } from "./hooks/authHooks";
 
 // Internet Explorer
 const isIE = /*@cc_on!@*/ false || !!document.documentMode;
