@@ -30,8 +30,11 @@ const Users = () => {
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
   };
 
-  useEffect(async () => {
-    await loadUserData();
+  useEffect(() => {
+    const loadData = async () => {
+      await loadUserData();
+    };
+    loadData();
   }, []);
 
   const deactivateUser = async (e) => {
