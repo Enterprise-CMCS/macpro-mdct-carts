@@ -8,13 +8,6 @@ import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
 
-// Print page
-const printWindow = (event) => {
-  event.preventDefault();
-  //send to server
-  window.print();
-};
-
 /**
  * Generate data and load entire form based on user information
  *
@@ -143,7 +136,7 @@ const Print = ({ currentUser, state }) => {
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
-        onClick={printWindow}
+        onClick={getPdfFriendlyDocument}
         title="Print"
       >
         <FontAwesomeIcon icon={faPrint} /> Print
