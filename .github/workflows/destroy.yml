@@ -2,7 +2,7 @@ name: Destroy
 
 on: delete
 
-
+# comment
 jobs:
   destroy:
     if: github.event.commits[message] == 'destroy-workflow'
