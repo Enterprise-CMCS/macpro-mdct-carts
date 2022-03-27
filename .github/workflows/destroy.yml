@@ -2,9 +2,9 @@ name: Destroy
 
 on: delete
 
-# comment
 jobs:
   destroy:
+  #  if: github.event.ref_type == 'branch' && !contains(fromJson('["stage", "master", "prod"]'), github.event.ref)
     if: github.event.commits[message] == 'destroy-workflow'
     runs-on: ubuntu-latest
     steps:
