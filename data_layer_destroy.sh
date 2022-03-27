@@ -28,5 +28,5 @@ if ! terraform workspace list | grep -q " ${workspace}\$" ; then
     terraform workspace select ${workspace}
 
 #Run terraform apply
-#terraform ${action} -var "${varString1}" -var "${varString2}" -input=false -auto-approve
-terrform destroy -input=false -auto-approve
+terraform ${action} -var "${varString1}" -var "${varString2}" -input=false -auto-approve
+#terrform destroy -input=false -auto-approve
