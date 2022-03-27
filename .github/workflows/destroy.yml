@@ -24,7 +24,7 @@ jobs:
       - name: Create env var for  API postgress django ecr repo name
         run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: set variable values
-        run: ./.github/build_vars.sh $BRANCH_NAME
+        run: ./.github/build_vars.sh $branch_name
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
@@ -40,7 +40,7 @@ jobs:
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $BRANCH_NAME
+        run: ./.github/github-lock.sh $branch_name
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Destroy frontend
