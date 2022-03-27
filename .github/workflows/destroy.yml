@@ -55,7 +55,7 @@ jobs:
           terraform_version: 0.13.4
           terraform_wrapper: false
       - name: Destroy frontend
-        run: ./frontend_destry.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
+        run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
       - name: Destroy data Layer
         run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev
       - name: Destroy serverless
