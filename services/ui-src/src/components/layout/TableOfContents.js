@@ -15,7 +15,7 @@ const idToUrl = (location, id) => {
 };
 const subsection = (index) => String.fromCharCode("A".charCodeAt(0) + index);
 
-class TOC extends Component {
+class TableOfContents extends Component {
   constructor(props) {
     super(props);
     this.click = this.click.bind(this);
@@ -85,7 +85,7 @@ class TOC extends Component {
     );
   }
 }
-TOC.propTypes = {
+TableOfContents.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   sections: PropTypes.array.isRequired,
@@ -123,4 +123,4 @@ const mapStateToProps = (state) => ({
   formYear: state.global.formYear,
 });
 
-export default connect(mapStateToProps)(withRouter(TOC));
+export default connect(mapStateToProps)(withRouter(TableOfContents));

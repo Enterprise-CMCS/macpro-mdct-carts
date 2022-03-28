@@ -5,7 +5,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../layout/PageInfo";
 import FormNavigation from "../layout/FormNavigation";
 import FormActions from "../layout/FormActions";
-import FPL from "../layout/FPL";
+import FederalPovertyLevel from "../layout/FederalPovertyLevel";
 import {
   Button as button,
   ChoiceList,
@@ -77,7 +77,7 @@ class Section1Review extends Component {
     const initialFPL = [
       {
         id: 1,
-        component: <FPL />,
+        component: <FederalPovertyLevel />,
       },
     ];
 
@@ -99,7 +99,7 @@ class Section1Review extends Component {
     console.log("newID: ", newID);
     let newFPL = {
       id: newID,
-      component: <FPL />,
+      component: <FederalPovertyLevel />,
     };
     this.setState({
       [`${list}_count`]: newID,
