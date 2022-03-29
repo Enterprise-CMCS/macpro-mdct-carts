@@ -12,7 +12,7 @@ function ScrollToTop({ history }) {
     return () => {
       unlisten();
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return null;
 }

@@ -35,7 +35,7 @@ const Users = () => {
       await loadUserData();
     };
     loadData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const deactivateUser = async (e) => {
     const really = window.confirm(

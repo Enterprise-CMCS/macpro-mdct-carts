@@ -44,7 +44,7 @@ const Percentage = ({ onChange, question, ...props }) => {
       ref.parentNode.appendChild(wrapper);
       wrapper.appendChild(ref);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // The CMS design system uses refs in a weird way - they are supposed to be
   // functions instead of ref objects. 🤷🏼‍♂️

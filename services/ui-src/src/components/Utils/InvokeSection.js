@@ -20,7 +20,7 @@ const InvokeSection = (username) => {
     if (username) {
       dispatch(loadForm(state));
     }
-  }, [username]);
+  }, [username]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filteredMarker = subsectionMarker
     ? subsectionMarker.toLowerCase()

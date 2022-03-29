@@ -62,7 +62,7 @@ const UserEdit = ({ stateList }) => {
   // When stateList is rendered, call for User data
   useEffect(() => {
     loadUserData();
-  }, [stateList]);
+  }, [stateList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const roles = [
     { value: "admin_user", label: "Admin User" },
