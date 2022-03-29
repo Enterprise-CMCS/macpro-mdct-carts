@@ -1,7 +1,7 @@
 export const UserRoles = {
-  ADMIN: "mdctcarts-admin",
-  STATE: "mdctcarts-state-user",
-  HELP: "mdctcarts-help-desk",
-  BO: "mdctcarts-bo-user",
-  CO: "mdctcarts-co",
+  ADMIN: "mdctqmr-approver",
+  STATE: "mdctqmr-state-user",
+  HELP: "mdctqmr-help-desk",
+  BO: "mdctqmr-bo-user",
+  CO: "todo-co",
 }

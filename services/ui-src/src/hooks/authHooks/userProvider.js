@@ -4,6 +4,8 @@ import { Auth } from "aws-amplify";
 import config from "../../config";
 import { UserContext, UserContextInterface } from "./userContext";
 import { UserRoles } from "../../types";
+import { loadUser } from "../../actions/initial";
+import { useDispatch } from "react-redux";
 
 
 const authenticateWithIDM = () => {
@@ -28,6 +30,7 @@ export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
   const isProduction = window.location.origin.includes("mdctqmr.cms.gov");
+  const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
   const [showLocalLogins, setShowLocalLogins] = useState(false);
@@ -46,6 +49,7 @@ export const UserProvider = ({ children }) => {
     try {
       const authenticatedUser = await Auth.currentAuthenticatedUser();
       setUser(authenticatedUser);
+      dispatch(loadUser(authenticatedUser));
     } catch (e) {
       if (isProduction) {
         authenticateWithIDM();

@@ -15,7 +15,6 @@ import { useUser } from "./hooks/authHooks";
 
 const AppRoutes = () => {
   const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
-
   if (!user && showLocalLogins) {
     return (<LocalLogins loginWithIDM={loginWithIDM}/>);
   }
@@ -23,7 +22,7 @@ const AppRoutes = () => {
   const VisibleHeader =
     window.location.pathname.split("/")[1] === "reports" ||
     window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-      <Header />
+      <Header currentUser={user} />
     );
 
   const VisibleFooter =
@@ -33,7 +32,6 @@ const AppRoutes = () => {
     );
 
 
-  // TODO: add user role hooks
   return (
     <div
       className={"App " + window.location.pathname.split("/")[1]}

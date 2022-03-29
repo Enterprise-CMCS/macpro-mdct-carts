@@ -8,12 +8,8 @@ import Unauthorized from "./Unauthorized";
 import { UserRoles } from "../../types";
 
 const Home = ({ user, role }) => {
-  // TODO: This is the spot that flickers in the app with unauthorized, find a way to resolve
   let content = null;
-  console.log(user)
-  console.log(role)
 
-  // TODO: Switch on user role
   switch (role) {
     case UserRoles.ADMIN:
       content = <AdminHome />;

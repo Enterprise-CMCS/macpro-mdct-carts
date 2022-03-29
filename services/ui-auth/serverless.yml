@@ -33,11 +33,11 @@ custom:
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
+      - main
       - master
       - val
       - prod
   sesSourceEmailAddress: ${ssm:/configuration/${self:custom.stage}/sesSourceEmailAddress~true, ssm:/configuration/default/sesSourceEmailAddress~true, ""}
-  attachments_bucket_arn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   api_gateway_rest_api_name: ${cf:app-api-${self:custom.stage}.ApiGatewayRestApiName}
   okta_metadata_url: ${ssm:/configuration/${self:custom.stage}/okta_metadata_url~true, ""}
   application_endpoint_url: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl}
@@ -206,17 +206,7 @@ resources:
                   Action:
                     - "execute-api:Invoke"
                   Resource: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${self:custom.api_gateway_rest_api_name}/*
-                - Effect: "Allow"
-                  Action:
-                    - "s3:*"
-                  Resource:
-                    # Must use Join here.  See: https://github.com/serverless/serverless/issues/3565
-                    - Fn::Join:
-                        - ""
-                        - - ${self:custom.attachments_bucket_arn}
-                          - "/protected/"
-                          - "$"
-                          - "{cognito-identity.amazonaws.com:sub}/*"
+
   Outputs:
     UserPoolId:
       Value: !Ref CognitoUserPool

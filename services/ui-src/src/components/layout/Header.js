@@ -95,7 +95,7 @@ Header.propTypes = {
 
 RenderEmailMenuItem.propTypes = {
   toggleUserNav: PropTypes.object.isRequired,
-  email: PropTypes.object.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
