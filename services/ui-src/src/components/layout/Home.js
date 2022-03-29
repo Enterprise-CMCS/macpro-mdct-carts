@@ -6,9 +6,13 @@ import CMSHome from "./HomeCMS";
 import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
 import { UserRoles } from "../../types";
+import { getHello } from "../../actions/hello";
 
-const Home = ({ user, role }) => {
+const Home = ( { user, 
+  role, 
+  getHello: helloAction }) => {
   let content = null;
+  helloAction();
 
   switch (role) {
     case UserRoles.ADMIN:
@@ -38,4 +42,6 @@ Home.propTypes = {
   role: PropTypes.string,
 };
 
-export default Home;
+const mapState = (state) => ({})
+const mapDispatch = { getHello };
+export default connect(mapState, mapDispatch)(Home);

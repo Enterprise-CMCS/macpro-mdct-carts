@@ -9,7 +9,7 @@ export const ApiProvider = ({ children }) => {
     API.configure({
       endpoints: [
         {
-          name: "coreSet",
+          name: "carts-api",
           endpoint: config.apiGateway.URL,
           region: config.apiGateway.REGION,
         },

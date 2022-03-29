@@ -111,6 +111,14 @@ functions:
           method: delete
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getHello:
+    handler: handlers/measures/get.listMeasures
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
 resources:
   Resources:
     GatewayResponseDefault4XX:
