@@ -48,7 +48,7 @@ jobs:
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $branch_name
+        run: ./.github/github-lock.sh $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure AWS credentials
