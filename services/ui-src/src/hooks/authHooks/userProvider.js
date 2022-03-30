@@ -7,7 +7,6 @@ import { UserRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 
-
 const authenticateWithIDM = () => {
   const authConfig = Auth.configure();
   if (authConfig?.oauth) {
@@ -60,9 +59,9 @@ export const UserProvider = ({ children }) => {
   }, [isProduction]);
 
   // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to qmr
-  const userRole = (
-    user?.signInUserSession?.idToken?.payload?.["custom:cms_roles"]
-  )
+  const userRole = user?.signInUserSession?.idToken?.payload?.[
+    "custom:cms_roles"
+  ]
     ?.split(",")
     .find((r) => r.includes("mdctqmr"));
 
@@ -70,7 +69,6 @@ export const UserProvider = ({ children }) => {
 
   const userState =
     user?.signInUserSession?.idToken?.payload?.["custom:cms_state"];
-
 
   // rerender on auth state change, checking router location
   useEffect(() => {

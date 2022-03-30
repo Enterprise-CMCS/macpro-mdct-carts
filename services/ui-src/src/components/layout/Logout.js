@@ -9,12 +9,7 @@ const Logout = () => {
   const { logout } = useUser();
 
   return (
-    <Button
-      type="button"
-      inversed
-      variation="transparent"
-      onClick={logout}
-    >
+    <Button type="button" inversed variation="transparent" onClick={logout}>
       <FontAwesomeIcon icon={faSignOutAlt} />
       Log out
     </Button>

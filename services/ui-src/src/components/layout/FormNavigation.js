@@ -28,7 +28,11 @@ const FormNavigation = (props) => {
   const year = location.pathname.split("/")[2];
 
   // If admin, DO NOT ADD
-  if (role !== UserRoles.ADMIN && role !== UserRoles.BO && role !== UserRoles.CO) {
+  if (
+    role !== UserRoles.ADMIN &&
+    role !== UserRoles.BO &&
+    role !== UserRoles.CO
+  ) {
     // Add certify and submit page to items array
     items.push(`/sections/${year}/certify-and-submit`);
   }

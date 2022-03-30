@@ -28,7 +28,7 @@ Amplify.configure({
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
-    ]
+    ],
   },
   Auth: {
     mandatorySignIn: true,
@@ -43,7 +43,7 @@ Amplify.configure({
       scope: ["email", "openid"],
       responseType: "token",
     },
-  }
+  },
 });
 
 ReactDOM.render(

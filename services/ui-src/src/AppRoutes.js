@@ -16,7 +16,7 @@ import { useUser } from "./hooks/authHooks";
 const AppRoutes = () => {
   const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
   if (!user && showLocalLogins) {
-    return (<LocalLogins loginWithIDM={loginWithIDM}/>);
+    return <LocalLogins loginWithIDM={loginWithIDM} />;
   }
 
   const VisibleHeader =
@@ -30,7 +30,6 @@ const AppRoutes = () => {
     window.location.pathname.split("/")[1] === "coming-soon" ? null : (
       <Footer />
     );
-
 
   return (
     <div

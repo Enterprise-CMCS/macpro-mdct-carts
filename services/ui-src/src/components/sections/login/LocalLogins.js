@@ -20,12 +20,8 @@ const LocalLogin = () => {
 
   return (
     <>
-      <h1>
-        Login with Cognito
-      </h1>
-      <h2>
-        Email
-      </h2>
+      <h1>Login with Cognito</h1>
+      <h2>Email</h2>
       <input
         className="field"
         type="email"
@@ -34,9 +30,7 @@ const LocalLogin = () => {
         value={fields.email}
         onChange={handleFieldChange}
       />
-      <h2>
-        Password
-      </h2>
+      <h2>Password</h2>
       <input
         className="field"
         type="password"
@@ -45,7 +39,7 @@ const LocalLogin = () => {
         value={fields.password}
         onChange={handleFieldChange}
       />
-      <br/>
+      <br />
       <button
         colorScheme="teal"
         onClick={() => {
@@ -64,15 +58,11 @@ export const LocalLogins = ({ loginWithIDM }) => {
   return (
     <div className="local-login__wrapper">
       <div>
-        <h1>
-          Developer Login{" "}
-        </h1>
+        <h1>Developer Login </h1>
         <br />
       </div>
       <div spacing={8}>
-        <button onClick={loginWithIDM}>
-          Login with IDM
-        </button>
+        <button onClick={loginWithIDM}>Login with IDM</button>
         <LocalLogin />
       </div>
     </div>

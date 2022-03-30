@@ -247,9 +247,11 @@ export const loadUser = (user) => async (dispatch) => {
   // TODO: bring in info for state and program
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
-    dispatch(getStateData({abbr: user.attributes["custom:cms_state"]})),
+    dispatch(getStateData({ abbr: user.attributes["custom:cms_state"] })),
     dispatch(getProgramData(user)),
-    dispatch(getStateAllStatuses({ stateCode: user?.attributes["custom:cms_state"] })),
+    dispatch(
+      getStateAllStatuses({ stateCode: user?.attributes["custom:cms_state"] })
+    ),
     dispatch(getAllStatesData()),
   ]);
 };

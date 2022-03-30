@@ -4,4 +4,4 @@ export const UserRoles = {
   HELP: "mdctqmr-help-desk",
   BO: "mdctqmr-bo-user",
   CO: "todo-co",
-}
+};

@@ -44,7 +44,7 @@ const AdminHome = () => {
               </ul>
             </div>
             <div className="cmslist">
-              <CMSHomepage/>
+              <CMSHomepage />
             </div>
           </div>
         </div>
@@ -62,11 +62,7 @@ const AdminHome = () => {
           <InvokeSection />
         </Route>
         <Route exact path="/state_assoc" component={StateAssociations} />
-        <Route
-          exact
-          path="/role_user_assoc"
-          component={UserRoleAssociations}
-        />
+        <Route exact path="/role_user_assoc" component={UserRoleAssociations} />
         <Route
           exact
           path="/role_jobcode_assoc"

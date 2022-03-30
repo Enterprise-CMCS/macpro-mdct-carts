@@ -43,7 +43,7 @@ const initialState = {
 // STATE USER REDUCER
 export default (state = initialState, action) => {
   switch (action.type) {
-    case STATE_INFO:      
+    case STATE_INFO:
       return {
         ...state,
         name: action.name,
