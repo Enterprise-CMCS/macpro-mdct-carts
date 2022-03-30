@@ -1,6 +1,6 @@
 name: Destroy
 
-on: push
+on: delete
 
 jobs:
   destroy:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
-        run: echo "branch_name=${{ github.event.ref }}" >> $GITHUB_ENV
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v2
       - name: set branch specific variable names
         run: |
