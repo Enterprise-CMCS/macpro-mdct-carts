@@ -63,7 +63,7 @@ export const UserProvider = ({ children }) => {
     "custom:cms_roles"
   ]
     ?.split(",")
-    .find((r) => r.includes("mdctqmr"));
+    .find((r) => r.includes("mdctcarts"));
 
   const isStateUser = userRole === UserRoles.STATE;
 
