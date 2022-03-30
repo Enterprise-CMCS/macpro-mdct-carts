@@ -6,6 +6,7 @@ import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
+import { UserRoles } from "../../../types";
 
 const CMSHomepage = ({
   getStatuses,
@@ -66,7 +67,7 @@ const CMSHomepage = ({
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
-        {currentUserRole !== "admin_user" ? (
+        {currentUserRole !== UserRoles.ADMIN ? (
           <>
             <div className="ds-l-row ds-u-padding-left--2">
               <h1 className="page-title ds-u-margin-bottom--0">

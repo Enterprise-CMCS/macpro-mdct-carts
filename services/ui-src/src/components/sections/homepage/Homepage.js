@@ -7,6 +7,7 @@ import {
   selectFormStatus,
   selectIsFormEditable,
 } from "../../../store/selectors";
+import { UserRoles } from "../../../types";
 
 function formatStateStatus(item, editable) {
   if (item) {
@@ -21,7 +22,7 @@ function formatStateStatus(item, editable) {
         link2Text={null}
         statusText={item.status}
         editor="karen.dalton@state.gov"
-        userRole="state_user"
+        userRole={UserRoles.STATE}
         year={item.year}
       />
     );

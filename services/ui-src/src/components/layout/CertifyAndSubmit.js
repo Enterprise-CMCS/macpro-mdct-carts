@@ -9,6 +9,7 @@ import { certifyAndSubmit } from "../../actions/certify";
 import PageInfo from "./PageInfo";
 import { selectIsFormEditable } from "../../store/selectors";
 import FormActions from "./FormActions";
+import { UserRoles } from "../../types";
 
 const Submit = ({ certify }) => (
   <>
@@ -74,7 +75,7 @@ const CertifyAndSubmit = ({
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
         <PageInfo />
-        {currentUserRole === "state_user" && <h2>Certify and Submit</h2>}
+        {currentUserRole === UserRoles.STATE && <h2>Certify and Submit</h2>}
         {isCertified ? (
           <Thanks done={doneClick} lastSave={lastSave} user={user} />
         ) : (

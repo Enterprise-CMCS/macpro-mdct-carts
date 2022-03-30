@@ -6,6 +6,7 @@ import { Button, TextField } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
 import Searchable from "react-searchable-dropdown";
+import { UserRoles } from "../../../types";
 
 /**
  * View/edit a single user with options
@@ -65,10 +66,10 @@ const UserEdit = ({ stateList }) => {
   }, [stateList]);
 
   const roles = [
-    { value: "admin_user", label: "Admin User" },
-    { value: "bus_user", label: "Business User" },
-    { value: "co_user", label: "Central Office User" },
-    { value: "state_user", label: "State User" },
+    { value: UserRoles.ADMIN, label: "Admin User" },
+    { value: UserRoles.BO, label: "Business User" },
+    { value: UserRoles.CO, label: "Central Office User" },
+    { value: UserRoles.STATE, label: "State User" },
   ];
 
   const statuses = [
@@ -216,7 +217,7 @@ const UserEdit = ({ stateList }) => {
             </>
           </div>
           <div>
-            {role == "state_user" ? (
+            {role == UserRoles.STATE ? (
               <>
                 <label className="ds-c-label">State</label>
                 <br />
@@ -228,7 +229,7 @@ const UserEdit = ({ stateList }) => {
                 />
               </>
             ) : null}
-            {role !== "state_user" && role !== null ? (
+            {role !== UserRoles.STATE && role !== null ? (
               <>
                 <label className="ds-c-label">State</label>
                 <MultiSelect

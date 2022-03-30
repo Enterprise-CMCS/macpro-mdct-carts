@@ -1,6 +1,6 @@
 //  @ts-nocheck
 
-const configToExport = {
+export const configToExport = {
   BRANCH_NAME: window.env.BRANCH_NAME,
   MAX_ATTACHMENT_SIZE: 5000000,
   LOCAL_LOGIN: window.env.LOCAL_LOGIN,

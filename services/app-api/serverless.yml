@@ -112,7 +112,7 @@ functions:
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getHello:
-    handler: handlers/measures/get.listMeasures
+    handler: handlers/measures/getHello.hello
     events:
       - http:
           path: hello

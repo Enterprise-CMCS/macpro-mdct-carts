@@ -6,6 +6,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectSectionsForNav } from "../../store/selectors";
+import { UserRoles } from "../../types";
 
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
@@ -27,7 +28,7 @@ const FormNavigation = (props) => {
   const year = location.pathname.split("/")[2];
 
   // If admin, DO NOT ADD
-  if (role !== "admin_user" && role !== "bus_user" && role !== "co_user") {
+  if (role !== UserRoles.ADMIN && role !== UserRoles.BO && role !== UserRoles.CO) {
     // Add certify and submit page to items array
     items.push(`/sections/${year}/certify-and-submit`);
   }
