@@ -1,6 +1,14 @@
 name: Destroy
 
-on: delete
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:
+      - actions-migration
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - destroy
+
 
 jobs:
   destroy:
@@ -17,14 +25,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: set branch specific variable names
         run: |
-          ./.github/build_vars.sh $BRANCH_NAME
+          ./.github/build_vars.sh set_names
           echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
       - name: Create env var for  postgress deployer ECR repo name
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
         run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: set variable values
-        run: ./.github/build_vars.sh $branch_name
+        run: ./.github/build_vars.sh set_values
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
