@@ -7,6 +7,9 @@ if [[ $1 == "" ]] ; then
 fi
 stage=$1
 
+
+
+
 #install jq
 #sudo apt install jq -y
 #install
@@ -37,7 +40,7 @@ set -e
 ##Export aws credentials
 export AWS_ACCESS_KEY_ID=$2
 export AWS_SECRET_ACCESS_KEY=$3
-export AWS_SESSION_TOKEN=$4
+export AWS_DEFAULT_REGION=$4
 
 # Find cloudformation stacks associated with stage
 stackList=(`aws cloudformation --region us-east-1 describe-stacks | jq -r ".Stacks[] | select(.Tags[] | select(.Key==\"STAGE\") | select(.Value==\"$stage\")) | .StackName"`)
