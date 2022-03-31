@@ -1,4 +1,4 @@
-name: Deploy
+name: deploy
 
 on:
   push:
@@ -21,15 +21,15 @@ jobs:
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
       - name: set branch specific variable names
-        run: ./.github/build_vars.sh set_names
-      - name: set commit HASH for image tagging
-        run: echo "HASH=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+        run: |
+          ./.github/build_vars.sh set_names
+          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
       - name: Create env var for  postgress deployer ECR repo name
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
         run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: set variable values
-        run: ./.github/build_vars.sh $BRANCH_NAME
+        run: ./.github/build_vars.sh set_values
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
@@ -67,10 +67,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Terraform Installation
+      - name: Terraform setup
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.13.4
+          terraform_wrapper: false
+      - name: Chrome setup
+        uses: browser-actions/setup-chrome@latest
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -79,7 +82,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG: ${{ github.sha }}        #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG:  ${{env.BUILD_TAG}}       #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           pushd data/postgres_deployer
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -90,7 +93,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           pushd frontend/api_postgres
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -98,7 +101,7 @@ jobs:
           popd
       - name: Build and push react artifacts.
         env:
-          IMAGE_TAG: ${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BUILD_TAG}}          #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
         run: |
           cd frontend/react
@@ -110,7 +113,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{env.BUILD_TAG}}
         run: |
           aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
@@ -118,23 +121,39 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{env.BUILD_TAG}} #${{ github.sha }}
         run: |
           aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
-      - name: Store ecr images scan results
+      - name: Archive ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: image_scan_results
           path: ecr_scan_*.json
       - name: Deploy Uploads Scan
-    #    env:
-    #      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #      aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
           cd serverless-uploads
-          ./deploy.sh $GITHUB_JOB
-
-    #  - name: Deploy Data Layer
+          ./deploy.sh ${{env.BRANCH_NAME}}
+      - name: Deploy Data Layer
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev
+      - name: Archive data aws logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: data-aws-logs
+          path: data/aws/log*
+      - name: Deploy Frontend Layer
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
+      - name: Archive Frontend aws logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Frontend-aws-logs
+          path: frontend/aws/log*
+      - name: Serverless
+        run: |
+          cd serverless
+          ./deploy.sh ${{env.BRANCH_NAME}}
+    #  - name: Run Test
+    #    run: ./test_deploy.sh

@@ -69,4 +69,5 @@ jobs:
       - name: Destroy serverless
         run: |
           cd serverless
-          sudo ./destroy.sh ${{env.BRANCH_NAME}}
+          sudo ./destroy.sh $BRANCH_NAME
+    #${{env.BRANCH_NAME}}

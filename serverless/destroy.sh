@@ -10,7 +10,7 @@ stage=$1
 #install jq
 sudo apt install jq -y
 #install
-sudo apt install awscli -y
+#sudo apt install awscli -y
 # A list of protected/important branches/environments/stages.
 protected_stage_regex="(^master$|^val$|^production)"
 if [[ $stage =~ $protected_stage_regex ]] ; then
