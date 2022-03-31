@@ -8,7 +8,7 @@ fi
 stage=$1
 
 #install jq
-sudo apt install jq -y
+#sudo apt install jq -y
 #install
 #sudo apt install awscli -y
 # A list of protected/important branches/environments/stages.
