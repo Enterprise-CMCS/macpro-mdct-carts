@@ -5,12 +5,12 @@
 set -e
 
 ##Initializing terraform
-pushd frontend/aws
-
+#pushd frontend/aws
+cd frontend/aws
 #set application_endpoint env variables from terraform output Files
 APPLICATION_ENDPOINT=$(terraform output application_endpoint)
 
-popd
+cd ../..
 
 cd tests
 
