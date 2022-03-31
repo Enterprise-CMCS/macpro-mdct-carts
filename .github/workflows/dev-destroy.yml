@@ -69,9 +69,4 @@ jobs:
       - name: Destroy serverless
         run: |
           cd serverless
-          sudo ./destroy.sh ${{env.BRANCH_NAME}}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+          sudo ./destroy.sh ${{env.BRANCH_NAME}} ${{ secrets.AWS_ACCESS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }} ${{ secrets.AWS_DEFAULT_REGION }}
