@@ -3,6 +3,7 @@ import jsonpath from "../util/jsonpath";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
+import { UserRoles } from "../types";
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
@@ -152,7 +153,7 @@ export const selectIsFormEditable = (state) => {
     case undefined:
       // Forms can only be edited if the current user is a state user AND the
       // form is in one of the statuses above.
-      return role === "state_user";
+      return role === UserRoles.STATE;
     default:
       return false;
   }

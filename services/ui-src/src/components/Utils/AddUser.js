@@ -6,6 +6,7 @@ import Searchable from "react-searchable-dropdown";
 import { TextField, Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
 import { roles } from "../Utils/RoleHelper";
+import { UserRoles } from "../../types";
 
 /**
  * Add a new record to carts_api_rolefromusername & carts_api_statesfromusername so that the user
@@ -102,7 +103,7 @@ const AddUser = ({ currentUser, stateList }) => {
             />
           </div>
           <div>
-            {role == "state_user" ? (
+            {role == UserRoles.STATE ? (
               <>
                 State:
                 <br />
@@ -119,7 +120,7 @@ const AddUser = ({ currentUser, stateList }) => {
                 />
               </>
             ) : null}
-            {role !== "state_user" && role !== null ? (
+            {role !== UserRoles.STATE && role !== null ? (
               <>
                 States:
                 <br />
@@ -148,7 +149,7 @@ const AddUser = ({ currentUser, stateList }) => {
   const unauthorized = <p>You do not have access to this functionality.</p>;
 
   const userRole = currentUser.role;
-  return userRole === "admin_user" ? authorized : unauthorized;
+  return userRole === UserRoles.ADMIN ? authorized : unauthorized;
 };
 
 AddUser.propTypes = {
