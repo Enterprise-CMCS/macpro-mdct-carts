@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Switch } from "react-router";
 import { Route } from "react-router-dom";
 import CMSHomepage from "../sections/homepage/CMSHomepage";

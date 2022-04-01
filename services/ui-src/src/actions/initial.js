@@ -1,6 +1,6 @@
+/* eslint-disable no-underscore-dangle, no-console */
 import axios from "../authenticatedAxios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
-import { setToken } from "../authenticatedAxios";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
@@ -8,8 +8,6 @@ export const SET_STATE_STATUS = "SET_STATE_STATUS";
 export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
-
-/* eslint-disable no-underscore-dangle, no-console */
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
@@ -223,14 +221,6 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
     }
     dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
-};
-
-const getCookie = (key) => {
-  const result = new RegExp(`(?:^|; ) ${encodeURIComponent(key)}=([^;]*)`).exec(
-    document.cookie
-  );
-
-  return result ? result[1] : null;
 };
 
 export const loadUser = (user) => async (dispatch) => {
