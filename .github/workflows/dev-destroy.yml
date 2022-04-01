@@ -11,11 +11,10 @@ jobs:
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
     if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "actions-migration", "production"]'), github.event.ref)
-    #if: github.event.ref_type == 'branch' && contains(fromJson('["actions-migration"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+        run: echo "branch_name=${{ github.event.ref }}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
       - name: set branch specific variable names
         run: |
