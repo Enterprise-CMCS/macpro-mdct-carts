@@ -56,7 +56,7 @@ const Print = ({ currentUser, state }) => {
       ).replaceAll(
         `“`,
         `"`
-      );
+    );
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
     const res = await axios.post("prince", {
