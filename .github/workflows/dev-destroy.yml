@@ -10,7 +10,11 @@ jobs:
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
+<<<<<<< HEAD
     if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "production"]'), github.event.ref)
+=======
+    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "actions-migration", "production"]'), github.event.ref)
+>>>>>>> actions-migration
     #if: github.event.ref_type == 'branch' && contains(fromJson('["actions-migration"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
