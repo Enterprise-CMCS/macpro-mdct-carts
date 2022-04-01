@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { VerticalNav } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { UserRoles } from "../../types";
 
 const idToUrl = (location, id) => {
   const endOfPath = id.replace(/-/g, "/");
@@ -67,7 +68,7 @@ class TableOfContents extends Component {
       });
 
     // If the user can certify and submit AND the form is not yet submitted...
-    if (userRole === "state_user") {
+    if (userRole === UserRoles.STATE) {
       items.push({
         id: "certify-and-submit",
         label: "Certify and Submit",

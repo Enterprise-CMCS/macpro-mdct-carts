@@ -8,6 +8,7 @@ import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 import Text from "./Text";
+import { UserRoles } from "../../types";
 
 const showPart = (contextData, programType, state) => {
   if (
@@ -117,7 +118,7 @@ const showPartBasedOnUserType = (contextData, programData, state) => {
 
   if (
     programData &&
-    (role === "bus_user" || role === "co_user" || role === "admin_user")
+    (role === UserRoles.BO || role === UserRoles.CO || role === UserRoles.ADMIN)
   ) {
     // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);

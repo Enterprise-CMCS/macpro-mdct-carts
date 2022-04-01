@@ -233,27 +233,25 @@ const getCookie = (key) => {
   return result ? result[1] : null;
 };
 
-export const loadUser = (userToken) => async (dispatch) => {
-  if (getCookie("csrftoken") === null) {
-    await axios
-      .get("/api/v1/initiate", { withCredentials: true })
-      .then(function (result) {
-        console.log("!!!!Django session initialted successfully!!! ", result);
-      })
-      .catch(function (error) {
-        console.log("???????error initiating Django session ?????:", error);
-      });
-  }
-
-  const { data } = userToken
-    ? await axios.get(`/api/v1/appusers/${userToken}`)
-    : await axios.post(`/api/v1/appusers/auth`);
-  setToken(null, userToken);
+export const loadUser = (user) => async (dispatch) => {
+  const flattenedUser = {
+    username: user.attributes.email,
+    state: {
+      id: user.attributes["custom:cms_state"],
+    },
+    role: user.attributes["custom:cms_roles"],
+    lastname: user.attributes?.family_name,
+    firstname: user.attributes?.given_name,
+    email: user.attributes?.email,
+  };
+  // TODO: bring in info for state and program
   await Promise.all([
-    dispatch(getUserData(data.currentUser)),
-    dispatch(getStateData(data)),
-    dispatch(getProgramData(data)),
-    dispatch(getStateAllStatuses({ stateCode: data.abbr })),
+    dispatch(getUserData(flattenedUser)),
+    dispatch(getStateData({ abbr: user.attributes["custom:cms_state"] })),
+    dispatch(getProgramData(user)),
+    dispatch(
+      getStateAllStatuses({ stateCode: user?.attributes["custom:cms_state"] })
+    ),
     dispatch(getAllStatesData()),
   ]);
 };

@@ -1,3 +1,5 @@
+import { UserRoles } from "../types";
+
 const fakeUserData = {
   AK: {
     name: "Alaska",
@@ -8,7 +10,7 @@ const fakeUserData = {
     imageURI: `${process.env.PUBLIC_URL}/img/states/ak.svg`,
     formName: "CARTS FY",
     currentUser: {
-      role: "state_user",
+      role: UserRoles.STATE,
       state: {
         id: "AK",
         name: "Alaska",
@@ -25,7 +27,7 @@ const fakeUserData = {
     imageURI: `${process.env.PUBLIC_URL}/img/states/az.svg`,
     formName: "CARTS FY",
     currentUser: {
-      role: "state_user",
+      role: UserRoles.STATE,
       state: {
         id: "AZ",
         name: "Arizona",
@@ -42,7 +44,7 @@ const fakeUserData = {
     imageURI: `${process.env.PUBLIC_URL}/img/states/ma.svg`,
     formName: "CARTS FY",
     currentUser: {
-      role: "state_user",
+      role: UserRoles.STATE,
       state: {
         id: "MA",
         name: "Massachusetts",

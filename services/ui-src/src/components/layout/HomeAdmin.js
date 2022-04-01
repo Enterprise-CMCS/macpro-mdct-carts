@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
@@ -15,11 +15,11 @@ import { Switch } from "react-router";
 import ScrollToTop from "../Utils/ScrollToTop";
 import { connect } from "react-redux";
 
-const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
+const AdminHome = () => {
   return (
     <>
       <ScrollToTop />
-      <SecureRoute exact path="/">
+      <Route exact path="/">
         <div className="homepage ds-l-col--12">
           <div className="ds-l-container">
             <div className="ds-l-row">
@@ -44,45 +44,40 @@ const AdminHome = ({ SecureRouteComponent: SecureRoute }) => {
               </ul>
             </div>
             <div className="cmslist">
-              <CMSHomepage SecureRouteComponent={SecureRoute} />
+              <CMSHomepage />
             </div>
           </div>
         </div>
-      </SecureRoute>
+      </Route>
       <Switch>
-        <SecureRoute
+        <Route
           exact
           path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
         >
           <Sidebar />
           <InvokeSection />
-        </SecureRoute>
-        <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
+        </Route>
+        <Route path="/views/sections/:state/:year/:sectionOrdinal">
           <Sidebar />
           <InvokeSection />
-        </SecureRoute>
-        <SecureRoute exact path="/state_assoc" component={StateAssociations} />
-        <SecureRoute
-          exact
-          path="/role_user_assoc"
-          component={UserRoleAssociations}
-        />
-        <SecureRoute
+        </Route>
+        <Route exact path="/state_assoc" component={StateAssociations} />
+        <Route exact path="/role_user_assoc" component={UserRoleAssociations} />
+        <Route
           exact
           path="/role_jobcode_assoc"
           component={JobCodeRoleAssociations}
         />
-        <SecureRoute exact path="/users" component={Users} />
-        <SecureRoute exact path="/add_user" component={AddUser} />
-        <SecureRoute exact path="/user/:id" component={UserEdit} />
-        <SecureRoute exact path="/state-reports" component={CMSHomepage} />
-        <SecureRoute exact path="/templates" component={FormTemplates} />
+        <Route exact path="/users" component={Users} />
+        <Route exact path="/add_user" component={AddUser} />
+        <Route exact path="/user/:id" component={UserEdit} />
+        <Route exact path="/state-reports" component={CMSHomepage} />
+        <Route exact path="/templates" component={FormTemplates} />
       </Switch>
     </>
   );
 };
 AdminHome.propTypes = {
-  SecureRouteComponent: PropTypes.element.isRequired,
   formYear: PropTypes.object.isRequired,
 };
 

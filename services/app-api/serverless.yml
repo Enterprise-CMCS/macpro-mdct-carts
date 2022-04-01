@@ -1,7 +1,7 @@
 # Refer to the README.md file in within this service directory to configure all ssm parameters required for this service.
 service: app-api
 
-frameworkVersion: "3"
+frameworkVersion: "2"
 
 package:
   individually: true
@@ -109,6 +109,14 @@ functions:
       - http:
           path: coreset/{state}/{year}/{coreSet}/measures/{measure}/delete
           method: delete
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getHello:
+    handler: handlers/measures/getHello.hello
+    events:
+      - http:
+          path: hello
+          method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
 resources:

@@ -1,30 +1,5 @@
 [
   {
-    "username": "paul@test.com",
-    "attributes": [
-      {
-        "Name": "email",
-        "Value": "paul@test.com"
-      },
-      {
-        "Name": "given_name",
-        "Value": "Paul"
-      },
-      {
-        "Name": "family_name",
-        "Value": "McCartney"
-      },
-      {
-        "Name": "email_verified",
-        "Value": "true"
-      },
-      {
-        "Name": "custom:cms_roles",
-        "Value": "mdctqmr-approver"
-      }
-    ]
-  },
-  {
     "username": "john@test.com",
     "attributes": [
       {
@@ -45,7 +20,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -74,7 +49,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-help-desk"
+        "Value": "mdctcarts-help-desk"
       }
     ]
   },
@@ -99,7 +74,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-bo-user"
+        "Value": "mdctcarts-bo-user"
       }
     ]
   },
@@ -124,7 +99,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -153,7 +128,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -182,7 +157,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -211,7 +186,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -240,7 +215,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -269,7 +244,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-state-user"
+        "Value": "mdctcarts-state-user"
       },
       {
         "Name": "custom:cms_state",
@@ -298,7 +273,7 @@
       },
       {
         "Name": "custom:cms_roles",
-        "Value": "mdctqmr-approver"
+        "Value": "mdctcarts-approver"
       }
     ]
   }

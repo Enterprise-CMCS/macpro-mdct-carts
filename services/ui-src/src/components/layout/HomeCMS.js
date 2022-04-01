@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch } from "react-router";
-
+import { Route } from "react-router-dom";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
 import InvokeSection from "../Utils/InvokeSection";
 import SaveError from "./SaveError";
@@ -9,25 +9,25 @@ import ScrollToTop from "../Utils/ScrollToTop";
 import Sidebar from "./Sidebar";
 import Unauthorized from "./Unauthorized";
 
-const CMSHome = ({ SecureRouteComponent: SecureRoute }) => (
+const CMSHome = () => (
   <>
     <SaveError />
     <ScrollToTop />
     <Switch>
-      <SecureRoute exact path="/" component={CMSHomepage} />
-      <SecureRoute
+      <Route exact path="/" component={CMSHomepage} />
+      <Route
         exact
         path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
       >
         <Sidebar />
         <InvokeSection />
-      </SecureRoute>
-      <SecureRoute path="/views/sections/:state/:year/:sectionOrdinal">
+      </Route>
+      <Route path="/views/sections/:state/:year/:sectionOrdinal">
         <Sidebar />
         <InvokeSection />
-      </SecureRoute>
+      </Route>
       {/* Add routes from admin that should be unauthorized for cms users */}
-      <SecureRoute
+      <Route
         path={[
           "/role_user_assoc",
           "/state_assoc",
@@ -39,9 +39,5 @@ const CMSHome = ({ SecureRouteComponent: SecureRoute }) => (
     </Switch>
   </>
 );
-
-CMSHome.propTypes = {
-  SecureRouteComponent: PropTypes.element.isRequired,
-};
 
 export default CMSHome;

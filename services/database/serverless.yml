@@ -1,6 +1,6 @@
 service: database
 
-frameworkVersion: "3"
+frameworkVersion: "2"
 
 plugins:
   - serverless-dynamodb-local

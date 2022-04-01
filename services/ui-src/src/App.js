@@ -1,14 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import WrappedSecurity from "./wrapSecurity";
+import { UserProvider } from "./hooks/authHooks";
+import AppRoutes from "./AppRoutes";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 
 function App() {
   return (
-    <Router>
-      <WrappedSecurity />
-    </Router>
+    <div id="app-wrapper">
+      <Router>
+        <UserProvider>
+          <AppRoutes />
+        </UserProvider>
+      </Router>
+    </div>
   );
 }
 export default App;

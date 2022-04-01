@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { theAccept } from "../../../actions/accept";
+import { UserRoles } from "../../../types";
 
 const ReportItem = ({
   link1Text,
@@ -24,7 +25,7 @@ const ReportItem = ({
   let theDateTime = "";
   let tempTime = "";
   let stateUser = false;
-  if (userRole === "state_user") {
+  if (userRole === UserRoles.STATE) {
     stateUser = true;
   }
 
@@ -94,14 +95,14 @@ const ReportItem = ({
             </Link>
           </div>
           {statusText === "Certified" &&
-          (userRole === "co_user" || userRole === "bus_user") ? (
+          (userRole === UserRoles.CO || userRole === UserRoles.BO) ? (
             <div className="actions ds-l-col--1">
               <Link onClick={uncertify} variation="primary">
                 Uncertify
               </Link>
             </div>
           ) : null}
-          {statusText === "Certified" && userRole === "co_user" ? (
+          {statusText === "Certified" && userRole === UserRoles.CO ? (
             <div className="actions ds-l-col--1">
               <Link onClick={accept} variation="primary">
                 Accept

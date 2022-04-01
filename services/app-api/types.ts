@@ -70,11 +70,11 @@ export const enum MeasureStatus {
 }
 
 export const enum UserRoles {
-  ADMIN = "mdctqmr-approver",
-  STATE = "mdctqmr-state-user",
-  HELP = "mdctqmr-help-desk",
-  BO = "mdctqmr-bo-user",
-  BOR = "mdctqmr-bor",
+  ADMIN = "mdctcarts-approver",
+  STATE = "mdctcarts-state-user",
+  HELP = "mdctcarts-help-desk",
+  BO = "mdctcarts-bo-user",
+  BOR = "mdctcarts-bor",
 }
 
 export const enum RequestMethods {
