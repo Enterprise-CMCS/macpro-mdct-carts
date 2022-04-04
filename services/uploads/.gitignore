@@ -7,6 +7,9 @@ jspm_packages
 # Serverless directories
 .serverless
 
+# yarn cache
+.yarn
+
 # ClamAV
 *.so.*
 *.so*
