@@ -10,7 +10,7 @@
   "scripts": {
     "test:cypress": "cd tests/cypress && npm test && cd -",
     "test:ci": "cd tests/cypress && yarn run test:ci",
-    "test:jest": "cd tests/jest && jest tests/jest"
+    "test:jest": "jest services/ui-src/src/__tests__ --passWithNoTests"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@types/dotenv": "^8.2.0",
     "@types/flat": "^5.0.2",
