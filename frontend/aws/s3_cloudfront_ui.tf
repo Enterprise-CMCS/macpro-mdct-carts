@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "s3_policy" {
 }
 
 resource "aws_s3_bucket_public_access_block" "www" {
-  bucket = aws.aws_s3_bucket.www.id
+  bucket = aws_s3_bucket.www.id
 
   block_public_acls       = true
   block_public_policy     = true

@@ -18,7 +18,7 @@ resource "aws_lambda_permission" "allow_bucket" {
 }
 
 resource "aws_s3_bucket_public_access_block" "uploads" {
-  bucket = aws.aws_s3_bucket.uploads.id
+  bucket = aws_s3_bucket.uploads.id
 
   block_public_acls       = true
   block_public_policy     = true
