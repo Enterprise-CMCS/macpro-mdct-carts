@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@cmsgov/design-system-core";
-import PropTypes from "prop-types";
-import { loadSections } from "../../actions/initial";
-import Section from "../layout/Section";
-import axios from "../../authenticatedAxios";
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@cmsgov/design-system-core';
+import PropTypes from 'prop-types';
+import { loadSections } from '../../actions/initial';
+import Section from '../layout/Section';
+import axios from '../../authenticatedAxios';
 
 // Print page
 const printWindow = (event) => {
@@ -33,28 +33,25 @@ const Print = ({ currentUser, state }) => {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
     let byteArray = new Uint8Array(byteNumbers);
-    let file = new Blob([byteArray], { type: "application/pdf;base64" });
+    let file = new Blob([byteArray], { type: 'application/pdf;base64' });
     let fileURL = URL.createObjectURL(file);
     window.open(fileURL);
   };
 
   const getPdfFriendlyDocument = async () => {
-    const noscriptTag = document.querySelector("noscript");
+    const noscriptTag = document.querySelector('noscript');
     if (noscriptTag) {
       noscriptTag.remove();
     }
-    document.querySelectorAll("input").forEach((element) => {
-      element.style.height = "50px";
+    document.querySelectorAll('input').forEach((element) => {
+      element.style.height = '50px';
     });
     const htmlString = document
-      .querySelector("html")
-      .innerHTML.replaceAll(
-        '<link href="',
-        `<link href="https://${window.location.host}`
-      );
+      .querySelector('html')
+      .innerHTML.replaceAll('<link href="', `<link href="https://${window.location.host}`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
-    const res = await axios.post("prince", {
+    const res = await axios.post('prince', {
       encodedHtml: base64String,
     });
     openPdf(res.data);
@@ -68,26 +65,24 @@ const Print = ({ currentUser, state }) => {
       // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
-      const selectedYear = urlParams.get("year");
+      const selectedYear = urlParams.get('year');
       let stateCode;
       if (stateUser.currentUser.state.id) {
         stateCode = stateUser.currentUser.state.id;
       } else {
-        stateCode = urlParams.get("state");
+        stateCode = urlParams.get('state');
       }
 
       // Start Spinner
-      dispatch({ type: "CONTENT_FETCHING_STARTED" });
+      dispatch({ type: 'CONTENT_FETCHING_STARTED' });
 
       // Pull data based on user details
       await Promise.all([
-        dispatch(
-          loadSections({ userData: currentUser, stateCode, selectedYear })
-        ),
+        dispatch(loadSections({ userData: currentUser, stateCode, selectedYear })),
       ]);
 
       // End isFetching for spinner
-      dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+      dispatch({ type: 'CONTENT_FETCHING_FINISHED' });
     };
 
     // Call async function to load data
@@ -106,20 +101,12 @@ const Print = ({ currentUser, state }) => {
 
       // Loop through subsections to get subsectionId
       /* eslint-disable no-plusplus */
-      for (
-        let j = 0;
-        j < formData[i].contents.section.subsections.length;
-        j++
-      ) {
+      for (let j = 0; j < formData[i].contents.section.subsections.length; j++) {
         const subsectionId = formData[i].contents.section.subsections[j].id;
 
         // Add section to sections array
         sections.push(
-          <Section
-            sectionId={sectionId}
-            subsectionId={subsectionId}
-            readonly="false"
-          />
+          <Section sectionId={sectionId} subsectionId={subsectionId} readonly="false" />
         );
       }
     }

@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { AccordionButton, AccordionPanel } from "@reach/accordion";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { AccordionButton, AccordionPanel } from '@reach/accordion';
 
-import Question from "./Question"; // eslint-disable-line import/no-cycle
+import Question from './Question'; // eslint-disable-line import/no-cycle
 
 const Objective = ({ headerRef, objective, objectiveNumber }) => {
   const first = objective.questions[0].answer.readonly === true;

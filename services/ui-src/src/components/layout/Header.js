@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import Autosave from "./Autosave";
-import Logout from "./Logout";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Autosave from './Autosave';
+import Logout from './Logout';
 
 class Header extends Component {
   constructor() {
@@ -15,16 +15,16 @@ class Header extends Component {
   toggleUserNav(e) {
     e.preventDefault();
 
-    document.getElementById("menu-block").classList.toggle("open");
-    document.getElementById("nav-user").classList.toggle("open");
+    document.getElementById('menu-block').classList.toggle('open');
+    document.getElementById('nav-user').classList.toggle('open');
 
     // Close menu when leaving focus
-    const root = document.getElementById("root");
+    const root = document.getElementById('root');
     root.addEventListener(
-      "click",
+      'click',
       () => {
-        document.getElementById("menu-block").classList.remove("open");
-        document.getElementById("nav-user").classList.remove("open");
+        document.getElementById('menu-block').classList.remove('open');
+        document.getElementById('nav-user').classList.remove('open');
       },
       false
     );
@@ -76,11 +76,7 @@ function RenderEmailMenuItem({ toggleUserNav, email }) {
   return (
     <ul className="user-email-button">
       <li>
-        <a
-          href="#menu"
-          className="nav--dropdown__trigger"
-          onClick={toggleUserNav}
-        >
+        <a href="#menu" className="nav--dropdown__trigger" onClick={toggleUserNav}>
           {email}
         </a>
       </li>

@@ -1,22 +1,14 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Accordion, AccordionItem } from "@reach/accordion";
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Accordion, AccordionItem } from '@reach/accordion';
 
-import { Objective } from "./Objective"; // eslint-disable-line import/no-cycle
-import {
-  createNewObjective,
-  removeRepeatable,
-} from "../../actions/repeatables";
+import { Objective } from './Objective'; // eslint-disable-line import/no-cycle
+import { createNewObjective, removeRepeatable } from '../../actions/repeatables';
 
-const Objectives = ({
-  addObjectiveTo,
-  disabled,
-  question,
-  removeObjectiveFrom,
-}) => {
+const Objectives = ({ addObjectiveTo, disabled, question, removeObjectiveFrom }) => {
   const ref = useRef();
 
   const add = () => {
@@ -38,11 +30,7 @@ const Objectives = ({
 
   return (
     <>
-      <Accordion
-        collapsible
-        multiple
-        defaultIndex={[...Array(100)].map((_, i) => i)}
-      >
+      <Accordion collapsible multiple defaultIndex={[...Array(100)].map((_, i) => i)}>
         {question.questions.map((q, i) => (
           <AccordionItem key={q.id}>
             <Objective headerRef={ref} objective={q} objectiveNumber={i + 1} />
@@ -62,9 +50,7 @@ const Objectives = ({
       </Accordion>
 
       <div className="section-footer">
-        <h3 className="question-inner-header">
-          Do you have another objective in your State Plan?
-        </h3>
+        <h3 className="question-inner-header">Do you have another objective in your State Plan?</h3>
 
         <div className="ds-c-field__hint">Optional</div>
         <button

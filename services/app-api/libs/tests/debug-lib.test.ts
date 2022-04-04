@@ -1,8 +1,8 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { testEvent } from "../../test-util/testEvents";
-import debug, { clearLogs, flush, init } from "../debug-lib";
+import { APIGatewayProxyEvent } from 'aws-lambda'; // eslint-disable-line no-unused-vars
+import { testEvent } from '../../test-util/testEvents';
+import debug, { clearLogs, flush, init } from '../debug-lib';
 
-jest.mock("aws-sdk", () => ({
+jest.mock('aws-sdk', () => ({
   __esModule: true,
   default: {
     config: {
@@ -19,20 +19,20 @@ const mockedConsoleDebug = jest.fn();
   debug: mockedConsoleDebug,
 };
 
-describe("Debug Library Functions", () => {
+describe('Debug Library Functions', () => {
   afterEach(() => {
     clearLogs();
   });
 
-  describe("Init Function", () => {
-    test("logs should have a length of one", () => {
+  describe('Init Function', () => {
+    test('logs should have a length of one', () => {
       const logs = init({ ...testEvent }, null);
 
       expect(logs.length).toBe(1);
       expect(logs[0].string.length).toBeGreaterThan(0);
     });
 
-    test("logs should be overridden on init", () => {
+    test('logs should be overridden on init', () => {
       const event = { ...testEvent };
 
       debug(event);
@@ -47,9 +47,9 @@ describe("Debug Library Functions", () => {
     });
   });
 
-  describe("Flush function", () => {
-    test("flush should only call error by default", () => {
-      const error = new Error("test error");
+  describe('Flush function', () => {
+    test('flush should only call error by default', () => {
+      const error = new Error('test error');
       flush(error);
 
       expect(mockedConsoleError).toBeCalled();
@@ -57,9 +57,9 @@ describe("Debug Library Functions", () => {
       expect(mockedConsoleError).toBeCalledWith(error);
     });
 
-    test("flush should call debug for every log and error once", () => {
+    test('flush should call debug for every log and error once', () => {
       const event = { ...testEvent };
-      const error = new Error("test error");
+      const error = new Error('test error');
 
       debug(event);
       debug(event);
@@ -74,14 +74,14 @@ describe("Debug Library Functions", () => {
     });
   });
 
-  describe("Debug Function", () => {
-    test("logs should have a new object", () => {
-      const logs = debug({ body: "test" });
+  describe('Debug Function', () => {
+    test('logs should have a new object', () => {
+      const logs = debug({ body: 'test' });
 
       expect(logs.length).toBe(1);
     });
 
-    test("logs should have event structured object", () => {
+    test('logs should have event structured object', () => {
       const event = { ...testEvent };
       debug(event);
       debug(event);
@@ -93,23 +93,23 @@ describe("Debug Library Functions", () => {
     });
   });
 
-  describe("clearLogs Function", () => {
-    test("logs should be empty", () => {
-      debug("test");
-      debug("test");
-      debug("test");
-      debug("test");
+  describe('clearLogs Function', () => {
+    test('logs should be empty', () => {
+      debug('test');
+      debug('test');
+      debug('test');
+      debug('test');
       const logs = clearLogs();
 
       expect(logs.length).toBe(0);
     });
 
-    test("only logs after clear should be seen", () => {
-      debug("test");
+    test('only logs after clear should be seen', () => {
+      debug('test');
       clearLogs();
 
-      debug("test");
-      const logs = debug("test");
+      debug('test');
+      const logs = debug('test');
       expect(logs.length).toBe(2);
     });
   });

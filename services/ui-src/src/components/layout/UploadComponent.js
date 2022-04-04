@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Button, TextField } from "@cmsgov/design-system-core";
-import axios from "../../authenticatedAxios";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Button, TextField } from '@cmsgov/design-system-core';
+import axios from '../../authenticatedAxios';
 
-import { setAnswerEntry } from "../../actions/initial";
+import { setAnswerEntry } from '../../actions/initial';
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -31,17 +31,17 @@ class UploadComponent extends Component {
 
   isFileTypeAllowed = (extension) => {
     const allowedFileTypes = [
-      "jpg",
-      "jpeg",
-      "png",
-      "document",
-      "sheet",
-      "pdf",
-      "docx",
-      "doc",
-      "xltx",
-      "xlsx",
-      "xls",
+      'jpg',
+      'jpeg',
+      'png',
+      'document',
+      'sheet',
+      'pdf',
+      'docx',
+      'doc',
+      'xltx',
+      'xlsx',
+      'xls',
     ];
     return allowedFileTypes.indexOf(extension) > -1;
   };
@@ -52,14 +52,11 @@ class UploadComponent extends Component {
 
     for (const uploadedFile of loadedFiles) {
       // *** obtain signed URL
-      const response = await axios.post(
-        `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
-        {
-          uploadedFileName: uploadedFile.name,
-          uploadedFileType: uploadedFile.type,
-          questionId,
-        }
-      );
+      const response = await axios.post(`${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`, {
+        uploadedFileName: uploadedFile.name,
+        uploadedFileType: uploadedFile.type,
+        questionId,
+      });
 
       const { psurl, psdata } = response.data;
 
@@ -70,9 +67,7 @@ class UploadComponent extends Component {
 
       await this.uploadFileToS3(presignedPostData, uploadedFile);
 
-      const filteredStateFiles = loadedFiles.filter(
-        (e) => e.name !== uploadedFile.name
-      );
+      const filteredStateFiles = loadedFiles.filter((e) => e.name !== uploadedFile.name);
 
       this.setState({
         loadedFiles: filteredStateFiles,
@@ -95,10 +90,10 @@ class UploadComponent extends Component {
         formData.append(key, presignedPostData.fields[key]);
       });
 
-      formData.append("file", file);
+      formData.append('file', file);
 
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", presignedPostData.url, true);
+      xhr.open('POST', presignedPostData.url, true);
       xhr.send(formData);
       xhr.onload = function () {
         this.status === 204
@@ -125,9 +120,7 @@ class UploadComponent extends Component {
   removeFile = (evt) => {
     const { loadedFiles } = this.state;
 
-    const filteredStateFiles = loadedFiles.filter(
-      (e) => e.name !== evt.target.name
-    );
+    const filteredStateFiles = loadedFiles.filter((e) => e.name !== evt.target.name);
 
     this.setState({
       loadedFiles: filteredStateFiles,
@@ -135,21 +128,18 @@ class UploadComponent extends Component {
   };
 
   downloadFile = async (filename, awsFilename) => {
-    const response = await axios.post(
-      `${window.env.API_POSTGRES_URL}/api/v1/psurl_download`,
-      {
-        filename,
-        awsFilename,
-      }
-    );
+    const response = await axios.post(`${window.env.API_POSTGRES_URL}/api/v1/psurl_download`, {
+      filename,
+      awsFilename,
+    });
 
-    const { psurl } = response["data"];
+    const { psurl } = response['data'];
     window.location.href = psurl;
   };
 
   retrieveUploadedFiles = async () => {
     const questionId = this.props.question.id;
-    const stateCode = window.location.pathname.split("/")[3];
+    const stateCode = window.location.pathname.split('/')[3];
 
     this.setState({
       uploadedFilesRetrieved: false,
@@ -161,10 +151,10 @@ class UploadComponent extends Component {
         stateCode,
       })
       .catch((error) => {
-        console.log("!!!Error downloading files: ", error);
+        console.log('!!!Error downloading files: ', error);
       });
 
-    const uploadedFiles = response ? response.data["uploaded_files"] : [];
+    const uploadedFiles = response ? response.data['uploaded_files'] : [];
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
@@ -179,7 +169,7 @@ class UploadComponent extends Component {
         awsFilename,
       })
       .catch((error) => {
-        console.log("!!!Error retrieving files: ", error);
+        console.log('!!!Error retrieving files: ', error);
       });
 
     await this.retrieveUploadedFiles();
@@ -193,12 +183,12 @@ class UploadComponent extends Component {
       const filePayload = [];
       const maxFileSize = 25; // in MB
 
-      let errorString = "";
+      let errorString = '';
 
       for (const file of filesArray) {
         const uploadName = file.name;
         const mediaSize = file.size / 1024 / 1024;
-        const mediaExtension = uploadName.split(".").pop();
+        const mediaExtension = uploadName.split('.').pop();
         const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
 
         if (fileTypeAllowed === true) {
@@ -210,9 +200,7 @@ class UploadComponent extends Component {
             );
           }
         } else {
-          errorString = errorString.concat(
-            `${uploadName} is not an approved file type`
-          );
+          errorString = errorString.concat(`${uploadName} is not an approved file type`);
         }
       }
 
@@ -220,13 +208,11 @@ class UploadComponent extends Component {
 
       this.setState({
         inputErrors: errorString || null,
-        loadedFiles: loadedFiles
-          ? [...loadedFiles, ...filePayload]
-          : [...filePayload],
+        loadedFiles: loadedFiles ? [...loadedFiles, ...filePayload] : [...filePayload],
         blockFileSubmission: false,
       });
 
-      if (errorString === "") {
+      if (errorString === '') {
         // eslint-disable-next-line react/prop-types
         const { setAnswer } = this.props;
         setAnswer(event.target.name, filePayload);
@@ -255,14 +241,10 @@ class UploadComponent extends Component {
           ? this.state.loadedFiles.map((element) => (
               <div key={element.name}>
                 <a href={element.name} download>
-                  {" "}
-                  {element.name}{" "}
+                  {' '}
+                  {element.name}{' '}
                 </a>
-                <Button
-                  name={element.name}
-                  onClick={this.removeFile}
-                  size="small"
-                >
+                <Button name={element.name} onClick={this.removeFile} size="small">
                   x
                 </Button>
               </div>
@@ -278,16 +260,12 @@ class UploadComponent extends Component {
           Upload
         </Button>
 
-        <Button
-          onClick={this.viewUploaded}
-          size="small"
-          className="margin-left-1em"
-        >
+        <Button onClick={this.viewUploaded} size="small" className="margin-left-1em">
           {this.state.displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
         </Button>
 
         {this.state.displayUploadedFiles ? (
-          <table key={"uploadedFilesContainer"}>
+          <table key={'uploadedFilesContainer'}>
             <tbody>
               {!this.state.uploadedFilesRetrieved ? (
                 <tr>
@@ -296,7 +274,7 @@ class UploadComponent extends Component {
                       // eslint-disable-next-line
                       src={`${process.env.PUBLIC_URL}/img/bouncing_ball.gif`}
                       alt="Retrieving uploaded files... Please wait..."
-                    />{" "}
+                    />{' '}
                     <br />
                     <br />
                     Loading... Please wait...
@@ -312,21 +290,13 @@ class UploadComponent extends Component {
                       <td>
                         <Button
                           size="small"
-                          onClick={() =>
-                            this.downloadFile(
-                              fileObj.filename,
-                              fileObj.aws_filename
-                            )
-                          }
+                          onClick={() => this.downloadFile(fileObj.filename, fileObj.aws_filename)}
                         >
                           Download
                         </Button>
                       </td>
                       <td>
-                        <Button
-                          size="small"
-                          onClick={() => this.deleteFile(fileObj.aws_filename)}
-                        >
+                        <Button size="small" onClick={() => this.deleteFile(fileObj.aws_filename)}>
                           Delete
                         </Button>
                       </td>

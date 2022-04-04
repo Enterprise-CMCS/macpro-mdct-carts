@@ -1,17 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Text from "../layout/Text";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Text from '../layout/Text';
 
 const CMSLegend = ({ hideNumber, hint, id, label }) => {
-  let labelBits = "";
+  let labelBits = '';
 
   if (id) {
     const lastHunk = Number.parseInt(id.substring(id.length - 2), 10);
     if (Number.isNaN(lastHunk)) {
-      const numberBit = Number.parseInt(
-        id.substring(id.length - 4, id.length - 2),
-        10
-      );
+      const numberBit = Number.parseInt(id.substring(id.length - 4, id.length - 2), 10);
       labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
     } else {
       labelBits = `${lastHunk}. `;
@@ -38,7 +35,7 @@ CMSLegend.propTypes = {
 };
 CMSLegend.defaultProps = {
   hideNumber: false,
-  hint: "",
+  hint: '',
 };
 
 export { CMSLegend };

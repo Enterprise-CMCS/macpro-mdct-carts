@@ -1,6 +1,6 @@
-import { SAVE_FINISHED, SAVE_STARTED } from "./saveMiddleware";
-import { SET_STATE_STATUS } from "../actions/initial";
-import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
+import { SAVE_FINISHED, SAVE_STARTED } from './saveMiddleware';
+import { SET_STATE_STATUS } from '../actions/initial';
+import { CERTIFY_AND_SUBMIT_SUCCESS } from '../actions/certify';
 
 const initial = {
   error: false,
@@ -36,8 +36,7 @@ export default (state = initial, action) => {
       // When the report status initially loads...
       return {
         ...state,
-        lastSave:
-          action.payload.last_changed && new Date(action.payload.last_changed),
+        lastSave: action.payload.last_changed && new Date(action.payload.last_changed),
       };
 
     default:

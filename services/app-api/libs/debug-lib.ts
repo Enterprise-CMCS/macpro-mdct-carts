@@ -1,6 +1,8 @@
-import util from "util";
-import AWS from "aws-sdk";
-import { APIGatewayProxyEvent } from "aws-lambda";
+// TODO logging solution for backend services
+/* eslint-disable no-console */
+import util from 'util';
+import AWS from 'aws-sdk';
+import { APIGatewayProxyEvent } from 'aws-lambda'; // eslint-disable-line no-unused-vars
 
 let logs: { date: Date; string: string }[] = [];
 
@@ -19,7 +21,7 @@ export function init(event: APIGatewayProxyEvent, _context: any) {
   logs = [];
 
   // Log API event
-  return debug("API event", {
+  return debug('API event', {
     body: event.body,
     pathParameters: event.pathParameters,
     queryStringParameters: event.queryStringParameters,

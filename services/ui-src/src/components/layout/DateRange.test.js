@@ -1,12 +1,8 @@
-import React from "react";
-import { shallow } from "enzyme";
-import {
-  storeFactory,
-  findByTestAttribute,
-  mockInitialState,
-} from "../../testUtils";
+import React from 'react';
+import { shallow } from 'enzyme';
+import { storeFactory, findByTestAttribute, mockInitialState } from '../../testUtils';
 
-import DateRange from "./DateRange";
+import DateRange from './DateRange';
 
 /**
  * Factory functon to create a ShallowWrapper for the Header component.
@@ -31,32 +27,29 @@ const setupTopmostComponent = (initialState = {}, props = {}) => {
   return shallow(<DateRange store={store} {...setupProps} />);
 };
 
-describe("DateRange Component (shallow)", () => {
+describe('DateRange Component (shallow)', () => {
   const wrapper = setup(mockInitialState);
-  it("renders with test attributes", () => {
-    const dateComponent = findByTestAttribute(wrapper, "component-date-range");
+  it('renders with test attributes', () => {
+    const dateComponent = findByTestAttribute(wrapper, 'component-date-range');
     expect(dateComponent.length).toBe(1);
   });
-  it("has the appropriate classname", () => {
-    const dateClassname = wrapper.find(".date-range");
+  it('has the appropriate classname', () => {
+    const dateClassname = wrapper.find('.date-range');
     expect(dateClassname.length).toBe(1);
   });
-  it("initializes as empty string when props.previousEntry is false", () => {
-    const previousEntryDisplay = findByTestAttribute(
-      wrapper,
-      "component-daterange-monthstart"
-    )
+  it('initializes as empty string when props.previousEntry is false', () => {
+    const previousEntryDisplay = findByTestAttribute(wrapper, 'component-daterange-monthstart')
       .shallow()
       .props().children[1].props.value;
-    expect(previousEntryDisplay).toBe("");
+    expect(previousEntryDisplay).toBe('');
   });
-  it("initializes as empty string when props.previousEntry is true", () => {
+  it('initializes as empty string when props.previousEntry is true', () => {
     const previousEntrywrapper = setup(mockInitialState, {
       previousEntry: true,
     });
     const previousEntryDisplay = findByTestAttribute(
       previousEntrywrapper,
-      "component-daterange-monthstart"
+      'component-daterange-monthstart'
     )
       .shallow()
       .props().children[1].props.value;
@@ -64,8 +57,8 @@ describe("DateRange Component (shallow)", () => {
   });
 });
 
-describe("DateRange Component (shallow)", () => {
-  it("starts with the initial props", () => {
+describe('DateRange Component (shallow)', () => {
+  it('starts with the initial props', () => {
     const wrapper = setupTopmostComponent(mockInitialState, {
       previousEntry: true,
     });

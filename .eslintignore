@@ -1,0 +1,6 @@
+plugins/**/*
+cypress/plugins/**/*
+tests/cypress/plugins/**/*
+
+# ignoring due to parsing error
+services/app-api/libs/authorization.ts

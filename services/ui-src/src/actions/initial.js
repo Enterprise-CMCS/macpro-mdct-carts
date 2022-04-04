@@ -1,21 +1,21 @@
 /* eslint-disable no-underscore-dangle, no-console */
-import axios from "../authenticatedAxios";
-import { getProgramData, getStateData, getUserData } from "../store/stateUser";
+import axios from '../authenticatedAxios';
+import { getProgramData, getStateData, getUserData } from '../store/stateUser';
 
-export const LOAD_SECTIONS = "LOAD SECTIONS";
-export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
-export const SET_STATE_STATUS = "SET_STATE_STATUS";
-export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
-export const QUESTION_ANSWERED = "QUESTION ANSWERED";
-export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
+export const LOAD_SECTIONS = 'LOAD SECTIONS';
+export const GET_ALL_STATES_DATA = 'GET_ALL_STATES_DATA';
+export const SET_STATE_STATUS = 'SET_STATE_STATUS';
+export const SET_STATE_STATUSES = 'SET_STATE_STATUSES';
+export const QUESTION_ANSWERED = 'QUESTION ANSWERED';
+export const LOAD_LASTYEAR_SECTIONS = 'LOAD_LASTYEAR_SECTIONS';
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/state/");
+      const { data } = await axios.get('/state/');
       dispatch({ type: GET_ALL_STATES_DATA, data });
     } catch (err) {
-      console.log("error:", err);
+      console.log('error:', err);
       console.dir(err);
     }
   };
@@ -62,9 +62,7 @@ export const getAllStateStatuses =
         (status, index, original) =>
           original
             .slice(index + 1)
-            .findIndex(
-              (el) => el.state === status.state && el.year === status.year
-            ) < 0
+            .findIndex((el) => el.state === status.state && el.year === status.year) < 0
       )
       .reduce(
         (out, record) => ({
@@ -123,9 +121,7 @@ export const getStateAllStatuses =
         (status, index, original) =>
           original
             .slice(index + 1)
-            .findIndex(
-              (el) => el.state === status.state && el.year === status.year
-            ) < 0
+            .findIndex((el) => el.state === status.state && el.year === status.year) < 0
       )
       .reduce(
         (out, record) => ({
@@ -175,7 +171,7 @@ export const getStateStatus =
       const { data: newData } = await axios.post(`/state_status/`, {
         last_changed: new Date(),
         state: stateCode,
-        status: "in_progress",
+        status: 'in_progress',
         year,
       });
       dispatch({ type: SET_STATE_STATUS, payload: newData });
@@ -185,35 +181,31 @@ export const getStateStatus =
 export const loadSections = ({ userData, stateCode, selectedYear }) => {
   const state = stateCode || userData.abbr;
   return async (dispatch) => {
-    const { data } = await axios
-      .get(`/api/v1/sections/${selectedYear}/${state}`)
-      .catch((err) => {
-        // Error-handling would go here. For now, just log it so we can see
-        // it in the console, at least.
-        console.log("--- ERROR LOADING SECTIONS ---");
-        console.log(err);
-        // Without the following too many things break, because the
-        // entire app is too dependent on section data being present.
-        dispatch({ type: LOAD_SECTIONS, data: [] });
-        throw err;
-      });
+    const { data } = await axios.get(`/api/v1/sections/${selectedYear}/${state}`).catch((err) => {
+      // Error-handling would go here. For now, just log it so we can see
+      // it in the console, at least.
+      console.log('--- ERROR LOADING SECTIONS ---');
+      console.log(err);
+      // Without the following too many things break, because the
+      // entire app is too dependent on section data being present.
+      dispatch({ type: LOAD_SECTIONS, data: [] });
+      throw err;
+    });
 
     const lastYear = parseInt(selectedYear) - 1;
     let lastYearData = undefined;
     if (lastYear % 2 === 0) {
-      const data = await axios
-        .get(`/api/v1/sections/${lastYear}/${state}`)
-        .catch((err) => {
-          // Error-handling would go here. For now, just log it so we can see
-          // it in the console, at least.
-          console.log("--- ERROR LOADING SECTIONS ---");
-          console.log(err);
-          // Without the following too many things break, because the
-          // entire app is too dependent on section data being present.
-          //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
-          dispatch({ type: LOAD_SECTIONS, data, lastYearData });
-          throw err;
-        });
+      const data = await axios.get(`/api/v1/sections/${lastYear}/${state}`).catch((err) => {
+        // Error-handling would go here. For now, just log it so we can see
+        // it in the console, at least.
+        console.log('--- ERROR LOADING SECTIONS ---');
+        console.log(err);
+        // Without the following too many things break, because the
+        // entire app is too dependent on section data being present.
+        //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
+        dispatch({ type: LOAD_SECTIONS, data, lastYearData });
+        throw err;
+      });
       if (data.data.length > 0) {
         lastYearData = data;
         dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: data.data });
@@ -227,9 +219,9 @@ export const loadUser = (user) => async (dispatch) => {
   const flattenedUser = {
     username: user.attributes.email,
     state: {
-      id: user.attributes["custom:cms_state"],
+      id: user.attributes['custom:cms_state'],
     },
-    role: user.attributes["custom:cms_roles"],
+    role: user.attributes['custom:cms_roles'],
     lastname: user.attributes?.family_name,
     firstname: user.attributes?.given_name,
     email: user.attributes?.email,
@@ -237,11 +229,9 @@ export const loadUser = (user) => async (dispatch) => {
   // TODO: bring in info for state and program
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
-    dispatch(getStateData({ abbr: user.attributes["custom:cms_state"] })),
+    dispatch(getStateData({ abbr: user.attributes['custom:cms_state'] })),
     dispatch(getProgramData(user)),
-    dispatch(
-      getStateAllStatuses({ stateCode: user?.attributes["custom:cms_state"] })
-    ),
+    dispatch(getStateAllStatuses({ stateCode: user?.attributes['custom:cms_state'] })),
     dispatch(getAllStatesData()),
   ]);
 };
@@ -249,30 +239,25 @@ export const loadUser = (user) => async (dispatch) => {
 export const loadForm = (state) => async (dispatch, getState) => {
   const { stateUser } = getState();
   const stateCode = state ?? stateUser.currentUser.state.id;
-  let selectedYear = window.location.pathname.split("/")[2];
-  if (window.location.pathname.includes("views")) {
-    selectedYear = window.location.pathname.split("/")[4];
+  let selectedYear = window.location.pathname.split('/')[2];
+  if (window.location.pathname.includes('views')) {
+    selectedYear = window.location.pathname.split('/')[4];
   }
 
   // Start isFetching for spinner
-  dispatch({ type: "CONTENT_FETCHING_STARTED" });
+  dispatch({ type: 'CONTENT_FETCHING_STARTED' });
 
   try {
-    await dispatch(
-      loadSections({ userData: stateUser, stateCode, selectedYear })
-    );
+    await dispatch(loadSections({ userData: stateUser, stateCode, selectedYear }));
   } finally {
     // End isFetching for spinner
-    dispatch({ type: "CONTENT_FETCHING_FINISHED" });
+    dispatch({ type: 'CONTENT_FETCHING_FINISHED' });
   }
 };
 
 // Move this to where actions should go when we know where that is.
 export const setAnswerEntry = (fragmentId, something) => {
-  const value =
-    something.target && something.target.value
-      ? something.target.value
-      : something;
+  const value = something.target && something.target.value ? something.target.value : something;
   return {
     type: QUESTION_ANSWERED,
     fragmentId,

@@ -1,8 +1,8 @@
-const utils = require("./utils");
-const av = require("./antivirus");
-const constants = require("./constants");
+const utils = require('./utils');
+const av = require('./antivirus');
+const constants = require('./constants');
 
-async function lambdaHandleEvent(event, context) {
+async function lambdaHandleEvent(event, _context) {
   let s3ObjectKey = utils.extractKeyFromApiEvent(event);
   let s3ObjectBucket = utils.extractBucketFromApiEvent(event);
 

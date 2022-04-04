@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import PageInfo from "./PageInfo";
-import { selectSectionTitle } from "../../store/selectors";
-import Subsection from "./Subsection";
-import FormNavigation from "./FormNavigation";
-import FormActions from "./FormActions";
-import Autosave from "../fields/Autosave";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import PageInfo from './PageInfo';
+import { selectSectionTitle } from '../../store/selectors';
+import Subsection from './Subsection';
+import FormNavigation from './FormNavigation';
+import FormActions from './FormActions';
+import Autosave from '../fields/Autosave';
 
 // Get section number only from sectionId
 const selectSectionNumber = (sectionId) => {
-  return Number(sectionId.split("-")[1]);
+  return Number(sectionId.split('-')[1]);
 };
 
 const Section = ({ subsectionId, title, sectionId }) => {

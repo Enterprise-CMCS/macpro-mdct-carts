@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Button } from "@cmsgov/design-system-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useRef } from 'react';
+import { Button } from '@cmsgov/design-system-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPrint, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 /**
  * Display available options for form (print)
@@ -35,10 +35,10 @@ const FormActions = (props) => {
       }
 
       // Bind the event listener
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
       return () => {
         // Unbind the event listener on clean up
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }, [ref]);
   };
@@ -101,9 +101,7 @@ const FormActions = (props) => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href={`/print?year=${formYear}&state=${
-                  window.location.href.split("/")[5]
-                }`}
+                href={`/print?year=${formYear}&state=${window.location.href.split('/')[5]}`}
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDiaglogue}

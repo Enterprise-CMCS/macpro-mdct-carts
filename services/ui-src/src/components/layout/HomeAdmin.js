@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link, Route } from "react-router-dom";
-import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
-import StateAssociations from "../Utils/StateAssociations";
-import UserRoleAssociations from "../Utils/UserRoleAssociations";
-import Users from "../layout/users/Users";
-import FormTemplates from "./FormTemplates";
-import UserEdit from "../layout/users/UserEdit";
-import AddUser from "../Utils/AddUser";
-import CMSHomepage from "../sections/homepage/CMSHomepage";
-import InvokeSection from "../Utils/InvokeSection";
-import Sidebar from "./Sidebar";
-import { Switch } from "react-router";
-import ScrollToTop from "../Utils/ScrollToTop";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, Route } from 'react-router-dom';
+import JobCodeRoleAssociations from '../Utils/JobCodeRoleAssociations';
+import StateAssociations from '../Utils/StateAssociations';
+import UserRoleAssociations from '../Utils/UserRoleAssociations';
+import Users from '../layout/users/Users';
+import FormTemplates from './FormTemplates';
+import UserEdit from '../layout/users/UserEdit';
+import AddUser from '../Utils/AddUser';
+import CMSHomepage from '../sections/homepage/CMSHomepage';
+import InvokeSection from '../Utils/InvokeSection';
+import Sidebar from './Sidebar';
+import { Switch } from 'react-router';
+import ScrollToTop from '../Utils/ScrollToTop';
+import { connect } from 'react-redux';
 
 const AdminHome = () => {
   return (
@@ -50,10 +50,7 @@ const AdminHome = () => {
         </div>
       </Route>
       <Switch>
-        <Route
-          exact
-          path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
-        >
+        <Route exact path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker">
           <Sidebar />
           <InvokeSection />
         </Route>
@@ -63,11 +60,7 @@ const AdminHome = () => {
         </Route>
         <Route exact path="/state_assoc" component={StateAssociations} />
         <Route exact path="/role_user_assoc" component={UserRoleAssociations} />
-        <Route
-          exact
-          path="/role_jobcode_assoc"
-          component={JobCodeRoleAssociations}
-        />
+        <Route exact path="/role_jobcode_assoc" component={JobCodeRoleAssociations} />
         <Route exact path="/users" component={Users} />
         <Route exact path="/add_user" component={AddUser} />
         <Route exact path="/user/:id" component={UserEdit} />

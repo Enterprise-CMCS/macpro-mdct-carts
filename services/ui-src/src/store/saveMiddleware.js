@@ -1,10 +1,10 @@
-import axios from "../authenticatedAxios";
+import axios from '../authenticatedAxios';
 
-import { QUESTION_ANSWERED } from "../actions/initial";
-import { SET_FRAGMENT } from "../actions/repeatables";
+import { QUESTION_ANSWERED } from '../actions/initial';
+import { SET_FRAGMENT } from '../actions/repeatables';
 
-export const SAVE_STARTED = "automatic save has started";
-export const SAVE_FINISHED = "automated save has finished";
+export const SAVE_STARTED = 'automatic save has started';
+export const SAVE_FINISHED = 'automated save has finished';
 
 const saveMiddleware = (store) => {
   let isSaving = false;
@@ -42,7 +42,7 @@ const saveMiddleware = (store) => {
       try {
         store.dispatch({ type: SAVE_STARTED });
         await axios.put(
-          "/api/v1/sections",
+          '/api/v1/sections',
           // In a future world, we might save only the pending changes, but for
           // now, we save by posting the whole document in its current state.
           store.getState().formData
@@ -57,14 +57,14 @@ const saveMiddleware = (store) => {
         // In the event of an error, we might dispatch some other action here
         // to set a global error state and update the autosave header. TBD.
 
-        let errorMessage = "An unknown error occurred";
+        let errorMessage = 'An unknown error occurred';
 
         if (error.response && error.response.status === 401) {
-          errorMessage = "You are not currently logged in";
+          errorMessage = 'You are not currently logged in';
           // User is not logged in.
         } else if (error.response && error.response.status === 403) {
           // User does not have permission.
-          errorMessage = "You do not have permission to save";
+          errorMessage = 'You do not have permission to save';
         } else {
           // Some other server-side error.
         }

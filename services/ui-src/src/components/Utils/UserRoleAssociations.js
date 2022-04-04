@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { CSVReader } from "react-papaparse";
-import postDataToEndpointWithToken from "../../util/postDataToEndpointWithToken";
-import { UserRoles } from "../../types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { CSVReader } from 'react-papaparse';
+import postDataToEndpointWithToken from '../../util/postDataToEndpointWithToken';
+import { UserRoles } from '../../types';
 
 const buttonRef = React.createRef();
 
@@ -22,7 +22,7 @@ const handleOnFileLoad = (data) => {
       username: row.data.username.trim(),
       user_role: row.data.user_role.trim(),
     };
-    postDataToEndpointWithToken(postData, "/role_user_assoc/");
+    postDataToEndpointWithToken(postData, '/role_user_assoc/');
   });
 };
 
@@ -35,10 +35,9 @@ const UserRoleAssociation = ({ currentUser }) => {
     <>
       <div>
         <p>
-          The CSV must have a header row with <code>username</code> and{" "}
-          <code>user_role</code> as the headers, in order. Each row must contain
-          only two values. If you assign a role that the job codes for that user
-          do not entitle them to, this will not work; use{" "}
+          The CSV must have a header row with <code>username</code> and <code>user_role</code> as
+          the headers, in order. Each row must contain only two values. If you assign a role that
+          the job codes for that user do not entitle them to, this will not work; use{' '}
           <a href="/role_jobcode_assoc">/role_jobcode_assoc</a> for that.
         </p>
         <p>A sample valid CSV would look like this:</p>

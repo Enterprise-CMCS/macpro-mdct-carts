@@ -2,13 +2,16 @@
  * Lambda function that will be perform the scan and tag the file accordingly.
  */
 
-const AWS = require("aws-sdk");
-const path = require("path");
-const fs = require("fs");
-const clamav = require("./clamav");
+// TODO logging solution for backend services
+/* eslint-disable no-console */
+
+const AWS = require('aws-sdk');
+const path = require('path');
+const fs = require('fs');
+const clamav = require('./clamav');
 const s3 = new AWS.S3();
-const utils = require("./utils");
-const constants = require("./constants");
+const utils = require('./utils');
+const constants = require('./constants');
 
 /**
  * Retrieve the file size of S3 object without downloading.
@@ -17,8 +20,8 @@ const constants = require("./constants");
  * @return {int} Length of S3 object in bytes.
  */
 async function sizeOf(key, bucket) {
-  console.log("key: " + key);
-  console.log("bucket: " + bucket);
+  console.log('key: ' + key);
+  console.log('bucket: ' + bucket);
 
   let res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
   return res.ContentLength;
@@ -44,9 +47,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
 
   let writeStream = fs.createWriteStream(localPath);
 
-  utils.generateSystemMessage(
-    `Downloading file s3://${s3ObjectBucket}/${s3ObjectKey}`
-  );
+  utils.generateSystemMessage(`Downloading file s3://${s3ObjectBucket}/${s3ObjectKey}`);
 
   let options = {
     Bucket: s3ObjectBucket,
@@ -56,13 +57,11 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   return new Promise((resolve, reject) => {
     s3.getObject(options)
       .createReadStream()
-      .on("end", function () {
-        utils.generateSystemMessage(
-          `Finished downloading new object ${s3ObjectKey}`
-        );
+      .on('end', function () {
+        utils.generateSystemMessage(`Finished downloading new object ${s3ObjectKey}`);
         resolve();
       })
-      .on("error", function (err) {
+      .on('error', function (err) {
         console.log(err);
         reject();
       })
@@ -70,35 +69,33 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   });
 }
 
-async function lambdaHandleEvent(event, context) {
-  utils.generateSystemMessage("Start Antivirus Lambda function");
+async function lambdaHandleEvent(event, _context) {
+  utils.generateSystemMessage('Start Antivirus Lambda function');
 
   let s3ObjectKey = utils.extractKeyFromS3Event(event);
   let s3ObjectBucket = utils.extractBucketFromS3Event(event);
 
-  utils.generateSystemMessage(
-    `S3 Bucket and Key\n ${s3ObjectBucket}\n${s3ObjectKey}`
-  );
+  utils.generateSystemMessage(`S3 Bucket and Key\n ${s3ObjectBucket}\n${s3ObjectKey}`);
 
   let virusScanStatus;
 
-  //You need to verify that you are not getting too large a file
-  //currently lambdas max out at 500MB storage.
+  /*
+   * You need to verify that you are not getting too large a file
+   * currently lambdas max out at 500MB storage.
+   */
   if (await isS3FileTooBig(s3ObjectKey, s3ObjectBucket)) {
     virusScanStatus = constants.STATUS_SKIPPED_FILE;
-    utils.generateSystemMessage(
-      `S3 File is too big. virusScanStatus=${virusScanStatus}`
-    );
+    utils.generateSystemMessage(`S3 File is too big. virusScanStatus=${virusScanStatus}`);
   } else {
     //No need to act on file unless you are able to.
-    utils.generateSystemMessage("Download AV Definitions");
+    utils.generateSystemMessage('Download AV Definitions');
     await clamav.downloadAVDefinitions(
       constants.CLAMAV_BUCKET_NAME,
       constants.PATH_TO_AV_DEFINITIONS
     );
-    utils.generateSystemMessage("Download File from S3");
+    utils.generateSystemMessage('Download File from S3');
     await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
-    utils.generateSystemMessage("Set virusScanStatus");
+    utils.generateSystemMessage('Set virusScanStatus');
     virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
     utils.generateSystemMessage(`virusScanStatus=${virusScanStatus}`);
   }
@@ -111,11 +108,11 @@ async function lambdaHandleEvent(event, context) {
 
   try {
     await s3.putObjectTagging(taggingParams).promise();
-    utils.generateSystemMessage("Tagging successful");
+    utils.generateSystemMessage('Tagging successful');
   } catch (err) {
     console.log(err);
   } finally {
-    return virusScanStatus;
+    return virusScanStatus; // eslint-disable-line no-unsafe-finally
   }
 }
 
@@ -137,11 +134,11 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
 
   try {
     await s3.putObjectTagging(taggingParams).promise();
-    utils.generateSystemMessage("Tagging successful");
+    utils.generateSystemMessage('Tagging successful');
   } catch (err) {
     console.log(err);
   } finally {
-    return virusScanStatus;
+    return virusScanStatus; // eslint-disable-line no-unsafe-finally
   }
 }
 

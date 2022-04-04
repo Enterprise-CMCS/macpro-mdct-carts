@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import DateRange from "../layout/DateRange";
+import React from 'react';
+import PropTypes from 'prop-types';
+import DateRange from '../layout/DateRange';
 
 const DateRangeWrapper = ({ onChange, question }) => {
   const changeHandler = ([questionId, data]) => {

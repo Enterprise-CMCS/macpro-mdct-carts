@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { TextField } from "@cmsgov/design-system-core";
+import React, { Component } from 'react';
+import { TextField } from '@cmsgov/design-system-core';
 
 class FederalPovertyLevel extends Component {
   constructor(props) {
@@ -29,12 +29,12 @@ class FederalPovertyLevel extends Component {
     // percentStart < percentEnd
 
     // Strip value of all non-numeric chars
-    let numericValue = evt.target.value.replace(/\D/g, "");
+    let numericValue = evt.target.value.replace(/\D/g, '');
 
     let percentBoolean = false;
     if (this.percentStart.value && this.percentEnd.value) {
-      let percentStart = this.percentStart.value.replace(/,/g, "");
-      let percentEnd = this.percentEnd.value.replace(/,/g, "");
+      let percentStart = this.percentStart.value.replace(/,/g, '');
+      let percentEnd = this.percentEnd.value.replace(/,/g, '');
       if (parseInt(percentEnd) < parseInt(percentStart)) {
         percentBoolean = true;
       }
@@ -43,8 +43,8 @@ class FederalPovertyLevel extends Component {
     //feeStart < feeEnd
     let feeBoolean = false;
     if (this.feeStart.value && this.feeEnd.value) {
-      let feeStart = this.feeStart.value.replace(/,/g, "");
-      let feeEnd = this.feeEnd.value.replace(/,/g, "");
+      let feeStart = this.feeStart.value.replace(/,/g, '');
+      let feeEnd = this.feeEnd.value.replace(/,/g, '');
       if (parseInt(feeEnd) < parseInt(feeStart)) {
         feeBoolean = true;
       }
@@ -76,11 +76,7 @@ class FederalPovertyLevel extends Component {
                 onChange={this.changeText}
                 value={this.state.fpl_per_starts_at}
               />
-              <div
-                className={`ds-c-field__after ds-c-field__after--percent fpl-percentage`}
-              >
-                %
-              </div>
+              <div className={`ds-c-field__after ds-c-field__after--percent fpl-percentage`}>%</div>
             </div>
             <div className="fpl-arrow">
               <i className="fa fa-arrow-right" aria-hidden="true"></i>
@@ -98,11 +94,7 @@ class FederalPovertyLevel extends Component {
                 onChange={this.changeText}
                 value={this.state.fpl_per_ends_at}
               />
-              <div
-                className={`ds-c-field__after ds-c-field__after--percent fpl-percentage`}
-              >
-                %
-              </div>
+              <div className={`ds-c-field__after ds-c-field__after--percent fpl-percentage`}>%</div>
             </div>
           </div>
           {this.state.fpl_error_percent ? (
@@ -148,9 +140,7 @@ class FederalPovertyLevel extends Component {
           </div>
 
           {this.state.fpl_error_fee ? (
-            <div className="ds-l-row fpl-error error">
-              End fee cannot be lower than start fee
-            </div>
+            <div className="ds-l-row fpl-error error">End fee cannot be lower than start fee</div>
           ) : null}
         </div>
       </div>

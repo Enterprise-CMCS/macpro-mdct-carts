@@ -1,24 +1,24 @@
-import Axios from "axios";
+import Axios from 'axios';
 
 const authenticatedAxios = Axios.create({
   baseURL: window.env.API_POSTGRES_URL,
-  xsrfHeaderName: "X-CSRFTOKEN",
-  xsrfCookieName: "csrftoken",
+  xsrfHeaderName: 'X-CSRFTOKEN',
+  xsrfCookieName: 'csrftoken',
 });
 
 export const setToken = (token, localUserType = false) => {
   /* eslint-disable-line */
-  console.log("csrf token added");
+  console.log('csrf token added');
   authenticatedAxios.interceptors.request.use((config) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     if (localUserType) {
-      config.url += "?dev=" + localUserType;
+      config.url += '?dev=' + localUserType;
     }
 
     /* eslint-disable-line */
-    console.log("!+++++++++++++AXIOS CONFIG:", config);
+    console.log('!+++++++++++++AXIOS CONFIG:', config);
 
     return config;
   });

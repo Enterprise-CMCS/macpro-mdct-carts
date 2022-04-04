@@ -1,4 +1,4 @@
-import { GET_ALL_STATES_DATA } from "../actions/initial";
+import { GET_ALL_STATES_DATA } from '../actions/initial';
 
 const initialState = [];
 

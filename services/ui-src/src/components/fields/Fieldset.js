@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Question from "./Question";
-import DataGrid from "./DataGrid";
-import { SynthesizedTable } from "./SynthesizedTable";
-import { NoninteractiveTable } from "./NoninteractiveTable";
-import { SynthesizedValue } from "./SynthesizedValue";
+import Question from './Question';
+import DataGrid from './DataGrid';
+import { SynthesizedTable } from './SynthesizedTable';
+import { NoninteractiveTable } from './NoninteractiveTable';
+import { SynthesizedValue } from './SynthesizedValue';
 
 // Not done:
 // ==========================
@@ -15,18 +15,16 @@ import { SynthesizedValue } from "./SynthesizedValue";
 
 const Fieldset = ({ question, ...props }) => {
   switch (question.fieldset_type) {
-    case "datagrid":
+    case 'datagrid':
       return <DataGrid question={question} {...props} />;
-    case "synthesized_table":
+    case 'synthesized_table':
       return <SynthesizedTable question={question} {...props} />;
-    case "synthesized_value":
+    case 'synthesized_value':
       return <SynthesizedValue question={question} {...props} />;
-    case "noninteractive_table":
+    case 'noninteractive_table':
       return <NoninteractiveTable question={question} {...props} />;
     default:
-      return question.questions.map((q) => (
-        <Question key={q.id} question={q} {...props} />
-      ));
+      return question.questions.map((q) => <Question key={q.id} question={q} {...props} />);
   }
 };
 Fieldset.propTypes = {

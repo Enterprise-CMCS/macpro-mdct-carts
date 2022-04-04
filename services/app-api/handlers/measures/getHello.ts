@@ -1,5 +1,5 @@
-import handler from "../../libs/handler-lib";
+import handler from '../../libs/handler-lib';
 
-export const hello = handler(async (event, context) => {
-  return "Hello World";
+export const hello = handler(async (_event, _context) => {
+  return 'Hello World';
 });

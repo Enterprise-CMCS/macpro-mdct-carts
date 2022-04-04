@@ -1,9 +1,9 @@
-import jsonpath from "../util/jsonpath";
+import jsonpath from '../util/jsonpath';
 
-import { selectFragment } from "./formData"; // eslint-disable-line
-import { shouldDisplay } from "../util/shouldDisplay";
-import statesArray from "../components/Utils/statesArray";
-import { UserRoles } from "../types";
+import { selectFragment } from './formData'; // eslint-disable-line
+import { shouldDisplay } from '../util/shouldDisplay';
+import statesArray from '../components/Utils/statesArray';
+import { UserRoles } from '../types';
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
@@ -77,7 +77,7 @@ const filterDisplay = (question, state) => {
         question.context_data.skip_text)
     ) {
       // Set skip_text based on location in JSON
-      let skipText = "";
+      let skipText = '';
       if (
         question.context_data.conditional_display &&
         question.context_data.conditional_display.skip_text
@@ -89,7 +89,7 @@ const filterDisplay = (question, state) => {
 
       return {
         id: question.id,
-        type: "skip_text",
+        type: 'skip_text',
         skip_text: skipText,
       };
     }
@@ -147,9 +147,9 @@ export const selectIsFormEditable = (state) => {
   const { role } = state.stateUser.currentUser;
 
   switch (status) {
-    case "not_started":
-    case "in_progress":
-    case "uncertified":
+    case 'not_started':
+    case 'in_progress':
+    case 'uncertified':
     case undefined:
       // Forms can only be edited if the current user is a state user AND the
       // form is in one of the statuses above.
@@ -161,13 +161,13 @@ export const selectIsFormEditable = (state) => {
 
 export const { selectFormStatus, selectFormStatuses } = (() => {
   const STATUS_MAPPING = {
-    not_started: "Not started",
-    in_progress: "In progress",
-    certified: "Certified",
-    uncertified: "Uncertified",
-    accepted: "Accepted",
-    submitted: "Submitted",
-    published: "Published",
+    not_started: 'Not started',
+    in_progress: 'In progress',
+    certified: 'Certified',
+    uncertified: 'Uncertified',
+    accepted: 'Accepted',
+    submitted: 'Submitted',
+    published: 'Published',
   };
 
   return {
@@ -184,10 +184,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
       const allReportStatuses = Object.entries(state.reportStatus);
 
       // This is the default value so when the page loads before the records are populated, it will crash without this check
-      if (
-        allReportStatuses.length > 0 &&
-        allReportStatuses[0][0] !== "status"
-      ) {
+      if (allReportStatuses.length > 0 && allReportStatuses[0][0] !== 'status') {
         returnObject = Object.entries(state.reportStatus).map(
           // eslint-disable-next-line
           ([{}, { status, year, stateCode, lastChanged, username }]) => ({
@@ -201,12 +198,10 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
         );
       } else {
         // Need to return something before records are populated so the page doesn't crash
-        returnObject = Object.entries(state.reportStatus).map(
-          ([stateCode]) => ({
-            state: statesArray.find(({ value }) => value === stateCode)?.label,
-            stateCode,
-          })
-        );
+        returnObject = Object.entries(state.reportStatus).map(([stateCode]) => ({
+          state: statesArray.find(({ value }) => value === stateCode)?.label,
+          stateCode,
+        }));
       }
 
       return returnObject;

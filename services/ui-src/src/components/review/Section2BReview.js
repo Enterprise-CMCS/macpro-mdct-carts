@@ -1,20 +1,11 @@
-import React, { Component } from "react";
-import Objective2BReview from "./Section2B/Objective2BReview";
-import FormNavigation from "../layout/FormNavigation";
-import { Tabs, TabPanel } from "@cmsgov/design-system-core";
-import { connect } from "react-redux";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from "@reach/accordion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import "@reach/accordion/styles.css";
-import { sliceId } from "../Utils/helperFunctions";
-import FormActions from "../layout/FormActions";
-import DateRange from "../layout/DateRange";
+import React, { Component } from 'react';
+import Objective2BReview from './Section2B/Objective2BReview';
+import FormNavigation from '../layout/FormNavigation';
+import { connect } from 'react-redux';
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from '@reach/accordion';
+import '@reach/accordion/styles.css';
+import { sliceId } from '../Utils/helperFunctions';
+import FormActions from '../layout/FormActions';
 
 class Section2BReview extends Component {
   constructor(props) {
@@ -23,7 +14,7 @@ class Section2BReview extends Component {
       objectiveCount: 1,
       objectiveArray: [],
       previousObjectivesArray: [],
-      pageTitle: "Section 2B: State Plan Goals and Objectives",
+      pageTitle: 'Section 2B: State Plan Goals and Objectives',
     };
   }
 
@@ -35,10 +26,7 @@ class Section2BReview extends Component {
         id: `${this.props.year - 1}_${i}`,
         // this creates dummy data for the previous year tab, each tagged as a previous entry using props
         component: (
-          <Objective2BReview
-            objectiveId={`${this.props.year - 1}_${i}`}
-            previousEntry="true"
-          />
+          <Objective2BReview objectiveId={`${this.props.year - 1}_${i}`} previousEntry="true" />
         ),
       });
     }
@@ -84,10 +72,7 @@ class Section2BReview extends Component {
                     ))}
                   </Accordion>
                 </form>
-                <FormNavigation
-                  nextUrl="/section3/3a"
-                  previousUrl="/section2/2a"
-                />
+                <FormNavigation nextUrl="/section3/3a" previousUrl="/section2/2a" />
               </div>
             </div>
           </div>

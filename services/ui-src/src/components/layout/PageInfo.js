@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import moment from "moment";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import moment from 'moment';
 
 const PageInfo = ({ lastSaved, name, status, formYear }) => (
   <div className="page-info">
     <div className="edit-info">
-      {status ?? "draft"}
-      {lastSaved.isValid() && ` | Last Edit: ${lastSaved.format("M/D/YYYY")}`}
+      {status ?? 'draft'}
+      {lastSaved.isValid() && ` | Last Edit: ${lastSaved.format('M/D/YYYY')}`}
     </div>
     <h1>
       {name} CARTS{} FY{formYear}

@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { ChoiceList } from "@cmsgov/design-system-core";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ChoiceList } from '@cmsgov/design-system-core';
 
 const CheckboxFlag = ({ onChange, question, ...props }) => {
   const value = question.answer.entry || false;
@@ -13,7 +13,7 @@ const CheckboxFlag = ({ onChange, question, ...props }) => {
     <ChoiceList
       label=""
       type="checkbox"
-      choices={[{ label: "Select", value: true, checked: value }]}
+      choices={[{ label: 'Select', value: true, checked: value }]}
       value={value}
       onChange={change}
       {...props}

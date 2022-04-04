@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import Text from "./Text";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import Text from './Text';
 
 const validEmailRegex = RegExp(
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
@@ -16,7 +16,7 @@ const Email = ({ onChange, question, ...props }) => {
         setError(false);
         onChange({ target: { name, value } });
       } else {
-        setError("Please enter a valid email address");
+        setError('Please enter a valid email address');
       }
     } else {
       setError(false);

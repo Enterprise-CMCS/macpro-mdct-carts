@@ -3,7 +3,7 @@
 
 const sliceId = (id) => {
   const idString = id.toString();
-  const num = idString.slice(idString.indexOf("_", idString.length - 1));
+  const num = idString.slice(idString.indexOf('_', idString.length - 1));
   return num;
 };
 
@@ -12,7 +12,7 @@ const sliceId = (id) => {
 const showQuestionByPath = (path) => {
   let pageDisable = false;
 
-  if (path === "/print") {
+  if (path === '/print') {
     pageDisable = true;
   }
 

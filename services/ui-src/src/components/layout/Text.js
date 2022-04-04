@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
 const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
 
@@ -20,9 +20,7 @@ const parseLinks = (str) => {
 
       // Recompute the remaining string to remove the preceding text and the
       // link that we've already added to the parts.
-      remainingStr = remainingStr.substr(
-        remainingStr.indexOf(fullMatch) + fullMatch.length
-      );
+      remainingStr = remainingStr.substr(remainingStr.indexOf(fullMatch) + fullMatch.length);
 
       links = linkRegex.exec(str);
     }
@@ -41,8 +39,8 @@ const parseLinks = (str) => {
 const Text = ({ children }) => {
   return useMemo(() => {
     if (children.split) {
-      return children.split("\n\n").map((paragraph, index) => {
-        const lines = paragraph.split("\n");
+      return children.split('\n\n').map((paragraph, index) => {
+        const lines = paragraph.split('\n');
 
         const brokenLines = [...parseLinks(lines[0])];
         for (let i = 1; i < lines.length; i += 1) {

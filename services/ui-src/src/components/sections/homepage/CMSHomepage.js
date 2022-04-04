@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { getAllStateStatuses } from "../../../actions/initial";
-import ReportItem from "./ReportItem";
-import { selectFormStatuses, selectYears } from "../../../store/selectors";
-import { Button } from "@cmsgov/design-system-core";
-import MultiSelect from "react-multi-select-component";
-import { UserRoles } from "../../../types";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getAllStateStatuses } from '../../../actions/initial';
+import ReportItem from './ReportItem';
+import { selectFormStatuses, selectYears } from '../../../store/selectors';
+import { Button } from '@cmsgov/design-system-core';
+import MultiSelect from 'react-multi-select-component';
+import { UserRoles } from '../../../types';
 
-const CMSHomepage = ({
-  getStatuses,
-  statuses,
-  currentUserRole,
-  stateList,
-  yearList,
-}) => {
+const CMSHomepage = ({ getStatuses, statuses, currentUserRole, stateList, yearList }) => {
   const statusList = [
-    { label: "Accepted", value: "accepted" },
-    { label: "Certified", value: "certified" },
-    { label: "In progress", value: "in_progress" },
-    { label: "Not started", value: "not_started" },
-    { label: "Published", value: "published" },
+    { label: 'Accepted', value: 'accepted' },
+    { label: 'Certified', value: 'certified' },
+    { label: 'In progress', value: 'in_progress' },
+    { label: 'Not started', value: 'not_started' },
+    { label: 'Published', value: 'published' },
   ];
 
   // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
@@ -91,9 +85,9 @@ const CMSHomepage = ({
                       options={stateList}
                       value={tempStates}
                       onChange={onSelectState}
-                      labelledBy={"State"}
+                      labelledBy={'State'}
                       hasSelectAll={false}
-                      overrideStrings={{ selectSomeItems: "State" }}
+                      overrideStrings={{ selectSomeItems: 'State' }}
                     />
                   </div>
                   <div className="filter-drop-down-year-status">
@@ -101,9 +95,9 @@ const CMSHomepage = ({
                       options={yearList}
                       value={tempYears}
                       onChange={onSelectYear}
-                      labelledBy={"Year"}
+                      labelledBy={'Year'}
                       hasSelectAll={false}
-                      overrideStrings={{ selectSomeItems: "Year" }}
+                      overrideStrings={{ selectSomeItems: 'Year' }}
                     />
                   </div>
                   <div className="filter-drop-down-year-status">
@@ -113,7 +107,7 @@ const CMSHomepage = ({
                       onChange={onSelectStatus}
                       labelledBy="Status"
                       hasSelectAll={false}
-                      overrideStrings={{ selectSomeItems: "Status" }}
+                      overrideStrings={{ selectSomeItems: 'Status' }}
                     />
                   </div>
                   <div>
@@ -147,42 +141,33 @@ const CMSHomepage = ({
               <div className="report-status">
                 {statuses
                   .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
-                  .map(
-                    ({
-                      state,
-                      stateCode,
-                      status,
-                      year,
-                      username,
-                      lastChanged,
-                    }) => {
-                      return (
-                        // eslint-disable-next-line
-                        <div>
-                          {
-                            // eslint-disable-next-line
-                            // with statement below we don't get the three default records (username, status, and lastchanged)
-                            stateCode !== "status" &&
-                            stateCode !== "lastChanged" &&
-                            stateCode !== "userName" &&
-                            stateCode !== undefined ? (
-                              <ReportItem
-                                key={stateCode}
-                                link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                                name={`${state}`}
-                                year={year}
-                                statusText={status}
-                                editor="x@y.z"
-                                userRole={currentUserRole}
-                                username={username}
-                                lastChanged={lastChanged}
-                              />
-                            ) : null
-                          }
-                        </div>
-                      );
-                    }
-                  )}
+                  .map(({ state, stateCode, status, year, username, lastChanged }) => {
+                    return (
+                      // eslint-disable-next-line
+                      <div>
+                        {
+                          // eslint-disable-next-line
+                          // with statement below we don't get the three default records (username, status, and lastchanged)
+                          stateCode !== 'status' &&
+                          stateCode !== 'lastChanged' &&
+                          stateCode !== 'userName' &&
+                          stateCode !== undefined ? (
+                            <ReportItem
+                              key={stateCode}
+                              link1URL={`/views/sections/${stateCode}/${year}/00/a`}
+                              name={`${state}`}
+                              year={year}
+                              statusText={status}
+                              editor="x@y.z"
+                              userRole={currentUserRole}
+                              username={username}
+                              lastChanged={lastChanged}
+                            />
+                          ) : null
+                        }
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>

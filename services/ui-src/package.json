@@ -54,9 +54,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint 'src/**/*.js'",
-    "prettier": "npx prettier $(git diff --diff-filter=ACMR --name-only --relative | xargs) -w"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -75,18 +73,10 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-eslint": "^10.1.0",
     "babel-preset-env": "^1.7.0",
     "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.26.0",
-    "jest-enzyme": "^7.1.2",
-    "prettier": "^2.1.1"
-  },
-  "prettier": {}
+    "jest-enzyme": "^7.1.2"
+  }
 }

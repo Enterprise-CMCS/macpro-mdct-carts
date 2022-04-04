@@ -1,8 +1,8 @@
-import axios from "../authenticatedAxios";
+import axios from '../authenticatedAxios';
 
-export const CERTIFY_AND_SUBMIT = "CERTIFY_AND_SUBMIT";
-export const CERTIFY_AND_SUBMIT_SUCCESS = "CERTIFY_AND_SUBMIT_SUCCESS";
-export const CERTIFY_AND_SUBMIT_FAILURE = "CERTIFY_AND_SUBMIT_FAILURE";
+export const CERTIFY_AND_SUBMIT = 'CERTIFY_AND_SUBMIT';
+export const CERTIFY_AND_SUBMIT_SUCCESS = 'CERTIFY_AND_SUBMIT_SUCCESS';
+export const CERTIFY_AND_SUBMIT_FAILURE = 'CERTIFY_AND_SUBMIT_FAILURE';
 
 export const certifyAndSubmit = () => async (dispatch, getState) => {
   const state = getState();
@@ -17,7 +17,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
     axios.post(`/state_status/`, {
       last_changed: new Date(),
       state: stateCode,
-      status: "certified",
+      status: 'certified',
       user_name: userName,
       year,
     });
@@ -25,10 +25,10 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
     try {
       axios
         .post(`/api/v1/sendemail/statuschange`, {
-          subject: "CMS MDCT Carts",
+          subject: 'CMS MDCT Carts',
           statecode: stateCode,
           source: window.location.hostname,
-          status: "certify",
+          status: 'certify',
         })
         .then(function () {});
     } catch (ignore) {
@@ -37,7 +37,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
 
     dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });
   } catch (e) {
-    alert("ERROR_[CERTIFY]: Contact Help Desk. " + e.toString());
+    alert('ERROR_[CERTIFY]: Contact Help Desk. ' + e.toString());
     window.location.reload(false);
     dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
   }

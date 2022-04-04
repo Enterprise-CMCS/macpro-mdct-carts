@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-import SaveMessage from "./SaveMessage";
-import { selectLastSave, selectIsSaving } from "../../store/save.selectors";
+import SaveMessage from './SaveMessage';
+import { selectLastSave, selectIsSaving } from '../../store/save.selectors';
 
 const Check = () => <FontAwesomeIcon icon={faCheck} />;
 const Spinner = () => <FontAwesomeIcon icon={faSpinner} spin />;
@@ -21,7 +21,7 @@ const Autosave = ({ isSaving, lastSaved }) => {
   const [delayTimer, setDelayTimer] = useState();
 
   const path = window.location.path;
-  const excluded = ["/", "no-access"];
+  const excluded = ['/', 'no-access'];
 
   if (excluded.indexOf(path) > -1) {
     return <div className="save-status ds-l-col--6 ds-u-border--0"></div>;

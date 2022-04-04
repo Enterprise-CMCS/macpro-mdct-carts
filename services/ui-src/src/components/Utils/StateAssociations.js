@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { CSVReader } from "react-papaparse";
-import postDataToEndpointWithToken from "../../util/postDataToEndpointWithToken";
-import { UserRoles } from "../../types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { CSVReader } from 'react-papaparse';
+import postDataToEndpointWithToken from '../../util/postDataToEndpointWithToken';
+import { UserRoles } from '../../types';
 
 const buttonRef = React.createRef();
 
@@ -18,12 +18,10 @@ const handleOnFileLoad = (data) => {
     if (!row.data.username) {
       return;
     }
-    const stateCodes = row.data.state_codes
-      .split(",")
-      .map((code) => code.trim());
+    const stateCodes = row.data.state_codes.split(',').map((code) => code.trim());
     postDataToEndpointWithToken(
       { username: row.data.username, state_codes: stateCodes },
-      "/state_assoc/"
+      '/state_assoc/'
     );
   });
 };
@@ -37,10 +35,9 @@ const StateAssociation = ({ currentUser }) => {
     <>
       <div>
         <p>
-          The CSV must have a header row with <code>username</code> and{" "}
-          <code>state_codes</code> as the headers, in order. The values in
-          state_codes must be a list of the two-digit state codes, separated by
-          commas, and the entire list of state codes must be enclosed in
+          The CSV must have a header row with <code>username</code> and <code>state_codes</code> as
+          the headers, in order. The values in state_codes must be a list of the two-digit state
+          codes, separated by commas, and the entire list of state codes must be enclosed in
           quotation marks.
         </p>
         <p>A sample valid CSV would look like this:</p>

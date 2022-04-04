@@ -1,14 +1,13 @@
-import React from "react";
+import React from 'react';
 
 const Unauthorized = () => (
   <div>
     <h1>Unauthorized</h1>
     <p>
-      You are not authorized to view this page. Please return to the{" "}
-      <a href="/">home page</a>.
+      You are not authorized to view this page. Please return to the <a href="/">home page</a>.
     </p>
     <p>
-      If you feel this is an error, please contact the helpdesk{" "}
+      If you feel this is an error, please contact the helpdesk{' '}
       <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>
     </p>
   </div>

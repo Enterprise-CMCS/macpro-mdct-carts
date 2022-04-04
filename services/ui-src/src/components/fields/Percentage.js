@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { TextField } from "@cmsgov/design-system-core";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { TextField } from '@cmsgov/design-system-core';
 
 const Percentage = ({ onChange, question, ...props }) => {
   const [error, setError] = useState(false);
@@ -8,7 +8,7 @@ const Percentage = ({ onChange, question, ...props }) => {
   const change = ({ target: { name, value: newValue } }) => {
     let value = newValue;
 
-    let sign = "";
+    let sign = '';
     if (/^(\+|-)/.test(value)) {
       // starts with a + or - sign; temporarily remove
       [sign] = value;
@@ -18,14 +18,14 @@ const Percentage = ({ onChange, question, ...props }) => {
 
     const numericString = `${value}`;
     // This strips everything but numbers and decimals
-    const stripped = numericString.replace(/[^0-9.]/g, "");
+    const stripped = numericString.replace(/[^0-9.]/g, '');
 
     //This regex allows for numbers with ONLY a single decimal
     const regexTest = /^\d*[0-9]?(|.\d*[0-9]?|,\d*[0-9])?$/;
     const isNumberOrDecimal = regexTest.test(stripped);
 
     if (!isNumberOrDecimal) {
-      setError("Please enter only numbers and decimals");
+      setError('Please enter only numbers and decimals');
     } else {
       setError(false);
     }
@@ -39,8 +39,8 @@ const Percentage = ({ onChange, question, ...props }) => {
       // an :after pseudo-style. We can't apply it to the input element directly
       // because input elements can't have :before or :after pseudo-elements.
       // HTML is funky.
-      const wrapper = document.createElement("div");
-      wrapper.setAttribute("class", "input-holder__percent");
+      const wrapper = document.createElement('div');
+      wrapper.setAttribute('class', 'input-holder__percent');
       ref.parentNode.appendChild(wrapper);
       wrapper.appendChild(ref);
     }
@@ -61,7 +61,7 @@ const Percentage = ({ onChange, question, ...props }) => {
       name={question.id}
       numeric
       onChange={change}
-      value={question.answer.entry || ""}
+      value={question.answer.entry || ''}
       {...props}
     />
   );

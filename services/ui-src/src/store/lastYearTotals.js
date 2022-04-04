@@ -1,9 +1,9 @@
 const initialState = {
   calculatedTotal: false,
 };
-export const SET_LAST_YEAR_TOTALS = "SET_LAST_YEAR_TOTALS";
-export const ADD_TO_TOTAL = "ADD_TO_TOTAL";
-export const FINISH_CALCULATION = "FINISH_CALCULATION";
+export const SET_LAST_YEAR_TOTALS = 'SET_LAST_YEAR_TOTALS';
+export const ADD_TO_TOTAL = 'ADD_TO_TOTAL';
+export const FINISH_CALCULATION = 'FINISH_CALCULATION';
 
 export const lastYearTotals = (state = initialState, action) => {
   switch (action.type) {

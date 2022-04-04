@@ -1,8 +1,8 @@
-import { createCompoundKey } from "../createCompoundKey";
-import { testEvent } from "../../../test-util/testEvents";
+import { createCompoundKey } from '../createCompoundKey';
+import { testEvent } from '../../../test-util/testEvents';
 
-describe("Testing CreateCompundKey", () => {
-  test("If no path parameters throw an error", () => {
+describe('Testing CreateCompundKey', () => {
+  test('If no path parameters throw an error', () => {
     try {
       createCompoundKey({ ...testEvent, pathParameters: null });
     } catch (error) {
@@ -10,7 +10,7 @@ describe("Testing CreateCompundKey", () => {
     }
   });
 
-  test("If no year, state, or coreset throw an error", () => {
+  test('If no year, state, or coreset throw an error', () => {
     try {
       createCompoundKey({ ...testEvent, pathParameters: {} });
     } catch (error) {
@@ -18,24 +18,24 @@ describe("Testing CreateCompundKey", () => {
     }
   });
 
-  test("Successful key creation without passed measure", () => {
+  test('Successful key creation without passed measure', () => {
     const key = createCompoundKey({
       ...testEvent,
-      pathParameters: { year: "2022", state: "FL", coreSet: "ACS" },
+      pathParameters: { year: '2022', state: 'FL', coreSet: 'ACS' },
     });
-    expect(key).toEqual("FL2022ACS");
+    expect(key).toEqual('FL2022ACS');
   });
 
-  test("Successful key creation with passed measure", () => {
+  test('Successful key creation with passed measure', () => {
     const key = createCompoundKey({
       ...testEvent,
       pathParameters: {
-        year: "2022",
-        state: "FL",
-        coreSet: "ACS",
-        measure: "FUA-AD",
+        year: '2022',
+        state: 'FL',
+        coreSet: 'ACS',
+        measure: 'FUA-AD',
       },
     });
-    expect(key).toEqual("FL2022ACSFUA-AD");
+    expect(key).toEqual('FL2022ACSFUA-AD');
   });
 });

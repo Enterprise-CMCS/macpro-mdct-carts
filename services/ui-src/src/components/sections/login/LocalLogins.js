@@ -1,20 +1,20 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Auth } from "aws-amplify";
-import { useFormFields } from "../../../hooks/useFormFields";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { useFormFields } from '../../../hooks/useFormFields';
 
 const LocalLogin = () => {
   const history = useHistory();
   const [fields, handleFieldChange] = useFormFields({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   async function handleLogin() {
     try {
       await Auth.signIn(fields.email, fields.password);
       history.push(`/`);
     } catch (error) {
-      console.log("Error while logging in.", error);
+      console.log('Error while logging in.', error);
     }
   }
 

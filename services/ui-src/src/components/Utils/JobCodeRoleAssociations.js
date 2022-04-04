@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { CSVReader } from "react-papaparse";
-import postDataToEndpointWithToken from "../../util/postDataToEndpointWithToken";
-import { UserRoles } from "../../types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { CSVReader } from 'react-papaparse';
+import postDataToEndpointWithToken from '../../util/postDataToEndpointWithToken';
+import { UserRoles } from '../../types';
 
 const buttonRef = React.createRef();
 
@@ -18,12 +18,12 @@ const handleOnFileLoad = (data) => {
     if (!row.data.job_code) {
       return;
     }
-    const userRoles = row.data.user_roles.split(",").map((code) => code.trim());
+    const userRoles = row.data.user_roles.split(',').map((code) => code.trim());
     const postData = {
       job_code: row.data.job_code.trim(),
       user_roles: userRoles,
     };
-    postDataToEndpointWithToken(postData, "/roles_assoc/");
+    postDataToEndpointWithToken(postData, '/roles_assoc/');
   });
 };
 
@@ -36,19 +36,17 @@ const JobCodeRoleAssociation = ({ currentUser }) => {
     <>
       <div>
         <p>
-          The CSV must have a header row with <code>job_code</code> and{" "}
-          <code>user_role</code> as the headers, in order. Each row must contain
-          only two values. The role with the highest level of privileges will be
-          assigned to a user if they have multiple job codes. In order to assign
-          a role with lower privileges to a user, that job code must be
-          associated with that role here (note that this affects all users with
-          that job code) and the specific user must be associated with the role
-          via <a href="/role_user_assoc">/role_user_assoc</a> for that.
+          The CSV must have a header row with <code>job_code</code> and <code>user_role</code> as
+          the headers, in order. Each row must contain only two values. The role with the highest
+          level of privileges will be assigned to a user if they have multiple job codes. In order
+          to assign a role with lower privileges to a user, that job code must be associated with
+          that role here (note that this affects all users with that job code) and the specific user
+          must be associated with the role via <a href="/role_user_assoc">/role_user_assoc</a> for
+          that.
         </p>
         <p>
-          The values in user_roles must be a list of the user roles, separated
-          by commas, and the entire list of user roles must be enclosed in
-          quotation marks.
+          The values in user_roles must be a list of the user roles, separated by commas, and the
+          entire list of user roles must be enclosed in quotation marks.
         </p>
 
         <p>A sample valid CSV would look like this:</p>

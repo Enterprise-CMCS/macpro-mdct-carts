@@ -13,8 +13,8 @@
    around jsonpath so that we can get the performance benefits everywhere
    without having to change anything anywhere else.
  */
-import jsonpath from "jsonpath";
-import idLetterMarkers from "./idLetterMarkers";
+import jsonpath from 'jsonpath';
+import idLetterMarkers from './idLetterMarkers';
 
 const fullPathFromIDPath = (originalPath) => {
   const idMatch = /\[\?\(@\.id===?['"]([^'"]+)['"]\)\](.*)$/.exec(originalPath);
@@ -26,10 +26,10 @@ const fullPathFromIDPath = (originalPath) => {
     const [, id, rest] = idMatch;
 
     // Split the ID into its parts. We don't need the year, so toss it.
-    const [, section, subsection, part, question] = id.split("-");
+    const [, section, subsection, part, question] = id.split('-');
 
     // Now see what bits we have and assemble the pieces.
-    const pathParts = ["$."];
+    const pathParts = ['$.'];
     if (section) {
       // Sections start at 0, so we don't have to do anything special with them.
       pathParts.push(`.formData[${+section}].contents.section`);
@@ -51,7 +51,7 @@ const fullPathFromIDPath = (originalPath) => {
 
     // Now tack on anything at the end and push it all together.
     pathParts.push(rest);
-    return pathParts.join("");
+    return pathParts.join('');
   }
 
   return originalPath;
@@ -79,8 +79,8 @@ const getExactPath = (data, path) => {
       // end with [0]. But that's not what is being requested: the [*] at the
       // end means the request is for ALL of the things, not the first, so in
       // that case, replace [0] at the end of the exact path with [*].
-      if (path.endsWith("[*]")) {
-        exact = exact.replace(/\[0\]$/, "[*]");
+      if (path.endsWith('[*]')) {
+        exact = exact.replace(/\[0\]$/, '[*]');
       }
     } else {
       // If there is NOT a matching path, cache the inexact path so we don't
@@ -96,7 +96,7 @@ const getExactPath = (data, path) => {
 
 // These are the methods in jsonpath that actually do lookups into the data
 // object, so these should use the cache. Build those methods here.
-const methodsToWrap = ["apply", "nodes", "parent", "paths", "query", "value"];
+const methodsToWrap = ['apply', 'nodes', 'parent', 'paths', 'query', 'value'];
 const wrappers = methodsToWrap.reduce(
   (current, methodName) => ({
     ...current,

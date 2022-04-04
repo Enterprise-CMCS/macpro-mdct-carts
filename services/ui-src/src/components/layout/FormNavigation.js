@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Button } from "@cmsgov/design-system-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { selectSectionsForNav } from "../../store/selectors";
-import { UserRoles } from "../../types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button } from '@cmsgov/design-system-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { selectSectionsForNav } from '../../store/selectors';
+import { UserRoles } from '../../types';
 
-const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
+const idToUrl = (id) => `/sections/${id.replace(/-/g, '/')}`;
 
 const FormNavigation = (props) => {
   const { history, location, sections, role } = props;
@@ -25,14 +25,10 @@ const FormNavigation = (props) => {
   });
 
   // Pull year from current location
-  const year = location.pathname.split("/")[2];
+  const year = location.pathname.split('/')[2];
 
   // If admin, DO NOT ADD
-  if (
-    role !== UserRoles.ADMIN &&
-    role !== UserRoles.BO &&
-    role !== UserRoles.CO
-  ) {
+  if (role !== UserRoles.ADMIN && role !== UserRoles.BO && role !== UserRoles.CO) {
     // Add certify and submit page to items array
     items.push(`/sections/${year}/certify-and-submit`);
   }
@@ -41,12 +37,12 @@ const FormNavigation = (props) => {
   let currentUrl = window.location.pathname;
 
   // Get currentUrl if in format /views/sections/STATE/YEAR/SECTION
-  let currentArray = currentUrl.split("/");
+  let currentArray = currentUrl.split('/');
   let viewType = false;
   let state;
 
   // Get current url if views format
-  if (currentArray[1] === "views") {
+  if (currentArray[1] === 'views') {
     // Set viewType to true for use in building next/prev links
     viewType = true;
     // Remove empty first (empty) item and "views"
@@ -55,7 +51,7 @@ const FormNavigation = (props) => {
     state = currentArray[1];
     currentArray.splice(1, 1);
     // Create string
-    currentUrl = "/" + currentArray.join("/");
+    currentUrl = '/' + currentArray.join('/');
   }
 
   // Get index of url in items array
@@ -65,17 +61,17 @@ const FormNavigation = (props) => {
   let previousUrl = items[currentIndex - 1];
 
   if (viewType === true && items[currentIndex - 1] !== undefined) {
-    let previousArray = items[currentIndex - 1].split("/");
+    let previousArray = items[currentIndex - 1].split('/');
     previousArray.splice(1, 1, state);
-    previousUrl = "/views/sections" + previousArray.join("/");
+    previousUrl = '/views/sections' + previousArray.join('/');
   }
 
   // Determine next index
   let nextUrl = items[currentIndex + 1];
   if (viewType === true && items[currentIndex + 1] !== undefined) {
-    let nextArray = items[currentIndex + 1].split("/");
+    let nextArray = items[currentIndex + 1].split('/');
     nextArray.splice(1, 1, state);
-    nextUrl = "/views/sections" + nextArray.join("/");
+    nextUrl = '/views/sections' + nextArray.join('/');
   }
 
   return (
