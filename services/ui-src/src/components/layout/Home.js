@@ -24,9 +24,7 @@ const Home = ({ user, role, getHello: helloAction }) => {
       content = <StateHome />;
       break;
     default:
-      {
-        content = <Unauthorized />;
-      }
+      content = <Unauthorized />;
       break;
   }
   return (

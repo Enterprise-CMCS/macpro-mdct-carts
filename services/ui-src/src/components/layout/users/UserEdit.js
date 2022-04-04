@@ -63,7 +63,7 @@ const UserEdit = ({ stateList }) => {
   // When stateList is rendered, call for User data
   useEffect(() => {
     loadUserData();
-  }, [stateList]);
+  }, [stateList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const roles = [
     { value: UserRoles.ADMIN, label: "Admin User" },
@@ -217,7 +217,7 @@ const UserEdit = ({ stateList }) => {
             </>
           </div>
           <div>
-            {role == UserRoles.STATE ? (
+            {role === UserRoles.STATE ? (
               <>
                 <label className="ds-c-label">State</label>
                 <br />

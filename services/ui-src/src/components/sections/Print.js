@@ -92,7 +92,7 @@ const Print = ({ currentUser, state }) => {
 
     // Call async function to load data
     retrieveUserData();
-  }, [currentUser]);
+  }, [currentUser]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sections = [];
 

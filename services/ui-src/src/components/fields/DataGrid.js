@@ -116,9 +116,9 @@ const DataGrid = ({ question, lastYearFormData }) => {
         await getDataFromLastYear(item);
       });
     };
-
     generateRenderQuestions();
-  }, [dispatch]);
+  }, [dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {renderQuestions.map((question, index) => {

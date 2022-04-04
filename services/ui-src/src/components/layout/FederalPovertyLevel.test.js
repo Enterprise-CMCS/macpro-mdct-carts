@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import { findByTestAttribute } from "../../testUtils";
 
-import FPL from "../layout/FPL";
+import FederalPovertyLevel from "../layout/FederalPovertyLevel";
 
 /**
  * Factory functon to create a ShallowWrapper for the Footer component.
@@ -12,7 +12,7 @@ import FPL from "../layout/FPL";
  * @returns {ShallowWrapper}
  */
 const setup = (props = {}) => {
-  return shallow(<FPL {...props} />);
+  return shallow(<FederalPovertyLevel {...props} />);
 };
 
 describe("FPL Component, static render checks ", () => {

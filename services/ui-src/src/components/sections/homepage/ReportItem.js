@@ -48,7 +48,7 @@ const ReportItem = ({
     } else {
       if (Number(tempTime[0] === "00")) {
         theDateTime[1] =
-          "12" + ":" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
+          "12:" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
       } else {
         theDateTime[1] = theDateTime[1].substring(0, 8) + " am";
       }

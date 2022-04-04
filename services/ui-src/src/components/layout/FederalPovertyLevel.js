@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TextField } from "@cmsgov/design-system-core";
 
-class FPL extends Component {
+class FederalPovertyLevel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -158,4 +158,4 @@ class FPL extends Component {
   }
 }
 
-export default FPL;
+export default FederalPovertyLevel;

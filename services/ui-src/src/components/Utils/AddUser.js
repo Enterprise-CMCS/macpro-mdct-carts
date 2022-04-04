@@ -18,7 +18,7 @@ import { UserRoles } from "../../types";
 
 const AddUser = ({ currentUser, stateList }) => {
   const addUser = async (stateId, userId, role) => {
-    if (stateId !== undefined && userId != "") {
+    if (stateId !== undefined && userId !== "") {
       const xhrURL = [
         window.env.API_POSTGRES_URL,
         `/api/v1/adduser/${userId}/${statesToSend}/${role}`,
@@ -103,7 +103,7 @@ const AddUser = ({ currentUser, stateList }) => {
             />
           </div>
           <div>
-            {role == UserRoles.STATE ? (
+            {role === UserRoles.STATE ? (
               <>
                 State:
                 <br />

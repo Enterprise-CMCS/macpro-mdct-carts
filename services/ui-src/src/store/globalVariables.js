@@ -1,5 +1,6 @@
 // Storing global variables that will be the same regardless of users
 const activeYears = ["2020", "2021", "2022", "2023", "2024"];
+// eslint-disable-next-line no-extend-native
 String.prototype.containsAny =
   String.prototype.containsAny ||
   function (arr) {
@@ -30,13 +31,13 @@ export default function global(state = initialState, action) {
   state.url = document.location.pathname.toString();
   state.currentYear = 2021;
   for (let activeYear in activeYears) {
-    if (state.url.indexOf(activeYears[activeYear]) != -1) {
+    if (state.url.indexOf(activeYears[activeYear]) !== -1) {
       state.formYear = activeYears[activeYear];
       break;
     }
   }
 
-  if (state.formYear == undefined) {
+  if (typeof state.formYear == "undefined") {
     state.formYear = 2020;
   }
   if (action.type === "CONTENT_FETCHING_STARTED") {

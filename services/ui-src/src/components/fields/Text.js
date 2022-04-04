@@ -79,7 +79,7 @@ const Text = ({ question, state, ...props }) => {
     };
 
     getPrevYearValue().then();
-  }, [state]);
+  }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

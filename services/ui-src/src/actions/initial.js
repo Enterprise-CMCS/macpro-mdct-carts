@@ -1,6 +1,6 @@
+/* eslint-disable no-underscore-dangle, no-console */
 import axios from "../authenticatedAxios";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
-import { setToken } from "../authenticatedAxios";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
@@ -8,8 +8,6 @@ export const SET_STATE_STATUS = "SET_STATE_STATUS";
 export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
-
-/* eslint-disable no-underscore-dangle, no-console */
 
 export const getAllStatesData = () => {
   return async (dispatch) => {
@@ -34,15 +32,15 @@ export const getAllStateStatuses =
 
     selectedYears.length > 0
       ? (yearFilter = (record) => selectedYears.includes(record.year))
-      : (yearFilter = () => 1 === 1);
+      : (yearFilter = () => true);
 
     selectedStates.length > 0
       ? (stateFilter = (record) => selectedStates.includes(record.state))
-      : (stateFilter = () => 1 === 1);
+      : (stateFilter = () => true);
 
     selectedStatus.length > 0
       ? (statusFilter = (record) => selectedStatus.includes(record.status))
-      : (statusFilter = () => 1 === 1);
+      : (statusFilter = () => true);
 
     const payload = data
       .filter(yearFilter)
@@ -95,15 +93,15 @@ export const getStateAllStatuses =
 
     selectedYears.length > 0
       ? (yearFilter = (record) => selectedYears.includes(record.year))
-      : (yearFilter = () => 1 === 1);
+      : (yearFilter = () => true);
 
     selectedStates.length > 0
       ? (stateFilter = (record) => selectedStates.includes(record.state))
-      : (stateFilter = () => 1 === 1);
+      : (stateFilter = () => true);
 
     selectedStatus.length > 0
       ? (statusFilter = (record) => selectedStatus.includes(record.status))
-      : (statusFilter = () => 1 === 1);
+      : (statusFilter = () => true);
 
     const payload = data
       .filter(yearFilter)
@@ -202,7 +200,7 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
 
     const lastYear = parseInt(selectedYear) - 1;
     let lastYearData = undefined;
-    if (lastYear % 2 == 0) {
+    if (lastYear % 2 === 0) {
       const data = await axios
         .get(`/api/v1/sections/${lastYear}/${state}`)
         .catch((err) => {
@@ -223,14 +221,6 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
     }
     dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
-};
-
-const getCookie = (key) => {
-  const result = new RegExp(`(?:^|; ) ${encodeURIComponent(key)}=([^;]*)`).exec(
-    document.cookie
-  );
-
-  return result ? result[1] : null;
 };
 
 export const loadUser = (user) => async (dispatch) => {

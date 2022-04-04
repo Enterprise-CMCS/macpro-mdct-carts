@@ -1,17 +1,17 @@
 import React from "react";
-import "font-awesome/css/font-awesome.min.css";
-import "./App.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
-import Userinfo from "./components/sections/Userinfo";
-import UserProfile from "./components/sections/UserProfile";
 import Print from "./components/sections/Print";
 import Profile from "./Profile";
 import Spinner from "./components/Utils/Spinner";
+import Userinfo from "./components/sections/Userinfo";
+import UserProfile from "./components/sections/UserProfile";
 import { LocalLogins } from "./components/sections/login/LocalLogins";
 import { useUser } from "./hooks/authHooks";
+import "font-awesome/css/font-awesome.min.css";
+import "./styles/app.scss";
 
 const AppRoutes = () => {
   const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
