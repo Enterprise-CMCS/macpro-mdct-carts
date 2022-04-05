@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import config from "../../config";
-import { UserContext, UserContextInterface } from "./userContext";
+import { UserContext } from "./userContext";
 import { UserRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
@@ -56,7 +55,7 @@ export const UserProvider = ({ children }) => {
         setShowLocalLogins(true);
       }
     }
-  }, [isProduction]);
+  }, [isProduction]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to qmr
   const userRole = user?.signInUserSession?.idToken?.payload?.[

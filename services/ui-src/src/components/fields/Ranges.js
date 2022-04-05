@@ -21,7 +21,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   // Trigger validation when page loads so that all error messages show
   useEffect(() => {
     validateInequality();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // This chooses the appropriate mask for the <Input/>, Money, Percentage or Text
   let Input = Text;

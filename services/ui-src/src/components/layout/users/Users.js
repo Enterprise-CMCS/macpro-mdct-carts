@@ -30,9 +30,12 @@ const Users = () => {
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
   };
 
-  useEffect(async () => {
-    await loadUserData();
-  }, []);
+  useEffect(() => {
+    const loadData = async () => {
+      await loadUserData();
+    };
+    loadData();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const deactivateUser = async (e) => {
     const really = window.confirm(
