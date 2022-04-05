@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import NumberFormat from 'react-number-format';
-import { ChoiceList, TextField } from '@cmsgov/design-system-core';
-import FormNavigation from '../layout/FormNavigation';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import NumberFormat from "react-number-format";
+import { ChoiceList, TextField } from "@cmsgov/design-system-core";
+import FormNavigation from "../layout/FormNavigation";
+import PropTypes from "prop-types";
 
 class Section2a extends Component {
   constructor(props) {
@@ -13,46 +13,46 @@ class Section2a extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      t1_m1: '284143',
-      t1_m2: '300579',
-      t1_s1: '478542',
-      t1_s2: '511473',
-      p1_q1: '',
-      t2_y1_n1: '103',
-      t2_y1_m1: '7.0',
-      t2_y1_p1: '2.3',
-      t2_y1_m2: '.2',
-      t2_y2_n1: '86',
-      t2_y2_m1: '7.0',
-      t2_y2_p1: '2.0',
-      t2_y2_m2: '.2',
-      t2_y3_n1: '61',
-      t2_y3_m1: '6.0',
-      t2_y3_p1: '1.4',
-      t2_y3_m2: '.1',
-      t2_y4_n1: '58',
-      t2_y4_m1: '7.0',
-      t2_y4_p1: '1.3',
-      t2_y4_m2: '.2',
-      t2_y5_n1: '57',
-      t2_y5_m1: '7.0',
-      t2_y5_p1: '1.3',
-      t2_y5_m2: '.2',
-      p2_q1: '',
-      p2_q2: '',
-      p2_q2__a: '',
-      p2_q3: '',
-      p2_q3__a: '',
-      p2_q3__b: '',
-      p2_q3__c: '',
-      p2_q3__d: '',
-      p2_q3__e: '',
-      p2_q3__f: '',
-      p2_q3__g: '',
-      p2_q3__h: '',
-      p2_q4: '',
-      fillFormTitle: 'Same as last year',
-      pageTitle: 'Section 2A: Enrollment and Uninsured Data',
+      t1_m1: "284143",
+      t1_m2: "300579",
+      t1_s1: "478542",
+      t1_s2: "511473",
+      p1_q1: "",
+      t2_y1_n1: "103",
+      t2_y1_m1: "7.0",
+      t2_y1_p1: "2.3",
+      t2_y1_m2: ".2",
+      t2_y2_n1: "86",
+      t2_y2_m1: "7.0",
+      t2_y2_p1: "2.0",
+      t2_y2_m2: ".2",
+      t2_y3_n1: "61",
+      t2_y3_m1: "6.0",
+      t2_y3_p1: "1.4",
+      t2_y3_m2: ".1",
+      t2_y4_n1: "58",
+      t2_y4_m1: "7.0",
+      t2_y4_p1: "1.3",
+      t2_y4_m2: ".2",
+      t2_y5_n1: "57",
+      t2_y5_m1: "7.0",
+      t2_y5_p1: "1.3",
+      t2_y5_m2: ".2",
+      p2_q1: "",
+      p2_q2: "",
+      p2_q2__a: "",
+      p2_q3: "",
+      p2_q3__a: "",
+      p2_q3__b: "",
+      p2_q3__c: "",
+      p2_q3__d: "",
+      p2_q3__e: "",
+      p2_q3__f: "",
+      p2_q3__g: "",
+      p2_q3__h: "",
+      p2_q4: "",
+      fillFormTitle: "Same as last year",
+      pageTitle: "Section 2A: Enrollment and Uninsured Data",
       year1: this.props.formYear - 1,
       year2: this.props.formYear - 2,
       year3: this.props.formYear - 3,
@@ -94,12 +94,16 @@ class Section2a extends Component {
               <form>
                 <div>
                   <h2 className="section-header"></h2>
-                  <h3 className="part-header">Part 1: Number of Children Enrolled in CHIP</h3>
+                  <h3 className="part-header">
+                    Part 1: Number of Children Enrolled in CHIP
+                  </h3>
                   <p>
-                    This table is pre-filled with your SEDS data for the two most recent federal
-                    fiscal years. If the information is inaccurate, adjust your data in SEDS (go to
-                    line 7: “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report)
-                    and refresh the page. There may be a slight delay when updating data.
+                    This table is pre-filled with your SEDS data for the two
+                    most recent federal fiscal years. If the information is
+                    inaccurate, adjust your data in SEDS (go to line 7:
+                    “Unduplicated Number Ever Enrolled” in your fourth quarter
+                    SEDS report) and refresh the page. There may be a slight
+                    delay when updating data.
                   </p>
 
                   {/* SEDS Data Table */}
@@ -107,8 +111,13 @@ class Section2a extends Component {
                     <thead>
                       <tr>
                         <th scope="col">Program</th>
-                        <th scope="col">Number of children enrolled (FFY {this.state.year1})</th>
-                        <th scope="col">Number of children enrolled (FFY {this.props.formYear})</th>
+                        <th scope="col">
+                          Number of children enrolled (FFY {this.state.year1})
+                        </th>
+                        <th scope="col">
+                          Number of children enrolled (FFY {this.props.formYear}
+                          )
+                        </th>
                         <th scope="col">Percent change</th>
                       </tr>
                     </thead>
@@ -133,7 +142,10 @@ class Section2a extends Component {
                           <NumberFormat
                             displayType="text"
                             decimalScale="2"
-                            value={this.calcPercentChange(this.state.t1_m1, this.state.t1_m2)}
+                            value={this.calcPercentChange(
+                              this.state.t1_m1,
+                              this.state.t1_m2
+                            )}
                           />
                           %
                         </td>
@@ -158,7 +170,10 @@ class Section2a extends Component {
                           <NumberFormat
                             displayType="text"
                             decimalScale="2"
-                            value={this.calcPercentChange(this.state.t1_s1, this.state.t1_s2)}
+                            value={this.calcPercentChange(
+                              this.state.t1_s1,
+                              this.state.t1_s2
+                            )}
                           />
                           %
                         </td>
@@ -168,16 +183,28 @@ class Section2a extends Component {
                   <p></p>
 
                   <div>
-                    {this.calcPercentChange(this.state.t1_s1, this.state.t1_s2) >= 10 ||
-                    this.calcPercentChange(this.state.t1_s1, this.state.t1_s2) <= -10 ||
-                    this.calcPercentChange(this.state.t1_m1, this.state.t1_m2) >= 10 ||
-                    this.calcPercentChange(this.state.t1_m1, this.state.t1_m2) <= -10 ? (
+                    {this.calcPercentChange(
+                      this.state.t1_s1,
+                      this.state.t1_s2
+                    ) >= 10 ||
+                    this.calcPercentChange(
+                      this.state.t1_s1,
+                      this.state.t1_s2
+                    ) <= -10 ||
+                    this.calcPercentChange(
+                      this.state.t1_m1,
+                      this.state.t1_m2
+                    ) >= 10 ||
+                    this.calcPercentChange(
+                      this.state.t1_m1,
+                      this.state.t1_m2
+                    ) <= -10 ? (
                       <div className="conditional">
                         {/* Show if  M-CHIP or S-CHIP percent change(s) are more than a 10% change (increase or decrease) */}
                         <div className="question-container">
                           <div className="question">
-                            1. What are some possible reasons why your state had more than a 10%
-                            change in enrollment?
+                            1. What are some possible reasons why your state had
+                            more than a 10% change in enrollment?
                           </div>
                           <TextField
                             hint="Maximum 7,500 characters"
@@ -194,18 +221,21 @@ class Section2a extends Component {
                       <div>
                         {/* Show if M-CHIP & S-CHIP percent changes are less than a 10% change */}
                         <p>
-                          Since your percent change didn&apos;t exceed 10%, you can skip to the next
-                          question.
+                          Since your percent change didn&apos;t exceed 10%, you
+                          can skip to the next question.
                         </p>
                       </div>
                     )}
                   </div>
 
-                  <h3 className="part-header">Part 2: Number of Uninsured Children</h3>
+                  <h3 className="part-header">
+                    Part 2: Number of Uninsured Children
+                  </h3>
                   <p>
-                    This table is pre-filled with data on uninsured children (age 19 and under) who
-                    are below 200% of the Federal Poverty Line (FPL) based on annual estimates from
-                    the American Community Survey.
+                    This table is pre-filled with data on uninsured children
+                    (age 19 and under) who are below 200% of the Federal Poverty
+                    Line (FPL) based on annual estimates from the American
+                    Community Survey.
                   </p>
 
                   {/* American Community Survey Table
@@ -401,13 +431,17 @@ class Section2a extends Component {
                     <tbody>
                       <tr>
                         <th scope="row">
-                          Percent change between {this.state.year1} and {this.props.formYear}
+                          Percent change between {this.state.year1} and{" "}
+                          {this.props.formYear}
                         </th>
                         <td>
                           <NumberFormat
                             displayType="text"
                             decimalScale="1"
-                            value={this.calcPercentChange(this.state.t2_y4_n1, this.state.t2_y5_n1)}
+                            value={this.calcPercentChange(
+                              this.state.t2_y4_n1,
+                              this.state.t2_y5_n1
+                            )}
                           />
                           %
                         </td>
@@ -416,14 +450,20 @@ class Section2a extends Component {
                   </table>
 
                   <div>
-                    {this.calcPercentChange(this.state.t2_y4_n1, this.state.t2_y5_n1) >= 10 ||
-                    this.calcPercentChange(this.state.t2_y4_n1, this.state.t2_y5_n1) <= -10 ? (
+                    {this.calcPercentChange(
+                      this.state.t2_y4_n1,
+                      this.state.t2_y5_n1
+                    ) >= 10 ||
+                    this.calcPercentChange(
+                      this.state.t2_y4_n1,
+                      this.state.t2_y5_n1
+                    ) <= -10 ? (
                       <div className="conditional">
                         {/* Show if Number of Estimated number of uninsured children percent change is more than a 10% change (increase or decrease) */}
                         <div className="question-container">
                           <div className="question">
-                            1. What are some possible reasons why your state had more than a 10%
-                            change in enrollment?
+                            1. What are some possible reasons why your state had
+                            more than a 10% change in enrollment?
                           </div>
                           <TextField
                             hint="Maximum 7,500 characters"
@@ -440,8 +480,8 @@ class Section2a extends Component {
                       <div>
                         {/* Show if Number of Estimated number of uninsured children percent change is less than a 10% change */}
                         <p>
-                          Since your percent change didn&apos;t exceed 10%, you can skip to the next
-                          question.
+                          Since your percent change didn&apos;t exceed 10%, you
+                          can skip to the next question.
                         </p>
                       </div>
                     )}
@@ -449,16 +489,16 @@ class Section2a extends Component {
 
                   <div className="question-container">
                     <div className="question">
-                      2. Are there any reasons why the American Community Survey estimates
-                      wouldn&apos;t be an accurate representation of the number of uninsured
-                      children in your state?
+                      2. Are there any reasons why the American Community Survey
+                      estimates wouldn&apos;t be an accurate representation of
+                      the number of uninsured children in your state?
                     </div>
                     <div id="p2_q2">
                       <ChoiceList
                         choices={[
                           {
-                            label: 'Yes',
-                            value: 'yes',
+                            label: "Yes",
+                            value: "yes",
                             disabled: true,
                             defaultChecked: true,
                           },
@@ -472,11 +512,13 @@ class Section2a extends Component {
 
                       <div className="conditional">
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                       </div>
                     </div>
@@ -484,15 +526,16 @@ class Section2a extends Component {
 
                   <div className="question-container">
                     <div className="question">
-                      3. Do you have any alternate data source(s) or methodology for measuring the
-                      number and/or percent of uninsured children in your state?
+                      3. Do you have any alternate data source(s) or methodology
+                      for measuring the number and/or percent of uninsured
+                      children in your state?
                     </div>
                     <div id="p2_q3">
                       <ChoiceList
                         choices={[
                           {
-                            label: 'Yes',
-                            value: 'yes',
+                            label: "Yes",
+                            value: "yes",
                             disable: true,
                             defaultChecked: true,
                           },
@@ -504,79 +547,102 @@ class Section2a extends Component {
                       />
 
                       <div className="conditional">
-                        <h4>a) What is the alternate data source or methodology?</h4>
+                        <h4>
+                          a) What is the alternate data source or methodology?
+                        </h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla.
                         </div>
                         <h4>b) Give a date range for your data</h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                         <h4>
-                          c) Define the population you’re measuring, including ages and federal
-                          poverty levels.{' '}
+                          c) Define the population you’re measuring, including
+                          ages and federal poverty levels.{" "}
                         </h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                         <h4>
-                          d) Give numbers and/or the percent of uninsured children for at least two
-                          points in time.
+                          d) Give numbers and/or the percent of uninsured
+                          children for at least two points in time.
                         </h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
-                        </div>
-                        <h4>e) Why did your state choose to adopt this alternate data source?</h4>
-                        <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                         <h4>
-                          f) How reliable are these estimates? Provide standard errors, confidence
-                          intervals, and/or p-values if available.
+                          e) Why did your state choose to adopt this alternate
+                          data source?
                         </h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                         <h4>
-                          g) What are the limitations of this alternate data source or methodology?
+                          f) How reliable are these estimates? Provide standard
+                          errors, confidence intervals, and/or p-values if
+                          available.
                         </h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                         <h4>
-                          h) How do you use this alternate data source in CHIP program planning?
+                          g) What are the limitations of this alternate data
+                          source or methodology?
                         </h4>
                         <div className="textfield">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, mi
-                          dapibus blandit ultricies, tortor metus venenatis nulla, ac lacinia tortor
-                          massa sit amet nisl. Sed lacinia purus vel lectus facilisis, a suscipit ex
-                          aliquam. Donec blandit sem fringilla orci blandit vehicula. Sed et ante
-                          vulputate, porttitor nisi non, commodo risus.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
+                        </div>
+                        <h4>
+                          h) How do you use this alternate data source in CHIP
+                          program planning?
+                        </h4>
+                        <div className="textfield">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Donec viverra, mi dapibus blandit ultricies,
+                          tortor metus venenatis nulla, ac lacinia tortor massa
+                          sit amet nisl. Sed lacinia purus vel lectus facilisis,
+                          a suscipit ex aliquam. Donec blandit sem fringilla
+                          orci blandit vehicula. Sed et ante vulputate,
+                          porttitor nisi non, commodo risus.
                         </div>
                       </div>
                     </div>
@@ -584,8 +650,8 @@ class Section2a extends Component {
 
                   <div className="question-container">
                     <div className="question">
-                      4. Anything else you’d like to add about your data on enrolled and uninsured
-                      children?
+                      4. Anything else you’d like to add about your data on
+                      enrolled and uninsured children?
                     </div>
                     <div className="unanswered-text"></div>
                   </div>

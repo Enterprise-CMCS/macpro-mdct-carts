@@ -1,22 +1,26 @@
 // Our data source is Security Hub Findings.  Auth is provided via the lambda's IAM role.
-import AWS from 'aws-sdk';
+import AWS from "aws-sdk";
 const securityhub = new AWS.SecurityHub();
 
 // The GitHub org/owner and repo for which we're modifying issues
-const org = process.env.githubRepository.split('/')[0];
-const repo = process.env.githubRepository.split('/')[1];
+const org = process.env.githubRepository.split("/")[0];
+const repo = process.env.githubRepository.split("/")[1];
 
 // The repository project boards to which we want to add issues.
-const repoProjects = process.env.githubRepositoryProjects.split(',').filter(Boolean);
+const repoProjects = process.env.githubRepositoryProjects
+  .split(",")
+  .filter(Boolean);
 
 // The organization project boards to which we want to add issues.
-const orgProjects = process.env.githubOrganizationProjects.split(',').filter(Boolean);
+const orgProjects = process.env.githubOrganizationProjects
+  .split(",")
+  .filter(Boolean);
 
 // The stage variable maps to an environment, and will be used in the issue title.
 const stage = process.env.stage;
 
 // Octokit is the offical client(s) for the GitHub API.
-import { Octokit } from 'octokit';
+import { Octokit } from "octokit";
 // We auth to the GitHub API via a personal access token.
 const octokit = new Octokit({ auth: process.env.githubAccessToken });
 // Org/owner and repo params used in Octokit requests.
@@ -26,18 +30,18 @@ const octokitRepoParams = {
 };
 
 // We will use lodash to do some filtering/searching.
-const _ = require('lodash');
+const _ = require("lodash");
 
 // Regex used to search a GitHub Issue's body to find the Id of its underlying Security Hub Finding.
 const findingIdRegex = /(?<=\nFinding Id: ).*/g;
 
 async function getAllActiveFindings() {
-  const EMPTY = Symbol('empty');
+  const EMPTY = Symbol("empty");
   const res = [];
   let severityLabels = [];
-  process.env.severity.split(',').forEach(function (label) {
+  process.env.severity.split(",").forEach(function (label) {
     severityLabels.push({
-      Comparison: 'EQUALS',
+      Comparison: "EQUALS",
       Value: label,
     });
   });
@@ -72,11 +76,14 @@ async function getAllActiveFindings() {
 
 async function getAllIssues() {
   let issues = [];
-  for await (const response of octokit.paginate.iterator(octokit.rest.issues.listForRepo, {
-    ...octokitRepoParams,
-    state: 'all',
-    labels: ['security-hub', stage],
-  })) {
+  for await (const response of octokit.paginate.iterator(
+    octokit.rest.issues.listForRepo,
+    {
+      ...octokitRepoParams,
+      state: "all",
+      labels: ["security-hub", stage],
+    }
+  )) {
     issues.push(...response.data);
   }
   return issues;
@@ -85,8 +92,8 @@ async function getAllIssues() {
 function issueParamsForFinding(finding) {
   return {
     title: `SHF - ${repo} - ${stage} - ${finding.Severity.Label} - ${finding.Title}`,
-    state: 'open',
-    labels: ['security-hub', stage],
+    state: "open",
+    labels: ["security-hub", stage],
     body: `**************************************************************
 __This issue was generated from Security Hub data and is managed through automation.__
 Please do not edit the title or body of this issue, or remove the security-hub tag.  All other edits/comments are welcome.
@@ -138,7 +145,9 @@ async function updateIssueIfItsDrifted(finding, issue) {
       issue_number: issue.number,
     });
   } else {
-    console.log(`Issue ${issue.number}:  Issue is up to date.  Doing nothing...`);
+    console.log(
+      `Issue ${issue.number}:  Issue is up to date.  Doing nothing...`
+    );
   }
 }
 
@@ -148,20 +157,24 @@ async function closeIssuesWithoutAnActiveFinding(findings, issues) {
   );
 
   // Store all finding ids in an array
-  var findingsIds = _.map(findings, 'Id');
+  var findingsIds = _.map(findings, "Id");
   // Search for open issues that do not have a corresponding active SH finding.
   for (let i = 0; i < issues.length; i++) {
     let issue = issues[i];
-    if (issue.state != 'open') continue; // We only care about open issues here.
+    if (issue.state != "open") continue; // We only care about open issues here.
     let issueId = issue.body.match(findingIdRegex);
     if (issueId && findingsIds.includes(issueId[0])) {
-      console.log(`Issue ${issue.number}:  Underlying finding found.  Doing nothing...`);
+      console.log(
+        `Issue ${issue.number}:  Underlying finding found.  Doing nothing...`
+      );
     } else {
-      console.log(`Issue ${issue.number}:  No underlying finding found.  Closing issue...`);
+      console.log(
+        `Issue ${issue.number}:  No underlying finding found.  Closing issue...`
+      );
       await octokit.rest.issues.update({
         ...octokitRepoParams,
         issue_number: issue.number,
-        state: 'closed',
+        state: "closed",
       });
     }
   }
@@ -188,7 +201,9 @@ async function createOrUpdateIssuesBasedOnFindings(findings, issues) {
       }
     }
     if (!hit) {
-      console.log(`Finding ${finding.Id}:  No issue found for finding.  Creating issue...`);
+      console.log(
+        `Finding ${finding.Id}:  No issue found for finding.  Creating issue...`
+      );
       await createNewGitHubIssue(finding);
     }
   }
@@ -207,10 +222,14 @@ async function assignIssuesToProject(issues, projectId, defaultColumnName) {
   ).data;
 
   // Store the default column's id in a variable.  This is used later to add cards to the Project.
-  var defaultColumnId = _.find(targetProjectColumns, 'name', defaultColumnName).id;
+  var defaultColumnId = _.find(
+    targetProjectColumns,
+    "name",
+    defaultColumnName
+  ).id;
 
   // Store the Project's columns' ids in an array
-  var targetColumnIds = _.map(targetProjectColumns, 'id');
+  var targetColumnIds = _.map(targetProjectColumns, "id");
 
   // Iterate over the Project's columns, and put all cards into a single array.
   var projectCards = [];
@@ -224,20 +243,24 @@ async function assignIssuesToProject(issues, projectId, defaultColumnName) {
   }
 
   // Store all cards' content_urls in an array
-  const projectCardsContentUrls = _.map(projectCards, 'content_url');
+  const projectCardsContentUrls = _.map(projectCards, "content_url");
 
   // Iterate over the issues; if the issue is not on the board, add it to the default column.
   for (let i = 0; i < issues.length; i++) {
     let issue = issues[i];
-    if (issue.state != 'open') continue; // We only care about open issues here.
+    if (issue.state != "open") continue; // We only care about open issues here.
     if (projectCardsContentUrls.includes(issue.url)) {
-      console.log(`Issue ${issue.number}:  Already assigned to Project.  Doing nothing...`);
+      console.log(
+        `Issue ${issue.number}:  Already assigned to Project.  Doing nothing...`
+      );
     } else {
-      console.log(`Issue ${issue.number}:  Not assigned to Project.  Adding issue...`);
+      console.log(
+        `Issue ${issue.number}:  Not assigned to Project.  Adding issue...`
+      );
       await octokit.rest.projects.createCard({
         column_id: defaultColumnId,
         content_id: issue.id,
-        content_type: 'Issue',
+        content_type: "Issue",
       });
     }
   }
@@ -245,14 +268,16 @@ async function assignIssuesToProject(issues, projectId, defaultColumnName) {
 
 async function assignIssuesToRepositoryProjects(issues, projects) {
   // Find all Projects for the given repository
-  var repoProjects = (await octokit.rest.projects.listForRepo(octokitRepoParams)).data;
+  var repoProjects = (
+    await octokit.rest.projects.listForRepo(octokitRepoParams)
+  ).data;
 
   for (let i = 0; i < projects.length; i++) {
     // Find the target Project by name
     var targetProject = _.find(repoProjects, function (x) {
       return x.name == projects[i];
     });
-    await assignIssuesToProject(issues, targetProject.id, 'To Do');
+    await assignIssuesToProject(issues, targetProject.id, "To Do");
   }
 }
 
@@ -264,7 +289,7 @@ async function assignIssuesToOrganizationProjects(issues, projects) {
     var targetProject = _.find(orgProjects, function (x) {
       return x.name == projects[i];
     });
-    await assignIssuesToProject(issues, targetProject.id, 'To Do');
+    await assignIssuesToProject(issues, targetProject.id, "To Do");
   }
 }
 

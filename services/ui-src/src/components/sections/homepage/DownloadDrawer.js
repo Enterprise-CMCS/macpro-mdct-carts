@@ -1,6 +1,6 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 
 export const DownloadDrawer = () => {
   return (
@@ -18,15 +18,19 @@ export const DownloadDrawer = () => {
               <h3>FY21 template is ready for download</h3>
             </div>
             <p>
-              Welcome to CARTS! We’ve incorporated feedback from several states to bring you a
-              better CARTS experience. Contact{' '}
+              Welcome to CARTS! We’ve incorporated feedback from several states
+              to bring you a better CARTS experience. Contact{" "}
               <a href="mailto:mdct_help@cms.hhs.gov?subject=CARTS Help request">
                 mdct_help@cms.hhs.gov
-              </a>{' '}
+              </a>{" "}
               with any questions.
             </p>
             <div className="download">
-              <a href={'docs/FFY_2021_CARTS_Template.pdf'} download aria-label="Download Template">
+              <a
+                href={"docs/FFY_2021_CARTS_Template.pdf"}
+                download
+                aria-label="Download Template"
+              >
                 <button className="ds-c-button ds-c-button--primary">
                   <span>Download template</span>
                   <FontAwesomeIcon icon={faPlus} />

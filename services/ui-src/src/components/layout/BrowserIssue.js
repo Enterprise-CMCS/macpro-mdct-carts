@@ -1,15 +1,16 @@
-import React from 'react';
+import React from "react";
 
 const BrowserIssue = () => (
   <div className="browser-issue">
     <h1>Browser Problem</h1>
     <p>
-      We are sorry but <a href="https://mdctcarts.cms.gov/">https://mdctcarts.cms.gov</a> cannot be
-      viewed by Internet Explorer or Edge browsers. Please use a more secure browser such as Google
-      Chrome, Mozilla Firefox, Opera, etc.
+      We are sorry but{" "}
+      <a href="https://mdctcarts.cms.gov/">https://mdctcarts.cms.gov</a> cannot
+      be viewed by Internet Explorer or Edge browsers. Please use a more secure
+      browser such as Google Chrome, Mozilla Firefox, Opera, etc.
     </p>
     <p>
-      If you feel this is an error, please contact the helpdesk{' '}
+      If you feel this is an error, please contact the helpdesk{" "}
       <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>
     </p>
   </div>

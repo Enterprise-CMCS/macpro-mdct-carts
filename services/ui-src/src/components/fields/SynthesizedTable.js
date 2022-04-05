@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import synthesizeValue from '../../util/synthesize';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import synthesizeValue from "../../util/synthesize";
 
 const SynthesizedTable = ({ question, rows }) => {
   return (
@@ -43,8 +43,8 @@ const mapStateToProps = (state, { question }) => {
     row.map((cell) => {
       const value = synthesizeValue(cell, state);
 
-      return typeof value.contents === 'number' && Number.isNaN(value.contents)
-        ? { contents: 'Not Available' }
+      return typeof value.contents === "number" && Number.isNaN(value.contents)
+        ? { contents: "Not Available" }
         : value;
     })
   );

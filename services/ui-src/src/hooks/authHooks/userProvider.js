@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Auth } from 'aws-amplify';
-import { UserContext } from './userContext';
-import { UserRoles } from '../../types';
-import { loadUser } from '../../actions/initial';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import { UserContext } from "./userContext";
+import { UserRoles } from "../../types";
+import { loadUser } from "../../actions/initial";
+import { useDispatch } from "react-redux";
 
 const authenticateWithIDM = () => {
   const authConfig = Auth.configure();
@@ -14,7 +14,7 @@ const authenticateWithIDM = () => {
     const responseType = oAuthOpts.responseType;
     let redirectSignIn;
 
-    if ('redirectSignOut' in oAuthOpts) {
+    if ("redirectSignOut" in oAuthOpts) {
       redirectSignIn = oAuthOpts.redirectSignOut;
     }
 
@@ -27,7 +27,7 @@ const authenticateWithIDM = () => {
 export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
-  const isProduction = window.location.origin.includes('mdctqmr.cms.gov');
+  const isProduction = window.location.origin.includes("mdctqmr.cms.gov");
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
@@ -38,9 +38,9 @@ export const UserProvider = ({ children }) => {
       setUser(null);
       await Auth.signOut();
     } catch (error) {
-      console.log('error signing out: ', error);
+      console.log("error signing out: ", error); // eslint-disable-line no-console
     }
-    history.push('/');
+    history.push("/");
   }, [history]);
 
   const checkAuthState = useCallback(async () => {
@@ -55,16 +55,19 @@ export const UserProvider = ({ children }) => {
         setShowLocalLogins(true);
       }
     }
-  }, [isProduction]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isProduction]);
 
   // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to qmr
-  const userRole = user?.signInUserSession?.idToken?.payload?.['custom:cms_roles']
-    ?.split(',')
-    .find((r) => r.includes('mdctcarts'));
+  const userRole = user?.signInUserSession?.idToken?.payload?.[
+    "custom:cms_roles"
+  ]
+    ?.split(",")
+    .find((r) => r.includes("mdctcarts"));
 
   const isStateUser = userRole === UserRoles.STATE;
 
-  const userState = user?.signInUserSession?.idToken?.payload?.['custom:cms_state'];
+  const userState =
+    user?.signInUserSession?.idToken?.payload?.["custom:cms_state"];
 
   // rerender on auth state change, checking router location
   useEffect(() => {

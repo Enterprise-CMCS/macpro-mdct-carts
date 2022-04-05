@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../../../authenticatedAxios';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
-import Card from '@material-ui/core/Card';
-import 'react-data-table-component-extensions/dist/index.css';
-import SortIcon from '@material-ui/icons/ArrowDownward';
-import { useDispatch } from 'react-redux';
-import moment from 'moment';
+import React, { useState, useEffect } from "react";
+import axios from "../../../authenticatedAxios";
+import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import Card from "@material-ui/core/Card";
+import "react-data-table-component-extensions/dist/index.css";
+import SortIcon from "@material-ui/icons/ArrowDownward";
+import { useDispatch } from "react-redux";
+import moment from "moment";
 /**
  * Display all users with options
  *
@@ -19,15 +19,15 @@ const Users = () => {
   const [users, setUsers] = useState();
 
   const loadUserData = async () => {
-    dispatch({ type: 'CONTENT_FETCHING_STARTED' });
+    dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
     try {
       let { data } = await axios.post(`/api/v1/userprofiles`);
       setUsers(data);
     } catch (e) {
-      console.log('Error pulling users data: ', e);
+      console.log("Error pulling users data: ", e); // eslint-disable-line no-console
     }
-    dispatch({ type: 'CONTENT_FETCHING_FINISHED' });
+    dispatch({ type: "CONTENT_FETCHING_FINISHED" });
   };
 
   useEffect(() => {
@@ -35,10 +35,12 @@ const Users = () => {
       await loadUserData();
     };
     loadData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const deactivateUser = async (e) => {
-    const really = window.confirm(`Are you sure you want to deactivate user ${e}`);
+    const really = window.confirm(
+      `Are you sure you want to deactivate user ${e}`
+    );
     if (really) {
       axios.post(`/api/v1/user/deactivate/${e}`).then(async () => {
         await loadUserData();
@@ -47,7 +49,9 @@ const Users = () => {
   };
 
   const activateUser = async (e) => {
-    const really = window.confirm(`Are you sure you want to activate user ${e}`);
+    const really = window.confirm(
+      `Are you sure you want to activate user ${e}`
+    );
     if (really) {
       axios.post(`/api/v1/user/activate/${e}`).then(async () => {
         await loadUserData();
@@ -61,8 +65,8 @@ const Users = () => {
     // Build column structure for react-data-tables
     const columns = [
       {
-        name: 'Username',
-        selector: 'username',
+        name: "Username",
+        selector: "username",
         sortable: true,
         cell: function editUser(e) {
           return (
@@ -73,18 +77,18 @@ const Users = () => {
         },
       },
       {
-        name: 'First Name',
-        selector: 'first_name',
+        name: "First Name",
+        selector: "first_name",
         sortable: true,
       },
       {
-        name: 'Last Name',
-        selector: 'last_name',
+        name: "Last Name",
+        selector: "last_name",
         sortable: true,
       },
       {
-        name: 'Email',
-        selector: 'email',
+        name: "Email",
+        selector: "email",
         sortable: true,
         cell: function modifyEmail(e) {
           return (
@@ -95,60 +99,62 @@ const Users = () => {
         },
       },
       {
-        name: 'Role',
-        selector: 'user_role',
+        name: "Role",
+        selector: "user_role",
         sortable: true,
         cell: function Role(r) {
           if (r) {
             return r.user_role;
           } else {
-            return '';
+            return "";
           }
         },
       },
       {
-        name: 'Joined',
-        selector: 'date_joined',
+        name: "Joined",
+        selector: "date_joined",
         sortable: true,
         cell: function modifyDateJoined(d) {
           if (d.date_joined) {
-            return <span>{moment(d.date_joined).format('MM/DD/YYYY')}</span>;
+            return <span>{moment(d.date_joined).format("MM/DD/YYYY")}</span>;
           } else {
-            return '';
+            return "";
           }
         },
       },
       {
-        name: 'Last Active',
-        selector: 'last_login',
+        name: "Last Active",
+        selector: "last_login",
         sortable: true,
         cell: function modifyLastLogin(l) {
           if (l.last_login) {
-            return <span>{moment(l.last_login).format('MM/DD/YYYY')}</span>;
+            return <span>{moment(l.last_login).format("MM/DD/YYYY")}</span>;
           } else {
-            return '';
+            return "";
           }
         },
       },
       {
-        name: 'Created',
-        selector: 'date_joined',
+        name: "Created",
+        selector: "date_joined",
         sortable: true,
         cell: function modifyDateJoined(l) {
-          return <span>{moment(l.date_joined).format('MM/DD/YYYY')}</span>;
+          return <span>{moment(l.date_joined).format("MM/DD/YYYY")}</span>;
         },
       },
       {
-        name: 'States',
-        selector: 'state_codes',
+        name: "States",
+        selector: "state_codes",
         sortable: true,
         cell: function modifyStateCodes(s) {
-          return s.state_codes ? <span>{s.state_codes.sort().join(', ')}</span> : null;
+          return s.state_codes ? (
+            <span>{s.state_codes.sort().join(", ")}</span>
+          ) : null;
         },
       },
       {
-        name: 'Status',
-        selector: 'is_active',
+        name: "Status",
+        selector: "is_active",
         sortable: true,
         cell: function modifyIsActive(s) {
           return (
@@ -161,7 +167,10 @@ const Users = () => {
                   Deactivate
                 </button>
               ) : (
-                <button className="btn btn-primary status" onClick={() => activateUser(s.username)}>
+                <button
+                  className="btn btn-primary status"
+                  onClick={() => activateUser(s.username)}
+                >
                   Activate
                 </button>
               )}

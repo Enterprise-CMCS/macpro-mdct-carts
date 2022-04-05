@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import axios from '../../authenticatedAxios';
-import 'react-data-table-component-extensions/dist/index.css';
-import { Button } from '@cmsgov/design-system-core';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "../../authenticatedAxios";
+import "react-data-table-component-extensions/dist/index.css";
+import { Button } from "@cmsgov/design-system-core";
+import { useHistory } from "react-router-dom";
 
 const FormTemplates = () => {
   const history = useHistory();
   const [inProgress, setInprogress] = useState(false);
 
   const handleUpdateTemplates = async () => {
-    var selectedYear = document.getElementById('selectedYear').value;
+    var selectedYear = document.getElementById("selectedYear").value;
     setInprogress(true);
 
     try {
       await axios.post(`/api/v1/updateformtemplates`, {
         year: selectedYear,
       });
-      window.alert('Request Completed');
-      history.push('/');
+      window.alert("Request Completed");
+      history.push("/");
     } catch (e) {
-      window.alert('Error - Contact Support');
+      window.alert("Error - Contact Support");
     }
     setInprogress(false);
   };
@@ -47,7 +47,9 @@ const FormTemplates = () => {
         >
           Generate New Section Forms
         </Button>
-        {inProgress && <div style={{ color: 'red' }}>Running Please wait ....</div>}
+        {inProgress && (
+          <div style={{ color: "red" }}>Running Please wait ....</div>
+        )}
       </div>
     </>
   );

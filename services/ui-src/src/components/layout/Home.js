@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import AdminHome from './HomeAdmin';
-import CMSHome from './HomeCMS';
-import StateHome from './HomeState';
-import Unauthorized from './Unauthorized';
-import { UserRoles } from '../../types';
-import { getHello } from '../../actions/hello';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import AdminHome from "./HomeAdmin";
+import CMSHome from "./HomeCMS";
+import StateHome from "./HomeState";
+import Unauthorized from "./Unauthorized";
+import { UserRoles } from "../../types";
+import { getHello } from "../../actions/hello";
 
-const Home = ({ user, role, getHello: helloAction }) => {
+const Home = ({ _user, role, getHello: helloAction }) => {
   let content = null;
   helloAction();
 
@@ -38,6 +38,6 @@ Home.propTypes = {
   role: PropTypes.string,
 };
 
-const mapState = (state) => ({});
+const mapState = (_state) => ({});
 const mapDispatch = { getHello };
 export default connect(mapState, mapDispatch)(Home);

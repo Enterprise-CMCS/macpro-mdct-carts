@@ -1,8 +1,8 @@
-import handler from '../../libs/handler-lib';
-import dynamoDb from '../../libs/dynamodb-lib';
-import { convertToDynamoExpression } from '../dynamoUtils/convertToDynamoExpressionVars';
-import { createCompoundKey } from '../dynamoUtils/createCompoundKey';
-import { getUserNameFromJwt } from '../../libs/authorization';
+import handler from "../../libs/handler-lib";
+import dynamoDb from "../../libs/dynamodb-lib";
+import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
+import { createCompoundKey } from "../dynamoUtils/createCompoundKey";
+import { getUserNameFromJwt } from "../../libs/authorization";
 
 export const editMeasure = handler(async (event, _context) => {
   const { data, status, reporting = null } = JSON.parse(event!.body!);
@@ -24,7 +24,7 @@ export const editMeasure = handler(async (event, _context) => {
         lastAlteredBy,
         data,
       },
-      'post'
+      "post"
     ),
   };
   await dynamoDb.update(params);

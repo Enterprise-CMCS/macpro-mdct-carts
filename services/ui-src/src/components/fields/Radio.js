@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Choice } from '@cmsgov/design-system-core';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Choice } from "@cmsgov/design-system-core";
 
-import Question from './Question';
+import Question from "./Question";
 
 const Radio = ({ onChange, onClick, question, ...props }) => {
   const [checked, setChecked] = useState(question.answer.entry);
@@ -12,7 +12,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
   };
 
   const unCheck = (e) => {
-    setChecked('');
+    setChecked("");
     onClick(e);
   };
 

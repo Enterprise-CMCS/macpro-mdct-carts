@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const Spinner = (props) => {
   const { isFetching } = props;
@@ -8,7 +8,10 @@ const Spinner = (props) => {
   return isFetching ? (
     <div className="preloader">
       <div className="preloader-image">
-        <img src={`${process.env.PUBLIC_URL}/img/spinner.gif`} alt="Loading. Please wait." />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/spinner.gif`}
+          alt="Loading. Please wait."
+        />
       </div>
     </div>
   ) : null;

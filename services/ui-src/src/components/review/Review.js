@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Section1Review from './Section1Review';
-import Section2AReview from './Section2AReview';
-import Section2BReview from './Section2BReview';
-import Section3AReview from './Section3AReview';
-import Section3CReview from './Section3CReview';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Section1Review from "./Section1Review";
+import Section2AReview from "./Section2AReview";
+import Section2BReview from "./Section2BReview";
+import Section3AReview from "./Section3AReview";
+import Section3CReview from "./Section3CReview";
 
 class Review extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentState: '',
-      currentYear: '',
+      currentState: "",
+      currentYear: "",
     };
   }
 

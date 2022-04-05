@@ -1,7 +1,7 @@
-import _ from 'underscore';
-import { LOAD_LASTYEAR_SECTIONS } from '../actions/initial';
-import jsonpath from '../util/jsonpath';
-import idLetterMarkers from '../util/idLetterMarkers';
+import _ from "underscore";
+import { LOAD_LASTYEAR_SECTIONS } from "../actions/initial";
+import jsonpath from "../util/jsonpath";
+import idLetterMarkers from "../util/idLetterMarkers";
 
 const initialState = [];
 
@@ -16,7 +16,9 @@ export default (state = initialState, action) => {
 
 /* Helper functions for getting values from the JSON returned by the API */
 export const selectSectionByOrdinal = (state, ordinal) => {
-  const section = state.formData.filter((c) => c.contents.section.ordinal === ordinal);
+  const section = state.formData.filter(
+    (c) => c.contents.section.ordinal === ordinal
+  );
   if (section.length > 0) {
     return section[0].contents.section;
   }
@@ -24,7 +26,7 @@ export const selectSectionByOrdinal = (state, ordinal) => {
 };
 
 export const extractSectionOrdinalFromId = (id) => {
-  const chunks = id.split('-');
+  const chunks = id.split("-");
   const sectionOrdinal = parseInt(chunks[1], 10);
   return sectionOrdinal;
 };
@@ -40,22 +42,34 @@ export const extractSectionOrdinalFromJPExpr = (jpexpr) => {
  * @param {string} subsectionMarker: a–z or aa–zz. Should be lowercase by the time it gets here.
  * @returns {string} e.g. 2020-01-a.
  */
-export const constructIdFromYearSectionAndSubsection = (year, sectionOrdinal, subsectionMarker) => {
-  const sectionChunk = sectionOrdinal.toString().padStart(2, '0');
+export const constructIdFromYearSectionAndSubsection = (
+  year,
+  sectionOrdinal,
+  subsectionMarker
+) => {
+  const sectionChunk = sectionOrdinal.toString().padStart(2, "0");
   if (subsectionMarker) {
-    return [year, sectionChunk, subsectionMarker].join('-');
+    return [year, sectionChunk, subsectionMarker].join("-");
   }
-  return [year, sectionChunk].join('-');
+  return [year, sectionChunk].join("-");
 };
 
-export const extractJsonPathExpressionFromQuestionLike = (questionLikeId, parentId, index) => {
+export const extractJsonPathExpressionFromQuestionLike = (
+  questionLikeId,
+  parentId,
+  index
+) => {
   if (questionLikeId) {
     return `$..*[?(@.id=='${questionLikeId}')]`;
   }
   return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
 };
 
-export const selectFragmentByJsonPath = (state, expr, sectionOrdinal = false) => {
+export const selectFragmentByJsonPath = (
+  state,
+  expr,
+  sectionOrdinal = false
+) => {
   const sectionNumber = sectionOrdinal || extractSectionOrdinalFromJPExpr(expr);
 
   const section = selectSectionByOrdinal(state, sectionNumber);
@@ -104,7 +118,7 @@ export const selectFragment = (state, id = null, jp = null) => {
   const sectionOrdinal = extractSectionOrdinalFromId(idValue);
   const section = selectSectionByOrdinal(state, sectionOrdinal);
   let targetObject = section;
-  const chunks = idValue.split('-').slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
+  const chunks = idValue.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
   if (chunks.length >= 2) {
     // id of e.g. (2020-01-)a-01 means our target is the fragment's parent, subsection a:
     targetObject = targetObject.subsections[idLetterMarkers.indexOf(chunks[0])];
@@ -155,7 +169,7 @@ export const winnowProperties = (fragment) => {
   };
 
   // Check for subsections, parts, and questions, in that order.
-  const props = ['subsections', 'parts', 'questions'];
+  const props = ["subsections", "parts", "questions"];
   for (let i = 0; i < props.length; i += 1) {
     const prop = props[i];
     if (prop in fragment) {
@@ -168,7 +182,7 @@ export const winnowProperties = (fragment) => {
 
 // Generate subsection label including letter, ie: 'Section 3F'
 export const generateSubsectionLabel = (str) => {
-  const idArray = str.split('-');
+  const idArray = str.split("-");
   const sectionNumber = Number(idArray[1]);
   return `Section ${sectionNumber}${idArray[2]}`;
 };

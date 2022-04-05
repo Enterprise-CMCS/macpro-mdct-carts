@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Sidebar from '../layout/Sidebar';
-import PageInfo from '../layout/PageInfo';
-import NavigationButton from '../layout/NavigationButtons';
+import React, { Component } from "react";
+import Sidebar from "../layout/Sidebar";
+import PageInfo from "../layout/PageInfo";
+import NavigationButton from "../layout/NavigationButtons";
 
 class Preamble extends Component {
   constructor(props) {
@@ -23,17 +23,19 @@ class Preamble extends Component {
                 <h4>Preamble</h4>
                 <div className="preamble">
                   <p>
-                    Completing the CHIP Annual Report Template System (CARTS) is required under
-                    Title XXI, Section 2108(a) and Section 2108(e) of the Social Security Act.
+                    Completing the CHIP Annual Report Template System (CARTS) is
+                    required under Title XXI, Section 2108(a) and Section
+                    2108(e) of the Social Security Act.
                   </p>
                   <p>
-                    Each state or territory must assess their CHIP (Children’s Health Insurance
-                    Program) operations and their progress in reducing the number of uninsured
-                    low-income children after each federal fiscal year.
+                    Each state or territory must assess their CHIP (Children’s
+                    Health Insurance Program) operations and their progress in
+                    reducing the number of uninsured low-income children after
+                    each federal fiscal year.
                   </p>
                   <p>
-                    A state or territory must complete CARTS, including all relevant sections to
-                    their program, by January 1.
+                    A state or territory must complete CARTS, including all
+                    relevant sections to their program, by January 1.
                   </p>
                   <div className="preamble-carts-sections">
                     <h3>CARTS is organized into sections:</h3>
@@ -52,27 +54,31 @@ class Preamble extends Component {
                     <h3>The framework of CARTS is designed to:</h3>
                     <ul>
                       <li>
-                        Recognize the diversity of each state and territory, allowing for
-                        flexibility to highlight key accomplishments and progress of individual CHIP
-                        programs
+                        Recognize the diversity of each state and territory,
+                        allowing for flexibility to highlight key
+                        accomplishments and progress of individual CHIP programs
                       </li>
 
                       <li>
-                        Recognize the diversity of each state and territory, allowing for
-                        flexibility to highlight key accomplishments and progress of individual CHIP
-                        programs
-                      </li>
-
-                      <li>Build on data already collected by CMS in quarterly reports</li>
-
-                      <li>
-                        Make information about the achievements and challenges of each state and
-                        territory more accessible to stakeholders
+                        Recognize the diversity of each state and territory,
+                        allowing for flexibility to highlight key
+                        accomplishments and progress of individual CHIP programs
                       </li>
 
                       <li>
-                        Provide consistency in the structure, content, and format of reporting
-                        across states and territories
+                        Build on data already collected by CMS in quarterly
+                        reports
+                      </li>
+
+                      <li>
+                        Make information about the achievements and challenges
+                        of each state and territory more accessible to
+                        stakeholders
+                      </li>
+
+                      <li>
+                        Provide consistency in the structure, content, and
+                        format of reporting across states and territories
                       </li>
                     </ul>
                   </div>

@@ -1,10 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import ReportItem from './ReportItem';
-import { DownloadDrawer } from './DownloadDrawer';
-import { selectFormStatus, selectIsFormEditable } from '../../../store/selectors';
-import { UserRoles } from '../../../types';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import ReportItem from "./ReportItem";
+import { DownloadDrawer } from "./DownloadDrawer";
+import {
+  selectFormStatus,
+  selectIsFormEditable,
+} from "../../../store/selectors";
+import { UserRoles } from "../../../types";
 
 function formatStateStatus(item, editable) {
   if (item) {
@@ -14,7 +17,7 @@ function formatStateStatus(item, editable) {
         lastEditedTime="1:32pm"
         lastEditedDate="9/21/20"
         link1URL={`/sections/${item.year}/00`}
-        link1Text={editable ? 'Edit' : 'View'}
+        link1Text={editable ? "Edit" : "View"}
         link2URL="#"
         link2Text={null}
         statusText={item.status}
@@ -47,17 +50,20 @@ const Homepage = ({ editable, reportStatus }) => (
               <div className="actions ds-l-col--4">Actions</div>
             </div>
 
-            {Object.keys(reportStatus).map((k) => formatStateStatus(reportStatus[k], editable))}
+            {Object.keys(reportStatus).map((k) =>
+              formatStateStatus(reportStatus[k], editable)
+            )}
           </div>
         </div>
       </div>
       <div className="ds-l-row">
         <div className="omb-info ds-l-col--12">
           <p>
-            The OMB control number for this information is OMB 0938-1148. The time required to
-            complete this information collection is estimated to 40 hours per response, including
-            the time to review instructions, search existing data resources, gather data, and review
-            and submit the information.
+            The OMB control number for this information is OMB 0938-1148. The
+            time required to complete this information collection is estimated
+            to 40 hours per response, including the time to review instructions,
+            search existing data resources, gather data, and review and submit
+            the information.
           </p>
         </div>
       </div>

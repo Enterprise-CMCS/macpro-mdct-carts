@@ -1,4 +1,3 @@
-plugins/**/*
 cypress/plugins/**/*
 tests/cypress/plugins/**/*
 

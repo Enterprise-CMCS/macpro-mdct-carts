@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import store from './store/storeIndex';
-import BrowserIssue from './components/layout/BrowserIssue';
-import App from './App';
-import Amplify from 'aws-amplify';
-import config from './config';
+import React from "react";
+import ReactDOM from "react-dom";
+import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import store from "./store/storeIndex";
+import BrowserIssue from "./components/layout/BrowserIssue";
+import App from "./App";
+import Amplify from "aws-amplify";
+import config from "./config";
 
 // Internet Explorer
 const isIE = /*@cc_on!@*/ false || !!document.documentMode;
@@ -23,7 +23,7 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: 'carts-api',
+        name: "carts-api",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
@@ -39,20 +39,24 @@ Amplify.configure({
       domain: config.cognito.APP_CLIENT_DOMAIN,
       redirectSignIn: config.cognito.REDIRECT_SIGNIN,
       redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
-      scope: ['email', 'openid'],
-      responseType: 'token',
+      scope: ["email", "openid"],
+      responseType: "token",
     },
   },
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>{isIE || isEdge ? <BrowserIssue /> : <App />}</Provider>
+    <Provider store={store}>
+      {isIE || isEdge ? <BrowserIssue /> : <App />}
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+/*
+ * If you want your app to work offline and load faster, you can change
+ * unregister() to register() below. Note this comes with some pitfalls.
+ * Learn more about service workers: https://bit.ly/CRA-PWA
+ */
 serviceWorker.unregister();

@@ -1,7 +1,7 @@
-import { SET_STATE_STATUS, SET_STATE_STATUSES } from '../actions/initial';
-import { CERTIFY_AND_SUBMIT_SUCCESS } from '../actions/certify';
-import { UNCERTIFY_SUCCESS } from '../actions/uncertify';
-import { ACCEPT_SUCCESS } from '../actions/accept';
+import { SET_STATE_STATUS, SET_STATE_STATUSES } from "../actions/initial";
+import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
+import { UNCERTIFY_SUCCESS } from "../actions/uncertify";
+import { ACCEPT_SUCCESS } from "../actions/accept";
 
 const initialState = {
   status: null,
@@ -22,18 +22,18 @@ export default (state = initialState, action) => {
     case CERTIFY_AND_SUBMIT_SUCCESS:
       return {
         ...state,
-        status: 'certified',
+        status: "certified",
         userName: action.user,
       };
     case UNCERTIFY_SUCCESS:
       return {
         ...state,
-        [action.stateCode]: 'in_progress',
+        [action.stateCode]: "in_progress",
       };
     case ACCEPT_SUCCESS:
       return {
         ...state,
-        [action.stateCode]: 'accepted',
+        [action.stateCode]: "accepted",
       };
     default:
       return state;

@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useEffect } from "react";
+import { withRouter } from "react-router-dom";
 
 function ScrollToTop({ history }) {
   useEffect(() => {
@@ -12,7 +12,7 @@ function ScrollToTop({ history }) {
     return () => {
       unlisten();
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }

@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 const Userinfo = ({ currentUser }) => {
   const info = Object.entries(currentUser).map(([key, value]) => {
-    if (key === 'state') {
+    if (key === "state") {
       return (
         <span>
           <strong>state</strong>: {value.id} {value.name}

@@ -1,6 +1,6 @@
-import { UserRoles } from '../types';
-import jsonpath from './jsonpath';
-import { compareACS } from './synthesize';
+import { UserRoles } from "../types";
+import jsonpath from "./jsonpath";
+import { compareACS } from "./synthesize";
 
 /**
  * This function determines whether a radio's conditional subquestion should hide
@@ -79,13 +79,13 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
     for (let j = 0; j < computedValue.length; j++) {
       // Check if current variation corresponds with targetValue row
       let rowValue;
-      if (variations[i].row === '*') {
-        rowValue = '*';
+      if (variations[i].row === "*") {
+        rowValue = "*";
       } else {
         rowValue = parseFloat(variations[i].row, 10);
       }
       /* eslint-disable no-plusplus */
-      if (rowValue === '*' || rowValue === j) {
+      if (rowValue === "*" || rowValue === j) {
         // get row key
         const rowKey = parseFloat(variations[i].row_key, 10);
         const threshold = parseFloat(variations[i].threshold, 10);
@@ -93,28 +93,28 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
         // Check if threshold is met
         switch (variations[i].operator) {
-          case '<':
+          case "<":
             if (comparisonValue < threshold) {
               resultsArray.push(true);
             } else {
               resultsArray.push(false);
             }
             break;
-          case '>':
+          case ">":
             if (comparisonValue > threshold) {
               resultsArray.push(true);
             } else {
               resultsArray.push(false);
             }
             break;
-          case '=':
+          case "=":
             if (comparisonValue === variations[i].threshold) {
               resultsArray.push(true);
             } else {
               resultsArray.push(false);
             }
             break;
-          case '!=':
+          case "!=":
             if (comparisonValue !== variations[i].threshold) {
               resultsArray.push(true);
             } else {
@@ -127,13 +127,13 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
         // Determine is variation_operator is true
 
-        if (variationOperator === 'or') {
+        if (variationOperator === "or") {
           result = false;
 
           if (resultsArray.includes(true)) {
             result = true;
           }
-        } else if (variationOperator === 'and') {
+        } else if (variationOperator === "and") {
           result = true;
           if (resultsArray.includes(false)) {
             result = false;
@@ -163,18 +163,25 @@ const shouldDisplay = (state, context, programType = null) => {
     program = programType;
   }
 
-  if (!context || (!context.conditional_display && !context.show_if_state_program_type_in)) {
+  if (
+    !context ||
+    (!context.conditional_display && !context.show_if_state_program_type_in)
+  ) {
     return true;
   }
 
-  // show_if_state_program_type_in: there is an array of acceptable values
-  // displaying relies on that answer being included in the show_if_state_program_type_in array
+  /*
+   * show_if_state_program_type_in: there is an array of acceptable values
+   * displaying relies on that answer being included in the show_if_state_program_type_in array
+   */
   if (context.show_if_state_program_type_in) {
     return context.show_if_state_program_type_in.includes(program);
   }
 
-  // hide_if: there is just one target (question) with a single answer
-  // displaying relies on that answer being incldued in the hide_if.values.interactive array
+  /*
+   * hide_if: there is just one target (question) with a single answer
+   * displaying relies on that answer being incldued in the hide_if.values.interactive array
+   */
   if (context.conditional_display.hide_if) {
     return !hideIf(state, context.conditional_display.hide_if);
   }
@@ -184,20 +191,29 @@ const shouldDisplay = (state, context, programType = null) => {
     return !hideIfAll(state, context.conditional_display.hide_if_all);
   }
 
-  // hide_if_not, there is just one target (question) that may have multiple answers (checkbox)
-  // displaying relies on that array of answers including any of the values from the hide_if_not.values.interactive array
+  /*
+   * hide_if_not, there is just one target (question) that may have multiple answers (checkbox)
+   * displaying relies on that array of answers including any of the values from the hide_if_not.values.interactive array
+   */
   if (context.conditional_display.hide_if_not) {
     return !hideIfNot(state, context.conditional_display.hide_if_not);
   }
 
-  // hide_if_table_value, there is one target table that may have multiple variations
-  // displaying relies on variations supplied to return a bool is ANY are tru
+  /*
+   * hide_if_table_value, there is one target table that may have multiple variations
+   * displaying relies on variations supplied to return a bool is ANY are tru
+   */
   if (context.conditional_display.hide_if_table_value) {
-    return hideIfTableValue(state, context.conditional_display.hide_if_table_value);
+    return hideIfTableValue(
+      state,
+      context.conditional_display.hide_if_table_value
+    );
   }
 
-  // If we don't know what the heck is going on, just return true. Better to
-  // display a question we shouldn't than not.
+  /*
+   * If we don't know what the heck is going on, just return true. Better to
+   * display a question we shouldn't than not.
+   */
   return true;
 };
 

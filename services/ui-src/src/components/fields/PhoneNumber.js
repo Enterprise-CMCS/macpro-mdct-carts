@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Text from './Text';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Text from "./Text";
 
 const PhoneNumber = ({ onChange, question, ...props }) => {
   const [phone, setPhone] = useState(question.answer.entry);
@@ -8,9 +8,9 @@ const PhoneNumber = ({ onChange, question, ...props }) => {
 
   const change = ({ target: { name, value } }) => {
     if (value.length > 0) {
-      const digits = value.replace(/[()-. ]/g, '');
+      const digits = value.replace(/[()-. ]/g, "");
       if (digits.length > 10) {
-        setError('Please limit to 10 digits');
+        setError("Please limit to 10 digits");
       } else {
         setError(false);
         onChange({ target: { name, value } });

@@ -1,57 +1,57 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import { Checkbox } from './Checkbox';
-import { CheckboxFlag } from './CheckboxFlag';
-import { CMSLegend } from './CMSLegend';
-import { DateRange } from './DateRange';
-import { Email } from './Email';
-import { Fieldset } from './Fieldset';
+import { Checkbox } from "./Checkbox";
+import { CheckboxFlag } from "./CheckboxFlag";
+import { CMSLegend } from "./CMSLegend";
+import { DateRange } from "./DateRange";
+import { Email } from "./Email";
+import { Fieldset } from "./Fieldset";
 //import { FileUpload } from "./FileUpload";
-import UploadComponent from '../layout/UploadComponent';
-import { Integer } from './Integer';
-import { MailingAddress } from './MailingAddress';
-import { Money } from './Money';
-import { Objectives } from './Objectives';
-import { Percentage } from './Percentage';
-import { PhoneNumber } from './PhoneNumber';
-import { Radio } from './Radio';
-import { Ranges } from './Ranges';
-import { Repeatables } from './Repeatables';
-import { SkipText } from './SkipText';
-import Text from './Text';
-import { TextMedium, TextMultiline, TextSmall } from './TextOther';
+import UploadComponent from "../layout/UploadComponent";
+import { Integer } from "./Integer";
+import { MailingAddress } from "./MailingAddress";
+import { Money } from "./Money";
+import { Objectives } from "./Objectives";
+import { Percentage } from "./Percentage";
+import { PhoneNumber } from "./PhoneNumber";
+import { Radio } from "./Radio";
+import { Ranges } from "./Ranges";
+import { Repeatables } from "./Repeatables";
+import { SkipText } from "./SkipText";
+import Text from "./Text";
+import { TextMedium, TextMultiline, TextSmall } from "./TextOther";
 
-import { setAnswerEntry } from '../../actions/initial';
-import { selectIsFormEditable } from '../../store/selectors';
-import { showQuestionByPath } from '../Utils/helperFunctions';
+import { setAnswerEntry } from "../../actions/initial";
+import { selectIsFormEditable } from "../../store/selectors";
+import { showQuestionByPath } from "../Utils/helperFunctions";
 
 const questionTypes = new Map([
-  ['checkbox', Checkbox],
-  ['checkbox_flag', CheckboxFlag],
-  ['daterange', DateRange],
-  ['email', Email],
-  ['fieldset', Fieldset],
-  ['file_upload', UploadComponent],
-  ['integer', Integer],
-  ['mailing_address', MailingAddress],
-  ['money', Money],
-  ['objectives', Objectives],
-  ['percentage', Percentage],
-  ['phone_number', PhoneNumber],
-  ['radio', Radio],
-  ['ranges', Ranges],
-  ['repeatables', Repeatables],
-  ['skip_text', SkipText],
-  ['text', Text],
-  ['text_medium', TextMedium],
-  ['text_multiline', TextMultiline],
-  ['text_small', TextSmall],
+  ["checkbox", Checkbox],
+  ["checkbox_flag", CheckboxFlag],
+  ["daterange", DateRange],
+  ["email", Email],
+  ["fieldset", Fieldset],
+  ["file_upload", UploadComponent],
+  ["integer", Integer],
+  ["mailing_address", MailingAddress],
+  ["money", Money],
+  ["objectives", Objectives],
+  ["percentage", Percentage],
+  ["phone_number", PhoneNumber],
+  ["radio", Radio],
+  ["ranges", Ranges],
+  ["repeatables", Repeatables],
+  ["skip_text", SkipText],
+  ["text", Text],
+  ["text_medium", TextMedium],
+  ["text_multiline", TextMultiline],
+  ["text_small", TextSmall],
 ]);
 
 const Container = ({ question, children }) =>
-  question.type === 'fieldset' ? (
+  question.type === "fieldset" ? (
     <>{children}</>
   ) : (
     <fieldset className="ds-c-fieldset">{children}</fieldset>
@@ -61,7 +61,14 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ hideNumber, question, readonly, setAnswer, prevYear, ...props }) => {
+const Question = ({
+  hideNumber,
+  question,
+  readonly,
+  setAnswer,
+  prevYear,
+  ...props
+}) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -75,22 +82,23 @@ const Question = ({ hideNumber, question, readonly, setAnswer, prevYear, ...prop
 
   const onClick = (e) => {
     if (e.target.checked) {
-      setAnswer(e.target.name, '');
+      setAnswer(e.target.name, "");
     } else if (e.target.checked !== undefined) {
       setAnswer(e.target.name, e.target.value);
     }
   };
 
   const shouldRenderChildren =
-    (question.type !== 'fieldset' || question.fieldset_type === 'noninteractive_table') &&
-    question.type !== 'objectives' &&
-    question.type !== 'radio' &&
-    question.type !== 'repeatables' &&
+    (question.type !== "fieldset" ||
+      question.fieldset_type === "noninteractive_table") &&
+    question.type !== "objectives" &&
+    question.type !== "radio" &&
+    question.type !== "repeatables" &&
     question.questions &&
     question.questions.length > 0;
 
   let fieldsetId = false;
-  if (question.type === 'fieldset') {
+  if (question.type === "fieldset") {
     if (question.fieldset_info) {
       fieldsetId = question.fieldset_info.id;
     }

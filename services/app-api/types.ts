@@ -58,30 +58,30 @@ export interface DynamoFetch {
 
 /* eslint-disable no-unused-vars */
 export const enum CoreSetAbbr {
-  ACS = 'ACS', // adult
-  CCS = 'CCS', // child combined
-  CCSM = 'CCSM', // child medicaid
-  CCSC = 'CCSC', // child chip
-  HHCS = 'HHCS', // helth homes
+  ACS = "ACS", // adult
+  CCS = "CCS", // child combined
+  CCSM = "CCSM", // child medicaid
+  CCSC = "CCSC", // child chip
+  HHCS = "HHCS", // helth homes
 }
 
 export const enum MeasureStatus {
-  COMPLETE = 'complete',
-  INCOMPLETE = 'incomplete',
+  COMPLETE = "complete",
+  INCOMPLETE = "incomplete",
 }
 
 export const enum UserRoles {
-  ADMIN = 'mdctcarts-approver',
-  STATE = 'mdctcarts-state-user',
-  HELP = 'mdctcarts-help-desk',
-  BO = 'mdctcarts-bo-user',
-  BOR = 'mdctcarts-bor',
+  ADMIN = "mdctcarts-approver",
+  STATE = "mdctcarts-state-user",
+  HELP = "mdctcarts-help-desk",
+  BO = "mdctcarts-bo-user",
+  BOR = "mdctcarts-bor",
 }
 
 export const enum RequestMethods {
-  POST = 'POST',
-  GET = 'GET',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
+  POST = "POST",
+  GET = "GET",
+  PUT = "PUT",
+  DELETE = "DELETE",
 }
 /* eslint-enable no-unused-vars */

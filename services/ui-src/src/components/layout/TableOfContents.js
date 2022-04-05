@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { VerticalNav } from '@cmsgov/design-system-core';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { UserRoles } from '../../types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { VerticalNav } from "@cmsgov/design-system-core";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { UserRoles } from "../../types";
 
 const idToUrl = (location, id) => {
-  const endOfPath = id.replace(/-/g, '/');
-  if (location.pathname.startsWith('/views/sections')) {
-    const pathChunks = location.pathname.split('/');
-    const base = pathChunks.slice(0, 4).join('/');
+  const endOfPath = id.replace(/-/g, "/");
+  if (location.pathname.startsWith("/views/sections")) {
+    const pathChunks = location.pathname.split("/");
+    const base = pathChunks.slice(0, 4).join("/");
     return `${base}/${endOfPath}`;
   }
   return `/sections/${endOfPath}`;
 };
-const subsection = (index) => String.fromCharCode('A'.charCodeAt(0) + index);
+const subsection = (index) => String.fromCharCode("A".charCodeAt(0) + index);
 
 class TableOfContents extends Component {
   constructor(props) {
@@ -40,17 +40,24 @@ class TableOfContents extends Component {
         items:
           subsections.length < 2
             ? null
-            : subsections.map(({ id: subsectionId, title: subsectionTitle }, i) => ({
-                label: `Section ${ordinal}${subsection(i)}: ${subsectionTitle}`,
-                onClick: this.click,
-                selected: location.pathname
-                  .toLowerCase()
-                  .startsWith(idToUrl(location, subsectionId)),
-                url: idToUrl(location, subsectionId),
-              })),
-        label: ordinal > 0 ? `Section ${ordinal}: ${sectionTitle}` : sectionTitle,
+            : subsections.map(
+                ({ id: subsectionId, title: subsectionTitle }, i) => ({
+                  label: `Section ${ordinal}${subsection(
+                    i
+                  )}: ${subsectionTitle}`,
+                  onClick: this.click,
+                  selected: location.pathname
+                    .toLowerCase()
+                    .startsWith(idToUrl(location, subsectionId)),
+                  url: idToUrl(location, subsectionId),
+                })
+              ),
+        label:
+          ordinal > 0 ? `Section ${ordinal}: ${sectionTitle}` : sectionTitle,
         onClick: this.click,
-        selected: location.pathname.toLowerCase().startsWith(idToUrl(location, sectionId)),
+        selected: location.pathname
+          .toLowerCase()
+          .startsWith(idToUrl(location, sectionId)),
       }))
       .map(({ id, items: childItems, ...rest }) => {
         const updated = { id, items: childItems, ...rest };
@@ -63,10 +70,11 @@ class TableOfContents extends Component {
     // If the user can certify and submit AND the form is not yet submitted...
     if (userRole === UserRoles.STATE) {
       items.push({
-        id: 'certify-and-submit',
-        label: 'Certify and Submit',
+        id: "certify-and-submit",
+        label: "Certify and Submit",
         onClick: this.click,
-        selected: location.pathname === `/sections/${formYear}/certify-and-submit`,
+        selected:
+          location.pathname === `/sections/${formYear}/certify-and-submit`,
         url: `/sections/${formYear}/certify-and-submit`,
       });
     }
@@ -98,10 +106,12 @@ const selectSectionsForNav = (state) => {
         id: sectionId,
         ordinal,
         title: sectionTitle,
-        subsections: subsections.map(({ id: subsectionId, title: subsectionTitle }) => ({
-          id: subsectionId,
-          title: subsectionTitle,
-        })),
+        subsections: subsections.map(
+          ({ id: subsectionId, title: subsectionTitle }) => ({
+            id: subsectionId,
+            title: subsectionTitle,
+          })
+        ),
       })
     );
   }

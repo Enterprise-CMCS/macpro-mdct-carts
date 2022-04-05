@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Alert } from '@cmsgov/design-system-core';
+import React from "react";
+import PropTypes from "prop-types";
+import { Alert } from "@cmsgov/design-system-core";
 
 const SkipText = ({ question: { skip_text: skipText } }) => (
   <Alert>

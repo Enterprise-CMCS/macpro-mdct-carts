@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const NoninteractiveTable = ({ question }) => {
   const columnWidth = 100 / question.fieldset_info.headers.length;
@@ -14,7 +14,7 @@ const NoninteractiveTable = ({ question }) => {
             {question.fieldset_info.headers.map((header) => {
               count += 1;
               // captures the location of a percent element
-              if (String(header).toLowerCase().includes('percent')) {
+              if (String(header).toLowerCase().includes("percent")) {
                 percentLocation[count] = true;
               } else {
                 percentLocation[count] = false;
@@ -36,12 +36,15 @@ const NoninteractiveTable = ({ question }) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
                   if (percentLocation[count] === true) {
-                    // TODO Remove this custom logic when rewriting backend
-                    // This is part of the story to dynamically calculate percent change: OY2-13439 and is the absolute wrong way to do this.
+                    /*
+                     * TODO Remove this custom logic when rewriting backend
+                     * This is part of the story to dynamically calculate percent change: OY2-13439 and is the absolute wrong way to do this.
+                     */
                     if (
-                      (row[0] === 'Medicaid Expansion CHIP' || row[0] === 'Separate CHIP') &&
+                      (row[0] === "Medicaid Expansion CHIP" ||
+                        row[0] === "Separate CHIP") &&
                       question.fieldset_info.headers[1]?.includes(
-                        'Number of children enrolled in FFY'
+                        "Number of children enrolled in FFY"
                       )
                     ) {
                       // The percent change calculation times 100 to give the percent in the correct format
@@ -50,17 +53,33 @@ const NoninteractiveTable = ({ question }) => {
                         returnValue = 0;
                       }
                       if (row[1] === 0 && row[2] > 0) {
-                        returnValue = '-';
-                        return <td width={`${columnWidth}%`}>{returnValue.toLocaleString()}</td>;
+                        returnValue = "-";
+                        return (
+                          <td width={`${columnWidth}%`}>
+                            {returnValue.toLocaleString()}
+                          </td>
+                        );
                       }
                       returnValue = Math.round(returnValue * 1000) / 1000;
-                      return <td width={`${columnWidth}%`}>{returnValue.toLocaleString()}%</td>;
+                      return (
+                        <td width={`${columnWidth}%`}>
+                          {returnValue.toLocaleString()}%
+                        </td>
+                      );
                     }
                     //End of the custom logic, that should really never have been done in the first place
-                    return <td width={`${columnWidth}%`}>{value.toLocaleString()}%</td>;
+                    return (
+                      <td width={`${columnWidth}%`}>
+                        {value.toLocaleString()}%
+                      </td>
+                    );
                     // eslint-disable-next-line
                   } else {
-                    return <td width={`${columnWidth}%`}>{value.toLocaleString()}</td>;
+                    return (
+                      <td width={`${columnWidth}%`}>
+                        {value.toLocaleString()}
+                      </td>
+                    );
                   }
                 })}
               </tr>

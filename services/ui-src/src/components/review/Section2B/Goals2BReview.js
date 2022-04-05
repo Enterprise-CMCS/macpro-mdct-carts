@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { TextField, Choice, ChoiceList } from '@cmsgov/design-system-core';
-import DateRange from '../../layout/DateRange';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { TextField, Choice, ChoiceList } from "@cmsgov/design-system-core";
+import DateRange from "../../layout/DateRange";
 
 class Goals2BReview extends Component {
   constructor(props) {
@@ -12,12 +12,12 @@ class Goals2BReview extends Component {
       percentage: 0,
       shouldCalculate: true,
       goal2bDummyBoolean: true,
-      goal2bDummyData: '',
+      goal2bDummyData: "",
       goal2bDummyDigit: 10,
       discontinued: false,
       selectedFiles: [],
       p1_q1_answer: null,
-      p1_q2_answer: 'new',
+      p1_q2_answer: "new",
     };
     this.addDivisors = this.addDivisors.bind(this);
     this.percentageCalculator = this.percentageCalculator.bind(this);
@@ -27,10 +27,10 @@ class Goals2BReview extends Component {
 
   componentDidMount() {
     this.setState({
-      goal_type_value: 'continuing',
-      goal_source_value: 'enrollment_data',
+      goal_type_value: "continuing",
+      goal_source_value: "enrollment_data",
       goal2bDummyData:
-        'This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        "This is what you wrote last year. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     });
   }
 
@@ -44,9 +44,9 @@ class Goals2BReview extends Component {
   percentageCalculator(numerator, denominator) {
     let quotient;
     if (
-      numerator !== '' &&
+      numerator !== "" &&
       numerator > 0 &&
-      denominator !== '' &&
+      denominator !== "" &&
       denominator > 0 &&
       this.state.shouldCalculate === true
     ) {
@@ -54,7 +54,7 @@ class Goals2BReview extends Component {
       return quotient;
     }
     // default value
-    return '--';
+    return "--";
   }
 
   // Validate the input and set the state
@@ -62,18 +62,21 @@ class Goals2BReview extends Component {
     let num;
     let denom;
     // If the input includes letters, give the box an error message
-    if (isNaN(parseInt(evt.target.value)) || /^\d+$/.test(evt.target.value) === false) {
+    if (
+      isNaN(parseInt(evt.target.value)) ||
+      /^\d+$/.test(evt.target.value) === false
+    ) {
       this.setState({
-        [`${evt.target.name}Err`]: 'This input takes numbers only',
+        [`${evt.target.name}Err`]: "This input takes numbers only",
         shouldCalculate: false,
       });
       return;
     } else {
       // Calculate without waiting for the input to be added to state
-      if (evt.target.name === 'goal_numerator_digit') {
+      if (evt.target.name === "goal_numerator_digit") {
         num = evt.target.value;
         denom = this.state.goal_denominator_digit || 0;
-      } else if (evt.target.name === 'goal_denominator_digit') {
+      } else if (evt.target.name === "goal_denominator_digit") {
         num = this.state.goal_numerator_digit || 0;
         denom = evt.target.value;
       }
@@ -88,7 +91,7 @@ class Goals2BReview extends Component {
   }
 
   discontinuedGoal(evt) {
-    if (evt.target.value === 'discontinued') {
+    if (evt.target.value === "discontinued") {
       this.setState({ discontinued: true });
     } else {
       this.setState({ discontinued: false });
@@ -96,17 +99,19 @@ class Goals2BReview extends Component {
   }
 
   render() {
-    let renderPreviousEntry = this.props.previousEntry === 'true' ? true : false;
+    let renderPreviousEntry =
+      this.props.previousEntry === "true" ? true : false;
 
     return (
       <Fragment>
-        <div className={'question-container textfield'}>
+        <div className={"question-container textfield"}>
           <legend className="ds-c-label">1. Briefly describe your goal</legend>
           <div className="textfield">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec consequat orci.
-            Aliquam posuere ligula urna, gravida suscipit neque sodales quis. Morbi ultrices sapien
-            placerat fringilla bibendum. Vestibulum maximus augue lorem, quis molestie massa varius
-            vitae. Aenean sit amet massa eu augue luctus ornare.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec
+            consequat orci. Aliquam posuere ligula urna, gravida suscipit neque
+            sodales quis. Morbi ultrices sapien placerat fringilla bibendum.
+            Vestibulum maximus augue lorem, quis molestie massa varius vitae.
+            Aenean sit amet massa eu augue luctus ornare.
           </div>
         </div>
 
@@ -115,7 +120,7 @@ class Goals2BReview extends Component {
           <Choice
             name={`goal_type${this.props.goalId}`}
             value="new"
-            defaultChecked={this.state.p1_q2_answer === 'new' ? true : false}
+            defaultChecked={this.state.p1_q2_answer === "new" ? true : false}
             disabled={renderPreviousEntry ? true : false}
             type="radio"
             onChange={this.discontinuedGoal}
@@ -127,31 +132,42 @@ class Goals2BReview extends Component {
          * If the answer to question 2 is "discontinued" all following questions disapear
          */}
         {this.state.discontinued ? (
-          ''
+          ""
         ) : (
           <div className="dependant-on-discontinued">
             <div className="question-container">
-              <h3 className="question-outer-header">Define the numerator you're measuring</h3>
+              <h3 className="question-outer-header">
+                Define the numerator you're measuring
+              </h3>
               <legend className="ds-c-label">
                 3. Which population are you measuring in the numerator?
               </legend>
 
               <div className="textfield">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec consequat orci.
-                Aliquam posuere ligula urna, gravida suscipit neque sodales quis. Morbi ultrices
-                sapien placerat fringilla bibendum. Vestibulum maximus augue lorem, quis molestie
-                massa varius vitae. Aenean sit amet massa eu augue luctus ornare.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                nec consequat orci. Aliquam posuere ligula urna, gravida
+                suscipit neque sodales quis. Morbi ultrices sapien placerat
+                fringilla bibendum. Vestibulum maximus augue lorem, quis
+                molestie massa varius vitae. Aenean sit amet massa eu augue
+                luctus ornare.
               </div>
-              <legend className="ds-c-label">4. Numerator (total number):</legend>
+              <legend className="ds-c-label">
+                4. Numerator (total number):
+              </legend>
               <div className="textfield">10</div>
-              <h3 className="question-outer-header">Define the denominator you're measuring</h3>
+              <h3 className="question-outer-header">
+                Define the denominator you're measuring
+              </h3>
               <legend className="ds-c-label">
                 5. Which population are you measuring in the denominator?
               </legend>
               <div className="textfield">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec consequat orci.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                nec consequat orci.
               </div>
-              <legend className="ds-c-label">6. Denominator (total number):</legend>
+              <legend className="ds-c-label">
+                6. Denominator (total number):
+              </legend>
               <div className="textfield">10</div>
             </div>
 
@@ -170,7 +186,7 @@ class Goals2BReview extends Component {
                     size="small"
                     className="ds-l--auto"
                     value={
-                      this.props.previousEntry === 'true'
+                      this.props.previousEntry === "true"
                         ? this.state.goal2bDummyDigit
                         : this.state.goal_numerator_digit
                     }
@@ -184,7 +200,7 @@ class Goals2BReview extends Component {
                     size="small"
                     className="ds-l--auto"
                     value={
-                      this.props.previousEntry === 'true'
+                      this.props.previousEntry === "true"
                         ? this.state.goal2bDummyDigit
                         : this.state.goal_denominator_digit
                     }
@@ -197,7 +213,7 @@ class Goals2BReview extends Component {
                     name="goal_percentage"
                     size="small"
                     value={
-                      this.props.previousEntry === 'true'
+                      this.props.previousEntry === "true"
                         ? this.state.goal2bDummyDigit
                         : `${this.state.percentage}%`
                     }
@@ -207,9 +223,15 @@ class Goals2BReview extends Component {
             </div>
 
             <div className="question-container">
-              <div className="question">7. What is the date range for your data?</div>
+              <div className="question">
+                7. What is the date range for your data?
+              </div>
               <div className="date-range-wrapper">
-                <DateRange previousEntry={this.props.previousEntry === 'true' ? true : false} />
+                <DateRange
+                  previousEntry={
+                    this.props.previousEntry === "true" ? true : false
+                  }
+                />
               </div>
             </div>
 
@@ -217,8 +239,8 @@ class Goals2BReview extends Component {
               <ChoiceList
                 choices={[
                   {
-                    label: 'Eligibility or enrollment data',
-                    value: 'enrollment_data',
+                    label: "Eligibility or enrollment data",
+                    value: "enrollment_data",
                     disabled: renderPreviousEntry ? true : false,
                     defaultChecked: true,
                   },
@@ -233,27 +255,31 @@ class Goals2BReview extends Component {
 
             <div className="question-container">
               <legend className="ds-c-label">
-                9. How did your progress towards your goal last year compare to your previous year’s
-                progress?
+                9. How did your progress towards your goal last year compare to
+                your previous year’s progress?
               </legend>
 
               <div className="textfield">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec consequat orci.
-                Aliquam posuere ligula urna, gravida suscipit neque sodales quis. Morbi ultrices
-                sapien placerat fringilla bibendum. Vestibulum maximus augue lorem, quis molestie
-                massa varius vitae. Aenean sit amet massa eu augue luctus ornare.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                nec consequat orci. Aliquam posuere ligula urna, gravida
+                suscipit neque sodales quis. Morbi ultrices sapien placerat
+                fringilla bibendum. Vestibulum maximus augue lorem, quis
+                molestie massa varius vitae. Aenean sit amet massa eu augue
+                luctus ornare.
               </div>
             </div>
 
             <div className="question-container">
               <legend className="ds-c-label">
-                10. What are you doing to continually make progress towards your goal?
+                10. What are you doing to continually make progress towards your
+                goal?
               </legend>
 
               <div className="textfield">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec consequat orci.
-                Aliquam posuere ligula urna, gravida suscipit neque sodales quis. Morbi ultrices
-                sapien placerat fringilla bibendum.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                nec consequat orci. Aliquam posuere ligula urna, gravida
+                suscipit neque sodales quis. Morbi ultrices sapien placerat
+                fringilla bibendum.
               </div>
             </div>
 
@@ -266,7 +292,9 @@ class Goals2BReview extends Component {
             </div>
 
             <div className="question-container">
-              <legend className="ds-c-label">12. Do you have any supporting documentation?</legend>
+              <legend className="ds-c-label">
+                12. Do you have any supporting documentation?
+              </legend>
 
               <div className="textfield">myFile2019.docx</div>
             </div>

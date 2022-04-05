@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Question from './Question';
-import { connect, useDispatch } from 'react-redux';
-import { ADD_TO_TOTAL, FINISH_CALCULATION } from '../../store/lastYearTotals';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import Question from "./Question";
+import { connect, useDispatch } from "react-redux";
+import { ADD_TO_TOTAL, FINISH_CALCULATION } from "../../store/lastYearTotals";
 
 const DataGrid = ({ question, lastYearFormData }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
@@ -10,7 +10,9 @@ const DataGrid = ({ question, lastYearFormData }) => {
   const dispatch = useDispatch();
 
   const rowStyle =
-    question.questions.length > 5 ? `subquestion ds-u-padding-left--2` : `ds-u-margin-top--0`;
+    question.questions.length > 5
+      ? `subquestion ds-u-padding-left--2`
+      : `ds-u-margin-top--0`;
 
   // Pull data from last year
   const getDataFromLastYear = async (item) => {
@@ -19,7 +21,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
     }
 
     // Split and create array from id
-    const splitID = item.id.split('-');
+    const splitID = item.id.split("-");
 
     // the subquestion id (a, b, c, etc)
     const questionId = splitID[5];
@@ -29,19 +31,21 @@ const DataGrid = ({ question, lastYearFormData }) => {
 
     if (
       shouldGetPriorYear &&
-      splitID[1] === '03' &&
-      splitID[2] === 'c' &&
-      splitID[3] === '06' &&
+      splitID[1] === "03" &&
+      splitID[2] === "c" &&
+      splitID[3] === "06" &&
       parseInt(splitID[4]) > 2 &&
       parseInt(splitID[4]) < 10
     ) {
       // Set year to last year
       splitID[0] = parseInt(splitID[0]) - 1;
       splitID.pop();
-      const fieldsetId = splitID.join('-');
+      const fieldsetId = splitID.join("-");
 
       let prevYearValue =
-        parseInt(getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)) || '';
+        parseInt(
+          getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
+        ) || "";
       const itemId = item.id.slice(0, -2);
 
       dispatch({
@@ -86,7 +90,8 @@ const DataGrid = ({ question, lastYearFormData }) => {
     let lastYearAnswer;
 
     // Get questions from last years JSON
-    const questions = data.contents.section.subsections[2].parts[partNumber].questions;
+    const questions =
+      data.contents.section.subsections[2].parts[partNumber].questions;
 
     // Filter down to specific question
     let matchingQuestion = questions.filter(
@@ -95,10 +100,13 @@ const DataGrid = ({ question, lastYearFormData }) => {
 
     // The first will always be correct
     if (matchingQuestion[0]) {
-      // Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
-      // and subtract 97 to get the question index number
+      /*
+       * Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
+       * and subtract 97 to get the question index number
+       */
       const index = itemId.toLowerCase().charCodeAt(0) - 97;
-      lastYearAnswer = matchingQuestion[0].questions[1].questions[index].answer.entry;
+      lastYearAnswer =
+        matchingQuestion[0].questions[1].questions[index].answer.entry;
     }
     return lastYearAnswer ?? null;
   };
@@ -111,7 +119,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
       });
     };
     generateRenderQuestions();
-  }, [dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
@@ -119,7 +127,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
         return (
           <div className="ds-l-col" key={index}>
             <Question
-              hideNumber={question.type !== 'fieldset'}
+              hideNumber={question.type !== "fieldset"}
               question={question.question}
               prevYear={question.prevYear}
             />

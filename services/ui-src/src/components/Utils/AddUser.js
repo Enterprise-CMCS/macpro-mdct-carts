@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import axios from '../../authenticatedAxios';
-import Searchable from 'react-searchable-dropdown';
-import { TextField, Button } from '@cmsgov/design-system-core';
-import MultiSelect from 'react-multi-select-component';
-import { roles } from '../Utils/RoleHelper';
-import { UserRoles } from '../../types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import axios from "../../authenticatedAxios";
+import Searchable from "react-searchable-dropdown";
+import { TextField, Button } from "@cmsgov/design-system-core";
+import MultiSelect from "react-multi-select-component";
+import { roles } from "../Utils/RoleHelper";
+import { UserRoles } from "../../types";
 
 /**
  * Add a new record to carts_api_rolefromusername & carts_api_statesfromusername so that the user
@@ -18,11 +18,11 @@ import { UserRoles } from '../../types';
 
 const AddUser = ({ currentUser, stateList }) => {
   const addUser = async (stateId, userId, role) => {
-    if (stateId !== undefined && userId !== '') {
+    if (stateId !== undefined && userId !== "") {
       const xhrURL = [
         window.env.API_POSTGRES_URL,
         `/api/v1/adduser/${userId}/${statesToSend}/${role}`,
-      ].join('');
+      ].join("");
       // eslint-disable-next-line
       await axios.get(xhrURL).then(function (result2) {
         window.alert(result2.data.toString());
@@ -45,7 +45,7 @@ const AddUser = ({ currentUser, stateList }) => {
     setStateId(option);
 
     // Save for API use
-    let states = '';
+    let states = "";
 
     let first_iteration = true;
     // Create hyphen separated string of state abbreviations
@@ -54,7 +54,7 @@ const AddUser = ({ currentUser, stateList }) => {
         states += item.value;
         first_iteration = false;
       } else {
-        states += '-' + item.value;
+        states += "-" + item.value;
       }
     });
 
@@ -72,10 +72,13 @@ const AddUser = ({ currentUser, stateList }) => {
     <>
       <div className="ds-base">
         <h1>Add User</h1>
-        <p>To add a state user, enter their EUA Id, select their state, and click Add User.</p>
+        <p>
+          To add a state user, enter their EUA Id, select their state, and click
+          Add User.
+        </p>
         <p className="note">
-          Note: Users will not show up in the <a href="/users">User List</a> until they have logged
-          in.
+          Note: Users will not show up in the <a href="/users">User List</a>{" "}
+          until they have logged in.
         </p>
         {error && (
           <p className="error" id="Error">
@@ -93,7 +96,11 @@ const AddUser = ({ currentUser, stateList }) => {
           <div className="role">
             Role:
             <br />
-            <Searchable options={roles} placeholder="Select a Role" onSelect={setRoleOnSelect} />
+            <Searchable
+              options={roles}
+              placeholder="Select a Role"
+              onSelect={setRoleOnSelect}
+            />
           </div>
           <div>
             {role === UserRoles.STATE ? (
@@ -121,7 +128,7 @@ const AddUser = ({ currentUser, stateList }) => {
                   options={stateList}
                   value={stateId}
                   onChange={setStatesFromSelect}
-                  labelledBy={'Select States'}
+                  labelledBy={"Select States"}
                   multiple={false}
                 />
               </>

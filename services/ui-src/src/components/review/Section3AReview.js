@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Questions3A from './Section3A/Questions3AReview';
-import '@reach/accordion/styles.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Questions3A from "./Section3A/Questions3AReview";
+import "@reach/accordion/styles.css";
 
 class Section3a extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class Section3a extends Component {
       />
     );
     this.state = {
-      pageTitle: 'Part 3a: Program Outreach',
+      pageTitle: "Part 3a: Program Outreach",
       previousYearQuestions3AProp: previousYearQuestions3A,
       thisYearQuestions3AProp: thisYearQuestions3A,
     };

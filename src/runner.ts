@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn } from "child_process";
 
 /*
  * LabeledProcessRunner is a command runner that interleaves the output from different
@@ -6,7 +6,20 @@ import { spawn } from 'child_process';
  */
 export default class LabeledProcessRunner {
   private prefixColors: Record<string, string> = {};
-  private colors = ['1', '2', '3', '4', '5', '6', '9', '10', '11', '12', '13', '14'];
+  private colors = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+  ];
 
   /*
    * formattedPrefix pads the prefix for a given process so that all prefixes are
@@ -24,7 +37,7 @@ export default class LabeledProcessRunner {
         this.colors.push(color);
         this.prefixColors[prefix] = color;
       } else {
-        throw 'dev.ts programming error';
+        throw "dev.ts programming error";
       }
     }
 
@@ -47,11 +60,15 @@ export default class LabeledProcessRunner {
    * cwd: optional directory to change into before running the command
    * returns a promise that errors if the command exits error and resolves on success
    */
-  async run_command_and_output(prefix: string, cmd: string[], cwd: string | null) {
+  async run_command_and_output(
+    prefix: string,
+    cmd: string[],
+    cwd: string | null
+  ) {
     const proc_opts: Record<string, any> = {};
 
     if (cwd) {
-      proc_opts['cwd'] = cwd;
+      proc_opts["cwd"] = cwd;
     }
 
     const command = cmd[0];
@@ -59,32 +76,32 @@ export default class LabeledProcessRunner {
 
     const proc = spawn(command, args, proc_opts);
     const startingPrefix = this.formattedPrefix(prefix);
-    process.stdout.write(`${startingPrefix} Running: ${cmd.join(' ')}\n`);
+    process.stdout.write(`${startingPrefix} Running: ${cmd.join(" ")}\n`);
 
-    proc.stdout.on('data', (data) => {
+    proc.stdout.on("data", (data) => {
       const paddedPrefix = this.formattedPrefix(prefix);
 
-      for (let line of data.toString().split('\n')) {
+      for (let line of data.toString().split("\n")) {
         process.stdout.write(`${paddedPrefix} ${line}\n`);
       }
     });
 
-    proc.stderr.on('data', (data) => {
+    proc.stderr.on("data", (data) => {
       const paddedPrefix = this.formattedPrefix(prefix);
 
-      for (let line of data.toString().split('\n')) {
+      for (let line of data.toString().split("\n")) {
         process.stdout.write(`${paddedPrefix} ${line}\n`);
       }
     });
 
     return new Promise<void>((resolve, reject) => {
-      proc.on('error', (error) => {
+      proc.on("error", (error) => {
         const paddedPrefix = this.formattedPrefix(prefix);
         process.stdout.write(`${paddedPrefix} A PROCESS ERROR: ${error}\n`);
         reject(error);
       });
 
-      proc.on('close', (code) => {
+      proc.on("close", (code) => {
         const paddedPrefix = this.formattedPrefix(prefix);
         process.stdout.write(`${paddedPrefix} Exit: ${code}\n`);
         resolve();

@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Text from './Text';
+import React from "react";
+import PropTypes from "prop-types";
+import Text from "./Text";
 
 const TextMedium = ({ question, ...props }) => (
   <Text question={question} multiline rows={3} {...props} />

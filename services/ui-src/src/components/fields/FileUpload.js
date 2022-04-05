@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { Text } from './Text';
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
+import { Text } from "./Text";
 
-// Eat the incoming onChange event because for file uploads, we need to
-// handle them a little differently.
-const FileUpload = ({ onChange, ...props }) => {
+/*
+ * Eat the incoming onChange event because for file uploads, we need to
+ * handle them a little differently.
+ */
+const FileUpload = ({ _onChange, ...props }) => {
   const upload = useCallback(() => {
     // Here's where we'd actually handle the upload.
   }, []);

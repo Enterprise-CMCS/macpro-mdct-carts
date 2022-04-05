@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../../../authenticatedAxios';
-import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Button, TextField } from '@cmsgov/design-system-core';
-import MultiSelect from 'react-multi-select-component';
-import PropTypes from 'prop-types';
-import Searchable from 'react-searchable-dropdown';
-import { UserRoles } from '../../../types';
+import React, { useState, useEffect } from "react";
+import axios from "../../../authenticatedAxios";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { Button, TextField } from "@cmsgov/design-system-core";
+import MultiSelect from "react-multi-select-component";
+import PropTypes from "prop-types";
+import Searchable from "react-searchable-dropdown";
+import { UserRoles } from "../../../types";
 
 /**
  * View/edit a single user with options
@@ -23,15 +23,15 @@ const UserEdit = ({ stateList }) => {
   const [states, setStates] = useState();
   const [role, setRole] = useState();
   const [isActive, setIsActive] = useState();
-  const [statesToSend, setStatesToSend] = useState('null');
+  const [statesToSend, setStatesToSend] = useState("null");
 
   // Save selections for local use and API use
   const setStatesFromArray = (option, simple = false) => {
     // Save for API use
-    let states = '';
+    let states = "";
     if (option) {
       if (simple) {
-        states = option.join('-');
+        states = option.join("-");
       } else {
         let first_iteration = true;
         // Create hyphen separated string of state abbreviations
@@ -40,13 +40,13 @@ const UserEdit = ({ stateList }) => {
             states += item.value;
             first_iteration = false;
           } else {
-            states += '-' + item.value;
+            states += "-" + item.value;
           }
         });
       }
     }
     if (!states) {
-      states = 'null';
+      states = "null";
     }
     setStatesToSend(states);
   };
@@ -63,18 +63,18 @@ const UserEdit = ({ stateList }) => {
   // When stateList is rendered, call for User data
   useEffect(() => {
     loadUserData();
-  }, [stateList]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [stateList]);
 
   const roles = [
-    { value: UserRoles.ADMIN, label: 'Admin User' },
-    { value: UserRoles.BO, label: 'Business User' },
-    { value: UserRoles.CO, label: 'Central Office User' },
-    { value: UserRoles.STATE, label: 'State User' },
+    { value: UserRoles.ADMIN, label: "Admin User" },
+    { value: UserRoles.BO, label: "Business User" },
+    { value: UserRoles.CO, label: "Central Office User" },
+    { value: UserRoles.STATE, label: "State User" },
   ];
 
   const statuses = [
-    { value: true, label: 'Active' },
-    { value: false, label: 'Deactivated' },
+    { value: true, label: "Active" },
+    { value: false, label: "Deactivated" },
   ];
 
   // Update user object
@@ -82,7 +82,7 @@ const UserEdit = ({ stateList }) => {
     let tempUser = { ...user };
     let response;
 
-    if (field === 'state_codes') {
+    if (field === "state_codes") {
       // If from multiselect, else single selection
       if (Array.isArray(e)) {
         response = userStatesSimplified(e);
@@ -90,7 +90,7 @@ const UserEdit = ({ stateList }) => {
         setStatesFromArray(e);
       } else {
         if (!e.value) {
-          e.value = 'null';
+          e.value = "null";
         }
         setStatesToSend(e.value);
         response = e.value;
@@ -98,19 +98,19 @@ const UserEdit = ({ stateList }) => {
 
       // Write to local state
       setStates(e);
-    } else if (field === 'user_role') {
+    } else if (field === "user_role") {
       // Save to local state
       setRole(e.value);
-      setStatesToSend('null');
-      setStates('');
+      setStatesToSend("null");
+      setStates("");
       // Update user
       response = e.value;
-    } else if (field === 'is_active') {
+    } else if (field === "is_active") {
       response = e.value;
       if (e.value) {
-        setIsActive('True');
+        setIsActive("True");
       } else {
-        setIsActive('False');
+        setIsActive("False");
       }
     } else {
       response = e.target.value;
@@ -126,7 +126,7 @@ const UserEdit = ({ stateList }) => {
       response.push(state.value);
     });
     response.sort();
-    return response.join(',');
+    return response.join(",");
   };
 
   // Convert to object based on stateList entries
@@ -155,7 +155,7 @@ const UserEdit = ({ stateList }) => {
     const xhrURL = [
       window.env.API_POSTGRES_URL,
       `/api/v1/user/update/${user.id}/${statesToSend}/${user.user_role}/${user.is_active}`,
-    ].join('');
+    ].join("");
     // eslint-disable-next-line
     await axios.get(xhrURL).then((result2) => {
       window.alert(result2.data.message);
@@ -174,7 +174,7 @@ const UserEdit = ({ stateList }) => {
               value={user.username}
               type="text"
               label="Username"
-              onChange={(e) => updateLocalUser(e, 'username')}
+              onChange={(e) => updateLocalUser(e, "username")}
               disabled={true}
             />
           </div>
@@ -183,7 +183,7 @@ const UserEdit = ({ stateList }) => {
               value={user.first_name}
               type="text"
               label="First Name"
-              onChange={(e) => updateLocalUser(e, 'first_name')}
+              onChange={(e) => updateLocalUser(e, "first_name")}
               disabled={true}
             />
           </div>
@@ -192,7 +192,7 @@ const UserEdit = ({ stateList }) => {
               value={user.last_name}
               type="text"
               label="Last Name"
-              onChange={(e) => updateLocalUser(e, 'last_name')}
+              onChange={(e) => updateLocalUser(e, "last_name")}
               disabled={true}
             />
           </div>
@@ -201,7 +201,7 @@ const UserEdit = ({ stateList }) => {
               value={user.email}
               type="text"
               label="Email"
-              onChange={(e) => updateLocalUser(e, 'email')}
+              onChange={(e) => updateLocalUser(e, "email")}
               disabled={true}
             />
           </div>
@@ -211,7 +211,7 @@ const UserEdit = ({ stateList }) => {
               <Searchable
                 options={roles}
                 placeholder="Select a Role"
-                onSelect={(e) => updateLocalUser(e, 'user_role')}
+                onSelect={(e) => updateLocalUser(e, "user_role")}
                 value={role ? role : user.user_role}
               />
             </>
@@ -225,7 +225,7 @@ const UserEdit = ({ stateList }) => {
                   options={stateList}
                   multiple={true}
                   placeholder="Select a State"
-                  onSelect={(e) => updateLocalUser(e, 'state_codes')}
+                  onSelect={(e) => updateLocalUser(e, "state_codes")}
                 />
               </>
             ) : null}
@@ -235,8 +235,8 @@ const UserEdit = ({ stateList }) => {
                 <MultiSelect
                   options={stateList}
                   value={states}
-                  onChange={(e) => updateLocalUser(e, 'state_codes')}
-                  labelledBy={'Select States'}
+                  onChange={(e) => updateLocalUser(e, "state_codes")}
+                  labelledBy={"Select States"}
                   multiple={false}
                 />
               </>
@@ -249,7 +249,7 @@ const UserEdit = ({ stateList }) => {
                 options={statuses}
                 multiple={false}
                 placeholder="Select a State"
-                onSelect={(e) => updateLocalUser(e, 'is_active')}
+                onSelect={(e) => updateLocalUser(e, "is_active")}
                 value={isActive ? isActive : getStatus(user.is_active)}
               />
             </>

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Questions3C from './Section3C/Questions3C';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Questions3C from "./Section3C/Questions3C";
 class Section3c extends Component {
   constructor() {
     super();
@@ -9,8 +9,8 @@ class Section3c extends Component {
     this.setConditionalFromToggle = this.setConditionalFromToggle.bind(this);
 
     this.state = {
-      fillFormTitle: 'Same as last year',
-      pageTitle: 'Section 3C: Eligibility',
+      fillFormTitle: "Same as last year",
+      pageTitle: "Section 3C: Eligibility",
     };
   }
 

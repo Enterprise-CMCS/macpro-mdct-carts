@@ -1,12 +1,12 @@
-import React from 'react';
-import { Switch } from 'react-router';
-import { Route } from 'react-router-dom';
-import CMSHomepage from '../sections/homepage/CMSHomepage';
-import InvokeSection from '../Utils/InvokeSection';
-import SaveError from './SaveError';
-import ScrollToTop from '../Utils/ScrollToTop';
-import Sidebar from './Sidebar';
-import Unauthorized from './Unauthorized';
+import React from "react";
+import { Switch } from "react-router";
+import { Route } from "react-router-dom";
+import CMSHomepage from "../sections/homepage/CMSHomepage";
+import InvokeSection from "../Utils/InvokeSection";
+import SaveError from "./SaveError";
+import ScrollToTop from "../Utils/ScrollToTop";
+import Sidebar from "./Sidebar";
+import Unauthorized from "./Unauthorized";
 
 const CMSHome = () => (
   <>
@@ -14,7 +14,10 @@ const CMSHome = () => (
     <ScrollToTop />
     <Switch>
       <Route exact path="/" component={CMSHomepage} />
-      <Route exact path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker">
+      <Route
+        exact
+        path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
+      >
         <Sidebar />
         <InvokeSection />
       </Route>
@@ -24,7 +27,12 @@ const CMSHome = () => (
       </Route>
       {/* Add routes from admin that should be unauthorized for cms users */}
       <Route
-        path={['/role_user_assoc', '/state_assoc', '/role_jobcode_assoc', '/users']}
+        path={[
+          "/role_user_assoc",
+          "/state_assoc",
+          "/role_jobcode_assoc",
+          "/users",
+        ]}
         component={Unauthorized}
       />
     </Switch>

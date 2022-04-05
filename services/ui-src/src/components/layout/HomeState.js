@@ -1,13 +1,13 @@
-import React from 'react';
-import { Switch } from 'react-router';
-import { Route } from 'react-router-dom';
-import CertifyAndSubmit from './CertifyAndSubmit';
-import Homepage from '../sections/homepage/Homepage';
-import InvokeSection from '../Utils/InvokeSection';
-import SaveError from './SaveError';
-import ScrollToTop from '../Utils/ScrollToTop';
-import Sidebar from './Sidebar';
-import Unauthorized from './Unauthorized';
+import React from "react";
+import { Switch } from "react-router";
+import { Route } from "react-router-dom";
+import CertifyAndSubmit from "./CertifyAndSubmit";
+import Homepage from "../sections/homepage/Homepage";
+import InvokeSection from "../Utils/InvokeSection";
+import SaveError from "./SaveError";
+import ScrollToTop from "../Utils/ScrollToTop";
+import Sidebar from "./Sidebar";
+import Unauthorized from "./Unauthorized";
 
 const StateHome = () => {
   return (
@@ -31,7 +31,12 @@ const StateHome = () => {
         </Route>
         {/* Add routes from admin that should be unauthorized for state users */}
         <Route
-          path={['/role_user_assoc', '/state_assoc', '/role_jobcode_assoc', '/users']}
+          path={[
+            "/role_user_assoc",
+            "/state_assoc",
+            "/role_jobcode_assoc",
+            "/users",
+          ]}
           component={Unauthorized}
         />
       </Switch>

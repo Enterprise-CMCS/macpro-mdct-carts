@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { AccordionButton, AccordionPanel } from '@reach/accordion';
+import React from "react";
+import PropTypes from "prop-types";
+import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
-import Question from './Question'; // eslint-disable-line import/no-cycle
+import Question from "./Question";
 
 const Repeatable = ({ headerRef, number, question, type }) => {
   const children = question.questions ? question.questions : [];

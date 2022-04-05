@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Button } from '@cmsgov/design-system-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Button } from "@cmsgov/design-system-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
-import { Money } from './Money';
-import { Percentage } from './Percentage';
-import Text from './Text';
+import { Money } from "./Money";
+import { Percentage } from "./Percentage";
+import Text from "./Text";
 
 const inputs = new Map([
-  ['money', Money],
-  ['percentage', Percentage],
-  ['text', Text],
+  ["money", Money],
+  ["percentage", Percentage],
+  ["text", Text],
 ]);
 
 const Range = ({ category, id, index, onChange, row, type, values }) => {
-  const [rangeError, setRangeError] = useState('');
+  const [rangeError, setRangeError] = useState("");
   const [rangeValues, setRangeValues] = useState(values);
 
   // Trigger validation when page loads so that all error messages show
   useEffect(() => {
     validateInequality();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // This chooses the appropriate mask for the <Input/>, Money, Percentage or Text
   let Input = Text;
@@ -29,21 +29,25 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     Input = inputs.get(type);
   }
 
-  // Extract start value from redux's nested array, passed down from <Ranges/>
-  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+  /*
+   * Extract start value from redux's nested array, passed down from <Ranges/>
+   * This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+   */
   const startQuestion = {
     id: `${id}-row-${row}-${index}-start`,
     answer: {
-      entry: values ? values[0] : '',
+      entry: values ? values[0] : "",
     },
   };
 
-  // Extract start value from redux's nested array, passed down from <Ranges/>
-  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+  /*
+   * Extract start value from redux's nested array, passed down from <Ranges/>
+   * This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+   */
   const endQuestion = {
     id: `${id}-row-${row}-${index}-end`,
     answer: {
-      entry: values ? values[1] : '',
+      entry: values ? values[1] : "",
     },
   };
 
@@ -54,7 +58,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     }
 
     // If the range type is text, skip validation
-    if (type === 'text') {
+    if (type === "text") {
       return;
     }
 
@@ -63,17 +67,17 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
 
     if (values.length === 2 && !values.includes(null)) {
       // Strip both values of commas
-      let strippedStart = values[0].replace(/,/g, '');
-      let strippedEnd = values[1].replace(/,/g, '');
+      let strippedStart = values[0].replace(/,/g, "");
+      let strippedEnd = values[1].replace(/,/g, "");
 
       const start = parseFloat(strippedStart);
       const end = parseFloat(strippedEnd);
 
       // If both values are present, compare them and set appropriate error messages to state
       if (start > end) {
-        setRangeError('Start value must be less than end value');
+        setRangeError("Start value must be less than end value");
       } else {
-        setRangeError('');
+        setRangeError("");
       }
     }
   };
@@ -157,7 +161,9 @@ const Ranges = ({ onChange, question }) => {
     }
 
     const numberToCreate = min > 0 ? min : 1;
-    return [...Array(numberToCreate)].map(() => categories.map(() => [null, null]));
+    return [...Array(numberToCreate)].map(() =>
+      categories.map(() => [null, null])
+    );
   });
 
   const rowChange = (row, category, index, value) => {

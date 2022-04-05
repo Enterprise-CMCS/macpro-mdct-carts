@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { selectSubsectionTitleAndPartIDs } from '../../store/selectors';
-import Part from './Part';
-import Text from './Text';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
+import Part from "./Part";
+import Text from "./Text";
 
 const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
@@ -15,7 +15,11 @@ const Subsection = ({ partIds, subsectionId, title, text }) => {
         </div>
       ) : null}
       {partIds.map((partId, index) => (
-        <Part key={partId} partId={partId} partNumber={partIds.length > 1 ? index + 1 : null} />
+        <Part
+          key={partId}
+          partId={partId}
+          partNumber={partIds.length > 1 ? index + 1 : null}
+        />
       ))}
     </div>
   );
@@ -31,7 +35,10 @@ Subsection.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const subsection = selectSubsectionTitleAndPartIDs(state, ownProps.subsectionId);
+  const subsection = selectSubsectionTitleAndPartIDs(
+    state,
+    ownProps.subsectionId
+  );
   return {
     partIds: subsection ? subsection.parts : [],
     title: subsection ? subsection.title : null,

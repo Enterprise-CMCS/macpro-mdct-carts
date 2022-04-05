@@ -1,12 +1,12 @@
 // TODO logging solution for backend services
 /* eslint-disable no-console */
 
-const AWS = require('aws-sdk');
-const fs = require('fs');
-const execSync = require('child_process').execSync;
-const path = require('path');
-const constants = require('./constants');
-const utils = require('./utils');
+const AWS = require("aws-sdk");
+const fs = require("fs");
+const execSync = require("child_process").execSync;
+const path = require("path");
+const constants = require("./constants");
+const utils = require("./utils");
 
 const S3 = new AWS.S3();
 
@@ -41,13 +41,13 @@ function updateAVDefinitonsWithFreshclam() {
       `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
     );
 
-    utils.generateSystemMessage('Update message');
+    utils.generateSystemMessage("Update message");
     console.log(executionResult.toString());
 
-    console.log('Downloaded:', fs.readdirSync(constants.FRESHCLAM_WORK_DIR));
+    console.log("Downloaded:", fs.readdirSync(constants.FRESHCLAM_WORK_DIR));
 
     if (executionResult.stderr) {
-      utils.generateSystemMessage('stderr');
+      utils.generateSystemMessage("stderr");
       console.log(executionResult.stderr.toString());
     }
 
@@ -64,7 +64,7 @@ function updateAVDefinitonsWithFreshclam() {
  */
 async function downloadAVDefinitions() {
   // list all the files in that bucket
-  utils.generateSystemMessage('Downloading Definitions');
+  utils.generateSystemMessage("Downloading Definitions");
   const allFileKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
 
   const definitionFileKeys = allFileKeys
@@ -74,7 +74,7 @@ async function downloadAVDefinitions() {
   // download each file in the bucket.
   const downloadPromises = definitionFileKeys.map((filenameToDownload) => {
     return new Promise((resolve, reject) => {
-      let destinationFile = path.join('/tmp/', filenameToDownload);
+      let destinationFile = path.join("/tmp/", filenameToDownload);
 
       utils.generateSystemMessage(
         `Downloading ${filenameToDownload} from S3 to ${destinationFile}`
@@ -89,12 +89,16 @@ async function downloadAVDefinitions() {
 
       let s3ReadStream = S3.getObject(options)
         .createReadStream()
-        .on('end', function () {
-          utils.generateSystemMessage(`Finished download ${filenameToDownload}`);
+        .on("end", function () {
+          utils.generateSystemMessage(
+            `Finished download ${filenameToDownload}`
+          );
           resolve();
         })
-        .on('error', function (err) {
-          utils.generateSystemMessage(`Error downloading definition file ${filenameToDownload}`);
+        .on("error", function (err) {
+          utils.generateSystemMessage(
+            `Error downloading definition file ${filenameToDownload}`
+          );
           console.log(err);
           reject();
         });
@@ -114,7 +118,7 @@ async function uploadAVDefinitions() {
    * delete all the definitions currently in the bucket.
    * first list them.
    */
-  utils.generateSystemMessage('Uploading Definitions');
+  utils.generateSystemMessage("Uploading Definitions");
   const s3AllFullKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
 
   const s3DefinitionFileFullKeys = s3AllFullKeys.filter((key) =>
@@ -132,7 +136,9 @@ async function uploadAVDefinitions() {
           }),
         },
       }).promise();
-      utils.generateSystemMessage(`Deleted extant definitions: ${s3DefinitionFileFullKeys}`);
+      utils.generateSystemMessage(
+        `Deleted extant definitions: ${s3DefinitionFileFullKeys}`
+      );
     } catch (err) {
       utils.generateSystemMessage(
         `Error deleting current definition files: ${s3DefinitionFileFullKeys}`
@@ -147,23 +153,31 @@ async function uploadAVDefinitions() {
 
   const uploadPromises = definitionFiles.map((filenameToUpload) => {
     return new Promise((resolve, reject) => {
-      utils.generateSystemMessage(`Uploading updated definitions for file ${filenameToUpload} ---`);
+      utils.generateSystemMessage(
+        `Uploading updated definitions for file ${filenameToUpload} ---`
+      );
 
       let options = {
         Bucket: constants.CLAMAV_BUCKET_NAME,
         Key: `${constants.PATH_TO_AV_DEFINITIONS}/${filenameToUpload}`,
-        Body: fs.createReadStream(path.join(constants.FRESHCLAM_WORK_DIR, filenameToUpload)),
+        Body: fs.createReadStream(
+          path.join(constants.FRESHCLAM_WORK_DIR, filenameToUpload)
+        ),
       };
 
       S3.putObject(options, function (err, _data) {
         if (err) {
-          utils.generateSystemMessage(`--- Error uploading ${filenameToUpload} ---`);
+          utils.generateSystemMessage(
+            `--- Error uploading ${filenameToUpload} ---`
+          );
           console.log(err);
           reject();
           return;
         }
         resolve();
-        utils.generateSystemMessage(`--- Finished uploading ${filenameToUpload} ---`);
+        utils.generateSystemMessage(
+          `--- Finished uploading ${filenameToUpload} ---`
+        );
       });
     });
   });
@@ -184,19 +198,21 @@ async function uploadAVDefinitions() {
  */
 function scanLocalFile(pathToFile) {
   try {
-    let avResult = execSync(`${constants.PATH_TO_CLAMAV} -v -a --stdout -d /tmp/ ${pathToFile}`);
+    let avResult = execSync(
+      `${constants.PATH_TO_CLAMAV} -v -a --stdout -d /tmp/ ${pathToFile}`
+    );
 
-    utils.generateSystemMessage('SUCCESSFUL SCAN, FILE CLEAN');
+    utils.generateSystemMessage("SUCCESSFUL SCAN, FILE CLEAN");
     console.log(avResult.toString());
 
     return constants.STATUS_CLEAN_FILE;
   } catch (err) {
     // Error status 1 means that the file is infected.
     if (err.status === 1) {
-      utils.generateSystemMessage('SUCCESSFUL SCAN, FILE INFECTED');
+      utils.generateSystemMessage("SUCCESSFUL SCAN, FILE INFECTED");
       return constants.STATUS_INFECTED_FILE;
     } else {
-      utils.generateSystemMessage('-- SCAN FAILED --');
+      utils.generateSystemMessage("-- SCAN FAILED --");
       console.log(err);
       return constants.STATUS_ERROR_PROCESSING_FILE;
     }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const UserProfile = ({ currentUser }) => {
   return (
@@ -8,7 +8,7 @@ const UserProfile = ({ currentUser }) => {
       <div className="ds-l-col--12 content ds-u-padding-left--4 ">
         <h1>User Profile</h1>
         <div className="main">
-          If any information is incorrect, please contact the{' '}
+          If any information is incorrect, please contact the{" "}
           <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>.
           <div className="profile-information">
             <div>

@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Alert } from '@cmsgov/design-system-core';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Alert } from "@cmsgov/design-system-core";
 
-import { selectFragment } from '../../store/formData';
-import Question from '../fields/Question';
-import { selectQuestionsForPart } from '../../store/selectors';
-import { shouldDisplay } from '../../util/shouldDisplay';
-import Text from './Text';
-import { UserRoles } from '../../types';
+import { selectFragment } from "../../store/formData";
+import Question from "../fields/Question";
+import { selectQuestionsForPart } from "../../store/selectors";
+import { shouldDisplay } from "../../util/shouldDisplay";
+import Text from "./Text";
+import { UserRoles } from "../../types";
 
 const showPart = (contextData, programType, state) => {
   if (
@@ -22,10 +22,18 @@ const showPart = (contextData, programType, state) => {
   return shouldDisplay(state, contextData, programType);
 };
 
-const Part = ({ context_data: contextData, partId, partNumber, questions, show, text, title }) => {
+const Part = ({
+  context_data: contextData,
+  partId,
+  partNumber,
+  questions,
+  show,
+  text,
+  title,
+}) => {
   let innards = null;
 
-  const [, section] = partId.split('-');
+  const [, section] = partId.split("-");
 
   if (show) {
     innards = (
@@ -70,17 +78,19 @@ Part.propTypes = {
 };
 Part.defaultProps = {
   context_data: null,
-  text: '',
-  title: '',
+  text: "",
+  title: "",
 };
 
 const mapStateToProps = (state, { partId }) => {
   const part = selectFragment(state, partId);
   const questions = selectQuestionsForPart(state, partId);
   const contextData = part.context_data;
-  const location = window.location.pathname.split('/');
+  const location = window.location.pathname.split("/");
   const userState = location[3]; // Current state, ie: "AL" or "CT"
-  const programData = state.allStatesData.find((element) => element.code === userState);
+  const programData = state.allStatesData.find(
+    (element) => element.code === userState
+  );
 
   return {
     context_data: part.context_data,
@@ -106,7 +116,10 @@ export default connect(mapStateToProps)(Part);
 const showPartBasedOnUserType = (contextData, programData, state) => {
   const role = state.stateUser.currentUser.role;
 
-  if (programData && (role === UserRoles.BO || role === UserRoles.CO || role === UserRoles.ADMIN)) {
+  if (
+    programData &&
+    (role === UserRoles.BO || role === UserRoles.CO || role === UserRoles.ADMIN)
+  ) {
     // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);
   } else {

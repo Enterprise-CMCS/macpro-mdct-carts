@@ -1,11 +1,11 @@
 // TODO logging solution for backend services
 /* eslint-disable no-console */
 
-const { handler } = require('../libs/handler-lib');
-const { scan } = require('../libs/dynamodb-lib');
-const { flatten } = require('flat');
-const { parseAsync } = require('json2csv');
-const AWS = require('aws-sdk');
+const { handler } = require("../libs/handler-lib");
+const { scan } = require("../libs/dynamodb-lib");
+const { flatten } = require("flat");
+const { parseAsync } = require("json2csv");
+const AWS = require("aws-sdk");
 
 const csvToS3 = async (scanResult) => {
   const flattenedResults = scanResult.map((item) => flatten(item));
@@ -61,7 +61,7 @@ const scanAll = async (TableName) => {
 };
 
 const syncDynamoToS3 = handler(async (_event, _context) => {
-  console.log('Syncing Dynamo to Uploads');
+  console.log("Syncing Dynamo to Uploads");
   const measureScanResults = await scanAll(process.env.measureTableName);
   const coreSetScanResults = await scanAll(process.env.coreSetTableName);
   const measureResults = measureScanResults ? measureScanResults : [];
@@ -73,7 +73,7 @@ const syncDynamoToS3 = handler(async (_event, _context) => {
     `coreSetData/JSONmeasures/${Date.now()}.json`,
     JSON.stringify(measureResults)
   );
-  console.log('Uploaded measures file to s3');
+  console.log("Uploaded measures file to s3");
 
   const coreSetCsv = await csvToS3(coreSetResults);
   await uploadFileToS3(`coreSetData/CSVcoreSet/${Date.now()}.csv`, coreSetCsv);
@@ -81,7 +81,7 @@ const syncDynamoToS3 = handler(async (_event, _context) => {
     `coreSetData/JSONcoreSet/${Date.now()}.json`,
     JSON.stringify(coreSetResults)
   );
-  console.log('Uploaded coreSet file to s3');
+  console.log("Uploaded coreSet file to s3");
 });
 module.exports = {
   syncDynamoToS3: syncDynamoToS3,
