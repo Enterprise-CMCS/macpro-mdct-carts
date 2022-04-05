@@ -19,6 +19,14 @@ resource "aws_s3_bucket" "www" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
   }
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 }
 
 data "aws_iam_policy_document" "s3_policy" {
@@ -29,6 +37,28 @@ data "aws_iam_policy_document" "s3_policy" {
     principals {
       type        = "AWS"
       identifiers = [aws_cloudfront_origin_access_identity.s3_origin_access_identity.iam_arn]
+    }
+  }
+
+  statement {
+    sid     = "AllowSSLRequestsOnly"
+    effect  = "Deny"
+    actions = [ "s3:*" ]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    resources = [ 
+      "${aws_s3_bucket.www.arn}/*", 
+      "${aws_s3_bucket.www.arn}",
+    ]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = [ "false" ]
     }
   }
 }
@@ -78,6 +108,35 @@ resource "aws_s3_bucket_public_access_block" "cloudfront_logs" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+data "aws_iam_policy_document" "cf_logs_s3_policy" {
+  statement {
+    sid     = "AllowSSLRequestsOnly"
+    effect  = "Deny"
+    actions = [ "s3:*" ]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    resources = [ 
+      "${aws_s3_bucket.cloudfront_logs.arn}/*", 
+      "${aws_s3_bucket.cloudfront_logs.arn}",
+    ]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = [ "false" ]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "cloudfront_logs" {
+  bucket = aws_s3_bucket.cloudfront_logs.id
+  policy = data.aws_iam_policy_document.cf_logs_s3_policy.json
 }
 
 resource "aws_cloudfront_distribution" "www_distribution" {
