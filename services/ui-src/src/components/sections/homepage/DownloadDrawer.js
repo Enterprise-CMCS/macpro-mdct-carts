@@ -1,6 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faFileAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowDown,
+  faMinus,
+  faFileAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const DownloadDrawer = () => {
   return (
@@ -15,11 +19,11 @@ export const DownloadDrawer = () => {
           </div>
           <div className="update-contents ds-l-col--10">
             <div className="title">
-              <h3>FY21 template is ready for download</h3>
+              <h3>Your fiscal year 2021 template is ready for download</h3>
             </div>
             <p>
-              Welcome to CARTS! We’ve incorporated feedback from several states
-              to bring you a better CARTS experience. Contact{" "}
+              Download a PDF of your template for the current year. Fill it out
+              before returning to input information into the webform. Contact{" "}
               <a href="mailto:mdct_help@cms.hhs.gov?subject=CARTS Help request">
                 mdct_help@cms.hhs.gov
               </a>{" "}
@@ -32,8 +36,19 @@ export const DownloadDrawer = () => {
                 aria-label="Download Template"
               >
                 <button className="ds-c-button ds-c-button--primary">
-                  <span>Download template</span>
-                  <FontAwesomeIcon icon={faPlus} />
+                  <span className="button-display">Download template</span>
+                  <span className="fa-layers fa-fw">
+                    <FontAwesomeIcon
+                      icon={faArrowDown}
+                      transform="up-2 right-2"
+                      position
+                    />
+                    <FontAwesomeIcon
+                      icon={faMinus}
+                      transform="down-10 right-2"
+                      size="sm"
+                    />
+                  </span>
                 </button>
               </a>
             </div>
