@@ -21,7 +21,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
   // Trigger validation when page loads so that all error messages show
   useEffect(() => {
     validateInequality();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // This chooses the appropriate mask for the <Input/>, Money, Percentage or Text
   let Input = Text;
@@ -29,8 +29,10 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     Input = inputs.get(type);
   }
 
-  // Extract start value from redux's nested array, passed down from <Ranges/>
-  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+  /*
+   * Extract start value from redux's nested array, passed down from <Ranges/>
+   * This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+   */
   const startQuestion = {
     id: `${id}-row-${row}-${index}-start`,
     answer: {
@@ -38,8 +40,10 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
     },
   };
 
-  // Extract start value from redux's nested array, passed down from <Ranges/>
-  // This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+  /*
+   * Extract start value from redux's nested array, passed down from <Ranges/>
+   * This is an object because of the way it is eventually read by the Textfield component (in Integer.js or Text.js)
+   */
   const endQuestion = {
     id: `${id}-row-${row}-${index}-end`,
     answer: {

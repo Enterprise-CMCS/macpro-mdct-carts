@@ -10,18 +10,18 @@ async function requestOptions() {
     };
     return options;
   } catch (e) {
-    console.log({ e });
+    console.log({ e }); // eslint-disable-line no-console
   }
 }
 
-export const getHello = () => async (dispatch, getState) => {
+export const getHello = () => async (_dispatch, _getState) => {
   try {
     const opts = await requestOptions();
     const result = await API.get("carts-api", `/hello`, opts);
     // Dispatch on success
-    console.log("success", result);
+    console.log("success", result); // eslint-disable-line no-console
   } catch (e) {
     // Dispatch failure
-    console.log("ERROR NO HELLO", e);
+    console.log("ERROR NO HELLO", e); // eslint-disable-line no-console
   }
 };

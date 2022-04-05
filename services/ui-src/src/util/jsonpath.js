@@ -1,17 +1,18 @@
-/* What exactly is the point of this whole thing, you may be asking. A valid
-   question. It turns out that the performance of jsonpath is highly dependent
-   on how generic the search path is. The more generic, the worse the
-   performance. And not by just a little bit. In the case of CARTS data, a
-   query on just an ID (something like "?..(id=='2020-01-a-01-01')") takes
-   literally ONE THOUSAND TIMES longer than a query for the same node's exact
-   path.
-
-   So, what if we take all those generic lookups that come in, find the exact
-   path that corresponds to the generic path, and then cache those exact paths?
-   The first queries are still slow, but every subsequent query is suddenly
-   anywhere from 10 to 1000 times faster. So this exists as a drop-in wrapper
-   around jsonpath so that we can get the performance benefits everywhere
-   without having to change anything anywhere else.
+/*
+ * What exactly is the point of this whole thing, you may be asking. A valid
+ * question. It turns out that the performance of jsonpath is highly dependent
+ * on how generic the search path is. The more generic, the worse the
+ * performance. And not by just a little bit. In the case of CARTS data, a
+ * query on just an ID (something like "?..(id=='2020-01-a-01-01')") takes
+ * literally ONE THOUSAND TIMES longer than a query for the same node's exact
+ * path.
+ *
+ * So, what if we take all those generic lookups that come in, find the exact
+ * path that corresponds to the generic path, and then cache those exact paths?
+ * The first queries are still slow, but every subsequent query is suddenly
+ * anywhere from 10 to 1000 times faster. So this exists as a drop-in wrapper
+ * around jsonpath so that we can get the performance benefits everywhere
+ * without having to change anything anywhere else.
  */
 import jsonpath from "jsonpath";
 import idLetterMarkers from "./idLetterMarkers";
@@ -21,8 +22,10 @@ const fullPathFromIDPath = (originalPath) => {
 
   // Don't bother building up a short-circuited path if there's not an ID.
   if (idMatch) {
-    // Pull out the ID as well as everything *after* the ID. That stuff needs
-    // to get pusehd on to the back of whatever path we build up here.
+    /*
+     * Pull out the ID as well as everything *after* the ID. That stuff needs
+     * to get pusehd on to the back of whatever path we build up here.
+     */
     const [, id, rest] = idMatch;
 
     // Split the ID into its parts. We don't need the year, so toss it.
@@ -35,8 +38,10 @@ const fullPathFromIDPath = (originalPath) => {
       pathParts.push(`.formData[${+section}].contents.section`);
     }
     if (subsection) {
-      // We'll make an assumption that subsections will always be a-zz, because
-      // that seems safe enough for now.
+      /*
+       * We'll make an assumption that subsections will always be a-zz, because
+       * that seems safe enough for now.
+       */
       const subsectionNumber = idLetterMarkers.indexOf(subsection);
       pathParts.push(`.subsections[${subsectionNumber}]`);
     }
@@ -69,22 +74,28 @@ const getExactPath = (data, path) => {
     const paths = jsonpath.paths(data, pathShortCircuit);
 
     if (paths.length > 0) {
-      // If there are any matching paths, cache off the first one. The paths
-      // we get back above are in array form, but we want to cache the string
-      // form, so stringify it first.
+      /*
+       * If there are any matching paths, cache off the first one. The paths
+       * we get back above are in array form, but we want to cache the string
+       * form, so stringify it first.
+       */
       exact = jsonpath.stringify(paths[0]);
 
-      // If the incoming path ends with [*], the jsonpath.paths method will
-      // return an array with all of the matching paths, and the first one will
-      // end with [0]. But that's not what is being requested: the [*] at the
-      // end means the request is for ALL of the things, not the first, so in
-      // that case, replace [0] at the end of the exact path with [*].
+      /*
+       * If the incoming path ends with [*], the jsonpath.paths method will
+       * return an array with all of the matching paths, and the first one will
+       * end with [0]. But that's not what is being requested: the [*] at the
+       * end means the request is for ALL of the things, not the first, so in
+       * that case, replace [0] at the end of the exact path with [*].
+       */
       if (path.endsWith("[*]")) {
         exact = exact.replace(/\[0\]$/, "[*]");
       }
     } else {
-      // If there is NOT a matching path, cache the inexact path so we don't
-      // bother doing the path lookup again in the future.
+      /*
+       * If there is NOT a matching path, cache the inexact path so we don't
+       * bother doing the path lookup again in the future.
+       */
       exact = path;
     }
 
@@ -94,8 +105,10 @@ const getExactPath = (data, path) => {
   return exact;
 };
 
-// These are the methods in jsonpath that actually do lookups into the data
-// object, so these should use the cache. Build those methods here.
+/*
+ * These are the methods in jsonpath that actually do lookups into the data
+ * object, so these should use the cache. Build those methods here.
+ */
 const methodsToWrap = ["apply", "nodes", "parent", "paths", "query", "value"];
 const wrappers = methodsToWrap.reduce(
   (current, methodName) => ({

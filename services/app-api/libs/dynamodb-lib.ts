@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+/* eslint-disable no-unused-vars */
 import { ServiceConfigurationOptions } from "aws-sdk/lib/service";
 import {
   Measure,
@@ -8,6 +9,7 @@ import {
   DynamoFetch,
   DynamoScan,
 } from "../types";
+/* eslint-enable no-unused-vars */
 
 export function createDbClient() {
   const dynamoConfig: AWS.DynamoDB.DocumentClient.DocumentClientOptions &

@@ -1,9 +1,9 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { createCompoundKey } from "../dynamoUtils/createCompoundKey";
-import { MeasureStatus, CoreSetAbbr } from "../../types";
+import { MeasureStatus, CoreSetAbbr } from "../../types"; // eslint-disable-line no-unused-vars
 
-export const createMeasure = handler(async (event, context) => {
+export const createMeasure = handler(async (event, _context) => {
   const body = JSON.parse(event!.body!);
   const dynamoKey = createCompoundKey(event);
   const params = {

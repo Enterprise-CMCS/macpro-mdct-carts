@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent } from "aws-lambda";
 import jwt_decode from "jwt-decode";
 import { UserRoles, RequestMethods } from "../types";
 
+// prettier-ignore
 interface DecodedToken {
   "custom:cms_roles": UserRoles;
   "custom:cms_state"?: string;

@@ -227,8 +227,10 @@ describe("value synthesization utility", () => {
 
   describe("handles RPNs", () => {
     it("with too few operands", () => {
-      // NaN, because there's an operator with nothing to operate on. This
-      // assumes that all of our operators are binary, not unary.
+      /*
+       * NaN, because there's an operator with nothing to operate on. This
+       * assumes that all of our operators are binary, not unary.
+       */
       const out = synthesize(
         {
           targets: [
@@ -264,8 +266,10 @@ describe("value synthesization utility", () => {
     });
 
     it("with any value NaN", () => {
-      // There are too many @ tokens, so the last one resolves to NaN. Now the
-      // whole result should be NaN as well.
+      /*
+       * There are too many @ tokens, so the last one resolves to NaN. Now the
+       * whole result should be NaN as well.
+       */
       const out = synthesize(
         {
           targets: [
@@ -322,10 +326,12 @@ describe("value synthesization utility", () => {
     });
 
     it("with not-actually a postfix notation because...", () => {
-      // The operands and operators are parsed from the RPN string separately
-      // and then applied in their respective orders. As a result, it doesn't
-      // matter what order they are with respect to each other, as long as
-      // operands and operators are ordered amongst themselves.
+      /*
+       * The operands and operators are parsed from the RPN string separately
+       * and then applied in their respective orders. As a result, it doesn't
+       * matter what order they are with respect to each other, as long as
+       * operands and operators are ordered amongst themselves.
+       */
       const out = synthesize(
         {
           targets: [

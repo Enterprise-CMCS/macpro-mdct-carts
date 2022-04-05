@@ -35,19 +35,23 @@ const Percentage = ({ onChange, question, ...props }) => {
   let ref;
   useEffect(() => {
     if (ref) {
-      // Wrap the inner input element with a div. That wrapper div will get
-      // an :after pseudo-style. We can't apply it to the input element directly
-      // because input elements can't have :before or :after pseudo-elements.
-      // HTML is funky.
+      /*
+       * Wrap the inner input element with a div. That wrapper div will get
+       * an :after pseudo-style. We can't apply it to the input element directly
+       * because input elements can't have :before or :after pseudo-elements.
+       * HTML is funky.
+       */
       const wrapper = document.createElement("div");
       wrapper.setAttribute("class", "input-holder__percent");
       ref.parentNode.appendChild(wrapper);
       wrapper.appendChild(ref);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  // The CMS design system uses refs in a weird way - they are supposed to be
-  // functions instead of ref objects. 🤷🏼‍♂️
+  /*
+   * The CMS design system uses refs in a weird way - they are supposed to be
+   * functions instead of ref objects. 🤷🏼‍♂️
+   */
   const setRef = (inputComponent) => {
     ref = inputComponent;
   };

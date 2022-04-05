@@ -2,8 +2,10 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-// Configure moment to display '1 time-unit ago' instead of 'a time-unit ago'
-// https://github.com/moment/moment/issues/3764
+/*
+ * Configure moment to display '1 time-unit ago' instead of 'a time-unit ago'
+ * https://github.com/moment/moment/issues/3764
+ */
 moment.updateLocale("en", {
   relativeTime: {
     s: "seconds",

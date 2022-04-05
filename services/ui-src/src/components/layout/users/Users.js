@@ -25,7 +25,7 @@ const Users = () => {
       let { data } = await axios.post(`/api/v1/userprofiles`);
       setUsers(data);
     } catch (e) {
-      console.log("Error pulling users data: ", e);
+      console.log("Error pulling users data: ", e); // eslint-disable-line no-console
     }
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
   };
@@ -35,7 +35,7 @@ const Users = () => {
       await loadUserData();
     };
     loadData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const deactivateUser = async (e) => {
     const really = window.confirm(

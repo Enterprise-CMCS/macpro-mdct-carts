@@ -36,8 +36,10 @@ const NoninteractiveTable = ({ question }) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
                   if (percentLocation[count] === true) {
-                    // TODO Remove this custom logic when rewriting backend
-                    // This is part of the story to dynamically calculate percent change: OY2-13439 and is the absolute wrong way to do this.
+                    /*
+                     * TODO Remove this custom logic when rewriting backend
+                     * This is part of the story to dynamically calculate percent change: OY2-13439 and is the absolute wrong way to do this.
+                     */
                     if (
                       (row[0] === "Medicaid Expansion CHIP" ||
                         row[0] === "Separate CHIP") &&

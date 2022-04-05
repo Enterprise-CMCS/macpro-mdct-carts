@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
-import { Repeatable } from "./Repeatable"; // eslint-disable-line import/no-cycle
+import { Repeatable } from "./Repeatable";
 import {
   createNewRepeatable,
   removeRepeatable,
@@ -23,8 +23,10 @@ const Repeatables = ({
   const add = () => {
     addRepeatableTo(question.id);
 
-    // Do the focus+scroll on the next UI tick so the DOM will have updated
-    // before we try to grab DOM elements.
+    /*
+     * Do the focus+scroll on the next UI tick so the DOM will have updated
+     * before we try to grab DOM elements.
+     */
     setTimeout(() => {
       if (ref.current) {
         ref.current.focus();

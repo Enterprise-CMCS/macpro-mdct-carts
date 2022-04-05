@@ -7,8 +7,6 @@ const authenticatedAxios = Axios.create({
 });
 
 export const setToken = (token, localUserType = false) => {
-  /* eslint-disable-line */
-  console.log("csrf token added");
   authenticatedAxios.interceptors.request.use((config) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -16,9 +14,6 @@ export const setToken = (token, localUserType = false) => {
     if (localUserType) {
       config.url += "?dev=" + localUserType;
     }
-
-    /* eslint-disable-line */
-    console.log("!+++++++++++++AXIOS CONFIG:", config);
 
     return config;
   });

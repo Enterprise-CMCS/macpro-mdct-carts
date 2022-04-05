@@ -1,3 +1,6 @@
+// TODO logging solution for backend services
+/* eslint-disable no-console */
+
 const { handler } = require("../libs/handler-lib");
 const { scan } = require("../libs/dynamodb-lib");
 const { flatten } = require("flat");

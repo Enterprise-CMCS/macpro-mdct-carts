@@ -2,6 +2,9 @@
  * Lambda function that will be perform the scan and tag the file accordingly.
  */
 
+// TODO logging solution for backend services
+/* eslint-disable no-console */
+
 const AWS = require("aws-sdk");
 const path = require("path");
 const fs = require("fs");
@@ -70,7 +73,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   });
 }
 
-async function lambdaHandleEvent(event, context) {
+async function lambdaHandleEvent(event, _context) {
   utils.generateSystemMessage("Start Antivirus Lambda function");
 
   let s3ObjectKey = utils.extractKeyFromS3Event(event);
@@ -82,8 +85,10 @@ async function lambdaHandleEvent(event, context) {
 
   let virusScanStatus;
 
-  //You need to verify that you are not getting too large a file
-  //currently lambdas max out at 500MB storage.
+  /*
+   * You need to verify that you are not getting too large a file
+   * currently lambdas max out at 500MB storage.
+   */
   if (await isS3FileTooBig(s3ObjectKey, s3ObjectBucket)) {
     virusScanStatus = constants.STATUS_SKIPPED_FILE;
     utils.generateSystemMessage(
@@ -115,7 +120,7 @@ async function lambdaHandleEvent(event, context) {
   } catch (err) {
     console.log(err);
   } finally {
-    return virusScanStatus;
+    return virusScanStatus; // eslint-disable-line no-unsafe-finally
   }
 }
 
@@ -141,7 +146,7 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
   } catch (err) {
     console.log(err);
   } finally {
-    return virusScanStatus;
+    return virusScanStatus; // eslint-disable-line no-unsafe-finally
   }
 }
 

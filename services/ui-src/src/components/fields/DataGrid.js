@@ -100,8 +100,10 @@ const DataGrid = ({ question, lastYearFormData }) => {
 
     // The first will always be correct
     if (matchingQuestion[0]) {
-      // Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
-      // and subtract 97 to get the question index number
+      /*
+       * Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
+       * and subtract 97 to get the question index number
+       */
       const index = itemId.toLowerCase().charCodeAt(0) - 97;
       lastYearAnswer =
         matchingQuestion[0].questions[1].questions[index].answer.entry;
@@ -117,7 +119,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
       });
     };
     generateRenderQuestions();
-  }, [dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>

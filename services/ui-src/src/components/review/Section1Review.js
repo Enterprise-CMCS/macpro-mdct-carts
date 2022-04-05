@@ -3,14 +3,10 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import PageInfo from "../layout/PageInfo";
-import FormNavigation from "../layout/FormNavigation";
-import FormActions from "../layout/FormActions";
 import FederalPovertyLevel from "../layout/FederalPovertyLevel";
 import {
-  Button as button,
+  Button as button, // eslint-disable-line no-unused-vars
   ChoiceList,
-  Tabs,
-  TabPanel,
   TextField,
 } from "@cmsgov/design-system-core";
 
@@ -96,7 +92,6 @@ class Section1Review extends Component {
    */
   newFPL(list) {
     let newID = this.state[list + "_count"] + 1;
-    console.log("newID: ", newID);
     let newFPL = {
       id: newID,
       component: <FederalPovertyLevel />,
@@ -166,9 +161,11 @@ class Section1Review extends Component {
     this.setQuestionDisable(el.target.name, el.target.value);
   }
 
-  //set the flags for the custom div property disabled (_layout.scss) based on the selected programType
-  //true means the section will be disabled
-  //false means the section will be enabled
+  /*
+   * set the flags for the custom div property disabled (_layout.scss) based on the selected programType
+   * true means the section will be disabled
+   * false means the section will be enabled
+   */
   setProgramDisable() {
     {
       this.props.programType === "mCHIP"
@@ -182,12 +179,16 @@ class Section1Review extends Component {
     }
   }
 
-  //set the flags for the custom div property disabled (_layout.scss) based on the selected programType
-  //true means the section will be disabled
-  //false means the section will be enabled
+  /*
+   * set the flags for the custom div property disabled (_layout.scss) based on the selected programType
+   * true means the section will be disabled
+   * false means the section will be enabled
+   */
   setQuestionDisable(ename, evalue) {
-    //Each question must have its own disable variable in state
-    //The disable variable should only be changed IF we are working with the appropriate question
+    /*
+     * Each question must have its own disable variable in state
+     * The disable variable should only be changed IF we are working with the appropriate question
+     */
     if (ename === "p1_q2") {
       evalue === "yes"
         ? this.setState({ p1q2Disable: false })
@@ -325,7 +326,7 @@ class Section1Review extends Component {
                               <div>{element.component}</div>
                             ))}
                             <button
-                              onClick={(e) => this.newFPL("p1_q2_fpl")}
+                              onClick={(_e) => this.newFPL("p1_q2_fpl")}
                               type="button"
                               className="ds-c-button ds-c-button--primary"
                             >
@@ -415,7 +416,7 @@ class Section1Review extends Component {
                             <div>{element.component}</div>
                           ))}
                           <button
-                            onClick={(e) => this.newFPL("p1_q3_fpl")}
+                            onClick={(_e) => this.newFPL("p1_q3_fpl")}
                             type="button"
                             className="ds-c-button ds-c-button--primary"
                           >
@@ -650,7 +651,7 @@ class Section1Review extends Component {
                               <div key={element.id}>{element.component}</div>
                             ))}
                             <button
-                              onClick={(e) => this.newFPL("p2_q2_fpl")}
+                              onClick={(_e) => this.newFPL("p2_q2_fpl")}
                               type="button"
                               className="ds-c-button ds-c-button--primary"
                             >
@@ -739,7 +740,7 @@ class Section1Review extends Component {
                             <div key={element.id}>{element.component}</div>
                           ))}
                           <button
-                            onClick={(e) => this.newFPL("p2_q3_fpl")}
+                            onClick={(_e) => this.newFPL("p2_q3_fpl")}
                             type="button"
                             className="ds-c-button ds-c-button--primary"
                           >

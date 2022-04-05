@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import Goals2BReview from "./Goals2BReview";
-import { TextField } from "@cmsgov/design-system-core";
+import { TextField } from "@cmsgov/design-system-core"; // eslint-disable-line no-unused-vars
 import {
   Accordion,
   AccordionItem,
@@ -30,8 +30,10 @@ class Objective2BReview extends Component {
     const initialGoal = [
       {
         id: `${this.props.year}_1`,
-        // Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
-        // The sliceId() helper function extracts just the year from the parent objective
+        /*
+         * Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
+         * The sliceId() helper function extracts just the year from the parent objective
+         */
         component: (
           <Goals2BReview
             goalId={`${this.props.year}_${sliceId(this.props.objectiveId)}_1`}
@@ -44,8 +46,10 @@ class Objective2BReview extends Component {
     for (let i = 1; i < 3; i++) {
       dummyDataArray.push({
         id: `${this.props.year - 1}_${i}`,
-        // Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
-        // The sliceId() helper function extracts just the year from the parent objective
+        /*
+         * Each goal has a goalID with the format '<year>_<the objective it belongs to>_ <the goal's own ID>'
+         * The sliceId() helper function extracts just the year from the parent objective
+         */
         component: (
           <Goals2BReview
             goalId={`${this.props.year - 1}_${sliceId(
@@ -69,8 +73,10 @@ class Objective2BReview extends Component {
     let newGoalId = this.state.goalCount + 1;
     let newGoal = {
       id: `${this.props.year}_${newGoalId}`,
-      // Each goal has an ID with the format <year>_<the objective it belongs to>_ <the goal's own ID>
-      // The sliceId() helper function extracts just the year from the parent objective
+      /*
+       * Each goal has an ID with the format <year>_<the objective it belongs to>_ <the goal's own ID>
+       * The sliceId() helper function extracts just the year from the parent objective
+       */
       component: (
         <Goals2BReview
           goalId={`${this.props.year}_${sliceId(

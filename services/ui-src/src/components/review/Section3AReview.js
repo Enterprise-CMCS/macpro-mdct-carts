@@ -1,19 +1,7 @@
-import React, { Component, useState } from "react";
-import Sidebar from "../layout/Sidebar";
-import PageInfo from "../layout/PageInfo";
-import FormNavigation from "../layout/FormNavigation";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import Questions3A from "./Section3A/Questions3AReview";
 import "@reach/accordion/styles.css";
-import FormActions from "../layout/FormActions";
-import {
-  Button as button,
-  Choice,
-  ChoiceList,
-  Tabs,
-  TabPanel,
-  TextField,
-} from "@cmsgov/design-system-core";
 
 class Section3a extends Component {
   constructor(props) {

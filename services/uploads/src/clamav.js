@@ -1,3 +1,6 @@
+// TODO logging solution for backend services
+/* eslint-disable no-console */
+
 const AWS = require("aws-sdk");
 const fs = require("fs");
 const execSync = require("child_process").execSync;
@@ -111,8 +114,10 @@ async function downloadAVDefinitions() {
  * Uploads the AV definitions to the S3 bucket.
  */
 async function uploadAVDefinitions() {
-  // delete all the definitions currently in the bucket.
-  // first list them.
+  /*
+   * delete all the definitions currently in the bucket.
+   * first list them.
+   */
   utils.generateSystemMessage("Uploading Definitions");
   const s3AllFullKeys = await listBucketFiles(constants.CLAMAV_BUCKET_NAME);
 
@@ -160,7 +165,7 @@ async function uploadAVDefinitions() {
         ),
       };
 
-      S3.putObject(options, function (err, data) {
+      S3.putObject(options, function (err, _data) {
         if (err) {
           utils.generateSystemMessage(
             `--- Error uploading ${filenameToUpload} ---`

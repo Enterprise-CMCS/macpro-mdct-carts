@@ -14,16 +14,16 @@ export const storeFactory = (initialState) => {
 };
 
 /*
-export const checkProps = (component, conformingProps) => {
-   const propError = checkPropTypes(
-    component.propTypes,
-    conformingProps,
-    "prop",
-    component.name
-
-  //return expect(propError).toBeUndefined();
-};
-*/
+ *export const checkProps = (component, conformingProps) => {
+ *   const propError = checkPropTypes(
+ *    component.propTypes,
+ *    conformingProps,
+ *    "prop",
+ *    component.name
+ *
+ *  //return expect(propError).toBeUndefined();
+ *};
+ */
 
 export const mockInitialState = {
   formData: [],

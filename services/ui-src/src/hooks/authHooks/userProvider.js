@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
       setUser(null);
       await Auth.signOut();
     } catch (error) {
-      console.log("error signing out: ", error);
+      console.log("error signing out: ", error); // eslint-disable-line no-console
     }
     history.push("/");
   }, [history]);
@@ -55,7 +55,7 @@ export const UserProvider = ({ children }) => {
         setShowLocalLogins(true);
       }
     }
-  }, [isProduction]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isProduction]);
 
   // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to qmr
   const userRole = user?.signInUserSession?.idToken?.payload?.[

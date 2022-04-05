@@ -161,7 +161,7 @@ class UploadComponent extends Component {
         stateCode,
       })
       .catch((error) => {
-        console.log("!!!Error downloading files: ", error);
+        console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
       });
 
     const uploadedFiles = response ? response.data["uploaded_files"] : [];
@@ -179,14 +179,16 @@ class UploadComponent extends Component {
         awsFilename,
       })
       .catch((error) => {
-        console.log("!!!Error retrieving files: ", error);
+        console.log("!!!Error retrieving files: ", error); // eslint-disable-line no-console
       });
 
     await this.retrieveUploadedFiles();
   };
 
-  // TODO: when one file errors, the others are loaded but the error stays
-  // to duplicate: try loading all 9
+  /*
+   * TODO: when one file errors, the others are loaded but the error stays
+   * to duplicate: try loading all 9
+   */
   validateFileByExtension = (event) => {
     if (event.target.files.length > 0) {
       const filesArray = event.target.files; // All files selected by a user
@@ -227,7 +229,6 @@ class UploadComponent extends Component {
       });
 
       if (errorString === "") {
-        // eslint-disable-next-line react/prop-types
         const { setAnswer } = this.props;
         setAnswer(event.target.name, filePayload);
       }
@@ -358,10 +359,12 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadComponent);
 
-// associate with US State
-// meets file validation requirements ( #517 )
-// for audit purposes, save name of user who is saving the file.
-// save to server
-// provide user with status updates - at a minimum "uploading..." and "upload complete".
-// display spinner until file upload is complete (see below for design)
-// provide user with notice if there is an error.
+/*
+ * associate with US State
+ * meets file validation requirements ( #517 )
+ * for audit purposes, save name of user who is saving the file.
+ * save to server
+ * provide user with status updates - at a minimum "uploading..." and "upload complete".
+ * display spinner until file upload is complete (see below for design)
+ * provide user with notice if there is an error.
+ */

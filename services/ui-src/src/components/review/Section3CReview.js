@@ -1,16 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Choice,
-  ChoiceList,
-  Tabs,
-  TabPanel,
-  TextField,
-} from "@cmsgov/design-system-core";
-import PageInfo from "../layout/PageInfo";
-import FillForm from "../layout/FillForm";
-import FormNavigation from "../layout/FormNavigation";
-import FormActions from "../layout/FormActions";
 import Questions3C from "./Section3C/Questions3C";
 class Section3c extends Component {
   constructor() {
