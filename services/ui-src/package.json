@@ -88,5 +88,10 @@
     "jest-enzyme": "^7.1.2",
     "prettier": "^2.1.1"
   },
-  "prettier": {}
+  "prettier": {},
+  "jest": {
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "collectCoverageFrom": ["services/ui-src/src/**/*.js", "!services/ui-src/src/index.js"],
+    "coverageReporters": ["text"]
+  }
 }

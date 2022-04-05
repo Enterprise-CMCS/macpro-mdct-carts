@@ -10,7 +10,7 @@
   "scripts": {
     "test:cypress": "cd tests/cypress && npm test && cd -",
     "test:ci": "cd tests/cypress && yarn run test:ci",
-    "test:jest": "jest services/ui-src/src/__tests__ --passWithNoTests"
+    "test:jest": "jest services/ui-src/src/__tests__"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,9 @@
     "cypress-tests": "file:tests/cypress",
     "cypress-xpath": "^1.6.2",
     "dotenv": "^8.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.x",
@@ -50,6 +53,8 @@
     "eslint-plugin-react-hooks": "^2.x",
     "jest": "^27.5.1",
     "prettier": "^2.4.1",
+    "react-test-renderer": "^18.0.0",
+    "redux-mock-store": "^1.5.4",
     "serverless": "2.72.2",
     "serverless-bundle": "^5.0.1",
     "serverless-dotenv-plugin": "^3.0.0",
@@ -65,7 +70,8 @@
     "yargs": "^16.1.1"
   },
   "dependencies": {
-    "aws-amplify": "^4.3.17"
+    "aws-amplify": "^4.3.17",
+    "redux": "^4.1.2"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
