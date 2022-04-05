@@ -4750,6 +4750,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.9.2":
+  version: 7.17.8
+  resolution: "@babel/runtime@npm:7.17.8"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 68d195c1630bb91ac20e86635d292a17ebab7f361cfe79406b3f5a6cc2e59fa283ae5006568899abf869312c2b35b744bd407aea8ffdb650f1a68d07785d47e9
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.16.0, @babel/template@npm:^7.3.3":
   version: 7.16.0
   resolution: "@babel/template@npm:7.16.0"
@@ -16104,6 +16113,7 @@ __metadata:
     jest: ^27.5.1
     prettier: ^2.4.1
     react-test-renderer: ^18.0.0
+    redux: ^4.1.2
     redux-mock-store: ^1.5.4
     serverless: 2.72.2
     serverless-bundle: ^5.0.1
@@ -18549,6 +18559,15 @@ __metadata:
   dependencies:
     lodash.isplainobject: ^4.0.6
   checksum: 571eab2cca3e46321969025af865ddd780804c811be9db277fddf772d86e3ea67b4ef1b19ea3866417d41eb1b73605103020321f68cf68f379a52679a6823d12
+  languageName: node
+  linkType: hard
+
+"redux@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "redux@npm:4.1.2"
+  dependencies:
+    "@babel/runtime": ^7.9.2
+  checksum: 6a839cee5bd580c5298d968e9e2302150e961318253819bcd97f9d945a5a409559eacddf6026f4118bb68b681c593d90e8a2c5bbf278f014aff9bf0d2d8fa084
   languageName: node
   linkType: hard
 
