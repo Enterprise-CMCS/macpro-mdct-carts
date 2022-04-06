@@ -16,26 +16,34 @@ const round = (number, precision) => {
 
   const decimals = precision >= 0 ? precision : 2;
 
-  // Exponent. Because Math.round always rounds off all decimals, preemptively
-  // multiply by some number of tens to get the right precision.
+  /*
+   * Exponent. Because Math.round always rounds off all decimals, preemptively
+   * multiply by some number of tens to get the right precision.
+   */
   const exp = Math.pow(10, decimals); // eslint-disable-line no-restricted-properties
-  // Disable the eslint rule above. Math.pow is restricted, but the
-  // exponentiation operator (**) is not supported in IE.
+  /*
+   * Disable the eslint rule above. Math.pow is restricted, but the
+   * exponentiation operator (**) is not supported in IE.
+   */
 
   const value = Math.round(+number * exp);
 
   if (!Number.isNaN(value)) {
-    // Rather than doing additional math to get the decimal precision, since
-    // that's just another place we can create Wrong Math™, split the result
-    // from above into individual characters and insert a decimal point in
-    // the right place.
+    /*
+     * Rather than doing additional math to get the decimal precision, since
+     * that's just another place we can create Wrong Math™, split the result
+     * from above into individual characters and insert a decimal point in
+     * the right place.
+     */
     const digits = `${value}`.split("");
     if (decimals > 0) {
       digits.splice(digits.length - decimals, 0, ".");
     }
 
-    // If the first character is a decimal, then we're less than 1 percent
-    // and we should prepend a 0. We want "0.1%", not ".1%".
+    /*
+     * If the first character is a decimal, then we're less than 1 percent
+     * and we should prepend a 0. We want "0.1%", not ".1%".
+     */
     if (digits[0] === ".") {
       digits.unshift(0);
     }
@@ -300,8 +308,10 @@ const synthesizeValue = (value, state) => {
     });
 
     if (value.actions) {
-      // For now, per the documentation, we only handle a single action, but
-      // we'll have to solve for the more complicated case too. But not yet.
+      /*
+       * For now, per the documentation, we only handle a single action, but
+       * we'll have to solve for the more complicated case too. But not yet.
+       */
       const action = value.actions[0];
 
       switch (action) {

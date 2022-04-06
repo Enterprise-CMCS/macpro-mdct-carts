@@ -1,12 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { TextField, ChoiceList } from "@cmsgov/design-system-core";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from "@reach/accordion";
 import FillForm from "../../layout/FillForm";
 
 class Questions3A extends Component {
@@ -46,7 +40,6 @@ class Questions3A extends Component {
     //
   }
   selectInput(id, option, active) {
-    console.log(id + " " + option + " " + active);
     let selection = document.getElementById(id).getElementsByTagName("input");
 
     //clear any selections made by the user
@@ -64,13 +57,12 @@ class Questions3A extends Component {
   }
   loadAnswers(el) {
     el.preventDefault();
-    // button title: Undo or Same as Last year
-    //el.target.title = this.state.fillFormTitle;
+    /*
+     *  button title: Undo or Same as Last year
+     * el.target.title = this.state.fillFormTitle;
+     */
 
     el.target.classList.toggle("active");
-
-    // Boolean, Set values on active
-    let isActive = el.target.classList.contains("active");
 
     const elementName = el.target.name;
     const elementId = el.target.id;

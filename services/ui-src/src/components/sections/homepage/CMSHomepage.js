@@ -33,7 +33,7 @@ const CMSHomepage = ({
   let tempHolder = [];
   useEffect(() => {
     getStatuses();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSelectState = (element) => {
     tempHolder = element.map((state) => {

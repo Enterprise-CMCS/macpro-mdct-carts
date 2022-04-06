@@ -1,8 +1,7 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 
 export const createCompoundKey = (event: APIGatewayProxyEvent) => {
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
-  console.log(event.pathParameters);
   if (
     !event.pathParameters.state ||
     !event.pathParameters.year ||

@@ -1,6 +1,6 @@
 import { createMeasure } from "../create";
 
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 
 jest.mock("../../../libs/dynamodb-lib", () => ({

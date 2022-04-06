@@ -151,8 +151,10 @@ export const selectIsFormEditable = (state) => {
     case "in_progress":
     case "uncertified":
     case undefined:
-      // Forms can only be edited if the current user is a state user AND the
-      // form is in one of the statuses above.
+      /*
+       * Forms can only be edited if the current user is a state user AND the
+       * form is in one of the statuses above.
+       */
       return role === UserRoles.STATE;
     default:
       return false;

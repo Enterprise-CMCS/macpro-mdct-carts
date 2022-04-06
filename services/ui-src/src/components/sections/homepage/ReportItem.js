@@ -58,8 +58,10 @@ const ReportItem = ({
   const uncertify = () => {
     if (window.confirm("Are you sure to uncertify this record?")) {
       uncertifyAction(stateCode, stateYear);
-      // Getting the new statuses to update the page
-      // getAllStateStatuses();
+      /*
+       * Getting the new statuses to update the page
+       * getAllStateStatuses();
+       */
       window.location.reload(false); // Added because above wasn't consistently reloading
     }
   };

@@ -32,7 +32,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
         })
         .then(function () {});
     } catch (ignore) {
-      console.log(ignore);
+      console.log(ignore); // eslint-disable-line no-console
     }
 
     dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: userName });

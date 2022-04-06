@@ -88,18 +88,13 @@ async function run_all_locally() {
   run_fe_locally(runner);
 }
 
-// The command definitons in yargs
-// All valid arguments to dev should be enumerated here, this is the entrypoint to the script
+/*
+ * The command definitions in yargs
+ * All valid arguments to dev should be enumerated here, this is the entrypoint to the script
+ */
 yargs(process.argv.slice(2))
   .command("local", "run system locally", {}, () => {
     run_all_locally();
   })
-  .command(
-    "test",
-    "run all tests",
-    () => {},
-    () => {
-      console.log("Testing 1. 2. 3.");
-    }
-  )
+  .command("test", "run all tests", () => {})
   .demandCommand(1, "").argv; // this prints out the help if you don't call a subcommand

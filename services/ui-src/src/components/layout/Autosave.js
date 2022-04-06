@@ -29,22 +29,28 @@ const Autosave = ({ isSaving, lastSaved }) => {
 
   if (isSaving !== active) {
     if (isSaving) {
-      // If we have switched from not saving to saving, make the UI change
-      // immediately.
+      /*
+       * If we have switched from not saving to saving, make the UI change
+       * immediately.
+       */
       setActive(true);
 
       // If there's already a save delay timer, clear it.
       clearTimeout(delayTimer);
 
-      // Wait 750ms after the last save began before changing the UI back to
-      // "saved" from the spinner.
+      /*
+       * Wait 750ms after the last save began before changing the UI back to
+       * "saved" from the spinner.
+       */
       setDelayTimer(
         setTimeout(() => {
-          // This prompts a re-render. If the isSaving prop is still true, then
-          // the conditional at the start will pass, and we'll end up back in
-          // the block that creates the delay timer. This ensures that we don't
-          // switch to the "last saved" UI state if the saving action is not
-          // yet completed.
+          /*
+           * This prompts a re-render. If the isSaving prop is still true, then
+           * the conditional at the start will pass, and we'll end up back in
+           * the block that creates the delay timer. This ensures that we don't
+           * switch to the "last saved" UI state if the saving action is not
+           * yet completed.
+           */
           setActive(false);
         }, 750)
       );

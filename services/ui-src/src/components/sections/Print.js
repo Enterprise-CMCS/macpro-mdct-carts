@@ -92,7 +92,7 @@ const Print = ({ currentUser, state }) => {
 
     // Call async function to load data
     retrieveUserData();
-  }, [currentUser]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentUser]);
 
   const sections = [];
 
@@ -124,7 +124,6 @@ const Print = ({ currentUser, state }) => {
       }
     }
   }
-  console.log({ sections });
 
   // Return sections with wrapper div and print dialogue box
   return (

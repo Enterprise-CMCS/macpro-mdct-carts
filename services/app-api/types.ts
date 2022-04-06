@@ -56,6 +56,7 @@ export interface DynamoFetch {
   };
 }
 
+/* eslint-disable no-unused-vars */
 export const enum CoreSetAbbr {
   ACS = "ACS", // adult
   CCS = "CCS", // child combined
@@ -83,3 +84,4 @@ export const enum RequestMethods {
   PUT = "PUT",
   DELETE = "DELETE",
 }
+/* eslint-enable no-unused-vars */

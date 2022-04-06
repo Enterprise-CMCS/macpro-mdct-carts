@@ -4,8 +4,10 @@ import { TextField } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
 import uuid from "react-uuid";
 
-// This method checks that month input is appropriate:
-// (not empty, max of 2 digits, no letters, between 1 & 12)
+/*
+ * This method checks that month input is appropriate:
+ * (not empty, max of 2 digits, no letters, between 1 & 12)
+ */
 const validateMonth = (input) => {
   let returnString;
 
@@ -99,9 +101,11 @@ class DateRange extends Component {
       monthStart = monthStart.padStart(2, "0");
       monthEnd = monthEnd.padStart(2, "0");
 
-      // The entry value for daterange must be sent to the server as an array of two strings
-      // The format must be an ISO 8601 Date format.
-      // Because we are only asking for month/year, the last digit is a placeholder of '01'
+      /*
+       * The entry value for daterange must be sent to the server as an array of two strings
+       * The format must be an ISO 8601 Date format.
+       * Because we are only asking for month/year, the last digit is a placeholder of '01'
+       */
       const payload = [
         `${yearStart}-${monthStart}-01`,
         `${yearEnd}-${monthEnd}-01`,
@@ -123,8 +127,10 @@ class DateRange extends Component {
     }
   }
 
-  // This method checks that year input is appropriate
-  // (not empty, max of 4 digits, no letters, reasonable year)
+  /*
+   * This method checks that year input is appropriate
+   * (not empty, max of 4 digits, no letters, reasonable year)
+   */
   validateYear(input) {
     const { year } = this.props;
 

@@ -188,12 +188,16 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
     const { data } = await axios
       .get(`/api/v1/sections/${selectedYear}/${state}`)
       .catch((err) => {
-        // Error-handling would go here. For now, just log it so we can see
-        // it in the console, at least.
+        /*
+         * Error-handling would go here. For now, just log it so we can see
+         * it in the console, at least.
+         */
         console.log("--- ERROR LOADING SECTIONS ---");
         console.log(err);
-        // Without the following too many things break, because the
-        // entire app is too dependent on section data being present.
+        /*
+         * Without the following too many things break, because the
+         * entire app is too dependent on section data being present.
+         */
         dispatch({ type: LOAD_SECTIONS, data: [] });
         throw err;
       });
@@ -204,13 +208,17 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
       const data = await axios
         .get(`/api/v1/sections/${lastYear}/${state}`)
         .catch((err) => {
-          // Error-handling would go here. For now, just log it so we can see
-          // it in the console, at least.
+          /*
+           * Error-handling would go here. For now, just log it so we can see
+           * it in the console, at least.
+           */
           console.log("--- ERROR LOADING SECTIONS ---");
           console.log(err);
-          // Without the following too many things break, because the
-          // entire app is too dependent on section data being present.
-          //dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
+          /*
+           *  Without the following too many things break, because the
+           *  entire app is too dependent on section data being present.
+           * dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
+           */
           dispatch({ type: LOAD_SECTIONS, data, lastYearData });
           throw err;
         });

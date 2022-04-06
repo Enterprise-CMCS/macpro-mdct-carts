@@ -6,8 +6,10 @@ import "cypress-file-upload";
 const emailForCognito = "//input[@name='email']";
 const passwordForCognito = "//input[@name='password']";
 
-// the default stateuser1 is used to login but can also be changed
-// by passing in a user (not including the @test.com) ex. cy.login('bouser')
+/*
+ * the default stateuser1 is used to login but can also be changed
+ * by passing in a user (not including the @test.com) ex. cy.login('bouser')
+ */
 Cypress.Commands.add("login", (user = "stateuser1") => {
   cy.xpath(emailForCognito).type(`${user}@test.com`);
   cy.xpath(passwordForCognito).type("p@55W0rd!");
@@ -85,7 +87,9 @@ Cypress.Commands.add("deleteChildCoreSets", () => {
     if ($tbody.find('[data-cy="child-kebab-menu"]').length > 0) {
       cy.get(
         ':nth-child(2) > :nth-child(5) > .css-xi606m > [data-cy="child-kebab-menu"]'
-      ).click({ force: true });
+      ).click({
+        force: true,
+      });
       cy.xpath(
         "/html[1]/body[1]/div[1]/div[1]/main[1]/div[2]/table[1]/tbody[1]/tr[2]/td[5]/div[1]/div[1]/div[1]/button[2]"
       ).click({ force: true });
@@ -130,10 +134,12 @@ Cypress.Commands.add("checkA11yOfPage", () => {
       includedImpacts: ["minor", "moderate", "serious", "critical"], // options: "minor", "moderate", "serious", "critical"
     },
     terminalLog,
-    // (err) => {
-    //   console.log("Accessibility violations:");
-    //   console.log({ err });
-    // },
+    /*
+     * (err) => {
+     *   console.log("Accessibility violations:");
+     *   console.log({ err });
+     * },
+     */
     true // does not fail tests for ally violations
   );
 });

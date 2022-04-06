@@ -7,11 +7,13 @@ import { SynthesizedTable } from "./SynthesizedTable";
 import { NoninteractiveTable } from "./NoninteractiveTable";
 import { SynthesizedValue } from "./SynthesizedValue";
 
-// Not done:
-// ==========================
-// datagrid_with_total
-// marked
-// unmarked_descendants
+/*
+ * Not done:
+ * ==========================
+ * datagrid_with_total
+ * marked
+ * unmarked_descendants
+ */
 
 const Fieldset = ({ question, ...props }) => {
   switch (question.fieldset_type) {

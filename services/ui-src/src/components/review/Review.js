@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router";
 import Section1Review from "./Section1Review";
 import Section2AReview from "./Section2AReview";
 import Section2BReview from "./Section2BReview";

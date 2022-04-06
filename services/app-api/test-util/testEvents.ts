@@ -1,5 +1,5 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
-import { CoreSetAbbr, Measure, MeasureStatus } from "../types";
+import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
+import { CoreSetAbbr, Measure, MeasureStatus } from "../types"; // eslint-disable-line no-unused-vars
 
 export const testEvent: APIGatewayProxyEvent = {
   body: "{}",

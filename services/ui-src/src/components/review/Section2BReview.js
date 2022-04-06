@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Objective2BReview from "./Section2B/Objective2BReview";
 import FormNavigation from "../layout/FormNavigation";
-import { Tabs, TabPanel } from "@cmsgov/design-system-core";
 import { connect } from "react-redux";
 import {
   Accordion,
@@ -9,12 +8,9 @@ import {
   AccordionButton,
   AccordionPanel,
 } from "@reach/accordion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@reach/accordion/styles.css";
 import { sliceId } from "../Utils/helperFunctions";
 import FormActions from "../layout/FormActions";
-import DateRange from "../layout/DateRange";
 
 class Section2BReview extends Component {
   constructor(props) {

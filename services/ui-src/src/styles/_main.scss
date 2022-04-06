@@ -180,16 +180,12 @@ img {
       font-size: 0.85rem;
       text-transform: uppercase;
     }
-    p {
-      line-height: 2rem;
-    }
 
     .update {
       border: 2px solid $color-gray-lightest;
       border-left: none;
       border-right: none;
-      color: $color-hint;
-      padding: ($padding * 4) 0;
+      padding: ($padding * 6) 0;
       text-align: center;
 
       @media only screen and (min-width: 768px) {
@@ -206,12 +202,16 @@ img {
           border-radius: $border-radius;
           color: $brand-primary;
           display: inline-block;
-          font-size: 80px;
+          font-size: 100px;
           height: auto;
           padding: ($padding * 2) ($padding * 5);
           text-align: center;
           width: auto;
         }
+      }
+
+      .button-display {
+        padding-right: ($padding) - 2; // offset for icons shifted right 2
       }
 
       .title {
@@ -224,11 +224,13 @@ img {
         }
       }
 
-      .date {
-        text-align: center;
+      .update-contents {
         @media only screen and (min-width: 768px) {
-          text-align: right;
+          padding-left: ($padding * 6);
         }
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
     }
   }

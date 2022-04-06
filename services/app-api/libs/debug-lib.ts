@@ -1,6 +1,8 @@
+// TODO logging solution for backend services
+/* eslint-disable no-console */
 import util from "util";
 import AWS from "aws-sdk";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 
 let logs: { date: Date; string: string }[] = [];
 
