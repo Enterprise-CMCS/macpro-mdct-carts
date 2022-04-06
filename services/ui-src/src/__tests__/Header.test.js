@@ -23,7 +23,6 @@
 // };
 
 describe("Header Component, enzyme testing", () => {
-  
   // TODO: Update testing suite with DynamoDB endpoint (currently points to PostgreSQL endpoint)
 
   it("test suite runs", () => {
