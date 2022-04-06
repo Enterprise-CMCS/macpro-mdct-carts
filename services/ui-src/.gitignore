@@ -34,3 +34,6 @@ yarn-error.log*
 .idea/
 env-config.js
 public/env-config.js
+
+# yarn cache
+.yarn/cache
