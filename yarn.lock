@@ -12689,6 +12689,11 @@ serialize-javascript@^6.0.0:
   dependencies:
     randombytes "^2.1.0"
 
+serverless-api-client-certificate@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/serverless-api-client-certificate/-/serverless-api-client-certificate-1.0.2.tgz#9113f3ad3862faf8615a37733ca09a1409ced8dd"
+  integrity sha512-snlEA1129NpZGYc0ra1eae17dKPYOXrju7cN+ku8roo6XOSMvNPe4XmEf0vVojoVHburXmI+Yx7y8DgJYeM2Fg==
+
 serverless-bundle@^5.0.1:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/serverless-bundle/-/serverless-bundle-5.3.0.tgz#24b2b159e4d75c7a66de114997ab8a5803b572a2"
