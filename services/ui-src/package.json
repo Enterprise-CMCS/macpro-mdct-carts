@@ -88,6 +88,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.2",
+    "eslint-config-react-app": "^7.0.0",
     "jest": "^27.5.1",
     "jest-environment-jsdom": "^27.5.1",
     "jest-enzyme": "^7.1.2",

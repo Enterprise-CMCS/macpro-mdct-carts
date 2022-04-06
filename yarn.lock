@@ -8453,10 +8453,10 @@ __metadata:
 
 "cypress-tests@file:tests/cypress::locator=macpro-quickstart-serverless%40workspace%3A.":
   version: 1.0.0
-  resolution: "cypress-tests@file:tests/cypress#tests/cypress::hash=4b42ad&locator=macpro-quickstart-serverless%40workspace%3A."
+  resolution: "cypress-tests@file:tests/cypress#tests/cypress::hash=7e68eb&locator=macpro-quickstart-serverless%40workspace%3A."
   dependencies:
     cypress-tags: ^0.3.0
-  checksum: 974a0d29fd22ab4f85185d1715a34710e054a8718295f0bbca5206b40b3b33bf5e08d8106c51b0a395aed9216d91010855b0b0dc17730f0381a936f228b16fe8
+  checksum: fcef938e2b7015dac64671b981a9b88a45e455e6d65d99ef43a6bb3f0711320b2163db6d88260c6fdff2835c01c292c3806e5ac6b0af89542da92e583d82f2fc
   languageName: node
   linkType: hard
 
