@@ -4,6 +4,7 @@ describe("placeholder test", () => {
   test("test suite runs", () => {
     expect(1 + 2).toBe(3);
   });
+});
 
 /*
  * import React from "react";

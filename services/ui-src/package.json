@@ -53,7 +53,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -69,11 +69,36 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
     "babel-core": "^6.26.3",
+    "babel-jest": "^27.5.1",
     "babel-preset-env": "^1.7.0",
     "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "jest-enzyme": "^7.1.2"
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
+    "jest": "^27.5.1",
+    "jest-environment-jsdom": "^27.5.1",
+    "jest-enzyme": "^7.1.2",
+    "react-test-renderer": "^18.0.0",
+    "redux-mock-store": "^1.5.4",
+    "ts-jest": "^27.1.4"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testEnvironment": "jsdom",
+    "collectCoverageFrom": [
+      "services/ui-src/src/**/*.js",
+      "!services/ui-src/src/index.js"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   }
 }
