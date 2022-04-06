@@ -86,7 +86,27 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: !Sub ${self:service.name}-${self:custom.stage}-avscan-${AWS::AccountId}
-        AccessControl: Private
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+    ClamDefsBucketPolicy:
+      Type: "AWS::S3::BucketPolicy"
+      Properties:
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Sid: "AllowSSLRequestsOnly"
+              Effect: Deny
+              Action: "s3:*"
+              Principal: "*"
+              Resource:
+                - !Sub arn:aws:s3:::${ClamDefsBucket}/*
+                - !Sub arn:aws:s3:::${ClamDefsBucket}
+              Condition:
+                Bool:
+                  aws:SecureTransport: false
+        Bucket: !Ref ClamDefsBucket
     BucketAVScanRole:
       Type: "AWS::IAM::Role"
       Properties:
