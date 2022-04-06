@@ -54,6 +54,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
+    "coverage": "jest --coverage",
+    "watchTest": "jest --watch",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -67,6 +69,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",

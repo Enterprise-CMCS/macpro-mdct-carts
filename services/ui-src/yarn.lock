@@ -12614,7 +12614,7 @@ __metadata:
     react-searchable-dropdown: ^1.2.5
     react-test-renderer: ^18.0.0
     react-uuid: ^1.0.2
-    redux: ^4.1.2
+    redux: ^4.0.5
     redux-devtools-extension: ^2.13.8
     redux-logger: ^3.0.6
     redux-mock-store: ^1.5.4
@@ -18941,7 +18941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^4.0.0, redux@npm:^4.1.2":
+"redux@npm:^4.0.0, redux@npm:^4.0.5":
   version: 4.1.2
   resolution: "redux@npm:4.1.2"
   dependencies:
