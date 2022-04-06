@@ -34,7 +34,6 @@ Most IDEs have a Prettier plugin that can be configured to run on file save. You
 npx prettier --write "**/*.tsx"
 ```
 
-
 To automatically run the pre-commit hook you'll need to install pre-commit and enable it in your local project
 
 ```
@@ -42,7 +41,9 @@ pip install pre-commit
 // or
 brew install pre-commit
 ```
+
 From the root folder run
+
 ```
 pre-commit install
 ```
