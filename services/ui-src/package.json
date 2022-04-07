@@ -57,7 +57,7 @@
     "coverage": "jest --coverage",
     "watchTest": "jest --watch",
     "eject": "react-scripts eject",
-    "pa11y": "pa11y https://mdctcartsdev.cms.gov/"
+    "pa11y": "pa11y --runner axe --runner htmlcs"
   },
   "browserslist": {
     "production": [
@@ -92,6 +92,7 @@
     "jest-environment-jsdom": "^27.5.1",
     "jest-enzyme": "^7.1.2",
     "pa11y": "^6.2.0",
+    "pa11y-runner-htmlcs": "^2.0.1",
     "react-test-renderer": "^18.0.0",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "^27.1.4"
