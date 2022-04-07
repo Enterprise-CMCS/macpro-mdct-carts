@@ -1,3 +1,4 @@
+import { Given, When } from "cypress-cucumber-preprocessor/steps";
 import Homepage from "../../../support/pages/Homepage";
 import LoginPage from "../../../support/pages/LoginPage";
 
