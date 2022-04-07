@@ -111,7 +111,7 @@ If you want to a visual view of your dynamodb after the application is up and ru
 
 Frontend unit testing is being done using [Jest](https://jestjs.io/).
 
-Jest unit test files should be in `services/ui-src/src/__tests__` and follow the `Component.test.js` naming convention.
+Jest unit test files should be in the same directory as their corresponding component and follow the `Component.test.js` naming convention.
 
 ```
 cd services/ui-src/
