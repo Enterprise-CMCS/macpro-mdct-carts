@@ -75,6 +75,7 @@ from typing import (
     Union,
 )
 import requests
+import boto3
 
 from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
 
