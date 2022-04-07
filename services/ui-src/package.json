@@ -56,7 +56,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "watchTest": "jest --watch",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pa11y": "pa11y https://mdctcartsdev.cms.gov/"
   },
   "browserslist": {
     "production": [
@@ -76,6 +77,8 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.1",
+    "@types/jest-axe": "^3.5.3",
+    "axe-core": "^4.4.1",
     "babel-core": "^6.26.3",
     "babel-jest": "^27.5.1",
     "babel-preset-env": "^1.7.0",
@@ -85,8 +88,10 @@
     "enzyme-to-json": "^3.6.2",
     "eslint-config-react-app": "^7.0.0",
     "jest": "^27.5.1",
+    "jest-axe": "^6.0.0",
     "jest-environment-jsdom": "^27.5.1",
     "jest-enzyme": "^7.1.2",
+    "pa11y": "^6.2.0",
     "react-test-renderer": "^18.0.0",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "^27.1.4"
