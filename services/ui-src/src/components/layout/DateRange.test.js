@@ -14,16 +14,16 @@ describe("placeholder test", () => {
  *   findByTestAttribute,
  *   mockInitialState,
  * } from "../../testUtils";
+ * import "../../setupTests";
+ * import DateRange from "./DateRange";
  */
 
-// import DateRange from "./DateRange";
-
-/**
- * Factory functon to create a ShallowWrapper for the Header component.
- * @function setup
- * @param {object} initialState - Component props specific to this setup.
- * @returns {ShallowWrapper}
- */
+// /**
+//  * Factory functon to create a ShallowWrapper for the Header component.
+//  * @function setup
+//  * @param {object} initialState - Component props specific to this setup.
+//  * @returns {ShallowWrapper}
+//  */
 
 // const defaultProps = { previousEntry: false };
 

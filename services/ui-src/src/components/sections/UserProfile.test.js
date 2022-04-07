@@ -1,9 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
-import "../setupTests";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import UserProfile from "../components/sections/UserProfile";
+import UserProfile from "./UserProfile";
 
 const mockStore = configureMockStore();
 const store = mockStore({});

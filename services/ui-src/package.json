@@ -107,6 +107,9 @@
     ],
     "coverageReporters": [
       "text"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
     ]
   }
 }

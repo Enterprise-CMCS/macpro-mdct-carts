@@ -57,6 +57,3 @@ _warmup
 
 # Ignore Build Folder
 .build
-
-# yarn cache
-.yarn 
