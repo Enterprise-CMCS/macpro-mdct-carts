@@ -5,16 +5,17 @@ export const createCompoundKey = (event: APIGatewayProxyEvent) => {
   if (
     !event.pathParameters.state ||
     !event.pathParameters.year ||
-    !event.pathParameters.measure
+    !event.pathParameters.coreSet
   )
     throw new Error(
-      "Be sure to include year, measure, and state in the path" +
+      "Be sure to include state, year, and coreset in the path" +
         event.pathParameters
     );
 
   const state = event.pathParameters.state;
   const year = event.pathParameters.year;
-  const measure = event.pathParameters.measure;
+  const coreSet = event.pathParameters.coreSet;
+  const measure = event.pathParameters.measure ?? "";
 
-  return `${state}${year}${measure}`;
+  return `${state}${year}${coreSet}${measure}`;
 };
