@@ -22,7 +22,7 @@ export class Homepage {
 
   validateCoreSetReportingIcon() {
     //cy.wait(3000);
-    cy.get(logoAtTopLeft).should("be.visible");
+    cy.get(headerAppLogo).should("be.visible");
   }
 
   validatePageBanner() {
