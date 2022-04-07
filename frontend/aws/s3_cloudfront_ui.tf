@@ -92,6 +92,8 @@ resource "aws_cloudfront_function" "hsts_cloudfront_function" {
 resource "aws_s3_bucket" "cloudfront_logs" {
   bucket = "cartscloudfrontlogs-${terraform.workspace}"
 
+  force_destroy = terraform.workspace == "prod" ? false : true
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
