@@ -5,3 +5,16 @@
 .App {
   font-family: "Open Sans", sans-serif;
 }
+
+.span-pdf-no-bookmark,
+.h3-pdf-bookmark,
+.h4-pdf-bookmark {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  color: black;
+}

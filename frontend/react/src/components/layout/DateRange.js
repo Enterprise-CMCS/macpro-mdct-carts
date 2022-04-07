@@ -82,8 +82,12 @@ class DateRange extends Component {
   // This method checks all 4 fields to confirm that the start range is before the end range
   checkChronology() {
     const { onChange, question } = this.props;
-    const { yearStart, yearEnd, startErrorMessage, endErrorMessage } =
-      this.state;
+    const {
+      yearStart,
+      yearEnd,
+      startErrorMessage,
+      endErrorMessage,
+    } = this.state;
     const errorCheck = [...startErrorMessage, ...endErrorMessage]; // Array of all input errors in state
 
     let { monthStart, monthEnd } = this.state;
@@ -219,9 +223,9 @@ class DateRange extends Component {
     return (
       <div className="date-range" data-test="component-date-range">
         <div className="date-range-start">
-          <h3 className="question-inner-header">
+          <span className="question-inner-header span-pdf-no-bookmark">
             {question.answer.labels[0] ? question.answer.labels[0] : "Start"}
-          </h3>
+          </span>
           <div className="ds-c-field__hint"> mm/yyyy</div>
           <div className="errors">
             {startErrorMessage.map((e) => {
@@ -256,10 +260,10 @@ class DateRange extends Component {
         </div>
 
         <div className="date-range-start">
-          <h3 className="question-inner-header">
+          <span className="question-inner-header span-pdf-no-bookmark">
             {" "}
             {question.answer.labels[1] ? question.answer.labels[1] : "End"}{" "}
-          </h3>
+          </span>
           <div className="ds-c-field__hint"> mm/yyyy</div>
           <div className="errors">
             {endErrorMessage.map((e) => {
