@@ -28,7 +28,7 @@ const SynthesizedTable = ({ question, rows }) => {
                   <td key={index}>
                     {cell.contents && cell.contents != ""
                       ? cell.contents
-                      : "No data"}
+                      : "Not answered"}
                   </td>
                 ))}
               </tr>
