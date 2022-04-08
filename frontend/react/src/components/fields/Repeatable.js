@@ -12,11 +12,11 @@ const Repeatable = ({ headerRef, number, question, type }) => {
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
-        <h3>
+        <span className="span-pdf-no-bookmark">
           <AccordionButton>
             <div className="accordion-title">{title}</div>
           </AccordionButton>
-        </h3>
+        </span>
       </div>
       <AccordionPanel>
         {children.map((q) => (
