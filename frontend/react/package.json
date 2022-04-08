@@ -91,7 +91,7 @@
   "prettier": {},
   "husky": {
     "hooks": {
-      "pre-commit": "npx prettier $(git diff --diff-filter=ACMR --name-only --relative origin/master -- | xargs) --write --ignore-unknown"
+      "pre-commit": "npx prettier $(git diff --diff-filter=ACMR --cached --name-only --relative origin/master -- | xargs) --write --ignore-unknown"
     }
   }
 }
