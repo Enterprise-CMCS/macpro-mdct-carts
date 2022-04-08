@@ -64,9 +64,9 @@ const Objectives = ({
       </Accordion>
 
       <div className="section-footer">
-        <h3 className="question-inner-header">
+        <span className="question-inner-header span-pdf-no-bookmark">
           Do you have another objective in your State Plan?
-        </h3>
+        </span>
 
         <div className="ds-c-field__hint">Optional</div>
         <button

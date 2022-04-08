@@ -18,15 +18,10 @@ const Section = ({ subsectionId, title, sectionId }) => {
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
         <PageInfo />
-        {sectionId !== 0 ? (
-          <h2 className="print-only">
-            <span className="section-pre-title">
-              Section {sectionId}: {title}
-            </span>
-          </h2>
-        ) : (
-          <h2 className="print-only">{title}</h2>
-        )}
+        <h2 className="print-only">
+          {sectionId !== 0 && <span>Section {sectionId}: </span>}
+          {title}
+        </h2>
         <h2 className="screen-only">{title}</h2>
         <Subsection key={subsectionId} subsectionId={subsectionId} />
       </div>
