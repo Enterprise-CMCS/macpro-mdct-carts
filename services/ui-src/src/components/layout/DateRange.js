@@ -225,7 +225,7 @@ class DateRange extends Component {
     return (
       <div className="date-range" data-test="component-date-range">
         <div className="date-range-start">
-        <span className="question-inner-header span-pdf-no-bookmark">
+          <span className="question-inner-header span-pdf-no-bookmark">
             {question.answer.labels[0] ? question.answer.labels[0] : "Start"}
           </span>
           <div className="ds-c-field__hint"> mm/yyyy</div>

@@ -12,7 +12,7 @@ const Repeatable = ({ headerRef, number, question, type }) => {
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
-      <span className="span-pdf-no-bookmark">
+        <span className="span-pdf-no-bookmark">
           <AccordionButton>
             <div className="accordion-title">{title}</div>
           </AccordionButton>

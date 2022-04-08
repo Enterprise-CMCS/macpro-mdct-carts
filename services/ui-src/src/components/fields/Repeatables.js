@@ -70,7 +70,7 @@ const Repeatables = ({
       </Accordion>
 
       <div className="section-footer">
-      <span className="question-inner-header span-pdf-no-bookmark">
+        <span className="question-inner-header span-pdf-no-bookmark">
           Do you have another{type ? ` ${type}` : ""} in this list?
         </span>
 
