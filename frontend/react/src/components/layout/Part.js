@@ -58,10 +58,12 @@ const Part = ({
 
   return (
     <div id={partId}>
-      <h4 className="h4-pdf-bookmark">
-        {+section !== 0 && partNumber && `Part ${partNumber}: `}
-        {title ? `${title}` : null}
-      </h4>
+      {title && (
+        <h4 className="h4-pdf-bookmark">
+          {+section !== 0 && partNumber && `Part ${partNumber}: `}
+          {title}
+        </h4>
+      )}
       {innards}
     </div>
   );
