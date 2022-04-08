@@ -12,7 +12,9 @@ const SynthesizedTable = ({ question, rows }) => {
             <tr>
               {question.fieldset_info.headers.map((header, index) => (
                 <th scope="col" key={index}>
-                  {header.contents && header.contents != "" ? header.contents : "Type"}
+                  {header.contents && header.contents != ""
+                    ? header.contents
+                    : "Type"}
                 </th>
               ))}
             </tr>
@@ -23,7 +25,11 @@ const SynthesizedTable = ({ question, rows }) => {
             return (
               <tr key={index}>
                 {row.map((cell, index) => (
-                  <td key={index}>{cell.contents && cell.contents != "" ? cell.contents : "No data"}</td>
+                  <td key={index}>
+                    {cell.contents && cell.contents != ""
+                      ? cell.contents
+                      : "No data"}
+                  </td>
                 ))}
               </tr>
             );
