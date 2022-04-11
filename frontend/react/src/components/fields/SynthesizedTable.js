@@ -3,18 +3,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import synthesizeValue from "../../util/synthesize";
 
-const SynthesizedTable = ({ question, rows }) => {
+const SynthesizedTable = ({ question, headers, rows }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <table className="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
-        {question.fieldset_info.headers && (
+        {headers && (
           <thead>
             <tr>
-              {question.fieldset_info.headers.map((header, index) => (
+              {headers.map((header, index) => (
                 <th scope="col" key={index}>
-                  {header.contents && header.contents != ""
-                    ? header.contents
-                    : "Type"}
+                  {header.contents}
                 </th>
               ))}
             </tr>
@@ -25,11 +23,7 @@ const SynthesizedTable = ({ question, rows }) => {
             return (
               <tr key={index}>
                 {row.map((cell, index) => (
-                  <td key={index}>
-                    {cell.contents && cell.contents != ""
-                      ? cell.contents
-                      : "Not Answered"}
-                  </td>
+                  <td key={index}>{cell.contents}</td>
                 ))}
               </tr>
             );
@@ -41,21 +35,34 @@ const SynthesizedTable = ({ question, rows }) => {
 };
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
+  headers: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state, { question }) => {
+  const headers = question.fieldset_info.headers.map((header) => {
+    return header.contents === "" ? { contents: "Type" } : header;
+  });
+
   const rows = question.fieldset_info.rows.map((row) =>
     row.map((cell) => {
       const value = synthesizeValue(cell, state);
 
-      return typeof value.contents === "number" && Number.isNaN(value.contents)
-        ? { contents: "Not Available" }
-        : value;
+      if (typeof value.contents === "number" && Number.isNaN(value.contents)) {
+        return { contents: "Not Available" };
+      } else if (!value.contents) {
+        return { contents: "Not Answered" };
+      } else if (Array.isArray(value.contents)) {
+        return value.contents === ""
+          ? { contents: "Not Answered" }
+          : { contents: value.contents[0] };
+      } else {
+        return value;
+      }
     })
   );
 
-  return { rows };
+  return { headers, rows };
 };
 
 const ConnectedSynthesizedTable = connect(mapStateToProps)(SynthesizedTable);
