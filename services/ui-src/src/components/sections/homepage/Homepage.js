@@ -3,25 +3,24 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import { DownloadDrawer } from "./DownloadDrawer";
-import {
-  selectFormStatus,
-  selectIsFormEditable,
-} from "../../../store/selectors";
-import { UserRoles } from "../../../types";
+import { selectFormStatus } from "../../../store/selectors";
+import { REPORT_STATUS, STATUS_MAPPING, UserRoles } from "../../../types";
 
-function formatStateStatus(item, editable) {
+function formatStateStatus(item) {
   if (item) {
+    const editable =
+      item.status === REPORT_STATUS.not_started ||
+      item.status === REPORT_STATUS.in_progress ||
+      item.status === REPORT_STATUS.uncertified;
     return (
       <ReportItem
+        key={item.stateId + "-" + item.year}
         name={item.year}
-        lastEditedTime="1:32pm"
-        lastEditedDate="9/21/20"
         link1URL={`/sections/${item.year}/00`}
         link1Text={editable ? "Edit" : "View"}
         link2URL="#"
         link2Text={null}
-        statusText={item.status}
-        editor="karen.dalton@state.gov"
+        statusText={STATUS_MAPPING[item.status]}
         userRole={UserRoles.STATE}
         year={item.year}
       />
@@ -29,7 +28,7 @@ function formatStateStatus(item, editable) {
   }
 }
 
-const Homepage = ({ editable, reportStatus }) => (
+const Homepage = ({ reportStatus }) => (
   <div className="homepage">
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -51,7 +50,7 @@ const Homepage = ({ editable, reportStatus }) => (
             </div>
 
             {Object.keys(reportStatus).map((k) =>
-              formatStateStatus(reportStatus[k], editable)
+              formatStateStatus(reportStatus[k])
             )}
           </div>
         </div>
@@ -71,13 +70,11 @@ const Homepage = ({ editable, reportStatus }) => (
   </div>
 );
 Homepage.propTypes = {
-  editable: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
   reportStatus: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
-  editable: selectIsFormEditable(state),
   status: selectFormStatus(state),
   reportStatus: state.reportStatus,
 });

@@ -6,7 +6,7 @@ import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
-import { UserRoles } from "../../../types";
+import { STATUS_MAPPING, UserRoles } from "../../../types";
 
 const CMSHomepage = ({
   getStatuses,
@@ -34,7 +34,6 @@ const CMSHomepage = ({
   useEffect(() => {
     getStatuses();
   }, []);
-
   const onSelectState = (element) => {
     tempHolder = element.map((state) => {
       return state.value;
@@ -171,7 +170,7 @@ const CMSHomepage = ({
                                 link1URL={`/views/sections/${stateCode}/${year}/00/a`}
                                 name={`${state}`}
                                 year={year}
-                                statusText={status}
+                                statusText={STATUS_MAPPING[status]}
                                 editor="x@y.z"
                                 userRole={currentUserRole}
                                 username={username}

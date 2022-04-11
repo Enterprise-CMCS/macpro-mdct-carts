@@ -12,10 +12,12 @@ custom:
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
+      - main
       - master
       - val
       - prod
   measureTableName: ${self:custom.stage}-measures
+  stateStatusTableName: ${self:custom.stage}-state-status
   dynamodb:
     stages:
       - local
@@ -23,6 +25,13 @@ custom:
       port: 8000
       inMemory: true
       migrate: true
+      seed: true
+    seed:
+      domain:
+        sources:
+          - table: ${self:custom.stateStatusTableName}
+            sources: [./seed-status.json]
+
 
 provider:
   name: aws
@@ -50,12 +59,33 @@ resources:
           - AttributeName: coreSet
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    StateStatusTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.stateStatusTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: year
+            AttributeType: N
+          - AttributeName: stateId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: stateId
+            KeyType: HASH
+          - AttributeName: year
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
   Outputs:
     MeasureTableName:
       Value: !Ref MeasureTable
     MeasureTableArn:
       Value: !GetAtt MeasureTable.Arn
-    MeasureTableStreamArn:
-      Value: !GetAtt MeasureTable.StreamArn
+    StateStatusTableName:
+      Value: !Ref StateStatusTable
+    StateStatusTableArn:
+      Value: !GetAtt StateStatusTable.Arn
     Region:
       Value: !Sub ${AWS::Region}

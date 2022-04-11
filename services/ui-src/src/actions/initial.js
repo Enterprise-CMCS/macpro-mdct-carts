@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle, no-console */
+import { API } from "aws-amplify";
 import axios from "../authenticatedAxios";
+import requestOptions from "../hooks/authHooks/requestOptions";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 
 export const LOAD_SECTIONS = "LOAD SECTIONS";
@@ -12,7 +14,9 @@ export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
 export const getAllStatesData = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/state/");
+      const opts = await requestOptions();
+      const data = await API.get("carts-api", `/state`, opts);
+
       dispatch({ type: GET_ALL_STATES_DATA, data });
     } catch (err) {
       console.log("error:", err);
@@ -24,8 +28,9 @@ export const getAllStatesData = () => {
 export const getAllStateStatuses =
   (selectedYears = [], selectedStates = [], selectedStatus = []) =>
   async (dispatch) => {
-    const { data } = await axios.get(`/state_status/`);
-
+    const opts = await requestOptions();
+    const results = await API.get("carts-api", `/state_status`, opts);
+    const data = results.Items;
     let yearFilter = () => {};
     let stateFilter = () => {};
     let statusFilter = () => {};
@@ -47,8 +52,8 @@ export const getAllStateStatuses =
       .filter(stateFilter)
       .filter(statusFilter)
       .sort((a, b) => {
-        const dateA = new Date(a.last_changed);
-        const dateB = new Date(b.last_changed);
+        const dateA = new Date(a.lastChanged);
+        const dateB = new Date(b.lastChanged);
 
         if (dateA > dateB) {
           return 1;
@@ -63,18 +68,18 @@ export const getAllStateStatuses =
           original
             .slice(index + 1)
             .findIndex(
-              (el) => el.state === status.state && el.year === status.year
+              (el) => el.stateId === status.stateId && el.year === status.year
             ) < 0
       )
       .reduce(
         (out, record) => ({
           ...out,
-          [record.state + record.year]: {
+          [record.stateId + record.year]: {
             status: record.status,
             year: record.year,
-            stateCode: record.state,
-            lastChanged: record.last_changed,
-            username: record.user_name,
+            stateCode: record.stateId,
+            lastChanged: record.lastChanged,
+            username: record.username,
           },
         }),
         {}
@@ -85,8 +90,9 @@ export const getAllStateStatuses =
 export const getStateAllStatuses =
   (selectedYears = [], selectedStates = [], selectedStatus = []) =>
   async (dispatch) => {
-    const { data } = await axios.get(`/state_status/`);
-
+    const opts = await requestOptions();
+    const results = await API.get("carts-api", `/state_status`, opts);
+    const data = results.Items;
     let yearFilter = () => {};
     let stateFilter = () => {};
     let statusFilter = () => {};
@@ -96,7 +102,7 @@ export const getStateAllStatuses =
       : (yearFilter = () => true);
 
     selectedStates.length > 0
-      ? (stateFilter = (record) => selectedStates.includes(record.state))
+      ? (stateFilter = (record) => selectedStates.includes(record.stateId))
       : (stateFilter = () => true);
 
     selectedStatus.length > 0
@@ -107,35 +113,24 @@ export const getStateAllStatuses =
       .filter(yearFilter)
       .filter(stateFilter)
       .filter(statusFilter)
-      .sort((a, b) => {
-        const dateA = new Date(a.last_changed);
-        const dateB = new Date(b.last_changed);
-
-        if (dateA > dateB) {
-          return 1;
-        }
-        if (dateA < dateB) {
-          return -1;
-        }
-        return 0;
-      })
+      .sort((a, b) => (a.year < b.year ? 1 : -1))
       .filter(
         (status, index, original) =>
           original
             .slice(index + 1)
             .findIndex(
-              (el) => el.state === status.state && el.year === status.year
+              (el) => el.stateId === status.stateId && el.year === status.year
             ) < 0
       )
       .reduce(
         (out, record) => ({
           ...out,
-          [record.state + record.year]: {
+          [record.stateId + record.year]: {
             status: record.status,
             year: record.year,
-            stateCode: record.state,
-            lastChanged: record.last_changed,
-            username: record.user_name,
+            stateCode: record.stateId,
+            lastChanged: record.lastChanged,
+            username: record.username,
           },
         }),
         {}
@@ -152,18 +147,7 @@ export const getStateStatus =
     // Get the latest status for this state.
     const payload = data
       .filter((status) => status.state === stateCode && status.year === year)
-      .sort((a, b) => {
-        const dateA = new Date(a.last_changed);
-        const dateB = new Date(b.last_changed);
-
-        if (dateA > dateB) {
-          return 1;
-        }
-        if (dateA < dateB) {
-          return -1;
-        }
-        return 0;
-      })
+      .sort((a, b) => (a.year < b.year ? 1 : -1))
       .pop();
 
     if (payload) {
@@ -173,7 +157,7 @@ export const getStateStatus =
       });
     } else {
       const { data: newData } = await axios.post(`/state_status/`, {
-        last_changed: new Date(),
+        lastChanged: new Date(),
         state: stateCode,
         status: "in_progress",
         year,
@@ -245,12 +229,13 @@ export const loadUser = (user) => async (dispatch) => {
   // TODO: bring in info for state and program
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
-    dispatch(getStateData({ abbr: user.attributes["custom:cms_state"] })),
+    // TODO: Get Program and State data
+    dispatch(getStateData(flattenedUser)),
     dispatch(getProgramData(user)),
+    dispatch(getAllStatesData()),
     dispatch(
       getStateAllStatuses({ stateCode: user?.attributes["custom:cms_state"] })
     ),
-    dispatch(getAllStatesData()),
   ]);
 };
 

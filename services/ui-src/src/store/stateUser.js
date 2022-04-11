@@ -1,3 +1,5 @@
+import statesArray from "../components/Utils/statesArray";
+
 // ACTION TYPES
 const STATE_INFO = "STATE_INFO";
 const USER_INFO = "USER_INFO";
@@ -18,12 +20,23 @@ export const getProgramData = (programObject) => ({
   formName: programObject.formName,
 });
 
-export const getStateData = (stateObject) => ({
-  type: STATE_INFO,
-  name: stateObject.name,
-  abbr: stateObject.abbr,
-  imageURI: stateObject.imageURI,
-});
+export const getStateData = (user) => {
+  if (!user.state || !user.state.id) {
+    return {
+      type: STATE_INFO,
+      name: null,
+      abbr: null,
+      imageURI: null,
+    };
+  }
+  const stateInfo = statesArray.find((state) => state.value === user.state.id);
+  return {
+    type: STATE_INFO,
+    name: stateInfo.label,
+    abbr: user.state.id,
+    imageURI: stateInfo.imageURI,
+  };
+};
 
 const initialState = {
   name: "New York",

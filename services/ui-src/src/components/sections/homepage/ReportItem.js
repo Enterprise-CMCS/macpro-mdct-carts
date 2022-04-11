@@ -139,13 +139,13 @@ ReportItem.propTypes = {
   theAccept: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   statusText: PropTypes.string,
   statusURL: PropTypes.string,
   userRole: PropTypes.string,
   year: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired,
-  lastChanged: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  lastChanged: PropTypes.string,
 };
 ReportItem.defaultProps = {
   link1Text: "View",

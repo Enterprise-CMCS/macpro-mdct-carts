@@ -14,7 +14,7 @@ export const theAccept =
     dispatch({ type: ACCEPT });
     try {
       await axios.post(`/state_status/`, {
-        last_changed: new Date(),
+        lastChanged: new Date(),
         state: stateCode,
         status: "accepted",
         user_name: username,

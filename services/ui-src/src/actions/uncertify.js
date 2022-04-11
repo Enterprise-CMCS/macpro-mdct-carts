@@ -14,7 +14,7 @@ export const theUncertify =
     dispatch({ type: UNCERTIFY });
     try {
       const stateStatus = axios.post(`/state_status/`, {
-        last_changed: new Date(),
+        lastChanged: new Date(),
         state: stateCode,
         status: "in_progress",
         user_name: userName,

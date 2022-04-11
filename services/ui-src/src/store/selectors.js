@@ -3,7 +3,7 @@ import jsonpath from "../util/jsonpath";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
-import { UserRoles } from "../types";
+import { STATUS_MAPPING, UserRoles } from "../types";
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
@@ -162,16 +162,6 @@ export const selectIsFormEditable = (state) => {
 };
 
 export const { selectFormStatus, selectFormStatuses } = (() => {
-  const STATUS_MAPPING = {
-    not_started: "Not started",
-    in_progress: "In progress",
-    certified: "Certified",
-    uncertified: "Uncertified",
-    accepted: "Accepted",
-    submitted: "Submitted",
-    published: "Published",
-  };
-
   return {
     selectFormStatus: (state) => {
       const { status } = state.reportStatus;
