@@ -28,7 +28,6 @@ const ReportItem = ({
   if (userRole === UserRoles.STATE) {
     stateUser = true;
   }
-
   if (lastChanged && lastChanged.toString().includes("T")) {
     theDateTime = lastChanged.split("T");
     tempTime = theDateTime[1].split(":");
@@ -122,6 +121,9 @@ const ReportItem = ({
             }`}
           >
             {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
+          </div>
+          <div className="actions ds-l-col--3">
+            {lastChanged && new Date(lastChanged)?.toLocaleDateString("en-US")}
           </div>
           <div className="actions ds-l-col--1">
             <Link to={link1URL} target={anchorTarget}>

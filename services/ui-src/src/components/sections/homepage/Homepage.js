@@ -16,6 +16,7 @@ function formatStateStatus(item) {
       <ReportItem
         key={item.stateId + "-" + item.year}
         name={item.year}
+        lastChanged={item.lastChanged}
         link1URL={`/sections/${item.year}/00`}
         link1Text={editable ? "Edit" : "View"}
         link2URL="#"
@@ -46,6 +47,7 @@ const Homepage = ({ reportStatus }) => (
             <div className="report-header ds-l-row">
               <div className="name ds-l-col--2">Year</div>
               <div className="status ds-l-col--2">Status</div>
+              <div className="name ds-l-col--3">Last Edited</div>
               <div className="actions ds-l-col--4">Actions</div>
             </div>
 
