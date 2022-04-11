@@ -63,6 +63,7 @@
     "aws-amplify": "^4.3.17"
   },
   "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
+    "nonGlobalStepDefinitions": true,
+    "stepDefinitions": "tests"
   }
 }

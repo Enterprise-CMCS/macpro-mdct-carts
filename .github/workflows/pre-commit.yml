@@ -9,3 +9,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: pre-commit/action@v2.0.2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: Prepare for Jest
+        run: yarn install --frozen-lockfile
+        working-directory: ./services/ui-src
+      - name: Jest
+        run: yarn test
+        working-directory: ./services/ui-src
+      
