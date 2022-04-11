@@ -56,9 +56,8 @@ const mapStateToProps = (state, { question }) => {
         return value.contents === ""
           ? { contents: "Not Answered" }
           : { contents: value.contents[0] };
-      } else {
-        return value;
       }
+      return value;
     })
   );
 
