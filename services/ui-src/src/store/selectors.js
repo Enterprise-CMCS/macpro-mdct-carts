@@ -3,7 +3,7 @@ import jsonpath from "../util/jsonpath";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
-import { STATUS_MAPPING, UserRoles } from "../types";
+import { UserRoles } from "../types";
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
@@ -165,10 +165,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
   return {
     selectFormStatus: (state) => {
       const { status } = state.reportStatus;
-      if (STATUS_MAPPING[status]) {
-        return STATUS_MAPPING[status];
-      }
-      return null;
+      return status;
     },
     selectFormStatuses: (state) => {
       let returnObject = [];
@@ -185,7 +182,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
           ([{}, { status, year, stateCode, lastChanged, username }]) => ({
             state: statesArray.find(({ value }) => value === stateCode)?.label,
             stateCode,
-            status: STATUS_MAPPING[status],
+            status,
             year,
             lastChanged,
             username,
