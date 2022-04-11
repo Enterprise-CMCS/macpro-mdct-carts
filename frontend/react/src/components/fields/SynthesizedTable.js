@@ -48,12 +48,12 @@ const mapStateToProps = (state, { question }) => {
     row.map((cell) => {
       const value = synthesizeValue(cell, state);
 
-      if (typeof value.contents === "number" && Number.isNaN(value.contents)) {
+      if (Number.isNaN(value.contents)) {
         return { contents: "Not Available" };
       } else if (!value.contents) {
         return { contents: "Not Answered" };
       } else if (Array.isArray(value.contents)) {
-        return value.contents === ""
+        return value.contents[0] === ""
           ? { contents: "Not Answered" }
           : { contents: value.contents[0] };
       }
