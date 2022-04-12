@@ -139,6 +139,8 @@ cd services/ui-src/
 yarn pa11y <url-endpoint>
 ```
 
+Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe), [@cypress-audit/pa11y](https://mfrachet.github.io/cypress-audit/guides/pa11y/installation.html), and [@cypress-audit/lighthouse](https://mfrachet.github.io/cypress-audit/guides/lighthouse/installation.html).
+
 ## Create New Branches and PRs for Tests
 
 When writing Cypress tests for an existing branch, create a new branch and write the tests there. For example, if the branch that needs tests is called `oy2-1234`, create a new branch called `oy2-1234test`.
