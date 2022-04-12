@@ -1,6 +1,6 @@
 # ==============================================================================
 # => psql deployment container
-FROM postgres:12.7 as bootstrapper
+FROM postgres:12.8 as bootstrapper
 
 WORKDIR /app
 
