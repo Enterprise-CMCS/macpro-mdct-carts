@@ -54,14 +54,13 @@ jobs:
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
-        with:
+        with: 
           node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
       - uses: satackey/action-docker-layer-caching@v0.0.11
-      # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
         with:
           key: docker-cache-${{ github.sha }}
