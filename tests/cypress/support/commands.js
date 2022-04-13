@@ -1,7 +1,10 @@
+import "cypress-file-upload";
+import "@cypress-audit/pa11y/commands";
+import "@cypress-audit/lighthouse/commands";
+
 before(() => {
   cy.visit("/", { timeout: 60000 * 5 });
 });
-import "cypress-file-upload";
 
 const emailForCognito = "//input[@name='email']";
 const passwordForCognito = "//input[@name='password']";
@@ -48,12 +51,17 @@ Cypress.Commands.add("checkA11yOfPage", () => {
       includedImpacts: ["minor", "moderate", "serious", "critical"], // options: "minor", "moderate", "serious", "critical"
     },
     terminalLog,
-    /*
-     * (err) => {
-     *   console.log("Accessibility violations:");
-     *   console.log({ err });
-     * },
-     */
     true // does not fail tests for ally violations
   );
+
+  // check for a11y using pa11y
+  cy.pa11y({
+    threshold: 10,
+    standard: "WCAG2AA",
+  });
+
+  // check for a11y using Lighthouse
+  cy.lighthouse({
+    accessibility: 90,
+  });
 });

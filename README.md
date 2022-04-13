@@ -124,9 +124,22 @@ yarn test --watch
 npx jest src/components --watch  # run all component tests and watch for changes
 ```
 
-### Cypress Testing
+### E2E Cypress Tests
 
 [See here](./tests/cypress/README.md)
+
+### Accessibility Tests
+
+Frontend accessibility (a11y) unit tests are being done using Jest with [axe-core](https://github.com/dequelabs/axe-core) and [jest-axe](https://github.com/nickcolley/jest-axe).
+
+To test the accessibility of an endpoint, [pa11y](https://github.com/pa11y/pa11y) is being used in combination with [aXe](https://www.axe-core.org/) and [HTML CodeSniffer](https://squizlabs.github.io/HTML_CodeSniffer/) as test runners.
+
+```
+cd services/ui-src/
+yarn pa11y <url-endpoint>
+```
+
+Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe), [@cypress-audit/pa11y](https://mfrachet.github.io/cypress-audit/guides/pa11y/installation.html), and [@cypress-audit/lighthouse](https://mfrachet.github.io/cypress-audit/guides/lighthouse/installation.html).
 
 ## Create New Branches and PRs for Tests
 
