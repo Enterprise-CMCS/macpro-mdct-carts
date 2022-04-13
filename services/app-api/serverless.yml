@@ -30,6 +30,8 @@ custom:
       - prod
   measureTableName: ${env:measureTableName, cf:database-${self:custom.stage}.MeasureTableName}
   measureTableArn: ${env:DYNAMO_TABLE_ARN, cf:database-${self:custom.stage}.MeasureTableArn}
+  stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
+  stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
   associateWaf:
     name: ${self:custom.webAclName}
@@ -73,6 +75,7 @@ provider:
           Resource: "*"
   environment:
     measureTableName: ${self:custom.measureTableName}
+    stateStatusTableName: ${self:custom.stateStatusTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${opt:stage, self:provider.stage}
 
@@ -117,11 +120,19 @@ functions:
           method: delete
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
-  getHello:
-    handler: handlers/measures/getHello.hello
+  getStates:
+    handler: handlers/state/get.getStates
     events:
       - http:
-          path: hello
+          path: state
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getStateStatus:
+    handler: handlers/stateStatus/get.getStateStatus
+    events:
+      - http:
+          path: state_status
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}

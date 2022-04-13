@@ -11,6 +11,22 @@ interface DecodedToken {
   identities?: [{ userId?: string }];
 }
 
+class UserCredentials {
+  role?: string;
+  state?: string;
+  identities?: [{ userId?: string }];
+
+  constructor(decoded?: DecodedToken) {
+    if (decoded === undefined) return;
+    const role = decoded["custom:cms_roles"]
+      .split(",")
+      .find((r) => r.includes("mdctcarts"));
+    this.role = role;
+    this.state = decoded["custom:cms_state"];
+    this.identities = decoded.identities;
+  }
+}
+
 export const isAuthorized = (event: APIGatewayProxyEvent) => {
   if (!event.headers["x-api-key"]) return false;
 
@@ -51,4 +67,12 @@ export const getUserNameFromJwt = (event: APIGatewayProxyEvent) => {
   }
 
   return userName;
+};
+
+export const getUserCredentialsFromJwt = (event: APIGatewayProxyEvent) => {
+  if (!event?.headers || !event.headers?.["x-api-key"])
+    return new UserCredentials();
+  const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;
+  const credentials = new UserCredentials(decoded);
+  return credentials;
 };

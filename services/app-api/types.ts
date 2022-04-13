@@ -17,6 +17,19 @@ export interface DynamoMeasureList {
   ScannedCount?: number;
 }
 
+export interface StateStatus {
+  year: number;
+  status: string;
+  stateId: string;
+  username?: string;
+  lastChanged?: string;
+}
+
+export interface DynamoStateStatusList {
+  Items?: StateStatus[];
+  Count?: number;
+  ScannedCount?: number;
+}
 export interface DynamoCreate {
   TableName: string;
   Item: Measure;
@@ -44,15 +57,14 @@ export interface DynamoUpdate {
 export interface DynamoScan {
   TableName: string;
   FilterExpression?: string;
-  ExpressionAttributeNames: { [key: string]: string };
-  ExpressionAttributeValues: { [key: string]: any };
+  ExpressionAttributeNames?: { [key: string]: string };
+  ExpressionAttributeValues?: { [key: string]: any };
 }
 
 export interface DynamoFetch {
   TableName: string;
   Key: {
-    compoundKey: string;
-    coreSet: string;
+    [key: string]: string | number;
   };
 }
 
@@ -76,6 +88,7 @@ export const enum UserRoles {
   HELP = "mdctcarts-help-desk",
   BO = "mdctcarts-bo-user",
   BOR = "mdctcarts-bor",
+  CO = "mdctcarts-co",
 }
 
 export const enum RequestMethods {

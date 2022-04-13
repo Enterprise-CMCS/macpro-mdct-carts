@@ -6,7 +6,7 @@ import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system-core";
 import MultiSelect from "react-multi-select-component";
-import { UserRoles } from "../../../types";
+import { STATUS_MAPPING, UserRoles } from "../../../types";
 
 const CMSHomepage = ({
   getStatuses,
@@ -24,17 +24,16 @@ const CMSHomepage = ({
   ];
 
   // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
-  const [tempStates, setTempStates] = useState();
-  const [tempStatuses, setTempStatus] = useState();
-  const [tempYears, setTempYear] = useState();
-  const [stateIds, setStateIds] = useState();
-  const [yearIds, setYearIds] = useState();
-  const [statusIds, setStatusIds] = useState();
+  const [tempStates, setTempStates] = useState([]);
+  const [tempStatuses, setTempStatus] = useState([]);
+  const [tempYears, setTempYear] = useState([]);
+  const [stateIds, setStateIds] = useState([]);
+  const [yearIds, setYearIds] = useState([]);
+  const [statusIds, setStatusIds] = useState([]);
   let tempHolder = [];
   useEffect(() => {
     getStatuses();
   }, []);
-
   const onSelectState = (element) => {
     tempHolder = element.map((state) => {
       return state.value;
@@ -63,7 +62,6 @@ const CMSHomepage = ({
   const clearFilter = () => {
     window.location.reload(false);
   };
-
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
@@ -171,7 +169,7 @@ const CMSHomepage = ({
                                 link1URL={`/views/sections/${stateCode}/${year}/00/a`}
                                 name={`${state}`}
                                 year={year}
-                                statusText={status}
+                                statusText={STATUS_MAPPING[status]}
                                 editor="x@y.z"
                                 userRole={currentUserRole}
                                 username={username}

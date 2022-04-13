@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_STATE_STATUS:
       return {
-        lastChanged: action.payload.last_changed,
+        lastChanged: action.payload.lastChanged,
         status: action.payload.status,
         userName: action.payload.user_name,
       };

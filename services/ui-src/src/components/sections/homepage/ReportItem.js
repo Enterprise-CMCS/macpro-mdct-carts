@@ -28,7 +28,6 @@ const ReportItem = ({
   if (userRole === UserRoles.STATE) {
     stateUser = true;
   }
-
   if (lastChanged && lastChanged.toString().includes("T")) {
     theDateTime = lastChanged.split("T");
     tempTime = theDateTime[1].split(":");
@@ -123,6 +122,9 @@ const ReportItem = ({
           >
             {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
           </div>
+          <div className="actions ds-l-col--3">
+            {lastChanged && new Date(lastChanged)?.toLocaleDateString("en-US")}
+          </div>
           <div className="actions ds-l-col--1">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
@@ -139,13 +141,13 @@ ReportItem.propTypes = {
   theAccept: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   statusText: PropTypes.string,
   statusURL: PropTypes.string,
   userRole: PropTypes.string,
   year: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired,
-  lastChanged: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  lastChanged: PropTypes.string,
 };
 ReportItem.defaultProps = {
   link1Text: "View",

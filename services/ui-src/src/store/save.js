@@ -37,7 +37,7 @@ export default (state = initial, action) => {
       return {
         ...state,
         lastSave:
-          action.payload.last_changed && new Date(action.payload.last_changed),
+          action.payload.lastChanged && new Date(action.payload.lastChanged),
       };
 
     default:

@@ -162,23 +162,10 @@ export const selectIsFormEditable = (state) => {
 };
 
 export const { selectFormStatus, selectFormStatuses } = (() => {
-  const STATUS_MAPPING = {
-    not_started: "Not started",
-    in_progress: "In progress",
-    certified: "Certified",
-    uncertified: "Uncertified",
-    accepted: "Accepted",
-    submitted: "Submitted",
-    published: "Published",
-  };
-
   return {
     selectFormStatus: (state) => {
       const { status } = state.reportStatus;
-      if (STATUS_MAPPING[status]) {
-        return STATUS_MAPPING[status];
-      }
-      return null;
+      return status;
     },
     selectFormStatuses: (state) => {
       let returnObject = [];
@@ -195,7 +182,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
           ([{}, { status, year, stateCode, lastChanged, username }]) => ({
             state: statesArray.find(({ value }) => value === stateCode)?.label,
             stateCode,
-            status: STATUS_MAPPING[status],
+            status,
             year,
             lastChanged,
             username,

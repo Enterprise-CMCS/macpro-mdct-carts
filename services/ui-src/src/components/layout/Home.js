@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import AdminHome from "./HomeAdmin";
 import CMSHome from "./HomeCMS";
 import StateHome from "./HomeState";
 import Unauthorized from "./Unauthorized";
 import { UserRoles } from "../../types";
-import { getHello } from "../../actions/hello";
 
-const Home = ({ _user, role, getHello: helloAction }) => {
+const Home = ({ role }) => {
   let content = null;
-  helloAction();
 
   switch (role) {
     case UserRoles.ADMIN:
@@ -34,10 +31,7 @@ const Home = ({ _user, role, getHello: helloAction }) => {
   );
 };
 Home.propTypes = {
-  user: PropTypes.object,
   role: PropTypes.string,
 };
 
-const mapState = (_state) => ({});
-const mapDispatch = { getHello };
-export default connect(mapState, mapDispatch)(Home);
+export default Home;

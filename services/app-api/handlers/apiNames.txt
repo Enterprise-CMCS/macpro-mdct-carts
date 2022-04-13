@@ -10,5 +10,9 @@ PUT /coreset/{state}/{year}/{coreSet}/measures/{measure} - edit specific measure
 
 DELETE /coreset/{state}/{year}/{coreSet}/measures/{measure} - delete specific measure
 
--- hello
-GET /hello - returns a hello world
+
+-- state
+GET /state - return info on all states and territories
+
+-- state_status
+GET /state_status - returns available state statuses for the current user role
