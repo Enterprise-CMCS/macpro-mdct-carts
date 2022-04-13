@@ -17,7 +17,7 @@ export const REPORT_STATUS = {
 };
 
 export const STATUS_MAPPING = {
-  not_started: "Not started",
+  not_started: "Not Started",
   in_progress: "In Progress",
   certified: "Certified and Submitted",
   uncertified: "Uncertified",

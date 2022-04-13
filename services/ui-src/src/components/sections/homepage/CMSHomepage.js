@@ -18,8 +18,8 @@ const CMSHomepage = ({
   const statusList = [
     { label: "Accepted", value: "accepted" },
     { label: "Certified", value: "certified" },
-    { label: "In progress", value: "in_progress" },
-    { label: "Not started", value: "not_started" },
+    { label: "In Progress", value: "in_progress" },
+    { label: "Not Started", value: "not_started" },
     { label: "Published", value: "published" },
   ];
 

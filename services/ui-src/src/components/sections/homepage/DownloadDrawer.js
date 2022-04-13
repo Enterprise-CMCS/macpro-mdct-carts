@@ -22,8 +22,8 @@ export const DownloadDrawer = () => {
               <h3>Your fiscal year 2021 template is ready for download</h3>
             </div>
             <p>
-              Download a PDF of your template for the current year. Fill it out
-              before returning to input information into the webform. Contact{" "}
+              Download your template for the current reporting period below.
+              Please contact{" "}
               <a href="mailto:mdct_help@cms.hhs.gov?subject=CARTS Help request">
                 mdct_help@cms.hhs.gov
               </a>{" "}
