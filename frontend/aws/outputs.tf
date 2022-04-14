@@ -21,5 +21,6 @@ output "s3_uploads_bucket_name" {
 }
 
 output "prince_api_endpoint" {
-  value = data.aws_ssm_parameter.prince_api_endpoint.value
+  value     = data.aws_ssm_parameter.prince_api_endpoint.value
+  sensitive = true
 }

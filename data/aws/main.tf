@@ -1,9 +1,19 @@
 provider "aws" {
-  version = "2.58.0"
-  region  = "us-east-1"
+  region = "us-east-1"
+
 }
 
 terraform {
+  required_providers {
+    aws = {
+      version = "3.75.1"
+      source  = "hashicorp/aws"
+    }
+    null = {
+      version = "3.1.1"
+      source  = "hashicorp/null"
+    }
+  }
   backend "s3" {
     key     = "tf_state/application/data"
     region  = "us-east-1"
@@ -16,5 +26,5 @@ provider "random" {
 }
 
 provider "null" {
-  version = "2.1.0"
+
 }
