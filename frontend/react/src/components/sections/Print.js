@@ -5,6 +5,7 @@ import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
+import Title from "../layout/Title";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
 
@@ -92,10 +93,13 @@ const Print = ({ currentUser, state }) => {
   }, [currentUser]);
 
   const sections = [];
+  
 
   // Check if formData has values
   const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
+
+    sections.push(<Title />);
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
     for (let i = 0; i < formData.length; i++) {

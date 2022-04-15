@@ -49,8 +49,23 @@
     }
   }
 
+  .h1-title-report {
+    margin-top: 16px;
+    margin-left: 0px;
+  
+    h1 {
+      font-weight: bold;
+      margin-top: 0;
+    }
+  }
+}
+
+.h1-title-report {
+  margin-top: 16px;
+  margin-left: 16px;
+
   h1 {
-    font-weight: 500;
+    font-weight: bold;
     margin-top: 0;
   }
 }
