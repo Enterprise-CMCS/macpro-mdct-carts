@@ -1,4 +1,4 @@
-name: Master-deploy
+name: dev-deploy
 
 on:
   push:
