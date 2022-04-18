@@ -7,6 +7,7 @@ import Subsection from "./Subsection";
 import FormNavigation from "./FormNavigation";
 import FormActions from "./FormActions";
 import Autosave from "../fields/Autosave";
+import { Helmet } from 'react-helmet';
 
 // Get section number only from sectionId
 const selectSectionNumber = (sectionId) => {
@@ -16,6 +17,9 @@ const selectSectionNumber = (sectionId) => {
 const Section = ({ subsectionId, title, sectionId }) => {
   return (
     <div className="section-basic-info ds-l-col--9 content">
+      <Helmet>
+        <meta name="author" content="CMS" />
+      </Helmet>
       <div className="main">
         <PageInfo />
         <h2 className="print-only">
