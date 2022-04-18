@@ -24,8 +24,8 @@ jobs:
         run: |
           ./.github/build_vars.sh set_names
           echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
-      - name: set commit HASH for image tagging
-        run: echo "HASH=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+    #  - name: set commit HASH for image tagging
+    #    run: echo "HASH=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
       - name: Create env var for  postgress deployer ECR repo name
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
@@ -63,7 +63,7 @@ jobs:
       - uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
         with:
-          key: docker-cache-${{ github.sha }}
+          key: docker-cache-{hash}
           restore-keys:  docker-cache-      
       - name: set path
         run: |
@@ -100,7 +100,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BUILD_TAG}} 
         run: |
           pushd frontend/api_postgres
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -128,7 +128,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{ github.sha }}
+          IMAGE_TAG: ${{env.BUILD_TAG}} 
         run: |
           aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
@@ -164,3 +164,4 @@ jobs:
           ./deploy.sh ${{env.BRANCH_NAME}}
       #- name: Run Test
       #  run: ./test_deploy.sh
+
