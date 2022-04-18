@@ -41,7 +41,7 @@ const Print = ({ currentUser, state }) => {
     });
     const htmlString = document
       .querySelector("html")
-      .innerHTML.replaceAll(
+      .outerHTML.replaceAll(
         '<link href="',
         `<link href="https://${window.location.host}`
       )
