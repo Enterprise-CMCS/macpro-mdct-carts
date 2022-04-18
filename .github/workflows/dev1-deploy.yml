@@ -48,6 +48,9 @@ jobs:
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
