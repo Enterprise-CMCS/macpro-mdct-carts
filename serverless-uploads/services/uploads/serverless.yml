@@ -146,13 +146,13 @@ resources:
                     - s3:PutObjectTagging
                     - s3:PutObjectVersionTagging
                     - s3:ListBucket
-                  Resource: 
+                  Resource:
                     - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*
                     - !Sub arn:aws:s3:::carts-uploads-${self:custom.stage}/*
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: 
+                  Resource:
                     - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
                     - !Sub arn:aws:s3:::carts-uploads-${self:custom.stage}
                 - Effect: "Allow"
