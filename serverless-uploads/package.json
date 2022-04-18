@@ -28,6 +28,7 @@
     "serverless": "2.72.2",
     "serverless-bundle": "^3.0.0",
     "serverless-dotenv-plugin": "^3.0.0",
+    "serverless-iam-helper": "github:cmsgov/serverless-iam-helper",
     "serverless-offline": "^6.8.0",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-plugin-warmup": "^4.9.0",

@@ -9,7 +9,7 @@ locals {
 
 resource "aws_s3_bucket" "www" {
 
-  bucket        = "cartsfrontendbucket-${terraform.workspace}"
+  bucket        = local.is_legacy_account ? "cartsfrontendbucket-${terraform.workspace}" : "carts-frontend-${terraform.workspace}"
   acl           = "private"
   force_destroy = true
   cors_rule {
@@ -43,22 +43,22 @@ data "aws_iam_policy_document" "s3_policy" {
   statement {
     sid     = "AllowSSLRequestsOnly"
     effect  = "Deny"
-    actions = [ "s3:*" ]
+    actions = ["s3:*"]
 
     principals {
       type        = "*"
       identifiers = ["*"]
     }
 
-    resources = [ 
-      "${aws_s3_bucket.www.arn}/*", 
+    resources = [
+      "${aws_s3_bucket.www.arn}/*",
       "${aws_s3_bucket.www.arn}",
     ]
 
     condition {
       test     = "Bool"
       variable = "aws:SecureTransport"
-      values   = [ "false" ]
+      values   = ["false"]
     }
   }
 }
@@ -86,11 +86,11 @@ resource "aws_cloudfront_function" "hsts_cloudfront_function" {
   runtime = "cloudfront-js-1.0"
   comment = "This function adds headers to implement HSTS"
   publish = true
-  code = file("${path.module}/hsts/${var.acm_certificate_domain_api_postgres == "" ? "use-" :"no-"}hsts.js")
+  code    = file("${path.module}/hsts/${var.acm_certificate_domain_api_postgres == "" ? "use-" : "no-"}hsts.js")
 }
 
 resource "aws_s3_bucket" "cloudfront_logs" {
-  bucket = "cartscloudfrontlogs-${terraform.workspace}"
+  bucket = local.is_legacy_account ? "cartscloudfrontlogs-${terraform.workspace}" : "carts-cloudfrontlogs-${terraform.workspace}"
 
   force_destroy = terraform.workspace == "prod" ? false : true
 
@@ -105,7 +105,7 @@ resource "aws_s3_bucket" "cloudfront_logs" {
 
 resource "aws_s3_bucket_public_access_block" "cloudfront_logs" {
   bucket = aws_s3_bucket.cloudfront_logs.id
-  
+
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -116,22 +116,22 @@ data "aws_iam_policy_document" "cf_logs_s3_policy" {
   statement {
     sid     = "AllowSSLRequestsOnly"
     effect  = "Deny"
-    actions = [ "s3:*" ]
+    actions = ["s3:*"]
 
     principals {
       type        = "*"
       identifiers = ["*"]
     }
 
-    resources = [ 
-      "${aws_s3_bucket.cloudfront_logs.arn}/*", 
+    resources = [
+      "${aws_s3_bucket.cloudfront_logs.arn}/*",
       "${aws_s3_bucket.cloudfront_logs.arn}",
     ]
 
     condition {
       test     = "Bool"
       variable = "aws:SecureTransport"
-      values   = [ "false" ]
+      values   = ["false"]
     }
   }
 }
@@ -149,7 +149,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     }
 
     domain_name = aws_s3_bucket.www.bucket_regional_domain_name
-    origin_id   = "cartsfrontendbucket-${terraform.workspace}"
+    origin_id   = aws_s3_bucket.www.bucket
   }
 
   enabled             = true
@@ -180,7 +180,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     // This needs to match the `origin_id` above.
-    target_origin_id = "cartsfrontendbucket-${terraform.workspace}"
+    target_origin_id = aws_s3_bucket.www.bucket
     min_ttl          = 0
     default_ttl      = 86400
     max_ttl          = 31536000

@@ -4,18 +4,21 @@ frameworkVersion: "2"
 
 plugins:
   - serverless-plugin-scripts
+  - serverless-iam-helper
   - serverless-s3-bucket-helper
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
+  iam:
+    role:
+      path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
-  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   privateSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id~true, ssm:/configuration/default/vpc/subnets/private/a/id~true}
@@ -46,7 +49,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
             - ""
-            - ${self:custom.iamPermissionsBoundaryPolicy}
+            - ${self:provider.iam.role.permissionsBoundary}
   Parameters:
     pLatestAmiId:
       Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
@@ -64,12 +67,12 @@ resources:
                   - ec2.amazonaws.com
               Action:
                 - sts:AssumeRole
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
-            - Ref: AWS::NoValue
+            - ${self:provider.iam.role.permissionsBoundary}
+            - !Ref AWS::NoValue
         ManagedPolicyArns:
           - !Sub arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
           # The following is attached automatically by the account's Config
@@ -78,7 +81,7 @@ resources:
     Ec2InstanceProfile:
       Type: AWS::IAM::InstanceProfile
       Properties:
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         Roles:
           - !Ref Ec2InstanceRole
     Ec2SecurityGroup:

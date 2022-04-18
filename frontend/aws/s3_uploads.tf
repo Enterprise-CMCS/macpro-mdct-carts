@@ -3,7 +3,7 @@ data "aws_cloudformation_stack" "uploads" {
 }
 
 resource "aws_s3_bucket" "uploads" {
-  bucket        = "cartscms-uploads-${terraform.workspace}"
+  bucket        = local.is_legacy_account ? "cartscms-uploads-${terraform.workspace}" : "carts-uploads-${terraform.workspace}"
   acl           = "private"
   force_destroy = terraform.workspace == "prod" ? false : true
 
@@ -17,12 +17,12 @@ resource "aws_s3_bucket" "uploads" {
 }
 
 resource "aws_lambda_permission" "allow_bucket" {
-  statement_id  = "AllowExecutionFromS3Bucket"
-  action        = "lambda:InvokeFunction"
-  function_name = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
-  principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.uploads.arn
-  source_account = "730373213083"
+  statement_id   = "AllowExecutionFromS3Bucket"
+  action         = "lambda:InvokeFunction"
+  function_name  = data.aws_cloudformation_stack.uploads.outputs["AvScanArn"]
+  principal      = "s3.amazonaws.com"
+  source_arn     = aws_s3_bucket.uploads.arn
+  source_account = local.account_id
 }
 
 resource "aws_s3_bucket_public_access_block" "uploads" {
@@ -57,7 +57,7 @@ resource "aws_s3_bucket_policy" "b" {
         Sid       = "MustBeClean"
         Effect    = "Deny"
         Principal = "*"
-        Action    = [
+        Action = [
           "s3:GetObject"
         ]
         Resource = "${aws_s3_bucket.uploads.arn}/*"
@@ -72,40 +72,40 @@ resource "aws_s3_bucket_policy" "b" {
         }
       },
       {
-        Sid = "RestrictFiles"
-        Effect = "Deny"
-        Principal="*",
-        Action=[
+        Sid       = "RestrictFiles"
+        Effect    = "Deny"
+        Principal = "*",
+        Action = [
           "s3:PutObject"
-          ]
-      "NotResource": [
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.bmp",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.csv",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.doc",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.docx",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.gif",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.jpg",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.jpeg",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.odp",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.ods",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.odt",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.png",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.pdf",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.ppt",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.pptx",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.rtf",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.tif",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.tiff",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.txt",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.xls",
-        "arn:aws:s3:::cartscms-uploads-${terraform.workspace}/*.xlsx"
+        ]
+        "NotResource" : [
+          "${aws_s3_bucket.uploads.arn}/*.bmp",
+          "${aws_s3_bucket.uploads.arn}/*.csv",
+          "${aws_s3_bucket.uploads.arn}/*.doc",
+          "${aws_s3_bucket.uploads.arn}/*.docx",
+          "${aws_s3_bucket.uploads.arn}/*.gif",
+          "${aws_s3_bucket.uploads.arn}/*.jpg",
+          "${aws_s3_bucket.uploads.arn}/*.jpeg",
+          "${aws_s3_bucket.uploads.arn}/*.odp",
+          "${aws_s3_bucket.uploads.arn}/*.ods",
+          "${aws_s3_bucket.uploads.arn}/*.odt",
+          "${aws_s3_bucket.uploads.arn}/*.png",
+          "${aws_s3_bucket.uploads.arn}/*.pdf",
+          "${aws_s3_bucket.uploads.arn}/*.ppt",
+          "${aws_s3_bucket.uploads.arn}/*.pptx",
+          "${aws_s3_bucket.uploads.arn}/*.rtf",
+          "${aws_s3_bucket.uploads.arn}/*.tif",
+          "${aws_s3_bucket.uploads.arn}/*.tiff",
+          "${aws_s3_bucket.uploads.arn}/*.txt",
+          "${aws_s3_bucket.uploads.arn}/*.xls",
+          "${aws_s3_bucket.uploads.arn}/*.xlsx"
         ]
       },
       {
         Sid       = "AllowSSLRequestsOnly"
         Effect    = "Deny"
         Principal = "*"
-        Action    = [
+        Action = [
           "s3:*"
         ]
         Resource = [

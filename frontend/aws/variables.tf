@@ -17,7 +17,7 @@ variable "prince_api_endpoint" {
   default = "not set"
 }
 variable "region" {
-  default="us-east-1"
+  default = "us-east-1"
 }
 // variable "s3_bucket" {
 //   type = string
@@ -26,7 +26,7 @@ variable "region" {
 // }
 variable "enable_log_waf_acl" {
   description = "Should logging be enabled on WAF ACL or not? Default is FALSE to not create"
-  default = true
+  default     = true
 }
 
 variable "use_custom_db_user_info" {
