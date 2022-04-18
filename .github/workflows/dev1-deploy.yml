@@ -44,6 +44,13 @@ jobs:
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+        with:
+          key: foo-docker-cache-{hash}
+          restore-keys: |
+            foo-docker-cache-    
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:
