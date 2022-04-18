@@ -1,4 +1,4 @@
-name: Dev-deploy
+name: Master-deploy
 
 on:
   push:
@@ -52,17 +52,12 @@ jobs:
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
-        with: 
+        with:
           node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
-         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-   #     continue-on-error: true
-        with:
-          key: docker-cache-{hash}
-          restore-keys:  docker-cache-      
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -98,7 +93,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} 
+          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}.${{env.HASH}}
         run: |
           pushd frontend/api_postgres
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -126,7 +121,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} 
+          IMAGE_TAG: ${{env.BUILD_TAG}} #${{ github.sha }}
         run: |
           aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
