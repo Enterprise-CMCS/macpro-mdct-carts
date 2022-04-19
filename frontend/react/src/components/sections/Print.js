@@ -18,7 +18,6 @@ import { Helmet } from "react-helmet";
  * @constructor
  */
 const Print = ({ currentUser, state }) => {
-
   const dispatch = useDispatch();
 
   const openPdf = (basePdf) => {
