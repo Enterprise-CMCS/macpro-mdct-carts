@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import PageInfo from "./PageInfo";
-import { selectSectionTitle } from "../../store/selectors";
+import { selectSectionTitle, selectFormStatus } from "../../store/selectors";
 import Subsection from "./Subsection";
 import FormNavigation from "./FormNavigation";
 import FormActions from "./FormActions";
 import Autosave from "../fields/Autosave";
-import { Helmet } from 'react-helmet';
 
 // Get section number only from sectionId
 const selectSectionNumber = (sectionId) => {
@@ -17,9 +16,6 @@ const selectSectionNumber = (sectionId) => {
 const Section = ({ subsectionId, title, sectionId }) => {
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <Helmet>
-        <meta name="author" content="CMS" />
-      </Helmet>
       <div className="main">
         <PageInfo />
         <h2 className="print-only">
@@ -38,6 +34,7 @@ const Section = ({ subsectionId, title, sectionId }) => {
   );
 };
 Section.propTypes = {
+  status: PropTypes.string.isRequired,
   subsectionId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   sectionId: PropTypes.string.isRequired,
@@ -48,6 +45,7 @@ const mapStateToProps = (state, { sectionId, subsectionId }) => {
     subsectionId,
     title: selectSectionTitle(state, sectionId),
     sectionId: selectSectionNumber(sectionId),
+    status: selectFormStatus(state),
   };
 };
 
