@@ -44,6 +44,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^2.x",
     "prettier": "^2.4.1",
+    "react-error-overlay": "6.0.9",
     "serverless": "2.72.2",
     "serverless-api-client-certificate": "^1.0.2",
     "serverless-bundle": "^5.0.1",
@@ -67,5 +68,8 @@
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,
     "stepDefinitions": "tests"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }
