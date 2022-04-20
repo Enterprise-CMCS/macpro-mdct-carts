@@ -5,7 +5,7 @@ services:
       context: ./postgres
       dockerfile: Dockerfile
       target: postgres
-    image: postgres:9.6.9
+    image: postgres:12.8
     ports:
       - "5432:5432"
     networks:

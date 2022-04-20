@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import synthesizeValue from "../../util/synthesize";
 
-const SynthesizedTable = ({ question, rows }) => {
+const SynthesizedTable = ({ headers, rows }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <table className="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
-        {question.fieldset_info.headers && (
+        {headers && (
           <thead>
             <tr>
-              {question.fieldset_info.headers.map((header, index) => (
+              {headers.map((header, index) => (
                 <th scope="col" key={index}>
                   {header.contents}
                 </th>
@@ -35,21 +35,33 @@ const SynthesizedTable = ({ question, rows }) => {
 };
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
+  headers: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state, { question }) => {
+  const headers = question.fieldset_info.headers.map((header) => {
+    return header.contents === "" ? { contents: "Type" } : header;
+  });
+
   const rows = question.fieldset_info.rows.map((row) =>
     row.map((cell) => {
       const value = synthesizeValue(cell, state);
 
-      return typeof value.contents === "number" && Number.isNaN(value.contents)
-        ? { contents: "Not Available" }
-        : value;
+      if (Number.isNaN(value.contents)) {
+        return { contents: "Not Available" };
+      } else if (!value.contents) {
+        return { contents: "Not Answered" };
+      } else if (Array.isArray(value.contents)) {
+        return value.contents[0] === ""
+          ? { contents: "Not Answered" }
+          : { contents: value.contents[0] };
+      }
+      return value;
     })
   );
 
-  return { rows };
+  return { headers, rows };
 };
 
 const ConnectedSynthesizedTable = connect(mapStateToProps)(SynthesizedTable);

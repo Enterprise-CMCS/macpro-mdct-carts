@@ -80,12 +80,9 @@ MIDDLEWARE = [
     "carts.cors.CorsMiddleware",
 ]
 
-# TODO: change carts.auth_dev.JwtDevAuthentication to
-# carts.auth.JewAuthentication once we no longer need fake users to bypass
-# authentication, and before deploying to production.
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "carts.auth_dev.JwtDevAuthentication",
+        "carts.auth.JwtAuthentication",
     ],
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
@@ -179,3 +176,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = "/static/"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}

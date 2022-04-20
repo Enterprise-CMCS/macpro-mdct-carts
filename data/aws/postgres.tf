@@ -25,7 +25,7 @@ module "db" {
   version                 = "~> 2.0"
   identifier              = "postgres-rf-${terraform.workspace}"
   engine                  = "postgres"
-  engine_version          = "12.7"
+  engine_version          = "12.8"
   allow_major_version_upgrade = true
   instance_class          = "db.t3.small"
   parameter_group_name    = aws_db_parameter_group.db_param_group_12.id

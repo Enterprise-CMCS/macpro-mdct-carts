@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -64,6 +65,11 @@ const Autosave = ({ isSaving, lastSaved }) => {
       )}
     </div>
   );
+};
+
+Autosave.propTypes = {
+  isSaving: PropTypes.bool,
+  lastSaved: SaveMessage.propTypes.lastSaved,
 };
 
 const mapStateToProps = (state) => ({

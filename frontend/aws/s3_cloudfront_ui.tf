@@ -19,6 +19,14 @@ resource "aws_s3_bucket" "www" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
   }
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 }
 
 data "aws_iam_policy_document" "s3_policy" {
@@ -31,6 +39,37 @@ data "aws_iam_policy_document" "s3_policy" {
       identifiers = [aws_cloudfront_origin_access_identity.s3_origin_access_identity.iam_arn]
     }
   }
+
+  statement {
+    sid     = "AllowSSLRequestsOnly"
+    effect  = "Deny"
+    actions = [ "s3:*" ]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    resources = [ 
+      "${aws_s3_bucket.www.arn}/*", 
+      "${aws_s3_bucket.www.arn}",
+    ]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = [ "false" ]
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "www" {
+  bucket = aws_s3_bucket.www.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket_policy" "www_bucket_policy" {
@@ -50,6 +89,58 @@ resource "aws_cloudfront_function" "hsts_cloudfront_function" {
   code = file("${path.module}/hsts/${var.acm_certificate_domain_api_postgres == "" ? "use-" :"no-"}hsts.js")
 }
 
+resource "aws_s3_bucket" "cloudfront_logs" {
+  bucket = "cartscloudfrontlogs-${terraform.workspace}"
+
+  force_destroy = terraform.workspace == "prod" ? false : true
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "cloudfront_logs" {
+  bucket = aws_s3_bucket.cloudfront_logs.id
+  
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+data "aws_iam_policy_document" "cf_logs_s3_policy" {
+  statement {
+    sid     = "AllowSSLRequestsOnly"
+    effect  = "Deny"
+    actions = [ "s3:*" ]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    resources = [ 
+      "${aws_s3_bucket.cloudfront_logs.arn}/*", 
+      "${aws_s3_bucket.cloudfront_logs.arn}",
+    ]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = [ "false" ]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "cloudfront_logs" {
+  bucket = aws_s3_bucket.cloudfront_logs.id
+  policy = data.aws_iam_policy_document.cf_logs_s3_policy.json
+}
+
 resource "aws_cloudfront_distribution" "www_distribution" {
   origin {
 
@@ -64,6 +155,11 @@ resource "aws_cloudfront_distribution" "www_distribution" {
   enabled             = true
   default_root_object = "index.html"
   web_acl_id          = aws_wafv2_web_acl.uiwaf.arn
+
+  logging_config {
+    bucket = aws_s3_bucket.cloudfront_logs.bucket_domain_name
+    prefix = "AWSLogs/CLOUDFRONT/${terraform.workspace}/"
+  }
 
   custom_error_response {
     error_caching_min_ttl = 3000
@@ -99,6 +195,7 @@ resource "aws_cloudfront_distribution" "www_distribution" {
       event_type   = "viewer-response"
       function_arn = aws_cloudfront_function.hsts_cloudfront_function.arn
     }
+
   }
   restrictions {
     geo_restriction {

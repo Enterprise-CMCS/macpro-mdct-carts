@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
-import Question from "./Question"; // eslint-disable-line import/no-cycle
+import Question from "./Question";
 
 const Repeatable = ({ headerRef, number, question, type }) => {
   const children = question.questions ? question.questions : [];
@@ -12,11 +12,11 @@ const Repeatable = ({ headerRef, number, question, type }) => {
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
-        <h3>
+        <span className="span-pdf-no-bookmark">
           <AccordionButton>
             <div className="accordion-title">{title}</div>
           </AccordionButton>
-        </h3>
+        </span>
       </div>
       <AccordionPanel>
         {children.map((q) => (

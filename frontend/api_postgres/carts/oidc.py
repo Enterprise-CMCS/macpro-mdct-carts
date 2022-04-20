@@ -35,7 +35,7 @@ def fetch_jwks():
 
 @cached(CACHE_LOCATION, 300)
 def fetch_user_info(token):
-    print("fetching user info with token: " + token)
+    print("fetching user info with token")
 
     user_info_uri = metadata("userinfo_endpoint")
     print("fetching user info from: " + user_info_uri)
@@ -54,9 +54,9 @@ def fetch_user_info(token):
             f"EXCEPTION === fetching user failed:  {err}"
         )  # as of python 3.6
     else:
-        print("!! SUCCESS fetching user info", user_info_res.json())
+        print("!! SUCCESS fetching user info")
 
-    print(f"\n\n\n!!!got user info from okta: ", user_info_res.json())
+    print(f"\n\n\n!!!got user info from okta")
     return user_info_res.json()
 
 

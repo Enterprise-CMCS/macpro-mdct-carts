@@ -3,7 +3,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "./App.scss";
 import { BrowserRouter as Router } from "react-router-dom";
 import WrappedSecurity from "./wrapSecurity";
-
+//entrypoint
 function App() {
   return (
     <Router>
@@ -11,5 +11,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
-import { Objective } from "./Objective"; // eslint-disable-line import/no-cycle
+import { Objective } from "./Objective";
 import {
   createNewObjective,
   removeRepeatable,
@@ -62,9 +62,9 @@ const Objectives = ({
       </Accordion>
 
       <div className="section-footer">
-        <h3 className="question-inner-header">
+        <span className="question-inner-header span-pdf-no-bookmark">
           Do you have another objective in your State Plan?
-        </h3>
+        </span>
 
         <div className="ds-c-field__hint">Optional</div>
         <button

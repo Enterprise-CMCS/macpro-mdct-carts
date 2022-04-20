@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   postgres:
-    image: postgres:9.6.9
+    image: postgres:12.8
     ports:
       - "5432:5432"
     networks:
@@ -46,7 +46,7 @@ services:
       - POSTGRES_API_URL=localhost
       - OPENID_DISCOVERY_URL=https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration
       - ENDPOINT_UI=http://localhost:81
-      - DJANGO_SETTINGS_MODULE=carts.settings
+      - DJANGO_SETTINGS_MODULE=carts.settings_local
       - ENVIRONMENT=local
     volumes:
       - ./api_postgres/:/usr/src/app/

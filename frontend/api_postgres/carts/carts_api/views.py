@@ -1,45 +1,20 @@
-import json
-import string
-from typing import (
-    Dict,
-    List,
-    Union,
-)
-
-import boto3
-import os
-import random
-
-
-from datetime import datetime
-from django.contrib.auth.models import User, Group  # type: ignore
-from django.db.models import Q
-from django.http import HttpResponse, JsonResponse  # type: ignore
-from django.template.loader import get_template, render_to_string  # type: ignore
-from django.utils import timezone  # type: ignore
-from jsonpath_ng.ext import parse  # type: ignore
-from jsonpath_ng import DatumInContext  # type: ignore
-from rest_framework import viewsets  # type: ignore
-from rest_framework.decorators import (  # type: ignore
-    api_view,
-)
-from rest_framework.exceptions import (  # type: ignore
-    PermissionDenied,
-    ValidationError,
-)
-from rest_framework.response import Response  # type: ignore
-from rest_framework.permissions import (  # type: ignore
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
-from carts.auth_dev import JwtDevAuthentication
-from carts.permissions import (
-    AdminHideRoleFromUsername,
-    AdminHideRoleFromJobCode,
-    AdminHideRolesFromJobCode,
-    AdminHideStatesFromUsername,
-    StateChangeSectionPermission,
-    StateViewSectionPermission,
+from django.core.serializers.json import DjangoJSONEncoder
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
+from carts.carts_api.model_utils import validate_status_change
+from carts.carts_api.models import (
+    FormTemplate,
+    RoleFromUsername,
+    RoleFromJobCode,
+    RolesFromJobCode,
+    Section,
+    SectionBase,
+    SectionSchema,
+    State,
+    StateStatus,
+    StatesFromUsername,
+    UserProfiles,
+    UploadedFiles,
 )
 from carts.carts_api.serializers import (
     UserSerializer,
@@ -55,26 +30,54 @@ from carts.carts_api.serializers import (
     StateStatusSerializer,
     StatesFromUsernameSerializer,
 )
-from carts.carts_api.models import (
-    FormTemplate,
-    RoleFromUsername,
-    RoleFromJobCode,
-    RolesFromJobCode,
-    Section,
-    SectionBase,
-    SectionSchema,
-    State,
-    StateStatus,
-    StatesFromUsername,
-    UserProfiles,
-    UploadedFiles,
+from carts.permissions import (
+    AdminHideRoleFromUsername,
+    AdminHideRoleFromJobCode,
+    AdminHideRolesFromJobCode,
+    AdminHideStatesFromUsername,
+    StateChangeSectionPermission,
+    StateViewSectionPermission,
 )
-from carts.carts_api.model_utils import validate_status_change
+from carts.auth_fake import (
+    get_or_create_fake_user,
+    are_fake_users_allowed,
+)
+from rest_framework.permissions import (  # type: ignore
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
+from rest_framework.response import Response  # type: ignore
+from rest_framework.exceptions import (  # type: ignore
+    PermissionDenied,
+    ValidationError,
+)
+from rest_framework.decorators import (  # type: ignore
+    api_view,
+)
+from rest_framework import viewsets  # type: ignore
+from jsonpath_ng import DatumInContext  # type: ignore
+from jsonpath_ng.ext import parse  # type: ignore
+from django.utils import timezone  # type: ignore
+from django.template.loader import get_template, render_to_string  # type: ignore
+from django.http import HttpResponse, JsonResponse  # type: ignore
+from django.db.models import Q
+from django.contrib.auth.models import User, Group  # type: ignore
+from datetime import datetime
+import base64
+import random
+import os
+from http import HTTPStatus
+import json
+import string
+from typing import (
+    Dict,
+    List,
+    Union,
+)
+import requests
+import boto3
 
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.csrf import ensure_csrf_cookie
-
-from django.core.serializers.json import DjangoJSONEncoder
+from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
 
 # TODO: This should be absolutely stored elswhere.
 STATE_INFO = {
@@ -209,17 +212,17 @@ def update_formtemplates_by_year(request):
             #
             # Update State Status
             #
-            allUsers = StateStatus.objects.all()
-            for newStateStatus in allUsers.iterator():
+            allStates = State.objects.all()
+            for state in allStates.iterator():
                 try:
                     stateExists = StateStatus.objects.filter(
-                        state=newStateStatus.state_id, year=year
+                        state=state.code, year=year
                     )
 
                     if len(stateExists) == 0:
                         createdStateStatus = StateStatus.objects.create(
                             year=year,
-                            state_id=newStateStatus.state_id,
+                            state=state,
                             user_name="pguser",
                             last_changed=datetime.now(tz=timezone.utc),
                         )
@@ -227,9 +230,9 @@ def update_formtemplates_by_year(request):
                 except:
                     print(
                         "WARNING: StateStatus Create Failed for user: "
-                        + newStateStatus.user_name
+                        + "pguser"
                         + " and State Code: "
-                        + newStateStatus.state_id
+                        + state.code
                         + " and Year: "
                         + str(year)
                     )
@@ -239,6 +242,28 @@ def update_formtemplates_by_year(request):
             "{'SUCCESS':'update_formtemplates_by_year'}", cls=DjangoJSONEncoder
         )
     )
+
+
+@api_view(["POST"])
+def prince_req(request):
+    api_endpoint = os.environ.get("PRINCE_API_ENDPOINT", "")
+    aws_host = api_endpoint.split("/")[-3]
+
+    try:
+        auth = BotoAWSRequestsAuth(
+            aws_host=aws_host,
+            aws_region="us-east-1",
+            aws_service="execute-api",
+        )
+        r = requests.post(
+            url=api_endpoint, data=request.data["encodedHtml"], auth=auth
+        )
+    except Exception as e:
+        print(e)
+        return HttpResponse(status=400, message=e)
+
+    print("PDF successfully encoded")
+    return HttpResponse(r.text)
 
 
 @api_view(["POST"])
@@ -1064,8 +1089,12 @@ def UserDeactivateViewSet(request, user=None):
 
 
 def fake_user_data(request, username=None):  # pylint: disable=unused-argument
-    jwt_auth = JwtDevAuthentication()
-    user, _ = jwt_auth.authenticate(request, username=username)
+    if not are_fake_users_allowed():
+        return JsonResponse(
+            {"detail": "Fake Users Not Allowed"},
+            status=500,
+        )
+    user = get_or_create_fake_user(username)
     state = user.appuser.states.all()[0] if user.appuser.states.all() else []
     groups = ", ".join(user.groups.all().values_list("name", flat=True))
 

@@ -48,7 +48,7 @@ const FormActions = (props) => {
   /**
    * Toggles printDialogue component display
    */
-  const togglePrintDiaglogue = () => {
+  const togglePrintDialogue = () => {
     setPrintShow(!printShow);
   };
 
@@ -61,7 +61,7 @@ const FormActions = (props) => {
     event.preventDefault();
 
     // Close dialogue box
-    togglePrintDiaglogue();
+    togglePrintDialogue();
     window.print();
   };
 
@@ -70,7 +70,7 @@ const FormActions = (props) => {
       <div className="print-button">
         <Button
           className="ds-c-button--primary ds-c-button--small"
-          onClick={togglePrintDiaglogue}
+          onClick={togglePrintDialogue}
           title="Print"
         >
           <FontAwesomeIcon icon={faPrint} /> Print
@@ -81,7 +81,7 @@ const FormActions = (props) => {
           <div className="close">
             <Button
               className="ds-c-button--transparent ds-c-button--small"
-              onClick={togglePrintDiaglogue}
+              onClick={togglePrintDialogue}
               title="close"
             >
               <FontAwesomeIcon icon={faWindowClose} />
@@ -106,7 +106,7 @@ const FormActions = (props) => {
                 }`}
                 title="Entire Form"
                 target="_blank"
-                onClick={togglePrintDiaglogue}
+                onClick={togglePrintDialogue}
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>

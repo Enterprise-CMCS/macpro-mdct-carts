@@ -39,7 +39,7 @@
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "react-searchable-dropdown": "^1.2.5",
     "react-uuid": "^1.0.2",
     "redux": "^4.0.5",
@@ -91,7 +91,7 @@
   "prettier": {},
   "husky": {
     "hooks": {
-      "pre-commit": "npx prettier $(git diff --diff-filter=ACMR --cached --name-only --relative | xargs) --check --ignore-unknown"
+      "pre-commit": "npx prettier $(git diff --diff-filter=ACMR --name-only --relative origin/master -- | xargs) --write --ignore-unknown"
     }
   }
 }

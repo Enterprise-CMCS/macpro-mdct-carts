@@ -8,13 +8,6 @@ import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
 
-// Print page
-const printWindow = (event) => {
-  event.preventDefault();
-  //send to server
-  window.print();
-};
-
 /**
  * Generate data and load entire form based on user information
  *
@@ -48,13 +41,19 @@ const Print = ({ currentUser, state }) => {
     });
     const htmlString = document
       .querySelector("html")
-      .innerHTML.replaceAll(
+      .outerHTML.replaceAll(
         '<link href="',
         `<link href="https://${window.location.host}`
-      );
+      )
+      .replaceAll(`’`, `'`)
+      .replaceAll(`‘`, `'`)
+      .replaceAll(`”`, `"`)
+      .replaceAll(`“`, `"`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
-
+    // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
+    const res = await axios.post("prince", {
+      encodedHtml: base64String,
+    });
     openPdf(res.data);
   };
   // Load formData via side effect
@@ -141,7 +140,7 @@ const Print = ({ currentUser, state }) => {
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
-        onClick={printWindow}
+        onClick={getPdfFriendlyDocument}
         title="Print"
       >
         <FontAwesomeIcon icon={faPrint} /> Print

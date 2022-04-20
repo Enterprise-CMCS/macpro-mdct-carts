@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Accordion, AccordionItem } from "@reach/accordion";
 
-import { Repeatable } from "./Repeatable"; // eslint-disable-line import/no-cycle
+import { Repeatable } from "./Repeatable";
 import {
   createNewRepeatable,
   removeRepeatable,
@@ -68,9 +68,9 @@ const Repeatables = ({
       </Accordion>
 
       <div className="section-footer">
-        <h3 className="question-inner-header">
+        <span className="question-inner-header span-pdf-no-bookmark">
           Do you have another{type ? ` ${type}` : ""} in this list?
-        </h3>
+        </span>
 
         <div className="ds-c-field__hint">Optional</div>
         <button

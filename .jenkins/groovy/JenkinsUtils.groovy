@@ -139,7 +139,7 @@ void terraformApply(String stateBucket, String workspace, String action, Map tfv
 def terraformOutput(String stateBucket, String workspace, String outputVar) {
   terraformInit(stateBucket)
   terraformSelectWorkspace(workspace)
-  sh(script: "~/.local/bin/terraform output ${outputVar}", returnStdout: true).trim()
+  sh(script: "~/.local/bin/terraform output -json ${outputVar} | jq -r .", returnStdout: true).trim()
 }
 
 void runInspecScan(String name, String taskDef, String cluster, String subnets, String securityGroup){

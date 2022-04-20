@@ -184,7 +184,7 @@ const Ranges = ({ onChange, question }) => {
 
   return (
     <div className="cmsranges">
-      {header && <h3>{header}</h3>}
+      {header && <span className="span-pdf-no-bookmark">{header}</span>}
 
       {values.map((rowValues, row) =>
         rowValues.map((categoryValues, index) => (
