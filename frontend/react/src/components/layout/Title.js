@@ -6,6 +6,8 @@ const Title = ({ stateName, formYear, urlStateName }) => {
   let displayStateName = stateName;
   if (stateName === undefined && urlStateName !== undefined) {
     displayStateName = urlStateName;
+  } else if (stateName === undefined && urlStateName === undefined) {
+    displayStateName = "";
   }
 
   return (
