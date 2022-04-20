@@ -17,7 +17,9 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
-      - uses: actions/checkout@v2  
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  
      # - name: set commit_count
       #  run: |
        #   echo "COMMIT_COUNT=`git rev-list HEAD --count` " >> $GITHUB_ENV 
