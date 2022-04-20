@@ -19,14 +19,14 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - name: set commit_count
         run: |
-          echo "COMMIT_COUNT=`git rev-list HEAD --count `" >> $GITHUB_ENV 
+          echo "COMMIT_COUNT=`git rev-list HEAD --count` " >> $GITHUB_ENV 
       - uses: actions/checkout@v2
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
       - name: set branch specific variable names
         run: |
           ./.github/build_vars.sh set_names
-          echo "BUILD_TAG=0.1.$COMMIT_COUNT" >> "$GITHUB_ENV"
+          echo "BUILD_TAG=0.1.`git rev-list HEAD --count` >> "$GITHUB_ENV"
       - name: Create env var for  postgress deployer ECR repo name
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
