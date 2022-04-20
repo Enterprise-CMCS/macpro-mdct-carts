@@ -7,7 +7,7 @@ on:
     #  - "dev-*"
     #  - "*"
     #  - "dependabot/**"
-      - "!skipci*"
+     # - "!skipci*"
 
 jobs:
   deploy:
