@@ -134,7 +134,7 @@ const Print = ({ currentUser, state }) => {
           onClick={getPdfFriendlyDocument}
           title="Print"
         >
-          <FontAwesomeIcon icon={faPrint} /> Print
+          <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> Print
         </Button>
       </div>
 
@@ -148,7 +148,7 @@ const Print = ({ currentUser, state }) => {
         onClick={getPdfFriendlyDocument}
         title="Print"
       >
-        <FontAwesomeIcon icon={faPrint} /> Print
+        <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> Print
       </Button>
     </div>
   );

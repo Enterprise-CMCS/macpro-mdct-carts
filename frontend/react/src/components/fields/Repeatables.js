@@ -80,7 +80,7 @@ const Repeatables = ({
           className="add-objective ds-c-button ds-c-button--primary"
         >
           Add another{type && ` ${type}`}
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon aria-hidden="true" icon={faPlus} />
         </button>
       </div>
     </>
