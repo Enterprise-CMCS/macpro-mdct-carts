@@ -28,10 +28,10 @@ jobs:
       # Use the output from the `commitswithintime` step
       - name: Get the output from CommitsWithinTime and set BUILD TAG
         run: |
-        echo "The 'has-new-commits-within-time' value is ${{ steps.commitswithintime.outputs.has-new-commits-within-time }}"
-        echo "The 'number-of-commits-within-time' value is ${{ steps.commitswithintime.outputs.number-of-commits-within-time }}"
-        echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
-        echo "BUILD_TAG=0.1.${{ steps.commitswithintime.outputs.total-commits }}" >> "$GITHUB_ENV"
+          echo "The 'has-new-commits-within-time' value is ${{ steps.commitswithintime.outputs.has-new-commits-within-time }}"
+          echo "The 'number-of-commits-within-time' value is ${{ steps.commitswithintime.outputs.number-of-commits-within-time }}"
+          echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
+          echo "BUILD_TAG=0.1.${{ steps.commitswithintime.outputs.total-commits }}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v2
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
