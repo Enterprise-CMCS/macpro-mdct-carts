@@ -1,4 +1,4 @@
-name: Master-deploy
+name: master-deploy
 
 on:
   push:
@@ -51,6 +51,13 @@ jobs:
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+        with:
+          key: foo-docker-cache-{hash}
+          restore-keys: |
+            foo-docker-cache-      
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
