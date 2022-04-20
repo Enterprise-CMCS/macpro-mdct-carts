@@ -1,11 +1,11 @@
 locals {
-  postgres_password = var.use_custom_db_password_info ? "/${terraform.workspace}/custom/postgres_custom_password" : "/${terraform.workspace}/postgres_password"
-  postgres_user = var.use_custom_db_user_info ? "/${terraform.workspace}/custom/postgres_custom_user" : "/${terraform.workspace}/postgres_user"
+  postgres_password     = var.use_custom_db_password_info ? "/${terraform.workspace}/custom/postgres_custom_password" : "/${terraform.workspace}/postgres_password"
+  postgres_user         = var.use_custom_db_user_info ? "/${terraform.workspace}/custom/postgres_custom_user" : "/${terraform.workspace}/postgres_user"
   endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}:8000" : "https://${var.acm_certificate_domain_api_postgres}"
   django_settings_module = {
     "prod" : "carts.settings"
   }
-  prince_api_ssm_path = substr(terraform.workspace, 0, 4) == "dev-" ? "/default/prince_api_endpoint"  : "/${terraform.workspace}/prince_api_endpoint"
+  prince_api_ssm_path = substr(terraform.workspace, 0, 4) == "dev-" ? "/default/prince_api_endpoint" : "/${terraform.workspace}/prince_api_endpoint"
 }
 
 
@@ -365,7 +365,8 @@ resource "aws_wafv2_web_acl_association" "apipostgreswafalb" {
 data "aws_caller_identity" "current" {}
 
 locals {
-  account_id = data.aws_caller_identity.current.account_id
+  account_id        = data.aws_caller_identity.current.account_id
+  is_legacy_account = local.account_id == "730373213083"
 }
 
 // data "aws_s3_bucket" "webacl_s3" {
@@ -373,35 +374,46 @@ locals {
 // }
 
 # Need to update with Prod and Val Bucket name
-locals { waf_logging_bucket = { prod: "cms-cloud-730373213083-us-east-1-legacy", val: "cms-cloud-730373213083-us-east-1-legacy", master: "cms-cloud-730373213083-us-east-1-legacy" } }
+locals {
+  legacy_waf_logging_buckets = {
+    prod : "cms-cloud-730373213083-us-east-1-legacy",
+    val : "cms-cloud-730373213083-us-east-1-legacy",
+    master : "cms-cloud-730373213083-us-east-1-legacy"
+  }
+  legacy_waf_logging_bucket = lookup(local.legacy_waf_logging_buckets, terraform.workspace, local.legacy_waf_logging_buckets["master"])
+  waf_logging_bucket        = "cms-cloud-${local.account_id}-us-east-1"
+}
 
 data "aws_s3_bucket" "webacl_s3" {
-  bucket = "${lookup(local.waf_logging_bucket, terraform.workspace, local.waf_logging_bucket["master"])}"
+  bucket = local.is_legacy_account ? local.legacy_waf_logging_bucket : local.waf_logging_bucket
 }
 
 // ##Create S3 Sub-folder
 resource "aws_s3_bucket_object" "waf_bucket_folder" {
-    bucket = "${data.aws_s3_bucket.webacl_s3.id}"
-    acl    = "private"
-    ##key= "/Prefix/Sub-folder/"
-    key    = "CloudTrail/${terraform.workspace}/"
-    
+  bucket = data.aws_s3_bucket.webacl_s3.id
+  acl    = "private"
+  ##key= "/Prefix/Sub-folder/"
+  key = "CloudTrail/${terraform.workspace}/"
+
 }
 # # ========================Create Kinesis firehose and role ========================
 resource "aws_kinesis_firehose_delivery_stream" "stream" {
-  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
+  count       = var.enable_log_waf_acl == true ? 1 : 0
   name        = "aws-waf-logs-${terraform.workspace}"
   destination = "extended_s3"
 
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = data.aws_s3_bucket.webacl_s3.arn
-    prefix ="CloudTrail/${terraform.workspace}/"
+    prefix     = "CloudTrail/${terraform.workspace}/"
   }
 }
 
 resource "aws_iam_role" "firehose_role" {
   name = "KinesisFirehoseRole-aws-${terraform.workspace}"
+
+  path                 = local.is_legacy_account ? null : data.aws_ssm_parameter.iam_path[0].value
+  permissions_boundary = local.is_legacy_account ? null : data.aws_ssm_parameter.permissions_boundary[0].value
 
   assume_role_policy = <<EOF
 {
@@ -421,9 +433,9 @@ EOF
 }
 
 resource "aws_iam_role_policy" "firehose_policy" {
-  depends_on  = [aws_kinesis_firehose_delivery_stream.stream]
-  name = "KinesisFirehosePolicy-aws-${terraform.workspace}"
-  role = aws_iam_role.firehose_role.id
+  depends_on = [aws_kinesis_firehose_delivery_stream.stream]
+  name       = "KinesisFirehosePolicy-aws-${terraform.workspace}"
+  role       = aws_iam_role.firehose_role.id
 
   policy = <<-EOF
   {
@@ -473,7 +485,7 @@ resource "aws_iam_role_policy" "firehose_policy" {
 
 # =================== Enable WAF Logging ===================
 resource "aws_wafv2_web_acl_logging_configuration" "log" {
-  count = "${var.enable_log_waf_acl == true ? 1 : 0}"
-  log_destination_configs = [ aws_kinesis_firehose_delivery_stream.stream[count.index].arn ]
+  count                   = var.enable_log_waf_acl == true ? 1 : 0
+  log_destination_configs = [aws_kinesis_firehose_delivery_stream.stream[count.index].arn]
   resource_arn            = aws_wafv2_web_acl.apiwaf.arn
 }
