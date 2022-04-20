@@ -95,7 +95,8 @@ const FormActions = (props) => {
                 onClick={printWindow}
                 title="This Section"
               >
-                <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> This Section
+                <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> This
+                Section
               </Button>
             </div>
             <div className="print-form">
@@ -108,7 +109,8 @@ const FormActions = (props) => {
                 target="_blank"
                 onClick={togglePrintDialogue}
               >
-                <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> Entire Form
+                <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> Entire
+                Form
               </Button>
             </div>
           </div>

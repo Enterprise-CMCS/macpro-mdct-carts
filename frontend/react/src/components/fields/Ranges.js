@@ -208,7 +208,8 @@ const Ranges = ({ onChange, question }) => {
       ) : null}
       {values.length > min || min === 0 ? (
         <Button onClick={removeRow} type="button" variation="primary">
-          Remove Last Entry <FontAwesomeIcon aria-hidden="true" icon={faMinusCircle} />
+          Remove Last Entry{" "}
+          <FontAwesomeIcon aria-hidden="true" icon={faMinusCircle} />
         </Button>
       ) : null}
     </div>

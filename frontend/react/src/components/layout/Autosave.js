@@ -7,7 +7,7 @@ import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import SaveMessage from "./SaveMessage";
 import { selectLastSave, selectIsSaving } from "../../store/save.selectors";
 
-const Check = () => <FontAwesomeIcon  icon={faCheck} />;
+const Check = () => <FontAwesomeIcon icon={faCheck} />;
 const Spinner = () => <FontAwesomeIcon icon={faSpinner} spin />;
 
 /**
