@@ -3,7 +3,7 @@ name: Dev-deploy
 on:
   push:
     branches:
-      - "actions-*"
+      - "actions-migration"
     #  - "dev-*"
     #  - "*"
     #  - "dependabot/**"
