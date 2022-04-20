@@ -24,7 +24,9 @@ const Print = ({ currentUser, state }) => {
   const search = useLocation().search;
   const stateInitials = new URLSearchParams(search).get("state");
   const formYear = new URLSearchParams(search).get("year");
-  const stateName = statesArray.find(({ value }) => value === stateInitials)?.label
+  const stateName = statesArray.find(
+    ({ value }) => value === stateInitials
+  )?.label;
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -99,13 +101,11 @@ const Print = ({ currentUser, state }) => {
   }, [currentUser]);
 
   const sections = [];
-  
 
   // Check if formData has values
   const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
-
-    sections.push(<Title urlStateName={stateName}/>);
+    sections.push(<Title urlStateName={stateName} />);
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
     for (let i = 0; i < formData.length; i++) {

@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const Title = ({ stateName, formYear, urlStateName }) => {
-
   let displayStateName = stateName;
-  if(stateName === undefined && urlStateName !== undefined) {
+  if (stateName === undefined && urlStateName !== undefined) {
     displayStateName = urlStateName;
   }
 
   return (
-  <div className="h1-title-report">
-    <h1>
-      {displayStateName} CARTS FY{formYear} Report
-    </h1>
-  </div>
-)};
+    <div className="h1-title-report">
+      <h1>
+        {displayStateName} CARTS FY{formYear} Report
+      </h1>
+    </div>
+  );
+};
 Title.propTypes = {
   stateName: PropTypes.string.isRequired,
   formYear: PropTypes.object.isRequired,
