@@ -13,7 +13,7 @@ output "s3_bucket_name" {
 }
 
 output "cloudfront_distribution_id" {
-  value = "${aws_cloudfront_distribution.www_distribution.id}"
+  value = aws_cloudfront_distribution.www_distribution.id
 }
 
 output "s3_uploads_bucket_name" {

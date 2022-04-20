@@ -9595,6 +9595,12 @@ serverless-dotenv-plugin@^3.0.0:
     dotenv "^8.2.0"
     dotenv-expand "^5.1.0"
 
+"serverless-iam-helper@github:cmsgov/serverless-iam-helper":
+  version "1.0.0"
+  resolved "https://codeload.github.com/cmsgov/serverless-iam-helper/tar.gz/e51709dfbb9461c18712cc429f489504d543c4c7"
+  dependencies:
+    lodash "^4.17.21"
+
 serverless-offline@^6.8.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-6.9.0.tgz#a87fee3561f34808be9ac8ab06db9278cea8fa5f"

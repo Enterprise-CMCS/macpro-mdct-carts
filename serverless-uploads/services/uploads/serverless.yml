@@ -6,18 +6,21 @@ plugins:
   - serverless-plugin-scripts
   - serverless-s3-local
   - serverless-stack-termination-protection
+  - serverless-iam-helper
   - serverless-s3-bucket-helper
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
+  iam:
+    role:
+      path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
-  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
   serverlessTerminationProtection:
     stages: # This is a list of common names for important envs that should not be destroyed.  You can remove the stage names your project doesn't use; this list is meant to be inclusive.
       - master
@@ -80,7 +83,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
             - ""
-            - ${self:custom.iamPermissionsBoundaryPolicy}
+            - ${self:provider.iam.role.permissionsBoundary}
   Resources:
     ClamDefsBucket:
       Type: AWS::S3::Bucket
@@ -117,11 +120,11 @@ resources:
               Principal:
                 Service: "lambda.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
+            - ${self:provider.iam.role.permissionsBoundary}
             - !Ref AWS::NoValue
         Policies:
           - PolicyName: "BucketAVScanRolePolicy"
@@ -143,11 +146,15 @@ resources:
                     - s3:PutObjectTagging
                     - s3:PutObjectVersionTagging
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*
+                  Resource:
+                    - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}/*
+                    - !Sub arn:aws:s3:::carts-uploads-${self:custom.stage}/*
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
+                  Resource:
+                    - !Sub arn:aws:s3:::cartscms-uploads-${self:custom.stage}
+                    - !Sub arn:aws:s3:::carts-uploads-${self:custom.stage}
                 - Effect: "Allow"
                   Action:
                     - s3:GetObject
@@ -162,11 +169,11 @@ resources:
               Principal:
                 Service: "lambda.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
+            - ${self:provider.iam.role.permissionsBoundary}
             - !Ref AWS::NoValue
         Policies:
           - PolicyName: "BucketAVDownloadRolePolicy"

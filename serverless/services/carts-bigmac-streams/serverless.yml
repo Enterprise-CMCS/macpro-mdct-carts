@@ -10,18 +10,21 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
   - serverless-online
+  - serverless-iam-helper
   - serverless-s3-bucket-helper
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
+  iam:
+    role:
+      path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
-  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   privateSubnets:
@@ -77,7 +80,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
             - ""
-            - ${self:custom.iamPermissionsBoundaryPolicy}
+            - ${self:provider.iam.role.permissionsBoundary}
   Resources:
     KafkaConnectWorkerLogGroup:
       Type: "AWS::Logs::LogGroup"
@@ -124,12 +127,12 @@ resources:
                   - "ecs.amazonaws.com"
                   - "ecs-tasks.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
-            - Ref: AWS::NoValue
+            - ${self:provider.iam.role.permissionsBoundary}
+            - !Ref AWS::NoValue
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         Policies:
@@ -246,12 +249,12 @@ resources:
               Principal:
                 Service: "lambda.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
-            - Ref: AWS::NoValue
+            - ${self:provider.iam.role.permissionsBoundary}
+            - !Ref AWS::NoValue
         ManagedPolicyArns:
           - !Sub arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
         Policies:
@@ -283,12 +286,12 @@ resources:
               Principal:
                 Service: "lambda.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
+        Path: ${self:provider.iam.role.path}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
-            - Ref: AWS::NoValue
+            - ${self:provider.iam.role.permissionsBoundary}
+            - !Ref AWS::NoValue
         Policies:
           - PolicyName: "LambdaRolePolicy"
             PolicyDocument:
