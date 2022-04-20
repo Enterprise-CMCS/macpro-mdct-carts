@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
-import { loadSections } from "../../actions/initial";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
+import statesArray from "../Utils/statesArray";
+import { loadSections } from "../../actions/initial";
+import { useLocation } from "react-router-dom";
 
 /**
  * Generate data and load entire form based on user information
@@ -19,6 +21,10 @@ import axios from "../../authenticatedAxios";
  */
 const Print = ({ currentUser, state }) => {
   const dispatch = useDispatch();
+  const search = useLocation().search;
+  const stateInitials = new URLSearchParams(search).get("state");
+  const formYear = new URLSearchParams(search).get("year");
+  const stateName = statesArray.find(({ value }) => value === stateInitials)?.label
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -40,9 +46,10 @@ const Print = ({ currentUser, state }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
+    document.title = stateName + " CARTS FY" + formYear + " Report";
     const htmlString = document
       .querySelector("html")
-      .innerHTML.replaceAll(
+      .outerHTML.replaceAll(
         '<link href="',
         `<link href="https://${window.location.host}`
       )
@@ -51,7 +58,6 @@ const Print = ({ currentUser, state }) => {
       .replaceAll(`”`, `"`)
       .replaceAll(`“`, `"`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
     const res = await axios.post("prince", {
       encodedHtml: base64String,
     });
@@ -99,7 +105,7 @@ const Print = ({ currentUser, state }) => {
   const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
 
-    sections.push(<Title />);
+    sections.push(<Title urlStateName={stateName}/>);
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
     for (let i = 0; i < formData.length; i++) {
@@ -159,8 +165,8 @@ Print.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.stateUser,
   state,
+  currentUser: state.stateUser,
 });
 
 export default connect(mapStateToProps)(Print);

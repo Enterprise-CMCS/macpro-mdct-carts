@@ -1,3 +1,5 @@
+import statesArray from "../components/Utils/statesArray";
+
 // Storing global variables that will be the same regardless of users
 const activeYears = ["2020", "2021", "2022", "2023", "2024"];
 String.prototype.containsAny =
@@ -17,6 +19,14 @@ const initialState = {
   isFetching: false,
 };
 
+export const updateStateName = (stateInitials) => {
+  const stateName = statesArray.find(({ value }) => value === stateInitials)?.label
+  return {
+    type: "UPDATE_STATE_NAME",
+    stateName,
+  };
+};
+
 export const updateFormYear = (year) => {
   return {
     type: "UPDATE_FORM_YEAR",
@@ -28,9 +38,10 @@ export const updateFormYear = (year) => {
 export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
   state.url = document.location.pathname.toString();
+  state.queryParams = document.location.search.toString();
   state.currentYear = 2021;
   for (let activeYear in activeYears) {
-    if (state.url.indexOf(activeYears[activeYear]) != -1) {
+    if (state.url.indexOf(activeYears[activeYear]) != -1 || state.queryParams.indexOf(activeYears[activeYear]) != -1) {
       state.formYear = activeYears[activeYear];
       break;
     }
@@ -48,6 +59,8 @@ export default function global(state = initialState, action) {
     return { ...state, isFetching: false };
   } else if (action.type === "UPDATE_FORM_YEAR") {
     return { ...state, formYear: action.year, isFetching: false };
+  } else if (action.type === "UPDATE_STATE_NAME") {
+    return { ...state, stateName: action.stateName, isFetching: false };
   }
   return state;
 }
