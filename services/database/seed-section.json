@@ -1,0 +1,131 @@
+[
+    {
+        "stateId": "AL",
+        "year": 2022,
+        "sectionId": 0,
+        "contents": {
+            "section": {
+              "id": "2022-00",
+              "type": "section",
+              "year": 2022,
+              "state": "AL",
+              "title": "Basic State Information",
+              "valid": null,
+              "ordinal": 0,
+              "subsections": [
+                {
+                  "id": "2022-00-a",
+                  "type": "subsection",
+                  "parts": [
+                    {
+                      "id": "2022-00-a-01",
+                      "text": "We already have some information about your state from our records. If any information is incorrect, please contact the [mdct_help@cms.hhs.gov](mailto:mdct_help@cms.hhs.gov).",
+                      "type": "part",
+                      "title": "Welcome!",
+                      "questions": [
+                        {
+                          "id": "2022-00-a-01-01",
+                          "type": "text",
+                          "label": "State or territory name:",
+                          "answer": {
+                            "entry": "Alabama",
+                            "readonly": true,
+                            "prepopulated": true
+                          }
+                        },
+                        {
+                          "id": "2022-00-a-01-02",
+                          "type": "radio",
+                          "label": "Program type:",
+                          "answer": {
+                            "entry": "combo",
+                            "options": [
+                              {
+                                "label": "Both Medicaid Expansion CHIP and Separate CHIP",
+                                "value": "combo"
+                              },
+                              {
+                                "label": "Medicaid Expansion CHIP only",
+                                "value": "medicaid_exp_chip"
+                              },
+                              {
+                                "label": "Separate CHIP only",
+                                "value": "separate_chip"
+                              }
+                            ],
+                            "readonly": true,
+                            "prepopulated": true
+                          }
+                        },
+                        {
+                          "id": "2022-00-a-01-03",
+                          "type": "text_medium",
+                          "label": "CHIP program name(s):",
+                          "answer": {
+                            "entry": "All Kids",
+                            "readonly": false,
+                            "prepopulated": true
+                          }
+                        },
+                        {
+                          "type": "fieldset",
+                          "label": "Who should we contact if we have any questions about your report?",
+                          "questions": [
+                            {
+                              "id": "2022-00-a-01-04",
+                              "type": "text",
+                              "label": "Contact name:",
+                              "answer": {
+                                "entry": "Tester"
+                              }
+                            },
+                            {
+                              "id": "2022-00-a-01-05",
+                              "type": "text",
+                              "label": "Job title:",
+                              "answer": {
+                                "entry": "Director"
+                              }
+                            },
+                            {
+                              "id": "2022-00-a-01-06",
+                              "type": "email",
+                              "label": "Email:",
+                              "answer": {
+                                "entry": ""
+                              }
+                            },
+                            {
+                              "id": "2022-00-a-01-07",
+                              "hint": "Include city, state, and zip code.",
+                              "type": "mailing_address",
+                              "label": "Full mailing address:",
+                              "answer": {
+                                "entry": "Alabama Department of Public Health, CHIP PO Box 303017 Montgomery, AL 36130"
+                              }
+                            },
+                            {
+                              "id": "2022-00-a-01-08",
+                              "type": "phone_number",
+                              "label": "Phone number:",
+                              "answer": {
+                                "entry": "123-456-7890"
+                              }
+                            },
+                            {
+                              "hint": "This information is being collected to assist the Centers for Medicare & Medicaid Services (CMS) in partnership with States with the ongoing management of Medicaid and CHIP programs and policies. This mandatory information collection (42 U.S.C. 1397hh) will be used to help each state meet the statutory requirements at section 2108(a) of the Social Security Act to assess the operation of the State child health plan in each Federal fiscal year and to report the results of the assessment including the progress made in reducing the number of uncovered, low-income children. Under the Privacy Act of 1974 any personally identifying information obtained will be kept private to the extent of the law. According to the Paperwork Reduction Act of 1995, no persons are required to respond to a collection of information unless it displays a valid OMB control number. The valid OMB control number for this information collection is 0938-1148 (CMS-10398 #1). The time required to complete this information collection is estimated to average 40 hours per response, including the time to review instructions, search existing data resources, gather the data needed, and complete and review the information collection. Send comments regarding this burden estimate or any other aspect of this collection of information, including suggestions for reducing this burden, to CMS, 7500 Security Boulevard, Attn: Paperwork Reduction Act Reports Clearance Officer, Mail Stop C4-26-05, Baltimore, Maryland 21244-1850.",
+                              "type": "fieldset",
+                              "label": "PRA Disclosure Statement.",
+                              "questions": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+    }
+]

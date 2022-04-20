@@ -112,5 +112,8 @@
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
     ]
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }
