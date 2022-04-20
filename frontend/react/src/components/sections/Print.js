@@ -19,14 +19,17 @@ import { useLocation } from "react-router-dom";
  * @returns {JSX.Element}
  * @constructor
  */
-const Print = ({ currentUser, state }) => {
+const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
   const search = useLocation().search;
-  const stateInitials = new URLSearchParams(search).get("state");
+  let stateName = "";
+  if (name !== undefined && name !== null) {
+    stateName = name;
+  } else {
+    const stateInitials = new URLSearchParams(search).get("state");
+    stateName = statesArray.find(({ value }) => value === stateInitials)?.label;
+  }
   const formYear = new URLSearchParams(search).get("year");
-  const stateName = statesArray.find(
-    ({ value }) => value === stateInitials
-  )?.label;
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -162,11 +165,13 @@ const Print = ({ currentUser, state }) => {
 Print.propTypes = {
   state: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
+  name: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   state,
   currentUser: state.stateUser,
+  name: state.stateUser.name,
 });
 
 export default connect(mapStateToProps)(Print);

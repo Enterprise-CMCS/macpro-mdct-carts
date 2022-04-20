@@ -2,12 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const Title = ({ stateName, formYear, urlStateName }) => {
-  let displayStateName = stateName;
-  if (stateName === undefined && urlStateName !== undefined) {
+const Title = ({ name, stateName, formYear, urlStateName }) => {
+  let displayStateName = "";
+  if (name !== undefined && name !== null) {
+    displayStateName = name;
+  } else if (urlStateName !== undefined && urlStateName !== null) {
     displayStateName = urlStateName;
-  } else if (stateName === undefined && urlStateName === undefined) {
-    displayStateName = "";
+  } else if (stateName !== undefined && stateName !== null) {
+    displayStateName = stateName;
   }
 
   return (
@@ -19,12 +21,14 @@ const Title = ({ stateName, formYear, urlStateName }) => {
   );
 };
 Title.propTypes = {
-  stateName: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  stateName: PropTypes.string,
+  urlStateName: PropTypes.string,
   formYear: PropTypes.object.isRequired,
-  urlStateName: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
+  name: state.stateUser.name,
   stateName: state.global.stateName,
   formYear: state.global.formYear,
 });

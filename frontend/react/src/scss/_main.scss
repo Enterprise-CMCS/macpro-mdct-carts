@@ -50,7 +50,7 @@
   }
 
   .h1-title-report {
-    margin-top: 16px;
+    margin-top: $padding * 2;
     margin-left: 0px;
 
     h1 {
@@ -61,8 +61,8 @@
 }
 
 .h1-title-report {
-  margin-top: 16px;
-  margin-left: 16px;
+  margin-top: $padding * 2;
+  margin-left: $padding * 2;
 
   h1 {
     font-weight: bold;
