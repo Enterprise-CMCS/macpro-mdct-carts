@@ -17,9 +17,10 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
-      - name: set commit_count
-        run: |
-          echo "COMMIT_COUNT=`git rev-list HEAD --count` " >> $GITHUB_ENV 
+      - uses: actions/checkout@v2  
+     # - name: set commit_count
+      #  run: |
+       #   echo "COMMIT_COUNT=`git rev-list HEAD --count` " >> $GITHUB_ENV 
       - name: Run CommitsWithinTime script
         uses: AlexHolderDeveloper/CommitsWithinTime@v1.1.5
         id: commitswithintime
@@ -32,7 +33,6 @@ jobs:
           echo "The 'number-of-commits-within-time' value is ${{ steps.commitswithintime.outputs.number-of-commits-within-time }}"
           echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
           echo "BUILD_TAG=0.1.${{ steps.commitswithintime.outputs.total-commits }}" >> "$GITHUB_ENV"
-      - uses: actions/checkout@v2
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
       - name: set branch specific variable names
