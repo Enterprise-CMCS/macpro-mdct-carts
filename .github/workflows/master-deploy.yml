@@ -26,7 +26,7 @@ jobs:
       - name: set branch specific variable names
         run: |
           ./.github/build_vars.sh set_names
-          echo "BUILD_TAG=0.1.`git rev-list HEAD --count` >> "$GITHUB_ENV"
+          echo "BUILD_TAG=0.1.`git rev-list HEAD --count`" >> "$GITHUB_ENV"
       - name: Create env var for  postgress deployer ECR repo name
         run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
       - name: Create env var for  API postgress django ecr repo name
