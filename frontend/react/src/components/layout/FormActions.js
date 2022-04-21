@@ -95,8 +95,7 @@ const FormActions = (props) => {
                 onClick={printWindow}
                 title="This Section"
               >
-                <FontAwesomeIcon icon={faPrint} /> This
-                Section
+                <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
             </div>
             <div className="print-form">
@@ -109,8 +108,7 @@ const FormActions = (props) => {
                 target="_blank"
                 onClick={togglePrintDialogue}
               >
-                <FontAwesomeIcon icon={faPrint} /> Entire
-                Form
+                <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
             </div>
           </div>

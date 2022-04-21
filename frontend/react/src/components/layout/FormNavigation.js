@@ -86,8 +86,7 @@ const FormNavigation = (props) => {
                   history.push(previousUrl);
                 }}
               >
-                <FontAwesomeIcon icon={faAngleLeft} />{" "}
-                Previous
+                <FontAwesomeIcon icon={faAngleLeft} /> Previous
               </Button>
             </div>
           ) : null}
