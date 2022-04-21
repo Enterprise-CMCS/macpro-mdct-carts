@@ -183,8 +183,8 @@ jobs:
         run: |
           git tag $BUILD_TAG -f
           git tag master-tag -f
-          git push -f refs/tags/$BUILD_TAG
-          git push -f refs/tags/master-tag
+          git push --tags
+          
 
       #- name: Run Test
       #  run: ./test_deploy.sh
