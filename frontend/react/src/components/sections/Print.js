@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system-core";
 import PropTypes from "prop-types";
-import { loadSections } from "../../actions/initial";
+import Title from "../layout/Title";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
+import statesArray from "../Utils/statesArray";
+import { loadSections } from "../../actions/initial";
+import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 /**
@@ -17,8 +20,13 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element}
  * @constructor
  */
-const Print = ({ currentUser, state }) => {
+const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
+  const search = useLocation().search;
+  const stateInitials = new URLSearchParams(search).get("state");
+  const stateName =
+    name || statesArray.find(({ value }) => value === stateInitials)?.label;
+  const formYear = new URLSearchParams(search).get("year");
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -51,7 +59,6 @@ const Print = ({ currentUser, state }) => {
       .replaceAll(`”`, `"`)
       .replaceAll(`“`, `"`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
     const res = await axios.post("prince", {
       encodedHtml: base64String,
     });
@@ -97,6 +104,7 @@ const Print = ({ currentUser, state }) => {
   // Check if formData has values
   const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
+    sections.push(<Title urlStateName={stateName} />);
     // Loop through each section to get sectionId
     /* eslint-disable no-plusplus */
     for (let i = 0; i < formData.length; i++) {
@@ -139,6 +147,9 @@ const Print = ({ currentUser, state }) => {
       </div>
 
       <Helmet>
+        <title>
+          {stateName} CARTS FY{formYear} Report
+        </title>
         <meta name="author" content="CMS" />
         <meta name="subject" content="Annual CARTS Report" />
       </Helmet>
@@ -157,11 +168,13 @@ const Print = ({ currentUser, state }) => {
 Print.propTypes = {
   state: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
+  name: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   state,
   currentUser: state.stateUser,
+  name: state.stateUser.name,
 });
 
 export default connect(mapStateToProps)(Print);
