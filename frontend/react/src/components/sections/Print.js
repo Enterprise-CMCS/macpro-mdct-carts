@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
+import { Helmet } from "react-helmet";
 
 /**
  * Generate data and load entire form based on user information
@@ -137,6 +138,10 @@ const Print = ({ currentUser, state }) => {
         </Button>
       </div>
 
+      <Helmet>
+        <meta name="author" content="CMS" />
+        <meta name="subject" content="Annual CARTS Report" />
+      </Helmet>
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
@@ -155,8 +160,8 @@ Print.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.stateUser,
   state,
+  currentUser: state.stateUser,
 });
 
 export default connect(mapStateToProps)(Print);

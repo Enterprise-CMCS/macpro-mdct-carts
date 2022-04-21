@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import PageInfo from "./PageInfo";
-import { selectSectionTitle } from "../../store/selectors";
+import { selectSectionTitle, selectFormStatus } from "../../store/selectors";
 import Subsection from "./Subsection";
 import FormNavigation from "./FormNavigation";
 import FormActions from "./FormActions";
@@ -34,6 +34,7 @@ const Section = ({ subsectionId, title, sectionId }) => {
   );
 };
 Section.propTypes = {
+  status: PropTypes.string.isRequired,
   subsectionId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   sectionId: PropTypes.string.isRequired,
@@ -44,6 +45,7 @@ const mapStateToProps = (state, { sectionId, subsectionId }) => {
     subsectionId,
     title: selectSectionTitle(state, sectionId),
     sectionId: selectSectionNumber(sectionId),
+    status: selectFormStatus(state),
   };
 };
 
