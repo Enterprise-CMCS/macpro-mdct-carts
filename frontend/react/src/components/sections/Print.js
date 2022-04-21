@@ -22,13 +22,8 @@ import { useLocation } from "react-router-dom";
 const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
   const search = useLocation().search;
-  let stateName = "";
-  if (name !== undefined && name !== null) {
-    stateName = name;
-  } else {
-    const stateInitials = new URLSearchParams(search).get("state");
-    stateName = statesArray.find(({ value }) => value === stateInitials)?.label;
-  }
+  const stateInitials = new URLSearchParams(search).get("state");
+  const stateName = name || statesArray.find(({ value }) => value === stateInitials)?.label;
   const formYear = new URLSearchParams(search).get("year");
 
   const openPdf = (basePdf) => {
