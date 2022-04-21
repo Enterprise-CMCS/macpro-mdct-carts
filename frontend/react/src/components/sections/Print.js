@@ -23,7 +23,8 @@ const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
   const search = useLocation().search;
   const stateInitials = new URLSearchParams(search).get("state");
-  const stateName = name || statesArray.find(({ value }) => value === stateInitials)?.label;
+  const stateName =
+    name || statesArray.find(({ value }) => value === stateInitials)?.label;
   const formYear = new URLSearchParams(search).get("year");
 
   const openPdf = (basePdf) => {
