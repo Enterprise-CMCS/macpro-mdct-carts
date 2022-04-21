@@ -20,8 +20,9 @@ const initialState = {
 };
 
 export const updateStateName = (stateInitials) => {
-  const stateName = statesArray.find(({ value }) => value === stateInitials)
-    ?.label;
+  const stateName = statesArray.find(
+    ({ value }) => value === stateInitials
+  )?.label;
   return {
     type: "UPDATE_STATE_NAME",
     stateName,
