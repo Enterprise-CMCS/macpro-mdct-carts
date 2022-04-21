@@ -55,17 +55,17 @@ export default function global(state = initialState, action) {
   if (state.formYear == undefined) {
     state.formYear = 2020;
   }
-  if (action.type === "CONTENT_FETCHING_STARTED") {
-    return { ...state, isFetching: true };
-  }
 
-  // Triggers isFetching which deactivates Spinner.js (reactRouter.js)
-  if (action.type === "CONTENT_FETCHING_FINISHED") {
-    return { ...state, isFetching: false };
-  } else if (action.type === "UPDATE_FORM_YEAR") {
-    return { ...state, formYear: action.year, isFetching: false };
-  } else if (action.type === "UPDATE_STATE_NAME") {
-    return { ...state, stateName: action.stateName, isFetching: false };
+  switch (action.type) {
+    case "CONTENT_FETCHING_STARTED":
+      return { ...state, isFetching: true };
+    case "CONTENT_FETCHING_FINISHED":
+      return { ...state, isFetching: false };
+    case "UPDATE_FORM_YEAR":
+      return { ...state, formYear: action.year, isFetching: false };
+    case "UPDATE_STATE_NAME":
+      return { ...state, stateName: action.stateName, isFetching: false };
+    default:
+      return state;
   }
-  return state;
 }
