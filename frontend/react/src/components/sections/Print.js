@@ -48,7 +48,6 @@ const Print = ({ currentUser, state, name }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
-    // document.title = stateName + " CARTS FY" + formYear + " Report";
     const htmlString = document
       .querySelector("html")
       .outerHTML.replaceAll(
