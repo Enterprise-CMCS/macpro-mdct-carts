@@ -44,8 +44,8 @@ export default function global(state = initialState, action) {
   state.currentYear = 2021;
   for (let activeYear in activeYears) {
     if (
-      state.url.indexOf(activeYears[activeYear]) != -1 ||
-      state.queryParams.indexOf(activeYears[activeYear]) != -1
+      state.url.indexOf(activeYears[activeYear]) !== -1 ||
+      state.queryParams.indexOf(activeYears[activeYear]) !== -1
     ) {
       state.formYear = activeYears[activeYear];
       break;
