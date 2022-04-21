@@ -148,7 +148,9 @@ const Print = ({ currentUser, state, name }) => {
       </div>
 
       <Helmet>
-        <title>{stateName} CARTS FY{formYear} Report</title>
+        <title>
+          {stateName} CARTS FY{formYear} Report
+        </title>
         <meta name="author" content="CMS" />
         <meta name="subject" content="Annual CARTS Report" />
       </Helmet>
