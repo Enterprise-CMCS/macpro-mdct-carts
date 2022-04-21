@@ -74,7 +74,7 @@ const Objectives = ({
           className="add-objective ds-c-button ds-c-button--primary"
         >
           Add another objective
-          <FontAwesomeIcon aria-hidden="true" icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
     </>

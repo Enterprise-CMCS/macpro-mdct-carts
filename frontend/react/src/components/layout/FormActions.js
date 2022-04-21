@@ -73,7 +73,7 @@ const FormActions = (props) => {
           onClick={togglePrintDialogue}
           title="Print"
         >
-          <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> Print
+          <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
       {printShow ? (
@@ -84,7 +84,7 @@ const FormActions = (props) => {
               onClick={togglePrintDialogue}
               title="close"
             >
-              <FontAwesomeIcon aria-hidden="true" icon={faWindowClose} />
+              <FontAwesomeIcon icon={faWindowClose} />
             </Button>
           </div>
           <h4>Print</h4>
@@ -95,7 +95,7 @@ const FormActions = (props) => {
                 onClick={printWindow}
                 title="This Section"
               >
-                <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> This
+                <FontAwesomeIcon icon={faPrint} /> This
                 Section
               </Button>
             </div>
@@ -109,7 +109,7 @@ const FormActions = (props) => {
                 target="_blank"
                 onClick={togglePrintDialogue}
               >
-                <FontAwesomeIcon aria-hidden="true" icon={faPrint} /> Entire
+                <FontAwesomeIcon icon={faPrint} /> Entire
                 Form
               </Button>
             </div>
