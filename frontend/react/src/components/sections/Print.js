@@ -48,7 +48,7 @@ const Print = ({ currentUser, state, name }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
-    document.title = stateName + " CARTS FY" + formYear + " Report";
+    // document.title = stateName + " CARTS FY" + formYear + " Report";
     const htmlString = document
       .querySelector("html")
       .outerHTML.replaceAll(
@@ -148,6 +148,7 @@ const Print = ({ currentUser, state, name }) => {
       </div>
 
       <Helmet>
+        <title>{stateName} CARTS FY{formYear} Report</title>
         <meta name="author" content="CMS" />
         <meta name="subject" content="Annual CARTS Report" />
       </Helmet>
