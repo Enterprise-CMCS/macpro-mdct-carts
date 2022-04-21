@@ -22,6 +22,7 @@ locals {
 
 data "aws_db_snapshot" "db_snapshot" {
     most_recent = true
+    db_snapshot_identifier = "postgres-rf-prod"
 }
 module "db" {
   source                      = "terraform-aws-modules/rds/aws"
