@@ -29,10 +29,10 @@ terraform ${action} -var "${varString1}" -var "${varString2}" -input=false -auto
 
 #set frontend env variables from terraform output Files
 
-CLOUDFRONT_DISTRIBUTION_ID=$(terraform output cloudfront_distribution_id)
-S3_BUCKET_NAME=$(terraform output s3_bucket_name)
-API_POSTGRES_UR=$(terraform output api_postgres_endpoint)
-PRINCE_API_ENDPOINT=$(terraform output prince_api_endpoint)
+CLOUDFRONT_DISTRIBUTION_ID=$(terraform output -json cloudfront_distribution_id | jq -r .)
+S3_BUCKET_NAME=$(terraform output -json s3_bucket_name | jq -r .)
+API_POSTGRES_UR=$(terraform output -json api_postgres_endpoint | jq -r .)
+PRINCE_API_ENDPOINT=$(terraform output -json prince_api_endpoint | jq -r .)
 
 
 #download and unzip artifacts from s3
