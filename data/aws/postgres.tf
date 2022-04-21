@@ -20,6 +20,9 @@ locals {
   }
 }
 
+data "aws_db_snapshot" "db_snapshot" {
+    most_recent = true
+}
 module "db" {
   source                      = "terraform-aws-modules/rds/aws"
   version                     = "~> 2.0"
@@ -42,6 +45,10 @@ module "db" {
   backup_window               = "03:00-06:00"
   skip_final_snapshot         = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "false" : "true"
   backup_retention_period     = terraform.workspace == "prod" ? 21 : 0
+  snapshot_identifier = data.aws_db_snapshot.db_snapshot.id
+  lifecycle {
+    ignore_changes = [snapshot_identifier]
+  }
   tags = {
     Environment = terraform.workspace
   }
