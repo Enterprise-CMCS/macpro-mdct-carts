@@ -3,14 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const Title = ({ name, stateName, formYear, urlStateName }) => {
-  let displayStateName = "";
-  if (name !== undefined && name !== null) {
-    displayStateName = name;
-  } else if (urlStateName !== undefined && urlStateName !== null) {
-    displayStateName = urlStateName;
-  } else if (stateName !== undefined && stateName !== null) {
-    displayStateName = stateName;
-  }
+  const displayStateName = name || urlStateName || stateName || "";
 
   return (
     <div className="h1-title-report">
