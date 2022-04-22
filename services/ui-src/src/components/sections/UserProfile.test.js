@@ -1,11 +1,26 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
+import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import UserProfile from "./UserProfile";
 
 const mockStore = configureMockStore();
-const store = mockStore({});
+const store = mockStore({
+  stateUser: {
+    currentUser: {
+      email: "",
+      username: "",
+      firstname: "",
+      lastname: "",
+      role: "",
+      state: {
+        id: "",
+      },
+    },
+  },
+});
 
 const userProfile = (
   <Provider store={store}>
@@ -16,5 +31,13 @@ const userProfile = (
 describe("UserProfile", () => {
   it("should render the UserProfile Component correctly", () => {
     expect(shallow(userProfile).exists()).toBe(true);
+  });
+});
+
+describe("Test UserProfile accessibility", () => {
+  it("Should not have basic accessibility issues", async () => {
+    const wrapper = mount(userProfile);
+    const results = await axe(wrapper.html());
+    expect(results).toHaveNoViolations();
   });
 });

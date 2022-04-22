@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const UserProfile = ({ currentUser }) => {
   return (
-    <div className="page-info">
+    <main className="page-info">
       <div className="ds-l-col--12 content ds-u-padding-left--4 ">
         <h1>User Profile</h1>
         <div className="main">
@@ -32,7 +32,7 @@ const UserProfile = ({ currentUser }) => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
