@@ -64,10 +64,6 @@ jobs:
           SLACK_CHANNEL_NAME: acme-dev
           SLACK_TEAM_DOMAIN_NAME: collabralink
           SAF_SCAN: false
-
-          
-          
-
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:
