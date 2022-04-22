@@ -19,11 +19,6 @@ locals {
     ]
   }
 }
-
-data "aws_db_snapshot" "db_snapshot" {
-    most_recent = true
-    db_snapshot_identifier = "postgres-rf-prod"
-}
 module "db" {
   source                      = "terraform-aws-modules/rds/aws"
   version                     = "~> 2.0"
@@ -46,10 +41,7 @@ module "db" {
   backup_window               = "03:00-06:00"
   skip_final_snapshot         = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "false" : "true"
   backup_retention_period     = terraform.workspace == "prod" ? 21 : 0
-  snapshot_identifier = data.aws_db_snapshot.db_snapshot.id
-  lifecycle {
-    ignore_changes = [snapshot_identifier]
-  }
+  snapshot_identifier         = local.is_legacy_account ? null : var.new_env_snapshot_id
   tags = {
     Environment = terraform.workspace
   }
@@ -57,7 +49,7 @@ module "db" {
   family                          = "postgres12"
   major_engine_version            = "12"
   final_snapshot_identifier       = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "postgres-${terraform.workspace}" : "false"
-  deletion_protection             = false
+  deletion_protection             = !local.is_legacy_account && (terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging")  ? "true" : "false"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
 

@@ -14,3 +14,7 @@ variable "postgres_db" {
 variable "skip_data_deployment" {
   default = false
 }
+
+variable "new_env_snapshot_id" {
+  default = "postgres-rf-master-dev-migration-test"
+}
