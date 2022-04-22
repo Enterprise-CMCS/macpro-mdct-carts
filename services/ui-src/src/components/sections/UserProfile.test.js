@@ -1,6 +1,5 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
