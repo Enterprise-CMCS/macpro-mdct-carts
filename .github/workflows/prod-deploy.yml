@@ -1,44 +1,27 @@
-name: master-deploy
+name: prod-deploy
 
 on:
-  push:
-    branches:
-      - "actions-testing"
-    #  - "dev-*"
-    #  - "*"
-    #  - "dependabot/**"
-     # - "!skipci*"
-
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version to deploy.  Versions are published by development pipelines and indicate which artifacts to deploy and what git tag to pull.  This should be a tag of format (number).(number).(number)  ex. 0.1.20',
+        required: true 
+        default: ''
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: ''
+        type: choice
+        options:
+        - staging
+        - prod
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  
-      - name: Run CommitsWithinTime script
-        uses: AlexHolderDeveloper/CommitsWithinTime@v1.1.5
-        id: commitswithintime
-        with:
-          hours: 24
-      # Use the output from the `commitswithintime` step
-      - name: Get the output from CommitsWithinTime and set BUILD TAG
-        run: |
-          echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
-          echo "BUILD_TAG=0.1.${{ steps.commitswithintime.outputs.total-commits }}" >> "$GITHUB_ENV"
-      - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
-      - name: set branch specific variable names
-        run: |
-          ./.github/build_vars.sh set_names
-      - name: Create env var for  postgress deployer ECR repo name
-        run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
-      - name: Create env var for  API postgress django ecr repo name
-        run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
@@ -54,17 +37,11 @@ jobs:
           TF_VAR_openid_discovery_url: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
-        with:
-          key: foo-docker-cache-{hash}
-          restore-keys: |
-            foo-docker-cache-      
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}    
+      - name: Create vars for  postgress deployer and postgres_django ECR repo name
+        run: |
+          echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
+          echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -89,48 +66,14 @@ jobs:
         with:
           terraform_version: 1.0.11
           terraform_wrapper: false
-     # - name: Chrome setup
-     #   uses: browser-actions/setup-chrome@latest
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: Build, tag, and push postgres_deployer (data layer) image
-        id: postgres_deployer_build
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG:  ${{env.BUILD_TAG}}       #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
-        run: |
-          pushd data/postgres_deployer
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-          popd
-      - name: Build, tag, and push postgres_django(frontend/api_postgres) image
-        id: postgres_django_build
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}.${{env.HASH}}
-        run: |
-          pushd frontend/api_postgres
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-          popd
-      - name: Build and push react artifacts.
-        env:
-          IMAGE_TAG: ${{env.BUILD_TAG}}          #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-        run: |
-          cd frontend/react
-          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
-          tar -zcvf cartsbuild.tar.gz build
-          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
-          rm -rf cartsbuild.tar.gz
+        uses: aws-actions/amazon-ecr-login@v1        
       - name: Scan postgres_deployer(data layer) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER}}
-          IMAGE_TAG: ${{env.BUILD_TAG}}
+          IMAGE_TAG: ${{ github.event.inputs.version }}
         run: |
           aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
@@ -138,7 +81,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{ github.sha }}
+          IMAGE_TAG: ${{ github.event.inputs.version }}
         run: |
           aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
           aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
@@ -147,37 +90,36 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: image_scan_results
-          path: ecr_scan_*.json
+          path: ecr_scan_*.json  
       - name: Deploy Uploads Scan
         run: |
           cd serverless-uploads
-          ./deploy.sh ${{env.BRANCH_NAME}}
+          ./deploy.sh ${{ github.event.inputs.environment }}  
       - name: Deploy Data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-dev
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: data-aws-logs
-          path: data/aws/log*
+          path: data/aws/log*    
       - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-dev ${{ github.event.inputs.version }}
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: Frontend-aws-logs
-          path: frontend/aws/log*
+          path: frontend/aws/log*   
       - name: Serverless
         run: |
           cd serverless
-          ./deploy.sh ${{env.BRANCH_NAME}}
+          ./deploy.sh ${{ github.event.inputs.environment }}
       - name: Push Tags
         run: |
-          git tag $BUILD_TAG -f
-          git tag master-tag -f
-          git push --tags
-          
+          git tag ${{ github.event.inputs.environment }} -f
+          git push --tags 
+      
 
       #- name: Run Test
       #  run: ./test_deploy.sh
@@ -191,4 +133,3 @@ jobs:
    #       SLACK_COLOR: ${{job.status}}
     #      SLACK_FOOTER: ""
     #      MSG_MINIMAL: actions url,commit,ref
-    
