@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
+import { Helmet } from "react-helmet";
 
 // Print page
 const printWindow = (event) => {
@@ -138,7 +139,10 @@ const Print = ({ currentUser, state }) => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
-
+      <Helmet>
+        <meta name="author" content="CMS" />
+        <meta name="subject" content="Annual CARTS Report" />
+      </Helmet>
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
