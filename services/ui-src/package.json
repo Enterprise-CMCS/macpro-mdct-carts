@@ -104,11 +104,19 @@
     ],
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
-      "services/ui-src/src/**/*.js",
-      "!services/ui-src/src/index.js"
+      "src/**/*.js",
+      "!src/index.js"
     ],
     "coverageReporters": [
-      "text"
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "text-summary"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
