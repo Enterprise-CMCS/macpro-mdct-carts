@@ -9,13 +9,6 @@ import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
 import { Helmet } from "react-helmet";
 
-// Print page
-const printWindow = (event) => {
-  event.preventDefault();
-  //send to server
-  window.print();
-};
-
 /**
  * Generate data and load entire form based on user information
  *
@@ -26,6 +19,24 @@ const printWindow = (event) => {
  */
 const Print = ({ currentUser, state }) => {
   const dispatch = useDispatch();
+
+  function removeButtonTags(htmlString) {
+    let tempHtml = htmlString;
+    let beforeButton = "";
+    let afterButton = "";
+
+    while (tempHtml.indexOf("<button") >= 0) {
+      // get the string before a <button> tag
+      beforeButton = tempHtml.substring(0, tempHtml.indexOf("<button"));
+
+      // get the string after closing </button> tag
+      afterButton = tempHtml.substring(tempHtml.indexOf("</button") + 9);
+
+      // Concatenate HTML string without <button /> tags
+      tempHtml = beforeButton + afterButton;
+    }
+    return tempHtml;
+  }
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -47,12 +58,14 @@ const Print = ({ currentUser, state }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
-    const htmlString = document
-      .querySelector("html")
-      .outerHTML.replaceAll(
-        '<link href="',
-        `<link href="https://${window.location.host}`
-      );
+    let htmlString = document.querySelector("html").outerHTML;
+    htmlString = removeButtonTags(htmlString);
+    htmlString = htmlString
+      .replaceAll('<link href="', `<link href="https://${window.location.host}`)
+      .replaceAll(`’`, `'`)
+      .replaceAll(`‘`, `'`)
+      .replaceAll(`”`, `"`)
+      .replaceAll(`“`, `"`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
     const res = await axios.post("prince", {
@@ -125,6 +138,7 @@ const Print = ({ currentUser, state }) => {
       }
     }
   }
+  console.log({ sections });
 
   // Return sections with wrapper div and print dialogue box
   return (
@@ -139,6 +153,7 @@ const Print = ({ currentUser, state }) => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
+
       <Helmet>
         <meta name="author" content="CMS" />
         <meta name="subject" content="Annual CARTS Report" />
@@ -146,7 +161,7 @@ const Print = ({ currentUser, state }) => {
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
-        onClick={printWindow}
+        onClick={getPdfFriendlyDocument}
         title="Print"
       >
         <FontAwesomeIcon icon={faPrint} /> Print
@@ -161,8 +176,8 @@ Print.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.stateUser,
   state,
+  currentUser: state.stateUser,
 });
 
 export default connect(mapStateToProps)(Print);
