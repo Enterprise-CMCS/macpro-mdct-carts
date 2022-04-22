@@ -3,7 +3,7 @@ name: prod-deploy
 on:
   workflow_dispatch:
     inputs:
-      version:
+      app_version:
         description: 'The version to deploy.  Versions are published by development pipelines and indicate which artifacts to deploy and what git tag to pull.  This should be a tag of format (number).(number).(number)  ex. 0.1.20',
         required: true 
         default: ''
@@ -14,7 +14,7 @@ on:
         type: choice
         options:
         - staging
-        - prod
+        - prod       
 jobs:
   deploy:
     runs-on: ubuntu-latest
