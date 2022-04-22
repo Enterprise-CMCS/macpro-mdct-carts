@@ -10,7 +10,7 @@ jobs:
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
-    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "actions-migration", "production"]'), github.event.ref)
+    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "production"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
@@ -53,7 +53,7 @@ jobs:
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.13.4
+          terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Destroy frontend
         run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
