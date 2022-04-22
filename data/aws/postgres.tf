@@ -49,7 +49,7 @@ module "db" {
   family                          = "postgres12"
   major_engine_version            = "12"
   final_snapshot_identifier       = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "postgres-${terraform.workspace}" : "false"
-  deletion_protection             = local.is_legacy_account && (terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging")  ? "true" : "false"
+  deletion_protection             = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging"  ? "true" : "false"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
 
