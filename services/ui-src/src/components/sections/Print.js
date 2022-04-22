@@ -138,7 +138,6 @@ const Print = ({ currentUser, state }) => {
       }
     }
   }
-  console.log({ sections });
 
   // Return sections with wrapper div and print dialogue box
   return (
