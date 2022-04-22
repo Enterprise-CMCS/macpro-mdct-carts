@@ -1,4 +1,4 @@
-name: prod-deploy
+name: staging-deploy
 
 on:
   workflow_dispatch:
@@ -13,8 +13,7 @@ on:
         default: ''
         type: choice
         options:
-        - staging
-        - prod       
+        - staging-test   
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -31,13 +30,22 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
         #  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         #  CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
-          VPC_NAME: "macpro-dev"
-          OIDC_CLIENT_ID: "0oa4juv4poiQ6nDB6297"
-          OIDC_ISSUER: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
-          TF_VAR_openid_discovery_url: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
+          VPC_NAME: "macpro-val1"
+          OIDC_CLIENT_ID: "0oa53ffe3v5N550ql297"
+          OIDC_ISSUER: "https://impl.idp.idm.cms.gov/oauth2/aus53fd5ewX9dMLEX297"
+          TF_VAR_openid_discovery_url: "https://impl.idp.idm.cms.gov/oauth2/aus53fd5ewX9dMLEX297/.well-known/openid-configuration"
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}    
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}} 
+          TF_VAR_acm_certificate_domain_ui: mdctcartsval.cms.gov
+          TF_VAR_acm_certificate_domain_api_postgres: api.mdctcartsval.cms.gov
+          TF_VAR_skip_data_deployment: true
+          TF_VAR_use_custom_db_password_info: true
+          TF_VAR_postgres_custom_password: /staging/custom/postgres_custom_password
+          SLACK_CREDENTIAL_NAME: SLACK_TOKEN
+          SLACK_CHANNEL_NAME: acme-dev
+          SLACK_TEAM_DOMAIN_NAME: collabralink
+          SAF_SCAN: false   
       - name: Create vars for  postgress deployer and postgres_django ECR repo name
         run: |
           echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
@@ -55,7 +63,7 @@ jobs:
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials for serverless
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -96,7 +104,7 @@ jobs:
           cd serverless-uploads
           ./deploy.sh ${{ github.event.inputs.environment }}  
       - name: Deploy Data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-dev
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-val1
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -104,7 +112,7 @@ jobs:
           name: data-aws-logs
           path: data/aws/log*    
       - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-dev ${{ github.event.inputs.version }}
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-val1 ${{ github.event.inputs.version }}
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3

@@ -55,6 +55,19 @@ jobs:
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+          TF_VAR_acm_certificate_domain_ui: mdctcartsdev.cms.gov
+          TF_VAR_acm_certificate_domain_api_postgres: api.mdctcartsdev.cms.gov
+          TF_VAR_skip_data_deployment: true
+          TF_VAR_postgres_custom_password: /master/custom/postgres_custom_password
+          TF_VAR_use_custom_db_password_info: true
+          SLACK_CREDENTIAL_NAME: SLACK_TOKEN
+          SLACK_CHANNEL_NAME: acme-dev
+          SLACK_TEAM_DOMAIN_NAME: collabralink
+          SAF_SCAN: false
+
+          
+          
+
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh $BRANCH_NAME
         env:

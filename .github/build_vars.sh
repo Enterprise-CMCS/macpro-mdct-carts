@@ -15,6 +15,14 @@ var_list=(
   'ECR_REPOSITORY_POSTGRESS_DEPLOYER'
   'ECR_REPOSITORY_API_POSTGRESS'
   'APPLICATION_BUCKET'
+  'TF_VAR_acm_certificate_domain_ui'
+  'TF_VAR_acm_certificate_domain_api_postgres'
+  'TF_VAR_skip_data_deployment'
+  'TF_VAR_postgres_custom_password'
+  'TF_VAR_use_custom_db_password_info'
+  'SLACK_CREDENTIAL_NAME'
+  'SLACK_CHANNEL_NAME'
+  'SLACK_TEAM_DOMAIN_NAME'
 )
 
 set_value() {
