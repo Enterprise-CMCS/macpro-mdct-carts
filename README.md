@@ -130,7 +130,7 @@ npx jest src/components --watch  # run all component tests and watch for changes
 
 ### Accessibility Tests
 
-Frontend accessibility (a11y) unit tests are being done using Jest with [axe-core](https://github.com/dequelabs/axe-core) and [jest-axe](https://github.com/nickcolley/jest-axe).
+Frontend accessibility (a11y) unit tests are being done using Jest with [axe-core](https://github.com/dequelabs/axe-core) and [jest-axe](https://github.com/nickcolley/jest-axe). To test a component's accessibility, import `axe` from `jest-axe` and pass the rendered component to `axe()`, then check for a11y issues using `toHaveNoViolations()`.
 
 To test the accessibility of an endpoint, [pa11y](https://github.com/pa11y/pa11y) is being used in combination with [aXe](https://www.axe-core.org/) and [HTML CodeSniffer](https://squizlabs.github.io/HTML_CodeSniffer/) as test runners.
 
