@@ -20,24 +20,6 @@ import { Helmet } from "react-helmet";
 const Print = ({ currentUser, state }) => {
   const dispatch = useDispatch();
 
-  function removeButtonTags(htmlString) {
-    let tempHtml = htmlString;
-    let beforeButton = "";
-    let afterButton = "";
-
-    while (tempHtml.indexOf("<button") >= 0) {
-      // get the string before a <button> tag
-      beforeButton = tempHtml.substring(0, tempHtml.indexOf("<button"));
-
-      // get the string after closing </button> tag
-      afterButton = tempHtml.substring(tempHtml.indexOf("</button") + 9);
-
-      // Concatenate HTML string without <button /> tags
-      tempHtml = beforeButton + afterButton;
-    }
-    return tempHtml;
-  }
-
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
     let byteNumbers = new Array(byteCharacters.length);
@@ -58,9 +40,12 @@ const Print = ({ currentUser, state }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
-    let htmlString = document.querySelector("html").outerHTML;
-    htmlString = removeButtonTags(htmlString);
-    htmlString = htmlString
+    document.querySelectorAll("button").forEach((element) => {
+      if (element.title !== "Print") {
+        element.remove();
+      }
+    });
+    const htmlString = document.querySelector("html").outerHTML
       .replaceAll('<link href="', `<link href="https://${window.location.host}`)
       .replaceAll(`’`, `'`)
       .replaceAll(`‘`, `'`)
@@ -138,7 +123,6 @@ const Print = ({ currentUser, state }) => {
       }
     }
   }
-  console.log({ sections });
 
   // Return sections with wrapper div and print dialogue box
   return (
