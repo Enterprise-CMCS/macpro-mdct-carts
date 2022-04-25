@@ -166,7 +166,6 @@ jobs:
           ./deploy.sh ${{env.BRANCH_NAME}}
       - name: Push Tags
         run: |
-          git tag $BUILD_TAG -f  
-          git tag ${{env.BRANCH_NAME}} -f    
+          git tag $BUILD_TAG -f     
           git push -f --tags
           
