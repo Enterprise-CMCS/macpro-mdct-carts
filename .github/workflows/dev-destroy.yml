@@ -50,7 +50,7 @@ jobs:
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.13.7
+          terraform_version: 0.13.4
           terraform_wrapper: false
       - name: Destroy frontend
         run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
