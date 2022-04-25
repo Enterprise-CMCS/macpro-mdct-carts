@@ -15,6 +15,8 @@ variable "skip_data_deployment" {
   default = false
 }
 
-variable "new_env_snapshot_id" {
-  default = "postgres-rf-master-dev-migration-test"
+variable "postgres_restore_snapshot_id" {
+  default     = null
+  type        = string
+  description = "The PostgreSQL database snapshot used to restore or recreate the database"
 }

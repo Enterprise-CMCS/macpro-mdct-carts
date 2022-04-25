@@ -19,6 +19,11 @@ locals {
     ]
   }
 }
+
+locals {
+  is_persistent_workspace = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging"
+}
+
 module "db" {
   source                      = "terraform-aws-modules/rds/aws"
   version                     = "~> 2.0"
@@ -39,17 +44,17 @@ module "db" {
   maintenance_window          = "Mon:00:00-Mon:03:00"
   apply_immediately           = true
   backup_window               = "03:00-06:00"
-  skip_final_snapshot         = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "false" : "true"
+  skip_final_snapshot         = !local.is_persistent_workspace
   backup_retention_period     = terraform.workspace == "prod" ? 21 : 0
-  snapshot_identifier         = local.is_legacy_account ? null : var.new_env_snapshot_id
+  snapshot_identifier         = local.is_legacy_account ? null : var.postgres_restore_snapshot_id
   tags = {
     Environment = terraform.workspace
   }
   subnet_ids                      = data.aws_subnet_ids.private.ids
   family                          = "postgres12"
   major_engine_version            = "12"
-  final_snapshot_identifier       = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging" ? "postgres-${terraform.workspace}" : "false"
-  deletion_protection             = terraform.workspace == "prod" || terraform.workspace == "master" || terraform.workspace == "staging"  ? "true" : "false"
+  final_snapshot_identifier       = local.is_persistent_workspace ? "postgres-${terraform.workspace}" : "false"
+  deletion_protection             = local.is_persistent_workspace
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 }
 
