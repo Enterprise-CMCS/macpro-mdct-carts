@@ -171,7 +171,16 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
 
   return {
     selectFormStatus: (state) => {
-      const { status } = state.reportStatus;
+      const year = state.global.formYear;
+      const stateCode = state.stateUser.abbr;
+      const reportStatusKey = stateCode + year;
+
+      if (!state.reportStatus[reportStatusKey]) {
+        return null;
+      }
+
+      const { status } = state.reportStatus[reportStatusKey];
+
       if (STATUS_MAPPING[status]) {
         return STATUS_MAPPING[status];
       }

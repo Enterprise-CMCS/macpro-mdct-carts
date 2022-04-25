@@ -142,3 +142,7 @@ frontend/react/node_modules
 # JSON generation
 fixtures/
 state-files/
+
+#Serverless
+.serverless/
+
