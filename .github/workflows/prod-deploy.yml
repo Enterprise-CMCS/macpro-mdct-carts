@@ -27,26 +27,19 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-        #  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        #  CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
-          VPC_NAME: "macpro-val1"
-          OIDC_CLIENT_ID: "0oa53ffe3v5N550ql297"
-          OIDC_ISSUER: "https://impl.idp.idm.cms.gov/oauth2/aus53fd5ewX9dMLEX297"
-          TF_VAR_openid_discovery_url: "https://impl.idp.idm.cms.gov/oauth2/aus53fd5ewX9dMLEX297/.well-known/openid-configuration"
+          VPC_NAME: ${{secrets.PROD_VPC_NAME}} 
+          OIDC_CLIENT_ID: ${{secrets.PROD_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.PROD_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.PROD_TF_VAR_OPENID_DISCOVERY_URL}}
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}} 
-          TF_VAR_acm_certificate_domain_ui:
-          TF_VAR_acm_certificate_domain_api_postgres: 
+          TF_VAR_acm_certificate_domain_ui: ${{secrets.PROD_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}} 
+          TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.PROD_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}} 
           TF_VAR_skip_data_deployment: true
           TF_VAR_use_custom_db_password_info: true
-          TF_VAR_postgres_custom_password: /staging/custom/postgres_custom_password
+          TF_VAR_postgres_custom_password: ${{secrets.PROD_TF_VAR_POSTGRES_CUSTOM_PASSWORD}} 
           SAF_SCAN: false   
-      - name: Create vars for  postgress deployer and postgres_django ECR repo name
-        run: |
-          echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
-          echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -101,7 +94,7 @@ jobs:
           cd serverless-uploads
           ./deploy.sh ${{ github.event.inputs.environment }}  
       - name: Deploy Data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-val1
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=m${{env.VPC_NAME}}
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -109,7 +102,7 @@ jobs:
           name: data-aws-logs
           path: data/aws/log*    
       - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=macpro-val1 ${{ github.event.inputs.version }}
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}} ${{ github.event.inputs.version }}
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
