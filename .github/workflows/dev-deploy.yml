@@ -5,8 +5,6 @@ on:
     branches:
       - "actions-migration"
     #  - "dev-*"
-    #  - "*"
-    #  - "dependabot/**"
       - "!skipci*"
 
 jobs:
@@ -36,13 +34,13 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-        #  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        #  CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
-          VPC_NAME: "macpro-dev"
-          OIDC_CLIENT_ID: "0oa4juv4poiQ6nDB6297"
-          OIDC_ISSUER: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
-          TF_VAR_openid_discovery_url: "https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
+          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}  
+          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}  
+          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}} 
+          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}  
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
@@ -72,7 +70,7 @@ jobs:
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.0.11
+          terraform_version: 0.13.7
           terraform_wrapper: false
       - name: Chrome setup
         uses: browser-actions/setup-chrome@latest
