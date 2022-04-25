@@ -1,8 +1,10 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
-import { parserConfiguration } from "yargs";
 
+/**
+ * Updates the Sections associated with a given year and state
+ */
 export const updateSections = handler(async (event, _context) => {
   const { body } = event!;
   const reportData = JSON.parse(body);
@@ -10,29 +12,30 @@ export const updateSections = handler(async (event, _context) => {
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
     throw new Error(
-      "Be sure to include state, year, and section in the path" + event.pathParameters
+      "Be sure to include state, year in the path" +
+        event.pathParameters
     );
   }
 
   const { year, state } = event.pathParameters;
 
-  // Update each of the Sections for the report associated with 
-  // the given year and state
+  // Update each of the Sections for the report
+  // associated with the given year and state
   for (let section = 0; section < reportData.length; section++) {
     const params = {
       TableName: process.env.sectionTableName!,
       Key: {
         pk: `${state}-${year}`,
-        sectionId: parseInt(section),
+        sectionId: section,
       },
       ...convertToDynamoExpression(
         {
-          contents: reportData[section].contents
+          contents: reportData[section].contents,
         },
         "post"
       ),
     };
-  
+
     await dynamoDb.update(params);
   }
 
@@ -43,15 +46,16 @@ export const updateSections = handler(async (event, _context) => {
     ...convertToDynamoExpression(
       {
         stateId: state,
-        year: parseInt(year)
+        year: parseInt(year),
       },
       "list"
     ),
   };
 
   const queryValue = await dynamoDb.scan(params);
+  const stateStatus = queryValue.Items[0];
 
-  if (queryValue.Items[0].status === 'not_started') {
+  if (queryValue.Items && stateStatus.status === "not_started") {
     const params = {
       TableName: process.env.stateStatusTableName!,
       Key: {
@@ -60,12 +64,13 @@ export const updateSections = handler(async (event, _context) => {
       },
       ...convertToDynamoExpression(
         {
-          status: 'in_progress'
+          status: "in_progress",
+          lastChanged: new Date().toString(),
         },
         "post"
       ),
     };
-  
+
     await dynamoDb.update(params);
   }
 });

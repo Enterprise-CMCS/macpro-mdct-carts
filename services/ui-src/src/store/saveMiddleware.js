@@ -53,7 +53,11 @@ const saveMiddleware = (store) => {
         opts.body = store.getState().formData;
         const { stateId, year } = opts.body[0];
 
-        const results = await API.put("carts-api", `/save_report/${year}/${stateId}`, opts);
+        const results = await API.put(
+          "carts-api",
+          `/save_report/${year}/${stateId}`,
+          opts
+        );
 
         /*
          * If the save is successful, we can clear out the list of pending
