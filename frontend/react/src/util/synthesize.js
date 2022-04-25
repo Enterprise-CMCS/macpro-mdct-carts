@@ -176,15 +176,22 @@ const sum = (values) => {
 };
 
 const lookupFMAP = (state, fy) => {
+  console.log("state.allStatesData", state.allStatesData);
+  console.log("state.stateUser", state.stateUser);
   if (state.allStatesData && state.stateUser) {
+    console.log("conquered the if!");
     const stateAbbr = state.stateUser.abbr;
     const stateData = state.allStatesData.filter(
       (st) => st.code === stateAbbr
     )[0];
+    console.log("stateAbbr", stateAbbr);
+    console.log("stateData", stateData);
+    console.log("fy", fy);
     const fmap =
       stateData?.fmap_set.filter((year) => year.fiscal_year === +fy)[0]
         ?.enhanced_FMAP || NaN;
 
+    console.log("returning fmap!", fmap);
     return fmap;
   }
   return "";
