@@ -13,7 +13,7 @@ on:
         default: ''
         type: choice
         options:
-        - staging-test   
+        - staging   
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,8 +28,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-        #  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        #  CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
           VPC_NAME: "macpro-val1"
           OIDC_CLIENT_ID: "0oa53ffe3v5N550ql297"
           OIDC_ISSUER: "https://impl.idp.idm.cms.gov/oauth2/aus53fd5ewX9dMLEX297"
@@ -42,9 +40,6 @@ jobs:
           TF_VAR_skip_data_deployment: false
           TF_VAR_use_custom_db_password_info: false
           TF_VAR_postgres_custom_password: /staging/custom/postgres_custom_password
-         # SLACK_CREDENTIAL_NAME: SLACK_TOKEN
-         # SLACK_CHANNEL_NAME: acme-dev
-         # SLACK_TEAM_DOMAIN_NAME: collabralink
           SAF_SCAN: false   
       - name: Create vars for  postgress deployer and postgres_django ECR repo name
         run: |

@@ -10,7 +10,7 @@ jobs:
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
-    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "production"]'), github.event.ref)
+    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "staging", "production", "prod"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
@@ -53,9 +53,9 @@ jobs:
           terraform_version: 0.13.4
           terraform_wrapper: false
       - name: Destroy frontend
-        run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev ${{env.BUILD_TAG}}
+        run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
       - name: Destroy data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=macpro-dev
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
       - name: Destroy serverless
         run: |
           cd serverless
