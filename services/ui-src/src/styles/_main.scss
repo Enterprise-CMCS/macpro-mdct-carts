@@ -76,8 +76,24 @@ img {
     }
   }
 
+  .h1-title-report {
+    margin-top: $padding * 2;
+    margin-left: 0px;
+
+    h1 {
+      font-weight: bold;
+      margin-top: 0;
+    }
+  }
+}
+
+.h1-title-report {
+  margin-top: $padding * 2;
+  margin-left: $padding * 2;
+
   h1 {
     font-weight: 500;
+    font-weight: bold;
     margin-top: 0;
   }
 }
