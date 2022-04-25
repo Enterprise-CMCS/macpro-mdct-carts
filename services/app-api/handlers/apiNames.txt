@@ -16,3 +16,9 @@ GET /state - return info on all states and territories
 
 -- state_status
 GET /state_status - returns available state statuses for the current user role
+
+-- section
+GET /section/{year}/{state} -- returns the report sections for a given year and state
+
+-- update_report
+PUT /update_report/{year}/{state} -- updates the sections of a given report

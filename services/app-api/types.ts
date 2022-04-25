@@ -25,6 +25,13 @@ export interface StateStatus {
   lastChanged?: string;
 }
 
+export interface Section {
+  year: number;
+  stateId: string;
+  sectionId: number;
+  contents: object;
+}
+
 export interface DynamoStateStatusList {
   Items?: StateStatus[];
   Count?: number;
@@ -45,10 +52,7 @@ export interface DynamoDelete {
 
 export interface DynamoUpdate {
   TableName: string;
-  Key: {
-    compoundKey: string;
-    coreSet: string;
-  };
+  Key: any;
   UpdateExpression?: string;
   ExpressionAttributeNames: { [key: string]: string };
   ExpressionAttributeValues: { [key: string]: any };

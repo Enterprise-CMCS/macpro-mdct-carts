@@ -93,14 +93,14 @@ resources:
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
         AttributeDefinitions:
-          - AttributeName: stateId
+          - AttributeName: pk
             AttributeType: S
-          - AttributeName: year
+          - AttributeName: sectionId
             AttributeType: N
         KeySchema:
-          - AttributeName: stateId
+          - AttributeName: pk
             KeyType: HASH
-          - AttributeName: year
+          - AttributeName: sectionId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
     SectionBaseTable:
