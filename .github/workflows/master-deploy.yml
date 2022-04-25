@@ -167,5 +167,5 @@ jobs:
       - name: Push Tags
         run: |
           git tag $BUILD_TAG -f     
-          git push -f --tags
+          git push --tags
           
