@@ -30,29 +30,23 @@ jobs:
       - name: set branch specific variable names
         run: |
           ./.github/build_vars.sh set_names
-      - name: Create env var for  postgress deployer ECR repo name
-        run:  echo "ECR_REPOSITORY_POSTGRESS_DEPLOYER=postgres_deployer" >> "$GITHUB_ENV"
-      - name: Create env var for  API postgress django ecr repo name
-        run:  echo "ECR_REPOSITORY_API_POSTGRESS=postgres_django" >> "$GITHUB_ENV"
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-         # STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}  # "macpro-dev" 
-          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}  #"0oa4juv4poiQ6nDB6297"
-          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}} #"https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
-          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}   #"https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297/.well-known/openid-configuration"
-          ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}  
+          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}  
+          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}} 
+          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}  
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-          #TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}    #mdctcartsdev.cms.gov
-         # TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}  #api.mdctcartsdev.cms.gov
+          #TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}    
+         # TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}  
          # TF_VAR_skip_data_deployment: true
-        #  TF_VAR_postgres_custom_password: ${{secrets.MASTER_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}  #/master/custom/postgres_custom_password
-         # TF_VAR_use_custom_db_password_info: false
+        #  TF_VAR_postgres_custom_password: ${{secrets.MASTER_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}  
+         # TF_VAR_use_custom_db_password_info: true
           SAF_SCAN: false
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh $BRANCH_NAME
@@ -171,7 +165,7 @@ jobs:
           ./deploy.sh ${{env.BRANCH_NAME}}
       - name: Push Tags
         run: |
-          git tag $BUILD_TAG -f
-          git tag master-tag -f
-          git push --tags
+          git tag $BUILD_TAG -f  
+          git tag ${{env.BRANCH_NAME}} -f    
+          git push -f --tags
           
