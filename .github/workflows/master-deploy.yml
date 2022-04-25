@@ -40,7 +40,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+         # STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           VPC_NAME: ${{secrets.DEV_VPC_NAME}}  # "macpro-dev" 
           OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}  #"0oa4juv4poiQ6nDB6297"
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}} #"https://test.idp.idm.cms.gov/oauth2/aus4itu0feyg3RJTK297"
@@ -172,6 +172,6 @@ jobs:
       - name: Push Tags
         run: |
           git tag $BUILD_TAG -f
-         # git tag master-tag -f
+          git tag master-tag -f
           git push --tags
           
