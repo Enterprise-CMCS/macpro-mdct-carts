@@ -45,8 +45,12 @@ const Print = ({ currentUser, state }) => {
         element.remove();
       }
     });
-    const htmlString = document.querySelector("html").outerHTML
-      .replaceAll('<link href="', `<link href="https://${window.location.host}`)
+    const htmlString = document
+      .querySelector("html")
+      .outerHTML.replaceAll(
+        '<link href="',
+        `<link href="https://${window.location.host}`
+      )
       .replaceAll(`’`, `'`)
       .replaceAll(`‘`, `'`)
       .replaceAll(`”`, `"`)
