@@ -115,6 +115,7 @@ jobs:
           ./deploy.sh ${{ github.event.inputs.environment }}
       - name: Push Tags
         run: |
-          git tag ${{ github.event.inputs.environment }} -f
-          git push --tags 
+          git tag -f ${{ github.event.inputs.environment }} 
+          git push -f origin ${{ github.event.inputs.environment }} 
+         
       
