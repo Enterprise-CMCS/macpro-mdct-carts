@@ -40,6 +40,7 @@ jobs:
           OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}  
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}} 
           TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}  
+          ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
           #TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}    
