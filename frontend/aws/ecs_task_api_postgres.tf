@@ -390,17 +390,10 @@ data "aws_s3_bucket" "webacl_s3" {
 
 // ##Create S3 Sub-folder
 resource "aws_s3_bucket_object" "waf_bucket_folder" {
-<<<<<<< HEAD
-    bucket = "${data.aws_s3_bucket.webacl_s3.id}"
-    acl    = "private"
-    ##key= "/Prefix/Sub-folder/"
-    key    = "CloudTrail/${terraform.workspace}/"
-=======
   bucket = data.aws_s3_bucket.webacl_s3.id
   acl    = "private"
   ##key= "/Prefix/Sub-folder/"
   key = "CloudTrail/${terraform.workspace}/"
->>>>>>> master
 
 }
 # # ========================Create Kinesis firehose and role ========================
