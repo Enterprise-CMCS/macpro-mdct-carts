@@ -19,8 +19,7 @@ export const updateSections = handler(async (event, _context) => {
 
   const { year, state } = event.pathParameters;
 
-  // Update each of the Sections for the report
-  // associated with the given year and state
+  // Update each of the Sections for the report associated with the given year and state
   for (let section = 0; section < reportData.length; section++) {
     const params = {
       TableName: process.env.sectionTableName!,
@@ -39,8 +38,7 @@ export const updateSections = handler(async (event, _context) => {
     await dynamoDb.update(params);
   }
 
-  // Check the State Status for this report and update it
-  // to 'in_progress' if it is currently 'not_started'
+  // Check the State Status for this report and update it to 'in_progress' if it is currently 'not_started'
   const params = {
     TableName: process.env.stateStatusTableName!,
     ...convertToDynamoExpression(

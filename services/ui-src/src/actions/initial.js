@@ -166,8 +166,7 @@ export const getStateStatus =
     }
   };
 
-export const loadSections = ({ userData, stateCode, selectedYear }) => {
-  const state = stateCode || userData.abbr;
+export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
     const results = await API.get(
@@ -217,7 +216,7 @@ export const loadForm = (state) => async (dispatch, getState) => {
 
   try {
     await dispatch(
-      loadSections({ userData: stateUser, stateCode, selectedYear })
+      loadSections({ stateCode, selectedYear })
     );
   } finally {
     // End isFetching for spinner

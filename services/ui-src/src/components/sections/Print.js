@@ -85,7 +85,7 @@ const Print = ({ currentUser, state }) => {
       // Pull data based on user details
       await Promise.all([
         dispatch(
-          loadSections({ userData: currentUser, stateCode, selectedYear })
+          loadSections({ stateCode, selectedYear })
         ),
       ]);
 

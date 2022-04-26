@@ -1,5 +1,4 @@
 import { API } from "aws-amplify";
-import axios from "../authenticatedAxios";
 import requestOptions from "../hooks/authHooks/requestOptions";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
@@ -54,7 +53,7 @@ const saveMiddleware = (store) => {
         // get the state and year from basic state info section
         const { stateId, year } = opts.body[0];
 
-        const results = await API.put(
+        await API.put(
           "carts-api",
           `/save_report/${year}/${stateId}`,
           opts
