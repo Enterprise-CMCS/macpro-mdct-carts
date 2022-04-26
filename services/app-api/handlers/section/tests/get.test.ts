@@ -19,7 +19,7 @@ jest.mock("../../../libs/authorization", () => ({
 
 jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
   __esModule: true,
-  convertToDynamoExpression: jest.fn().mockReturnValue({ testValue: "test" }),
+  convertToDynamoExpression: jest.fn(),
 }));
 
 describe("Test Get Sections Handlers", () => {
