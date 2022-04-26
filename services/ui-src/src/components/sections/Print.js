@@ -83,11 +83,7 @@ const Print = ({ currentUser, state }) => {
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
       // Pull data based on user details
-      await Promise.all([
-        dispatch(
-          loadSections({ stateCode, selectedYear })
-        ),
-      ]);
+      await Promise.all([dispatch(loadSections({ stateCode, selectedYear }))]);
 
       // End isFetching for spinner
       dispatch({ type: "CONTENT_FETCHING_FINISHED" });

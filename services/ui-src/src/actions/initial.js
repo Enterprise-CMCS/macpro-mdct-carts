@@ -215,9 +215,7 @@ export const loadForm = (state) => async (dispatch, getState) => {
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
   try {
-    await dispatch(
-      loadSections({ stateCode, selectedYear })
-    );
+    await dispatch(loadSections({ stateCode, selectedYear }));
   } finally {
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });
