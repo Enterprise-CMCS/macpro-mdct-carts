@@ -171,7 +171,7 @@ export const loadSections = ({ userData, stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
     const results = await API.get("carts-api", `/section/${selectedYear}/${stateCode}`, opts);
-    const data = results.Items;
+    const data = results;
     dispatch({ type: LOAD_SECTIONS, data });
   };
 };

@@ -26,6 +26,7 @@ export interface StateStatus {
 }
 
 export interface Section {
+  pk: string;
   year: number;
   stateId: string;
   sectionId: number;
@@ -52,7 +53,7 @@ export interface DynamoDelete {
 
 export interface DynamoUpdate {
   TableName: string;
-  Key: any;
+  Key: { [key: string]: any };
   UpdateExpression?: string;
   ExpressionAttributeNames: { [key: string]: string };
   ExpressionAttributeValues: { [key: string]: any };

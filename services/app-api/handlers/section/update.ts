@@ -7,7 +7,7 @@ import { StateStatus } from "../../types";
  * Updates the Sections associated with a given year and state
  */
 export const updateSections = handler(async (event, _context) => {
-  const { body } = event!;
+  const { body } = event;
   const reportData = JSON.parse(body || '{}');
 
   if (!event.pathParameters) throw new Error("No Path Parameters Object");

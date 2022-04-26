@@ -27,5 +27,5 @@ export const getSections = handler(async (event, _context) => {
   };
 
   const queryValue = await dynamoDb.scan(params);
-  return queryValue;
+  return queryValue.Items;
 });
