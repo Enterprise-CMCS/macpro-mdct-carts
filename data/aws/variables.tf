@@ -14,3 +14,9 @@ variable "postgres_db" {
 variable "skip_data_deployment" {
   default = false
 }
+
+variable "postgres_restore_snapshot_id" {
+  default     = null
+  type        = string
+  description = "The PostgreSQL database snapshot used to restore or recreate the database"
+}
