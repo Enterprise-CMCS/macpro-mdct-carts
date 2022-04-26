@@ -7,13 +7,7 @@ import PropTypes from "prop-types";
 import { loadSections } from "../../actions/initial";
 import Section from "../layout/Section";
 import axios from "../../authenticatedAxios";
-
-// Print page
-const printWindow = (event) => {
-  event.preventDefault();
-  //send to server
-  window.print();
-};
+import { Helmet } from "react-helmet";
 
 /**
  * Generate data and load entire form based on user information
@@ -46,12 +40,21 @@ const Print = ({ currentUser, state }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
+    document.querySelectorAll("button").forEach((element) => {
+      if (element.title !== "Print") {
+        element.remove();
+      }
+    });
     const htmlString = document
       .querySelector("html")
       .outerHTML.replaceAll(
         '<link href="',
         `<link href="https://${window.location.host}`
-      );
+      )
+      .replaceAll(`’`, `'`)
+      .replaceAll(`‘`, `'`)
+      .replaceAll(`”`, `"`)
+      .replaceAll(`“`, `"`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     // const res = await axios.post(window.env.PRINCE_API_ENDPOINT, base64String);
     const res = await axios.post("prince", {
@@ -139,10 +142,14 @@ const Print = ({ currentUser, state }) => {
         </Button>
       </div>
 
+      <Helmet>
+        <meta name="author" content="CMS" />
+        <meta name="subject" content="Annual CARTS Report" />
+      </Helmet>
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
-        onClick={printWindow}
+        onClick={getPdfFriendlyDocument}
         title="Print"
       >
         <FontAwesomeIcon icon={faPrint} /> Print
@@ -157,8 +164,8 @@ Print.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.stateUser,
   state,
+  currentUser: state.stateUser,
 });
 
 export default connect(mapStateToProps)(Print);

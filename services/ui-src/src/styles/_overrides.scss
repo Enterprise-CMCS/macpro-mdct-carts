@@ -307,15 +307,10 @@
 }
 
 .omb-info {
-  color: #81858d;
+  color: $color-hint-light;
   font-size: 0.85rem;
   line-height: 1.6rem;
   margin: 64px 0;
-}
-
-.reports {
-  color: #81858d;
-  width: 100%;
 }
 
 .reports h3 {

@@ -91,7 +91,7 @@ img {
 }
 
 .reports {
-  color: $color-hint;
+  color: $color-hint-light;
   width: 100%;
 
   h3 {
@@ -167,6 +167,12 @@ img {
 
   .report-section-title {
     margin-left: ($margin * 2);
+  }
+
+  .update-date {
+    color: $color-hint-light;
+    text-align: right;
+    text-transform: uppercase;
   }
 
   .updates {

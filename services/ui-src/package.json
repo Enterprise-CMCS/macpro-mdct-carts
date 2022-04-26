@@ -30,6 +30,7 @@
     "react-data-table-component": "^6.11.6",
     "react-data-table-component-extensions": "^1.5.0",
     "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
     "react-html-parser": "^2.0.2",
     "react-json-editor-ajrm": "^2.5.13",
     "react-json-editor-viewer": "^1.0.7",
@@ -93,6 +94,7 @@
     "jest-enzyme": "^7.1.2",
     "pa11y": "^6.2.0",
     "pa11y-runner-htmlcs": "^2.0.1",
+    "react-error-overlay": "6.0.9",
     "react-test-renderer": "^18.0.0",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "^27.1.4"
@@ -103,11 +105,19 @@
     ],
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
-      "services/ui-src/src/**/*.js",
-      "!services/ui-src/src/index.js"
+      "src/**/*.js",
+      "!src/index.js"
     ],
     "coverageReporters": [
-      "text"
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "text-summary"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"

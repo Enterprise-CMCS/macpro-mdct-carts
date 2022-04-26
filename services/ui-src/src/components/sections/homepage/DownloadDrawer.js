@@ -11,6 +11,7 @@ export const DownloadDrawer = () => {
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
         <h4>Updates from Central Office</h4>
+        <div className="update-date">Aug 2021</div>
         <div className="update ds-l-row">
           <div className="icon ds-l-col--2">
             <div className="icon-inner">
