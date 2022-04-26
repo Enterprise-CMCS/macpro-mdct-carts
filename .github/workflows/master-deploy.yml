@@ -3,7 +3,7 @@ name: master-deploy
 on:
   push:
     branches:
-      - "actions-testing"
+      - "master"
 
 jobs:
   deploy:
