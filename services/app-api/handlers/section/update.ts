@@ -1,13 +1,14 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
+import { StateStatus } from "../../types";
 
 /**
  * Updates the Sections associated with a given year and state
  */
 export const updateSections = handler(async (event, _context) => {
   const { body } = event!;
-  const reportData = JSON.parse(body);
+  const reportData = JSON.parse(body || '{}');
 
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
@@ -53,7 +54,7 @@ export const updateSections = handler(async (event, _context) => {
   };
 
   const queryValue = await dynamoDb.scan(params);
-  const stateStatus = queryValue.Items[0];
+  const stateStatus = queryValue.Items![0] as StateStatus;
 
   if (queryValue.Items && stateStatus.status === "not_started") {
     const params = {
