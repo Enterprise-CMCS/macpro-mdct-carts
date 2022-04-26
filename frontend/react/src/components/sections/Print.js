@@ -48,6 +48,11 @@ const Print = ({ currentUser, state, name }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
+    document.querySelectorAll("button").forEach((element) => {
+      if (element.title !== "Print") {
+        element.remove();
+      }
+    });
     const htmlString = document
       .querySelector("html")
       .outerHTML.replaceAll(
@@ -130,7 +135,6 @@ const Print = ({ currentUser, state, name }) => {
       }
     }
   }
-  console.log({ sections });
 
   // Return sections with wrapper div and print dialogue box
   return (
