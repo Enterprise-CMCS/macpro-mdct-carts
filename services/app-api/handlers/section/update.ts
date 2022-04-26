@@ -8,13 +8,12 @@ import { StateStatus } from "../../types";
  */
 export const updateSections = handler(async (event, _context) => {
   const { body } = event;
-  const reportData = JSON.parse(body || '{}');
+  const reportData = JSON.parse(body || "{}");
 
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
     throw new Error(
-      "Be sure to include state, year in the path" +
-        event.pathParameters
+      "Be sure to include state, year in the path" + event.pathParameters
     );
   }
 
