@@ -6,8 +6,10 @@ const UserProfile = ({ currentUser }) => {
   return (
     <div className="page-info">
       <div className="ds-l-col--12 content ds-u-padding-left--4 ">
-        <h1>User Profile</h1>
-        <div className="main">
+        <header>
+          <h1>User Profile</h1>
+        </header>
+        <main className="main">
           If any information is incorrect, please contact the{" "}
           <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>.
           <div className="profile-information">
@@ -30,7 +32,7 @@ const UserProfile = ({ currentUser }) => {
               <div>{currentUser.role}</div>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
