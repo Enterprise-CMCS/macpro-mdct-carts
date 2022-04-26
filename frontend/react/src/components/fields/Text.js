@@ -80,7 +80,6 @@ const Text = ({ question, state, ...props }) => {
 
     getPrevYearValue().then();
   }, [state]);
-  console.log(props)
   return (
     <>
       <div className="print-helper">{ReactHtmlParser(printValue)}</div>
