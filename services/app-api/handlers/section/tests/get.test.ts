@@ -8,7 +8,7 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
     get: jest.fn(),
-    scan: jest.fn(),
+    scan: jest.fn().mockReturnValue({Items: []}),
   },
 }));
 
