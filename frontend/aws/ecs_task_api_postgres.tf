@@ -174,7 +174,7 @@ resource "aws_alb" "api_postgres" {
 }
 
 resource "aws_alb_target_group" "api_postgres" {
-  name                 = "api-postgres-${terraform.workspace}"
+  name                 = "api-postgres-tg-${terraform.workspace}"
   port                 = 8000
   target_type          = "ip"
   protocol             = "HTTP"
