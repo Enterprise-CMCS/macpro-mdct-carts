@@ -24,7 +24,7 @@ jobs:
       - name: Get the output from CommitsWithinTime and set BUILD TAG
         run: |
           echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
-          COUNT=$(git rev-list --count head)
+          COUNT=$(git rev-list --count ${{ github.sha }})
           echo "BUILD_TAG=0.1.$COUNT" >> "$GITHUB_ENV"
           echo $BUILD_TAG
       - name: Validate branch name
