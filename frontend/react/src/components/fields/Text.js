@@ -4,6 +4,7 @@ import { TextField } from "@cmsgov/design-system-core";
 import ReactHtmlParser from "react-html-parser";
 import axios from "../../authenticatedAxios";
 import { connect } from "react-redux";
+import { generateQuestionNumber } from "../Utils/helperFunctions";
 
 const Text = ({ question, state, ...props }) => {
   const [printValue, setPrintValue] = useState(
@@ -81,15 +82,18 @@ const Text = ({ question, state, ...props }) => {
     getPrevYearValue().then();
   }, [state]);
 
+  console.log({ questionStuff: question });
   return (
     <>
       <div className="print-helper">{ReactHtmlParser(printValue)}</div>
       <TextField
+        id={question.id}
         value={
           prevYearValue || (question.answer && question.answer.entry) || ""
         }
         type="text"
-        label=""
+        label={`${generateQuestionNumber(question.id)} ${question.label}`}
+        hint={question.hint}
         onBlur={updatePrintHelper}
         {...props}
         disabled={prevYearDisabled}

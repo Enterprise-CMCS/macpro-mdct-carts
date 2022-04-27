@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
 import { useSelector } from "react-redux";
+import { generateQuestionNumber } from "../Utils/helperFunctions";
 
 const Integer = ({ onChange, question, prevYear, ...props }) => {
   const [error, setError] = useState(false);
@@ -29,7 +30,8 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
       <TextField
         className="ds-c-input"
         errorMessage={error}
-        label=""
+        label={`${generateQuestionNumber(question.id)} ${question.label}`}
+        hint={question.hint}
         name={question.id}
         numeric
         onChange={change}
@@ -43,7 +45,8 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
     <TextField
       className="ds-c-input"
       errorMessage={error}
-      label=""
+      label={`${generateQuestionNumber(question.id)}${question.label}`}
+      hint={question.hint}
       name={question.id}
       numeric
       onChange={change}
