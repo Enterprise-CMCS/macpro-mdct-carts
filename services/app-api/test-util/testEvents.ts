@@ -60,16 +60,3 @@ export const testEvent: APIGatewayProxyEvent = {
     },
   },
 };
-
-export const testMeasure: Measure = {
-  compoundKey: "",
-  coreSet: CoreSetAbbr.ACS,
-  createdAt: 0,
-  description: "",
-  lastAltered: 0,
-  measure: "",
-  state: "",
-  status: MeasureStatus.INCOMPLETE,
-  year: 2019,
-  lastAlteredBy: "",
-};

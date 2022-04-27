@@ -1,4 +1,5 @@
-import axios from "../authenticatedAxios";
+import { API } from "aws-amplify";
+import requestOptions from "../hooks/authHooks/requestOptions";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables";
@@ -47,14 +48,12 @@ const saveMiddleware = (store) => {
 
       try {
         store.dispatch({ type: SAVE_STARTED });
-        await axios.put(
-          "/api/v1/sections",
-          /*
-           * In a future world, we might save only the pending changes, but for
-           * now, we save by posting the whole document in its current state.
-           */
-          store.getState().formData
-        );
+        const opts = await requestOptions();
+        opts.body = store.getState().formData;
+        // get the state and year from basic state info section
+        const { stateId, year } = opts.body[0];
+
+        await API.put("carts-api", `/save_report/${year}/${stateId}`, opts);
 
         /*
          * If the save is successful, we can clear out the list of pending

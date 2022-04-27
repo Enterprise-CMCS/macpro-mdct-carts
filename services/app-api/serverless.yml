@@ -28,10 +28,10 @@ custom:
       - master
       - val
       - prod
-  measureTableName: ${env:measureTableName, cf:database-${self:custom.stage}.MeasureTableName}
-  measureTableArn: ${env:DYNAMO_TABLE_ARN, cf:database-${self:custom.stage}.MeasureTableArn}
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
   stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
+  sectionTableName: ${env:sectionTableName, cf:database-${self:custom.stage}.SectionTableName}
+  sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
   associateWaf:
     name: ${self:custom.webAclName}
@@ -47,6 +47,7 @@ custom:
         - schedule: rate(${ssm:/configuration/${self:custom.stage}/warmup/schedule~true, ssm:/configuration/default/warmup/schedule~true, "60 minutes"})
       concurrency: ${ssm:/configuration/${self:custom.stage}/warmup/concurrency~true, ssm:/configuration/default/warmup/concurrency~true, 5}
   authValue:
+    main: aws_iam
     master: aws_iam
     val: aws_iam
     prod: aws_iam
@@ -76,50 +77,11 @@ provider:
   environment:
     measureTableName: ${self:custom.measureTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
+    sectionTableName: ${self:custom.sectionTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${opt:stage, self:provider.stage}
 
 functions:
-  listMeasures:
-    handler: handlers/measures/get.listMeasures
-    events:
-      - http:
-          path: coreset/{state}/{year}/{coreSet}/measures/list
-          method: get
-          cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
-  getMeasure:
-    handler: handlers/measures/get.getMeasure
-    events:
-      - http:
-          path: coreset/{state}/{year}/{coreSet}/measures/{measure}/get
-          method: get
-          cors: true
-          authorizer: ""
-  createMeasure:
-    handler: handlers/measures/create.createMeasure
-    events:
-      - http:
-          path: coreset/{state}/{year}/{coreSet}/measures/{measure}/create
-          method: post
-          cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
-  editMeasure:
-    handler: handlers/measures/update.editMeasure
-    events:
-      - http:
-          path: coreset/{state}/{year}/{coreSet}/measures/{measure}/edit
-          method: put
-          cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
-  deleteMeasure:
-    handler: handlers/measures/delete.deleteMeasure
-    events:
-      - http:
-          path: coreset/{state}/{year}/{coreSet}/measures/{measure}/delete
-          method: delete
-          cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getStates:
     handler: handlers/state/get.getStates
     events:
@@ -134,6 +96,22 @@ functions:
       - http:
           path: state_status
           method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getSections:
+    handler: handlers/section/get.getSections
+    events:
+      - http:
+          path: section/{year}/{state}
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  updateSections:
+    handler: handlers/section/update.updateSections
+    events:
+      - http:
+          path: save_report/{year}/{state}
+          method: put
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
 resources:

@@ -18,6 +18,8 @@ custom:
       - prod
   measureTableName: ${self:custom.stage}-measures
   stateStatusTableName: ${self:custom.stage}-state-status
+  sectionTableName: ${self:custom.stage}-section
+  sectionBaseTableName: ${self:custom.stage}-section-base
   dynamodb:
     stages:
       - local
@@ -31,6 +33,10 @@ custom:
         sources:
           - table: ${self:custom.stateStatusTableName}
             sources: [./seed-status.json]
+          - table: ${self:custom.sectionTableName}
+            sources: [./seed-section.json]
+          - table: ${self:custom.sectionBaseTableName}
+            sources: [./seed-section-base.json]
 
 
 provider:
@@ -78,6 +84,44 @@ resources:
           - AttributeName: year
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    SectionTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.sectionTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sectionId
+            AttributeType: N
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sectionId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    SectionBaseTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.sectionBaseTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: year
+            AttributeType: N
+          - AttributeName: sectionId
+            AttributeType: N
+        KeySchema:
+          - AttributeName: year
+            KeyType: HASH
+          - AttributeName: sectionId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
   Outputs:
     MeasureTableName:
       Value: !Ref MeasureTable
@@ -87,5 +131,13 @@ resources:
       Value: !Ref StateStatusTable
     StateStatusTableArn:
       Value: !GetAtt StateStatusTable.Arn
+    SectionTableName:
+      Value: !Ref SectionTable
+    SectionTableArn:
+      Value: !GetAtt SectionTable.Arn
+    SectionBaseTable:
+      Value: !Ref SectionBaseTable
+    SectionBaseTableArn:
+      Value: !GetAtt SectionBaseTable.Arn
     Region:
       Value: !Sub ${AWS::Region}

@@ -166,52 +166,16 @@ export const getStateStatus =
     }
   };
 
-export const loadSections = ({ userData, stateCode, selectedYear }) => {
-  const state = stateCode || userData.abbr;
+export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
-    const { data } = await axios
-      .get(`/api/v1/sections/${selectedYear}/${state}`)
-      .catch((err) => {
-        /*
-         * Error-handling would go here. For now, just log it so we can see
-         * it in the console, at least.
-         */
-        console.log("--- ERROR LOADING SECTIONS ---");
-        console.log(err);
-        /*
-         * Without the following too many things break, because the
-         * entire app is too dependent on section data being present.
-         */
-        dispatch({ type: LOAD_SECTIONS, data: [] });
-        throw err;
-      });
-
-    const lastYear = parseInt(selectedYear) - 1;
-    let lastYearData = undefined;
-    if (lastYear % 2 === 0) {
-      const data = await axios
-        .get(`/api/v1/sections/${lastYear}/${state}`)
-        .catch((err) => {
-          /*
-           * Error-handling would go here. For now, just log it so we can see
-           * it in the console, at least.
-           */
-          console.log("--- ERROR LOADING SECTIONS ---");
-          console.log(err);
-          /*
-           *  Without the following too many things break, because the
-           *  entire app is too dependent on section data being present.
-           * dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: [] });
-           */
-          dispatch({ type: LOAD_SECTIONS, data, lastYearData });
-          throw err;
-        });
-      if (data.data.length > 0) {
-        lastYearData = data;
-        dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: data.data });
-      }
-    }
-    dispatch({ type: LOAD_SECTIONS, data, lastYearData });
+    const opts = await requestOptions();
+    const results = await API.get(
+      "carts-api",
+      `/section/${selectedYear}/${stateCode}`,
+      opts
+    );
+    const data = results;
+    dispatch({ type: LOAD_SECTIONS, data });
   };
 };
 
@@ -251,9 +215,7 @@ export const loadForm = (state) => async (dispatch, getState) => {
   dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
   try {
-    await dispatch(
-      loadSections({ userData: stateUser, stateCode, selectedYear })
-    );
+    await dispatch(loadSections({ stateCode, selectedYear }));
   } finally {
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });

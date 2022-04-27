@@ -9,6 +9,7 @@ import {
   DynamoFetch,
   DynamoScan,
   StateStatus,
+  Section,
 } from "../types";
 /* eslint-enable no-unused-vars */
 
@@ -32,13 +33,17 @@ export function createDbClient() {
 const client = createDbClient();
 
 export default {
-  get: async <Result = StateStatus | Measure>(params: DynamoFetch) => {
+  get: async <Result = StateStatus | Section | Measure>(
+    params: DynamoFetch
+  ) => {
     const result = await client.get(params).promise();
     return { ...result, Item: result?.Item as Result | undefined };
   },
   put: (params: DynamoCreate) => client.put(params).promise(),
   post: (params: DynamoCreate) => client.put(params).promise(),
-  scan: async <Result = StateStatus | Measure>(params: DynamoScan) => {
+  scan: async <Result = StateStatus | Section | Measure>(
+    params: DynamoScan
+  ) => {
     const result = await client.scan(params).promise();
     return { ...result, Items: result?.Items as Result[] | undefined };
   },
