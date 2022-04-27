@@ -15,14 +15,14 @@ const Objective = ({ headerRef, objective, objectiveNumber }) => {
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
-        <h3>
+        <span className="span-pdf-no-bookmark">
           <AccordionButton>
             <div className="accordion-title">
               Objective {objectiveNumber}
               {name ? `: ${name}` : null}
             </div>
           </AccordionButton>
-        </h3>
+        </span>
       </div>
       <AccordionPanel>
         {children.map((q) => (

@@ -70,9 +70,9 @@ const Repeatables = ({
       </Accordion>
 
       <div className="section-footer">
-        <h3 className="question-inner-header">
+        <span className="question-inner-header span-pdf-no-bookmark">
           Do you have another{type ? ` ${type}` : ""} in this list?
-        </h3>
+        </span>
 
         <div className="ds-c-field__hint">Optional</div>
         <button
