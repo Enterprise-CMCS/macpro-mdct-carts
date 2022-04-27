@@ -96,7 +96,7 @@ jobs:
           cd serverless-uploads
           ./deploy.sh ${{ github.event.inputs.environment }}
       - name: Deploy Data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} plan application_version=${{ github.event.inputs.version }} vpc_name=m${{env.VPC_NAME}}
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} plan application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}}
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
