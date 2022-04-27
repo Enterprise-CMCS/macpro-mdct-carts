@@ -176,10 +176,17 @@ const sum = (values) => {
 };
 
 const lookupFMAP = (state, fy) => {
-  if (state.allStatesData && state.global.stateName) {
-    const stateData = state.allStatesData.filter(
-      (st) => st.name === state.global.stateName
-    )[0];
+  if (state.allStatesData && (state.global.stateName || state.stateUser.abbr)) {
+    let stateData = "";
+    if (state.stateUser.abbr) {
+      stateData = state.allStatesData.filter(
+        (st) => st.code === state.stateUser.abbr
+      )[0];
+    } else {
+      stateData = state.allStatesData.filter(
+        (st) => st.name === state.global.stateName
+      )[0];
+    }
     const fmap =
       stateData?.fmap_set.filter((year) => year.fiscal_year === +fy)[0]
         ?.enhanced_FMAP || NaN;
