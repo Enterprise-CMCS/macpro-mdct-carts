@@ -26,11 +26,17 @@ export default (state = initialState, action) => {
       updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        if (!updatedData[0].contents.section.subsections[0].parts[0].questions[0].answer.entry) {
+        if (
+          !updatedData[0].contents.section.subsections[0].parts[0].questions[0]
+            .answer.entry
+        ) {
           updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
             lastYearData[0].contents.section.subsections[0].parts[0].questions[0]; // Name
         }
-        if (!updatedData[0].contents.section.subsections[0].parts[0].questions[1].answer.entry) {
+        if (
+          !updatedData[0].contents.section.subsections[0].parts[0].questions[1]
+            .answer.entry
+        ) {
           updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
             lastYearData[0].contents.section.subsections[0].parts[0].questions[1]; // Type
         }

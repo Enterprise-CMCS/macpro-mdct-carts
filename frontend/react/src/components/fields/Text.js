@@ -99,7 +99,7 @@ const Text = ({ question, state, ...props }) => {
 Text.propTypes = {
   question: PropTypes.object.isRequired,
   state: PropTypes.string.isRequired,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 const mapState = (state) => ({
