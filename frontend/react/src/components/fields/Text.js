@@ -80,7 +80,6 @@ const Text = ({ question, state, ...props }) => {
 
     getPrevYearValue().then();
   }, [state]);
-
   return (
     <>
       <div className="print-helper">{ReactHtmlParser(printValue)}</div>
@@ -92,7 +91,7 @@ const Text = ({ question, state, ...props }) => {
         label=""
         onBlur={updatePrintHelper}
         {...props}
-        disabled={prevYearDisabled}
+        disabled={prevYearDisabled || !!props.disabled}
       />
     </>
   );
@@ -100,6 +99,7 @@ const Text = ({ question, state, ...props }) => {
 Text.propTypes = {
   question: PropTypes.object.isRequired,
   state: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 const mapState = (state) => ({
