@@ -92,7 +92,7 @@ const Text = ({ question, state, ...props }) => {
         label=""
         onBlur={updatePrintHelper}
         {...props}
-        disabled={prevYearDisabled}
+        disabled={prevYearDisabled || !!props.disabled}
       />
     </>
   );
