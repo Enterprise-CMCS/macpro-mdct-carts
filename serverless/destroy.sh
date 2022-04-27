@@ -7,10 +7,13 @@ if [[ $1 == "" ]] ; then
 fi
 stage=$1
 
+
+
+
 #install jq
-yum install jq -y
-#install 
-yum install awscli -y
+#sudo apt install jq -y
+#install
+#sudo apt install awscli -y
 # A list of protected/important branches/environments/stages.
 protected_stage_regex="(^master$|^val$|^production)"
 if [[ $stage =~ $protected_stage_regex ]] ; then
@@ -33,6 +36,11 @@ fi
 echo "\nCollecting information on stage $stage before attempting a destroy... This can take a minute or two..."
 
 set -e
+
+##Export aws credentials
+#export AWS_ACCESS_KEY_ID=$2
+#export AWS_SECRET_ACCESS_KEY=$3
+#export AWS_DEFAULT_REGION=$4
 
 # Find cloudformation stacks associated with stage
 stackList=(`aws cloudformation --region us-east-1 describe-stacks | jq -r ".Stacks[] | select(.Tags[] | select(.Key==\"STAGE\") | select(.Value==\"$stage\")) | .StackName"`)
