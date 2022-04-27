@@ -3,6 +3,7 @@ import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 import { convertToDynamoExpression } from "../../dynamoUtils/convertToDynamoExpressionVars";
+import { UserRoles } from "../../../types";
 
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
@@ -15,6 +16,10 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 jest.mock("../../../libs/authorization", () => ({
   __esModule: true,
   isAuthorized: jest.fn().mockReturnValue(true),
+  getUserCredentialsFromJwt: jest.fn().mockReturnValue({
+    role: UserRoles.STATE,
+    state: "AL",
+  }),
 }));
 
 jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
