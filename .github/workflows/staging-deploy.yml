@@ -28,7 +28,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
           VPC_NAME: ${{secrets.STAGING_VPC_NAME}}
-          OIDC_CLIENT_ID: ${{secrets.STAGING_VOIDC_CLIENT_ID}}
+          OIDC_CLIENT_ID: ${{secrets.STAGING_OIDC_CLIENT_ID}}
           OIDC_ISSUER: ${{secrets.STAGING_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.STAGING_TF_VAR_OPENID_DISCOVERY_URL}}
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
@@ -36,8 +36,8 @@ jobs:
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
           TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
-          TF_VAR_skip_data_deployment: false
-          TF_VAR_use_custom_db_password_info: false
+          TF_VAR_skip_data_deployment: true
+          TF_VAR_use_custom_db_password_info: true
           TF_VAR_postgres_custom_password: ${{secrets.STAGING_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}
           SAF_SCAN: false
       - name: read .nvmrc

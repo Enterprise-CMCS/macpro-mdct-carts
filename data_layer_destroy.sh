@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##DEPLOYING DATA LAYER##
+##Destroying data layer##
 
 set -e
 

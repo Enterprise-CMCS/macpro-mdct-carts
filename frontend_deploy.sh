@@ -31,7 +31,7 @@ terraform ${action} -var "${varString1}" -var "${varString2}" -input=false -auto
 
 CLOUDFRONT_DISTRIBUTION_ID=$(terraform output -json cloudfront_distribution_id | jq -r .)
 S3_BUCKET_NAME=$(terraform output -json s3_bucket_name | jq -r .)
-API_POSTGRES_UR=$(terraform output -json api_postgres_endpoint | jq -r .)
+API_POSTGRES_URL=$(terraform output -json api_postgres_endpoint | jq -r .)
 PRINCE_API_ENDPOINT=$(terraform output -json prince_api_endpoint | jq -r .)
 
 
