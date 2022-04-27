@@ -1,9 +1,8 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { UserRoles } from "../../types";
+import { UserRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
-import { StateStatus } from "../../types";
 
 /**
  * Updates the Sections associated with a given year and state
