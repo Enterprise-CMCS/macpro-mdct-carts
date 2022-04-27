@@ -78,7 +78,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BUILD_TAG}} 
         run: |
           pushd data/postgres_deployer
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -89,7 +89,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BUILD_TAG}} 
         run: |
           pushd frontend/api_postgres
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -97,7 +97,7 @@ jobs:
           popd
       - name: Build and push react artifacts.
         env:
-          IMAGE_TAG: ${{env.BUILD_TAG}} #${{env.BRANCH_NAME}}-${{ github.sha }} #${{env.BRANCH_NAME}}.${{env.HASH}}
+          IMAGE_TAG: ${{env.BUILD_TAG}} 
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
         run: |
           cd frontend/react

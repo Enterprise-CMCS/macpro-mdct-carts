@@ -16,17 +16,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Run CommitsWithinTime script
-        uses: AlexHolderDeveloper/CommitsWithinTime@v1.1.5
-        id: commitswithintime
-        with:
-          hours: 24
-      - name: Get the output from CommitsWithinTime and set BUILD TAG
+      - name: Set BUILD TAG
         run: |
-          echo "The 'total-commits' value is ${{ steps.commitswithintime.outputs.total-commits }}"
           COUNT=$(git rev-list --count ${{ github.sha }})
           echo "BUILD_TAG=0.1.$COUNT" >> "$GITHUB_ENV"
-          echo $BUILD_TAG
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
       - name: set branch specific variable names
@@ -148,8 +141,7 @@ jobs:
           ./deploy.sh ${{env.BRANCH_NAME}}
       - name: Deploy Data Layer
         run: |
-          ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} plan application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
-        #./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
+          ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -158,8 +150,7 @@ jobs:
           path: data/aws/log*
       - name: Deploy Frontend Layer
         run: |
-          ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} plan application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
-        # ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+          ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
