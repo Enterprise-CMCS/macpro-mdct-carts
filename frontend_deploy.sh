@@ -34,6 +34,8 @@ S3_BUCKET_NAME=$(terraform output -json s3_bucket_name | jq -r .)
 API_POSTGRES_URL=$(terraform output -json api_postgres_endpoint | jq -r .)
 PRINCE_API_ENDPOINT=$(terraform output -json prince_api_endpoint | jq -r .)
 
+export API_POSTGRES_URL
+export PRINCE_API_ENDPOINT
 
 #download and unzip artifacts from s3
 aws s3 cp s3://${stateBucket}/artifacts/${varString3}/cartsbuild.tar.gz cartsbuild.tar.gz
