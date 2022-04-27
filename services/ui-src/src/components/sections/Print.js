@@ -12,13 +12,6 @@ import { loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-// Print page
-const printWindow = (event) => {
-  event.preventDefault();
-  //send to server
-  window.print();
-};
-
 /**
  * Generate data and load entire form based on user information
  *
@@ -55,12 +48,21 @@ const Print = ({ currentUser, state, name }) => {
     document.querySelectorAll("input").forEach((element) => {
       element.style.height = "50px";
     });
+    document.querySelectorAll("button").forEach((element) => {
+      if (element.title !== "Print") {
+        element.remove();
+      }
+    });
     const htmlString = document
       .querySelector("html")
       .outerHTML.replaceAll(
         '<link href="',
         `<link href="https://${window.location.host}`
-      );
+      )
+      .replaceAll(`’`, `'`)
+      .replaceAll(`‘`, `'`)
+      .replaceAll(`”`, `"`)
+      .replaceAll(`“`, `"`);
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     const res = await axios.post("prince", {
       encodedHtml: base64String,
@@ -147,6 +149,7 @@ const Print = ({ currentUser, state, name }) => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
+
       <Helmet>
         <title>
           {stateName} CARTS FY{formYear} Report
@@ -157,7 +160,7 @@ const Print = ({ currentUser, state, name }) => {
       {sections}
       <Button
         className="ds-c-button--primary ds-c-button--large print-all-btn"
-        onClick={printWindow}
+        onClick={getPdfFriendlyDocument}
         title="Print"
       >
         <FontAwesomeIcon icon={faPrint} /> Print
