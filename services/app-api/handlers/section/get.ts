@@ -25,7 +25,7 @@ export const getSections = handler(async (event, _context) => {
       TableName: process.env.sectionTableName!,
       KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
-        ":pk": `${state}-${year}`
+        ":pk": `${state}-${year}`,
       },
     };
 
