@@ -286,7 +286,8 @@ class UploadComponent extends Component {
           {this.state.displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
         </Button>
 
-        {this.state.displayUploadedFiles ? (
+        {this.state.displayUploadedFiles &&
+        this.state.uploadedFiles?.length > 0 ? (
           <table key={"uploadedFilesContainer"}>
             <tbody>
               {!this.state.uploadedFilesRetrieved ? (

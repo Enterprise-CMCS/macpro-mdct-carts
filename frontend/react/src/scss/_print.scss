@@ -45,6 +45,9 @@
 }
 
 @media print {
+  .no-print {
+    display: none !important;
+  }
   textarea {
     display: none !important;
   }
@@ -70,7 +73,7 @@
   }
 
   .screen-only {
-    display: none;
+    display: none !important;
   }
 
   .content {
