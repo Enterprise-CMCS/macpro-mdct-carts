@@ -9,7 +9,7 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
     update: jest.fn(),
-    scan: jest.fn().mockReturnValue({ Items: [{ status: "not_started" }] }),
+    query: jest.fn().mockReturnValue({ Items: [{ status: "not_started" }] }),
   },
 }));
 
@@ -51,16 +51,19 @@ describe("Test Update Sections Handler", () => {
         sectionId: 0,
       },
     });
+    expect(dbLib.query).toHaveBeenCalledWith({
+      KeyConditionExpression:
+        "stateId = :stateId AND #currentYear = :currentYear",
+      ExpressionAttributeValues: {
+        ":stateId": "AL",
+        ":currentYear": 2022,
+      },
+      ExpressionAttributeNames: {
+        "#currentYear": "year",
+      },
+    });
     expect(convertToDynamoExpression).toHaveBeenNthCalledWith(
       2,
-      {
-        stateId: "AL",
-        year: 2022,
-      },
-      "list"
-    );
-    expect(convertToDynamoExpression).toHaveBeenNthCalledWith(
-      3,
       {
         status: "in_progress",
         lastChanged: new Date().toString(),

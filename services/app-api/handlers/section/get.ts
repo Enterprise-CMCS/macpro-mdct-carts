@@ -2,7 +2,6 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { UserRoles } from "../../types";
-import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 
 /**
  * Returns the report Sections associated with a given year and state
@@ -24,16 +23,14 @@ export const getSections = handler(async (event, _context) => {
   } else {
     const params = {
       TableName: process.env.sectionTableName!,
-      ...convertToDynamoExpression(
-        {
-          year: parseInt(year),
-          stateId: state,
-        },
-        "list"
-      ),
+      KeyConditionExpression: "pk = :pk AND sectionId >= :sectionId",
+      ExpressionAttributeValues: {
+        ":pk": `${state}-${year}`,
+        ":sectionId": 0,
+      },
     };
 
-    const queryValue = await dynamoDb.scan(params);
+    const queryValue = await dynamoDb.query(params);
     return queryValue.Items;
   }
 });
