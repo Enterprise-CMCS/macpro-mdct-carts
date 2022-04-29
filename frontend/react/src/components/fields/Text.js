@@ -74,14 +74,16 @@ const Text = ({ question, state, ...props }) => {
   }, [state]);
   return (
     <>
+      <label htmlFor={question.id}>{`${generateQuestionNumber(question.id)} ${
+        question.label
+      }`}</label>
+      {question.hint && <p className="ds-c-field__hint">{question.hint}</p>}
       <TextField
         id={question.id}
         value={
           prevYearValue || (question.answer && question.answer.entry) || ""
         }
         type="text"
-        label={`${generateQuestionNumber(question.id)} ${question.label}`}
-        hint={question.hint}
         {...props}
         disabled={prevYearDisabled || !!props.disabled}
       />
