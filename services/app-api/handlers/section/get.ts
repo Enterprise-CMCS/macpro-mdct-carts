@@ -23,10 +23,9 @@ export const getSections = handler(async (event, _context) => {
   } else {
     const params = {
       TableName: process.env.sectionTableName!,
-      KeyConditionExpression: "pk = :pk AND sectionId >= :sectionId",
+      KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
-        ":pk": `${state}-${year}`,
-        ":sectionId": 0,
+        ":pk": `${state}-${year}`
       },
     };
 
