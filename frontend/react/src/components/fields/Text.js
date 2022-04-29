@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
-import ReactHtmlParser from "react-html-parser";
 import axios from "../../authenticatedAxios";
 import { connect } from "react-redux";
 
 const Text = ({ question, state, ...props }) => {
-  const [printValue, setPrintValue] = useState(
-    (question.answer && question.answer.entry) || ""
-  );
   const [prevYearValue, setPrevYearValue] = useState();
   const [prevYearDisabled, setPrevYearDisabled] = useState();
-
-  const updatePrintHelper = ({ target: { value } }) => {
-    const val = value.replace(/\n/g, "<br/>");
-    setPrintValue(val);
-  };
 
   useEffect(() => {
     const getPrevYearValue = async () => {
@@ -82,14 +73,12 @@ const Text = ({ question, state, ...props }) => {
   }, [state]);
   return (
     <>
-      <div className="print-helper">{ReactHtmlParser(printValue)}</div>
       <TextField
         value={
           prevYearValue || (question.answer && question.answer.entry) || ""
         }
         type="text"
         label=""
-        onBlur={updatePrintHelper}
         {...props}
         disabled={prevYearDisabled || !!props.disabled}
       />
