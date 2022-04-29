@@ -12,10 +12,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - name: Prepare for Jest
+      - name: Prepare for Jest (frontend)
         run: yarn install --frozen-lockfile
         working-directory: ./services/ui-src
-      - name: Jest
+      - name: Jest (frontend)
         run: yarn test
         working-directory: ./services/ui-src
+      - name: Prepare for Jest (backend)
+        run: yarn install --frozen-lockfile
+        working-directory: ./services/app-api
+      - name: Jest (backend)
+        run: yarn test
+        working-directory: ./services/app-api
       
