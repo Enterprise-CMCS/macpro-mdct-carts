@@ -1,0 +1,121 @@
+name: staging-deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version to deploy.  Versions are published by development pipelines and indicate which artifacts to deploy and what git tag to pull.  This should be a tag of format (number).(number).(number)  ex. 0.1.20"
+        required: true
+        default: ""
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        default: ""
+        type: choice
+        options:
+          - staging
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.version }}
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+          VPC_NAME: ${{secrets.STAGING_VPC_NAME}}
+          OIDC_CLIENT_ID: ${{secrets.STAGING_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.STAGING_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.STAGING_TF_VAR_OPENID_DISCOVERY_URL}}
+          ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
+          ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+          TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
+          TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
+          TF_VAR_skip_data_deployment: true
+          TF_VAR_use_custom_db_password_info: true
+          TF_VAR_postgres_custom_password: ${{secrets.STAGING_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}
+          SAF_SCAN: false
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: Configure AWS credentials for serverless
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.11
+          terraform_wrapper: false
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Scan postgres_deployer(data layer) Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER}}
+          IMAGE_TAG: ${{ github.event.inputs.version }}
+        run: |
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+      - name: Scan postgres_django(frontend/api_postgres) Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: ${{ github.event.inputs.version }}
+        run: |
+          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
+      - name: Archive ecr images scan results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: image_scan_results
+          path: ecr_scan_*.json
+      - name: Deploy Uploads Scan
+        run: |
+          cd serverless-uploads
+          ./deploy.sh ${{ github.event.inputs.environment }}
+      - name: Deploy Data Layer
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}}
+      - name: Archive data aws logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: data-aws-logs
+          path: data/aws/log*
+      - name: Deploy Frontend Layer
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}} ${{ github.event.inputs.version }}
+      - name: Archive Frontend aws logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Frontend-aws-logs
+          path: frontend/aws/log*
+      - name: Serverless
+        run: |
+          cd serverless
+          ./deploy.sh ${{ github.event.inputs.environment }}
+      - name: Push Tags
+        run: |
+          git tag -f ${{ github.event.inputs.environment }} 
+          git push -f origin ${{ github.event.inputs.environment }}

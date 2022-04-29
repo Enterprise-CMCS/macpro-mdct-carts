@@ -26,14 +26,25 @@ export default (state = initialState, action) => {
       updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
         let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
-        updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
-          lastYearData[0].contents.section.subsections[0].parts[0].questions[0];
-        updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
-          lastYearData[0].contents.section.subsections[0].parts[0].questions[1];
+        if (
+          !updatedData[0].contents.section.subsections[0].parts[0].questions[0]
+            .answer.entry
+        ) {
+          updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
+            lastYearData[0].contents.section.subsections[0].parts[0].questions[0]; // Name
+        }
+        if (
+          !updatedData[0].contents.section.subsections[0].parts[0].questions[1]
+            .answer.entry
+        ) {
+          updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
+            lastYearData[0].contents.section.subsections[0].parts[0].questions[1]; // Type
+        }
+        // TODO: Cohort Questions - These should be revolving around a 2 year cycle, but today just pull forward
         updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
-          lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer;
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer; // How does your state define “newly enrolled” for this cohort?
         updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
-          lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer;
+          lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer; // Do you have data for individual age groups?
 
         // Added mid year as a quick fix for 2021 forms see: https://qmacbis.atlassian.net/browse/OY2-12744 Should be removed ASAP!!
         updatedData[2].contents.section.subsections[0].parts[1].text =
