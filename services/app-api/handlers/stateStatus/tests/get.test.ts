@@ -1,5 +1,4 @@
 import { getStateStatus } from "../get";
-import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 import { UserRoles } from "../../../types";
