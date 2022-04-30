@@ -39,7 +39,7 @@ describe("Test Get Sections Handlers", () => {
     expect(dbLib.query).toHaveBeenCalledWith({
       KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
-        ":pk": "AL-2022"
+        ":pk": "AL-2022",
       },
     });
   });
