@@ -37,10 +37,9 @@ describe("Test Get Sections Handlers", () => {
 
     expect(res.statusCode).toBe(200);
     expect(dbLib.query).toHaveBeenCalledWith({
-      KeyConditionExpression: "pk = :pk AND sectionId >= :sectionId",
+      KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
-        ":pk": "AL-2022",
-        ":sectionId": 0,
+        ":pk": "AL-2022"
       },
     });
   });
