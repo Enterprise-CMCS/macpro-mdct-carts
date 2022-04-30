@@ -3,7 +3,7 @@ name: Pull-request
 on: [pull_request]
 
 jobs:
-  prchecks:
+  linting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,6 +15,10 @@ jobs:
   jest-frontend:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "14"
       - name: Prepare for Jest (frontend)
         run: yarn install --frozen-lockfile
         working-directory: ./services/ui-src
@@ -24,6 +28,10 @@ jobs:
   jest-backend:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "14"
       - name: Prepare for Jest (backend)
         run: yarn install --frozen-lockfile
         working-directory: ./services/app-api
