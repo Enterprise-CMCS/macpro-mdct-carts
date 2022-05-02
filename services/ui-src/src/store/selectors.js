@@ -143,8 +143,13 @@ export const selectSectionsForNav = (state) => {
 };
 
 export const selectIsFormEditable = (state) => {
-  const { status } = state.reportStatus;
-  const { role } = state.stateUser.currentUser;
+  console.log('HELLO IS IT EDITABLE?')
+  const { reportStatus, stateUser, global } = state;
+  const { role } = stateUser.currentUser;
+  console.log(state)
+  // get the state status of the current report
+  const currentReport = `${stateUser.abbr}${global.currentYear}`
+  const status = reportStatus[currentReport].status;
 
   switch (status) {
     case "not_started":
