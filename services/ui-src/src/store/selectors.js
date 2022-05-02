@@ -1,5 +1,5 @@
 import jsonpath from "../util/jsonpath";
-
+import { REPORT_STATUS } from "../types";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
@@ -143,18 +143,17 @@ export const selectSectionsForNav = (state) => {
 };
 
 export const selectIsFormEditable = (state) => {
-  console.log('HELLO IS IT EDITABLE?')
   const { reportStatus, stateUser, global } = state;
   const { role } = stateUser.currentUser;
-  console.log(state)
+
   // get the state status of the current report
-  const currentReport = `${stateUser.abbr}${global.currentYear}`
+  const currentReport = `${stateUser.abbr}${global.formYear}`
   const status = reportStatus[currentReport].status;
 
   switch (status) {
-    case "not_started":
-    case "in_progress":
-    case "uncertified":
+    case REPORT_STATUS.not_started:
+    case REPORT_STATUS.in_progress:
+    case REPORT_STATUS.uncertified:
     case undefined:
       /*
        * Forms can only be edited if the current user is a state user AND the
