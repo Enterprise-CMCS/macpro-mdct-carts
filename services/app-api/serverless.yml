@@ -98,6 +98,14 @@ functions:
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  updateStateStatus:
+    handler: handlers/stateStatus/update.updateStateStatus
+    events:
+      - http:
+          path: state_status/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getSections:
     handler: handlers/section/get.getSections
     events:
