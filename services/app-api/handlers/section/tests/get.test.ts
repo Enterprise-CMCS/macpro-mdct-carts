@@ -1,14 +1,14 @@
 import { getSections } from "../get";
+import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { convertToDynamoExpression } from "../../dynamoUtils/convertToDynamoExpressionVars";
 import { UserRoles } from "../../../types";
 
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
     get: jest.fn(),
-    scan: jest.fn().mockReturnValue({ Items: [] }),
+    query: jest.fn().mockReturnValue({ Items: [] }),
   },
 }));
 
@@ -36,9 +36,11 @@ describe("Test Get Sections Handlers", () => {
     const res = await getSections(event, null);
 
     expect(res.statusCode).toBe(200);
-    expect(convertToDynamoExpression).toHaveBeenCalledWith(
-      { stateId: "AL", year: 2022 },
-      "list"
-    );
+    expect(dbLib.query).toHaveBeenCalledWith({
+      KeyConditionExpression: "pk = :pk",
+      ExpressionAttributeValues: {
+        ":pk": "AL-2022",
+      },
+    });
   });
 });

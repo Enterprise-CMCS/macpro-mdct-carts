@@ -42,19 +42,20 @@ export const updateSections = handler(async (event, _context) => {
       await dynamoDb.update(params);
     }
 
-    // Check the State Status for this report and update it to 'in_progress' if it is currently 'not_started'
     const params = {
       TableName: process.env.stateStatusTableName!,
-      ...convertToDynamoExpression(
-        {
-          stateId: state,
-          year: parseInt(year),
-        },
-        "list"
-      ),
+      KeyConditionExpression:
+        "stateId = :stateId AND #currentYear = :currentYear",
+      ExpressionAttributeValues: {
+        ":stateId": state,
+        ":currentYear": parseInt(year),
+      },
+      ExpressionAttributeNames: {
+        "#currentYear": "year",
+      },
     };
 
-    const queryValue = await dynamoDb.scan(params);
+    const queryValue = await dynamoDb.query(params);
     const stateStatus = queryValue.Items![0] as StateStatus;
 
     if (queryValue.Items && stateStatus.status === "not_started") {
