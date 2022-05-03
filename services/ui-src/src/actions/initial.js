@@ -80,7 +80,7 @@ export const getAllStateStatuses =
             stateCode: record.stateId,
             lastChanged: record.lastChanged,
             username: record.username,
-            programType: record.prograType,
+            programType: record.programType,
           },
         }),
         {}
