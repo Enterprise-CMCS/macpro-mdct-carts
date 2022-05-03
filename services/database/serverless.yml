@@ -38,7 +38,6 @@ custom:
           - table: ${self:custom.sectionBaseTableName}
             sources: [./seed-section-base.json]
 
-
 provider:
   name: aws
   runtime: nodejs12.x

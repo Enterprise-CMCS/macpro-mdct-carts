@@ -160,8 +160,7 @@ const shouldDisplay = (state, context, programType = null) => {
     // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
     if (state.stateUser.currentUser.role === UserRoles.STATE) {
       reportStatusCode = state.stateUser.abbr + state.global.formYear;
-    }
-    else {
+    } else {
       reportStatusCode = state.formData[0].stateId + state.formData[0].year;
     }
     program = state.reportStatus[reportStatusCode].programType;
