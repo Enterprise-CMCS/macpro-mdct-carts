@@ -11,11 +11,13 @@ export const CERTIFY_AND_SUBMIT_FAILURE = "CERTIFY_AND_SUBMIT_FAILURE";
  */
 export const certifyAndSubmit = () => async (dispatch, getState) => {
   const stateObject = getState();
-  const { username } = stateObject.stateUser.currentUser;
+  const user = stateObject.stateUser.currentUser;
+  const username = `${user.firstname} ${user.lastname}`;
   const state = stateObject.stateUser.abbr;
-  const year = +stateObject.global.formYear;
+  const year = stateObject.global.formYear;
 
   dispatch({ type: CERTIFY_AND_SUBMIT });
+
   try {
     const opts = await requestOptions();
     opts.body = {
@@ -23,13 +25,16 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
       username: username,
     };
 
-    await API.post("carts-api", `/state_status/${year}/${state}`, opts);
-
-    dispatch({ type: CERTIFY_AND_SUBMIT_SUCCESS, user: username });
+    API.post("carts-api", `/state_status/${year}/${state}`, opts);
+    dispatch({
+      type: CERTIFY_AND_SUBMIT_SUCCESS,
+      user: username,
+      report: `${state}${year}`,
+    });
   } catch (e) {
-    console.log(e)
-    //alert("ERROR_[CERTIFY]: Contact Help Desk. " + e.toString());
-    //window.location.reload(false);
+    console.log(e);
+    alert("ERROR_[CERTIFY]: Contact Help Desk. " + e.toString());
+    window.location.reload(false);
     dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
   }
 };

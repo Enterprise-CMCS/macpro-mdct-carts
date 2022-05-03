@@ -142,13 +142,18 @@ export const selectSectionsForNav = (state) => {
   return [];
 };
 
-export const selectIsFormEditable = (state) => {
+export const getReportStatus = (state) => {
   const { reportStatus, stateUser, global } = state;
-  const { role } = stateUser.currentUser;
+  const currentReport = `${stateUser.abbr}${global.formYear}`;
+  const status = reportStatus[currentReport];
 
-  // get the state status of the current report
-  const currentReport = `${stateUser.abbr}${global.formYear}`
-  const status = reportStatus[currentReport].status;
+  return status;
+}
+
+export const selectIsFormEditable = (state) => {
+  const { stateUser } = state;
+  const { role } = stateUser.currentUser;
+  const status = getReportStatus(state);
 
   switch (status) {
     case REPORT_STATUS.not_started:

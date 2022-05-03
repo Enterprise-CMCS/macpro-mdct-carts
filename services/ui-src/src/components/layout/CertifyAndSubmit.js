@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { certifyAndSubmit } from "../../actions/certify";
 
 import PageInfo from "./PageInfo";
-import { selectIsFormEditable } from "../../store/selectors";
+import { getReportStatus, selectIsFormEditable } from "../../store/selectors";
 import FormActions from "./FormActions";
 import { UserRoles } from "../../types";
 
@@ -29,6 +29,7 @@ const Submit = ({ certify }) => (
     </Button>
   </>
 );
+
 Submit.propTypes = { certify: PropTypes.func.isRequired };
 
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
@@ -47,6 +48,7 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
     </>
   );
 };
+
 Thanks.propTypes = {
   done: PropTypes.func.isRequired,
   lastSave: PropTypes.object.isRequired,
@@ -86,6 +88,7 @@ const CertifyAndSubmit = ({
     </div>
   );
 };
+
 CertifyAndSubmit.propTypes = {
   certifyAndSubmit: PropTypes.func.isRequired,
   isCertified: PropTypes.bool.isRequired,
@@ -93,14 +96,15 @@ CertifyAndSubmit.propTypes = {
   user: PropTypes.oneOf([PropTypes.string, null]),
   currentUserRole: PropTypes.string.isRequired,
 };
+
 CertifyAndSubmit.defaultProps = {
   user: null,
 };
 
 const mapState = (state) => ({
   isCertified: !selectIsFormEditable(state),
-  lastSave: moment(state.save.lastSave),
-  user: state.reportStatus.userName,
+  lastSave: moment(getReportStatus(state).lastChanged),
+  user: getReportStatus(state).username,
   currentUserRole: state.stateUser.currentUser.role,
 });
 
