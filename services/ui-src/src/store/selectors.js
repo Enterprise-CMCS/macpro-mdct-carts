@@ -153,7 +153,7 @@ export const getReportStatus = (state) => {
 export const selectIsFormEditable = (state) => {
   const { stateUser } = state;
   const { role } = stateUser.currentUser;
-  const status = getReportStatus(state);
+  const status = getReportStatus(state).status;
 
   switch (status) {
     case REPORT_STATUS.not_started:
