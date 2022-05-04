@@ -5,6 +5,10 @@ on:
     branches:
       - "dev-*"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -40,10 +44,6 @@ jobs:
           key: foo-docker-cache-{hash}
           restore-keys: |
             foo-docker-cache-
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
