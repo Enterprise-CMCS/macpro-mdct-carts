@@ -28,15 +28,15 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
     !questionType.includes("percentage")
   ) {
     return (
-      <div className="ds-c-label">
+      <p>
         {!hideNumber && labelBits}
-        {!questionType.includes("text") && <p>{label}</p>}
+        {!questionType.includes("text") && label}
         {hint && (
           <div className="ds-c-field__hint">
             <Text>{hint}</Text>
           </div>
         )}
-      </div>
+      </p>
     );
   } else {
     return null;

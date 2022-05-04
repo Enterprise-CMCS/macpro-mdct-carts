@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Choice } from "@cmsgov/design-system-core";
+// import { Choice } from "@cmsgov/design-system-core";
 
 import Question from "./Question";
 
@@ -20,7 +20,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
 
   if (question.questions && question.questions.length) {
     childProps.checkedChildren = (
-      <div className="ds-c-choice__checkedChild">
+      <div>
         {question.questions.map((q, i) => (
           <Question key={q.id || i} question={q} />
         ))}
@@ -29,18 +29,20 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
   }
 
   return question.answer.options.map(({ label, value }) => (
-    <Choice
-      key={value}
-      checked={checked === value}
-      type="radio"
-      value={value}
-      {...childProps}
-      {...props}
-      onChange={onCheck}
-      onClick={unCheck}
-    >
-      {label}
-    </Choice>
+    <span key={props.name + "-" + value} style={{ display: "block" }}>
+      <input
+        key={value}
+        checked={checked === value}
+        type="radio"
+        value={value}
+        {...childProps}
+        {...props}
+        onChange={onCheck}
+        onClick={unCheck}
+        id={props.name + "-" + value}
+      />
+      <label htmlFor={props.name + "-" + value}>{label}</label>
+    </span>
   ));
 };
 Radio.propTypes = {
