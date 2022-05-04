@@ -28,8 +28,8 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
     );
   }
 
-  return question.answer.options.map(({ label, value }) => (
-    <span key={props.name + "-" + value} style={{ display: "block" }}>
+  const radioButttonList = question.answer.options.map(({ label, value }) => (
+    <div style={{ margin: "4rem 0" }} key={props.name + "-" + value}>
       <input
         key={value}
         checked={checked === value}
@@ -41,9 +41,13 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
         onClick={unCheck}
         id={props.name + "-" + value}
       />
-      <label htmlFor={props.name + "-" + value}>{label}</label>
-    </span>
+      <label style={{ marginLeft: "2rem" }} htmlFor={props.name + "-" + value}>
+        {label}
+      </label>
+    </div>
   ));
+
+  return <fieldset>{radioButttonList}</fieldset>;
 };
 Radio.propTypes = {
   onChange: PropTypes.func.isRequired,
