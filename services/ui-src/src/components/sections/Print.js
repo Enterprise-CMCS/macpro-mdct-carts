@@ -62,7 +62,9 @@ const Print = ({ currentUser, state, name }) => {
       .replaceAll(`’`, `'`)
       .replaceAll(`‘`, `'`)
       .replaceAll(`”`, `"`)
-      .replaceAll(`“`, `"`);
+      .replaceAll(`“`, `"`)
+      .replaceAll("\u2013", "-")
+      .replaceAll("\u2014", "-");
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     const res = await axios.post("prince", {
       encodedHtml: base64String,
