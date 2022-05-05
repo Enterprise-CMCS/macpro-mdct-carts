@@ -78,7 +78,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG: ${{env.BUILD_TAG}} 
+          IMAGE_TAG: ${{env.BUILD_TAG}}
         run: |
           pushd data/postgres_deployer
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -89,7 +89,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}} 
+          IMAGE_TAG: ${{env.BUILD_TAG}}
         run: |
           pushd frontend/api_postgres
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
@@ -97,7 +97,7 @@ jobs:
           popd
       - name: Build and push react artifacts.
         env:
-          IMAGE_TAG: ${{env.BUILD_TAG}} 
+          IMAGE_TAG: ${{env.BUILD_TAG}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
         run: |
           cd frontend/react
@@ -151,3 +151,33 @@ jobs:
         run: |
           cd serverless
           ./deploy.sh ${{env.BRANCH_NAME}}
+  deploy-serverless:
+    needs:
+      - deploy
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - name: set branch_name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v3
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v3
+        with:
+          path: serverless/**/node_modules
+          key: ${{ runner.os }}-serverless-modules-${{ hashFiles('serverless/**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-serverless-modules-
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Serverless
+        working-directory: serverless
+        run: ./deploy.sh ${{env.BRANCH_NAME}}
