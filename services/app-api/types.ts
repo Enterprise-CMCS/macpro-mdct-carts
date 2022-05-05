@@ -21,6 +21,7 @@ export interface StateStatus {
   year: number;
   status: string;
   stateId: string;
+  programType?: string;
   username?: string;
   lastChanged?: string;
 }

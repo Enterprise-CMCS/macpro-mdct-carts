@@ -154,11 +154,16 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
 const shouldDisplay = (state, context, programType = null) => {
-  let program;
+  let program, reportStatusCode;
   if (state.stateUser.currentUser.role === UserRoles.ADMIN) return true;
   if (!programType) {
     // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
-    program = state.stateUser.programType;
+    if (state.stateUser.currentUser.role === UserRoles.STATE) {
+      reportStatusCode = state.stateUser.abbr + state.global.formYear;
+    } else {
+      reportStatusCode = state.formData[0].stateId + state.formData[0].year;
+    }
+    program = state.reportStatus[reportStatusCode].programType;
   } else {
     program = programType;
   }
