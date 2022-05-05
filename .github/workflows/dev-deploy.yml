@@ -9,22 +9,21 @@ concurrency:
   group: dev-${{ github.ref_name }}
   cancel-in-progress: false
 
+env:
+  BRANCH_NAME: $ {{ env.GITHUB_REF_NAME }}
+
 jobs:
   prevalidate:
     runs-on: ubuntu-latest
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $$BRANCH_NAME
+        run: ./.github/branchNameValidation.sh ${{env.BRANCH_NAME}}
   build-push-scan-docker:
     needs:
       - prevalidate
     runs-on: ubuntu-latest
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: |
@@ -98,8 +97,6 @@ jobs:
       - prevalidate
     runs-on: ubuntu-latest
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: |
@@ -128,8 +125,6 @@ jobs:
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: read .nvmrc
         id: node_version
@@ -157,8 +152,6 @@ jobs:
       - build-push-scan-docker
     runs-on: ubuntu-latest
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: |
@@ -197,8 +190,6 @@ jobs:
       - build-push-scan-docker
     runs-on: ubuntu-latest
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: |
@@ -238,8 +229,6 @@ jobs:
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v3
       - name: read .nvmrc
         id: node_version
