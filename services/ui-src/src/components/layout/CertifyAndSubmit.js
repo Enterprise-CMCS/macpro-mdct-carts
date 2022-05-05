@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux"
 import moment from "moment";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Button } from "@cmsgov/design-system-core";
 import { useHistory } from "react-router-dom";
+import { loadForm } from "../../actions/initial";
 import { certifyAndSubmit } from "../../actions/certify";
-
 import PageInfo from "./PageInfo";
-import { getReportStatus, selectIsFormEditable } from "../../store/selectors";
+import { getCurrentReportStatus, selectIsFormEditable } from "../../store/selectors";
 import FormActions from "./FormActions";
 import { UserRoles } from "../../types";
 
@@ -43,7 +43,7 @@ const Thanks = ({ done: doneDispatch, lastSave, user }) => {
       <h3>What to expect next</h3>
       <p>You‘ll hear from CMS if they have any questions about your report.</p>
       <Button onClick={doneDispatch} variation="primary">
-        Done
+        Return Home
       </Button>
     </>
   );
@@ -61,8 +61,14 @@ const CertifyAndSubmit = ({
   lastSave,
   user,
   currentUserRole,
+  state
 }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+      dispatch(loadForm(state));
+  }, [user]);
 
   const certify = () => {
     certifyAction();
@@ -103,9 +109,10 @@ CertifyAndSubmit.defaultProps = {
 
 const mapState = (state) => ({
   isCertified: !selectIsFormEditable(state),
-  lastSave: moment(getReportStatus(state).lastChanged),
-  user: getReportStatus(state).username,
+  lastSave: moment(getCurrentReportStatus(state).lastChanged),
+  user: getCurrentReportStatus(state).username,
   currentUserRole: state.stateUser.currentUser.role,
+  state: state.stateUser.abbr,
 });
 
 const mapDispatch = { certifyAndSubmit };

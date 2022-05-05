@@ -81,6 +81,8 @@ describe("Test Update Sections Handler", () => {
     const res = await updateSections(event, null);
 
     expect(res.statusCode).toBe(500);
-    expect(res.body).toBe("{\"error\":\"Be sure to include state, year in the path\"}");
+    expect(res.body).toBe(
+      '{"error":"Be sure to include state, year in the path"}'
+    );
   });
 });

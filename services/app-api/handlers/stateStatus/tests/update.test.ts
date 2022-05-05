@@ -30,7 +30,9 @@ describe("Test Update State Status Handlers", () => {
     const res = await updateStateStatus(event, null);
 
     expect(res.statusCode).toBe(500);
-    expect(res.body).toBe("{\"error\":\"Be sure to include state, year in the path\"}");
+    expect(res.body).toBe(
+      '{"error":"Be sure to include state, year in the path"}'
+    );
   });
 
   test("update state status without new status", async () => {
@@ -43,7 +45,9 @@ describe("Test Update State Status Handlers", () => {
     const res = await updateStateStatus(event, null);
 
     expect(res.statusCode).toBe(500);
-    expect(res.body).toBe("{\"error\":\"Cannot update State Status without a new status and username\"}");
+    expect(res.body).toBe(
+      '{"error":"Cannot update State Status without a new status and username"}'
+    );
   });
 
   test("update state status as a state user uses correct query", async () => {
@@ -71,7 +75,8 @@ describe("Test Update State Status Handlers", () => {
         stateId: "AL",
         year: 2022,
       },
-      "UpdateExpression": "set #status=:status, #username=:username, #lastChanged=:lastChanged",
+      UpdateExpression:
+        "set #status=:status, #username=:username, #lastChanged=:lastChanged",
       TableName: undefined,
     });
   });
