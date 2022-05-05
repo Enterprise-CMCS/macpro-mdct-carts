@@ -68,8 +68,6 @@ const FormActions = (props) => {
 
   /**
    * Generates the URL to print an entire form.
-   * Since the section URLs are different for state vs other
-   * users we have to check what kind of user we are first
    * @param {object} currentUser - the current user object
    * @param {string} formYear = the year associated with the report
    * @return {string} The URL string
