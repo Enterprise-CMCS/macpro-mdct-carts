@@ -139,6 +139,39 @@ jobs:
         with:
           name: data-aws-logs
           path: data/aws/log*
+  frontend:
+    needs:
+      - deploy
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - name: set branch_name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v3
+      - name: set branch specific variable names
+        run: |
+          ./.github/build_vars.sh set_names
+          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.11
+          terraform_wrapper: false
       - name: Deploy Frontend Layer
         run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
       - name: Archive Frontend aws logs
@@ -147,7 +180,7 @@ jobs:
         with:
           name: Frontend-aws-logs
           path: frontend/aws/log*
-  deploy-serverless:
+  serverless:
     needs:
       - deploy
     runs-on: ubuntu-latest
