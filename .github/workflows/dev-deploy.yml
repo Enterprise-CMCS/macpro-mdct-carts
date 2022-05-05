@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh ${{env.BRANCH_NAME}}
-  build-push-scan-docker:
+  build-push-scan-postgres_deployer:
     needs:
       - prevalidate
     runs-on: ubuntu-latest
@@ -32,9 +32,9 @@ jobs:
         # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
         with:
-          key: foo-docker-cache-{hash}
+          key: ${{ runner.os }}-postgres_deployer-docker-cache-{hash}
           restore-keys: |
-            foo-docker-cache-
+            ${{ runner.os }}-postgres_deployer-docker-cache-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,6 +54,42 @@ jobs:
         run: |
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+      - name: Scan postgres_deployer(data layer) Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: ${{env.BUILD_TAG}}
+        run: |
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+      - name: Archive ecr images scan results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: image_scan_results
+          path: ecr_scan_*.json
+  build-push-scan-postgres_django:
+    needs:
+      - prevalidate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+        with:
+          key: ${{ runner.os }}-postgres_django-docker-cache-{hash}
+          restore-keys: |
+            ${{ runner.os }}-postgres_django-docker-cache-
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
@@ -64,14 +100,6 @@ jobs:
         run: |
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-      - name: Scan postgres_deployer(data layer) Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-        run: |
-          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
       - name: Scan postgres_django(frontend/api_postgres) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -139,7 +167,7 @@ jobs:
   data:
     needs:
       - prevalidate
-      - build-push-scan-docker
+      - build-push-scan-postgres_deployer
     runs-on: ubuntu-latest
     env:
       VPC_NAME: ${{secrets.DEV_VPC_NAME}}
@@ -171,7 +199,7 @@ jobs:
       - data
       - uploads
       - build-react
-      - build-push-scan-docker
+      - build-push-scan-postgres_django
     runs-on: ubuntu-latest
     env:
       VPC_NAME: ${{secrets.DEV_VPC_NAME}}
