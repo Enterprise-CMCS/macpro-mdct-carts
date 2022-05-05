@@ -49,7 +49,7 @@ export const psUpload = handler(async (event, _context) => {
 
   // Pre-sign url
   const { url, fields } = s3.createPresignedPost({
-    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME,
+    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME ?? "local-uploads",
     Fields: { key: awsFilename },
     Expires: 600,
   });

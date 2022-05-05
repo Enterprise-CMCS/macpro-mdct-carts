@@ -10,15 +10,12 @@ import { DeleteObjectRequest } from "aws-sdk/clients/s3";
  */
 export const deleteUpload = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
-  if (user.role !== UserRoles.STATE) {
-    throw new Error("User is not allowed to delete");
-  }
-
   const body = event.body ? JSON.parse(event.body) : null;
-  if (!body || !body.fileId) {
+  const state = event.pathParameters ? event.pathParameters["state"] : "";
+
+  if (user.role !== UserRoles.STATE || !body || !body.fileId || !state) {
     throw new Error("Unable to perform deletion");
   }
-  const state = event.pathParameters ? event.pathParameters["state"] : "";
   // Get file, check aws filename before deleting
   const documentParams = {
     TableName: process.env.uploadsTableName!,
@@ -30,18 +27,14 @@ export const deleteUpload = handler(async (event, _context) => {
     },
   };
   const results = await dynamoDb.query(documentParams);
-  if (
-    !results.Items ||
-    results.Items.length === 0 ||
-    !process.env.S3_ATTACHMENTS_BUCKET_NAME
-  ) {
+  if (!results.Items || results.Items.length === 0) {
     throw new Error("Unable to perform deletion");
   }
   const document = results.Items[0];
 
   // DELETE AWS
   var params: DeleteObjectRequest = {
-    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME,
+    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME ?? "local-uploads",
     Key: document.awsFilename,
   };
   await s3.deleteObject(params);

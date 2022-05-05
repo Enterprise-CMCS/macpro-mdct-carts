@@ -30,17 +30,13 @@ export const getSignedFileUrl = handler(async (event, _context) => {
     },
   };
   const results = await dynamoDb.query(documentParams);
-  if (
-    !results.Items ||
-    results.Items.length === 0 ||
-    !process.env.S3_ATTACHMENTS_BUCKET_NAME
-  ) {
+  if (!results.Items || results.Items.length === 0) {
     throw new Error("Cannot find file");
   }
   const document = results.Items[0];
   // Pre-sign url
   const url = s3.getSignedUrl("getObject", {
-    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME,
+    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME ?? "local-uploads",
     Key: document.awsFilename,
     ResponseContentDisposition: `attachment; filename = ${document.filename}`,
     Expires: 3600,
