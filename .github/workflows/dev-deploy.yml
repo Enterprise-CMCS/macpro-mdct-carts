@@ -209,7 +209,7 @@ jobs:
           path: frontend/aws/log*
   serverless:
     needs:
-      - deploy
+      - data
     runs-on: ubuntu-latest
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
