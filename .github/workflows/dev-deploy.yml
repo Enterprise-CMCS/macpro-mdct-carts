@@ -10,7 +10,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BRANCH_NAME: $ {{ env.GITHUB_REF_NAME }}
+  BRANCH_NAME: ${{ github.ref_name }}
+  BUILD_TAG: ${{ github.ref_name }}.${{ github.sha }}
+  ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
+  ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
 
 jobs:
   prevalidate:
@@ -25,15 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: set branch specific variable names
-        run: |
-          ./.github/build_vars.sh set_names
-          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
-      - name: set variable values
-        run: ./.github/build_vars.sh set_values
-        env:
-          ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
-          ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
       - uses: satackey/action-docker-layer-caching@v0.0.11
         # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
@@ -98,10 +92,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: set branch specific variable names
-        run: |
-          ./.github/build_vars.sh set_names
-          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -151,17 +141,11 @@ jobs:
       - prevalidate
       - build-push-scan-docker
     runs-on: ubuntu-latest
+    env:
+      VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+      APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
     steps:
       - uses: actions/checkout@v3
-      - name: set branch specific variable names
-        run: |
-          ./.github/build_vars.sh set_names
-          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
-      - name: set variable values
-        run: ./.github/build_vars.sh set_values
-        env:
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -189,20 +173,14 @@ jobs:
       - build-react
       - build-push-scan-docker
     runs-on: ubuntu-latest
+    env:
+      VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+      OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
+      OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
+      TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
+      APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
     steps:
       - uses: actions/checkout@v3
-      - name: set branch specific variable names
-        run: |
-          ./.github/build_vars.sh set_names
-          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
-      - name: set variable values
-        run: ./.github/build_vars.sh set_values
-        env:
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
-          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
-          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
