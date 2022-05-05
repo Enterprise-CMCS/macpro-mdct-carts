@@ -74,5 +74,8 @@ RUN chown -R app:app $APP_HOME
 # change to the app user
 USER app
 
+RUN python utils/section-schemas/generate_fixtures.py
+RUN python utils/section-schemas/compare_fixtures.py
+
 # run entrypoint.sh
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
