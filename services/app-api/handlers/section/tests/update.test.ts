@@ -71,4 +71,16 @@ describe("Test Update Sections Handler", () => {
       "post"
     );
   });
+
+  test("updating sections without state and year throws error", async () => {
+    const event: APIGatewayProxyEvent = {
+      ...testEvent,
+      pathParameters: {},
+    };
+
+    const res = await updateSections(event, null);
+
+    expect(res.statusCode).toBe(500);
+    expect(res.body).toBe("{\"error\":\"Be sure to include state, year in the path\"}");
+  });
 });
