@@ -73,16 +73,15 @@ const FormActions = (props) => {
    * @return {string} The URL string
    */
   const printEntireFormUrl = (currentUser, formYear) => {
-    let urlString = "";
+    let stateId = "";
 
     if (currentUser.role === UserRoles.STATE) {
-      urlString = `/print?year=${formYear}&state=${currentUser.state.id}`;
+      stateId = currentUser.state.id;
     } else {
-      urlString = `/print?year=${formYear}&state=${
-        window.location.href.split("/")[5]
-      }`;
+      stateId = window.location.href.split("/")[5];
     }
 
+    const urlString = `/print?year=${formYear}&state=${stateId}`;
     return urlString;
   };
 
