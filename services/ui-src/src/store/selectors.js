@@ -160,7 +160,7 @@ export const getCurrentReportStatus = (state) => {
 };
 
 export const selectIsFormEditable = (state) => {
-  const { stateUser, reportStatus } = state;
+  const { stateUser } = state;
   const { role } = stateUser.currentUser;
   const status = getCurrentReportStatus(state).status;
 
