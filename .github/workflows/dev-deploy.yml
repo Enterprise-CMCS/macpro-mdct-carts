@@ -95,16 +95,6 @@ jobs:
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
           popd
-      - name: Build and push react artifacts.
-        env:
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-        run: |
-          cd frontend/react
-          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
-          tar -zcvf cartsbuild.tar.gz build
-          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
-          rm -rf cartsbuild.tar.gz
       - name: Scan postgres_deployer(data layer) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -127,6 +117,34 @@ jobs:
         with:
           name: image_scan_results
           path: ecr_scan_*.json
+  build-react:
+    needs:
+      - deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: set branch_name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v3
+      - name: set branch specific variable names
+        run: |
+          ./.github/build_vars.sh set_names
+          echo "BUILD_TAG=${BRANCH_NAME}.${{ github.sha }}" >> "$GITHUB_ENV"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Build and push react artifacts.
+        env:
+          IMAGE_TAG: ${{env.BUILD_TAG}}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+        working-directory: frontend/react
+        run: |
+          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+          tar -zcvf cartsbuild.tar.gz build
+          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
+          rm -rf cartsbuild.tar.gz
   uploads:
     needs:
       - deploy
@@ -198,6 +216,7 @@ jobs:
       - deploy
       - data
       - uploads
+      - build-react
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
