@@ -6,16 +6,24 @@ on:
       - "dev-*"
 
 jobs:
-  deploy:
+  prevalidate:
     runs-on: ubuntu-latest
-    env:
-      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
       - name: set branch_name
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
-      - uses: actions/checkout@v2
-      - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
+      - uses: actions/checkout@v3
+      - name: lock this branch to prevent concurrent builds
+        run: ./.github/github-lock.sh $BRANCH_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build-push-scan-docker:
+    needs:
+      - prevalidate
+    runs-on: ubuntu-latest
+    steps:
+      - name: set branch_name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: |
           ./.github/build_vars.sh set_names
@@ -23,16 +31,8 @@ jobs:
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
-          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
-          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - uses: satackey/action-docker-layer-caching@v0.0.11
         # Ignore the failure of a step and avoid terminating the job.
         continue-on-error: true
@@ -40,36 +40,12 @@ jobs:
           key: foo-docker-cache-{hash}
           restore-keys: |
             foo-docker-cache-
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
-      - name: set path
-        run: |
-          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Terraform setup
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.0.11
-          terraform_wrapper: false
-      - name: Chrome setup
-        uses: browser-actions/setup-chrome@latest
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -79,22 +55,20 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
           IMAGE_TAG: ${{env.BUILD_TAG}}
+        working-directory: data/postgres_deployer
         run: |
-          pushd data/postgres_deployer
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-          popd
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
           IMAGE_TAG: ${{env.BUILD_TAG}}
+        working-directory: frontend/api_postgres
         run: |
-          pushd frontend/api_postgres
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-          popd
       - name: Scan postgres_deployer(data layer) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -147,7 +121,7 @@ jobs:
           rm -rf cartsbuild.tar.gz
   uploads:
     needs:
-      - deploy
+      - prevalidate
     runs-on: ubuntu-latest
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
@@ -177,7 +151,8 @@ jobs:
         run: ./deploy.sh ${{env.BRANCH_NAME}}
   data:
     needs:
-      - deploy
+      - prevalidate
+      - build-push-scan-docker
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
@@ -213,10 +188,11 @@ jobs:
           path: data/aws/log*
   frontend:
     needs:
-      - deploy
+      - prevalidate
       - data
       - uploads
       - build-react
+      - build-push-scan-docker
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
