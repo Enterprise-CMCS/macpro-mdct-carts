@@ -69,7 +69,7 @@ const FormActions = (props) => {
   /**
    * Generates the URL to print an entire form.
    * @param {object} currentUser - the current user object
-   * @param {string} formYear = the year associated with the report
+   * @param {string} formYear - the year associated with the report
    * @return {string} The URL string
    */
   const printEntireFormUrl = (currentUser, formYear) => {
