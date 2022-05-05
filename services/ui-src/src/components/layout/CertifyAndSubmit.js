@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux"
+import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system-core";
@@ -7,7 +7,10 @@ import { useHistory } from "react-router-dom";
 import { loadForm } from "../../actions/initial";
 import { certifyAndSubmit } from "../../actions/certify";
 import PageInfo from "./PageInfo";
-import { getCurrentReportStatus, selectIsFormEditable } from "../../store/selectors";
+import {
+  getCurrentReportStatus,
+  selectIsFormEditable,
+} from "../../store/selectors";
 import FormActions from "./FormActions";
 import { UserRoles } from "../../types";
 
@@ -61,13 +64,13 @@ const CertifyAndSubmit = ({
   lastSave,
   user,
   currentUserRole,
-  state
+  state,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-      dispatch(loadForm(state));
+    dispatch(loadForm(state));
   }, [user]);
 
   const certify = () => {
