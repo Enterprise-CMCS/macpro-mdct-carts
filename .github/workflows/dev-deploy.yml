@@ -147,10 +147,6 @@ jobs:
         with:
           name: Frontend-aws-logs
           path: frontend/aws/log*
-      - name: Serverless
-        run: |
-          cd serverless
-          ./deploy.sh ${{env.BRANCH_NAME}}
   deploy-serverless:
     needs:
       - deploy
