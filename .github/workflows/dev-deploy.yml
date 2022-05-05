@@ -57,7 +57,7 @@ jobs:
       - name: Scan postgres_deployer(data layer) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
           IMAGE_TAG: ${{env.BUILD_TAG}}
         run: |
           aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
