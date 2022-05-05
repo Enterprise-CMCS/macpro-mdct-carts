@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import formData from "./formData";
 import lastYearFormData from "./lastYearFormData";
 import { lastYearTotals } from "./lastYearTotals";

@@ -90,7 +90,7 @@ function RenderEmailMenuItem({ toggleUserNav, email }) {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentYear: PropTypes.object.isRequired,
+  currentYear: PropTypes.number.isRequired,
 };
 
 RenderEmailMenuItem.propTypes = {

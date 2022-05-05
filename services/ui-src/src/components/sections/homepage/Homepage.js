@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import { DownloadDrawer } from "./DownloadDrawer";
-import { selectFormStatus } from "../../../store/selectors";
 import { REPORT_STATUS, STATUS_MAPPING, UserRoles } from "../../../types";
 
 function formatStateStatus(item) {
@@ -72,12 +71,10 @@ const Homepage = ({ reportStatus }) => (
   </div>
 );
 Homepage.propTypes = {
-  status: PropTypes.string.isRequired,
   reportStatus: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
-  status: selectFormStatus(state),
   reportStatus: state.reportStatus,
 });
 
