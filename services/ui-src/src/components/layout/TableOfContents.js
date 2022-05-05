@@ -91,7 +91,7 @@ TableOfContents.propTypes = {
   location: PropTypes.object.isRequired,
   sections: PropTypes.array.isRequired,
   userRole: PropTypes.string.isRequired,
-  formYear: PropTypes.string.isRequired,
+  formYear: PropTypes.number.isRequired,
 };
 
 const selectSectionsForNav = (state) => {
