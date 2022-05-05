@@ -14,6 +14,11 @@ on:
         type: choice
         options:
           - staging
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.environment }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
