@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Alert } from "@cmsgov/design-system-core";
+import { Alert } from "@cmsgov/design-system";
 
 import { selectFragment } from "../../store/formData";
 import Question from "../fields/Question";

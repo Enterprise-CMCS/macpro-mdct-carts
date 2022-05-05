@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
 import { certifyAndSubmit } from "../../actions/certify";
 

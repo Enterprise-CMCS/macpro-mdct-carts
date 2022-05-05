@@ -1,4 +1,4 @@
-import { Alert } from "@cmsgov/design-system-core";
+import { Alert } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";

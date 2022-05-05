@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { TextField } from "@cmsgov/design-system-core";
+import { TextField } from "@cmsgov/design-system";
 import ReactHtmlParser from "react-html-parser";
 import axios from "../../authenticatedAxios";
 import { connect } from "react-redux";

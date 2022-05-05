@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "../../hooks/authHooks";
