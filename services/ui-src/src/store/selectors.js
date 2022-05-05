@@ -141,9 +141,14 @@ export const selectSectionsForNav = (state) => {
   return [];
 };
 
+/**
+ * Get the State Status for the current report.
+ * @param {object} state - The current state object
+ * @returns {object} The reportStatus object associated with the current report
+ */
 export const getCurrentReportStatus = (state) => {
   if (state.reportStatus.status === null) {
-    return "";
+    return { status: "" };
   }
 
   const { reportStatus, formData, stateUser, global } = state;
@@ -159,6 +164,11 @@ export const getCurrentReportStatus = (state) => {
   return status;
 };
 
+/**
+ * Determines if the report form should be editable.
+ * @param {object} state - The current state object
+ * @returns {boolean}
+ */
 export const selectIsFormEditable = (state) => {
   const { stateUser } = state;
   const { role } = stateUser.currentUser;
