@@ -114,6 +114,38 @@ functions:
           method: put
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  postUpload:
+    handler: handlers/uploads/createUploadPsUrl.psUpload
+    events:
+      - http:
+          path: psUrlUpload/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  postDownload:
+    handler: handlers/uploads/createDownloadPsUrl.getSignedFileUrl
+    events:
+      - http:
+          path: psUrlDownload/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  deleteUpload:
+    handler: handlers/uploads/delete.deleteUpload
+    events:
+      - http:
+          path: uploads/{year}/{state}
+          method: delete
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  viewUploads:
+    handler: handlers/uploads/viewUploaded.viewUploaded
+    events:
+      - http:
+          path: uploads/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
 resources:
   Resources:
     GatewayResponseDefault4XX:

@@ -9,3 +9,9 @@ GET /section/{year}/{state} -- returns the report sections for a given year and 
 
 -- update_report
 PUT /update_report/{year}/{state} -- updates the sections of a given report
+
+-- uploads
+POST /psUrlDownload/{year}/{state} - get a presigned url to download a file
+POST /psUrlUpload/{year}/{state} - get a presigned url to upload a file
+DELETE /uploads/{year}/{state} - delete an upload on a question
+POST /uploads/{year}/{state} - get a list of uploads matching the request body
