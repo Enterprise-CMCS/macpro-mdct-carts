@@ -112,7 +112,8 @@
         position: relative;
 
         a {
-          padding: ($padding * 2) ($padding * 4) ($padding * 1.5) ($padding * 0.5);
+          padding: ($padding * 2) ($padding * 4) ($padding * 1.5)
+            ($padding * 0.5);
           &:before {
             content: "\f05a";
             font-family: "FontAwesome";
@@ -142,7 +143,8 @@
           text-decoration: none;
           font-weight: normal;
           color: #fff;
-          padding: ($padding * 2) ($padding * 6.5) ($padding * 1.5) ($padding * 2);
+          padding: ($padding * 2) ($padding * 6.5) ($padding * 1.5)
+            ($padding * 2);
           margin-left: -($margin * 1.5);
           &:hover {
             color: #8ed2e5;
