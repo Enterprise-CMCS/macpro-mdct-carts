@@ -4,7 +4,7 @@ on:
   delete:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.ref }}
+  group: dev-${{ github.event.ref }}
   cancel-in-progress: false
 
 jobs:
