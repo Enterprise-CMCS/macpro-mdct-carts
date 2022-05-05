@@ -4,13 +4,14 @@ import s3 from "../../libs/s3-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { UserRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
+import { UnauthorizedError } from "../../libs/httpErrors";
 /**
  * Updates the Sections associated with a given year and state
  */
 export const psUpload = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
   if (user.role !== UserRoles.STATE) {
-    throw new Error("Unauthorized");
+    throw new UnauthorizedError("Unauthorized");
   }
 
   // Format Info

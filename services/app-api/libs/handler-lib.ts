@@ -2,6 +2,7 @@ import * as debug from "./debug-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { isAuthorized } from "./authorization";
 import { failure, success, buildResponse } from "./response-lib";
+import { NotFoundError, UnauthorizedError } from "./httpErrors";
 
 type LambdaFunction = (
   event: APIGatewayProxyEvent, // eslint-disable-line no-unused-vars
@@ -23,7 +24,14 @@ export default function handler(lambda: LambdaFunction) {
         debug.flush(e);
 
         const body = { error: e.message };
-        return failure(body);
+        switch (e.constructor) {
+          case UnauthorizedError:
+            return buildResponse(403, body);
+          case NotFoundError:
+            return buildResponse(404, body);
+          default:
+            return failure(body);
+        }
       }
     } else {
       const body = { error: "User is not authorized to access this resource." };

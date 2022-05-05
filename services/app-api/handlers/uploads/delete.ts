@@ -4,6 +4,7 @@ import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { UserRoles } from "../../types";
 import s3 from "../../libs/s3-lib";
 import { DeleteObjectRequest } from "aws-sdk/clients/s3";
+import { UnauthorizedError } from "../../libs/httpErrors";
 
 /**
  * Returns the report Sections associated with a given year and state
@@ -14,7 +15,7 @@ export const deleteUpload = handler(async (event, _context) => {
   const state = event.pathParameters ? event.pathParameters["state"] : "";
 
   if (user.role !== UserRoles.STATE || !body || !body.fileId || !state) {
-    throw new Error("Unauthorized");
+    throw new UnauthorizedError("Unauthorized");
   }
   // Get file, check aws filename before deleting
   const documentParams = {
