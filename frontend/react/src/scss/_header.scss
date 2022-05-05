@@ -101,38 +101,42 @@
 
       &.open {
         background: $brand-tertiary;
-        display: block;
-        padding: ($padding * 2);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: ($padding * 1.5);
         position: absolute;
         right: 0;
         transition: all 2s;
       }
 
       .manage-account {
-        padding: $padding 0 $padding ($padding * 4);
+        padding: ($padding * 1.5) 0 ($padding * 1.5) 0;
         position: relative;
 
         a {
+          padding: ($padding * 2) 0 ($padding * 1.5) 0;
           &:before {
             content: "\f044";
             font-family: "FontAwesome";
-            position: absolute;
             top: ($margin * 1.5);
             left: 0;
+            padding: 0 $padding 0 0;
           }
         }
       }
-      .helpdesk {
-        padding: $padding 0 $padding ($padding * 4);
+      .contact-us {
+        padding: ($padding * 2) 0 ($padding * 1.5) 0;
         position: relative;
 
         a {
+          padding: ($padding * 2) ($padding * 3) ($padding * 1.5) $padding;
           &:before {
             content: "\f05a";
             font-family: "FontAwesome";
-            position: absolute;
             top: ($margin * 1.5);
             left: 0;
+            padding: 0 ($padding * 3) 0 0;
           }
         }
       }
