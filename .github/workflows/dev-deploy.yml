@@ -93,7 +93,7 @@ jobs:
           path: ecr_scan_*.json
   build-react:
     needs:
-      - deploy
+      - prevalidate
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
