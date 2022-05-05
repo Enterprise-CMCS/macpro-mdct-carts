@@ -5,6 +5,10 @@ on:
     branches:
       - "master"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -44,10 +48,6 @@ jobs:
           TF_VAR_postgres_custom_password: ${{secrets.MASTER_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}
           TF_VAR_use_custom_db_password_info: true
           SAF_SCAN: false
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
         with:
