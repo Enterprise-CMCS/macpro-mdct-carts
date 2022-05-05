@@ -14,7 +14,7 @@ export const deleteUpload = handler(async (event, _context) => {
   const state = event.pathParameters ? event.pathParameters["state"] : "";
 
   if (user.role !== UserRoles.STATE || !body || !body.fileId || !state) {
-    throw new Error("Unable to perform deletion");
+    throw new Error("Unauthorized");
   }
   // Get file, check aws filename before deleting
   const documentParams = {
@@ -28,7 +28,7 @@ export const deleteUpload = handler(async (event, _context) => {
   };
   const results = await dynamoDb.query(documentParams);
   if (!results.Items || results.Items.length === 0) {
-    throw new Error("Unable to perform deletion");
+    throw new Error("Unauthorized");
   }
   const document = results.Items[0];
 

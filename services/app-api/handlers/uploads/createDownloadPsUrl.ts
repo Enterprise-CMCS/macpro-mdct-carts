@@ -1,19 +1,12 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { UserRoles } from "../../types";
 
 /**
  * Returns the report Sections associated with a given year and state
  */
 export const getSignedFileUrl = handler(async (event, _context) => {
-  const user = getUserCredentialsFromJwt(event);
   const state = event.pathParameters ? event.pathParameters["state"] : "";
-  if (user.role === UserRoles.STATE && user.state !== state) {
-    return;
-  }
-
   const body = event.body ? JSON.parse(event.body) : null;
   if (!body || !body.fileId) {
     throw new Error("Unable to find info");

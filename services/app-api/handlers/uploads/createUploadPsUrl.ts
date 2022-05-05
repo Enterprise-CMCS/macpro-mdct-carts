@@ -10,7 +10,7 @@ import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpress
 export const psUpload = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
   if (user.role !== UserRoles.STATE) {
-    throw new Error("User is not allowed to upload");
+    throw new Error("Unauthorized");
   }
 
   // Format Info
