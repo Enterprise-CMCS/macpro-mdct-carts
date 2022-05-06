@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 
 const Autosave = () => (
   <div className="autosave">

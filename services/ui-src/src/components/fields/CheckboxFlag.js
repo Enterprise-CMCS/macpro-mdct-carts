@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ChoiceList } from "@cmsgov/design-system-core";
+import { ChoiceList } from "@cmsgov/design-system";
 
 const CheckboxFlag = ({ onChange, question, ...props }) => {
   const value = question.answer.entry || false;

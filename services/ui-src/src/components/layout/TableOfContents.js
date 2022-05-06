@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { VerticalNav } from "@cmsgov/design-system-core";
+import { VerticalNav } from "@cmsgov/design-system";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { UserRoles } from "../../types";
@@ -91,7 +91,7 @@ TableOfContents.propTypes = {
   location: PropTypes.object.isRequired,
   sections: PropTypes.array.isRequired,
   userRole: PropTypes.string.isRequired,
-  formYear: PropTypes.string.isRequired,
+  formYear: PropTypes.number.isRequired,
 };
 
 const selectSectionsForNav = (state) => {

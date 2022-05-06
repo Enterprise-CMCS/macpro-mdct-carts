@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import { useUser } from "../../hooks/authHooks";
 
 // Basic component with logout button

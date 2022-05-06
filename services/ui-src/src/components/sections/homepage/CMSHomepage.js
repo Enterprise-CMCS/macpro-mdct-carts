@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import MultiSelect from "react-multi-select-component";
 import { STATUS_MAPPING, UserRoles } from "../../../types";
 
