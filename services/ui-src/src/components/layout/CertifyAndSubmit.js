@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Button } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
 import { loadForm } from "../../actions/initial";
