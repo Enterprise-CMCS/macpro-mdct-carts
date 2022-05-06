@@ -8,7 +8,7 @@ export const theUncertify =
   (stateCode, stateYear) => async (dispatch, getState) => {
     const state = getState();
     const user = state.stateUser.currentUser;
-    const userName = `${user.firstname} ${user.lastname}`;
+    const username = `${user.firstname} ${user.lastname}`;
 
     // created a new record in carts_api_statestatus that will label the state as uncertified
     dispatch({ type: UNCERTIFY });
@@ -17,7 +17,7 @@ export const theUncertify =
         lastChanged: new Date(),
         state: stateCode,
         status: "in_progress",
-        user_name: userName,
+        username: username,
         year: stateYear,
       });
 

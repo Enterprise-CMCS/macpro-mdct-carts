@@ -2,11 +2,12 @@ import { SET_STATE_STATUS, SET_STATE_STATUSES } from "../actions/initial";
 import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
 import { UNCERTIFY_SUCCESS } from "../actions/uncertify";
 import { ACCEPT_SUCCESS } from "../actions/accept";
+import { REPORT_STATUS } from "../types";
 
 const initialState = {
   status: null,
   lastChanged: null,
-  userName: null,
+  username: null,
 };
 
 export default (state = initialState, action) => {
@@ -15,25 +16,28 @@ export default (state = initialState, action) => {
       return {
         lastChanged: action.payload.lastChanged,
         status: action.payload.status,
-        userName: action.payload.user_name,
+        username: action.payload.username,
       };
     case SET_STATE_STATUSES:
       return action.payload;
     case CERTIFY_AND_SUBMIT_SUCCESS:
       return {
         ...state,
-        status: "certified",
-        userName: action.user,
+        [action.report]: {
+          status: REPORT_STATUS.certified,
+          lastChanged: new Date(),
+          username: action.user,
+        },
       };
     case UNCERTIFY_SUCCESS:
       return {
         ...state,
-        [action.stateCode]: "in_progress",
+        [action.stateCode]: REPORT_STATUS.in_progress,
       };
     case ACCEPT_SUCCESS:
       return {
         ...state,
-        [action.stateCode]: "accepted",
+        [action.stateCode]: REPORT_STATUS.accepted,
       };
     default:
       return state;
