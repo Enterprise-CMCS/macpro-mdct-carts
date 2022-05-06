@@ -162,7 +162,7 @@ const CMSHomepage = ({
                             // with statement below we don't get the three default records (username, status, and lastchanged)
                             stateCode !== "status" &&
                             stateCode !== "lastChanged" &&
-                            stateCode !== "userName" &&
+                            stateCode !== "username" &&
                             stateCode !== undefined ? (
                               <ReportItem
                                 key={stateCode}

@@ -1,9 +1,8 @@
 import jsonpath from "../util/jsonpath";
-
+import { REPORT_STATUS, UserRoles } from "../types";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
-import { UserRoles } from "../types";
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
@@ -142,14 +141,43 @@ export const selectSectionsForNav = (state) => {
   return [];
 };
 
+/**
+ * Get the State Status for the current report.
+ * @param {object} state - The current state object
+ * @returns {object} The reportStatus object associated with the current report
+ */
+export const getCurrentReportStatus = (state) => {
+  if (state.reportStatus.status === null) {
+    return { status: "" };
+  }
+
+  const { reportStatus, formData, stateUser, global } = state;
+
+  let currentReport = "";
+  if (stateUser.currentUser.role === UserRoles.STATE) {
+    currentReport = `${stateUser.abbr}${global.formYear}`;
+  } else {
+    currentReport = `${formData[0].stateId}${formData[0].year}`;
+  }
+
+  const status = reportStatus[currentReport];
+  return status;
+};
+
+/**
+ * Determines if the report form should be editable.
+ * @param {object} state - The current state object
+ * @returns {boolean}
+ */
 export const selectIsFormEditable = (state) => {
-  const { status } = state.reportStatus;
-  const { role } = state.stateUser.currentUser;
+  const { stateUser } = state;
+  const { role } = stateUser.currentUser;
+  const status = getCurrentReportStatus(state).status;
 
   switch (status) {
-    case "not_started":
-    case "in_progress":
-    case "uncertified":
+    case REPORT_STATUS.not_started:
+    case REPORT_STATUS.in_progress:
+    case REPORT_STATUS.uncertified:
     case undefined:
       /*
        * Forms can only be edited if the current user is a state user AND the
