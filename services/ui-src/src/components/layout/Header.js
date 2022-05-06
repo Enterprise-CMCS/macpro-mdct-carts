@@ -40,7 +40,7 @@ class Header extends Component {
         <div className="ds-l-container">
           <div className="ds-l-row header-row">
             <div className="site-title ds-l-col--4 ds-u-padding--2">
-              <a href="/">Carts-{currentYear}</a>
+              <a href="/">CARTS-{currentYear}</a>
             </div>
             <div className="user-details ds-l-col--8 ds-u-padding--2">
               <div className="ds-l-row">
@@ -59,11 +59,11 @@ function renderMenu(toggleUserNav, email) {
     <div className="nav-user" id="nav-user">
       <RenderEmailMenuItem toggleUserNav={toggleUserNav} email={email} />
       <ul className="menu-block" id="menu-block">
-        <li className="helpdesk">
-          <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
+        <li className="contact-us">
+          <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
         </li>
         <li className="manage-account">
-          <a href="/user/profile">Manage account</a>
+          <a href="/user/profile">Manage Account</a>
         </li>
         <li className="logout">
           <Logout />
