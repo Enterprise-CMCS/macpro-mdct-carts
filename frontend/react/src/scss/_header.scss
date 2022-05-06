@@ -69,10 +69,8 @@
       &.user-email-button {
         font-weight: $font-weight-bold;
         margin: 0;
-        padding: 0;
-        padding-right: ($padding * 3);
+        padding: 0 ($padding * 2.5) 0 0;
         position: relative;
-        text-align: center;
 
         @media only screen and (min-width: 768px) {
           text-align: right;
@@ -101,53 +99,62 @@
 
       &.open {
         background: $brand-tertiary;
-        display: block;
-        padding: ($padding * 2);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: ($padding * 1.5);
         position: absolute;
         right: 0;
         transition: all 2s;
       }
-
-      .manage-account {
-        padding: $padding 0 $padding ($padding * 4);
+      .contact-us {
+        padding: ($padding * 2) 0 ($padding * 1.5) 0;
         position: relative;
 
         a {
-          &:before {
-            content: "\f044";
-            font-family: "FontAwesome";
-            position: absolute;
-            top: ($margin * 1.5);
-            left: 0;
-          }
-        }
-      }
-      .helpdesk {
-        padding: $padding 0 $padding ($padding * 4);
-        position: relative;
-
-        a {
+          padding: ($padding * 2) ($padding * 4) ($padding * 1.5)
+            ($padding * 0.5);
           &:before {
             content: "\f05a";
             font-family: "FontAwesome";
-            position: absolute;
             top: ($margin * 1.5);
             left: 0;
+            padding: 0 ($padding * 3) 0 0;
           }
         }
       }
-
-      .logout {
-        padding-left: ($padding * 4);
+      .manage-account {
+        padding: ($padding * 1.5) 0 ($padding * 1.5) ($padding * 0.5);
         position: relative;
-
+        a {
+          padding: ($padding * 2) 0 ($padding * 1.5) 0;
+          &:before {
+            content: "\f044";
+            font-family: "FontAwesome";
+            top: ($margin * 1.5);
+            left: 0;
+            padding: 0 $padding 0 0;
+          }
+        }
+      }
+      .logout {
+        position: relative;
         button {
           text-decoration: none;
           font-weight: normal;
-          svg {
-            position: absolute;
+          color: #fff;
+          padding: ($padding * 2) ($padding * 6.5) ($padding * 1.5)
+            ($padding * 2);
+          margin-left: -($margin * 1.5);
+          &:hover {
+            color: #8ed2e5;
+          }
+          &:before {
+            content: "\f08b";
+            font-family: "FontAwesome";
             top: ($margin * 1.5);
             left: 0;
+            padding: 0 ($padding * 3) 0 0;
           }
         }
       }
