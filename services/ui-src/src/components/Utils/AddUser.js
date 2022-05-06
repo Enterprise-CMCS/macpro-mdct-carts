@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "../../authenticatedAxios";
 import Searchable from "react-searchable-dropdown";
-import { TextField, Button } from "@cmsgov/design-system-core";
+import { TextField, Button } from "@cmsgov/design-system";
 import MultiSelect from "react-multi-select-component";
 import { roles } from "../Utils/RoleHelper";
 import { UserRoles } from "../../types";

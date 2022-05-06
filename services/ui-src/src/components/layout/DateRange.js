@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TextField } from "@cmsgov/design-system-core";
+import { TextField } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import uuid from "react-uuid";
 

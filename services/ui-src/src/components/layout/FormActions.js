@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";

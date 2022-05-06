@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Choice } from "@cmsgov/design-system-core";
+import { Choice } from "@cmsgov/design-system";
 
 const Checkbox = ({ onChange, question, ...props }) => {
   const value = Array.isArray(question.answer.entry)

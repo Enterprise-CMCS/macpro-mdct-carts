@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../authenticatedAxios";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Button, TextField } from "@cmsgov/design-system-core";
+import { Button, TextField } from "@cmsgov/design-system";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
 import Searchable from "react-searchable-dropdown";
