@@ -15,11 +15,9 @@ const CMSHomepage = ({
   yearList,
 }) => {
   const statusList = [
-    { label: "Accepted", value: "accepted" },
     { label: "Certified", value: "certified" },
     { label: "In progress", value: "in_progress" },
     { label: "Not started", value: "not_started" },
-    { label: "Published", value: "published" },
   ];
 
   // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down

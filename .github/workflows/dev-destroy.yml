@@ -3,6 +3,10 @@ name: dev-destroy
 on:
   delete:
 
+concurrency:
+  group: dev-${{ github.event.ref }}
+  cancel-in-progress: false
+
 jobs:
   destroy:
     # Protected branches should be designated as such in the GitHub UI.
@@ -37,10 +41,6 @@ jobs:
           ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
           ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

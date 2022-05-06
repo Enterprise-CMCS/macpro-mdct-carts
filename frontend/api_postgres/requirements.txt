@@ -6,7 +6,7 @@ markdown
 django-json-widget
 django-filter
 django-cors-headers
-jsonschema
+jsonschema==4.4.0
 jsonpath_ng
 python_jwt
 pytest-django
