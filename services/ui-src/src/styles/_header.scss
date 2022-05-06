@@ -27,6 +27,12 @@
     }
   }
 
+  a:focus,
+  p:active {
+    box-shadow: none;
+    background-color: inherit;
+  }
+
   .site-title {
     font-weight: $font-weight-bold;
     text-transform: uppercase;

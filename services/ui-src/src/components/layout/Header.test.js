@@ -1,65 +1,42 @@
-// TODO: Update testing suite with DynamoDB endpoint (currently points to PostgreSQL endpoint)
+import React from "react";
+import { mount, shallow } from "enzyme";
+import { axe } from "jest-axe";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+import Header from "./Header";
 
-describe("placeholder test", () => {
-  test("test suite runs", () => {
-    expect(1 + 2).toBe(3);
+const mockStore = configureMockStore();
+const store = mockStore({
+  stateUser: {
+    currentUser: {
+      email: "",
+      username: "",
+      firstname: "",
+      lastname: "",
+      role: "",
+      state: {
+        id: "",
+      },
+    },
+  },
+});
+
+const header = (
+  <Provider store={store}>
+    <Header currentYear={2021} />
+  </Provider>
+);
+
+describe("Header", () => {
+  it("should render the Header Component correctly", () => {
+    expect(shallow(header).exists()).toBe(true);
   });
 });
 
-/*
- * import React from "react";
- * import { shallow } from "enzyme";
- * import {
- *   storeFactory,
- *   findByTestAttribute,
- *   mockInitialState,
- * } from "../testUtils";
- */
-
-// import Header from "../components/layout/Header";
-
-// /**
-//  * Factory functon to create a ShallowWrapper for the Header component.
-//  * @function setup
-//  * @param {object} initialState - Component props specific to this setup.
-//  * @returns {ShallowWrapper}
-//  */
-
-/*
- * const setup = (initialState = {}) => {
- *   const store = storeFactory(initialState);
- *   return shallow(<Header store={store} />)
- *     .dive()
- *     .dive();
- * };
- */
-
-/*
- * describe("Header Component, enzyme testing", () => {
- *   const wrapper = setup(mockInitialState);
- */
-
-/*
- *   it("renders with test attributes", () => {
- *     const headerComponent = findByTestAttribute(wrapper, "component-header");
- *     expect(headerComponent.length).toBe(1);
- *   });
- */
-
-/*
- *   it("renders with header classname", () => {
- *     const headerClassname = wrapper.find(".header");
- *     expect(headerClassname.length).toBe(1);
- *   });
- */
-
-/*
- *   it("includes contact email address provided by redux", () => {
- *     const usernameDisplay = findByTestAttribute(
- *       wrapper,
- *       "component-header-username"
- *     );
- *     expect(usernameDisplay.text()).toBe("karen.dalton@state.gov");
- *   });
- * });
- */
+describe("Test Header accessibility", () => {
+  it("Should not have basic accessibility issues", async () => {
+    const wrapper = mount(header);
+    const results = await axe(wrapper.html());
+    expect(results).toHaveNoViolations();
+  });
+});

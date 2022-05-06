@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Autosave from "./Autosave";
 import Logout from "./Logout";
+import UsaBanner from "@cmsgov/design-system/dist/components/UsaBanner/UsaBanner";
 
 class Header extends Component {
   constructor() {
@@ -36,16 +37,19 @@ class Header extends Component {
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     return (
-      <div className="header" data-test="component-header">
-        <div className="ds-l-container">
-          <div className="ds-l-row header-row">
-            <div className="site-title ds-l-col--4 ds-u-padding--2">
-              <a href="/">Carts-{currentYear}</a>
-            </div>
-            <div className="user-details ds-l-col--8 ds-u-padding--2">
-              <div className="ds-l-row">
-                <Autosave />
-                {isLoggedIn && renderMenu(this.toggleUserNav, email)}
+      <div data-test="component-header">
+        <UsaBanner />
+        <div className="header">
+          <div className="ds-l-container">
+            <div className="ds-l-row header-row">
+              <div className="site-title ds-l-col--4 ds-u-padding--2">
+                <a href="/">Carts-{currentYear}</a>
+              </div>
+              <div className="user-details ds-l-col--8 ds-u-padding--2">
+                <div className="ds-l-row">
+                  <Autosave />
+                  {isLoggedIn && renderMenu(this.toggleUserNav, email)}
+                </div>
               </div>
             </div>
           </div>
@@ -90,11 +94,11 @@ function RenderEmailMenuItem({ toggleUserNav, email }) {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentYear: PropTypes.number.isRequired,
+  currentYear: PropTypes.object.isRequired,
 };
 
 RenderEmailMenuItem.propTypes = {
-  toggleUserNav: PropTypes.func.isRequired,
+  toggleUserNav: PropTypes.object.isRequired,
   email: PropTypes.string.isRequired,
 };
 
