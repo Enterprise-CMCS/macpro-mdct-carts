@@ -169,9 +169,6 @@ jobs:
       - prevalidate
       - build-push-scan-postgres_deployer
     runs-on: ubuntu-latest
-    env:
-      VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-      APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS credentials
@@ -187,6 +184,9 @@ jobs:
           terraform_wrapper: false
       - name: Deploy Data Layer
         run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
+        env:
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - name: Archive data aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -201,12 +201,6 @@ jobs:
       - build-react
       - build-push-scan-postgres_django
     runs-on: ubuntu-latest
-    env:
-      VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-      OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
-      OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
-      TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
-      APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS credentials
@@ -222,6 +216,12 @@ jobs:
           terraform_wrapper: false
       - name: Deploy Frontend Layer
         run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+        env:
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
       - name: Archive Frontend aws logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
