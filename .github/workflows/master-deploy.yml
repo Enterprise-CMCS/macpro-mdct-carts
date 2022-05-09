@@ -9,64 +9,171 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: false
 
+env:
+  BRANCH_NAME: ${{ github.ref_name }}
+  ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
+  ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
+
 jobs:
-  deploy:
+  build-info:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - id: calculate_build_tag
+        run: echo "::set-output name=build_tag::0.1.$(git rev-list --count ${{ github.sha }})"
+    outputs:
+      build_tag: ${{ steps.calculate_build_tag.outputs.build_tag}}
+  build-push-scan-postgres_deployer:
+    needs:
+      - build-info
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+        with:
+          key: ${{ runner.os }}-postgres_deployer-docker-cache-{hash}
+          restore-keys: |
+            ${{ runner.os }}-postgres_deployer-docker-cache-
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push postgres_deployer (data layer) image
+        id: postgres_deployer_build
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
+          IMAGE_TAG: ${{ needs.build-info.outputs.build_tag }}
+        working-directory: data/postgres_deployer
+        run: |
+          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+      - name: Scan postgres_deployer(data layer) Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
+          IMAGE_TAG: ${{ needs.build-info.outputs.build_tag }}
+        run: |
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+      - name: Archive ecr images scan results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: image_scan_results
+          path: ecr_scan_*.json
+  build-push-scan-postgres_django:
+    needs:
+      - build-info
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+        with:
+          key: ${{ runner.os }}-postgres_django-docker-cache-{hash}
+          restore-keys: |
+            ${{ runner.os }}-postgres_django-docker-cache-
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push postgres_django(frontend/api_postgres) image
+        id: postgres_django_build
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: ${{ needs.build-info.outputs.build_tag }}
+        working-directory: frontend/api_postgres
+        run: |
+          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+      - name: Scan postgres_django(frontend/api_postgres) Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
+          IMAGE_TAG: ${{ needs.build-info.outputs.build_tag }}
+        run: |
+          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
+          aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
+      - name: Archive ecr images scan results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: image_scan_results
+          path: ecr_scan_*.json
+  build-react:
+    needs:
+      - build-info
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Build and push react artifacts.
+        env:
+          IMAGE_TAG: ${{ needs.build-info.outputs.build_tag }}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+        working-directory: frontend/react
+        run: |
+          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+          tar -zcvf cartsbuild.tar.gz build
+          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
+          rm -rf cartsbuild.tar.gz
+  uploads:
+    needs:
+      - build-info
     runs-on: ubuntu-latest
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
-      - name: set branch_name
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set BUILD TAG
-        run: |
-          COUNT=$(git rev-list --count ${{ github.sha }})
-          echo "BUILD_TAG=0.1.$COUNT" >> "$GITHUB_ENV"
-      - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $STAGE_PREFIX$BRANCH_NAME
-      - name: set branch specific variable names
-        run: |
-          ./.github/build_vars.sh set_names
-      - name: set variable values
-        run: ./.github/build_vars.sh set_values
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
-          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
-          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
-          ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
-          ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-          TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
-          TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
-          TF_VAR_skip_data_deployment: true
-          TF_VAR_postgres_custom_password: ${{secrets.MASTER_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}
-          TF_VAR_use_custom_db_password_info: true
-          SAF_SCAN: false
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
-        with:
-          key: foo-docker-cache-{hash}
-          restore-keys: |
-            foo-docker-cache-
+      - uses: actions/checkout@v3
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
-      - name: set path
-        run: |
-          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+          path: serverless-uploads/**/node_modules
+          key: ${{ runner.os }}-serverless-uploads-modules-${{ hashFiles('serverless-uploads/**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-serverless-uploads-
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Deploy Uploads Scan
+        working-directory: serverless-uploads
+        run: ./deploy.sh ${{env.BRANCH_NAME}}
+  data:
+    needs:
+      - build-info
+      - build-push-scan-postgres_deployer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -78,91 +185,85 @@ jobs:
         with:
           terraform_version: 1.0.11
           terraform_wrapper: false
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: Build, tag, and push postgres_deployer (data layer) image
-        id: postgres_deployer_build
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-        run: |
-          pushd data/postgres_deployer
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-          popd
-      - name: Build, tag, and push postgres_django(frontend/api_postgres) image
-        id: postgres_django_build
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-        run: |
-          pushd frontend/api_postgres
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
-          popd
-      - name: Build and push react artifacts.
-        env:
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-        run: |
-          cd frontend/react
-          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
-          tar -zcvf cartsbuild.tar.gz build
-          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
-          rm -rf cartsbuild.tar.gz
-      - name: Scan postgres_deployer(data layer) Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER}}
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-        run: |
-          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
-      - name: Scan postgres_django(frontend/api_postgres) Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-        run: |
-          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
-          aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
-      - name: Archive ecr images scan results
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: image_scan_results
-          path: ecr_scan_*.json
-      - name: Deploy Uploads Scan
-        run: |
-          cd serverless-uploads
-          ./deploy.sh ${{env.BRANCH_NAME}}
       - name: Deploy Data Layer
-        run: |
-          ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
-      - name: Archive data aws logs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
+        env:
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+          BUILD_TAG: ${{ needs.build-info.outputs.build_tag }}
+          TF_VAR_skip_data_deployment: true
+  frontend:
+    needs:
+      - build-info
+      - data
+      - uploads
+      - build-react
+      - build-push-scan-postgres_django
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: data-aws-logs
-          path: data/aws/log*
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.0.11
+          terraform_wrapper: false
       - name: Deploy Frontend Layer
-        run: |
-          ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
-      - name: Archive Frontend aws logs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+        env:
+          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
+          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+          TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
+          TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
+          TF_VAR_postgres_custom_password: ${{secrets.MASTER_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}
+          TF_VAR_use_custom_db_password_info: true
+  serverless:
+    needs:
+      - data
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - uses: actions/checkout@v3
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v3
         with:
-          name: Frontend-aws-logs
-          path: frontend/aws/log*
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v3
+        with:
+          path: serverless/**/node_modules
+          key: ${{ runner.os }}-serverless-modules-${{ hashFiles('serverless/**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-serverless-modules-
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Serverless
-        run: |
-          cd serverless
-          ./deploy.sh ${{env.BRANCH_NAME}}
+        working-directory: serverless
+        run: ./deploy.sh ${{env.BRANCH_NAME}}
+  finalize:
+    needs:
+      - uploads
+      - data
+      - frontend
+      - serverless
+    runs-on: ubuntu-latest
+    env:
+      BUILD_TAG: ${{ needs.build-info.outputs.build_tag }}
+    steps:
       - name: Push Tags
         run: |
           git tag -f $BUILD_TAG
-          git tag master-tag -f     
-          git push -f origin $BUILD_TAG
+          git tag master-tag -f
+          git push -f origin $BUILD_TAG master-tag
