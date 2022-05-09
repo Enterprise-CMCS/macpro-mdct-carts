@@ -216,6 +216,7 @@ jobs:
       - name: Deploy Frontend Layer
         run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
         env:
+          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
           OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
