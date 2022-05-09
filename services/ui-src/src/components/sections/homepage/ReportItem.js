@@ -157,7 +157,7 @@ ReportItem.defaultProps = {
 };
 
 const mapState = (state) => ({
-  user: state.reportStatus.userName,
+  user: state.reportStatus.username,
 });
 
 const mapDispatch = { theUncertify, theAccept };

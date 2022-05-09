@@ -9,9 +9,7 @@ import { UserRoles } from "../../types";
 export const getSections = handler(async (event, _context) => {
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
-    throw new Error(
-      "Be sure to include state, year in the path" + event.pathParameters
-    );
+    throw new Error("Be sure to include state, year in the path");
   }
 
   const user = getUserCredentialsFromJwt(event);

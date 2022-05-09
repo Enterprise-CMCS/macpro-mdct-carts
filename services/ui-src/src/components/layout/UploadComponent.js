@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Button, TextField } from "@cmsgov/design-system-core";
+import { Button, TextField } from "@cmsgov/design-system";
 import { API } from "aws-amplify";
 import requestOptions from "../../hooks/authHooks/requestOptions";
-
 import { setAnswerEntry } from "../../actions/initial";
 
 class UploadComponent extends Component {

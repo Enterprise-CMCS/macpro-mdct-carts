@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Choice } from "@cmsgov/design-system-core";
+import { Choice } from "@cmsgov/design-system";
 
 import Question from "./Question";
 

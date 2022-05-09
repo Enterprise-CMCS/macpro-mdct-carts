@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "../../authenticatedAxios";
 import "react-data-table-component-extensions/dist/index.css";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
 
 const FormTemplates = () => {

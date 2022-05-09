@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button } from "@cmsgov/design-system-core";
+import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { UserRoles } from "../../types";
 
 /**
  * Display available options for form (print)
@@ -14,7 +15,7 @@ import PropTypes from "prop-types";
 const FormActions = (props) => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
-  const { formYear } = props;
+  const { currentUser, formYear } = props;
 
   /**
    * Print dialogue box state
@@ -65,6 +66,25 @@ const FormActions = (props) => {
     window.print();
   };
 
+  /**
+   * Generates the URL to print an entire form.
+   * @param {object} currentUser - the current user object
+   * @param {string} formYear - the year associated with the report
+   * @return {string} The URL string
+   */
+  const printEntireFormUrl = (currentUser, formYear) => {
+    let stateId = "";
+
+    if (currentUser.role === UserRoles.STATE) {
+      stateId = currentUser.state.id;
+    } else {
+      stateId = window.location.href.split("/")[5];
+    }
+
+    const urlString = `/print?year=${formYear}&state=${stateId}`;
+    return urlString;
+  };
+
   return (
     <section className="action-buttons">
       <div className="print-button">
@@ -101,9 +121,7 @@ const FormActions = (props) => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href={`/print?year=${formYear}&state=${
-                  window.location.href.split("/")[5]
-                }`}
+                href={printEntireFormUrl(currentUser, formYear)}
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDialogue}

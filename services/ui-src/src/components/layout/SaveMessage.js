@@ -59,7 +59,7 @@ SaveMessage.propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
     PropTypes.string,
-  ]).isRequired,
+  ]),
 };
 
 export default SaveMessage;
