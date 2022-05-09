@@ -187,12 +187,6 @@ jobs:
         env:
           VPC_NAME: ${{secrets.DEV_VPC_NAME}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-      - name: Archive data aws logs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: data-aws-logs
-          path: data/aws/log*
   frontend:
     needs:
       - prevalidate
@@ -222,12 +216,6 @@ jobs:
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-      - name: Archive Frontend aws logs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: Frontend-aws-logs
-          path: frontend/aws/log*
   serverless:
     needs:
       - data
