@@ -9,12 +9,14 @@ interface DecodedToken {
   given_name?: string;
   family_name?: string;
   identities?: [{ userId?: string }];
+  email?: string
 }
 
 class UserCredentials {
   role?: string;
   state?: string;
   identities?: [{ userId?: string }];
+  email?: string;
 
   constructor(decoded?: DecodedToken) {
     if (decoded === undefined) return;
@@ -24,6 +26,7 @@ class UserCredentials {
     this.role = role;
     this.state = decoded["custom:cms_state"];
     this.identities = decoded.identities;
+    this.email = decoded.email;
   }
 }
 
