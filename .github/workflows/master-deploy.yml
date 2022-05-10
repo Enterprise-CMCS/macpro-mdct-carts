@@ -260,6 +260,7 @@ jobs:
       - data
       - frontend
       - serverless
+      - build-info
     runs-on: ubuntu-latest
     env:
       BUILD_TAG: ${{ needs.build-info.outputs.build_tag }}
