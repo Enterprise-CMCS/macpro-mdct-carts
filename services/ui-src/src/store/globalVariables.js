@@ -48,7 +48,7 @@ export default function global(state = initialState, action) {
       state.url.indexOf(activeYears[activeYear]) !== -1 ||
       state.queryParams.indexOf(activeYears[activeYear]) !== -1
     ) {
-      state.formYear = activeYears[activeYear];
+      state.formYear = parseInt(activeYears[activeYear]);
       break;
     }
   }

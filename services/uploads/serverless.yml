@@ -35,12 +35,9 @@ custom:
   region: ${opt:region, self:provider.region}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, "{}"}
-  coreSetTableName: ${env:coreSetTableName, cf:database-${self:custom.stage}.CoreSetTableName}
-  coreSetTableArn: ${env:DYNAMO_TABLE_ARN, cf:database-${self:custom.stage}.CoreSetTableArn}
-  measureTableName: ${env:measureTableName, cf:database-${self:custom.stage}.MeasureTableName}
-  measureTableArn: ${env:DYNAMO_TABLE_ARN, cf:database-${self:custom.stage}.MeasureTableArn}
   serverlessTerminationProtection:
     stages:
+      - main
       - master
       - val
       - prod
@@ -65,14 +62,6 @@ layers:
     package:
       artifact: lambda_layer.zip
 functions:
-  dynamoSync:
-    handler: src/dynamoSync/handler.syncDynamoToS3
-    events:
-      - schedule: cron(30 * * * ? *)
-    environment:
-      coreSetTableName: ${self:custom.coreSetTableName}
-      measureTableName: ${self:custom.measureTableName}
-      uploadS3BucketName: !Ref AttachmentsBucket
   avScan:
     handler: src/antivirus.lambdaHandleEvent
     name: ${self:service.name}-${self:custom.stage}-avScan

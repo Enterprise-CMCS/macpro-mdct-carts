@@ -138,7 +138,7 @@ const FormActions = (props) => {
 
 FormActions.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  formYear: PropTypes.object.isRequired,
+  formYear: PropTypes.number.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
