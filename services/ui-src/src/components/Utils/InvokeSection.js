@@ -10,15 +10,15 @@ const InvokeSection = (username) => {
   const { state, year, sectionOrdinal, subsectionMarker } = useParams();
   const dispatch = useDispatch();
   const currentPath = window.location.href;
-  if (currentPath.includes("views")) {
-    const stateInitials = window.location.href.toString().split("/")[5];
-    const linkYear = window.location.href.toString().split("/")[6];
-    dispatch(updateStateName(stateInitials));
-    dispatch(updateFormYear(linkYear));
-  }
 
   useEffect(() => {
     if (username) {
+      if (currentPath.includes("views")) {
+        const stateInitials = window.location.href.toString().split("/")[5];
+        const linkYear = window.location.href.toString().split("/")[6];
+        dispatch(updateStateName(stateInitials));
+        dispatch(updateFormYear(linkYear));
+      }
       dispatch(loadForm(state));
     }
   }, [username]);
