@@ -370,7 +370,7 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 
 .percentages-info {
-  padding: 0 16px;
+  padding: 0 ($padding * 2);
   h4 {
     margin-bottom: 0;
   }
