@@ -72,7 +72,7 @@ const Part = ({
 Part.propTypes = {
   context_data: PropTypes.object,
   partId: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  partNumber: PropTypes.number.isRequired,
+  partNumber: PropTypes.number,
   questions: PropTypes.array.isRequired,
   show: PropTypes.bool.isRequired,
   text: PropTypes.string,
