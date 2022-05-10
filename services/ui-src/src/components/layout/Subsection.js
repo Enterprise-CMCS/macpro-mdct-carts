@@ -28,7 +28,7 @@ Subsection.propTypes = {
   partIds: PropTypes.array.isRequired,
   subsectionId: PropTypes.string.isRequired,
   text: PropTypes.oneOf([PropTypes.string, null]),
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 Subsection.defaultProps = {
   text: null,
