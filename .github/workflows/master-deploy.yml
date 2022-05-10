@@ -264,6 +264,7 @@ jobs:
     env:
       BUILD_TAG: ${{ needs.build-info.outputs.build_tag }}
     steps:
+      - uses: actions/checkout@v3
       - name: Push Tags
         run: |
           git tag -f $BUILD_TAG
