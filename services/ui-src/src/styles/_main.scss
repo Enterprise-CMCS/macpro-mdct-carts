@@ -121,6 +121,7 @@ img {
     text-transform: uppercase;
     width: 100%;
   }
+
   .report-item {
     padding: ($padding * 2) 0;
     width: 100%;
@@ -129,6 +130,32 @@ img {
       color: $black;
       font-weight: $font-weight-bold;
     }
+  }
+
+  table {
+    width: 100%;
+
+    .name {
+      color: #333;
+      font-weight: 700;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+  
+  .ds-c-table th {
+    background: none;
+    color: #333;
+    font-size: 0.85rem;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+  
+  .ds-c-table td,
+  .ds-c-table th {
+    border: none;
   }
 }
 
@@ -164,6 +191,13 @@ img {
     padding: 0.1rem 0.4rem;
     text-align: center;
   }
+}
+
+[class^="number-"] {
+  border-radius: 2px;
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  text-align: center;
 }
 
 .number-primary {
@@ -337,6 +371,7 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 
 .percentages-info {
+  padding: 0 16px;
   h4 {
     margin-bottom: 0;
   }
