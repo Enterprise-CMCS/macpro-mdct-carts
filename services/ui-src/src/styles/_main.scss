@@ -92,8 +92,7 @@ img {
   margin-left: $padding * 2;
 
   h1 {
-    font-weight: 500;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     margin-top: 0;
   }
 }
