@@ -5,7 +5,7 @@ djangorestframework
 markdown
 django-json-widget
 django-filter
-django-cors-headers
+django-cors-headers==3.11.0
 jsonschema==4.4.0
 jsonpath_ng
 python_jwt
