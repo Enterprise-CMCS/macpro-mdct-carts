@@ -141,6 +141,14 @@
         padding-left: ($padding * 4);
         position: relative;
 
+        a:before {
+          content: "\f2f5";
+          font-family: "FontAwesome";
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        
         button {
           text-decoration: none;
           font-weight: normal;
