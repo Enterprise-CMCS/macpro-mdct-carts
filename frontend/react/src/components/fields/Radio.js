@@ -29,7 +29,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
   }
 
   const radioButttonList = question.answer.options.map(({ label, value }) => (
-    <div style={{ margin: "4rem 0" }} key={props.name + "-" + value}>
+    <div style={{ margin: "2rem 0" }} key={props.name + "-" + value}>
       <input
         key={value}
         checked={checked === value}
