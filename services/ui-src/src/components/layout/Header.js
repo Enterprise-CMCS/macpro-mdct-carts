@@ -38,12 +38,14 @@ class Header extends Component {
     const isLoggedIn = !!currentUser.username;
     return (
       <div data-test="component-header">
-        <UsaBanner />
+        <UsaBanner data-testid={"usaBanner"} />
         <div className="header">
           <div className="ds-l-container">
             <div className="ds-l-row header-row">
               <div className="site-title ds-l-col--4 ds-u-padding--2">
-                <a href="/">Carts-{currentYear}</a>
+                <a data-testid={"cartsCurrentYear"} href="/">
+                  Carts-{currentYear}
+                </a>
               </div>
               <div className="user-details ds-l-col--8 ds-u-padding--2">
                 <div className="ds-l-row">
@@ -94,7 +96,7 @@ function RenderEmailMenuItem({ toggleUserNav, email }) {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentYear: PropTypes.object.isRequired,
+  currentYear: PropTypes.number.isRequired,
 };
 
 RenderEmailMenuItem.propTypes = {
