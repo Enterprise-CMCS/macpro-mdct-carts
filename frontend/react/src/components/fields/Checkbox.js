@@ -17,11 +17,12 @@ const Checkbox = ({ onChange, question, ...props }) => {
   };
 
   const radioButttonList = question.answer.options.map(
-    ({ label, value: checkBoxValue }) => {
-      console.log({ value });
-
+    ({ label, value: checkBoxValue }, idx) => {
       return (
-        <div style={{ margin: "2rem 0" }} key={props.name + "-" + value}>
+        <div
+          style={{ margin: "2rem 0" }}
+          key={props.name + "-" + value + "-" + idx}
+        >
           <input
             id={props.name + "-" + value}
             key={value}
