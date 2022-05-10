@@ -35,8 +35,8 @@ const Section = ({ subsectionId, title, sectionId }) => {
 };
 Section.propTypes = {
   subsectionId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  sectionId: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  sectionId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, { sectionId, subsectionId }) => {

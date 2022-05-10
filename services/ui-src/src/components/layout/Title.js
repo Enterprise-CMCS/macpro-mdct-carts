@@ -17,7 +17,7 @@ Title.propTypes = {
   name: PropTypes.string,
   stateName: PropTypes.string,
   urlStateName: PropTypes.string,
-  formYear: PropTypes.object.isRequired,
+  formYear: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
