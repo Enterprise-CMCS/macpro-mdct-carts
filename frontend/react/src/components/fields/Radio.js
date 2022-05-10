@@ -47,7 +47,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
     </div>
   ));
 
-  return <fieldset>{radioButttonList}</fieldset>;
+  return <fieldset className="ds-c-fieldset">{radioButttonList}</fieldset>;
 };
 Radio.propTypes = {
   onChange: PropTypes.func.isRequired,

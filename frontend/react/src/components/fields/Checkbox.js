@@ -16,22 +16,34 @@ const Checkbox = ({ onChange, question, ...props }) => {
     }
   };
 
-  const radioButttonList = question.answer.options.map(({ label, value }) => (
-    <div style={{ margin: "4rem 0" }} key={props.name + "-" + value}>
-      <input
-        key={value}
-        type="checkbox"
-        value={value}
-        {...props}
-        id={props.name + "-" + value}
-      />
-      <label style={{ marginLeft: "2rem" }} htmlFor={props.name + "-" + value}>
-        {label}
-      </label>
-    </div>
-  ));
+  const radioButttonList = question.answer.options.map(
+    ({ label, value: checkBoxValue }) => {
+      console.log({ value });
 
-  return <fieldset>{radioButttonList}</fieldset>;
+      return (
+        <div style={{ margin: "2rem 0" }} key={props.name + "-" + value}>
+          <input
+            id={props.name + "-" + value}
+            key={value}
+            type="checkbox"
+            value={checkBoxValue}
+            onChange={change}
+            checked={value.indexOf(checkBoxValue) >= 0}
+            name={props.name + value}
+            {...props}
+          />
+          <label
+            style={{ marginLeft: "2rem" }}
+            htmlFor={props.name + "-" + value}
+          >
+            {label}
+          </label>
+        </div>
+      );
+    }
+  );
+
+  return <fieldset className="ds-c-fieldset">{radioButttonList}</fieldset>;
 };
 Checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,
