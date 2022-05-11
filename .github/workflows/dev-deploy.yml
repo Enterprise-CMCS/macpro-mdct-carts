@@ -19,7 +19,7 @@ env:
   BUILD_TAG: ${{ github.ref_name }}.${{ github.sha }}
   ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
   ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-  DATALAYER_IN_NEW_ACCOUNTS: ${{ secrets.DEV_DATALAYER_IN_NEW_ACCOUNTS }}
+  DATALAYER_IN_NEW_ACCOUNTS: ${{ secrets.DEV_DATALAYER_IN_NEW_ACCOUNTS == 'dev-datalayer-in-new-accounts' }}
 
 jobs:
   prevalidate:
