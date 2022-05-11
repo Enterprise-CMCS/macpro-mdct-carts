@@ -37,7 +37,7 @@ class Header extends Component {
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     return (
-      <div data-test="component-header">
+      <header data-test="component-header">
         <UsaBanner data-testid={"usaBanner"} />
         <div className="header">
           <div className="ds-l-container">
@@ -56,7 +56,7 @@ class Header extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </header>
     );
   }
 }

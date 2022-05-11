@@ -4,10 +4,8 @@ import { axe } from "jest-axe";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Header from "./Header";
-import { describe } from "yargs";
 
 const mockStore = configureMockStore();
-const testYear = 525600;
 const store = mockStore({
   stateUser: {
     currentUser: {
@@ -22,7 +20,7 @@ const store = mockStore({
     },
   },
   global: {
-    currentYear: testYear,
+    currentYear: 2077,
   },
   save: {
     error: false,
@@ -36,7 +34,7 @@ const header = (
   </Provider>
 );
 
-describe("Header", () => {
+describe("Test Header", () => {
   it("should render the Header Component correctly", () => {
     expect(shallow(header).exists()).toBe(true);
   });
@@ -47,11 +45,11 @@ describe("Header", () => {
   it("should have the current year reporting year in the header", () => {
     const wrapper = mount(header);
     const results = wrapper.find({ "data-testid": "cartsCurrentYear" }).html();
-    expect(results.includes(testYear)).toBeTruthy();
+    expect(results.includes(2077)).toBeTruthy();
   });
 });
 
-describe("Header accessibility", () => {
+describe("Test Header accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     const wrapper = mount(header);
     const results = await axe(wrapper.html());
