@@ -200,6 +200,9 @@ jobs:
       - serverless
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.version }}
       - name: Push Tags
         run: |
           git tag -f ${{ github.event.inputs.environment }}
