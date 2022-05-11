@@ -149,6 +149,7 @@ jobs:
           VPC_NAME: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_STAGING_VPC_NAME || secrets.STAGING_VPC_NAME}}
           APPLICATION_BUCKET: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_APPLICATION_BUCKET || secrets.APPLICATION_BUCKET}}
           TF_VAR_skip_data_deployment: true
+          TF_VAR_postgres_restore_snapshot_id: ${{secrets.STAGING_RESTORE_SNAPSHOT_ID}}
   frontend:
     needs:
       - data
