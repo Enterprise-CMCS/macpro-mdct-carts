@@ -102,7 +102,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: ($padding * 1.5);
+        //padding: ($padding * 1.5);
         position: absolute;
         right: 0;
         transition: all 2s;
@@ -127,13 +127,14 @@
         padding: ($padding * 1.5) 0 ($padding * 1.5) ($padding * 0.5);
         position: relative;
         a {
-          padding: ($padding * 2) 0 ($padding * 1.5) 0;
+          padding: ($padding * 2) ($padding * 4) ($padding * 1.5)
+            ($padding * 0.5);
           &:before {
             content: "\f044";
             font-family: "FontAwesome";
             top: ($margin * 1.5);
             left: 0;
-            padding: 0 $padding 0 0;
+            padding: 0 ($padding * 3) 0 0;
           }
         }
       }
