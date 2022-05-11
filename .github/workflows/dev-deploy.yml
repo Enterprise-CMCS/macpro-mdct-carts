@@ -200,8 +200,8 @@ jobs:
       - name: Deploy Data Layer
         run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
         env:
-          VPC_NAME: env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && ${{secrets.NEW_DEV_VPC}} || ${{secrets.DEV_VPC_NAME}}
-          APPLICATION_BUCKET: env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && ${{secrets.NEW_APPLICATION_BUCKET}} || ${{secrets.APPLICATION_BUCKET}}
+          VPC_NAME: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_DEV_VPC || secrets.DEV_VPC_NAME}}
+          APPLICATION_BUCKET: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_APPLICATION_BUCKET || secrets.APPLICATION_BUCKET}}
   frontend:
     needs:
       - prevalidate
