@@ -4,7 +4,6 @@ import { axe } from "jest-axe";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Header from "./Header";
-import { UsaBanner } from "@cmsgov/design-system";
 import { describe } from "yargs";
 
 const mockStore = configureMockStore();
