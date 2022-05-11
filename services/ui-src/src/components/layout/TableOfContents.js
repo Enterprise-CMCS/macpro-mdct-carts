@@ -90,7 +90,7 @@ TableOfContents.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   sections: PropTypes.array.isRequired,
-  userRole: PropTypes.string.isRequired,
+  userRole: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   formYear: PropTypes.number.isRequired,
 };
 

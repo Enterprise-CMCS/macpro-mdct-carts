@@ -46,10 +46,7 @@ export interface DynamoCreate {
 
 export interface DynamoDelete {
   TableName: string;
-  Key: {
-    compoundKey: string;
-    coreSet: string;
-  };
+  Key: { [key: string]: any };
 }
 
 export interface DynamoUpdate {

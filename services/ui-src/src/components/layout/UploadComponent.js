@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system";
-import axios from "../../authenticatedAxios";
-
+import { API } from "aws-amplify";
+import requestOptions from "../../hooks/authHooks/requestOptions";
 import { setAnswerEntry } from "../../actions/initial";
+import { REPORT_STATUS, UserRoles } from "../../types";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -48,24 +49,25 @@ class UploadComponent extends Component {
 
   submitUpload = async () => {
     const { loadedFiles } = this.state;
+    const { year, stateCode } = this.props;
     const questionId = this.props.question.id;
 
     for (const uploadedFile of loadedFiles) {
       // *** obtain signed URL
-      const response = await axios.post(
-        `${window.env.API_POSTGRES_URL}/api/v1/psurl_upload`,
-        {
-          uploadedFileName: uploadedFile.name,
-          uploadedFileType: uploadedFile.type,
-          questionId,
-        }
+      const body = {
+        uploadedFileName: uploadedFile.name,
+        uploadedFileType: uploadedFile.type,
+        questionId,
+      };
+      const opts = await requestOptions(body);
+      const response = await API.post(
+        "carts-api",
+        `/psUrlUpload/${year}/${stateCode}`,
+        opts
       );
-
-      const { psurl, psdata } = response.data;
-
       const presignedPostData = {
-        url: psurl,
-        fields: psdata,
+        url: response.psurl,
+        fields: response.psdata,
       };
 
       await this.uploadFileToS3(presignedPostData, uploadedFile);
@@ -134,37 +136,39 @@ class UploadComponent extends Component {
     });
   };
 
-  downloadFile = async (filename, awsFilename) => {
-    const response = await axios.post(
-      `${window.env.API_POSTGRES_URL}/api/v1/psurl_download`,
-      {
-        filename,
-        awsFilename,
-      }
+  downloadFile = async (fileId) => {
+    const { year, stateCode } = this.props;
+    const opts = await requestOptions({ fileId });
+    const response = await API.post(
+      "carts-api",
+      `/psUrlDownload/${year}/${stateCode}`,
+      opts
     );
-
-    const { psurl } = response["data"];
+    const { psurl } = response;
     window.location.href = psurl;
   };
 
   retrieveUploadedFiles = async () => {
     const questionId = this.props.question.id;
-    const stateCode = window.location.pathname.split("/")[3];
+    const { year, stateCode } = this.props;
 
     this.setState({
       uploadedFilesRetrieved: false,
     });
 
-    const response = await axios
-      .post(`${window.env.API_POSTGRES_URL}/api/v1/view_uploaded`, {
-        questionId,
-        stateCode,
-      })
-      .catch((error) => {
-        console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
-      });
-
-    const uploadedFiles = response ? response.data["uploaded_files"] : [];
+    const body = {
+      stateCode,
+      questionId,
+    };
+    const opts = await requestOptions(body);
+    const response = await API.post(
+      "carts-api",
+      `/uploads/${year}/${stateCode}`,
+      opts
+    ).catch((error) => {
+      console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
+    });
+    const uploadedFiles = response ? response : [];
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
@@ -172,15 +176,15 @@ class UploadComponent extends Component {
     });
   };
 
-  deleteFile = async (awsFilename) => {
-    // *** retrieve files
-    await axios
-      .post(`${window.env.API_POSTGRES_URL}/api/v1/remove_uploaded`, {
-        awsFilename,
-      })
-      .catch((error) => {
+  deleteFile = async (fileId) => {
+    const { year, stateCode } = this.props;
+
+    const opts = await requestOptions({ fileId });
+    await API.del("carts-api", `/uploads/${year}/${stateCode}`, opts).catch(
+      (error) => {
         console.log("!!!Error retrieving files: ", error); // eslint-disable-line no-console
-      });
+      }
+    );
 
     await this.retrieveUploadedFiles();
   };
@@ -213,7 +217,7 @@ class UploadComponent extends Component {
           }
         } else {
           errorString = errorString.concat(
-            `${uploadName} is not an approved file type`
+            "Your file is not an approved file type. See below for a list of approved file types."
           );
         }
       }
@@ -236,14 +240,24 @@ class UploadComponent extends Component {
   };
 
   render() {
+    let submissionsAllowed = false;
+    const { year, stateCode, user, reportStatus } = this.props;
+    if (year && stateCode) {
+      const stateReportStatus = reportStatus[`${stateCode}${year}`];
+      submissionsAllowed =
+        stateReportStatus.status !== REPORT_STATUS.certified &&
+        user.role === UserRoles.STATE;
+    }
+
     return (
       <div>
         <div>
           <TextField
             accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
             className="file_upload"
+            disabled={!submissionsAllowed}
             errorMessage={this.state.inputErrors}
-            hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
+            hint="You can only upload PDF, Word, Excel, JPG or PNG files."
             label="Click Choose Files and make your selection(s) then click Upload to attach your files. Click View Uploaded to see a list of all files attached here."
             multiple
             name={this.props.question.id}
@@ -273,7 +287,7 @@ class UploadComponent extends Component {
         <Button
           onClick={this.submitUpload}
           size="small"
-          disabled={this.state.blockFileSubmission}
+          disabled={!submissionsAllowed}
           className=""
         >
           Upload
@@ -305,20 +319,13 @@ class UploadComponent extends Component {
                 </tr>
               ) : (
                 this.state.uploadedFiles.map((file) => {
-                  const fileObj = JSON.parse(file.replace(/'/gi, '"'));
-
                   return (
-                    <tr key={fileObj.aws_filename}>
-                      <td>{fileObj.filename}</td>
+                    <tr key={file.aws_filename}>
+                      <td>{file.filename}</td>
                       <td>
                         <Button
                           size="small"
-                          onClick={() =>
-                            this.downloadFile(
-                              fileObj.filename,
-                              fileObj.aws_filename
-                            )
-                          }
+                          onClick={() => this.downloadFile(file.fileId)}
                         >
                           Download
                         </Button>
@@ -326,7 +333,8 @@ class UploadComponent extends Component {
                       <td>
                         <Button
                           size="small"
-                          onClick={() => this.deleteFile(fileObj.aws_filename)}
+                          onClick={() => this.deleteFile(file.fileId)}
+                          disabled={!submissionsAllowed}
                         >
                           Delete
                         </Button>
@@ -351,6 +359,9 @@ UploadComponent.propTypes = {
 const mapStateToProps = (state) => ({
   USState: state.stateUser.abbr, // Currently this is meaningless dummy data
   user: state.stateUser.currentUser,
+  year: state.formData[0].contents.section.year,
+  stateCode: state.formData[0].contents.section.state,
+  reportStatus: state.reportStatus,
 });
 
 const mapDispatchToProps = {

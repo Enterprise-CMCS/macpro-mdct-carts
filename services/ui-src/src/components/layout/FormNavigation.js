@@ -118,8 +118,8 @@ const FormNavigation = (props) => {
 FormNavigation.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  sections: PropTypes.object.isRequired,
-  role: PropTypes.oneOf([PropTypes.bool, PropTypes.string]).isRequired,
+  sections: PropTypes.array.isRequired,
+  role: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
 };
 
 const mapStateToProps = (state) => ({

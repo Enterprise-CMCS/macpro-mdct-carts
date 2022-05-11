@@ -16,10 +16,10 @@ custom:
       - master
       - val
       - prod
-  measureTableName: ${self:custom.stage}-measures
   stateStatusTableName: ${self:custom.stage}-state-status
   sectionTableName: ${self:custom.stage}-section
   sectionBaseTableName: ${self:custom.stage}-section-base
+  uploadsTableName: ${self:custom.stage}-uploads
   dynamodb:
     stages:
       - local
@@ -45,25 +45,6 @@ provider:
 
 resources:
   Resources:
-    MeasureTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.measureTableName}
-        PointInTimeRecoverySpecification:
-          PointInTimeRecoveryEnabled: true
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
-        AttributeDefinitions:
-          - AttributeName: compoundKey
-            AttributeType: S
-          - AttributeName: coreSet
-            AttributeType: S
-        KeySchema:
-          - AttributeName: compoundKey
-            KeyType: HASH
-          - AttributeName: coreSet
-            KeyType: RANGE
-        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
     StateStatusTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -121,11 +102,26 @@ resources:
           - AttributeName: sectionId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    UploadsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.uploadsTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: uploadedState
+            AttributeType: S
+          - AttributeName: fileId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uploadedState
+            KeyType: HASH
+          - AttributeName: fileId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
   Outputs:
-    MeasureTableName:
-      Value: !Ref MeasureTable
-    MeasureTableArn:
-      Value: !GetAtt MeasureTable.Arn
     StateStatusTableName:
       Value: !Ref StateStatusTable
     StateStatusTableArn:
@@ -138,5 +134,9 @@ resources:
       Value: !Ref SectionBaseTable
     SectionBaseTableArn:
       Value: !GetAtt SectionBaseTable.Arn
+    UploadsTable:
+      Value: !Ref UploadsTable
+    UploadsTableArn:
+      Value: !GetAtt UploadsTable.Arn
     Region:
       Value: !Sub ${AWS::Region}
