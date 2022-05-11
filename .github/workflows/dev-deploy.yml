@@ -14,6 +14,7 @@ env:
   BUILD_TAG: ${{ github.ref_name }}.${{ github.sha }}
   ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
   ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
+  DATALAYER_IN_NEW_ACCOUNTS: ${{ secrets.DEV_DATALAYER_IN_NEW_ACCOUNTS }}
 
 jobs:
   prevalidate:
@@ -35,7 +36,14 @@ jobs:
           key: ${{ runner.os }}-postgres_deployer-docker-cache-{hash}
           restore-keys: |
             ${{ runner.os }}-postgres_deployer-docker-cache-
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (new account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS == 'true'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure AWS credentials (legacy account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS != 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -171,7 +179,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (new account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS == 'true'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure AWS credentials (legacy account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS != 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -185,8 +200,8 @@ jobs:
       - name: Deploy Data Layer
         run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
         env:
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+          VPC_NAME: env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && ${{secrets.NEW_DEV_VPC}} || ${{secrets.DEV_VPC_NAME}}
+          APPLICATION_BUCKET: env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && ${{secrets.NEW_APPLICATION_BUCKET}} || ${{secrets.APPLICATION_BUCKET}}
   frontend:
     needs:
       - prevalidate
@@ -197,7 +212,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Configure datalayer AWS credentials
+      - name: Configure datalayer AWS credentials (new account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS == 'true'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure datalayer AWS credentials (legacy account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS != 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -246,7 +268,14 @@ jobs:
           path: serverless/**/node_modules
           key: ${{ runner.os }}-serverless-modules-${{ hashFiles('serverless/**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-serverless-modules-
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (new account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS == 'true'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure AWS credentials (legacy account)
+        if: env.DATALAYER_IN_NEW_ACCOUNTS != 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
