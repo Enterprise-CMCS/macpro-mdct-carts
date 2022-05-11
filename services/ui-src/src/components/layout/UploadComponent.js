@@ -5,6 +5,7 @@ import { Button, TextField } from "@cmsgov/design-system";
 import { API } from "aws-amplify";
 import requestOptions from "../../hooks/authHooks/requestOptions";
 import { setAnswerEntry } from "../../actions/initial";
+import { REPORT_STATUS, UserRoles } from "../../types";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -216,7 +217,7 @@ class UploadComponent extends Component {
           }
         } else {
           errorString = errorString.concat(
-            `${uploadName} is not an approved file type`
+            "Your file is not an approved file type. See below for a list of approved file types."
           );
         }
       }
@@ -239,14 +240,24 @@ class UploadComponent extends Component {
   };
 
   render() {
+    let submissionsAllowed = false;
+    const { year, stateCode, user, reportStatus } = this.props;
+    if (year && stateCode) {
+      const stateReportStatus = reportStatus[`${stateCode}${year}`];
+      submissionsAllowed =
+        stateReportStatus.status !== REPORT_STATUS.certified &&
+        user.role === UserRoles.STATE;
+    }
+
     return (
       <div>
         <div>
           <TextField
             accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
             className="file_upload"
+            disabled={!submissionsAllowed}
             errorMessage={this.state.inputErrors}
-            hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)"
+            hint="You can only upload PDF, Word, Excel, JPG or PNG files."
             label="Click Choose Files and make your selection(s) then click Upload to attach your files. Click View Uploaded to see a list of all files attached here."
             multiple
             name={this.props.question.id}
@@ -276,7 +287,7 @@ class UploadComponent extends Component {
         <Button
           onClick={this.submitUpload}
           size="small"
-          disabled={this.state.blockFileSubmission}
+          disabled={!submissionsAllowed}
           className=""
         >
           Upload
@@ -323,6 +334,7 @@ class UploadComponent extends Component {
                         <Button
                           size="small"
                           onClick={() => this.deleteFile(file.fileId)}
+                          disabled={!submissionsAllowed}
                         >
                           Delete
                         </Button>
@@ -349,6 +361,7 @@ const mapStateToProps = (state) => ({
   user: state.stateUser.currentUser,
   year: state.formData[0].contents.section.year,
   stateCode: state.formData[0].contents.section.state,
+  reportStatus: state.reportStatus,
 });
 
 const mapDispatchToProps = {
