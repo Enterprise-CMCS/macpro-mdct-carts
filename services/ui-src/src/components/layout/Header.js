@@ -37,9 +37,12 @@ class Header extends Component {
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     return (
-      <header data-test="component-header">
-        <UsaBanner data-testid={"usaBanner"} />
-        <div className="header">
+      <div data-test="component-header">
+        <UsaBanner
+          data-testid={"usaBanner"}
+          className={"usabanner-section-layout"}
+        />
+        <header className="header">
           <div className="ds-l-container">
             <div className="ds-l-row header-row">
               <div className="site-title ds-l-col--4 ds-u-padding--2">
@@ -55,8 +58,8 @@ class Header extends Component {
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
     );
   }
 }

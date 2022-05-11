@@ -154,7 +154,7 @@
           top: 0;
           left: 0;
         }
-        
+
         button {
           text-decoration: none;
           font-weight: normal;
@@ -170,4 +170,15 @@
   .header-row {
     position: relative;
   }
+}
+
+/**********************
+  USA BANNER 
+**********************/
+.usabanner-section-layout {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: inherit;
+  max-width: 1040px;
+  padding-left: 16px;
 }
