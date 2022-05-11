@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
-import { DownloadDrawer } from "./DownloadDrawer";
+import { TemplateDownload } from "./TemplateDownload";
 import { REPORT_STATUS, STATUS_MAPPING, UserRoles } from "../../../types";
 
 function formatStateStatus(item) {
@@ -36,7 +36,7 @@ const Homepage = ({ reportStatus }) => (
           CHIP Annual Report Template System (CARTS)
         </h1>
       </div>
-      <DownloadDrawer />
+      <TemplateDownload />
       <div className="ds-l-row">
         <div className="reports ds-l-col--12">
           <div className="carts-report preview__grid">

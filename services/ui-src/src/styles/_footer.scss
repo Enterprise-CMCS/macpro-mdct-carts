@@ -53,6 +53,12 @@
       text-decoration: none;
     }
 
+    a:focus,
+    p:active {
+      box-shadow: none;
+      background-color: inherit;
+    }
+
     a:hover,
     a:active {
       color: darken($lily-white, 20);

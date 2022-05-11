@@ -6,7 +6,7 @@ import {
   faFileAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const DownloadDrawer = () => {
+export const TemplateDownload = () => {
   return (
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
@@ -32,6 +32,7 @@ export const DownloadDrawer = () => {
             </p>
             <div className="download">
               <a
+                tabIndex={-1}
                 href={"docs/FFY_2021_CARTS_Template.pdf"}
                 download
                 aria-label="Download Template"
@@ -42,6 +43,7 @@ export const DownloadDrawer = () => {
                     <FontAwesomeIcon
                       icon={faArrowDown}
                       transform="up-2 right-2"
+                      position
                     />
                     <FontAwesomeIcon
                       icon={faMinus}
