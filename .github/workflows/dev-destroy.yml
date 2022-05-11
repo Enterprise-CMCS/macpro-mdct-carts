@@ -54,12 +54,12 @@ jobs:
           terraform_wrapper: false
       - name: Destroy frontend
         run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
-      - name: Destroy data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
         env:
           TF_VAR_datalayer_aws_access_key: env.AWS_ACCESS_KEY_ID
           TF_VAR_datalayer_aws_secret_key: env.AWS_SECRET_ACCESS_KEY
           TF_VAR_datalayer_aws_session_token: env.AWS_SESSION_TOKEN
+      - name: Destroy data Layer
+        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
       - name: Destroy serverless
         run: |
           cd serverless
