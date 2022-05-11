@@ -25,6 +25,7 @@ provider:
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
+  kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image~true, ssm:/configuration/default/kafka_connect_image~true,"confluentinc/cp-kafka-connect:6.2.0"}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   privateSubnets:
@@ -149,7 +150,7 @@ resources:
       Properties:
         ContainerDefinitions:
           - Name: ${self:service}-${self:custom.stage}-worker
-            Image: "confluentinc/cp-kafka-connect:6.2.0"
+            Image: ${self:custom.kafkaConnectImage}
             Memory: 4096
             Cpu: 2048
             Command:
