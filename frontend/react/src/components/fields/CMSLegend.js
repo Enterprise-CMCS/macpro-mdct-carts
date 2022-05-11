@@ -18,8 +18,6 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
     }
   }
 
-  console.log({ questionType });
-
   if (
     !questionType.includes("text") &&
     !questionType.includes("mailing_address") &&

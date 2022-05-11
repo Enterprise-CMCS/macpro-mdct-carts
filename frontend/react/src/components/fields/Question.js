@@ -107,7 +107,6 @@ const Question = ({
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
 
-  console.log({ question });
   return (
     <div className="question">
       <Container question={question}>
