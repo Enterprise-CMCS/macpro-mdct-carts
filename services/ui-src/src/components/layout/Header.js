@@ -68,11 +68,11 @@ function renderMenu(toggleUserNav, email) {
     <div className="nav-user" id="nav-user">
       <RenderEmailMenuItem toggleUserNav={toggleUserNav} email={email} />
       <ul className="menu-block" id="menu-block">
-        <li className="helpdesk">
-          <a href="mailto:mdct_help@cms.hhs.gov">Helpdesk</a>
+        <li className="contact-us">
+          <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
         </li>
         <li className="manage-account">
-          <a href="/user/profile">Manage account</a>
+          <a href="/user/profile">Manage Account</a>
         </li>
         <li className="logout">
           <Logout />

@@ -60,7 +60,6 @@
   .nav-user {
     text-align: center;
     float: right;
-    padding: 0 1.2rem;
     margin: 0 auto;
     width: auto;
 
@@ -75,23 +74,25 @@
       &.user-email-button {
         font-weight: $font-weight-bold;
         margin: 0;
-        padding: 0;
-        padding-right: ($padding * 3);
         position: relative;
-        text-align: center;
+        margin-left: ($margin * 10);
 
         @media only screen and (min-width: 768px) {
           text-align: right;
         }
 
         a {
+          &:focus {
+            background-color: initial;
+          }
+          padding-right: ($padding * 3);
           &:after {
             content: "\f106";
             font-family: "FontAwesome";
             height: 5px;
             pointer-events: all;
             position: absolute;
-            right: $margin;
+            right: ($margin * 0.5);
             top: ($margin * 2);
             transform: rotate(180deg);
             width: 10px;
@@ -107,45 +108,53 @@
 
       &.open {
         background: $brand-tertiary;
-        display: block;
-        padding: ($padding * 2);
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        padding: $padding;
         position: absolute;
         right: 0;
+        top: ($padding * 6.25);
         transition: all 2s;
       }
-
-      .manage-account {
-        padding: $padding 0 $padding ($padding * 4);
-        position: relative;
-
-        a {
-          &:before {
-            content: "\f044";
-            font-family: "FontAwesome";
-            position: absolute;
-            top: ($margin * 1.5);
-            left: 0;
-          }
+      a, button {
+        &:focus {
+          background-color: initial;
         }
       }
-      .helpdesk {
-        padding: $padding 0 $padding ($padding * 4);
+      .contact-us {
+        padding: ($padding * 2) 0 ($padding * 1.5);
         position: relative;
-
+        width: 100%;
         a {
+          padding: ($padding * 2) ($padding * 9.75) ($padding * 1.5) $padding;
           &:before {
             content: "\f05a";
             font-family: "FontAwesome";
-            position: absolute;
-            top: ($margin * 1.5);
-            left: 0;
+            display: inline-block;
+            width: 16px;
+            padding-right: ($padding * 2);
           }
         }
       }
-
-      .logout {
-        padding-left: ($padding * 4);
+      .manage-account {
+        padding: ($padding * 2) 0 ($padding * 1.5);
         position: relative;
+        width: 100%;
+        a {
+          padding: ($padding * 2) ($padding * 4) ($padding * 1.5) $padding;
+          &:before {
+            content: "\f044";
+            font-family: "FontAwesome";
+            display: inline-block;
+            width: 16px;
+            padding-right: ($padding * 2);
+          }
+        }
+      }
+      .logout {
+        position: relative;
+        width: 100%;
 
         a:before {
           content: "\f2f5";
@@ -158,10 +167,17 @@
         button {
           text-decoration: none;
           font-weight: normal;
-          svg {
-            position: absolute;
-            top: ($margin * 1.5);
-            left: 0;
+          color: #fff;
+          padding: ($padding * 2) ($padding * 12.25) ($padding * 1.5) $padding;
+          &:hover {
+            color: #8ed2e5;
+          }
+          &:before {
+            content: "\f08b";
+            font-family: "FontAwesome";
+            display: inline-block;
+            width: 16px;
+            padding-right: ($padding * 2);
           }
         }
       }
