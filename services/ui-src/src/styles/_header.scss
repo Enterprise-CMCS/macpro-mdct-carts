@@ -76,6 +76,9 @@
         }
 
         a {
+          &:focus {
+            background-color: initial;
+          }
           padding-right: ($padding * 3);
           &:after {
             content: "\f106";
