@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy CARTSv3
 
 on:
   push:
