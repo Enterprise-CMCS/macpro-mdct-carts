@@ -14,23 +14,28 @@ data "aws_ssm_parameter" "prince_api_endpoint" {
 }
 
 data "aws_ssm_parameter" "postgres_user" {
-  name = local.postgres_user
+  provider = aws.datalayer
+  name     = local.postgres_user
 }
 
 data "aws_ssm_parameter" "postgres_password" {
-  name = local.postgres_password
+  provider = aws.datalayer
+  name     = local.postgres_password
 }
 
 data "aws_ssm_parameter" "postgres_host" {
-  name = "/${terraform.workspace}/postgres_host"
+  provider = aws.datalayer
+  name     = "/${terraform.workspace}/postgres_host"
 }
 
 data "aws_ssm_parameter" "postgres_db" {
-  name = "/${terraform.workspace}/postgres_db"
+  provider = aws.datalayer
+  name     = "/${terraform.workspace}/postgres_db"
 }
 
 data "aws_ssm_parameter" "postgres_security_group" {
-  name = "/${terraform.workspace}/postgres_security_group"
+  provider = aws.datalayer
+  name     = "/${terraform.workspace}/postgres_security_group"
 }
 
 data "aws_ecr_repository" "postgres_django" {
@@ -66,6 +71,10 @@ resource "aws_security_group" "api_postgres" {
   vpc_id = data.aws_vpc.app.id
 }
 
+data "aws_caller_identity" "datalayer" {
+  provider = aws.datalayer
+}
+
 resource "aws_security_group_rule" "api_postgres_ingress" {
   type                     = "ingress"
   from_port                = 8000
@@ -80,16 +89,17 @@ resource "aws_security_group_rule" "api_postgres_egress" {
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"
-  source_security_group_id = data.aws_ssm_parameter.postgres_security_group.value
+  source_security_group_id = "${data.aws_caller_identity.datalayer.account_id}/${data.aws_ssm_parameter.postgres_security_group.value}"
   security_group_id        = aws_security_group.api_postgres.id
 }
 
 resource "aws_security_group_rule" "postgres_ingress_from_api_postgres" {
+  provider                 = aws.datalayer
   type                     = "ingress"
   from_port                = 5432
   to_port                  = 5432
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.api_postgres.id
+  source_security_group_id = "${local.account_id}/${aws_security_group.api_postgres.id}"
   security_group_id        = data.aws_ssm_parameter.postgres_security_group.value
 }
 

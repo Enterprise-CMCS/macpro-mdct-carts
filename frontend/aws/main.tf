@@ -18,6 +18,13 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
+provider "aws" {
+  alias      = "datalayer"
+  access_key = var.datalayer_aws_access_key
+  secret_key = var.datalayer_aws_secret_key
+  token      = var.datalayer_aws_session_token
+  region     = "us-east-1"
+}
 provider "null" {
 
 }

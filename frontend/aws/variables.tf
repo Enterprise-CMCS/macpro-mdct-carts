@@ -3,6 +3,21 @@ variable "application_version" {}
 
 variable "vpc_name" {}
 
+variable "datalayer_aws_access_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "datalayer_aws_secret_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "datalayer_aws_session_token" {
+  type      = string
+  sensitive = true
+}
+
 variable "acm_certificate_domain_ui" {
   default = ""
 }
