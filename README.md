@@ -1,103 +1,46 @@
-# cms-mdct-carts
+# CHIP Annual Reporting Template System
 
-A serverless form submission application built and deployed to AWS with the Serverless Application Framework.
+Under section 2108(a) of the Act, states must assess the operation of their separate CHIP and Medicaid expansion programs and the progress made in reducing the number of uncovered, low-income children. The results of the assessment are reported to the Secretary by January 1 following the end of the FY in the CHIP Annual Report Template System (CARTS). CARTS collects information about programmatic changes, performance goals, program operation, program financing, program challenges and accomplishments.
 
-## Release
+_Our main branch is for development of CARTSv3. Head to the [`master` branch](https://github.com/cmsgov/cms-carts-seds/tree/master) to view the readme, documentation, and source code fo CARTSv2._
 
-Our product is promoted through branches. Master is merged to val to affect a master release, and val is merged to production to affect a production release. Please use the buttons below to promote/release code to higher environments.<br />
+## Table of contents
 
-## Architecture
+- [Status](#status)
+- [Quick Start](#quick-start)
+- [Contributing](#contributing)
+- [Architecture] (#architecture)
+- [Copyright and license](#copyright-and-license)
 
-![Architecture Diagram](./.images/architecture.svg?raw=true)
+## Status
 
-## Local Dev
+TODO: Add all the status badges here
 
-Populate .env files in the root directory and in the `ui-src` directory.
+## Quick Start
 
-Run all the services locally with the command `./dev local`
+### One time only
 
-See the Requirements section if the command asks for any prerequisites you don't have installed.
+Before starting the project install some tools
 
-Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
+- `brew install nvm`
+- `brew install pre-commit`
 
-Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
+### Setting up the project locally
 
-When run locally, auth bypasses Cognito. The frontend mimics login in local storage with a mock user and sends an id in the `cognito-identity-id` header on every request. `serverless-offline` expects that and sets it as the cognitoId in the requestContext for your lambdas, just like Cognito would in AWS.
+TODO: Fix the phone a friend instructions below
 
-### Prettier Linter
+1. Clone the repo: `git clone https://github.com/CMSgov/cms-carts-seds.git`
+2. In the root directory copy the .env_example file and name it .env
+3. In the services/ui-src directory copy the .env_example file and name it .env
+4. Overwrite the values here with an example from another developer
+5. In the root directory run `pre-commit install`
+6. Also in the root of the project run `./dev local`
 
-We use Prettier to format all code. This runs as part of a Git Hook and changes to files will cause the deploy to fail.
+### Logging in
 
-Most IDEs have a Prettier plugin that can be configured to run on file save. You can also run the format check manually from the IDE or invoking Prettier on the command line.
+For local development there is a list of users that can be found at services/ui-auth/libs/users.json.
 
-```
-npx prettier --write "**/*.tsx"
-```
-
-To automatically run the pre-commit hook you'll need to install pre-commit and enable it in your local project
-
-```
-pip install pre-commit
-// or
-brew install pre-commit
-```
-
-From the root folder run
-
-```
-pre-commit install
-```
-
-Now when you attempt a git commit your terminal should display the results of the pre-commit stages.
-
-## Usage
-
-This application is built and deployed via GitHub Actions.
-
-Want to deploy from your Mac?
-
-- Create an AWS account
-- Install/configure the AWS CLI
-- npm install -g severless
-- brew install yarn
-- sh deploy.sh
-
-Building the app locally
-
-- todo
-
-Running tests locally
-
-- npm test
-
-## Requirements
-
-Node - we enforce using a specific version of node, specified in the file `.nvmrc`. This version matches the Lambda runtime. We recommend managing node versions using [NVM](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-Serverless - Get help installing it here: [Serverless Getting Started page](https://www.serverless.com/framework/docs/providers/aws/guide/installation/)
-
-Yarn - in order to install dependencies, you need to [install yarn](https://classic.yarnpkg.com/en/docs/install/).
-
-AWS Account: You'll need an AWS account with appropriate IAM permissions (admin recommended) to deploy this app in Amazon.
-
-If you are on a Mac, you should be able to install all the dependencies like so:
-
-```
-# install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-
-# select the version specified in .nvmrc
-nvm install
-nvm use
-
-# install yarn
-brew install yarn
-
-# run dev
-./dev local
-```
-
-## DynamoDB locally
+### DynamoDB locally
 
 In order to run dynamodb locally you will need to have java installed on your system. If not currently installed go here: https://java.com/en/download/ to download the latest version.
 
@@ -105,9 +48,39 @@ If you want to a visual view of your dynamodb after the application is up and ru
 
 - to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin` in a new terminal window
 
-## Testing
+### Local Development Random Info
 
-### ui-src Unit Tests
+Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
+
+Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
+
+When run locally, auth bypasses Cognito. The frontend mimics login in local storage with a mock user and sends an id in the `cognito-identity-id` header on every request. `serverless-offline` expects that and sets it as the cognitoId in the requestContext for your lambdas, just like Cognito would in AWS.
+
+## Copyright and license
+
+[![License](https://img.shields.io/badge/License-CC0--1.0--Universal-blue.svg)](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
+
+```text
+As a work of the United States Government, this project is
+in the public domain within the United States.
+
+Additionally, we waive copyright and related rights in the
+work worldwide through the CC0 1.0 Universal public domain dedication.
+```
+
+## Contributing
+
+Our product has three deployed environments.
+
+- Dev (main branch)
+- Val / Impl ()
+- Production ()
+
+TODO: writeup the CI/CD flow for the application
+
+### Testing
+
+#### Frontend Unit Tests
 
 Frontend unit testing is being done using [Jest](https://jestjs.io/).
 
@@ -124,11 +97,11 @@ yarn test --watch
 npx jest src/components --watch  # run all component tests and watch for changes
 ```
 
-### E2E Cypress Tests
+#### E2E Cypress Tests
 
 [See here](./tests/cypress/README.md)
 
-### Accessibility Tests
+#### Accessibility Tests
 
 Frontend accessibility (a11y) unit tests are being done using Jest with [axe-core](https://github.com/dequelabs/axe-core) and [jest-axe](https://github.com/nickcolley/jest-axe). To test a component's accessibility, import `axe` from `jest-axe` and pass the rendered component to `axe()`, then check for a11y issues using `toHaveNoViolations()`.
 
@@ -141,56 +114,13 @@ yarn pa11y <url-endpoint>
 
 Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe), [@cypress-audit/pa11y](https://mfrachet.github.io/cypress-audit/guides/pa11y/installation.html), and [@cypress-audit/lighthouse](https://mfrachet.github.io/cypress-audit/guides/lighthouse/installation.html).
 
-## Create New Branches and PRs for Tests
+### Prettier Linter
 
-When writing Cypress tests for an existing branch, create a new branch and write the tests there. For example, if the branch that needs tests is called `oy2-1234`, create a new branch called `oy2-1234test`.
+We use Prettier to format all code. This runs as part of a Git Hook and changes to files will cause the deploy to fail. If you followed the instructions above this is already installed and configured.
 
-When the tests have been written, create a new PR for `oy2-1234test` and set its base to `oy2-1234`. Submit this PR for review.
+Most IDEs have a Prettier plugin that can be configured to run on file save. You can also run the format check manually from the IDE or invoking Prettier on the command line.
 
-## Dependencies
+## Architecture
 
-None.
-
-## Examples
-
-None.
-
-## Contributing / To-Do
-
-See current open [issues](https://github.com/mdial89f/quickstart-serverless/issues) or check out the [project board](https://github.com/mdial89f/quickstart-serverless/projects/1)
-
-Please feel free to open new issues for defects or enhancements.
-
-To contribute:
-
-- Fork this repository
-- Make changes in your fork
-- Open a pull request targetting this repository
-
-Pull requests are being accepted.
-
-## License
-
-[![License](https://img.shields.io/badge/License-CC0--1.0--Universal-blue.svg)](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
-
-See [LICENSE](LICENSE.md) for full details.
-
-```text
-As a work of the United States Government, this project is
-in the public domain within the United States.
-
-Additionally, we waive copyright and related rights in the
-work worldwide through the CC0 1.0 Universal public domain dedication.
-```
-
-### Contributors
-
-This project made possible by the [Serverless Stack](https://serverless-stack.com/) and its authors/contributors. The extremely detailed tutorial, code examples, and serverless pattern is where this project started. I can't recommend this resource enough.
-
-| [![Mike Dial][dial_avatar]][dial_homepage]<br/>[Mike Dial][dial_homepage] | [![Seth Sacher][sacher_avatar]][sacher_homepage]<br/>[Seth Sacher][sacher_homepage] |
-| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-
-[dial_homepage]: https://github.com/mdial89f
-[dial_avatar]: https://avatars.githubusercontent.com/mdial89f?size=150
-[sacher_homepage]: https://github.com/sethsacher
-[sacher_avatar]: https://avatars.githubusercontent.com/sethsacher?size=150
+TODO: Get an updated diagram
+![Architecture Diagram](./.images/architecture.svg?raw=true)

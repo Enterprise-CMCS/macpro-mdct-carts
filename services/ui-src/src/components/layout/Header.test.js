@@ -1,65 +1,58 @@
-// TODO: Update testing suite with DynamoDB endpoint (currently points to PostgreSQL endpoint)
+import React from "react";
+import { mount, shallow } from "enzyme";
+import { axe } from "jest-axe";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+import Header from "./Header";
 
-describe("placeholder test", () => {
-  test("test suite runs", () => {
-    expect(1 + 2).toBe(3);
+const mockStore = configureMockStore();
+const store = mockStore({
+  stateUser: {
+    currentUser: {
+      email: "garthVader@DeathStarInc.com",
+      username: "",
+      firstname: "",
+      lastname: "",
+      role: "",
+      state: {
+        id: "",
+      },
+    },
+  },
+  global: {
+    currentYear: 2077,
+  },
+  save: {
+    error: false,
+    saving: false,
+  },
+});
+
+const header = (
+  <Provider store={store}>
+    <Header />
+  </Provider>
+);
+
+describe("Test Header", () => {
+  it("should render the Header Component correctly", () => {
+    expect(shallow(header).exists()).toBe(true);
+  });
+  it("should have a usaBanner as a child component", () => {
+    const wrapper = mount(header);
+    expect(wrapper.find({ "data-testid": "usaBanner" }).length).toBe(1);
+  });
+  it("should have the current year reporting year in the header", () => {
+    const wrapper = mount(header);
+    const results = wrapper.find({ "data-testid": "cartsCurrentYear" }).html();
+    expect(results.includes(2077)).toBeTruthy();
   });
 });
 
-/*
- * import React from "react";
- * import { shallow } from "enzyme";
- * import {
- *   storeFactory,
- *   findByTestAttribute,
- *   mockInitialState,
- * } from "../testUtils";
- */
-
-// import Header from "../components/layout/Header";
-
-// /**
-//  * Factory functon to create a ShallowWrapper for the Header component.
-//  * @function setup
-//  * @param {object} initialState - Component props specific to this setup.
-//  * @returns {ShallowWrapper}
-//  */
-
-/*
- * const setup = (initialState = {}) => {
- *   const store = storeFactory(initialState);
- *   return shallow(<Header store={store} />)
- *     .dive()
- *     .dive();
- * };
- */
-
-/*
- * describe("Header Component, enzyme testing", () => {
- *   const wrapper = setup(mockInitialState);
- */
-
-/*
- *   it("renders with test attributes", () => {
- *     const headerComponent = findByTestAttribute(wrapper, "component-header");
- *     expect(headerComponent.length).toBe(1);
- *   });
- */
-
-/*
- *   it("renders with header classname", () => {
- *     const headerClassname = wrapper.find(".header");
- *     expect(headerClassname.length).toBe(1);
- *   });
- */
-
-/*
- *   it("includes contact email address provided by redux", () => {
- *     const usernameDisplay = findByTestAttribute(
- *       wrapper,
- *       "component-header-username"
- *     );
- *     expect(usernameDisplay.text()).toBe("karen.dalton@state.gov");
- *   });
- * });
- */
+describe("Test Header accessibility", () => {
+  it("Should not have basic accessibility issues", async () => {
+    const wrapper = mount(header);
+    const results = await axe(wrapper.html());
+    expect(results).toHaveNoViolations();
+  });
+});
