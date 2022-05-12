@@ -25,7 +25,7 @@ custom:
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
-      - master
+      - main
       - val
       - prod
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
