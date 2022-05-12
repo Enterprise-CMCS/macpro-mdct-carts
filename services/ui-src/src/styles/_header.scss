@@ -110,6 +110,11 @@
         right: 0;
         transition: all 2s;
       }
+      a, button {
+        &:focus {
+          background-color: initial;
+        }
+      }
       .contact-us {
         padding: ($padding * 2) 0 ($padding * 1.5);
         position: relative;
