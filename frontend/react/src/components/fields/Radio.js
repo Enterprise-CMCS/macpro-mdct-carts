@@ -52,6 +52,8 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
 Radio.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
+  name: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export { Radio };
