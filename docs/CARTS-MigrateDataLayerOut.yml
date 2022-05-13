@@ -1,0 +1,82 @@
+description: Shuts down the data layer for the specified CARTS environment and shares an encrypted snapshot of the RDS instance with the specified account.
+schemaVersion: "0.3"
+outputs:
+  - CreateShareableCopy.SharedSnapshot
+parameters:
+  Environment:
+    type: String
+    description: Stage or Workspace name for the environment to run
+  EncryptionKeyARN:
+    type: String
+    description: ARN for KMS key to encrypted the shared snapshot
+  AccountIds:
+    type: StringList
+    description: Target accounts to share the snapshot with
+mainSteps:
+  - name: GetKafkaConnectClusterName
+    action: "aws:executeAwsApi"
+    inputs:
+      Service: cloudformation
+      Api: DescribeStackResource
+      LogicalResourceId: KafkaConnectCluster
+      StackName: "carts-bigmac-streams-{{Environment}}"
+    outputs:
+      - Name: ClusterName
+        Selector: $.StackResourceDetail.PhysicalResourceId
+        Type: String
+  - name: StopKafkaConnectService
+    action: "aws:executeAwsApi"
+    inputs:
+      Service: ecs
+      Api: UpdateService
+      service: kafka-connect
+      cluster: "{{GetKafkaConnectClusterName.ClusterName}}"
+      desiredCount: 0
+    description: Scales _kafka-connect_ service within the KafkaConnectCluster to 0
+  - name: StopRDSInstance
+    action: "aws:executeAwsApi"
+    inputs:
+      Service: rds
+      Api: StopDBInstance
+      DBInstanceIdentifier: "postgres-rf-{{Environment}}"
+      DBSnapshotIdentifier: "postgres-rf-{{Environment}}-stopped"
+  - name: WaitForSnapshot
+    action: "aws:waitForAwsResourceProperty"
+    inputs:
+      Service: rds
+      Api: DescribeDBSnapshots
+      PropertySelector: "$.DBSnapshots[0].Status"
+      DesiredValues:
+        - available
+      DBSnapshotIdentifier: "postgres-rf-{{Environment}}-stopped"
+  - name: CreateShareableCopy
+    action: "aws:executeAwsApi"
+    inputs:
+      Service: rds
+      Api: CopyDBSnapshot
+      SourceDBSnapshotIdentifier: "postgres-rf-{{Environment}}-stopped"
+      TargetDBSnapshotIdentifier: "postgres-rf-{{Environment}}-shared"
+      KmsKeyId: "{{EncryptionKeyARN}}"
+    description: Creates a copy of the stopped snapshot encrypted with the provided KMS key that will be suitable for sharing
+    outputs:
+      - Name: SharedSnapshot
+        Selector: $.DBSnapshot.DBSnapshotIdentifier
+        Type: String
+  - name: WaitForSharableSnapshot
+    action: "aws:waitForAwsResourceProperty"
+    inputs:
+      Service: rds
+      Api: DescribeDBSnapshots
+      PropertySelector: "$.DBSnapshots[0].Status"
+      DesiredValues:
+        - available
+      DBSnapshotIdentifier: "{{CreateShareableCopy.SharedSnapshot}}"
+  - name: ShareSnapshot
+    action: "aws:executeAwsApi"
+    inputs:
+      Service: rds
+      Api: ModifyDBSnapshotAttribute
+      DBSnapshotIdentifier: "{{CreateShareableCopy.SharedSnapshot}}"
+      AttributeName: restore
+      ValuesToAdd: "{{ AccountIds }}"
+    description: Shares snapshot with given aws accounts
