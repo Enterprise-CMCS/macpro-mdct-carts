@@ -48,7 +48,7 @@ custom:
       # Build the static archive and populate the config
       package:initialize: |
         set -e
-        # TODO handle react hooks warnings then remove CI=false
+        # TODO: [MDCT-300] handle react hooks warnings then remove CI=false
         CI=false SKIP_PREFLIGHT_CHECK=true yarn run build
         export API_REGION=${self:custom.api_region}
         export API_URL=${self:custom.api_url}
