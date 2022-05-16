@@ -13,13 +13,13 @@ const passwordForCognito = "//input[@name='password']";
 
 const stateUser = {
   email: Cypress.env("STATE_USER_EMAIL"),
-  password: Cypress.env("STATE_USER_PASSWORD")
+  password: Cypress.env("STATE_USER_PASSWORD"),
 };
 
 const adminUser = {
   email: Cypress.env("ADMIN_USER_EMAIL"),
-  password: Cypress.env("ADMIN_USER_PASSWORD")
-}
+  password: Cypress.env("ADMIN_USER_PASSWORD"),
+};
 
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   let credentials = {};
@@ -42,7 +42,7 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
     }
   } else {
     throw new Error("Must specify either userType or userCredentials.");
-  }  
+  }
   cy.xpath(emailForCognito).type(credentials.email);
   cy.xpath(passwordForCognito).type(credentials.password);
   cy.get('[data-cy="login-with-cognito-button"]').click();
