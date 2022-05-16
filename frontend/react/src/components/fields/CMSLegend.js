@@ -1,22 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Text from "../layout/Text";
+import { generateQuestionNumber } from "../Utils/helperFunctions";
 
 const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
-  let labelBits = "";
-
-  if (id) {
-    const lastHunk = Number.parseInt(id.substring(id.length - 2), 10);
-    if (Number.isNaN(lastHunk)) {
-      const numberBit = Number.parseInt(
-        id.substring(id.length - 4, id.length - 2),
-        10
-      );
-      labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
-    } else {
-      labelBits = `${lastHunk}. `;
-    }
-  }
+  let labelBits = generateQuestionNumber(id);
 
   if (
     !questionType.includes("text") &&
@@ -26,15 +14,15 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
     !questionType.includes("percentage")
   ) {
     return (
-      <p>
-        {!hideNumber && labelBits}
-        {!questionType.includes("text") && label}
+      <div>
+        {!hideNumber && <p>{labelBits}</p>}
+        {!questionType.includes("text") && <p>{label}</p>}
         {hint && (
           <div className="ds-c-field__hint">
             <Text>{hint}</Text>
           </div>
         )}
-      </p>
+      </div>
     );
   } else {
     return null;

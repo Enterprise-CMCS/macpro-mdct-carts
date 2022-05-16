@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import { Choice } from "@cmsgov/design-system-core";
 
 import Question from "./Question";
 
@@ -29,7 +28,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
   }
 
   const radioButttonList = question.answer.options.map(({ label, value }) => (
-    <div style={{ margin: "2rem 0" }} key={props.name + "-" + value}>
+    <div className="radio-container" key={props.name + "-" + value}>
       <input
         key={value}
         checked={checked === value}
@@ -41,7 +40,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
         onClick={unCheck}
         id={props.name + "-" + value}
       />
-      <label style={{ marginLeft: "2rem" }} htmlFor={props.name + "-" + value}>
+      <label className="label-radio" htmlFor={props.name + "-" + value}>
         {label}
       </label>
     </div>

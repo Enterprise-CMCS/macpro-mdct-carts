@@ -20,7 +20,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
     ({ label, value: checkBoxValue }, idx) => {
       return (
         <div
-          style={{ margin: "2rem 0" }}
+          className="radio-container"
           key={props.name + "-" + value + "-" + idx}
         >
           <input
@@ -33,10 +33,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
             name={props.name + value}
             {...props}
           />
-          <label
-            style={{ marginLeft: "2rem" }}
-            htmlFor={props.name + "-" + value}
-          >
+          <label className="label-radio" htmlFor={props.name + "-" + value}>
             {label}
           </label>
         </div>
