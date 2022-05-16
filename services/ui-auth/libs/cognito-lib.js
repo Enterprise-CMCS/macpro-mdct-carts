@@ -5,23 +5,23 @@ const COGNITO_CLIENT = new aws.CognitoIdentityServiceProvider({
 });
 
 export async function createUser(params) {
-  await new Promise((resolve, _reject) => {
-    COGNITO_CLIENT.adminCreateUser(params, function (err, _data) {
-      var response;
-      if (err) {
-        response = { statusCode: 500, body: { message: "FAILED", error: err } };
-        resolve(response); //if user already exists, we still continue and ignore
-      } else {
-        response = { statusCode: 200, body: { message: "SUCCESS" } };
-        resolve(response);
-      }
-    });
+  // eslint-disable-next-line no-console
+  console.log("promise created");
+  await COGNITO_CLIENT.adminCreateUser(params, function (err, data) {
+    // eslint-disable-next-line no-console
+    console.log("data", data);
+    if (err) {
+      // eslint-disable-next-line no-console
+      console.log({ statusCode: 500, body: { message: "FAILED", error: err } });
+      throw new Error("Cannot create user"); //if user already exists, we still continue and ignore
+    }
   });
 }
 
 export async function setPassword(params) {
   await new Promise((resolve, reject) => {
-    COGNITO_CLIENT.adminSetUserPassword(params, function (err, _data) {
+    // eslint-disable-next-line no-unused-vars
+    COGNITO_CLIENT.adminSetUserPassword(params, function (err, data) {
       if (err) {
         var response = {
           statusCode: 500,
@@ -37,7 +37,8 @@ export async function setPassword(params) {
 
 export async function updateUserAttributes(params) {
   await new Promise((resolve, reject) => {
-    COGNITO_CLIENT.adminUpdateUserAttributes(params, function (err, _data) {
+    // eslint-disable-next-line no-unused-vars
+    COGNITO_CLIENT.adminUpdateUserAttributes(params, function (err, data) {
       if (err) {
         var response = {
           statusCode: 500,

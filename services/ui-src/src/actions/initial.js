@@ -192,7 +192,6 @@ export const loadUser = (user) => async (dispatch) => {
     firstname: user.attributes?.given_name,
     email: user.attributes?.email,
   };
-  // TODO: bring in info for state and program
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
     // TODO: Get Program and State data

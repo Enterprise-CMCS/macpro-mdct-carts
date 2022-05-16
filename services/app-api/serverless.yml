@@ -122,6 +122,14 @@ functions:
           method: put
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  generateFormTemplates:
+    handler: handlers/formTemplates/post.post
+    events:
+      - http:
+          path: formTemplates
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   postUpload:
     handler: handlers/uploads/createUploadPsUrl.psUpload
     events:

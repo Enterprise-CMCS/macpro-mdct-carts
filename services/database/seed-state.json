@@ -1,0 +1,9 @@
+[ 
+  { "programType": "combo", "code": "AL", "name": "Alabama", "programNames": {} },
+  { "programType": "combo", "code": "AK", "name": "Alaska", "programNames": {} },
+  { "programType": "combo", "code": "CA", "name": "California", "programNames": {} },
+  { "programType": "combo", "code": "CT", "name": "Connecticut", "programNames": {} },
+  { "programType": "combo", "code": "NJ", "name": "New Jersey", "programNames": {} },
+  { "programType": "combo", "code": "PA", "name": "Pennsylvania", "programNames": {} },
+  { "programType": "combo", "code": "TX", "name": "Texas", "programNames": {} }
+]

@@ -8,6 +8,7 @@ import {
   DynamoUpdate,
   DynamoFetch,
   DynamoScan,
+  State,
   StateStatus,
   Section,
 } from "../types";
@@ -33,7 +34,8 @@ export function createDbClient() {
 const client = createDbClient();
 
 export default {
-  get: async <Result = StateStatus | Section | Measure>(
+  batchWriteItem: async (params: any) => client.batchWrite(params).promise(),
+  get: async <Result = StateStatus | Section | Measure | State>(
     params: DynamoFetch
   ) => {
     const result = await client.get(params).promise();
@@ -41,7 +43,7 @@ export default {
   },
   put: (params: DynamoCreate) => client.put(params).promise(),
   post: (params: DynamoCreate) => client.put(params).promise(),
-  scan: async <Result = StateStatus | Section | Measure>(
+  scan: async <Result = StateStatus | Section | Measure | State>(
     params: DynamoScan
   ) => {
     const result = await client.scan(params).promise();

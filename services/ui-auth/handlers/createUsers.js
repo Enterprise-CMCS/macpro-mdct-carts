@@ -5,7 +5,8 @@ import * as cognitolib from "../libs/cognito-lib";
 const userPoolId = process.env.userPoolId;
 const users = require("../libs/users.json");
 
-async function myHandler(_event, _context, _callback) {
+// eslint-disable-next-line no-unused-vars
+async function myHandler(event, context, callback) {
   console.log("USER POOL ID: ");
   console.log(userPoolId);
 

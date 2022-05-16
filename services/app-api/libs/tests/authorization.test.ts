@@ -59,7 +59,7 @@ describe("Authorization Lib Function", () => {
       event.headers = { "x-api-key": "test" };
       event.pathParameters = { state: "AL" };
       mockedDecode.mockReturnValue({
-        "custom:cms_roles": UserRoles.ADMIN,
+        "custom:cms_roles": UserRoles.BUSINESS_OWNER_REP,
         "custom:cms_state": "AL",
       });
     });

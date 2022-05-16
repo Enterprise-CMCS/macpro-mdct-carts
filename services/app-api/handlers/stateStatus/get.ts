@@ -16,9 +16,10 @@ export const getStateStatus = handler(async (event, _context) => {
     const queryValue = await dynamoDb.scan(params);
     return queryValue;
   } else if (
-    user.role === UserRoles.ADMIN ||
-    user.role === UserRoles.BO ||
-    user.role === UserRoles.CO
+    user.role === UserRoles.APPROVER ||
+    user.role === UserRoles.HELP ||
+    user.role === UserRoles.PROJECT_OFFICER ||
+    user.role === UserRoles.BUSINESS_OWNER_REP
   ) {
     // Return all
     const params = {

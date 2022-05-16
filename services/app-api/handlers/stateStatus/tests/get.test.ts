@@ -21,7 +21,7 @@ jest.mock("../../../libs/authorization", () => ({
       state: "AL",
     })
     .mockReturnValueOnce({
-      role: UserRoles.ADMIN,
+      role: UserRoles.BUSINESS_OWNER_REP,
     }),
 }));
 
@@ -46,7 +46,7 @@ describe("Test Get State Status Handlers", () => {
     });
   });
 
-  test("fetching state status should return everything for admin user", async () => {
+  test("fetching state status should return everything for business owner rep", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
     };
