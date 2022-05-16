@@ -6,7 +6,6 @@ on:
       - main
       - val
       - production
-      - deploy-v3
       # Not automating dev branches yet.
       # - "*"
       # - "dependabot/**"
