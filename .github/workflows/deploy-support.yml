@@ -5,6 +5,7 @@ on:
     branches:
       # # List of all branches which should control underlying infrastructure.
       - main
+      - deploy-v3
 
 permissions:
   id-token: write
