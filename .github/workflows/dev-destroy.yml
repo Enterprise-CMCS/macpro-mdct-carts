@@ -74,6 +74,7 @@ jobs:
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
     if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "main", "staging", "production", "prod"]'), github.event.ref) && startsWith(github.event.ref,'dev-')
+    runs-on: ubuntu-latest
     needs:
       - destroy-frontend
     steps:
@@ -109,6 +110,7 @@ jobs:
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
     if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "main", "staging", "production", "prod"]'), github.event.ref)
+    runs-on: ubuntu-latest
     needs:
       - destroy-data
     steps:
@@ -140,6 +142,7 @@ jobs:
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
     if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "main", "staging", "production", "prod"]'), github.event.ref)
+    runs-on: ubuntu-latest
     needs:
       - destroy-data
     steps:
