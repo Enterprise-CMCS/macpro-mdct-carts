@@ -24,7 +24,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
           key={props.name + "-" + value + "-" + idx}
         >
           <input
-            id={props.name + "-" + value}
+            id={`${props.name}-${value}`}
             key={value}
             type="checkbox"
             value={checkBoxValue}
