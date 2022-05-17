@@ -86,8 +86,8 @@ jobs:
         run: |
           APPLICATION_ENDPOINT=$(./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name)
           echo ::set-output name=application_endpoint::$APPLICATION_ENDPOINT
-          echo '## Application Endpoint' >> $GITHUB_STEP_SUMMARY
-          echo '<$APPLICATION_ENDPOINT>' >> $GITHUB_STEP_SUMMARY
+          echo "## Application Endpoint" >> $GITHUB_STEP_SUMMARY
+          echo "<$APPLICATION_ENDPOINT>" >> $GITHUB_STEP_SUMMARY
         working-directory: services
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
