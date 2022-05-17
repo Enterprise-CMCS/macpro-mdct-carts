@@ -10,7 +10,7 @@ import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpress
 export const uncertifyReport = handler(async (event, _context) => {
   const { body } = event;
   const { username } = JSON.parse(body || "{}");
-  const status = 'in_progress';
+  const status = "in_progress";
 
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
@@ -35,7 +35,7 @@ export const uncertifyReport = handler(async (event, _context) => {
         {
           username: username,
           lastChanged: new Date().toString(),
-          status: status
+          status: status,
         },
         "post"
       ),
