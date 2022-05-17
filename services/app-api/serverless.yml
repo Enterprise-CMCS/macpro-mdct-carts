@@ -106,6 +106,14 @@ functions:
           method: post
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  uncertifyReport:
+    handler: handlers/stateStatus/uncertify.uncertifyReport
+    events:
+      - http:
+          path: uncertify_report/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getSections:
     handler: handlers/section/get.getSections
     events:
