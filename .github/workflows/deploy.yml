@@ -3,13 +3,9 @@ name: Deploy CARTSv3
 on:
   push:
     branches:
-      - main
-      - val
-      - production
-      # Not automating dev branches yet.
-      # - "*"
-      # - "dependabot/**"
-      # - "!skipci*"
+      - "*"
+      - "dependabot/**"
+      - "!skipci*"
 
 permissions:
   id-token: write
