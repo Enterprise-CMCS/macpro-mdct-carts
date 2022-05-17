@@ -124,6 +124,7 @@ const ReportItem = ({
                   className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
                   key="primary"
                   onClick={uncertify}
+                  aria-label="Uncertify this Report"
                 >
                   Yes, Uncertify
                 </button>,
