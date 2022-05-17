@@ -58,19 +58,11 @@ const ReportItem = ({
   }
 
   const uncertify = () => {
-    //setShowModal(!showModal);
-    // toggleModal();
-    // if (window.confirm("Are you sure to uncertify this record?")) {
-    //   uncertifyAction(stateCode, stateYear);
-    //   /*
-    //    * Getting the new statuses to update the page
-    //    * getAllStateStatuses();
-    //    */
-    //   window.location.reload(false); // Added because above wasn't consistently reloading
     uncertifyAction(stateCode, stateYear);
     toggleModal();
-    // }
+    window.location.reload(false);
   };
+
   const accept = () => {
     if (window.confirm("Are you sure to accept this record?")) {
       acceptAction(stateCode, stateYear);
@@ -97,7 +89,7 @@ const ReportItem = ({
           <div className="actions ds-l-col--3">
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
-          <div className="actions ds-l-col--1">
+          <div className="actions ds-l-col--auto">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
             </Link>
@@ -107,17 +99,16 @@ const ReportItem = ({
           (userRole === UserRoles.CO ||
             userRole === UserRoles.BO ||
             userRole === UserRoles.ADMIN) ? (
-            <div className="actions ds-l-col--1">
-              <button onClick={toggleModal}>Uncertify</button>
-              {/* <Link onClick={uncertify} variation="primary">
+            <div className="actions ds-l-col--auto">
+              <button className="link" onClick={toggleModal}>
                 Uncertify
-              </Link> */}
+              </button>
             </div>
           ) : null}
           {/* TODO: Remove userRole === UserRoles.ADMIN */}
           {statusText === "Certified and Submitted" &&
           (userRole === UserRoles.CO || userRole === UserRoles.ADMIN) ? (
-            <div className="actions ds-l-col--1">
+            <div className="actions ds-l-col--auto">
               <Link onClick={accept} variation="primary">
                 Accept
               </Link>

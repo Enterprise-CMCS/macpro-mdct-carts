@@ -129,6 +129,26 @@ img {
       color: $black;
       font-weight: $font-weight-bold;
     }
+
+    .link {
+      background: none !important;
+      border: none;
+      padding: 0 !important;
+      font-family: inherit;
+      font-size: inherit;
+      color: #0071bc;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      cursor: pointer;
+    }
+
+    .link:focus {
+      color: #4c2c92;
+    }
+
+    .link:hover {
+      color: #0071bc;
+    }
   }
 
   table {
@@ -143,7 +163,7 @@ img {
       text-decoration: none;
     }
   }
-  
+
   .ds-c-table th {
     background: none;
     color: #333;
@@ -151,7 +171,7 @@ img {
     font-weight: 300;
     text-transform: uppercase;
   }
-  
+
   .ds-c-table td,
   .ds-c-table th {
     border: none;

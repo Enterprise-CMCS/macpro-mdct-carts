@@ -24,7 +24,7 @@ export const theUncertify =
         state: state,
       };
 
-      API.post("carts-api", `/uncertify_report/${year}/${state}`, opts);
+      await API.post("carts-api", `/uncertify_report/${year}/${state}`, opts);
       dispatch({
         type: UNCERTIFY_SUCCESS,
         user: username,

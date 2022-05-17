@@ -21,8 +21,9 @@ export const uncertifyReport = handler(async (event, _context) => {
   const { year, state } = event.pathParameters;
 
   // only Approvers can uncertify a CARTS report
+
   // eslint-disable-next-line
-  // TODO: update ADMIN with APPROVER
+  // TODO: update ADMIN with APPROVER role
   if (user.role === UserRoles.ADMIN) {
     const uncertifyReportParams = {
       TableName: process.env.stateStatusTableName!,
