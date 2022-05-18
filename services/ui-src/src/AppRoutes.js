@@ -36,16 +36,18 @@ const AppRoutes = () => {
       className={"App " + window.location.pathname.split("/")[1]}
       data-test="component-app"
     >
-      {VisibleHeader}
-      <Spinner />
-      <Router>
-        <Home user={user} role={userRole} />
-        {/* These routes are available to everyone, so define them here */}
-        <Route exact path="/userinfo" component={Userinfo} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/user/profile" component={UserProfile} />
-        <Route path="/print" component={Print} />
-      </Router>
+      <div className="app-content">
+        {VisibleHeader}
+        <Spinner />
+        <Router>
+          <Home user={user} role={userRole} />
+          {/* These routes are available to everyone, so define them here */}
+          <Route exact path="/userinfo" component={Userinfo} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/user/profile" component={UserProfile} />
+          <Route path="/print" component={Print} />
+        </Router>
+      </div>
       {VisibleFooter}
     </div>
   );
