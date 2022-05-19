@@ -144,6 +144,8 @@ const CMSHomepage = ({
               </div>
               <div className="report-status">
                 {statuses
+                  .sort((a, b) => (a.stateCode < b.stateCode ? -1 : 1))
+                  .sort((a, b) => (a.year > b.year ? -1 : 1))
                   .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
                   .map(
                     ({

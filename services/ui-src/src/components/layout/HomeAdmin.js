@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
@@ -28,20 +28,7 @@ const AdminHome = () => {
               </h1>
             </div>
             <div className="page-info">
-              <div className="edit-info">admin</div>
-            </div>
-            <div className="ds-l-row">
-              <ul>
-                <li>
-                  <Link to="/users">List users</Link>
-                </li>
-                <li>
-                  <Link to="/add_user">Add user</Link>
-                </li>
-                <li>
-                  <Link to="/templates">Generate Form Base Templates</Link>
-                </li>
-              </ul>
+              <div className="edit-info">help desk</div>
             </div>
             <div className="cmslist">
               <CMSHomepage />
