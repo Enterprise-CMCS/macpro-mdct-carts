@@ -35,7 +35,6 @@ export const isAuthorized = (event: APIGatewayProxyEvent) => {
 
   // get state and method from the event
   const requestState = event.pathParameters?.state;
-  //const requestMethod = event.httpMethod as RequestMethods;
 
   // decode the idToken
   const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;

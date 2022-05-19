@@ -140,14 +140,14 @@ img {
       text-decoration: underline;
       text-decoration-thickness: 1px;
       cursor: pointer;
-    }
 
-    .link:focus {
-      color: #4c2c92;
-    }
+      &:focus {
+        color: #4c2c92;
+      }
 
-    .link:hover {
-      color: #0071bc;
+      &:hover {
+        color: #0071bc;
+      }
     }
   }
 
