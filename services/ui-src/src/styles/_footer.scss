@@ -7,6 +7,7 @@
   color: $color-gray;
   margin-top: 2.2rem;
   text-align: center;
+  flex-shrink: 0;
 
   @media only screen and (min-width: 768px) {
     text-align: left;
