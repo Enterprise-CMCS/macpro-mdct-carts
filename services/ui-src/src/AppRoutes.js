@@ -36,8 +36,8 @@ const AppRoutes = () => {
       className={"App " + window.location.pathname.split("/")[1]}
       data-test="component-app"
     >
+      {VisibleHeader}
       <div className="app-content">
-        {VisibleHeader}
         <Spinner />
         <Router>
           <Home user={user} role={userRole} />
