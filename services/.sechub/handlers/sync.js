@@ -59,6 +59,16 @@ async function getAllActiveFindings() {
                 Value: "ACTIVE",
               },
             ],
+            WorkflowStatus: [
+              {
+                Comparison: "NOT_EQUALS",
+                Value: "SUPPRESSED",
+              },
+              {
+                Comparison: "NOT_EQUALS",
+                Value: "RESOLVED",
+              },
+            ],
             SeverityLabel: severityLabels,
           },
           MaxResults: 100,
