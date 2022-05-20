@@ -17,7 +17,7 @@ global.window.env = {
   API_POSTGRES_URL: "fakeurl",
 };
 
-window.matchMedia = Object.defineProperty(window, "matchMedia", {
+global.window.matchMedia = Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
     matches: false,
