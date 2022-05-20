@@ -18,7 +18,8 @@ export const getStateStatus = handler(async (event, _context) => {
   } else if (
     user.role === UserRoles.ADMIN ||
     user.role === UserRoles.BO ||
-    user.role === UserRoles.CO
+    user.role === UserRoles.CO ||
+    user.role === UserRoles.HELP
   ) {
     // Return all
     const params = {

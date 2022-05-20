@@ -15,6 +15,7 @@ const Home = ({ role }) => {
       break;
     case UserRoles.BO:
     case UserRoles.CO:
+    case UserRoles.HELP:
       content = <CMSHome />;
       break;
     case UserRoles.STATE:
