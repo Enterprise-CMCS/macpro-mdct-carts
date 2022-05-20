@@ -7,21 +7,7 @@ import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 
 const authenticateWithIDM = () => {
-  const authConfig = Auth.configure();
-  if (authConfig?.oauth) {
-    const oAuthOpts = authConfig.oauth;
-    const domain = oAuthOpts.domain;
-    const responseType = oAuthOpts.responseType;
-    let redirectSignIn;
-
-    if ("redirectSignOut" in oAuthOpts) {
-      redirectSignIn = oAuthOpts.redirectSignOut;
-    }
-
-    const clientId = authConfig.userPoolWebClientId;
-    const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
-    window.location.assign(url);
-  }
+  Auth.federatedSignIn({ customProvider: "Okta" });
 };
 
 export const UserProvider = ({ children }) => {
