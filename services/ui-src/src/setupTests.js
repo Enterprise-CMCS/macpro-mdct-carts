@@ -16,3 +16,14 @@ configure({ adapter: new Adapter() });
 global.window.env = {
   API_POSTGRES_URL: "fakeurl",
 };
+
+global.matchMedia =
+  global.matchMedia ||
+  function () {
+    return {
+      addListener: jest.fn(), //deprecated
+      removeListener: jest.fn(), //deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    };
+  };
