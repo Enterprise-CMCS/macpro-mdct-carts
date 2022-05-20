@@ -3,6 +3,7 @@ import { mount, shallow } from "enzyme";
 import { axe } from "jest-axe";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+import "../../matchMedia.mock";
 import Header from "./Header";
 
 const mockStore = configureMockStore();
