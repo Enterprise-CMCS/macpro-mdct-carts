@@ -16,8 +16,8 @@ provider:
   region: us-east-1
   iam:
     role:
-      path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, "{}"}
+      path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
       statements:
         - Effect: "Allow"
           Action:
@@ -38,8 +38,6 @@ s3BucketHelper:
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
-  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, "{}"}
   serverlessTerminationProtection:
     stages:
       - main
@@ -232,12 +230,6 @@ resources:
               Principal:
                 Service: "lambda.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
-            - !Ref AWS::NoValue
         Policies:
           - PolicyName: "BucketAVScanRolePolicy"
             PolicyDocument:
@@ -287,12 +279,6 @@ resources:
               Principal:
                 Service: "lambda.amazonaws.com"
               Action: "sts:AssumeRole"
-        Path: ${self:custom.iamPath}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
-            - !Ref AWS::NoValue
         Policies:
           - PolicyName: "BucketAVDownloadRolePolicy"
             PolicyDocument:

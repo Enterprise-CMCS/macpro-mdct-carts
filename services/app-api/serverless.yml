@@ -30,7 +30,7 @@ custom:
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
-      - master
+      - main
       - val
       - prod
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
@@ -67,7 +67,7 @@ provider:
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, "{}"}
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
       statements:
         - Effect: "Allow"
           Action:
