@@ -62,6 +62,7 @@ const CMSHomepage = ({
   const clearFilter = () => {
     window.location.reload(false);
   };
+
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
@@ -144,9 +145,10 @@ const CMSHomepage = ({
               </div>
               <div className="report-status">
                 {statuses
-                  .sort((a, b) => (a.stateCode < b.stateCode ? -1 : 1))
-                  .sort((a, b) => (a.year > b.year ? -1 : 1))
-                  .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
+                  // if there is a difference in year, sort by year first, otherwise, sort by state
+                  .sort(
+                    (a, b) => b.year - a.year || (a.state < b.state ? -1 : 1)
+                  )
                   .map(
                     ({
                       state,
@@ -157,7 +159,6 @@ const CMSHomepage = ({
                       lastChanged,
                     }) => {
                       return (
-                        // eslint-disable-next-line
                         <div>
                           {
                             // eslint-disable-next-line
