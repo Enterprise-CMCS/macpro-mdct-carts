@@ -23,7 +23,7 @@ custom:
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
-      - master
+      - main
       - val
       - prod
   route53HostedZoneId: ${ssm:/configuration/${self:custom.stage}/route53/hostedZoneId~true, ssm:/configuration/default/route53/hostedZoneId~true, ""}

@@ -2,6 +2,16 @@ name: Destroy
 
 on: delete
 
+concurrency:
+  # Ensuring group key matches the destroy workflow currently in master
+  group: dev-${{ github.event.ref }}
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
 jobs:
   destroy:
     # Protected branches should be designated as such in the GitHub UI.
@@ -9,7 +19,7 @@ jobs:
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
-    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "val", "prod"]'), github.event.ref)
+    if: github.event.ref_type == 'branch' && !contains(fromJson('["main", "master", "val", "production"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
@@ -25,12 +35,12 @@ jobs:
       - name: set variable values
         run: ./.github/build_vars.sh set_values
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh $branch_name
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Configure AWS credentials for GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - run: ./destroy.sh $STAGE_PREFIX$branch_name
