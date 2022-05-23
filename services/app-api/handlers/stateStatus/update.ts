@@ -60,7 +60,6 @@ export const updateStateStatus = handler(async (event, _context) => {
       ...convertToDynamoExpression(
         {
           status: "in_progress",
-          username: username,
           lastChanged: new Date().toString(),
         },
         "post"
