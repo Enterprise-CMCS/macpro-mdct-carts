@@ -15,7 +15,7 @@ const FormTemplates = () => {
 
     try {
       const opts = await requestOptions({ year: selectedYear });
-      await API.post("carts-api", "formTemplates", opts);
+      await API.post("carts-api", "/formTemplates", opts);
       window.alert("Request Completed");
       history.push("/");
     } catch (e) {
@@ -35,9 +35,10 @@ const FormTemplates = () => {
           id="selectedYear"
           // onChange={loadSectionBaseBySection}
         >
-          <option value="2021" selected>
-            2021
+          <option value="2022" selected>
+            2022
           </option>
+          <option value="2021">2021</option>
         </select>
         <Button
           type="button"

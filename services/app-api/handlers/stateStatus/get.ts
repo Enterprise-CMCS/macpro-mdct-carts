@@ -6,7 +6,6 @@ import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpress
 
 export const getStateStatus = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
-
   if (user.role === UserRoles.STATE && !!user.state) {
     // Return only the user's state
     const params = {

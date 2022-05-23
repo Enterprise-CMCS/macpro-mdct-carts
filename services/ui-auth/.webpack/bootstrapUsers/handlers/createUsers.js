@@ -4456,7 +4456,7 @@
       /***/ (module) => {
         "use strict";
         module.exports = JSON.parse(
-          '[{"username":"john@test.com","attributes":[{"Name":"email","Value":"john@test.com"},{"Name":"given_name","Value":"John"},{"Name":"family_name","Value":"Lennon"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"OH"}]},{"username":"george@test.com","attributes":[{"Name":"email","Value":"george@test.com"},{"Name":"given_name","Value":"George"},{"Name":"family_name","Value":"Harrison"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-help-desk"}]},{"username":"bouser@test.com","attributes":[{"Name":"email","Value":"bouser@test.com"},{"Name":"given_name","Value":"Bobby"},{"Name":"family_name","Value":"Business"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-bor"}]},{"username":"stateuser1@test.com","attributes":[{"Name":"email","Value":"stateuser1@test.com"},{"Name":"given_name","Value":"Sammy"},{"Name":"family_name","Value":"States"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"MA"}]},{"username":"stateuser2@test.com","attributes":[{"Name":"email","Value":"stateuser2@test.com"},{"Name":"given_name","Value":"Frank"},{"Name":"family_name","Value":"States"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"AL"}]},{"username":"stateuser3@test.com","attributes":[{"Name":"email","Value":"stateuser3@test.com"},{"Name":"given_name","Value":"Dean"},{"Name":"family_name","Value":"States"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"WY"}]},{"username":"stateuserME@test.com","attributes":[{"Name":"email","Value":"stateuserME@test.com"},{"Name":"given_name","Value":"Mary"},{"Name":"family_name","Value":"Maine"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"ME"}]},{"username":"stateuserDC@test.com","attributes":[{"Name":"email","Value":"stateuserDC@test.com"},{"Name":"given_name","Value":"David"},{"Name":"family_name","Value":"DC"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"DC"}]},{"username":"stateuserCA@test.com","attributes":[{"Name":"email","Value":"stateuserCA@test.com"},{"Name":"given_name","Value":"Carol"},{"Name":"family_name","Value":"California"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-state-user"},{"Name":"custom:cms_state","Value":"CA"}]},{"username":"po@test.com","attributes":[{"Name":"email","Value":"po@test.com"},{"Name":"given_name","Value":"Project"},{"Name":"family_name","Value":"Officer"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-project-officer"}]},{"username":"approver@test.com","attributes":[{"Name":"email","Value":"approver@test.com"},{"Name":"given_name","Value":"Adam"},{"Name":"family_name","Value":"Approver"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-approver"}]}]'
+          '[{"username":"bouser@test.com","attributes":[{"Name":"email","Value":"bouser@test.com"},{"Name":"given_name","Value":"Bobby"},{"Name":"family_name","Value":"Businesser"},{"Name":"email_verified","Value":"true"},{"Name":"custom:cms_roles","Value":"mdctcarts-bor"}]}]'
         );
 
         /***/
@@ -4609,30 +4609,11 @@
 
       for (var i = 0; i < users.length; i++) {
         console.log(users[i]);
-        var poolData = {
-          UserPoolId: userPoolId,
-          Username: users[i].username,
-          DesiredDeliveryMediums: ["EMAIL"],
-          UserAttributes: users[i].attributes,
-        };
-        var passwordData = {
-          Password: process.env.bootstrapUsersPassword,
-          UserPoolId: userPoolId,
-          Username: users[i].username,
-          Permanent: true,
-        };
         var attributeData = {
           Username: users[i].username,
           UserPoolId: userPoolId,
           UserAttributes: users[i].attributes,
-        };
-        await _libs_cognito_lib__WEBPACK_IMPORTED_MODULE_1__.createUser(
-          poolData
-        ); //userCreate must set a temp password first, calling setPassword to set the password configured in SSM for consistent dev login
-
-        await _libs_cognito_lib__WEBPACK_IMPORTED_MODULE_1__.setPassword(
-          passwordData
-        ); //if user exists and attributes are updated in this file updateUserAttributes is needed to update the attributes
+        }; //if user exists and attributes are updated in this file updateUserAttributes is needed to update the attributes
 
         await _libs_cognito_lib__WEBPACK_IMPORTED_MODULE_1__.updateUserAttributes(
           attributeData

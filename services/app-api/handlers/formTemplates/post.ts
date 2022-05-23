@@ -17,8 +17,10 @@ export const post = handler(async (event, _context) => {
     throw new UnauthorizedError("Unauthorized Request");
   }
 
+  // Determine which, if any, states need forms
+  const yearNumber = parseInt(year);
   const states = await getAllStates();
-  const existingStates = await getExistingStates(year);
+  const existingStates = await getExistingStates(yearNumber);
 
   const queuedStates = states?.filter(
     (state) => !existingStates.includes(state.code)
@@ -26,7 +28,7 @@ export const post = handler(async (event, _context) => {
   if (queuedStates.length === 0) {
     return `All templates for year ${year} have already been generated.`;
   }
-  const baseSections = await getBaseSections(year);
+  const baseSections = await getBaseSections(yearNumber);
   if (!baseSections || baseSections.length === 0) {
     throw new NotFoundError(
       `Base Section Templates not found for year ${year}`
@@ -35,27 +37,35 @@ export const post = handler(async (event, _context) => {
 
   // Copy out report string and populate state data
   const forms = [];
+  const stateStatuses = [];
   for (const state of queuedStates) {
     for (const section of baseSections) {
       state;
       let modifiedSection = section.replace("~XX~", state.code);
       let sectionObj = JSON.parse(modifiedSection);
-      sectionObj.year = year;
-      sectionObj.state = state.code;
-      forms.push({
-        PutRequest: {
-          Item: sectionObj,
-        },
-      });
+      sectionObj.pk = `${state.code}-${year}`;
+      sectionObj.year = yearNumber;
+      sectionObj.stateId = state.code;
+      sectionObj.contents.section.state = state.code;
+
+      // Section 0 Special Case - Program Type should be read from State
+      if (sectionObj.sectionId === 0) {
+        sectionObj.contents.section.subsections[0].parts[0].questions[1].answer.entry =
+          state.programType;
+      }
+      forms.push(sectionObj);
     }
+    stateStatuses.push({
+      stateId: state.code,
+      year: yearNumber,
+      programType: state.programType,
+      status: "not_started",
+    });
   }
 
-  await dynamoDb.batchWriteItem({
-    RequestItems: {
-      [process.env.stateStatusTableName!]: forms,
-    },
-  });
-  // TODO: save new items to db
+  await saveBatch(process.env.sectionTableName!, forms);
+  await saveBatch(process.env.stateStatusTableName!, stateStatuses);
+
   return `State templates generated for year ${year}`;
 });
 
@@ -100,4 +110,21 @@ const getBaseSections = async (year: number) => {
   };
   const queryValue = await dynamoDb.scan(params);
   return queryValue.Items?.map((s) => JSON.stringify(s));
+};
+
+const saveBatch = async (tableName: string, items: any) => {
+  // Save new forms
+  var batch = []; // DynamoDB batchWriteItem takes 25 items max
+  for (let i = 0; i < items.length; i++) {
+    batch.push({ PutRequest: { Item: items[i] } });
+    // Submit every 25, or when you're on the last item
+    if (i == items.length - 1 || batch.length == 25) {
+      dynamoDb.batchWriteItem({
+        RequestItems: {
+          [tableName]: batch,
+        },
+      });
+      batch = []; // clear queue
+    }
+  }
 };
