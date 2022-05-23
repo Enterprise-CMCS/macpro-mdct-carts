@@ -91,9 +91,9 @@ const ReportItem = ({
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
           <div className="actions ds-l-col--1">
-            <Link to={link1URL} target={anchorTarget}>
+            <a href={link1URL} target={anchorTarget}>
               {link1Text}
-            </Link>
+            </a>
           </div>
           {statusText === "Certified" &&
           (userRole === UserRoles.CO || userRole === UserRoles.BO) ? (
@@ -126,9 +126,9 @@ const ReportItem = ({
             {lastChanged && new Date(lastChanged)?.toLocaleDateString("en-US")}
           </div>
           <div className="actions ds-l-col--1">
-            <Link to={link1URL} target={anchorTarget}>
+            <a href={link1URL} target={anchorTarget}>
               {link1Text}
-            </Link>
+            </a>
           </div>
         </div>
       )}

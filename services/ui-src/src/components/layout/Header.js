@@ -34,6 +34,7 @@ class Header extends Component {
   render() {
     const { currentUser } = this.props;
     const { currentYear } = this.props;
+    const { showAutoSave } = this.props;
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     return (
@@ -52,7 +53,7 @@ class Header extends Component {
               </div>
               <div className="user-details ds-l-col--8 ds-u-padding--2">
                 <div className="ds-l-row">
-                  <Autosave />
+                  {showAutoSave && <Autosave />}
                   {isLoggedIn && renderMenu(this.toggleUserNav, email)}
                 </div>
               </div>

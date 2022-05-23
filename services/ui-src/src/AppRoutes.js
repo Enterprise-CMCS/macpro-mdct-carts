@@ -15,14 +15,17 @@ import "./styles/app.scss";
 
 const AppRoutes = () => {
   const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
+
   if (!user && showLocalLogins) {
     return <LocalLogins loginWithIDM={loginWithIDM} />;
   }
 
+  const ShowAutoSave = window.location.pathname.split("/")[2] === "sections";
+
   const VisibleHeader =
     window.location.pathname.split("/")[1] === "reports" ||
     window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-      <Header currentUser={user} />
+      <Header currentUser={user} showAutoSave={ShowAutoSave} />
     );
 
   const VisibleFooter =
