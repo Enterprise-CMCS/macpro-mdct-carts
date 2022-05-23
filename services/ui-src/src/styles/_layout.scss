@@ -46,6 +46,10 @@ div[hidden] {
   }
 }
 
+.app-content {
+  flex: 1 0 auto;
+}
+
 .user-profiles {
   overflow-y: hidden;
   margin: 2.2rem 0;
