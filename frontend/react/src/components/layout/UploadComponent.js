@@ -20,7 +20,6 @@ class UploadComponent extends Component {
   }
 
   componentDidMount = async () => {
-    console.log({ question: this.props.question });
     this.validateFileByExtension = this.validateFileByExtension.bind(this);
     this.removeFile = this.removeFile.bind(this);
     this.submitUpload = this.submitUpload.bind(this);

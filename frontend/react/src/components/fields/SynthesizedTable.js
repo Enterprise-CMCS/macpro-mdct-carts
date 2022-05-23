@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import synthesizeValue from "../../util/synthesize";
 
 const SynthesizedTable = ({ headers, rows, question }) => {
-  console.log({ question });
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <table
