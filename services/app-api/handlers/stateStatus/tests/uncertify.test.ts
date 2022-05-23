@@ -40,8 +40,7 @@ describe("Test Uncertify CARTS Report Handler", () => {
         stateId: "AL",
         year: 2021,
       },
-      UpdateExpression:
-        "set #status=:status, #lastChanged=:lastChanged",
+      UpdateExpression: "set #status=:status, #lastChanged=:lastChanged",
       TableName: undefined,
     });
   });
