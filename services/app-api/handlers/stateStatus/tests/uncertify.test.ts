@@ -31,11 +31,9 @@ describe("Test Uncertify CARTS Report Handler", () => {
       ExpressionAttributeNames: {
         "#lastChanged": "lastChanged",
         "#status": "status",
-        "#username": "username",
       },
       ExpressionAttributeValues: {
         ":status": "in_progress",
-        ":username": "test user",
         ":lastChanged": new Date().toString(),
       },
       Key: {
@@ -43,7 +41,7 @@ describe("Test Uncertify CARTS Report Handler", () => {
         year: 2021,
       },
       UpdateExpression:
-        "set #status=:status, #username=:username, #lastChanged=:lastChanged",
+        "set #status=:status, #lastChanged=:lastChanged",
       TableName: undefined,
     });
   });
