@@ -4,6 +4,7 @@ import { axe } from "jest-axe";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Header from "./Header";
+import Autosave from "./Autosave";
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -34,6 +35,12 @@ const header = (
   </Provider>
 );
 
+const headerWithAutosave = (
+  <Provider store={store}>
+    <Header showAutoSave />
+  </Provider>
+);
+
 describe("Test Header", () => {
   it("should render the Header Component correctly", () => {
     expect(shallow(header).exists()).toBe(true);
@@ -46,6 +53,14 @@ describe("Test Header", () => {
     const wrapper = mount(header);
     const results = wrapper.find({ "data-testid": "cartsCurrentYear" }).html();
     expect(results.includes(2077)).toBeTruthy();
+  });
+  it("should not show the autosave component by default ", () => {
+    const wrapper = mount(header);
+    expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
+  });
+  it("should show the autosave component when passed by prop ", () => {
+    const wrapper = mount(headerWithAutosave);
+    expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(true);
   });
 });
 
