@@ -58,7 +58,7 @@ describe("Test Header", () => {
     const wrapper = mount(header);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
   });
-  it("should show the autosave component when passed by prop ", () => {
+  it("should show the autosave component when prop passed is true", () => {
     const wrapper = mount(headerWithAutosave);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(true);
   });
