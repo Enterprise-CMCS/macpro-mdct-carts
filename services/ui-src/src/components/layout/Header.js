@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Autosave from "./Autosave";
 import Logout from "./Logout";
 import UsaBanner from "@cmsgov/design-system/dist/components/UsaBanner/UsaBanner";
+import { Link, withRouter } from "react-router-dom";
 
 class Header extends Component {
   constructor() {
@@ -34,9 +35,10 @@ class Header extends Component {
   render() {
     const { currentUser } = this.props;
     const { currentYear } = this.props;
-    const { showAutoSave } = this.props;
+    const { location } = this.props;
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
+    const showAutoSave = location.pathname.includes("/views/sections/");
     return (
       <div className="component-header" data-test="component-header">
         <UsaBanner
@@ -47,9 +49,9 @@ class Header extends Component {
           <div className="ds-l-container">
             <div className="ds-l-row header-row">
               <div className="site-title ds-l-col--4 ds-u-padding--2">
-                <a data-testid={"cartsCurrentYear"} href="/">
+                <Link data-testid={"cartsCurrentYear"} to="/">
                   Carts-{currentYear}
-                </a>
+                </Link>
               </div>
               <div className="user-details ds-l-col--8 ds-u-padding--2">
                 <div className="ds-l-row">
@@ -73,7 +75,7 @@ function renderMenu(toggleUserNav, email) {
           <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
         </li>
         <li className="manage-account">
-          <a href="/user/profile">Manage Account</a>
+          <Link to="/user/profile">Manage Account</Link>
         </li>
         <li className="logout">
           <Logout />
@@ -113,4 +115,4 @@ const mapStateToProps = (state) => ({
   currentYear: state.global.currentYear,
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(withRouter(Header));

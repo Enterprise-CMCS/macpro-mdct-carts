@@ -20,12 +20,10 @@ const AppRoutes = () => {
     return <LocalLogins loginWithIDM={loginWithIDM} />;
   }
 
-  const ShowAutoSave = window.location.pathname.split("/")[2] === "sections";
-
   const VisibleHeader =
     window.location.pathname.split("/")[1] === "reports" ||
     window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-      <Header currentUser={user} showAutoSave={ShowAutoSave} />
+      <Header currentUser={user} />
     );
 
   const VisibleFooter =
@@ -39,10 +37,10 @@ const AppRoutes = () => {
       className={"App " + window.location.pathname.split("/")[1]}
       data-test="component-app"
     >
-      {VisibleHeader}
       <div className="app-content">
         <Spinner />
         <Router>
+          {VisibleHeader}
           <Home user={user} role={userRole} />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />
