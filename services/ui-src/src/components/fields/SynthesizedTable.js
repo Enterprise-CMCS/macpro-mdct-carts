@@ -3,11 +3,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import synthesizeValue from "../../util/synthesize";
 
-const SynthesizedTable = ({ question, rows }) => {
+const SynthesizedTable = ({ headers, rows, question }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
-      <table className="ds-c-table ds-u-margin-top--2" id="synthesized-table-1">
-        {question.fieldset_info.headers && (
+      <table
+        className="ds-c-table ds-u-margin-top--2"
+        id="synthesized-table-1"
+        summary={question.label || "This is a table for the CARTS Application"}
+      >
+        {headers && (
           <thead>
             <tr>
               {question.fieldset_info.headers.map((header, index) => (
