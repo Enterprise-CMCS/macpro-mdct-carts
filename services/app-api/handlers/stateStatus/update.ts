@@ -50,7 +50,7 @@ export const updateStateStatus = handler(async (event, _context) => {
    */
   // eslint-disable-next-line
   // TODO: update ADMIN with APPROVER role
-  else if (user.role === UserRoles.ADMIN) {
+  else if (user.role === UserRoles.APPROVER) {
     const uncertifyReportParams = {
       TableName: process.env.stateStatusTableName!,
       Key: {
