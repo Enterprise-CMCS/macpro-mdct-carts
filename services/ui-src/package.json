@@ -35,7 +35,7 @@
     "react-json-editor-ajrm": "^2.5.13",
     "react-json-editor-viewer": "^1.0.7",
     "react-json-view": "^1.21.3",
-    "react-multi-select-component": "^3.0.7",
+    "react-multi-select-component": "4.2.7",
     "react-number-format": "^4.4.1",
     "react-papaparse": "^3.8.0",
     "react-redux": "^8.0.1",

@@ -3,7 +3,7 @@ import axios from "../../../authenticatedAxios";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Button, TextField } from "@cmsgov/design-system";
-import MultiSelect from "react-multi-select-component";
+import { MultiSelect } from "react-multi-select-component";
 import PropTypes from "prop-types";
 import Searchable from "react-searchable-dropdown";
 import { UserRoles } from "../../../types";
