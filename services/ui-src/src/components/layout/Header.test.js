@@ -5,6 +5,8 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Header from "./Header";
 import Autosave from "./Autosave";
+import { MemoryRouter } from "react-router";
+import { screen, render } from "@testing-library/react";
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -31,13 +33,17 @@ const store = mockStore({
 
 const header = (
   <Provider store={store}>
-    <Header />
+    <MemoryRouter initialEntries={["/"]}>
+      <Header />
+    </MemoryRouter>
   </Provider>
 );
 
 const headerWithAutosave = (
   <Provider store={store}>
-    <Header showAutoSave />
+    <MemoryRouter initialEntries={["/views/sections/"]}>
+      <Header />
+    </MemoryRouter>
   </Provider>
 );
 
@@ -50,15 +56,15 @@ describe("Test Header", () => {
     expect(wrapper.find({ "data-testid": "usaBanner" }).length).toBe(1);
   });
   it("should have the current year reporting year in the header", () => {
-    const wrapper = mount(header);
-    const results = wrapper.find({ "data-testid": "cartsCurrentYear" }).html();
-    expect(results.includes(2077)).toBeTruthy();
+    render(header);
+    const currentYearElement = screen.getByTestId("cartsCurrentYear");
+    expect(currentYearElement).toHaveTextContent(2077);
   });
   it("should not show the autosave component by default ", () => {
     const wrapper = mount(header);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
   });
-  it("should show the autosave component when prop passed is true", () => {
+  it("should show autosave component when on a report", () => {
     const wrapper = mount(headerWithAutosave);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(true);
   });
