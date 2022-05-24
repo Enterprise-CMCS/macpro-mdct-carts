@@ -1,5 +1,5 @@
 export const UserRoles = {
-  APPROVER: "mdct-carts-approver",
+  APPROVER: "mdctcarts-approver",
   BUSINESS_OWNER_REP: "mdctcarts-bor",
   HELP: "mdctcarts-help-desk",
   STATE: "mdctcarts-state-user",
