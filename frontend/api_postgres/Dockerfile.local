@@ -32,8 +32,5 @@ RUN pip install pdfkit --no-cache
 # copy project
 COPY . /usr/src/app/
 
-RUN python utils/section-schemas/generate_fixtures.py
-RUN python utils/section-schemas/compare_fixtures.py
-
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint_local.sh"]
