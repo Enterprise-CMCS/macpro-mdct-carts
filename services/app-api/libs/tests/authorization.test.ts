@@ -68,9 +68,9 @@ describe("Authorization Lib Function", () => {
       expect(isAuthorized(event)).toBeTruthy();
     });
 
-    test("authorization should fail from unauthorized http method", () => {
+    test("authorization should succeed on non-GET methods", () => {
       event.httpMethod = "POST";
-      expect(isAuthorized(event)).toBeFalsy();
+      expect(isAuthorized(event)).toBeTruthy();
     });
   });
 });

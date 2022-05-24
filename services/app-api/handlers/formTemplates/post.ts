@@ -66,7 +66,10 @@ export const post = handler(async (event, _context) => {
   await saveBatch(process.env.sectionTableName!, forms);
   await saveBatch(process.env.stateStatusTableName!, stateStatuses);
 
-  return `State templates generated for year ${year}`;
+  return {
+    message: `State templates generated for year ${year}`,
+    generatedForms: [queuedStates.map((s) => s.code)],
+  };
 });
 
 // Queries
