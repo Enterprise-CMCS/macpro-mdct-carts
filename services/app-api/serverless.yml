@@ -28,10 +28,14 @@ custom:
       - main
       - val
       - prod
+  stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
+  stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
   stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
   sectionTableName: ${env:sectionTableName, cf:database-${self:custom.stage}.SectionTableName}
   sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
+  sectionBaseTableName: ${env:sectionBaseTableName, cf:database-${self:custom.stage}.SectionBaseTableName}
+  sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
   associateWaf:
     name: ${self:custom.webAclName}
@@ -75,9 +79,10 @@ provider:
             - dynamodb:DeleteItem
           Resource: "*"
   environment:
-    measureTableName: ${self:custom.measureTableName}
+    stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
+    sectionBaseName: ${self:custom.sectionBaseTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${opt:stage, self:provider.stage}
 
