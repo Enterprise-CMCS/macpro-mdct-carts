@@ -25,7 +25,7 @@ describe("Authorization Lib Function", () => {
       });
     });
 
-    test("authorizaiton should fail from missing jwt key", () => {
+    test("authorization should fail from missing jwt key", () => {
       event.headers = {};
       expect(isAuthorized(event)).toBeFalsy();
     });
