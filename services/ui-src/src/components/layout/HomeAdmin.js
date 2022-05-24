@@ -25,7 +25,7 @@ const AdminHome = () => {
               </h1>
             </div>
             <div className="page-info">
-              <div className="edit-info">admin</div>
+              <div className="edit-info">help desk</div>
             </div>
             <div className="ds-l-row">
               <ul>

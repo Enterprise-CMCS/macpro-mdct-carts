@@ -14,7 +14,6 @@ const Home = ({ role }) => {
       content = <AdminHome />;
       break;
     case UserRoles.APPROVER:
-      // TODO: different approver & help behavior
       content = <CMSHome />;
       break;
     case UserRoles.HELP:

@@ -14,7 +14,16 @@ const inputs = new Map([
   ["text", Text],
 ]);
 
-const Range = ({ category, id, index, onChange, row, type, values }) => {
+const Range = ({
+  category,
+  id,
+  index,
+  onChange,
+  row,
+  type,
+  values,
+  ...props
+}) => {
   const [rangeError, setRangeError] = useState("");
   const [rangeValues, setRangeValues] = useState(values);
 
@@ -103,6 +112,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
             <Input
+              {...props}
               id={`${id}-${row}-${index}-0`}
               label={category[0]}
               className="cmsrange-input"
@@ -111,6 +121,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               onChange={changeStart}
               onBlur={validateInequality}
               value={rangeValues[0] ? rangeValues[0] : values[0]}
+              disabled={props.disabled}
             />
           </div>
           <div className="cmsrange-arrow">
@@ -118,6 +129,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
           </div>
           <div className="cmsrange-container cmsrange-end">
             <Input
+              {...props}
               id={`${id}-${row}-${index}-1`}
               label={category[1]}
               className="cmsrange-input"
@@ -126,6 +138,7 @@ const Range = ({ category, id, index, onChange, row, type, values }) => {
               onChange={changeEnd}
               onBlur={validateInequality}
               value={rangeValues[1] ? rangeValues[1] : values[1]}
+              disabled={props.disabled}
             />
           </div>
         </div>
@@ -143,7 +156,7 @@ Range.propTypes = {
   values: PropTypes.array.isRequired,
 };
 
-const Ranges = ({ onChange, question }) => {
+const Ranges = ({ onChange, question, ...props }) => {
   const {
     answer: {
       entry,
@@ -193,6 +206,7 @@ const Ranges = ({ onChange, question }) => {
       {values.map((rowValues, row) =>
         rowValues.map((categoryValues, index) => (
           <Range
+            {...props}
             key={`${row}.${index}`}
             category={categories[index]}
             id={question.id}
@@ -201,12 +215,13 @@ const Ranges = ({ onChange, question }) => {
             row={row}
             type={types[index]}
             values={categoryValues}
+            disabled={props.disabled}
           />
         ))
       )}
 
       {values.length < max || max === 0 ? (
-        <Button onClick={addRow} type="button" variation="primary">
+        <Button onClick={addRow} type="button" variation="primary" {...props}>
           Add another? <FontAwesomeIcon icon={faPlus} />
         </Button>
       ) : null}
