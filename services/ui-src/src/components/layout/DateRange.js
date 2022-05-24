@@ -247,6 +247,7 @@ class DateRange extends Component {
               onChange={this.handleInput}
               onBlur={this.validateStartInput}
               value={monthStart}
+              disabled={this.props.disabled}
             />
             <div className="ds-c-datefield__separator">/</div>
             <TextField
@@ -257,6 +258,7 @@ class DateRange extends Component {
               onBlur={this.validateStartInput}
               numeric
               value={yearStart}
+              disabled={this.props.disabled}
             />
           </div>
         </div>
@@ -285,6 +287,7 @@ class DateRange extends Component {
               onChange={this.handleInput}
               onBlur={this.validateEndInput}
               value={monthEnd}
+              disabled={this.props.disabled}
             />
             <div className="ds-c-datefield__separator">/</div>
 
@@ -296,6 +299,7 @@ class DateRange extends Component {
               onBlur={this.validateEndInput}
               numeric
               value={yearEnd}
+              disabled={this.props.disabled}
             />
           </div>
           <div className="errors">
