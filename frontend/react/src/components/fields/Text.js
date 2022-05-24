@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system-core";
-import ReactHtmlParser from "react-html-parser";
 import axios from "../../authenticatedAxios";
 import { connect } from "react-redux";
+import { generateQuestionNumber } from "../Utils/helperFunctions";
 
 const Text = ({ question, state, ...props }) => {
-  const [printValue, setPrintValue] = useState(
-    (question.answer && question.answer.entry) || ""
-  );
   const [prevYearValue, setPrevYearValue] = useState();
   const [prevYearDisabled, setPrevYearDisabled] = useState();
-
-  const updatePrintHelper = ({ target: { value } }) => {
-    const val = value.replace(/\n/g, "<br/>");
-    setPrintValue(val);
-  };
 
   useEffect(() => {
     const getPrevYearValue = async () => {
@@ -82,14 +74,16 @@ const Text = ({ question, state, ...props }) => {
   }, [state]);
   return (
     <>
-      <div className="print-helper">{ReactHtmlParser(printValue)}</div>
+      <label htmlFor={question.id}>{`${generateQuestionNumber(question.id)} ${
+        question.label
+      }`}</label>
+      {question.hint && <p className="ds-c-field__hint">{question.hint}</p>}
       <TextField
+        id={question.id}
         value={
           prevYearValue || (question.answer && question.answer.entry) || ""
         }
         type="text"
-        label=""
-        onBlur={updatePrintHelper}
         {...props}
         disabled={prevYearDisabled || !!props.disabled}
       />

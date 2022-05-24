@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Choice } from "@cmsgov/design-system-core";
 
 const Checkbox = ({ onChange, question, ...props }) => {
   const value = Array.isArray(question.answer.entry)
@@ -17,22 +16,37 @@ const Checkbox = ({ onChange, question, ...props }) => {
     }
   };
 
-  return question.answer.options.map(({ label, value: checkboxValue }) => (
-    <Choice
-      key={label}
-      type="checkbox"
-      checked={value.indexOf(checkboxValue) >= 0}
-      value={checkboxValue}
-      onChange={change}
-      {...props}
-    >
-      {label}
-    </Choice>
-  ));
+  const radioButttonList = question.answer.options.map(
+    ({ label, value: checkBoxValue }, idx) => {
+      return (
+        <div
+          className="radio-container"
+          key={props.name + "-" + value + "-" + idx}
+        >
+          <input
+            id={`${props.name}-${value}`}
+            key={value}
+            type="checkbox"
+            value={checkBoxValue}
+            onChange={change}
+            checked={value.indexOf(checkBoxValue) >= 0}
+            name={props.name + value}
+            {...props}
+          />
+          <label className="label-radio" htmlFor={props.name + "-" + value}>
+            {label}
+          </label>
+        </div>
+      );
+    }
+  );
+
+  return <fieldset className="ds-c-fieldset">{radioButttonList}</fieldset>;
 };
 Checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
+  name: PropTypes.string,
 };
 
 export { Checkbox };

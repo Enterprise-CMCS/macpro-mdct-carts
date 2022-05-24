@@ -19,4 +19,23 @@ const showQuestionByPath = (path) => {
   return pageDisable;
 };
 
-export { sliceId, showQuestionByPath };
+const generateQuestionNumber = (id) => {
+  let labelBits = "";
+
+  if (id) {
+    const lastHunk = Number.parseInt(id.substring(id.length - 2), 10);
+    if (Number.isNaN(lastHunk)) {
+      const numberBit = Number.parseInt(
+        id.substring(id.length - 4, id.length - 2),
+        10
+      );
+      labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
+    } else {
+      labelBits = `${lastHunk}. `;
+    }
+  }
+
+  return labelBits;
+};
+
+export { sliceId, showQuestionByPath, generateQuestionNumber };

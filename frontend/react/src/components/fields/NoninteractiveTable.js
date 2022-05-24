@@ -8,7 +8,11 @@ const NoninteractiveTable = ({ question }) => {
   let count = -1;
   return (
     <div className="non-interactive-table ds-u-margin-top--2">
-      <table className="ds-c-table" width="100%">
+      <table
+        className="ds-c-table"
+        width="100%"
+        summary={question.label || "This is a table for the CARTS Application"}
+      >
         <thead>
           <tr>
             {question.fieldset_info.headers.map((header) => {
