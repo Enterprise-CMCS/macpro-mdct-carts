@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
 import { theAccept } from "../../../actions/accept";
 import { UserRoles } from "../../../types";
+import { Dialog } from "@cmsgov/design-system";
+import useModal from "../../../hooks/useModal";
 
 const ReportItem = ({
   link1Text,
@@ -22,6 +24,7 @@ const ReportItem = ({
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
+  const { isShowing, toggleModal } = useModal();
   let theDateTime = "";
   let tempTime = "";
   let stateUser = false;
@@ -55,15 +58,11 @@ const ReportItem = ({
   }
 
   const uncertify = () => {
-    if (window.confirm("Are you sure to uncertify this record?")) {
-      uncertifyAction(stateCode, stateYear);
-      /*
-       * Getting the new statuses to update the page
-       * getAllStateStatuses();
-       */
-      window.location.reload(false); // Added because above wasn't consistently reloading
-    }
+    uncertifyAction(stateCode, stateYear);
+    toggleModal();
+    window.location.reload(false);
   };
+
   const accept = () => {
     if (window.confirm("Are you sure to accept this record?")) {
       acceptAction(stateCode, stateYear);
@@ -90,26 +89,51 @@ const ReportItem = ({
           <div className="actions ds-l-col--3">
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
-          <div className="actions ds-l-col--1">
+          <div className="actions ds-l-col--auto">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
             </Link>
           </div>
-          {statusText === "Certified" &&
-          (userRole === UserRoles.CO || userRole === UserRoles.BO) ? (
-            <div className="actions ds-l-col--1">
-              <Link onClick={uncertify} variation="primary">
+          {/* TODO: Remove userRole === UserRoles.ADMIN */}
+          {statusText === "Certified and Submitted" &&
+          (userRole === UserRoles.CO ||
+            userRole === UserRoles.BO ||
+            userRole === UserRoles.ADMIN) ? (
+            <div className="actions ds-l-col--auto">
+              <button className="link" onClick={toggleModal}>
                 Uncertify
-              </Link>
+              </button>
             </div>
           ) : null}
-          {statusText === "Certified" && userRole === UserRoles.CO ? (
-            <div className="actions ds-l-col--1">
+          {/* TODO: Remove userRole === UserRoles.ADMIN */}
+          {statusText === "Certified and Submitted" &&
+          (userRole === UserRoles.CO || userRole === UserRoles.ADMIN) ? (
+            <div className="actions ds-l-col--auto">
               <Link onClick={accept} variation="primary">
                 Accept
               </Link>
             </div>
           ) : null}
+          {isShowing && (
+            <Dialog
+              isShowing={isShowing}
+              onExit={toggleModal}
+              heading="Uncertify this Report?"
+              actions={[
+                <button
+                  className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
+                  key="primary"
+                  onClick={uncertify}
+                  aria-label="Uncertify this Report"
+                >
+                  Yes, Uncertify
+                </button>,
+              ]}
+            >
+              Uncertifying will send this CARTS report back to the state user
+              who submitted it
+            </Dialog>
+          )}
         </div>
       )}
       {stateUser && (
