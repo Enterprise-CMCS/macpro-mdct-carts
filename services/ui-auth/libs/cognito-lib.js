@@ -6,14 +6,17 @@ const COGNITO_CLIENT = new aws.CognitoIdentityServiceProvider({
 });
 
 export async function createUser(params) {
-  // eslint-disable-next-line no-console
-  await COGNITO_CLIENT.adminCreateUser(params, function (err, data) {
-    // eslint-disable-next-line no-console
-    if (err) {
-      // eslint-disable-next-line no-console
-      console.log({ statusCode: 500, body: { message: "FAILED", error: err } });
-      throw new Error("Cannot create user"); //if user already exists, we still continue and ignore
-    }
+  await new Promise((resolve, _reject) => {
+    COGNITO_CLIENT.adminCreateUser(params, function (err, data) {
+      var response;
+      if (err) {
+        response = { statusCode: 500, body: { message: "FAILED", error: err } };
+        resolve(response); //if user already exists, we still continue and ignore
+      } else {
+        response = { statusCode: 200, body: { message: "SUCCESS" } };
+        resolve(response);
+      }
+    });
   });
 }
 

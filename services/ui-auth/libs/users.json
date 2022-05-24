@@ -253,36 +253,11 @@
     ]
   },
   {
-    "username": "po@test.com",
+    "username": "admin@test.com",
     "attributes": [
       {
         "Name": "email",
-        "Value": "po@test.com"
-      },
-      {
-        "Name": "given_name",
-        "Value": "Project"
-      },
-      {
-        "Name": "family_name",
-        "Value": "Officer"
-      },
-      {
-        "Name": "email_verified",
-        "Value": "true"
-      },
-      {
-        "Name": "custom:cms_roles",
-        "Value": "mdctcarts-project-officer"
-      }
-    ]
-  },
-  {
-    "username": "approver@test.com",
-    "attributes": [
-      {
-        "Name": "email",
-        "Value": "approver@test.com"
+        "Value": "admin@test.com"
       },
       {
         "Name": "given_name",
