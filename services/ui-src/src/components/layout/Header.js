@@ -61,7 +61,7 @@ class Header extends Component {
                 </Link>
               </div>
               <div className="user-details ds-l-col--8 ds-u-padding--2">
-                <div className="ds-l-row">
+                <div data-testid={"userDetailsRow"} className="ds-l-row">
                   {showAutoSave && <Autosave />}
                   {isLoggedIn &&
                     renderDropDownMenu(
@@ -80,25 +80,37 @@ class Header extends Component {
 }
 function renderDropDownMenu(isMenuOpen, toggleDropDownMenu, email) {
   return (
-    <div className="nav-user" id="nav-user">
+    <div className="nav-user" id="nav-user" data-testid="headerDropDownMenu">
       <ul className="user-email-button">
         <li>
           <a
+            data-testid={"headerDropDownMenuButton"}
             href="#menu"
-            className="nav--dropdown__trigger"
             onClick={toggleDropDownMenu}
           >
             {email}
             {isMenuOpen ? (
-              <i class="fa fa-chevron-up" aria-hidden="true"></i>
+              <i
+                data-testid="headerDropDownChevUp"
+                className="fa fa-chevron-up"
+                aria-hidden="true"
+              ></i>
             ) : (
-              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+              <i
+                data-testid="headerDropDownChevDown"
+                className="fa fa-chevron-down"
+                aria-hidden="true"
+              ></i>
             )}
           </a>
         </li>
       </ul>
       {isMenuOpen && (
-        <ul className="menu-block open" id="menu-block">
+        <ul
+          data-testid="headerDropDownLinks"
+          className="menu-block open"
+          id="menu-block"
+        >
           <li className="contact-us">
             <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
           </li>

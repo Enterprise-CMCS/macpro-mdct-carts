@@ -6,10 +6,32 @@ import configureMockStore from "redux-mock-store";
 import Header from "./Header";
 import Autosave from "./Autosave";
 import { MemoryRouter } from "react-router";
-import { screen, render } from "@testing-library/react";
+import { screen, render, fireEvent } from "@testing-library/react";
 
 const mockStore = configureMockStore();
 const store = mockStore({
+  stateUser: {
+    currentUser: {
+      email: "garthVader@DeathStarInc.com",
+      username: "garthVader",
+      firstname: "Garth",
+      lastname: "Vader",
+      role: "",
+      state: {
+        id: "",
+      },
+    },
+  },
+  global: {
+    currentYear: 2077,
+  },
+  save: {
+    error: false,
+    saving: false,
+  },
+});
+
+const noUserNameStore = mockStore({
   stateUser: {
     currentUser: {
       email: "garthVader@DeathStarInc.com",
@@ -33,6 +55,14 @@ const store = mockStore({
 
 const header = (
   <Provider store={store}>
+    <MemoryRouter initialEntries={["/"]}>
+      <Header />
+    </MemoryRouter>
+  </Provider>
+);
+
+const headerWithNoUsername = (
+  <Provider store={noUserNameStore}>
     <MemoryRouter initialEntries={["/"]}>
       <Header />
     </MemoryRouter>
@@ -67,6 +97,41 @@ describe("Test Header", () => {
   it("should show autosave component when on a report", () => {
     const wrapper = mount(headerWithAutosave);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(true);
+  });
+  it("should render the dropdownmenu if user is logged in", () => {
+    render(header);
+    const headerDropDownMenuButton = screen.getByTestId(
+      "headerDropDownMenuButton"
+    );
+    expect(headerDropDownMenuButton).toHaveTextContent(
+      "garthVader@DeathStarInc.com"
+    );
+  });
+  it("should not render the dropdownmenu if user is not logged in", () => {
+    render(headerWithNoUsername);
+    const userDetailsRow = screen.getByTestId("userDetailsRow");
+    expect(userDetailsRow).toBeEmpty();
+  });
+  it("should render the dropdownmenu in a closed initial state with a chevron pointed down", () => {
+    render(header);
+    const headerDropDownMenuButton = screen.getByTestId(
+      "headerDropDownMenuButton"
+    );
+    const chevDown = screen.getByTestId("headerDropDownChevDown");
+    expect(headerDropDownMenuButton).toContainElement(chevDown);
+  });
+
+  it("should render the dropdownmenu on click with a chevron pointed up and items underneath", () => {
+    render(header);
+    const headerDropDownMenuButton = screen.getByTestId(
+      "headerDropDownMenuButton"
+    );
+    fireEvent.click(headerDropDownMenuButton);
+    const chevUp = screen.getByTestId("headerDropDownChevUp");
+    const headerDropDownMenu = screen.getByTestId("headerDropDownMenu");
+    const headerDropDownLinks = screen.getByTestId("headerDropDownLinks");
+    expect(headerDropDownMenuButton).toContainElement(chevUp);
+    expect(headerDropDownMenu).toContainElement(headerDropDownLinks);
   });
 });
 
