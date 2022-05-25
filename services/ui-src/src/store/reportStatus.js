@@ -1,7 +1,6 @@
 import { SET_STATE_STATUS, SET_STATE_STATUSES } from "../actions/initial";
 import { CERTIFY_AND_SUBMIT_SUCCESS } from "../actions/certify";
 import { UNCERTIFY_SUCCESS } from "../actions/uncertify";
-import { ACCEPT_SUCCESS } from "../actions/accept";
 import { REPORT_STATUS } from "../types";
 
 const initialState = {
@@ -33,11 +32,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [action.stateCode]: REPORT_STATUS.in_progress,
-      };
-    case ACCEPT_SUCCESS:
-      return {
-        ...state,
-        [action.stateCode]: REPORT_STATUS.accepted,
       };
     default:
       return state;

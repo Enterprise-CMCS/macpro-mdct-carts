@@ -18,6 +18,11 @@ plugins:
   - serverless-s3-bucket-helper
   - serverless-api-client-certificate
 
+s3BucketHelper:
+  loggingConfiguration:
+    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket~true, ssm:/configuration/default/s3/accessLogsBucket~true}
+    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix~true, ssm:/configuration/default/s3/accessLogsPrefix~true}
+
 custom:
   serverlessPluginTypescript:
     tsConfigFileLocation: "./tsconfig.json"
@@ -28,10 +33,14 @@ custom:
       - main
       - val
       - prod
+  stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
+  stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
   stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
   sectionTableName: ${env:sectionTableName, cf:database-${self:custom.stage}.SectionTableName}
   sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
+  sectionBaseTableName: ${env:sectionBaseTableName, cf:database-${self:custom.stage}.SectionBaseTableName}
+  sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
   associateWaf:
     name: ${self:custom.webAclName}
@@ -75,9 +84,10 @@ provider:
             - dynamodb:DeleteItem
           Resource: "*"
   environment:
-    measureTableName: ${self:custom.measureTableName}
+    stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
+    sectionBaseName: ${self:custom.sectionBaseTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${opt:stage, self:provider.stage}
 
@@ -120,6 +130,14 @@ functions:
       - http:
           path: save_report/{year}/{state}
           method: put
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  generateFormTemplates:
+    handler: handlers/formTemplates/post.post
+    events:
+      - http:
+          path: formTemplates
+          method: post
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   postUpload:

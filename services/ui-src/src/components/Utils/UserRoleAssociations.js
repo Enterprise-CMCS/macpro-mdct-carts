@@ -74,7 +74,7 @@ const UserRoleAssociation = ({ currentUser }) => {
   const unauthorized = <p>You do not have access to this functionality.</p>;
 
   const userRole = currentUser.role;
-  return userRole === UserRoles.ADMIN ? authorized : unauthorized;
+  return userRole === UserRoles.APPROVER ? authorized : unauthorized;
 };
 
 UserRoleAssociation.propTypes = {

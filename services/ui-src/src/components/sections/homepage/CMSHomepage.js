@@ -111,7 +111,7 @@ const CMSHomepage = ({
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
-        {currentUserRole !== UserRoles.ADMIN ? (
+        {currentUserRole !== UserRoles.BUSINESS_OWNER_REP ? (
           <>
             <div className="ds-l-row ds-u-padding-left--2">
               <h1 className="page-title ds-u-margin-bottom--0">

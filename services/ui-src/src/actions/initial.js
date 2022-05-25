@@ -151,13 +151,33 @@ export const getStateStatus =
 export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
-    const results = await API.get(
+    const data = await API.get(
       "carts-api",
       `/section/${selectedYear}/${stateCode}`,
       opts
     );
-    const data = results;
-    dispatch({ type: LOAD_SECTIONS, data });
+
+    const lastYear = parseInt(selectedYear) - 1;
+    let lastYearData = undefined;
+    const priorData = await API.get(
+      "carts-api",
+      `/section/${lastYear}/${stateCode}`,
+      opts
+    ).catch((err) => {
+      console.log("--- ERROR PRIOR YEAR SECTIONS ---");
+      console.log(err);
+      /*
+       * Without the following too many things break, because the
+       * entire app is too dependent on section data being present.
+       */
+      dispatch({ type: LOAD_SECTIONS, data, lastYearData });
+      throw err;
+    });
+    if (data.length > 0) {
+      lastYearData = priorData;
+      dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: priorData });
+    }
+    dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
 };
 
@@ -172,7 +192,6 @@ export const loadUser = (user) => async (dispatch) => {
     firstname: user.attributes?.given_name,
     email: user.attributes?.email,
   };
-  // TODO: bring in info for state and program
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
     // TODO: Get Program and State data
