@@ -35,6 +35,7 @@ const CMSHomepage = ({
 
   useEffect(() => {
     getStatuses();
+    setFilteredStatuses(allStateStatuses);
   }, []);
 
   const onSelectState = (selectedValues) => {
@@ -96,9 +97,17 @@ const CMSHomepage = ({
     setCurrentlySelectedStates([]);
   };
 
-  const stateStatuses = filteredStatuses;
-  console.log(stateStatuses)
-  console.log(allStateStatuses)
+  let stateStatuses;
+
+  if (
+    filteredStatuses.length > 0 &&
+    filteredStatuses[0].stateCode === "status"
+  ) {
+    stateStatuses = allStateStatuses;
+  } else {
+    stateStatuses = filteredStatuses;
+  }
+
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
