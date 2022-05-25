@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
-import { theAccept } from "../../../actions/accept";
 import { UserRoles } from "../../../types";
 import { Dialog } from "@cmsgov/design-system";
 import useModal from "../../../hooks/useModal";
@@ -15,7 +14,6 @@ const ReportItem = ({
   statusText,
   statusURL,
   theUncertify: uncertifyAction,
-  theAccept: acceptAction,
   userRole,
   year,
   username,
@@ -63,16 +61,6 @@ const ReportItem = ({
     window.location.reload(false);
   };
 
-  const accept = () => {
-    if (window.confirm("Are you sure to accept this record?")) {
-      acceptAction(stateCode, stateYear);
-      // Need to send out a notification ticket #OY2-2416
-
-      //Getting the new statuses to update the page
-      window.location.reload(false);
-    }
-  };
-
   return (
     <>
       {!stateUser && (
@@ -94,24 +82,12 @@ const ReportItem = ({
               {link1Text}
             </Link>
           </div>
-          {/* TODO: Remove userRole === UserRoles.ADMIN */}
           {statusText === "Certified and Submitted" &&
-          (userRole === UserRoles.CO ||
-            userRole === UserRoles.BO ||
-            userRole === UserRoles.ADMIN) ? (
+          userRole === UserRoles.APPROVER ? (
             <div className="actions ds-l-col--auto">
               <button className="link" onClick={toggleModal}>
                 Uncertify
               </button>
-            </div>
-          ) : null}
-          {/* TODO: Remove userRole === UserRoles.ADMIN */}
-          {statusText === "Certified and Submitted" &&
-          (userRole === UserRoles.CO || userRole === UserRoles.ADMIN) ? (
-            <div className="actions ds-l-col--auto">
-              <Link onClick={accept} variation="primary">
-                Accept
-              </Link>
             </div>
           ) : null}
           {isShowing && (
@@ -162,7 +138,6 @@ const ReportItem = ({
 
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
-  theAccept: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -184,6 +159,6 @@ const mapState = (state) => ({
   user: state.reportStatus.username,
 });
 
-const mapDispatch = { theUncertify, theAccept };
+const mapDispatch = { theUncertify };
 
 export default connect(mapState, mapDispatch)(ReportItem);

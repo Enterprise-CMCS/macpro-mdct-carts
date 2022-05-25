@@ -1,3 +1,6 @@
+-- formTemplates
+POST /formTemplates - create the sections for a given year for all known states
+
 -- state
 GET /state - return info on all states and territories
 

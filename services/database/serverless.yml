@@ -21,10 +21,25 @@ custom:
       - master
       - val
       - prod
+  stateTableName: ${self:custom.stage}-state
   stateStatusTableName: ${self:custom.stage}-state-status
   sectionTableName: ${self:custom.stage}-section
   sectionBaseTableName: ${self:custom.stage}-section-base
   uploadsTableName: ${self:custom.stage}-uploads
+  seedOptions:
+    prod: false
+    val: false
+    default:
+      domain:
+        sources:
+          - table: ${self:custom.stateTableName}
+            sources: [./seed-state.json]
+          - table: ${self:custom.stateStatusTableName}
+            sources: [./seed-status.json]
+          - table: ${self:custom.sectionTableName}
+            sources: [./seed-section.json]
+          - table: ${self:custom.sectionBaseTableName}
+            sources: [./seed-section-base.json]
   dynamodb:
     stages:
       - local
@@ -33,16 +48,7 @@ custom:
       inMemory: true
       migrate: true
       seed: true
-    seed:
-      domain:
-        sources:
-          - table: ${self:custom.stateStatusTableName}
-            sources: [./seed-status.json]
-          - table: ${self:custom.sectionTableName}
-            sources: [./seed-section.json]
-          - table: ${self:custom.sectionBaseTableName}
-            sources: [./seed-section-base.json]
-
+    seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
   runtime: nodejs12.x
@@ -50,6 +56,21 @@ provider:
 
 resources:
   Resources:
+    StateTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.stateTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: code
+            AttributeType: S
+        KeySchema:
+          - AttributeName: code
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
     StateStatusTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -127,6 +148,10 @@ resources:
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
   Outputs:
+    StateTableName:
+      Value: !Ref StateTable
+    StateTableArn:
+      Value: !GetAtt StateTable.Arn
     StateStatusTableName:
       Value: !Ref StateStatusTable
     StateStatusTableArn:

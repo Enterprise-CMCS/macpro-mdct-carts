@@ -17,6 +17,12 @@ export interface DynamoMeasureList {
   ScannedCount?: number;
 }
 
+export interface State {
+  code: string;
+  programType: string;
+  name: string;
+  programNames?: any;
+}
 export interface StateStatus {
   year: number;
   status: string;
@@ -42,6 +48,10 @@ export interface DynamoStateStatusList {
 export interface DynamoCreate {
   TableName: string;
   Item: Measure;
+}
+
+export interface DynamoBatchWrite {
+  RequestItems: { [key: string]: Array<any> };
 }
 
 export interface DynamoDelete {
@@ -86,12 +96,11 @@ export const enum MeasureStatus {
 }
 
 export const enum UserRoles {
-  ADMIN = "mdctcarts-approver",
-  STATE = "mdctcarts-state-user",
+  APPROVER = "mdctcarts-approver",
+  BUSINESS_OWNER_REP = "mdctcarts-bor",
   HELP = "mdctcarts-help-desk",
-  BO = "mdctcarts-bo-user",
-  BOR = "mdctcarts-bor",
-  CO = "mdctcarts-co",
+  STATE = "mdctcarts-state-user",
+  PROJECT_OFFICER = "mdctcarts-project-officer",
 }
 
 export const enum RequestMethods {

@@ -1,13 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Route } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
 import StateAssociations from "../Utils/StateAssociations";
 import UserRoleAssociations from "../Utils/UserRoleAssociations";
-import Users from "../layout/users/Users";
 import FormTemplates from "./FormTemplates";
-import UserEdit from "../layout/users/UserEdit";
-import AddUser from "../Utils/AddUser";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
 import InvokeSection from "../Utils/InvokeSection";
 import Sidebar from "./Sidebar";
@@ -29,6 +26,13 @@ const AdminHome = () => {
             </div>
             <div className="page-info">
               <div className="edit-info">help desk</div>
+            </div>
+            <div className="ds-l-row">
+              <ul>
+                <li>
+                  <Link to="/templates">Generate Form Base Templates</Link>
+                </li>
+              </ul>
             </div>
             <div className="cmslist">
               <CMSHomepage />
@@ -55,9 +59,6 @@ const AdminHome = () => {
           path="/role_jobcode_assoc"
           component={JobCodeRoleAssociations}
         />
-        <Route exact path="/users" component={Users} />
-        <Route exact path="/add_user" component={AddUser} />
-        <Route exact path="/user/:id" component={UserEdit} />
         <Route exact path="/state-reports" component={CMSHomepage} />
         <Route exact path="/templates" component={FormTemplates} />
       </Switch>

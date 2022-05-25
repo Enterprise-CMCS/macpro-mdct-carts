@@ -10,12 +10,14 @@ const Home = ({ role }) => {
   let content = null;
 
   switch (role) {
-    case UserRoles.ADMIN:
+    case UserRoles.BUSINESS_OWNER_REP:
       content = <AdminHome />;
       break;
-    case UserRoles.BO:
-    case UserRoles.CO:
+    case UserRoles.APPROVER:
+      content = <CMSHome />;
+      break;
     case UserRoles.HELP:
+    case UserRoles.PROJECT_OFFICER:
       content = <CMSHome />;
       break;
     case UserRoles.STATE:
