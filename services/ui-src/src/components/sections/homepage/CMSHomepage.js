@@ -96,9 +96,9 @@ const CMSHomepage = ({
     setCurrentlySelectedStates([]);
   };
 
-  const stateStatuses =
-    filteredStatuses.length > 0 ? filteredStatuses : allStateStatuses;
-
+  const stateStatuses = filteredStatuses;
+  console.log(stateStatuses)
+  console.log(allStateStatuses)
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
@@ -203,7 +203,6 @@ const CMSHomepage = ({
                       lastChanged,
                     }) => {
                       return (
-                        // eslint-disable-next-line
                         <div>
                           {
                             // eslint-disable-next-line

@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 const UserProfile = ({ currentUser }) => {
   return (
-    <div className="page-info">
-      <div className="ds-l-col--12 content ds-u-padding-left--4 ">
+    <div className="page-info ds-l-container">
+      <div className="ds-l-col--12">
         <header>
           <h1>User Profile</h1>
         </header>

@@ -1,7 +1,7 @@
 describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
   before(() => {
     cy.visit("/");
-    cy.loginAsAdminUser();
+    cy.authenticate("adminUser");
   });
 
   beforeEach(() => {
