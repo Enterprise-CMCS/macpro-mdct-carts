@@ -92,17 +92,9 @@
           &:focus {
             background-color: initial;
           }
-          padding-right: ($padding * 3);
-          &:after {
-            content: "\f106";
-            font-family: "FontAwesome";
-            height: 5px;
-            pointer-events: all;
-            position: absolute;
-            right: ($margin * 0.5);
-            top: ($margin * 2);
-            transform: rotate(180deg);
-            width: 10px;
+
+          i {
+            padding-left: $padding * 2;
           }
         }
       }

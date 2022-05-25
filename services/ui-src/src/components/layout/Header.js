@@ -9,27 +9,32 @@ import { Link, withRouter } from "react-router-dom";
 class Header extends Component {
   constructor() {
     super();
-
-    this.toggleUserNav = this.toggleUserNav.bind(this);
+    this.state = {
+      isMenuOpen: false,
+    };
   }
 
-  // eslint-disable-next-line
-  toggleUserNav(e) {
-    e.preventDefault();
+  toggleDropDown = () => {
+    this.setState((prevState) => ({
+      isMenuOpen: !prevState.isMenuOpen,
+    }));
+  };
 
-    document.getElementById("menu-block").classList.toggle("open");
-    document.getElementById("nav-user").classList.toggle("open");
+  closeDropDown = () => {
+    this.setState({
+      isMenuOpen: false,
+    });
+  };
 
-    // Close menu when leaving focus
-    const root = document.getElementById("root");
-    root.addEventListener(
-      "click",
-      () => {
-        document.getElementById("menu-block").classList.remove("open");
-        document.getElementById("nav-user").classList.remove("open");
-      },
-      false
-    );
+  componentDidUpdate() {
+    const { isMenuOpen } = this.state;
+    setTimeout(() => {
+      if (isMenuOpen) {
+        window.addEventListener("click", this.closeDropDown);
+      } else {
+        window.removeEventListener("click", this.closeDropDown);
+      }
+    }, 0);
   }
 
   render() {
@@ -39,6 +44,8 @@ class Header extends Component {
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     const showAutoSave = location.pathname.includes("/views/sections/");
+    const { isMenuOpen } = this.state;
+
     return (
       <div className="component-header" data-test="component-header">
         <UsaBanner
@@ -56,7 +63,8 @@ class Header extends Component {
               <div className="user-details ds-l-col--8 ds-u-padding--2">
                 <div className="ds-l-row">
                   {showAutoSave && <Autosave />}
-                  {isLoggedIn && renderMenu(this.toggleUserNav, email)}
+                  {isLoggedIn &&
+                    renderDropDownMenu(isMenuOpen, this.toggleDropDown, email)}
                 </div>
               </div>
             </div>
@@ -66,48 +74,45 @@ class Header extends Component {
     );
   }
 }
-function renderMenu(toggleUserNav, email) {
+function renderDropDownMenu(isMenuOpen, toggleDropDown, email) {
   return (
     <div className="nav-user" id="nav-user">
-      <RenderEmailMenuItem toggleUserNav={toggleUserNav} email={email} />
-      <ul className="menu-block" id="menu-block">
-        <li className="contact-us">
-          <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
-        </li>
-        <li className="manage-account">
-          <Link to="/user/profile">Manage Account</Link>
-        </li>
-        <li className="logout">
-          <Logout />
+      <ul className="user-email-button">
+        <li>
+          <a
+            href="#menu"
+            className="nav--dropdown__trigger"
+            onClick={toggleDropDown}
+          >
+            {email}
+            {isMenuOpen ? (
+              <i class="fa fa-chevron-up" aria-hidden="true"></i>
+            ) : (
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            )}
+          </a>
         </li>
       </ul>
+      {isMenuOpen && (
+        <ul className="menu-block open" id="menu-block">
+          <li className="contact-us">
+            <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
+          </li>
+          <li className="manage-account">
+            <Link to="/user/profile">Manage Account</Link>
+          </li>
+          <li className="logout">
+            <Logout />
+          </li>
+        </ul>
+      )}
     </div>
-  );
-}
-function RenderEmailMenuItem({ toggleUserNav, email }) {
-  return (
-    <ul className="user-email-button">
-      <li>
-        <a
-          href="#menu"
-          className="nav--dropdown__trigger"
-          onClick={toggleUserNav}
-        >
-          {email}
-        </a>
-      </li>
-    </ul>
   );
 }
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentYear: PropTypes.number.isRequired,
-};
-
-RenderEmailMenuItem.propTypes = {
-  toggleUserNav: PropTypes.object.isRequired,
-  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
