@@ -14,13 +14,13 @@ class Header extends Component {
     };
   }
 
-  toggleDropDown = () => {
+  toggleDropDownMenu = () => {
     this.setState((prevState) => ({
       isMenuOpen: !prevState.isMenuOpen,
     }));
   };
 
-  closeDropDown = () => {
+  closeDropDownMenu = () => {
     this.setState({
       isMenuOpen: false,
     });
@@ -30,9 +30,9 @@ class Header extends Component {
     const { isMenuOpen } = this.state;
     setTimeout(() => {
       if (isMenuOpen) {
-        window.addEventListener("click", this.closeDropDown);
+        window.addEventListener("click", this.closeDropDownMenu);
       } else {
-        window.removeEventListener("click", this.closeDropDown);
+        window.removeEventListener("click", this.closeDropDownMenu);
       }
     }, 0);
   }
@@ -64,7 +64,11 @@ class Header extends Component {
                 <div className="ds-l-row">
                   {showAutoSave && <Autosave />}
                   {isLoggedIn &&
-                    renderDropDownMenu(isMenuOpen, this.toggleDropDown, email)}
+                    renderDropDownMenu(
+                      isMenuOpen,
+                      this.toggleDropDownMenu,
+                      email
+                    )}
                 </div>
               </div>
             </div>
@@ -74,7 +78,7 @@ class Header extends Component {
     );
   }
 }
-function renderDropDownMenu(isMenuOpen, toggleDropDown, email) {
+function renderDropDownMenu(isMenuOpen, toggleDropDownMenu, email) {
   return (
     <div className="nav-user" id="nav-user">
       <ul className="user-email-button">
@@ -82,7 +86,7 @@ function renderDropDownMenu(isMenuOpen, toggleDropDown, email) {
           <a
             href="#menu"
             className="nav--dropdown__trigger"
-            onClick={toggleDropDown}
+            onClick={toggleDropDownMenu}
           >
             {email}
             {isMenuOpen ? (
