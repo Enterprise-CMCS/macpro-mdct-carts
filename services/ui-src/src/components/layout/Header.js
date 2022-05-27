@@ -28,14 +28,6 @@ class Header extends Component {
     });
   };
 
-  findDiff = (str1, str2) => {
-    let diff = "";
-    str2.split("").forEach((val, i) => {
-      if (val != str1.charAt(i)) diff += val;
-    });
-    return diff;
-  };
-
   showAutoSaveOnReport = (location, currentUser, reportStatus) => {
     const { role } = currentUser;
     if (location.pathname.includes("/sections/") && role === UserRoles.STATE) {
