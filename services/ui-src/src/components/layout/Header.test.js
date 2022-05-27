@@ -53,6 +53,133 @@ const noUserNameStore = mockStore({
   },
 });
 
+const stateUserWithReportInProgressStore = mockStore({
+  stateUser: {
+    name: "Alabama",
+    abbr: "AL",
+    imageURI: "/img/states/al.svg",
+    currentUser: {
+      username: "stateuser2@test.com",
+      state: {
+        id: "AL",
+      },
+      role: "mdctcarts-state-user",
+      lastname: "States",
+      firstname: "Frank",
+      email: "stateuser2@test.com",
+    },
+    localLogin: false,
+  },
+  global: {
+    formName: "CARTS FY",
+    largeTextBoxHeight: 6,
+    isFetching: false,
+    url: "/sections/2021/00",
+    queryParams: "",
+    currentYear: 2021,
+    formYear: 2021,
+    stateName: "Alabama",
+  },
+  reportStatus: {
+    AL2021: {
+      status: "in_progress",
+      year: 2021,
+      stateCode: "AL",
+      lastChanged: "2021-01-04 18:28:18.524133+00",
+      username: "al@test.com",
+      programType: "combo",
+    },
+  },
+  save: {
+    error: false,
+    saving: false,
+  },
+});
+
+const stateUserWithReportCertifiedStore = mockStore({
+  stateUser: {
+    name: "Alabama",
+    abbr: "AL",
+    imageURI: "/img/states/al.svg",
+    currentUser: {
+      username: "stateuser2@test.com",
+      state: {
+        id: "AL",
+      },
+      role: "mdctcarts-state-user",
+      lastname: "States",
+      firstname: "Frank",
+      email: "stateuser2@test.com",
+    },
+    localLogin: false,
+  },
+  global: {
+    formName: "CARTS FY",
+    largeTextBoxHeight: 6,
+    isFetching: false,
+    url: "/sections/2021/00",
+    queryParams: "",
+    currentYear: 2021,
+    formYear: 2021,
+    stateName: "Alabama",
+  },
+  reportStatus: {
+    AL2021: {
+      status: "certified",
+      year: 2021,
+      stateCode: "AL",
+      lastChanged: "2021-01-04 18:28:18.524133+00",
+      username: "al@test.com",
+      programType: "combo",
+    },
+  },
+  save: {
+    error: false,
+    saving: false,
+  },
+});
+
+const adminUserWithReportStore = mockStore({
+  stateUser: {
+    name: null,
+    abbr: null,
+    imageURI: null,
+    currentUser: {
+      username: "adminuser@test.com",
+      state: {},
+      role: "mdctcarts-approver",
+      lastname: "Admins",
+      firstname: "Adam",
+      email: "adminuser@test.com",
+    },
+    localLogin: false,
+  },
+  global: {
+    formName: "CARTS FY",
+    largeTextBoxHeight: 6,
+    isFetching: false,
+    url: "/",
+    queryParams: "",
+    currentYear: 2021,
+    formYear: 2021,
+    stateName: "Alabama",
+  },
+  reportStatus: {
+    AL2021: {
+      status: "in_progress",
+      year: 2021,
+      stateCode: "AL",
+      lastChanged: "2021-01-04 18:28:18.524133+00",
+      username: "al@test.com",
+      programType: "combo",
+    },
+  },
+  save: {
+    error: false,
+    saving: false,
+  },
+});
+
 const header = (
   <Provider store={store}>
     <MemoryRouter initialEntries={["/"]}>
@@ -69,9 +196,25 @@ const headerWithNoUsername = (
   </Provider>
 );
 
-const headerWithAutosave = (
-  <Provider store={store}>
-    <MemoryRouter initialEntries={["/views/sections/"]}>
+const headerOnReportPageAsStateUserThatsInProgress = (
+  <Provider store={stateUserWithReportInProgressStore}>
+    <MemoryRouter initialEntries={["/sections/2021/00"]}>
+      <Header />
+    </MemoryRouter>
+  </Provider>
+);
+
+const headerOnReportPageAsStateUserThatsCertified = (
+  <Provider store={stateUserWithReportCertifiedStore}>
+    <MemoryRouter initialEntries={["/sections/2021/00"]}>
+      <Header />
+    </MemoryRouter>
+  </Provider>
+);
+
+const headerOnReportPageAsAdminUser = (
+  <Provider store={adminUserWithReportStore}>
+    <MemoryRouter initialEntries={["views/sections/AL/2021/00/a"]}>
       <Header />
     </MemoryRouter>
   </Provider>
@@ -94,8 +237,16 @@ describe("Test Header", () => {
     const wrapper = mount(header);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
   });
-  it("should show autosave component when on a report", () => {
-    const wrapper = mount(headerWithAutosave);
+  it("should not show the autosave when user is an admin", () => {
+    const wrapper = mount(headerOnReportPageAsAdminUser);
+    expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
+  });
+  it("should not show the autosave when user is an state user on a report thats certified", () => {
+    const wrapper = mount(headerOnReportPageAsStateUserThatsCertified);
+    expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
+  });
+  it("should show autosave component only when user is a state user, is on a report page, and status is in progress", () => {
+    const wrapper = mount(headerOnReportPageAsStateUserThatsInProgress);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(true);
   });
   it("should render the dropdownmenu if user is logged in", () => {

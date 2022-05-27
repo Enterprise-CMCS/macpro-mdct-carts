@@ -147,7 +147,7 @@ export const selectSectionsForNav = (state) => {
  * @returns {object} The reportStatus object associated with the current report
  */
 export const getCurrentReportStatus = (state) => {
-  if (state.reportStatus.status === null) {
+  if (!state.reportStatus || state.reportStatus.status === null) {
     return { status: "" };
   }
 
@@ -157,11 +157,12 @@ export const getCurrentReportStatus = (state) => {
   if (stateUser.currentUser.role === UserRoles.STATE) {
     currentReport = `${stateUser.abbr}${global.formYear}`;
   } else {
+    if (formData?.[0] === undefined) return { status: "" };
     currentReport = `${formData[0].stateId}${formData[0].year}`;
   }
 
   const status = reportStatus[currentReport];
-  return status;
+  return status !== undefined ? status : { status: "" };
 };
 
 /**

@@ -39,7 +39,7 @@ class Header extends Component {
   showAutoSaveOnReport = (location, currentUser, reportStatus) => {
     const { role } = currentUser;
     if (location.pathname.includes("/sections/") && role === UserRoles.STATE) {
-      switch (reportStatus) {
+      switch (reportStatus.status) {
         case REPORT_STATUS.not_started:
         case REPORT_STATUS.in_progress:
         case REPORT_STATUS.uncertified:
@@ -90,7 +90,7 @@ class Header extends Component {
                   {this.showAutoSaveOnReport(
                     location,
                     currentUser,
-                    reportStatus.status
+                    reportStatus
                   ) && <Autosave />}
                   {isLoggedIn &&
                     renderDropDownMenu(
