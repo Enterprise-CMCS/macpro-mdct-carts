@@ -116,6 +116,7 @@ const Question = ({
             hint={question.hint}
             id={fieldsetId || question.id}
             label={question.label}
+            questionType={question.type}
           />
         )}
 

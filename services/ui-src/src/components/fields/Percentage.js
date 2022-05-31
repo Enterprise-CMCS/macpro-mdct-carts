@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system";
+import { generateQuestionNumber } from "../Utils/helperFunctions";
 
 const Percentage = ({ onChange, question, ...props }) => {
   const [error, setError] = useState(false);
@@ -61,7 +62,8 @@ const Percentage = ({ onChange, question, ...props }) => {
       className="ds-c-input"
       errorMessage={error}
       inputRef={setRef}
-      label=""
+      label={`${generateQuestionNumber(question.id)}${question.label}`}
+      hint={question.hint}
       name={question.id}
       numeric
       onChange={change}
