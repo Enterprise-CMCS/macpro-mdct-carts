@@ -62,6 +62,11 @@ class Header extends Component {
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     const { isMenuOpen } = this.state;
+    const shouldShowAutosave = this.showAutoSaveOnReport(
+      location,
+      currentUser,
+      reportStatus
+    );
 
     return (
       <div className="component-header" data-test="component-header">
@@ -79,11 +84,7 @@ class Header extends Component {
               </div>
               <div className="user-details ds-l-col--8 ds-u-padding--2">
                 <div data-testid={"userDetailsRow"} className="ds-l-row">
-                  {this.showAutoSaveOnReport(
-                    location,
-                    currentUser,
-                    reportStatus
-                  ) && <Autosave />}
+                  {shouldShowAutosave && <Autosave />}
                   {isLoggedIn &&
                     renderDropDownMenu(
                       isMenuOpen,
