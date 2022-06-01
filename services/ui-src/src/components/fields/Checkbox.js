@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Choice } from "@cmsgov/design-system";
 
 const Checkbox = ({ onChange, question, ...props }) => {
   const value = Array.isArray(question.answer.entry)
@@ -23,7 +22,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
         <div
           className="radio-container"
           key={props.name + "-" + value + "-" + idx}
-          >
+        >
           <input
             id={`${props.name}-${value}`}
             key={value}

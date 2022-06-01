@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Choice } from "@cmsgov/design-system";
 
 import Question from "./Question";
 
@@ -41,9 +40,9 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
         onClick={unCheck}
         id={props.name + "-" + value}
       />
-        <label className="label-radio" htmlFor={props.name + "-" + value}>
-          {label}
-        </label>
+      <label className="label-radio" htmlFor={props.name + "-" + value}>
+        {label}
+      </label>
     </div>
   ));
 

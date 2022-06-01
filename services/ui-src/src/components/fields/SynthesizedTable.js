@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import synthesizeValue from "../../util/synthesize";
 
-const SynthesizedTable = ({ question, rows, question }) => {
+const SynthesizedTable = ({ rows, question }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <table
