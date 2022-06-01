@@ -302,14 +302,14 @@ class UploadComponent extends Component {
         </Button>
 
         {this.state.displayUploadedFiles &&
-          this.state.uploadedFiles?.length > 0 ? (
-            <table
-              key={"uploadedFilesContainer"}
-              summary={
-                this.props.question.label ||
-                "This is a table for the CARTS Application"
-              }
-            >
+        this.state.uploadedFiles?.length > 0 ? (
+          <table
+            key={"uploadedFilesContainer"}
+            summary={
+              this.props.question.label ||
+              "This is a table for the CARTS Application"
+            }
+          >
             <tbody>
               {!this.state.uploadedFilesRetrieved ? (
                 <tr>
