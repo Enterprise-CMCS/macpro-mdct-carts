@@ -13,16 +13,12 @@ const selectSectionNumber = (sectionId) => {
   return Number(sectionId.split("-")[1]);
 };
 
-const Section = ({ subsectionId, title, sectionId }) => {
+const Section = ({ subsectionId, title }) => {
   return (
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
         <PageInfo />
-        <h2 className="print-only">
-          {sectionId !== 0 && <span>Section {sectionId}: </span>}
-          {title}
-        </h2>
-        <h2 className="screen-only">{title}</h2>
+        <h2>{title}</h2>
         <Subsection key={subsectionId} subsectionId={subsectionId} />
       </div>
       <div className="form-footer">

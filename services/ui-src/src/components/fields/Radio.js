@@ -20,7 +20,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
 
   if (question.questions && question.questions.length) {
     childProps.checkedChildren = (
-      <div className="ds-c-choice__checkedChild">
+      <div>
         {question.questions.map((q, i) => (
           <Question key={q.id || i} question={q} />
         ))}
@@ -28,24 +28,32 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
     );
   }
 
-  return question.answer.options.map(({ label, value }) => (
-    <Choice
-      key={value}
-      checked={checked === value}
-      type="radio"
-      value={value}
-      {...childProps}
-      {...props}
-      onChange={onCheck}
-      onClick={unCheck}
-    >
-      {label}
-    </Choice>
+  const radioButttonList = question.answer.options.map(({ label, value }) => (
+    <div className="radio-container" key={props.name + "-" + value}>
+      <input
+        key={value}
+        checked={checked === value}
+        type="radio"
+        value={value}
+        {...childProps}
+        {...props}
+        onChange={onCheck}
+        onClick={unCheck}
+        id={props.name + "-" + value}
+      />
+        <label className="label-radio" htmlFor={props.name + "-" + value}>
+          {label}
+        </label>
+    </div>
   ));
+
+  return <fieldset className="ds-c-fieldset">{radioButttonList}</fieldset>;
 };
 Radio.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
+  name: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export { Radio };

@@ -60,10 +60,10 @@ const Part = ({
   return (
     <div id={partId}>
       {title && (
-        <h4 className="h4-pdf-bookmark">
+        <h3 className="h3-pdf-bookmark">
           {+section !== 0 && partNumber && `Part ${partNumber}: `}
           {title}
-        </h4>
+        </h3>
       )}
       {innards}
     </div>
