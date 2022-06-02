@@ -15,7 +15,6 @@ var_list=(
   'TF_VAR_acm_certificate_domain_ui'
   'TF_VAR_acm_certificate_domain_api_postgres'
   'TF_VAR_skip_data_deployment'
-  'TF_VAR_postgres_custom_password'
   'TF_VAR_use_custom_db_password_info'
 )
 
