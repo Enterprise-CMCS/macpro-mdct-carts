@@ -19,6 +19,7 @@ env:
   ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
   ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
   DATALAYER_IN_NEW_ACCOUNTS: ${{ secrets.MASTER_DATALAYER_IN_NEW_ACCOUNTS == 'master-datalayer-in-new-accounts' }}
+  USE_CUSTOM_PASSWORD: ${{ secrets.MASTER_USE_CUSTOM_PASSWORD == 'master-use-custom-password' }}
 
 jobs:
   build-info:
@@ -60,6 +61,8 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: ${{ secrets.MASTER_POSTGRES_DEPLOYER_ACCOUNT_ID }}
       - name: Build, tag, and push postgres_deployer (data layer) image
         id: postgres_deployer_build
         env:
@@ -263,8 +266,7 @@ jobs:
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
           TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
-          TF_VAR_postgres_custom_password: ${{secrets.MASTER_TF_VAR_POSTGRES_CUSTOM_PASSWORD}}
-          TF_VAR_use_custom_db_password_info: true
+          TF_VAR_use_custom_db_password_info: ${{ env.USE_CUSTOM_PASSWORD }}
   serverless:
     needs:
       - data
