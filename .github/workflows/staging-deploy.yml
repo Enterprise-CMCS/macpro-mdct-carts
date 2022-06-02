@@ -51,7 +51,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registries: ${{ secrets.POSTGRES_DEPLOYER_ACCOUNT_ID }}
+          registries: ${{ secrets.STAGING_POSTGRES_DEPLOYER_ACCOUNT_ID }}
       - name: Scan postgres_deployer(data layer) Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
