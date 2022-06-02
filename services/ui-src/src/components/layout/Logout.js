@@ -7,7 +7,12 @@ const Logout = () => {
   const { logout } = useUser();
 
   return (
-    <Button type="button" variation="transparent" onClick={logout}>
+    <Button
+      type="button"
+      variation="transparent"
+      onClick={logout}
+      data-testid="logout"
+    >
       Log Out
     </Button>
   );

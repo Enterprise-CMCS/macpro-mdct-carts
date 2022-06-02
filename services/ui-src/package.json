@@ -105,7 +105,9 @@
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
       "src/**/*.js",
-      "!src/index.js"
+      "!src/index.js",
+      "!src/config.js",
+      "!src/**/index.js"
     ],
     "coverageReporters": [
       "json",
@@ -120,7 +122,10 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/styleMock.js"
+    }
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"
