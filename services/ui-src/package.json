@@ -104,10 +104,16 @@
     ],
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
-      "src/**/*.js",
+      "src/components/**/*.js",
+      "src/util/**/*.js",
       "!src/index.js",
+      "!src/types.js",
       "!src/config.js",
-      "!src/**/index.js"
+      "!src/**/index.js",
+      "!src/components/Utils/statesArray.js",
+      "!src/util/testing/**/*.js",
+      "!src/actions/**/*.js",
+      "!src/store/**/*.js"
     ],
     "coverageReporters": [
       "json",
@@ -124,7 +130,7 @@
       "<rootDir>/src/setupTests.js"
     ],
     "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/styleMock.js"
+      "\\.(css|less|scss)$": "<rootDir>/styleMock.js"
     }
   },
   "resolutions": {

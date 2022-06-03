@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 import Title from "./Title";
 
 const mockStore = configureMockStore();
@@ -12,7 +12,7 @@ const store = mockStore({
     stateName: "KY",
   },
   stateUser: {
-    name: "Alphonse",
+    name: "Kentucky",
   },
 });
 const title = (
@@ -27,9 +27,10 @@ describe("Title Component", () => {
   });
 
   it("Title should contain Year & State abbr when loaded in state", () => {
-    const { getByTestId } = render(title);
-    const title = getByTestId("report-title");
-    expect(title).toHaveTextContent("KY");
-    expect(title).toHaveTextContent("2011");
+    render(title);
+
+    expect(
+      screen.getByText("Kentucky CARTS FY2011 Report")
+    ).toBeInTheDocument();
   });
 });
