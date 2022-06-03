@@ -20,3 +20,9 @@ variable "postgres_restore_snapshot_id" {
   type        = string
   description = "The PostgreSQL database snapshot used to restore or recreate the database"
 }
+
+variable "postgres_deployer_registry_id" {
+  default     = null
+  type        = string
+  description = "The AWS Account ID where the postgres deployer repository is located"
+}
