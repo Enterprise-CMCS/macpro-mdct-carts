@@ -54,12 +54,12 @@ jobs:
           registries: ${{ secrets.STAGING_POSTGRES_DEPLOYER_ACCOUNT_ID }}
       - name: Scan postgres_deployer(data layer) Docker image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY_ID: ${{ secrets.STAGING_POSTGRES_DEPLOYER_ACCOUNT_ID }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_POSTGRESS_DEPLOYER }}
           IMAGE_TAG: ${{ github.event.inputs.version }}
         run: |
-          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
       - name: Archive ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
