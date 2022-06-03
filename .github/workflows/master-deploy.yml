@@ -216,6 +216,7 @@ jobs:
           BUILD_TAG: ${{ needs.build-info.outputs.build_tag }}
           TF_VAR_skip_data_deployment: true
           TF_VAR_postgres_restore_snapshot_id: ${{secrets.MASTER_RESTORE_SNAPSHOT_ID}}
+          TF_VAR_postgres_deployer_registry_id: ${{secrets.MASTER_POSTGRES_DEPLOYER_ACCOUNT_ID}}
   frontend:
     needs:
       - build-info

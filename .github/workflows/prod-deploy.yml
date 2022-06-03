@@ -153,6 +153,7 @@ jobs:
           APPLICATION_BUCKET: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_APPLICATION_BUCKET || secrets.APPLICATION_BUCKET}}
           TF_VAR_skip_data_deployment: true
           TF_VAR_postgres_restore_snapshot_id: ${{secrets.PROD_RESTORE_SNAPSHOT_ID}}
+          TF_VAR_postgres_deployer_registry_id: ${{secrets.PROD_POSTGRES_DEPLOYER_ACCOUNT_ID}}
   frontend:
     needs:
       - data
