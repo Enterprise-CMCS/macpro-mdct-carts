@@ -27,7 +27,7 @@ const Submit = ({ certify }) => (
       compliance with Title XXI of the Social Security Act (Section 2109(a) and
       Section 2108(e)).
     </p>
-    <Button data-testid={"certifySubmit"} onClick={certify} variation="primary">
+    <Button data-testid="certifySubmit" onClick={certify} variation="primary">
       Certify and Submit
     </Button>
   </>
