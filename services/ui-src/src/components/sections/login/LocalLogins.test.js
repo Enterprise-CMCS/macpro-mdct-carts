@@ -6,7 +6,6 @@ import { LocalLogins } from "./LocalLogins";
 const mockPost = jest.fn();
 const localLogins = <LocalLogins />;
 jest.mock("aws-amplify", () => ({
-  __esModule: true,
   Auth: {
     signIn: (email, password) => mockPost(email, password),
   },
