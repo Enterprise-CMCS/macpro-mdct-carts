@@ -18,6 +18,7 @@ export const stateUserSimple = {
     error: false,
     saving: false,
   },
+  reportStatus: {},
 };
 
 export const stateUserNoUsername = {
@@ -40,6 +41,7 @@ export const stateUserNoUsername = {
     error: false,
     saving: false,
   },
+  reportStatus: {},
 };
 
 export const stateUserWithReportInProgress = {
