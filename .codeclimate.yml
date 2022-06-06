@@ -18,7 +18,7 @@ checks:
   similar-code:
     enabled: false
   identical-code:
-    enabled: false
+    enabled: true
 exclude_patterns:
   - "**/node_modules/"
   - ".github/"
@@ -35,6 +35,8 @@ exclude_patterns:
   - "services/uploads/"
   - "tests/"
   - "**/*.test.tsx"
+  - "**/*.test.ts"
+  - "**/*.test.js"
   - "**/*.scss"
   - "**/*.sh"
   - "**/*.lock"
