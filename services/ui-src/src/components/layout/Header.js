@@ -5,6 +5,8 @@ import Autosave from "./Autosave";
 import Logout from "./Logout";
 import UsaBanner from "@cmsgov/design-system/dist/components/UsaBanner/UsaBanner";
 import { Link, withRouter } from "react-router-dom";
+import { getCurrentReportStatus } from "../../store/selectors";
+import { REPORT_STATUS, UserRoles } from "../../types";
 
 class Header extends Component {
   constructor() {
@@ -26,6 +28,21 @@ class Header extends Component {
     });
   };
 
+  showAutoSaveOnReport = (location, currentUser, reportStatus) => {
+    const { role } = currentUser;
+    if (location.pathname.includes("/sections/") && role === UserRoles.STATE) {
+      switch (reportStatus.status) {
+        case REPORT_STATUS.not_started:
+        case REPORT_STATUS.in_progress:
+        case REPORT_STATUS.uncertified:
+          return true;
+        default:
+          return false;
+      }
+    }
+    return false;
+  };
+
   componentDidUpdate() {
     const { isMenuOpen } = this.state;
     setTimeout(() => {
@@ -40,11 +57,16 @@ class Header extends Component {
   render() {
     const { currentUser } = this.props;
     const { currentYear } = this.props;
+    const { reportStatus } = this.props;
     const { location } = this.props;
     const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
-    const showAutoSave = location.pathname.includes("/views/sections/");
     const { isMenuOpen } = this.state;
+    const shouldShowAutosave = this.showAutoSaveOnReport(
+      location,
+      currentUser,
+      reportStatus
+    );
 
     return (
       <div className="component-header" data-test="component-header">
@@ -62,7 +84,7 @@ class Header extends Component {
               </div>
               <div className="user-details ds-l-col--8 ds-u-padding--2">
                 <div data-testid={"userDetailsRow"} className="ds-l-row">
-                  {showAutoSave && <Autosave />}
+                  {shouldShowAutosave && <Autosave />}
                   {isLoggedIn &&
                     renderDropDownMenu(
                       isMenuOpen,
@@ -129,11 +151,13 @@ function renderDropDownMenu(isMenuOpen, toggleDropDownMenu, email) {
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
   currentYear: PropTypes.number.isRequired,
+  reportStatus: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
   currentYear: state.global.currentYear,
+  reportStatus: getCurrentReportStatus(state),
 });
 
 export default connect(mapStateToProps)(withRouter(Header));

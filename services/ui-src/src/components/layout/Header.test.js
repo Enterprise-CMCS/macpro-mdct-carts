@@ -7,51 +7,28 @@ import Header from "./Header";
 import Autosave from "./Autosave";
 import { MemoryRouter } from "react-router";
 import { screen, render, fireEvent } from "@testing-library/react";
+import {
+  adminUserWithReportInProgress,
+  stateUserNoUsername,
+  stateUserSimple,
+  stateUserWithReportCertified,
+  stateUserWithReportInProgress,
+} from "../../store/fakeStoreExamples";
 
 const mockStore = configureMockStore();
-const store = mockStore({
-  stateUser: {
-    currentUser: {
-      email: "garthVader@DeathStarInc.com",
-      username: "garthVader",
-      firstname: "Garth",
-      lastname: "Vader",
-      role: "",
-      state: {
-        id: "",
-      },
-    },
-  },
-  global: {
-    currentYear: 2077,
-  },
-  save: {
-    error: false,
-    saving: false,
-  },
-});
+const store = mockStore(stateUserSimple);
 
-const noUserNameStore = mockStore({
-  stateUser: {
-    currentUser: {
-      email: "garthVader@DeathStarInc.com",
-      username: "",
-      firstname: "",
-      lastname: "",
-      role: "",
-      state: {
-        id: "",
-      },
-    },
-  },
-  global: {
-    currentYear: 2077,
-  },
-  save: {
-    error: false,
-    saving: false,
-  },
-});
+const noUserNameStore = mockStore(stateUserNoUsername);
+
+const stateUserWithReportInProgressStore = mockStore(
+  stateUserWithReportInProgress
+);
+
+const stateUserWithReportCertifiedStore = mockStore(
+  stateUserWithReportCertified
+);
+
+const adminUserWithReportStore = mockStore(adminUserWithReportInProgress);
 
 const header = (
   <Provider store={store}>
@@ -69,9 +46,25 @@ const headerWithNoUsername = (
   </Provider>
 );
 
-const headerWithAutosave = (
-  <Provider store={store}>
-    <MemoryRouter initialEntries={["/views/sections/"]}>
+const headerOnReportPageAsStateUserThatsInProgress = (
+  <Provider store={stateUserWithReportInProgressStore}>
+    <MemoryRouter initialEntries={["/sections/2021/00"]}>
+      <Header />
+    </MemoryRouter>
+  </Provider>
+);
+
+const headerOnReportPageAsStateUserThatsCertified = (
+  <Provider store={stateUserWithReportCertifiedStore}>
+    <MemoryRouter initialEntries={["/sections/2021/00"]}>
+      <Header />
+    </MemoryRouter>
+  </Provider>
+);
+
+const headerOnReportPageAsAdminUser = (
+  <Provider store={adminUserWithReportStore}>
+    <MemoryRouter initialEntries={["views/sections/AL/2021/00/a"]}>
       <Header />
     </MemoryRouter>
   </Provider>
@@ -94,8 +87,16 @@ describe("Test Header", () => {
     const wrapper = mount(header);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
   });
-  it("should show autosave component when on a report", () => {
-    const wrapper = mount(headerWithAutosave);
+  it("should not show the autosave when user is an admin", () => {
+    const wrapper = mount(headerOnReportPageAsAdminUser);
+    expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
+  });
+  it("should not show the autosave when user is an state user on a report thats certified", () => {
+    const wrapper = mount(headerOnReportPageAsStateUserThatsCertified);
+    expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
+  });
+  it("should show autosave component only when user is a state user, is on a report page, and status is in progress", () => {
+    const wrapper = mount(headerOnReportPageAsStateUserThatsInProgress);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(true);
   });
   it("should render the dropdownmenu if user is logged in", () => {
