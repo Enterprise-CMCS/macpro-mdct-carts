@@ -113,7 +113,9 @@
       "!src/components/Utils/statesArray.js",
       "!src/util/testing/**/*.js",
       "!src/actions/**/*.js",
-      "!src/store/**/*.js"
+      "!src/store/**/*.js",
+      "!src/store/fakeUserData.js",
+      "!src/util/idLetterMarkers.js"
     ],
     "coverageReporters": [
       "json",

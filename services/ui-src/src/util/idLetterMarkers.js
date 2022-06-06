@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 /*
  * Letter markers go from a to z, and then from aa to zz although we all hope
  * that will never be needed.

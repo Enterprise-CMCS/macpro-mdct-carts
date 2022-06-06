@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import { UserRoles } from "../types";
 
 const fakeUserData = {
