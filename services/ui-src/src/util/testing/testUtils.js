@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 
 //import checkPropTypes from "check-prop-types";
 
-import { reducer } from "./store/storeIndex";
+import { reducer } from "../../store/storeIndex";
 
 export const findByTestAttribute = (wrapper, val) => {
   return wrapper.find(`[data-test="${val}"]`);
@@ -43,7 +43,11 @@ export const mockInitialState = {
   },
   global: {
     formName: "CARTS FY",
-    formYear: new Date().getFullYear().toString(),
+    formYear: new Date().getFullYear(),
     largeTextBoxHeight: 6,
+  },
+  save: {
+    error: false,
+    saving: false,
   },
 };
