@@ -27,6 +27,12 @@ Amplify.configure({
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
+      {
+        name: "prince",
+        endpoint:
+          "https://y5pywiyrb7.execute-api.us-east-1.amazonaws.com/master/prince",
+        region: config.apiGateway.REGION,
+      },
     ],
   },
   Auth: {

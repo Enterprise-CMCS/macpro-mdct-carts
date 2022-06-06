@@ -6,11 +6,13 @@ import { Button } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-import axios from "../../authenticatedAxios";
+//import axios from "../../authenticatedAxios";
+import { API } from "aws-amplify";
 import statesArray from "../Utils/statesArray";
 import { loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import requestOptions from "../../hooks/authHooks/requestOptions";
 
 /**
  * Generate data and load entire form based on user information
@@ -36,6 +38,8 @@ const Print = ({ currentUser, state, name }) => {
     }
     let byteArray = new Uint8Array(byteNumbers);
     let file = new Blob([byteArray], { type: "application/pdf;base64" });
+    // eslint-disable-next-line
+    console.log(file);
     let fileURL = URL.createObjectURL(file);
     window.open(fileURL);
   };
@@ -66,9 +70,24 @@ const Print = ({ currentUser, state, name }) => {
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const res = await axios.post("prince", {
+    // eslint-disable-next-line
+    // const res = await axios.post("prince", {
+    //   encodedHtml: base64String,
+    // });
+    // const res = await API.post(
+    //   "https://y5pywiyrb7.execute-api.us-east-1.amazonaws.com/master/prince",
+    //   {
+    //     encodedHtml: base64String,
+    //   }
+    // );
+    const opts = await requestOptions();
+    opts.body = {
       encodedHtml: base64String,
-    });
+    };
+
+    const res = await API.post("prince", "", opts);
+    // eslint-disable-next-line
+    console.log(res);
     openPdf(res.data);
   };
   // Load formData via side effect
@@ -77,7 +96,6 @@ const Print = ({ currentUser, state, name }) => {
     const retrieveUserData = async () => {
       // Get user details
       const { stateUser } = state;
-      // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
