@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { updateSections } from "../update";
 import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
@@ -5,6 +6,7 @@ import { testEvent } from "../../../test-util/testEvents";
 import { convertToDynamoExpression } from "../../dynamoUtils/convertToDynamoExpressionVars";
 import { UserRoles } from "../../../types";
 
+const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
@@ -28,6 +30,13 @@ jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
 }));
 
 describe("Test Update Sections Handler", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+  afterEach(() => {
+    console.error = originalError;
+  });
+
   test("sections should batch update and update state status if not started", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
