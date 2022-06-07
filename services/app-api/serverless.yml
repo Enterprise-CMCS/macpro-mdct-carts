@@ -172,14 +172,14 @@ functions:
           method: post
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
-  # printPdf:
-  #   handler: handlers/printing/printPDF.printPDF
-  #   events:
-  #     - http:
-  #         path: print_pdf
-  #         method: post
-  #         cors: true
-  #         authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  printPdf:
+    handler: handlers/printing/printPDF.printPDF
+    events:
+      - http:
+          path: print_pdf
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
 resources:
   Resources:
     GatewayResponseDefault4XX:
