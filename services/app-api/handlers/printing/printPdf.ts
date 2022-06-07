@@ -14,8 +14,6 @@ export const print = handler(async (event, _context) => {
   }
 
   // Build Request -> Prince
-  const host = "macpro-platform-dev.cms.gov";
-  const path = "/doc-conv/508html-to-508pdf";
   const region = "us-east-1";
   AWS.config.update({
     region,
@@ -27,18 +25,16 @@ export const print = handler(async (event, _context) => {
   });
   const aws4 = require("aws4");
 
+  // region,
   var opts = {
-    host,
-    path,
     method: "POST",
-    url: `https://${host}${path}`,
-    region,
+    url: "https://macpro-platform-dev.cms.gov/doc-conv/508html-to-508pdf/", // Note the trailing slash
+    host: "macpro-platform-dev.cms.gov",
+    path: "/doc-conv/508html-to-508pdf/",
+    region: "us-east-1",
     service: "execute-api",
     data: body.encodedHtml, // aws4 looks for body; axios for data
     body: body.encodedHtml,
-    headers: {
-      "content-type": "application/json",
-    },
   };
 
   // Sign auth, and massage the format for axios
@@ -48,8 +44,7 @@ export const print = handler(async (event, _context) => {
     accessKeyId: credentials.accessKeyId,
     sessionToken: credentials.sessionToken,
   });
-  delete signedRequest.headers["Host"];
-  delete signedRequest.headers["Content-Length"];
+  // delete signedRequest.headers["Host"];
 
   // Execute
   let response = await axios(signedRequest);
