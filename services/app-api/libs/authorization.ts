@@ -48,9 +48,9 @@ export const isAuthorized = (event: APIGatewayProxyEvent) => {
     if (userState && requestState) {
       return userState.toLowerCase() === requestState.toLowerCase();
     }
-    if (!requestState && event.httpMethod != RequestMethods.GET) {
-      return false;
-    }
+    // if (!requestState && event.httpMethod != RequestMethods.GET) {
+    //   return false;
+    // }
   }
   return true;
 };

@@ -173,7 +173,7 @@ functions:
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   printPdf:
-    handler: handlers/printing/printPDF.printPDF
+    handler: handlers/printing/printPDF.print
     events:
       - http:
           path: print_pdf
