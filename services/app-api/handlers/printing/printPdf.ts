@@ -15,10 +15,9 @@ export const print = handler(async (event, _context) => {
   var aws4 = require("aws4");
   var https = require("https");
 
-  // to illustrate usage, we'll create a utility function to request and pipe to stdout
-  function request(opts) {
+  function request(opts: any) {
     https
-      .request(opts, function (res) {
+      .request(opts, function (res: any) {
         res.pipe(process.stdout);
       })
       .end(opts.body || "");
@@ -28,7 +27,7 @@ export const print = handler(async (event, _context) => {
     host,
     path,
     region,
-    // body: body.encodedHtml,
+    body: body.encodedHtml,
   };
   aws4.sign(opts);
 
