@@ -1,7 +1,7 @@
 import handler from "../../libs/handler-lib";
 import { NotFoundError } from "../../libs/httpErrors";
 /**
- * Updates the State Status associated with a given year and state
+ * Generates 508 compliant PDF using the external Prince service for a given HTML block.
  */
 // eslint-disable-next-line no-unused-vars
 export const print = handler(async (event, _context) => {
