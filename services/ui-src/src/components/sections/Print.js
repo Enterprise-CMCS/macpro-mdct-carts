@@ -70,16 +70,6 @@ const Print = ({ currentUser, state, name }) => {
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    // eslint-disable-next-line
-    // const res = await axios.post("prince", {
-    //   encodedHtml: base64String,
-    // });
-    // const res = await API.post(
-    //   "https://y5pywiyrb7.execute-api.us-east-1.amazonaws.com/master/prince",
-    //   {
-    //     encodedHtml: base64String,
-    //   }
-    // );
     const opts = await requestOptions();
     opts.body = {
       encodedHtml: base64String,
