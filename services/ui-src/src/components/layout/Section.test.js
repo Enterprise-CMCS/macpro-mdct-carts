@@ -15,7 +15,6 @@ const store = mockStore({
   },
 });
 jest.mock("../../store/selectors", () => ({
-  __esModule: true,
   selectSectionTitle: () => "Section Title",
 }));
 jest.mock("./Autosave", () => () => {

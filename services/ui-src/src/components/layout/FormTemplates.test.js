@@ -5,7 +5,6 @@ import { act, render, fireEvent } from "@testing-library/react";
 
 const mockPost = jest.fn();
 jest.mock("aws-amplify", () => ({
-  __esModule: true,
   API: {
     post: () => mockPost(),
   },

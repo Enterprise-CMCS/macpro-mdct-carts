@@ -1,5 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { shallow } from "enzyme";
 import { MemoryRouter } from "react-router";
 import configureMockStore from "redux-mock-store";
 import CertifyAndSubmit from "./CertifyAndSubmit";
@@ -64,14 +65,18 @@ const submitFinished = (
 );
 
 describe("CertifyAndSubmit Component", () => {
-  it("should display thanks after submit", () => {
-    render(submitFinished);
-    const thankYouElement = screen.getByTestId("certifyThankYou");
-    expect(thankYouElement).toHaveTextContent("Thank you");
+  it("renders without crashing", () => {
+    expect(shallow(submitFinished).exists()).toBe(true);
   });
+
   it("should display submit button", () => {
     render(submit);
     const thankYouElement = screen.getByTestId("certifySubmit");
     expect(thankYouElement).toHaveTextContent("Certify and Submit");
+  });
+  it("should display thanks after submit", () => {
+    render(submitFinished);
+    const thankYouElement = screen.getByTestId("certifyThankYou");
+    expect(thankYouElement).toHaveTextContent("Thank you");
   });
 });
