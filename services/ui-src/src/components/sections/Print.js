@@ -85,7 +85,7 @@ const Print = ({ currentUser, state, name }) => {
       encodedHtml: base64String,
     };
 
-    const res = await API.post("prince", "", opts);
+    const res = await API.post("carts-api", "/print_pdf", opts);
     // eslint-disable-next-line
     console.log(res);
     openPdf(res.data);
