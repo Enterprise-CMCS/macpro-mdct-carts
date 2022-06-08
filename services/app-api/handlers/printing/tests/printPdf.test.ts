@@ -48,7 +48,7 @@ describe("Test Print PDF handler", () => {
     const res = await print(event, null);
 
     expect(axios).toHaveBeenCalledWith(
-      expect.objectContaining({ body: "HtMl", method: "POST" })
+      expect.objectContaining({ data: "HtMl", method: "POST" })
     );
     expect(res.statusCode).toBe(200);
     expect(res.body).toContain("transformed!");
