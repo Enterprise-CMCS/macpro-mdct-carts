@@ -38,8 +38,6 @@ const Print = ({ currentUser, state, name }) => {
     }
     let byteArray = new Uint8Array(byteNumbers);
     let file = new Blob([byteArray], { type: "application/pdf;base64" });
-    // eslint-disable-next-line
-    console.log(file);
     let fileURL = URL.createObjectURL(file);
     window.open(fileURL);
   };
@@ -76,8 +74,6 @@ const Print = ({ currentUser, state, name }) => {
     };
 
     const res = await API.post("carts-api", "/print_pdf", opts);
-    // eslint-disable-next-line
-    console.log(res);
     openPdf(res.data);
   };
   // Load formData via side effect
