@@ -31,8 +31,6 @@ const Print = ({ currentUser, state, name }) => {
   const sectionId = searchParams.get("sectionId");
   const subsectionId = searchParams.get("subsectionId");
 
-  console.log(sectionId, subsectionId);
-
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
     let byteNumbers = new Array(byteCharacters.length);

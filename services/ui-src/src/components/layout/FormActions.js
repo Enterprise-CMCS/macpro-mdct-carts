@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { UserRoles } from "../../types";
 
@@ -16,7 +16,6 @@ const FormActions = (props) => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
   const { currentUser, formYear } = props;
-  const dispatch = useDispatch();
 
   // Get section IDs and subsection IDs for printing single section
   let searchParams = document.location.pathname
