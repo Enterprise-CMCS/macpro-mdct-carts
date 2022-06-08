@@ -28,6 +28,7 @@ const LocalLogin = () => {
         id="email"
         name="email"
         value={fields.email}
+        data-testid="login-email"
         onChange={handleFieldChange}
       />
       <h2>Password</h2>
@@ -37,6 +38,7 @@ const LocalLogin = () => {
         id="password"
         name="password"
         value={fields.password}
+        data-testid="login-password"
         onChange={handleFieldChange}
       />
       <br />
@@ -46,6 +48,7 @@ const LocalLogin = () => {
           handleLogin();
         }}
         isFullWidth
+        data-testid="login-button"
         data-cy="login-with-cognito-button"
       >
         Login with Cognito
