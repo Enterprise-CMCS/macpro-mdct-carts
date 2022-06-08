@@ -23,10 +23,15 @@ import { Helmet } from "react-helmet";
 const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
   const search = useLocation().search;
-  const stateInitials = new URLSearchParams(search).get("state");
+  const searchParams = new URLSearchParams(search);
+  const stateInitials = searchParams.get("state");
   const stateName =
     name || statesArray.find(({ value }) => value === stateInitials)?.label;
-  const formYear = new URLSearchParams(search).get("year");
+  const formYear = searchParams.get("year");
+  const sectionId = searchParams.get("sectionId");
+  const subsectionId = searchParams.get("subsectionId");
+
+  console.log(sectionId, subsectionId);
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -109,16 +114,12 @@ const Print = ({ currentUser, state, name }) => {
   if (formData !== undefined && formData.length !== 0) {
     sections.push(<Title urlStateName={stateName} />);
 
-    const searchParams = new URLSearchParams(window.location.search);
-
-    const sectionParam = searchParams.get("sectionId");
-    const subsectionParam = searchParams.get("subsectionId");
-
-    if (sectionParam) {
+    if (sectionId) {
+      // Add section to sections array
       sections.push(
         <Section
-          sectionId={sectionParam}
-          subsectionId={subsectionParam}
+          sectionId={sectionId}
+          subsectionId={subsectionId}
           readonly="false"
         />
       );

@@ -18,14 +18,26 @@ const FormActions = (props) => {
   const { currentUser, formYear } = props;
   const dispatch = useDispatch();
 
+  // Get section IDs and subsection IDs for printing single section
+  let searchParams = document.location.pathname
+    .toString()
+    .replace("/sections/", "")
+    .replace(formYear + "/", "");
+
+  const sectionId = formYear + "-" + searchParams.substring(0, 2);
+  let subsectionId = sectionId + "-";
+
+  if (sectionId.slice(-2) === "03") {
+    subsectionId += searchParams.slice(-1);
+  } else {
+    subsectionId += "a";
+  }
+
   /**
    * Print dialogue box state
    * Defaults to false
    */
   const [printShow, setPrintShow] = useState(false);
-
-  const searchParams = document.location.toString();
-  console.log(searchParams);
 
   /**
    * If click occurs outside component, setPrintShow to false
@@ -58,14 +70,6 @@ const FormActions = (props) => {
   };
 
   /**
-   * Set print type
-   */
-  const setPrintType = (printType) => {
-    dispatch({ type: "UPDATE_PRINT_TYPE", printType: printType });
-    togglePrintDialogue();
-  };
-
-  /**
    * Generates the URL to print a form.
    * @param {object} currentUser - the current user object
    * @param {string} formYear - the year associated with the report
@@ -74,8 +78,8 @@ const FormActions = (props) => {
   const printFormUrl = (
     currentUser,
     formYear,
-    section = null,
-    subSection = null
+    sectionId = null,
+    subsectionId = null
   ) => {
     let stateId = "";
 
@@ -86,11 +90,13 @@ const FormActions = (props) => {
     }
 
     let urlString = `/print?year=${formYear}&state=${stateId}`;
-    if (section) {
-      urlString += `&sectionId=${section}`;
+
+    if (sectionId) {
+      urlString += `&sectionId=${sectionId}`;
     }
-    if (subSection) {
-      urlString += `&subsectionId=${subSection}`;
+
+    if (subsectionId) {
+      urlString += `&subsectionId=${subsectionId}`;
     }
 
     return urlString;
@@ -126,12 +132,12 @@ const FormActions = (props) => {
                 href={printFormUrl(
                   currentUser,
                   formYear,
-                  sectionParam,
-                  subsectionParam
+                  sectionId,
+                  subsectionId
                 )}
                 title="This Section"
                 target="_blank"
-                onClick={() => setPrintType("section")}
+                onClick={togglePrintDialogue}
               >
                 <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
@@ -142,7 +148,7 @@ const FormActions = (props) => {
                 href={printFormUrl(currentUser, formYear)}
                 title="Entire Form"
                 target="_blank"
-                onClick={() => setPrintType("all")}
+                onClick={togglePrintDialogue}
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
