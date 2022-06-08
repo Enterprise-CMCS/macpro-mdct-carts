@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { UserRoles } from "../../types";
 
@@ -16,12 +16,16 @@ const FormActions = (props) => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
   const { currentUser, formYear } = props;
+  const dispatch = useDispatch();
 
   /**
    * Print dialogue box state
    * Defaults to false
    */
   const [printShow, setPrintShow] = useState(false);
+
+  const searchParams = document.location.toString();
+  console.log(searchParams);
 
   /**
    * If click occurs outside component, setPrintShow to false
@@ -54,25 +58,25 @@ const FormActions = (props) => {
   };
 
   /**
-   * Opens print dialogue for current view
-   *
-   * @param {Event} event
+   * Set print type
    */
-  const printWindow = (event) => {
-    event.preventDefault();
-
-    // Close dialogue box
+  const setPrintType = (printType) => {
+    dispatch({ type: "UPDATE_PRINT_TYPE", printType: printType });
     togglePrintDialogue();
-    window.print();
   };
 
   /**
-   * Generates the URL to print an entire form.
+   * Generates the URL to print a form.
    * @param {object} currentUser - the current user object
    * @param {string} formYear - the year associated with the report
    * @return {string} The URL string
    */
-  const printEntireFormUrl = (currentUser, formYear) => {
+  const printFormUrl = (
+    currentUser,
+    formYear,
+    section = null,
+    subSection = null
+  ) => {
     let stateId = "";
 
     if (currentUser.role === UserRoles.STATE) {
@@ -81,7 +85,14 @@ const FormActions = (props) => {
       stateId = window.location.href.split("/")[5];
     }
 
-    const urlString = `/print?year=${formYear}&state=${stateId}`;
+    let urlString = `/print?year=${formYear}&state=${stateId}`;
+    if (section) {
+      urlString += `&sectionId=${section}`;
+    }
+    if (subSection) {
+      urlString += `&subsectionId=${subSection}`;
+    }
+
     return urlString;
   };
 
@@ -112,8 +123,15 @@ const FormActions = (props) => {
             <div className="print-page">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                onClick={printWindow}
+                href={printFormUrl(
+                  currentUser,
+                  formYear,
+                  sectionParam,
+                  subsectionParam
+                )}
                 title="This Section"
+                target="_blank"
+                onClick={() => setPrintType("section")}
               >
                 <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
@@ -121,10 +139,10 @@ const FormActions = (props) => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href={printEntireFormUrl(currentUser, formYear)}
+                href={printFormUrl(currentUser, formYear)}
                 title="Entire Form"
                 target="_blank"
-                onClick={togglePrintDialogue}
+                onClick={() => setPrintType("all")}
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
@@ -144,6 +162,7 @@ FormActions.propTypes = {
 export const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
   formYear: state.global.formYear,
+  printType: state.global.printType,
 });
 
 export default connect(mapStateToProps)(FormActions);

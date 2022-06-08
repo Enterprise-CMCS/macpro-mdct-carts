@@ -108,28 +108,44 @@ const Print = ({ currentUser, state, name }) => {
   const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
     sections.push(<Title urlStateName={stateName} />);
-    // Loop through each section to get sectionId
-    /* eslint-disable no-plusplus */
-    for (let i = 0; i < formData.length; i++) {
-      const sectionId = formData[i].contents.section.id;
 
-      // Loop through subsections to get subsectionId
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const sectionParam = searchParams.get("sectionId");
+    const subsectionParam = searchParams.get("subsectionId");
+
+    if (sectionParam) {
+      sections.push(
+        <Section
+          sectionId={sectionParam}
+          subsectionId={subsectionParam}
+          readonly="false"
+        />
+      );
+    } else {
+      // Loop through each section to get sectionId
       /* eslint-disable no-plusplus */
-      for (
-        let j = 0;
-        j < formData[i].contents.section.subsections.length;
-        j++
-      ) {
-        const subsectionId = formData[i].contents.section.subsections[j].id;
+      for (let i = 0; i < formData.length; i++) {
+        const sectionId = formData[i].contents.section.id;
 
-        // Add section to sections array
-        sections.push(
-          <Section
-            sectionId={sectionId}
-            subsectionId={subsectionId}
-            readonly="false"
-          />
-        );
+        // Loop through subsections to get subsectionId
+        /* eslint-disable no-plusplus */
+        for (
+          let j = 0;
+          j < formData[i].contents.section.subsections.length;
+          j++
+        ) {
+          const subsectionId = formData[i].contents.section.subsections[j].id;
+
+          // Add section to sections array
+          sections.push(
+            <Section
+              sectionId={sectionId}
+              subsectionId={subsectionId}
+              readonly="false"
+            />
+          );
+        }
       }
     }
   }
