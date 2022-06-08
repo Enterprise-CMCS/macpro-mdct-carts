@@ -84,6 +84,7 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - execute-api:Invoke
           Resource: "*"
   environment:
     princeApiHost: ${self:custom.princeApiHost}
