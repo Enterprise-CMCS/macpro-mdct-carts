@@ -17,8 +17,12 @@ export const psUpload = handler(async (event, _context) => {
   // Format Info
   const body = event.body ? JSON.parse(event.body) : null;
   const { uploadedFileName, questionId } = body;
-  if (!event.pathParameters) {
-    throw new Error("Path Parameters required");
+  if (
+    !event.pathParameters ||
+    !event.pathParameters.state ||
+    !event.pathParameters.year
+  ) {
+    throw new Error("Be sure to include state, year in the path");
   }
   const { state, year } = event.pathParameters;
   const username = user.email ?? "";

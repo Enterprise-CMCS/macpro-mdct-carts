@@ -44,13 +44,8 @@ export const isAuthorized = (event: APIGatewayProxyEvent) => {
   const userState = decoded["custom:cms_state"];
 
   // if user is a state user - check they are requesting a resource from their state
-  if (userRole === UserRoles.STATE) {
-    if (userState && requestState) {
-      return userState.toLowerCase() === requestState.toLowerCase();
-    }
-    // if (!requestState && event.httpMethod != RequestMethods.GET) {
-    //   return false;
-    // }
+  if (userRole === UserRoles.STATE && userState && requestState) {
+    return userState.toLowerCase() === requestState.toLowerCase();
   }
   return true;
 };

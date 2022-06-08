@@ -1,27 +1,23 @@
 import handler from "../../libs/handler-lib";
-import { NotFoundError } from "../../libs/httpErrors";
 import axios from "axios";
 import AWS from "aws-sdk";
 
 /**
  * Generates 508 compliant PDF using the external Prince service for a given HTML block.
  */
-// eslint-disable-next-line no-unused-vars
 export const print = handler(async (event, _context) => {
   const body = event.body ? JSON.parse(event.body) : null;
   if (!body || !body.encodedHtml) {
-    throw new NotFoundError("Unable to find info");
+    throw new Error("Missing required encodedHtml");
   }
-
+  const host = process.env.princeApiHost; // JUST the host name, no protocol, ex: "my-site.cms.gov"
+  const path = process.env.princeApiPath; // Needs leading and trailing slash, ex: "/doc-conv/508html-to-508pdf/"
   // Build Request -> Prince
-  const aws4 = require("aws4");
-
-  // region,
   var opts = {
     method: "POST",
-    url: "https://macpro-platform-dev.cms.gov/doc-conv/508html-to-508pdf/", // Note the trailing slash
-    host: "macpro-platform-dev.cms.gov",
-    path: "/doc-conv/508html-to-508pdf/",
+    url: `https://${host}${path}`, // Needs trailing slash from path
+    host: host,
+    path: path,
     region: "us-east-1",
     service: "execute-api",
     data: body.encodedHtml, // aws4 looks for body; axios for data
@@ -29,15 +25,18 @@ export const print = handler(async (event, _context) => {
   };
 
   // Sign auth, and massage the format for axios
+  const aws4 = require("aws4");
   const credentials = AWS.config.credentials;
+  if (!credentials) {
+    throw new Error("No config found to make request to PDF API");
+  }
   var signedRequest = aws4.sign(opts, {
     secretAccessKey: credentials.secretAccessKey,
     accessKeyId: credentials.accessKeyId,
     sessionToken: credentials.sessionToken,
   });
-  // delete signedRequest.headers["Host"];
 
   // Execute
   let response = await axios(signedRequest);
-  return response;
+  return { data: response.data };
 });
