@@ -84,6 +84,9 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
             - execute-api:Invoke
           Resource: "*"
   environment:

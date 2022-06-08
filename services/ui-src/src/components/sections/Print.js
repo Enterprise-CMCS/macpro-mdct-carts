@@ -6,7 +6,6 @@ import { Button } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-//import axios from "../../authenticatedAxios";
 import { API } from "aws-amplify";
 import statesArray from "../Utils/statesArray";
 import { loadSections } from "../../actions/initial";
