@@ -36,6 +36,8 @@ export const print = handler(async (event, _context) => {
     sessionToken: credentials.sessionToken,
   });
 
+  delete signedRequest.body; // Remove body after signing, contained in data, don't need to duplicate it
+
   // Execute
   let response = await axios(signedRequest);
   return { data: response.data };
