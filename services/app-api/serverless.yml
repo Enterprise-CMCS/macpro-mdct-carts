@@ -179,6 +179,7 @@ functions:
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   printPdf:
     handler: handlers/printing/printPdf.print
+    timeout: 30
     events:
       - http:
           path: print_pdf
