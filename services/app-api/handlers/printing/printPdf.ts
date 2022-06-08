@@ -14,15 +14,6 @@ export const print = handler(async (event, _context) => {
   }
 
   // Build Request -> Prince
-  const region = "us-east-1";
-  AWS.config.update({
-    region,
-    credentials: new AWS.Credentials(
-      process.env.AWS_ACCESS_KEY_ID,
-      process.env.AWS_SECRET_ACCESS_KEY,
-      process.env.AWS_SESSION_TOKEN
-    ),
-  });
   const aws4 = require("aws4");
 
   // region,
