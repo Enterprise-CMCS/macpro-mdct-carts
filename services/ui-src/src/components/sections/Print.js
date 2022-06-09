@@ -116,6 +116,7 @@ const Print = ({ currentUser, state, name }) => {
       // Add section to sections array
       sections.push(
         <Section
+          data-testid="print-section"
           sectionId={sectionId}
           subsectionId={subsectionId}
           readonly="false"
@@ -139,6 +140,7 @@ const Print = ({ currentUser, state, name }) => {
           // Add section to sections array
           sections.push(
             <Section
+              data-testid="print-section"
               sectionId={sectionId}
               subsectionId={subsectionId}
               readonly="false"
