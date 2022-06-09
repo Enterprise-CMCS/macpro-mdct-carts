@@ -18,12 +18,6 @@
     padding-bottom: 16px;
   }
 
-  &:after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
   a,
   a:visited {
     color: $white;
@@ -216,6 +210,7 @@
   }
   .header-row {
     position: relative;
+    margin: 0;
   }
 }
 
