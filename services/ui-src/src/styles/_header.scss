@@ -15,6 +15,7 @@
 
   @media only screen and (max-width: 767px) {
     text-align: center;
+    padding-bottom: 16px;
   }
 
   &:after {
@@ -50,26 +51,39 @@
     }
   }
 
-  .save-status {
-    font-size: 0.85rem;
-    font-style: italic;
-    padding-top: 0.1rem;
-    text-align: center;
-    width: auto;
+  #carts-logo {
+    max-width: 300px;
+  }
 
-    @media only screen and (min-width: 768px) {
+  .user-details-container {
+    height: 100%;
+    justify-content: center;
+
+    @media only screen and (min-width: 767px) {
+      justify-content: flex-end;
+    }
+  }
+
+  .get-help-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-weight: $font-weight-bold;
+
+    @media only screen and (max-width: 767px) {
+      padding-right: 20px;
       border-right: 2px solid $white;
-      float: right;
-      text-align: right;
+    }
+
+    a {
+      svg {
+        padding-right: $padding;
+      }
     }
   }
 
   .nav-user {
-    text-align: center;
-    float: right;
-    margin: 0 auto;
-    width: auto;
-
     &.open ul:after {
       transform: rotate(0deg);
     }
@@ -82,19 +96,36 @@
         font-weight: $font-weight-bold;
         margin: 0;
         position: relative;
-        margin-left: ($margin * 10);
+        height: 100%;
+
+        @media only screen and (max-width: 767px) {
+          padding-left: 20px;
+        }
 
         @media only screen and (min-width: 768px) {
           text-align: right;
         }
 
+        li {
+          height: 100%;
+        }
+
         a {
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+
+          svg {
+            padding-right: $padding;
+          }
+
           &:focus {
             background-color: initial;
           }
 
           i {
-            padding-left: $padding * 2;
+            padding-left: $padding;
           }
         }
       }
@@ -197,4 +228,26 @@
   background-color: $color-gray-lightest;
   max-width: 1040px;
   padding-left: 16px;
+}
+
+/**********************
+  Not Yet Saved Banner
+**********************/
+.save {
+  &-container {
+    background: $lily-white;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;
+  }
+  &-status {
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: $font-weight-bold;
+    padding-top: 0.1rem;
+    text-align: center;
+    width: auto;
+
+    @media only screen and (min-width: 768px) {
+      text-align: right;
+    }
+  }
 }

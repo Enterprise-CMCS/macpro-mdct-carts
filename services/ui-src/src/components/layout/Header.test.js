@@ -78,11 +78,6 @@ describe("Test Header", () => {
     const wrapper = mount(header);
     expect(wrapper.find({ "data-testid": "usaBanner" }).length).toBe(1);
   });
-  it("should have the current year reporting year in the header", () => {
-    render(header);
-    const currentYearElement = screen.getByTestId("cartsCurrentYear");
-    expect(currentYearElement).toHaveTextContent(2077);
-  });
   it("should not show the autosave component by default ", () => {
     const wrapper = mount(header);
     expect(wrapper.containsMatchingElement(<Autosave />)).toEqual(false);
