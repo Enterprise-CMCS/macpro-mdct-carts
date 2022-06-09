@@ -17,6 +17,21 @@ const FormActions = (props) => {
   const printDialogeRef = useRef(null);
   const { currentUser, formYear } = props;
 
+  // Get section IDs and subsection IDs for printing single section
+  let searchParams = document.location.pathname
+    .toString()
+    .replace("/sections/", "")
+    .replace(formYear + "/", "");
+
+  const sectionId = formYear + "-" + searchParams.substring(0, 2);
+  let subsectionId = sectionId + "-";
+
+  if (sectionId.slice(-2) === "03") {
+    subsectionId += searchParams.slice(-1);
+  } else {
+    subsectionId += "a";
+  }
+
   /**
    * Print dialogue box state
    * Defaults to false
@@ -54,25 +69,17 @@ const FormActions = (props) => {
   };
 
   /**
-   * Opens print dialogue for current view
-   *
-   * @param {Event} event
-   */
-  const printWindow = (event) => {
-    event.preventDefault();
-
-    // Close dialogue box
-    togglePrintDialogue();
-    window.print();
-  };
-
-  /**
-   * Generates the URL to print an entire form.
+   * Generates the URL to print a form.
    * @param {object} currentUser - the current user object
    * @param {string} formYear - the year associated with the report
    * @return {string} The URL string
    */
-  const printEntireFormUrl = (currentUser, formYear) => {
+  const printFormUrl = (
+    currentUser,
+    formYear,
+    sectionId = null,
+    subsectionId = null
+  ) => {
     let stateId = "";
 
     if (currentUser.role === UserRoles.STATE) {
@@ -81,7 +88,16 @@ const FormActions = (props) => {
       stateId = window.location.href.split("/")[5];
     }
 
-    const urlString = `/print?year=${formYear}&state=${stateId}`;
+    let urlString = `/print?year=${formYear}&state=${stateId}`;
+
+    if (sectionId) {
+      urlString += `&sectionId=${sectionId}`;
+    }
+
+    if (subsectionId) {
+      urlString += `&subsectionId=${subsectionId}`;
+    }
+
     return urlString;
   };
 
@@ -112,8 +128,15 @@ const FormActions = (props) => {
             <div className="print-page">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                onClick={printWindow}
+                href={printFormUrl(
+                  currentUser,
+                  formYear,
+                  sectionId,
+                  subsectionId
+                )}
                 title="This Section"
+                target="_blank"
+                onClick={togglePrintDialogue}
               >
                 <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
@@ -121,7 +144,7 @@ const FormActions = (props) => {
             <div className="print-form">
               <Button
                 className="ds-c-button--primary ds-c-button--small"
-                href={printEntireFormUrl(currentUser, formYear)}
+                href={printFormUrl(currentUser, formYear)}
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDialogue}
@@ -144,6 +167,7 @@ FormActions.propTypes = {
 export const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
   formYear: state.global.formYear,
+  printType: state.global.printType,
 });
 
 export default connect(mapStateToProps)(FormActions);
