@@ -99,14 +99,19 @@ describe("Test Header", () => {
     const headerDropDownMenuButton = screen.getByTestId(
       "headerDropDownMenuButton"
     );
-    expect(headerDropDownMenuButton).toHaveTextContent(
-      "garthVader@DeathStarInc.com"
-    );
+    expect(headerDropDownMenuButton).toHaveTextContent("My Account");
   });
   it("should not render the dropdownmenu if user is not logged in", () => {
-    render(headerWithNoUsername);
-    const userDetailsRow = screen.getByTestId("userDetailsRow");
-    expect(userDetailsRow).toBeEmpty();
+    const wrapper = mount(headerWithNoUsername);
+    expect(
+      wrapper.containsMatchingElement(
+        <div
+          className="nav-user"
+          id="nav-user"
+          data-testid="headerDropDownMenu"
+        />
+      )
+    ).toEqual(false);
   });
   it("should render the dropdownmenu in a closed initial state with a chevron pointed down", () => {
     render(header);
