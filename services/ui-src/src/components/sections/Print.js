@@ -6,11 +6,12 @@ import { Button } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-import axios from "../../authenticatedAxios";
+import { API } from "aws-amplify";
 import statesArray from "../Utils/statesArray";
 import { loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import requestOptions from "../../hooks/authHooks/requestOptions";
 
 /**
  * Generate data and load entire form based on user information
@@ -66,9 +67,12 @@ const Print = ({ currentUser, state, name }) => {
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const res = await axios.post("prince", {
+    const opts = await requestOptions();
+    opts.body = {
       encodedHtml: base64String,
-    });
+    };
+
+    const res = await API.post("carts-api", "/print_pdf", opts);
     openPdf(res.data);
   };
   // Load formData via side effect
@@ -77,7 +81,6 @@ const Print = ({ currentUser, state, name }) => {
     const retrieveUserData = async () => {
       // Get user details
       const { stateUser } = state;
-      // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
