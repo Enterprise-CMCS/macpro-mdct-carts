@@ -134,6 +134,19 @@ describe("Test Header", () => {
     expect(headerDropDownMenuButton).toContainElement(chevUp);
     expect(headerDropDownMenu).toContainElement(headerDropDownLinks);
   });
+
+  it("should open and close the dropdown menu on click", () => {
+    render(header);
+    const headerDropDownMenuButton = screen.getByTestId(
+      "headerDropDownMenuButton"
+    );
+    fireEvent.click(headerDropDownMenuButton);
+    const chevUp = screen.getByTestId("headerDropDownChevUp");
+    expect(headerDropDownMenuButton).toContainElement(chevUp);
+    fireEvent.click(headerDropDownMenuButton);
+    const chevDown = screen.getByTestId("headerDropDownChevDown");
+    expect(headerDropDownMenuButton).toContainElement(chevDown);
+  });
 });
 
 describe("Test Header accessibility", () => {
