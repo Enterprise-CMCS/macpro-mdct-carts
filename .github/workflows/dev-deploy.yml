@@ -223,7 +223,7 @@ jobs:
           terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+        run: ./frontend_deploy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
         env:
           VPC_NAME: ${{secrets.DEV_VPC_NAME}}
           OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}

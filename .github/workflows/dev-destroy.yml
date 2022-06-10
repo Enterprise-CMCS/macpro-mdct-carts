@@ -54,7 +54,7 @@ jobs:
           terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Destroy frontend
-        run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+        run: ./frontend_destroy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
         env:
           VPC_NAME: ${{secrets.DEV_VPC_NAME}}
           OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
@@ -89,7 +89,7 @@ jobs:
           terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Destroy data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
+        run: ./data_layer_deploy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
         env:
           VPC_NAME: ${{secrets.NEW_DEV_VPC}}
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}

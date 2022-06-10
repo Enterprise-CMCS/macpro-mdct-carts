@@ -169,7 +169,7 @@ jobs:
           terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}} ${{ github.event.inputs.version }}
+        run: ./frontend_deploy.sh ${{env.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}} ${{ github.event.inputs.version }}
         env:
           VPC_NAME: ${{secrets.STAGING_VPC_NAME}}
           OIDC_CLIENT_ID: ${{secrets.STAGING_OIDC_CLIENT_ID}}
