@@ -240,7 +240,7 @@ jobs:
           VPC_NAME: ${{secrets.NEW_DEV_VPC }}
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
           TF_VAR_postgres_restore_snapshot_id: ${{secrets.DEV_RESTORE_SNAPSHOT_ID}}
-  frontend:
+  frontend-legacy:
     needs:
       - prevalidate
       - data
@@ -279,6 +279,39 @@ jobs:
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+  frontend-new:
+    needs:
+      - prevalidate
+      - data
+      - uploads-new
+      - build-react
+      - build-push-scan-postgres_django
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS credentials (new account)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure Terraform Datalayer Provider Credentials
+        run: |
+          echo "TF_VAR_datalayer_aws_access_key=${{env.AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
+          echo "TF_VAR_datalayer_aws_secret_key=${{env.AWS_SECRET_ACCESS_KEY}}" >> $GITHUB_ENV
+          echo "TF_VAR_datalayer_aws_session_token=${{env.AWS_SESSION_TOKEN}}" >> $GITHUB_ENV
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.0.11
+          terraform_wrapper: false
+      - name: Deploy Frontend Layer
+        run: ./frontend_deploy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+        env:
+          VPC_NAME: ${{secrets.NEW_DEV_VPC }}
+          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
+          APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
   serverless:
     needs:
       - data
