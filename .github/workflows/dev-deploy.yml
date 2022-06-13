@@ -134,22 +134,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Configure AWS credentials
+      - name: Build react artifacts.
+        working-directory: frontend/react
+        run: |
+          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
+          tar -zcvf cartsbuild.tar.gz build
+      - name: Configure AWS credentials (legacy)
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Build and push react artifacts.
+      - name: Push react artifacts (legacy).
         env:
           IMAGE_TAG: ${{env.BUILD_TAG}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
         working-directory: frontend/react
-        run: |
-          docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
-          tar -zcvf cartsbuild.tar.gz build
-          aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
-          rm -rf cartsbuild.tar.gz
+        run: aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
+      - name: Configure AWS credentials (new account)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Push react artifacts (new account).
+        env:
+          IMAGE_TAG: ${{env.BUILD_TAG}}
+          APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
+        working-directory: frontend/react
+        run: aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
   uploads:
     needs:
       - prevalidate
