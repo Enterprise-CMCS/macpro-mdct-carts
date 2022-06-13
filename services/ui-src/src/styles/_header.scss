@@ -62,12 +62,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    width: 50%;
     font-weight: $font-weight-bold;
 
-    @media only screen and (max-width: 767px) {
-      padding-right: 20px;
-      border-right: 2px solid $white;
+    @media only screen and (min-width: 768px) {
+      width: auto;
     }
 
     a {
@@ -78,6 +77,11 @@
   }
 
   .nav-user {
+    width: 50%;
+    @media only screen and (min-width: 768px) {
+      width: auto;
+    }
+
     &.open ul:after {
       transform: rotate(0deg);
     }
@@ -107,7 +111,7 @@
         a {
           display: flex;
           height: 100%;
-          justify-content: center;
+          justify-content: flex-end;
           align-items: center;
 
           svg {
@@ -238,11 +242,7 @@
     font-style: italic;
     font-weight: $font-weight-bold;
     padding-top: 0.1rem;
-    text-align: center;
+    text-align: right;
     width: auto;
-
-    @media only screen and (min-width: 768px) {
-      text-align: right;
-    }
   }
 }
