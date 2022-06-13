@@ -85,28 +85,38 @@ jobs:
           key: ${{ runner.os }}-postgres_django-docker-cache-{hash}
           restore-keys: |
             ${{ runner.os }}-postgres_django-docker-cache-
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (legacy)
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Login to Amazon ECR
-        id: login-ecr
+        id: login-ecr-legacy
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Configure AWS credentials (new account)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr-new
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY_LEGACY: ${{ steps.login-ecr-legacy.outputs.registry }}
+          ECR_REGISTRY_NEW: ${{ steps.login-ecr-new.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
           IMAGE_TAG: ${{env.BUILD_TAG}}
         working-directory: frontend/api_postgres
         run: |
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+          docker build . -t $ECR_REGISTRY_LEGACY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY_LEGACY/$ECR_REPOSITORY:${{env.BRANCH_NAME}} -t $ECR_REGISTRY_NEW/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY_NEW/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
+          docker push $ECR_REGISTRY_LEGACY/$ECR_REPOSITORY --all-tags
+          docker push $ECR_REGISTRY_NEW/$ECR_REPOSITORY --all-tags
       - name: Scan postgres_django(frontend/api_postgres) Docker image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.login-ecr-new.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
           IMAGE_TAG: ${{env.BUILD_TAG}}
         run: |
