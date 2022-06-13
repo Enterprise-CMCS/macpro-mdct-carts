@@ -326,7 +326,7 @@ jobs:
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
-          # UI Domain can only be set in one at the time. Should Currently be the legacy environment
+          # UI Domain can only be set in one at the time. Should currently be the legacy environment
           # TODO: Uncomment after domain switch over.
           # TF_VAR_acm_certificate_domain_ui: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.MASTER_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
@@ -360,7 +360,8 @@ jobs:
         run: ./deploy.sh ${{env.BRANCH_NAME}}
   finalize:
     needs:
-      - uploads
+      - uploads-legacy
+      - uploads-new
       - data
       - frontend-legacy
       - frontend-new

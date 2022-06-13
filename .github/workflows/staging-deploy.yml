@@ -50,7 +50,7 @@ jobs:
           IMAGE_TAG: ${{ github.event.inputs.version }}
         run: |
           aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID --output json | tee ecr_scan_result_$ECR_REPOSITORY_POSTGRESS_DEPLOYER.json >/dev/null
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID --output json | tee ecr_scan_result_$ECR_REPOSITORY.json >/dev/null
       - name: Archive ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -60,30 +60,31 @@ jobs:
   scan-postgres_django:
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (new account)
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.STAGING_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: ${{ secrets.STAGING_POSTGRES_DJANGO_ACCOUNT_ID }}
       - name: Scan postgres_django(frontend/api_postgres) Docker image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY_ID: ${{ secrets.STAGING_POSTGRES_DJANGO_ACCOUNT_ID }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
           IMAGE_TAG: ${{ github.event.inputs.version }}
         run: |
-          aws ecr wait image-scan-complete --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG
-          aws ecr describe-image-scan-findings --repository-name ${{ env.ECR_REPOSITORY_API_POSTGRESS }} --image-id imageTag=$IMAGE_TAG --output json | tee ecr_scan_result_$ECR_REPOSITORY_API_POSTGRESS.json >/dev/null
+          aws ecr wait image-scan-complete --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID
+          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG --registry-id $ECR_REGISTRY_ID --output json | tee ecr_scan_result_$ECR_REPOSITORY.json >/dev/null
       - name: Archive ecr images scan results
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: image_scan_results
           path: ecr_scan_*.json
-  uploads:
+  uploads-legacy:
     runs-on: ubuntu-latest
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
@@ -107,6 +108,33 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Deploy Uploads Scan
+        working-directory: serverless-uploads
+        run: ./deploy.sh ${{ github.event.inputs.environment }}
+  uploads-new:
+    runs-on: ubuntu-latest
+    env:
+      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.version }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v3
+        with:
+          path: serverless-uploads/**/node_modules
+          key: ${{ runner.os }}-serverless-uploads-modules-${{ hashFiles('serverless-uploads/**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-serverless-uploads-
+      - name: Configure AWS credentials (new account)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.STAGING_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Deploy Uploads Scan
         working-directory: serverless-uploads
@@ -137,10 +165,10 @@ jobs:
           TF_VAR_skip_data_deployment: true
           TF_VAR_postgres_restore_snapshot_id: ${{secrets.STAGING_RESTORE_SNAPSHOT_ID}}
           TF_VAR_postgres_deployer_registry_id: ${{secrets.STAGING_POSTGRES_DEPLOYER_ACCOUNT_ID}}
-  frontend:
+  frontend-legacy:
     needs:
       - data
-      - uploads
+      - uploads-legacy
       - scan-postgres_django
     runs-on: ubuntu-latest
     steps:
@@ -179,6 +207,45 @@ jobs:
           TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
           TF_VAR_use_custom_db_password_info: ${{ env.USE_CUSTOM_PASSWORD }}
+  frontend-new:
+    needs:
+      - data
+      - uploads-new
+      - scan-postgres_django
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.version }}
+      - name: Configure AWS credentials (new account)
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.STAGING_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Configure Terraform Datalayer Provider Credentials
+        run: |
+          echo "TF_VAR_datalayer_aws_access_key=${{env.AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
+          echo "TF_VAR_datalayer_aws_secret_key=${{env.AWS_SECRET_ACCESS_KEY}}" >> $GITHUB_ENV
+          echo "TF_VAR_datalayer_aws_session_token=${{env.AWS_SESSION_TOKEN}}" >> $GITHUB_ENV
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.0.11
+          terraform_wrapper: false
+      - name: Deploy Frontend Layer
+        run: ./frontend_deploy.sh ${{env.APPLICATION_BUCKET}} ${{ github.event.inputs.environment }} apply application_version=${{ github.event.inputs.version }} vpc_name=${{env.VPC_NAME}} ${{ github.event.inputs.version }}
+        env:
+          VPC_NAME: ${{secrets.NEW_STAGING_VPC_NAME}}
+          OIDC_CLIENT_ID: ${{secrets.STAGING_OIDC_CLIENT_ID}}
+          OIDC_ISSUER: ${{secrets.STAGING_OIDC_ISSUER}}
+          TF_VAR_openid_discovery_url: ${{secrets.STAGING_TF_VAR_OPENID_DISCOVERY_URL}}
+          APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
+          # UI Domain can only be set in one at the time. Should currently be the legacy environment
+          # TODO: Uncomment after domain switch over.
+          # TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
+          TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
+          TF_VAR_use_custom_db_password_info: ${{ env.USE_CUSTOM_PASSWORD }}
+          TF_VAR_postgres_django_registry_id: ${{secrets.STAGING_POSTGRES_DJANGO_ACCOUNT_ID}}
   serverless:
     needs:
       - data
@@ -210,9 +277,11 @@ jobs:
         run: ./deploy.sh ${{ github.event.inputs.environment }}
   finalize:
     needs:
-      - uploads
+      - uploads-legacy
+      - uploads-new
       - data
-      - frontend
+      - frontend-legacy
+      - frontend-new
       - serverless
     runs-on: ubuntu-latest
     steps:

@@ -39,7 +39,8 @@ data "aws_ssm_parameter" "postgres_security_group" {
 }
 
 data "aws_ecr_repository" "postgres_django" {
-  name = "postgres_django"
+  name        = "postgres_django"
+  registry_id = var.postgres_django_registry_id
 }
 
 resource "aws_ecs_task_definition" "api_postgres" {
