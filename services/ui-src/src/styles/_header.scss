@@ -230,12 +230,16 @@
 }
 
 /**********************
-  Not Yet Saved Banner
+  Autosave Banner
 **********************/
 .save {
   &-container {
     background: $lily-white;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;
+
+    @media print {
+      display: none;
+    }
   }
   &-status {
     font-size: 0.95rem;
