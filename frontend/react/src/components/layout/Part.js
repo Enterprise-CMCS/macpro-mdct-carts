@@ -88,7 +88,8 @@ const mapStateToProps = (state, { partId }) => {
   const questions = selectQuestionsForPart(state, partId);
   const contextData = part.context_data;
   const location = window.location.pathname.split("/");
-  const userState = location[3]; // Current state, ie: "AL" or "CT"
+  const queryParams = new URLSearchParams(window.location.search);
+  const userState = location[3] ?? queryParams.get("state"); // Current state, ie: "AL" or "CT"
   const programData = state.allStatesData.find(
     (element) => element.code === userState
   );
