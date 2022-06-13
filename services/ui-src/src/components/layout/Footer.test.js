@@ -1,10 +1,26 @@
-// TODO: Update testing suite with DynamoDB endpoint (currently points to PostgreSQL endpoint)
+import { mount, shallow } from "enzyme";
+import { axe } from "jest-axe";
+import React from "react";
 
-describe("placeholder test", () => {
-  test("test suite runs", () => {
-    expect(1 + 2).toBe(3);
+import Footer from "./Footer";
+
+const footer = <Footer />;
+
+describe("<Footer />", () => {
+  it("should render the Header Component correctly", () => {
+    expect(shallow(footer).exists()).toBe(true);
   });
 });
+
+describe("Test Footer accessibility", () => {
+  it("Should not have basic accessibility issues", async () => {
+    const wrapper = mount(footer);
+    const results = await axe(wrapper.html());
+    expect(results).toHaveNoViolations();
+  });
+});
+
+// TODO: Update testing suite with DynamoDB endpoint (currently points to PostgreSQL endpoint)
 
 /*
  * import React from "react";

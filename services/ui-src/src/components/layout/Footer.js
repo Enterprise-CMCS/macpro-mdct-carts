@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import cartsLogoGrey from "../../assets/images/MDCT_CARTS_gray_2x.png";
 import deptHealthLogo from "../../assets/images/depthealthhumanservices_usa_2x.png";
 import medicaidLogo from "../../assets/images/logo-MedicaidGov_2x.png";
-import { Link } from "react-router-dom";
 
 class Footer extends Component {
   render() {
     return (
-      <div className="footer" data-test="component-footer">
+      <footer className="footer" data-test="component-footer">
         <div className="adverts">
           <div className="ds-l-container">
             <div className="ds-l-row">
@@ -53,7 +52,7 @@ class Footer extends Component {
           <div className="ds-l-container">
             <div className="ds-l-row">
               <div className="help ds-l-col--6">
-                <Link to="/">Contact Us</Link>
+                <a href="/">Contact Us</a>
 
                 <a href="https://www.cms.gov/About-CMS/Agency-Information/Aboutwebsite/CMSNondiscriminationNotice">
                   Accessibility Statement
@@ -65,7 +64,7 @@ class Footer extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </footer>
     );
   }
 }
