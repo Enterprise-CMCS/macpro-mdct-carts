@@ -65,7 +65,7 @@ class Footer extends Component {
                   Accessibility Statement
                 </a>
               </div>
-              <div className="address ds-l-col--6">
+              <div data-testid={"address"} className="address ds-l-col--6">
                 7500 Security Boulevard Baltimore, MD 21244
               </div>
             </div>
