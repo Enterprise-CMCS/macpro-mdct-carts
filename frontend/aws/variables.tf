@@ -51,3 +51,9 @@ variable "use_custom_db_user_info" {
 variable "use_custom_db_password_info" {
   default = false
 }
+
+variable "postgres_django_registry_id" {
+  default     = null
+  type        = string
+  description = "The AWS Account ID where the postgres django repository is located"
+}
