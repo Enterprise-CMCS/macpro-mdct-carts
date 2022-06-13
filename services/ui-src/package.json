@@ -131,7 +131,8 @@
       "<rootDir>/src/setupTests.js"
     ],
     "moduleNameMapper": {
-      "\\.(css|less|scss)$": "<rootDir>/styleMock.js"
+      "\\.(css|less|scss)$": "<rootDir>/src/util/testing/styleMock.js",
+      "\\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|wav|mp3|m4a)$": "<rootDir>/src/util/testing/mockAsset.ts"
     }
   },
   "resolutions": {

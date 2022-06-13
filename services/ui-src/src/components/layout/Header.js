@@ -7,6 +7,9 @@ import UsaBanner from "@cmsgov/design-system/dist/components/UsaBanner/UsaBanner
 import { Link, withRouter } from "react-router-dom";
 import { getCurrentReportStatus } from "../../store/selectors";
 import { REPORT_STATUS, UserRoles } from "../../types";
+import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle, faUser } from "@fortawesome/free-solid-svg-icons";
 
 class Header extends Component {
   constructor() {
@@ -56,10 +59,8 @@ class Header extends Component {
 
   render() {
     const { currentUser } = this.props;
-    const { currentYear } = this.props;
     const { reportStatus } = this.props;
     const { location } = this.props;
-    const { email } = currentUser;
     const isLoggedIn = !!currentUser.username;
     const { isMenuOpen } = this.state;
     const shouldShowAutosave = this.showAutoSaveOnReport(
@@ -77,30 +78,49 @@ class Header extends Component {
         <header className="header">
           <div className="ds-l-container">
             <div className="ds-l-row header-row">
-              <div className="site-title ds-l-col--4 ds-u-padding--2">
-                <Link data-testid={"cartsCurrentYear"} to="/">
-                  Carts-{currentYear}
+              <div className="site-title ds-l-col--4 ds-u-padding-x--2 ds-u-padding-top--1">
+                <Link to="/" className="ds-u-display--block">
+                  <img
+                    id="carts-logo"
+                    src={appLogo}
+                    alt="Logo for Medicaid Data Collection Tool (MDCT): CHIP Annual Report Template System (CARTS)"
+                  />
                 </Link>
               </div>
-              <div className="user-details ds-l-col--8 ds-u-padding--2">
-                <div data-testid={"userDetailsRow"} className="ds-l-row">
-                  {shouldShowAutosave && <Autosave />}
+              <div className="user-details ds-l-col--8">
+                <div
+                  className="user-details-container ds-l-row"
+                  data-testid={"userDetailsRow"}
+                >
+                  <div className="get-help-container">
+                    <Link to="/" className="ds-u-display--block">
+                      <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
+                      Get Help
+                    </Link>
+                  </div>
                   {isLoggedIn &&
-                    renderDropDownMenu(
-                      isMenuOpen,
-                      this.toggleDropDownMenu,
-                      email
-                    )}
+                    renderDropDownMenu(isMenuOpen, this.toggleDropDownMenu)}
                 </div>
               </div>
             </div>
           </div>
         </header>
+        {shouldShowAutosave && (
+          <div className="save-container">
+            <div className="ds-l-container">
+              <div className="ds-l-row header-row">
+                <div className="ds-l-col--12 ds-u-padding--2">
+                  <Autosave />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 }
-function renderDropDownMenu(isMenuOpen, toggleDropDownMenu, email) {
+function renderDropDownMenu(isMenuOpen, toggleDropDownMenu) {
   return (
     <div className="nav-user" id="nav-user" data-testid="headerDropDownMenu">
       <ul className="user-email-button">
@@ -110,7 +130,8 @@ function renderDropDownMenu(isMenuOpen, toggleDropDownMenu, email) {
             href="#menu"
             onClick={toggleDropDownMenu}
           >
-            {email}
+            <FontAwesomeIcon icon={faUser} size="lg" />
+            My Account
             {isMenuOpen ? (
               <i
                 data-testid="headerDropDownChevUp"
@@ -150,13 +171,11 @@ function renderDropDownMenu(isMenuOpen, toggleDropDownMenu, email) {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentYear: PropTypes.number.isRequired,
   reportStatus: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currentUser: state.stateUser.currentUser,
-  currentYear: state.global.currentYear,
   reportStatus: getCurrentReportStatus(state),
 });
 
