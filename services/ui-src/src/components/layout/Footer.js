@@ -20,15 +20,22 @@ class Footer extends Component {
               </div>
               <div className="cms-branding ds-l-col--6">
                 <div className="ds-l-row">
-                  <div className="cms-branding ds-l-col--4">
+                  <div className="cms-branding ds-l-col--3">
                     <div className="cms-logo">
                       <img
                         src={deptHealthLogo}
                         alt="Department of Health and Human Services, USA"
                       />
                     </div>
+
+                    <div className="cms-medicaid-mobile">
+                      <img
+                        src={medicaidLogo}
+                        alt="Medicaid.gov: Keeping America Healthy"
+                      />
+                    </div>
                   </div>
-                  <div className="cms-branding ds-l-col--8">
+                  <div className="cms-branding ds-l-col--9">
                     <div className="cms-copy">
                       A federal government website managed and paid for by the
                       U.S. Centers for Medicare and Medicaid Services and part
@@ -37,7 +44,7 @@ class Footer extends Component {
                   </div>
                 </div>
                 <div className="cms-medicaid ds-l-row">
-                  <div className="ds-l-col--8">
+                  <div className="ds-l-col--9">
                     <img
                       src={medicaidLogo}
                       alt="Medicaid.gov: Keeping America Healthy"

@@ -29,29 +29,63 @@
     font-size: 14px;
     line-height: 21px;
     color: #212121;
+    margin-top: $margin * 2;
+    @media only screen and (min-width: 768px) {
+      margin-top: 0;
+    }
   }
 
-  .chip-info div img {
-    max-height: 78px;
-  }
+  .chip-info {
+    margin-bottom: $margin * 2;
 
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+    }
+
+    div img {
+      max-height: 78px;
+    }
+  }
   .cms-branding {
     &:first-child {
       text-align: right;
+
+      @media only screen and (max-width: 767px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
     &:last-child {
-      padding-left: 0;
+      @media only screen and (min-width: 768px) {
+        padding-left: 0;
+      }
     }
   }
 
   .cms-medicaid {
+    display: none;
     justify-content: flex-end;
+
+    @media only screen and (min-width: 768px) {
+      display: flex;
+    }
+
     div {
       padding: 0;
       margin-top: 4px;
 
       img {
         max-width: 220px;
+      }
+    }
+
+    &-mobile {
+      max-width: 200px;
+      margin-left: 20px;
+
+      @media (min-width: 768px) {
+        display: none;
       }
     }
   }
