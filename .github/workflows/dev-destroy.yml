@@ -209,8 +209,4 @@ jobs:
           workflow: Delete Topics
           repo: cmsgov/cms-bigmac
           token: ${{ secrets.AUTOMATION_ACCESS_TOKEN }}
-          inputs: '{ "topics":
-            "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config",
-            "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets",
-            "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"
-            }'
+          inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
