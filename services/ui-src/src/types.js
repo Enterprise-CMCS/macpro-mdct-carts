@@ -1,9 +1,9 @@
 export const UserRoles = {
-  ADMIN: "mdctcarts-approver",
-  STATE: "mdctcarts-state-user",
+  APPROVER: "mdctcarts-approver",
+  BUSINESS_OWNER_REP: "mdctcarts-bor",
   HELP: "mdctcarts-help-desk",
-  BO: "mdctcarts-bo-user",
-  CO: "mdctcarts-co",
+  STATE: "mdctcarts-state-user",
+  PROJECT_OFFICER: "mdctcarts-project-officer",
 };
 
 export const REPORT_STATUS = {

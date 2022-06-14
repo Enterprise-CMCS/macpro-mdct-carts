@@ -18,6 +18,7 @@ const SaveError = ({ hasError }) => {
         heading="There's been an unexpected error."
         role="alertdialog"
         variation="warn"
+        data-test="component-header"
       >
         We weren&lsquo;t able to save your latest changes. Try saving in a few
         minutes. If you continue to see this message, refresh your browser.

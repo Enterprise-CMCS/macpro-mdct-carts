@@ -9,6 +9,7 @@ const Spinner = (props) => {
     <div className="preloader">
       <div className="preloader-image">
         <img
+          data-testid="spinner-img"
           src={`${process.env.PUBLIC_URL}/img/spinner.gif`}
           alt="Loading. Please wait."
         />

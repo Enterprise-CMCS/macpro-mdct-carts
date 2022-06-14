@@ -35,7 +35,7 @@
     "react-json-editor-ajrm": "^2.5.13",
     "react-json-editor-viewer": "^1.0.7",
     "react-json-view": "^1.21.3",
-    "react-multi-select-component": "^3.0.7",
+    "react-multi-select-component": "4.2.7",
     "react-number-format": "^4.4.1",
     "react-papaparse": "^3.8.0",
     "react-redux": "^8.0.1",
@@ -104,8 +104,17 @@
     ],
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/index.js"
+      "src/components/**/*.js",
+      "src/util/**/*.js",
+      "!src/index.js",
+      "!src/types.js",
+      "!src/config.js",
+      "!src/**/index.js",
+      "!src/components/Utils/statesArray.js",
+      "!src/util/testing/**/*.js",
+      "!src/actions/**/*.js",
+      "!src/store/**/*.js",
+      "!src/util/idLetterMarkers.js"
     ],
     "coverageReporters": [
       "json",
@@ -120,7 +129,11 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "<rootDir>/src/util/testing/styleMock.js",
+      "\\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|wav|mp3|m4a)$": "<rootDir>/src/util/testing/mockAsset.ts"
+    }
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"

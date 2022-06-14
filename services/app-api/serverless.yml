@@ -18,6 +18,11 @@ plugins:
   - serverless-s3-bucket-helper
   - serverless-api-client-certificate
 
+s3BucketHelper:
+  loggingConfiguration:
+    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket~true, ssm:/configuration/default/s3/accessLogsBucket~true}
+    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix~true, ssm:/configuration/default/s3/accessLogsPrefix~true}
+
 custom:
   serverlessPluginTypescript:
     tsConfigFileLocation: "./tsconfig.json"
@@ -28,10 +33,16 @@ custom:
       - main
       - val
       - prod
+  princeApiHost: ${env:princeApiHost, ssm:/${self:custom.stage}/prince_api_host, ssm:/default/prince_api_host}
+  princeApiPath: ${env:princeApiPath, ssm:/${self:custom.stage}/prince_api_path, ssm:/default/prince_api_path}
+  stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
+  stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
   stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
   sectionTableName: ${env:sectionTableName, cf:database-${self:custom.stage}.SectionTableName}
   sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
+  sectionBaseTableName: ${env:sectionBaseTableName, cf:database-${self:custom.stage}.SectionBaseTableName}
+  sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
   associateWaf:
     name: ${self:custom.webAclName}
@@ -74,10 +85,17 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - execute-api:Invoke
+          Resource: "*"
   environment:
-    measureTableName: ${self:custom.measureTableName}
+    princeApiHost: ${self:custom.princeApiHost}
+    princeApiPath: ${self:custom.princeApiPath}
+    stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
+    sectionBaseName: ${self:custom.sectionBaseTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${opt:stage, self:provider.stage}
 
@@ -122,6 +140,14 @@ functions:
           method: put
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  generateFormTemplates:
+    handler: handlers/formTemplates/post.post
+    events:
+      - http:
+          path: formTemplates
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   postUpload:
     handler: handlers/uploads/createUploadPsUrl.psUpload
     events:
@@ -151,6 +177,15 @@ functions:
     events:
       - http:
           path: uploads/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  printPdf:
+    handler: handlers/printing/printPdf.print
+    timeout: 30
+    events:
+      - http:
+          path: print_pdf
           method: post
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}

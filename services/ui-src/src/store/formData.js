@@ -25,7 +25,8 @@ export default (state = initialState, action) => {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
       if (action.lastYearData) {
-        let lastYearData = action.lastYearData.data.sort(sortByOrdinal);
+        let lastYearData = action.lastYearData.sort(sortByOrdinal);
+        const twoYearCycle = action.lastYearData.year % 2 == 0;
         if (
           !updatedData[0].contents.section.subsections[0].parts[0].questions[0]
             .answer.entry
@@ -40,11 +41,13 @@ export default (state = initialState, action) => {
           updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
             lastYearData[0].contents.section.subsections[0].parts[0].questions[1]; // Type
         }
-        // TODO: Cohort Questions - These should be revolving around a 2 year cycle, but today just pull forward
-        updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
-          lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer; // How does your state define “newly enrolled” for this cohort?
-        updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
-          lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer; // Do you have data for individual age groups?
+        // Cohort Questions - These should be revolving around a 2 year cycle, but today just pull forward
+        if (twoYearCycle) {
+          updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
+            lastYearData[3].contents.section.subsections[2].parts[5].questions[1].answer; // How does your state define “newly enrolled” for this cohort?
+          updatedData[3].contents.section.subsections[2].parts[5].questions[2].answer =
+            lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer; // Do you have data for individual age groups?
+        }
         // Added mid year as a quick fix for 2021 forms see: https://qmacbis.atlassian.net/browse/OY2-12744 Should be removed ASAP!!
         updatedData[2].contents.section.subsections[0].parts[1].text =
           "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";

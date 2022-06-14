@@ -6,7 +6,7 @@ const Title = ({ name, stateName, formYear, urlStateName }) => {
   const displayStateName = name || urlStateName || stateName || "";
 
   return (
-    <div className="h1-title-report">
+    <div className="h1-title-report" data-testid="report-title">
       <h1>
         {displayStateName} CARTS FY{formYear} Report
       </h1>

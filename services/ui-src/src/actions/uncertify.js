@@ -1,41 +1,35 @@
-import axios from "../authenticatedAxios";
+import { API } from "aws-amplify";
+import requestOptions from "../hooks/authHooks/requestOptions";
+import { REPORT_STATUS } from "../types";
 
 export const UNCERTIFY = "UNCERTIFY";
 export const UNCERTIFY_SUCCESS = "UNCERTIFY_SUCCESS";
 export const UNCERTIFY_FAILURE = "UNCERTIFY_FAILURE";
 
 export const theUncertify =
-  (stateCode, stateYear) => async (dispatch, getState) => {
-    const state = getState();
-    const user = state.stateUser.currentUser;
+  (stateCode, reportYear) => async (dispatch, getState) => {
+    const stateObject = getState();
+    const user = stateObject.stateUser.currentUser;
     const username = `${user.firstname} ${user.lastname}`;
+    const state = stateCode;
+    const year = reportYear;
 
-    // created a new record in carts_api_statestatus that will label the state as uncertified
     dispatch({ type: UNCERTIFY });
     try {
-      const stateStatus = axios.post(`/state_status/`, {
-        lastChanged: new Date(),
-        state: stateCode,
-        status: "in_progress",
+      const opts = await requestOptions();
+      opts.body = {
+        status: REPORT_STATUS.in_progress,
         username: username,
-        year: stateYear,
+        year: reportYear,
+        state: state,
+      };
+
+      await API.post("carts-api", `/state_status/${year}/${state}`, opts);
+      dispatch({
+        type: UNCERTIFY_SUCCESS,
+        user: username,
+        report: `${state}${year}`,
       });
-
-      const statusChangeEmail = axios.post(`/api/v1/sendemail/statuschange`, {
-        subject: "CMS MDCT Carts",
-        statecode: stateCode,
-        source: window.location.hostname,
-        status: "uncertify",
-      });
-
-      await axios
-        .all([stateStatus, statusChangeEmail])
-        .then(function (response) {
-          window.alert(response.data.message.toString());
-          window.location.reload(false);
-        });
-
-      dispatch({ type: UNCERTIFY_SUCCESS, stateCode: stateCode });
     } catch (e) {
       dispatch({ type: UNCERTIFY_FAILURE, message: { e } });
     }

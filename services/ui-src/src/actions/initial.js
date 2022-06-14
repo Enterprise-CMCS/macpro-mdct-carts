@@ -25,68 +25,48 @@ export const getAllStatesData = () => {
   };
 };
 
-export const getAllStateStatuses =
-  (selectedYears = [], selectedStates = [], selectedStatus = []) =>
-  async (dispatch) => {
-    const opts = await requestOptions();
-    const results = await API.get("carts-api", `/state_status`, opts);
-    const data = results.Items;
-    let yearFilter = () => {};
-    let stateFilter = () => {};
-    let statusFilter = () => {};
+export const getAllStateStatuses = () => async (dispatch) => {
+  const opts = await requestOptions();
+  const results = await API.get("carts-api", `/state_status`, opts);
+  const data = results.Items;
 
-    selectedYears.length > 0
-      ? (yearFilter = (record) => selectedYears.includes(record.year))
-      : (yearFilter = () => true);
+  const payload = data
+    .sort((a, b) => {
+      const dateA = new Date(a.lastChanged);
+      const dateB = new Date(b.lastChanged);
 
-    selectedStates.length > 0
-      ? (stateFilter = (record) => selectedStates.includes(record.state))
-      : (stateFilter = () => true);
-
-    selectedStatus.length > 0
-      ? (statusFilter = (record) => selectedStatus.includes(record.status))
-      : (statusFilter = () => true);
-
-    const payload = data
-      .filter(yearFilter)
-      .filter(stateFilter)
-      .filter(statusFilter)
-      .sort((a, b) => {
-        const dateA = new Date(a.lastChanged);
-        const dateB = new Date(b.lastChanged);
-
-        if (dateA > dateB) {
-          return 1;
-        }
-        if (dateA < dateB) {
-          return -1;
-        }
-        return 0;
-      })
-      .filter(
-        (status, index, original) =>
-          original
-            .slice(index + 1)
-            .findIndex(
-              (el) => el.stateId === status.stateId && el.year === status.year
-            ) < 0
-      )
-      .reduce(
-        (out, record) => ({
-          ...out,
-          [record.stateId + record.year]: {
-            status: record.status,
-            year: record.year,
-            stateCode: record.stateId,
-            lastChanged: record.lastChanged,
-            username: record.username,
-            programType: record.programType,
-          },
-        }),
-        {}
-      );
-    dispatch({ type: SET_STATE_STATUSES, payload });
-  };
+      if (dateA > dateB) {
+        return 1;
+      }
+      if (dateA < dateB) {
+        return -1;
+      }
+      return 0;
+    })
+    .filter(
+      (status, index, original) =>
+        original
+          .slice(index + 1)
+          .findIndex(
+            (el) => el.stateId === status.stateId && el.year === status.year
+          ) < 0
+    )
+    .reduce(
+      (out, record) => ({
+        ...out,
+        [record.stateId + record.year]: {
+          status: record.status,
+          year: record.year,
+          stateCode: record.stateId,
+          lastChanged: record.lastChanged,
+          username: record.username,
+          programType: record.programType,
+        },
+      }),
+      {}
+    );
+  dispatch({ type: SET_STATE_STATUSES, payload });
+};
 
 export const getStateAllStatuses =
   (selectedYears = [], selectedStates = [], selectedStatus = []) =>
@@ -171,13 +151,33 @@ export const getStateStatus =
 export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
-    const results = await API.get(
+    const data = await API.get(
       "carts-api",
       `/section/${selectedYear}/${stateCode}`,
       opts
     );
-    const data = results;
-    dispatch({ type: LOAD_SECTIONS, data });
+
+    const lastYear = parseInt(selectedYear) - 1;
+    let lastYearData = undefined;
+    const priorData = await API.get(
+      "carts-api",
+      `/section/${lastYear}/${stateCode}`,
+      opts
+    ).catch((err) => {
+      console.log("--- ERROR PRIOR YEAR SECTIONS ---");
+      console.log(err);
+      /*
+       * Without the following too many things break, because the
+       * entire app is too dependent on section data being present.
+       */
+      dispatch({ type: LOAD_SECTIONS, data, lastYearData });
+      throw err;
+    });
+    if (data.length > 0) {
+      lastYearData = priorData;
+      dispatch({ type: LOAD_LASTYEAR_SECTIONS, data: priorData });
+    }
+    dispatch({ type: LOAD_SECTIONS, data, lastYearData });
   };
 };
 
@@ -192,7 +192,6 @@ export const loadUser = (user) => async (dispatch) => {
     firstname: user.attributes?.given_name,
     email: user.attributes?.email,
   };
-  // TODO: bring in info for state and program
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
     // TODO: Get Program and State data

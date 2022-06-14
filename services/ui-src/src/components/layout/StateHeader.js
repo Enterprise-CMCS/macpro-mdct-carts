@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const StateHeader = ({ imageURI, name }) => (
-  <div className="state-header">
+  <div className="state-header" data-testid="state-header">
     <div className="state-image">
       <img src={imageURI} alt={name} />
     </div>

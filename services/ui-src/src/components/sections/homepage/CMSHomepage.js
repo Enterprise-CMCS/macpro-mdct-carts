@@ -5,12 +5,12 @@ import { getAllStateStatuses } from "../../../actions/initial";
 import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system";
-import MultiSelect from "react-multi-select-component";
+import { MultiSelect } from "react-multi-select-component";
 import { STATUS_MAPPING, UserRoles } from "../../../types";
 
 const CMSHomepage = ({
   getStatuses,
-  statuses,
+  allStateStatuses,
   currentUserRole,
   stateList,
   yearList,
@@ -23,49 +23,95 @@ const CMSHomepage = ({
     { label: "Published", value: "published" },
   ];
 
-  // using state below allows the user to keep both of the other filters working properly when they "remove" from a different drop down
-  const [tempStates, setTempStates] = useState([]);
-  const [tempStatuses, setTempStatus] = useState([]);
-  const [tempYears, setTempYear] = useState([]);
+  const [currentlySelectedStates, setCurrentlySelectedStates] = useState([]);
+  const [currentlySelectedStatuses, setCurrentlySelectedStatuses] = useState(
+    []
+  );
+  const [currentlySelectedYears, setCurrentlySelectedYears] = useState([]);
   const [stateIds, setStateIds] = useState([]);
   const [yearIds, setYearIds] = useState([]);
   const [statusIds, setStatusIds] = useState([]);
-  let tempHolder = [];
+  const [filteredStatuses, setFilteredStatuses] = useState([]);
+
   useEffect(() => {
     getStatuses();
+    setFilteredStatuses(allStateStatuses);
   }, []);
-  const onSelectState = (element) => {
-    tempHolder = element.map((state) => {
+
+  const onSelectState = (selectedValues) => {
+    const selectedStateCodes = selectedValues.map((state) => {
       return state.value;
     });
-    setStateIds(tempHolder);
-    setTempStates(element);
+    setStateIds(selectedStateCodes);
+    setCurrentlySelectedStates(selectedValues);
   };
-  const onSelectYear = (element) => {
-    tempHolder = element.map((year) => {
+
+  const onSelectYear = (selectedValues) => {
+    const selectedYears = selectedValues.map((year) => {
       return year.value;
     });
-    setYearIds(tempHolder);
-    setTempYear(element);
+    setYearIds(selectedYears);
+    setCurrentlySelectedYears(selectedValues);
   };
-  const onSelectStatus = (element) => {
-    tempHolder = element.map((status) => {
+
+  const onSelectStatus = (selectedValues) => {
+    const selectedStatuses = selectedValues.map((status) => {
       return status.value;
     });
-    setStatusIds(tempHolder);
-    setTempStatus(element);
+    setStatusIds(selectedStatuses);
+    setCurrentlySelectedStatuses(selectedValues);
   };
 
   const filterReports = () => {
-    getStatuses(yearIds, stateIds, statusIds);
+    let yearFilter = () => {};
+    let stateFilter = () => {};
+    let statusFilter = () => {};
+
+    yearIds.length > 0
+      ? (yearFilter = (record) => yearIds.includes(record.year))
+      : (yearFilter = () => true);
+
+    stateIds.length > 0
+      ? (stateFilter = (record) => stateIds.includes(record.stateCode))
+      : (stateFilter = () => true);
+
+    statusIds.length > 0
+      ? (statusFilter = (record) => statusIds.includes(record.status))
+      : (statusFilter = () => true);
+
+    const withFilters = allStateStatuses
+      .filter(yearFilter)
+      .filter(stateFilter)
+      .filter(statusFilter);
+
+    setFilteredStatuses(withFilters);
   };
+
   const clearFilter = () => {
-    window.location.reload(false);
+    setFilteredStatuses(allStateStatuses);
+    setStatusIds([]);
+    setCurrentlySelectedStatuses([]);
+    setYearIds([]);
+    setCurrentlySelectedYears([]);
+    setStateIds([]);
+    setCurrentlySelectedStates([]);
   };
+
+  let stateStatuses;
+
+  if (
+    filteredStatuses.length > 0 &&
+    filteredStatuses[0].stateCode === "status"
+  ) {
+    stateStatuses = allStateStatuses;
+  } else {
+    stateStatuses = filteredStatuses;
+  }
+
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
-        {currentUserRole !== UserRoles.ADMIN ? (
+        {currentUserRole !== UserRoles.BUSINESS_OWNER_REP ? (
           <>
             <div className="ds-l-row ds-u-padding-left--2">
               <h1 className="page-title ds-u-margin-bottom--0">
@@ -84,30 +130,39 @@ const CMSHomepage = ({
                 <div className="filter-div">
                   <div className="ds-c-label">Search and Filter results</div>
 
-                  <div className="filter-drop-down-state">
+                  <div
+                    data-cy="cms-homepage-state-dropdown"
+                    className="filter-drop-down-state"
+                  >
                     <MultiSelect
                       options={stateList}
-                      value={tempStates}
+                      value={currentlySelectedStates}
                       onChange={onSelectState}
                       labelledBy={"State"}
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "State" }}
                     />
                   </div>
-                  <div className="filter-drop-down-year-status">
+                  <div
+                    data-cy="cms-homepage-year-dropdown"
+                    className="filter-drop-down-year-status"
+                  >
                     <MultiSelect
                       options={yearList}
-                      value={tempYears}
+                      value={currentlySelectedYears}
                       onChange={onSelectYear}
                       labelledBy={"Year"}
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "Year" }}
                     />
                   </div>
-                  <div className="filter-drop-down-year-status">
+                  <div
+                    data-cy="cms-homepage-status-dropdown"
+                    className="filter-drop-down-year-status"
+                  >
                     <MultiSelect
                       options={statusList}
-                      value={tempStatuses}
+                      value={currentlySelectedStatuses}
                       onChange={onSelectStatus}
                       labelledBy="Status"
                       hasSelectAll={false}
@@ -117,6 +172,7 @@ const CMSHomepage = ({
                   <div>
                     <Button
                       type="button"
+                      data-cy="cms-homepage-filter-submit"
                       class="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => filterReports()}
                     >
@@ -124,6 +180,7 @@ const CMSHomepage = ({
                     </Button>
                     <Button
                       type="button"
+                      data-cy="cms-homepage-filter-clear"
                       class="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => clearFilter()}
                     >
@@ -142,8 +199,8 @@ const CMSHomepage = ({
                 <div className="name ds-l-col--3">Last Edited</div>
                 <div className="actions ds-l-col--4">Actions</div>
               </div>
-              <div className="report-status">
-                {statuses
+              <div data-cy="cms-homepage-reports" className="report-status">
+                {stateStatuses
                   .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
                   .map(
                     ({
@@ -155,7 +212,6 @@ const CMSHomepage = ({
                       lastChanged,
                     }) => {
                       return (
-                        // eslint-disable-next-line
                         <div>
                           {
                             // eslint-disable-next-line
@@ -189,9 +245,10 @@ const CMSHomepage = ({
     </div>
   );
 };
+
 CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
-  statuses: PropTypes.object.isRequired,
+  allStateStatuses: PropTypes.object.isRequired,
   currentYear: PropTypes.object.isRequired,
   currentUserRole: PropTypes.string.isRequired,
   stateList: PropTypes.object.isRequired,
@@ -200,7 +257,7 @@ CMSHomepage.propTypes = {
 };
 
 const mapState = (state) => ({
-  statuses: selectFormStatuses(state),
+  allStateStatuses: selectFormStatuses(state),
   currentYear: state.global.formYear,
   stateList: state.allStatesData.map((element) => {
     return { label: element.name, value: element.code };
