@@ -93,7 +93,6 @@ async function uploadAVDefinitions() {
           Bucket: constants.CLAMAV_BUCKET_NAME,
           Key: `${constants.PATH_TO_AV_DEFINITIONS}/${filenameToUpload}`,
           Body: fs.createReadStream(path.join("/tmp/", filenameToUpload)),
-          ACL: "public-read",
         };
 
         S3.putObject(options, function (err, data) {
