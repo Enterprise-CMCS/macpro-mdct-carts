@@ -37,7 +37,7 @@ describe("<Footer />", () => {
     const cartsLogo = (
       <img
         src={cartsLogoGrey}
-        alt="Logo for Medicaid Data Collection Tool (MDCT): CHIP Annual Report Template System (CARTS)"
+        alt="Logo for Medicaid Data Collection Tool (MDCT): CHIP Annual Reporting Template System (CARTS)"
       />
     );
 
