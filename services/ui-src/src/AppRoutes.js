@@ -15,6 +15,7 @@ import "./styles/app.scss";
 
 const AppRoutes = () => {
   const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
+
   if (!user && showLocalLogins) {
     return <LocalLogins loginWithIDM={loginWithIDM} />;
   }
@@ -36,10 +37,10 @@ const AppRoutes = () => {
       className={"App " + window.location.pathname.split("/")[1]}
       data-test="component-app"
     >
-      {VisibleHeader}
       <div className="app-content">
         <Spinner />
         <Router>
+          {VisibleHeader}
           <Home user={user} role={userRole} />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />

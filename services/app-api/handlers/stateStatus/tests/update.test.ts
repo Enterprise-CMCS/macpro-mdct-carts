@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import { updateStateStatus } from "../update";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 import { UserRoles } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 
+const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
@@ -20,6 +22,12 @@ jest.mock("../../../libs/authorization", () => ({
 }));
 
 describe("Test Update State Status Handlers", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+  afterEach(() => {
+    console.error = originalError;
+  });
   test("update state status without year and state", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,

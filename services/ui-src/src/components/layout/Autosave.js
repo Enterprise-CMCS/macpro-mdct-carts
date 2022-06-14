@@ -58,7 +58,7 @@ const Autosave = ({ isSaving, lastSaved }) => {
   }
 
   return (
-    <div className="save-status ds-l-col--6">
+    <div className="save-status">
       {active ? (
         <>
           <Spinner /> Saving...

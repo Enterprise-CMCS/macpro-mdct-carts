@@ -4,6 +4,9 @@ Under section 2108(a) of the Act, states must assess the operation of their sepa
 
 _Our main branch is for development of CARTSv3. Head to the [`master` branch](https://github.com/cmsgov/cms-carts-seds/tree/master) to view the readme, documentation, and source code fo CARTSv2._
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/6bd409a85fe7b9b7d1ff/maintainability)](https://codeclimate.com/github/CMSgov/cms-carts-seds/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6bd409a85fe7b9b7d1ff/test_coverage)](https://codeclimate.com/github/CMSgov/cms-carts-seds/test_coverage)
+
 ## Table of contents
 
 - [Status](#status)

@@ -25,7 +25,7 @@ describe("Authorization Lib Function", () => {
       });
     });
 
-    test("authorizaiton should fail from missing jwt key", () => {
+    test("authorization should fail from missing jwt key", () => {
       event.headers = {};
       expect(isAuthorized(event)).toBeFalsy();
     });
@@ -43,12 +43,6 @@ describe("Authorization Lib Function", () => {
       event.pathParameters = null;
       expect(isAuthorized(event)).toBeTruthy();
     });
-
-    test("authorization should fail from missing requestState and non-GET call", () => {
-      event.pathParameters = null;
-      event.httpMethod = "POST";
-      expect(isAuthorized(event)).toBeFalsy();
-    });
   });
 
   describe("Non-State User Tests", () => {
@@ -59,7 +53,7 @@ describe("Authorization Lib Function", () => {
       event.headers = { "x-api-key": "test" };
       event.pathParameters = { state: "AL" };
       mockedDecode.mockReturnValue({
-        "custom:cms_roles": UserRoles.ADMIN,
+        "custom:cms_roles": UserRoles.BUSINESS_OWNER_REP,
         "custom:cms_state": "AL",
       });
     });
@@ -68,9 +62,9 @@ describe("Authorization Lib Function", () => {
       expect(isAuthorized(event)).toBeTruthy();
     });
 
-    test("authorization should fail from unauthorized http method", () => {
+    test("authorization should succeed on non-GET methods", () => {
       event.httpMethod = "POST";
-      expect(isAuthorized(event)).toBeFalsy();
+      expect(isAuthorized(event)).toBeTruthy();
     });
   });
 });

@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import { getSections } from "../get";
 import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 import { UserRoles } from "../../../types";
 
+const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
@@ -27,6 +29,13 @@ jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
 }));
 
 describe("Test Get Sections Handlers", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+  afterEach(() => {
+    console.error = originalError;
+  });
+
   test("fetching sections should use state and year", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,

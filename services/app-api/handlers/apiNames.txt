@@ -1,9 +1,13 @@
+-- formTemplates
+POST /formTemplates - create the sections for a given year for all known states
+
 -- state
 GET /state - return info on all states and territories
 
 -- state_status
 GET /state_status - returns available state statuses for the current user role
 POST /state_status/{year}/{state} - updates the state status for a given report
+POST /uncertify_report/{year}/{state} - uncertifies the report for a given state and year
 
 -- section
 GET /section/{year}/{state} -- returns the report sections for a given year and state
@@ -16,3 +20,6 @@ POST /psUrlDownload/{year}/{state} - get a presigned url to download a file
 POST /psUrlUpload/{year}/{state} - get a presigned url to upload a file
 DELETE /uploads/{year}/{state} - delete an upload on a question
 POST /uploads/{year}/{state} - get a list of uploads matching the request body
+
+-- printing (Prince)
+POST /print_pdf -- produces a Prince-generated PDF

@@ -9,14 +9,6 @@
   },
   {
     "stateId": "AL",
-    "status": "not_started",
-    "year": 2022,
-    "programType": "combo",
-    "username": "al@test.com",
-    "lastChanged": "2022-01-04 18:28:18.524133+00"
-  },
-  {
-    "stateId": "AL",
     "status": "certified",
     "year": 2020,
     "programType": "combo",

@@ -44,4 +44,28 @@ export const updateStateStatus = handler(async (event, _context) => {
 
     await dynamoDb.update(updateStateStatusparams);
   }
+
+  /**
+   * Approver uncertifies a CARTS report
+   */
+  // eslint-disable-next-line
+  // TODO: update ADMIN with APPROVER role
+  else if (user.role === UserRoles.APPROVER) {
+    const uncertifyReportParams = {
+      TableName: process.env.stateStatusTableName!,
+      Key: {
+        stateId: state,
+        year: parseInt(year),
+      },
+      ...convertToDynamoExpression(
+        {
+          status: "in_progress",
+          lastChanged: new Date().toString(),
+        },
+        "post"
+      ),
+    };
+
+    await dynamoDb.update(uncertifyReportParams);
+  }
 });

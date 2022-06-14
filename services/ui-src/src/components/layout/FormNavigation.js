@@ -29,9 +29,10 @@ const FormNavigation = (props) => {
 
   // If admin, DO NOT ADD
   if (
-    role !== UserRoles.ADMIN &&
-    role !== UserRoles.BO &&
-    role !== UserRoles.CO
+    role !== UserRoles.BUSINESS_OWNER_REP &&
+    role !== UserRoles.HELP &&
+    role !== UserRoles.PROJECT_OFFICER &&
+    role !== UserRoles.APPROVER
   ) {
     // Add certify and submit page to items array
     items.push(`/sections/${year}/certify-and-submit`);

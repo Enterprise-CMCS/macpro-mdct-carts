@@ -120,7 +120,10 @@ const showPartBasedOnUserType = (contextData, programData, state) => {
 
   if (
     programData &&
-    (role === UserRoles.BO || role === UserRoles.CO || role === UserRoles.ADMIN)
+    (role === UserRoles.BUSINESS_OWNER_REP ||
+      role === UserRoles.HELP ||
+      role === UserRoles.STATE ||
+      role === UserRoles.PROJECT_OFFICER)
   ) {
     // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);

@@ -33,7 +33,7 @@ const SaveMessage = ({ lastSaved }) => {
   const lastSavedMoment = moment(lastSaved);
 
   if (!lastSavedMoment.isValid()) {
-    return "not yet saved";
+    return "Not yet saved";
   }
 
   const difference = currentMoment.diff(lastSavedMoment);

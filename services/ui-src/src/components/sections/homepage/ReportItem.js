@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
-import { theAccept } from "../../../actions/accept";
 import { UserRoles } from "../../../types";
+import { Dialog } from "@cmsgov/design-system";
+import useModal from "../../../hooks/useModal";
 
 const ReportItem = ({
   link1Text,
@@ -13,7 +14,6 @@ const ReportItem = ({
   statusText,
   statusURL,
   theUncertify: uncertifyAction,
-  theAccept: acceptAction,
   userRole,
   year,
   username,
@@ -22,6 +22,7 @@ const ReportItem = ({
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
+  const { isShowing, toggleModal } = useModal();
   let theDateTime = "";
   let tempTime = "";
   let stateUser = false;
@@ -55,23 +56,9 @@ const ReportItem = ({
   }
 
   const uncertify = () => {
-    if (window.confirm("Are you sure to uncertify this record?")) {
-      uncertifyAction(stateCode, stateYear);
-      /*
-       * Getting the new statuses to update the page
-       * getAllStateStatuses();
-       */
-      window.location.reload(false); // Added because above wasn't consistently reloading
-    }
-  };
-  const accept = () => {
-    if (window.confirm("Are you sure to accept this record?")) {
-      acceptAction(stateCode, stateYear);
-      // Need to send out a notification ticket #OY2-2416
-
-      //Getting the new statuses to update the page
-      window.location.reload(false);
-    }
+    uncertifyAction(stateCode, stateYear);
+    toggleModal();
+    window.location.reload(false);
   };
 
   return (
@@ -90,26 +77,39 @@ const ReportItem = ({
           <div className="actions ds-l-col--3">
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
-          <div className="actions ds-l-col--1">
+          <div className="actions ds-l-col--auto">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
             </Link>
           </div>
-          {statusText === "Certified" &&
-          (userRole === UserRoles.CO || userRole === UserRoles.BO) ? (
-            <div className="actions ds-l-col--1">
-              <Link onClick={uncertify} variation="primary">
+          {statusText === "Certified and Submitted" &&
+          userRole === UserRoles.APPROVER ? (
+            <div className="actions ds-l-col--auto">
+              <button className="link" onClick={toggleModal}>
                 Uncertify
-              </Link>
+              </button>
             </div>
           ) : null}
-          {statusText === "Certified" && userRole === UserRoles.CO ? (
-            <div className="actions ds-l-col--1">
-              <Link onClick={accept} variation="primary">
-                Accept
-              </Link>
-            </div>
-          ) : null}
+          {isShowing && (
+            <Dialog
+              isShowing={isShowing}
+              onExit={toggleModal}
+              heading="Uncertify this Report?"
+              actions={[
+                <button
+                  className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
+                  key="primary"
+                  onClick={uncertify}
+                  aria-label="Uncertify this Report"
+                >
+                  Yes, Uncertify
+                </button>,
+              ]}
+            >
+              Uncertifying will send this CARTS report back to the state user
+              who submitted it
+            </Dialog>
+          )}
         </div>
       )}
       {stateUser && (
@@ -138,7 +138,6 @@ const ReportItem = ({
 
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
-  theAccept: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string,
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -160,6 +159,6 @@ const mapState = (state) => ({
   user: state.reportStatus.username,
 });
 
-const mapDispatch = { theUncertify, theAccept };
+const mapDispatch = { theUncertify };
 
 export default connect(mapState, mapDispatch)(ReportItem);

@@ -1,5 +1,6 @@
+import { API } from "aws-amplify";
+import requestOptions from "../../hooks/authHooks/requestOptions";
 import React, { useState } from "react";
-import axios from "../../authenticatedAxios";
 import "react-data-table-component-extensions/dist/index.css";
 import { Button } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
@@ -13,9 +14,8 @@ const FormTemplates = () => {
     setInprogress(true);
 
     try {
-      await axios.post(`/api/v1/updateformtemplates`, {
-        year: selectedYear,
-      });
+      const opts = await requestOptions({ year: selectedYear });
+      await API.post("carts-api", "/formTemplates", opts);
       window.alert("Request Completed");
       history.push("/");
     } catch (e) {
@@ -33,17 +33,19 @@ const FormTemplates = () => {
           className="ds-c-field"
           name="selectedYear"
           id="selectedYear"
+          data-testid="generate-forms-options"
+          defaultValue="2022"
           // onChange={loadSectionBaseBySection}
         >
-          <option value="2021" selected>
-            2021
-          </option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
         </select>
         <Button
           type="button"
           className="ds-c-button ds-c-button--primary"
           onClick={handleUpdateTemplates}
           disabled={inProgress}
+          data-testid="generate-forms-button"
         >
           Generate New Section Forms
         </Button>

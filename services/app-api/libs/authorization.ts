@@ -35,7 +35,6 @@ export const isAuthorized = (event: APIGatewayProxyEvent) => {
 
   // get state and method from the event
   const requestState = event.pathParameters?.state;
-  const requestMethod = event.httpMethod as RequestMethods;
 
   // decode the idToken
   const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;
@@ -45,12 +44,10 @@ export const isAuthorized = (event: APIGatewayProxyEvent) => {
   const userState = decoded["custom:cms_state"];
 
   // if user is a state user - check they are requesting a resource from their state
-  if (userState && requestState && userRole === UserRoles.STATE) {
+  if (userRole === UserRoles.STATE && userState && requestState) {
     return userState.toLowerCase() === requestState.toLowerCase();
   }
-
-  // if user is an admin - they can only GET resources
-  return requestMethod === RequestMethods.GET;
+  return true;
 };
 
 export const getUserNameFromJwt = (event: APIGatewayProxyEvent) => {

@@ -27,7 +27,7 @@ const Submit = ({ certify }) => (
       compliance with Title XXI of the Social Security Act (Section 2109(a) and
       Section 2108(e)).
     </p>
-    <Button onClick={certify} variation="primary">
+    <Button data-testid="certifySubmit" onClick={certify} variation="primary">
       Certify and Submit
     </Button>
   </>
@@ -38,7 +38,9 @@ Submit.propTypes = { certify: PropTypes.func.isRequired };
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
   return (
     <>
-      <h3>Thank you for submitting your CARTS report!</h3>
+      <h3 data-testid={"certifyThankYou"}>
+        Thank you for submitting your CARTS report!
+      </h3>
       <p>
         Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
         {lastSave.format("h:mm A")} by {user}.
