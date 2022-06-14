@@ -20,7 +20,6 @@ Now that the PR is open this is what happens next
 - [ ] I have added thorough tests. [Testing Doc](https://qmacbis.atlassian.net/wiki/spaces/CM/pages/2914025525/Test+Suite+and+Testing+Research)
 - [ ] Necessary analytics were added, or no new analytics were required
 - [ ] I have made corresponding changes to the documentation
-- [ ] I have assigned the PR to myself
 
 ## Reviewers Checklist (Two different people)
 
