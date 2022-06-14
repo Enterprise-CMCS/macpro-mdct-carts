@@ -377,6 +377,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   account_id        = data.aws_caller_identity.current.account_id
+  new_account_id    = data.aws_caller_identity.datalayer.account_id # Data Layer is always in new account now
   is_legacy_account = local.account_id == "730373213083"
 }
 
