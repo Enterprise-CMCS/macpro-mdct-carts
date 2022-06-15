@@ -3,8 +3,7 @@ import { Accordion, AccordionItem, Alert } from "@cmsgov/design-system";
 import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.png";
 import ActionCard from "../Utils/ActionCard";
 
-// eslint-disable-next-line no-unused-vars
-const GetHelp = ({ currentUser }) => {
+const GetHelp = () => {
   return (
     <main className="page-info ds-l-container">
       <div className="ds-l-col--12">
@@ -30,7 +29,7 @@ const GetHelp = ({ currentUser }) => {
         </ActionCard>
 
         <Accordion bordered>
-          <AccordionItem heading="First FAQ Question" contentClassName="jimmy">
+          <AccordionItem heading="First FAQ Question">
             <p>
               This is the first FAQ Answer. It's quite a verbose one, really. In
               fact, wouldn't you know that the person is simply using this as
