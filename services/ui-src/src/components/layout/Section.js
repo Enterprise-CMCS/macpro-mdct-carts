@@ -19,7 +19,6 @@ const Section = ({ subsectionId, title }) => {
       <div className="main">
         <PageInfo />
         <h2 className="print-only" data-testid="section-print-title">
-          {sectionId !== 0 && <span>Section {sectionId}: </span>}
           {title}
         </h2>
         <h2 className="screen-only" data-testid="section-screen-title">
