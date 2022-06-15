@@ -66,7 +66,6 @@ describe("Section Component", () => {
     const { getByTestId } = render(section);
     const headerComponent = getByTestId("section-print-title");
     expect(headerComponent).toHaveTextContent("Section Title");
-    expect(headerComponent).toHaveTextContent("123");
     expect(headerComponent).not.toHaveTextContent("2020-123");
   });
 });
