@@ -35,17 +35,13 @@ jobs:
         run: yarn test
         working-directory: ./services/app-api
   assignAuthor:
+    if: github.event.pull_request.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Assign PR to Creator
-        run: |
-          if [ "$PR_AUTHOR_TYPE" != "Bot" ]
-            then
-              gh pr edit $PRNUM --add-assignee $PR_AUTHOR
-            fi
+        run: gh pr edit $PRNUM --add-assignee $PR_AUTHOR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PRNUM: ${{ github.event.pull_request.number }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-          PR_AUTHOR_TYPE: ${{ github.event.pull_request.user.type }}
