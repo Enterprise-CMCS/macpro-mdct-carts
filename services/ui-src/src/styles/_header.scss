@@ -15,12 +15,7 @@
 
   @media only screen and (max-width: 767px) {
     text-align: center;
-  }
-
-  &:after {
-    content: "";
-    clear: both;
-    display: table;
+    padding-bottom: 16px;
   }
 
   a,
@@ -50,25 +45,54 @@
     }
   }
 
-  .save-status {
-    font-size: 0.85rem;
-    font-style: italic;
-    padding-top: 0.1rem;
-    text-align: center;
-    width: auto;
+  #carts-logo {
+    max-width: 300px;
+  }
+
+  .user-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media only screen and (min-width: 767px) {
+      justify-content: flex-end;
+    }
+
+    &-container {
+      height: 100%;
+      justify-content: center;
+      max-width: 400px;
+      width: 100%;
+
+      @media only screen and (min-width: 767px) {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .get-help-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
+    font-weight: $font-weight-bold;
 
     @media only screen and (min-width: 768px) {
-      border-right: 2px solid $white;
-      float: right;
-      text-align: right;
+      width: auto;
+    }
+
+    a {
+      svg {
+        padding-right: $padding;
+      }
     }
   }
 
   .nav-user {
-    text-align: center;
-    float: right;
-    margin: 0 auto;
-    width: auto;
+    width: 50%;
+    @media only screen and (min-width: 768px) {
+      width: auto;
+    }
 
     &.open ul:after {
       transform: rotate(0deg);
@@ -82,19 +106,36 @@
         font-weight: $font-weight-bold;
         margin: 0;
         position: relative;
-        margin-left: ($margin * 10);
+        height: 100%;
+
+        @media only screen and (max-width: 767px) {
+          padding-left: 20px;
+        }
 
         @media only screen and (min-width: 768px) {
           text-align: right;
         }
 
+        li {
+          height: 100%;
+        }
+
         a {
+          display: flex;
+          height: 100%;
+          justify-content: flex-end;
+          align-items: center;
+
+          svg {
+            padding-right: $padding;
+          }
+
           &:focus {
             background-color: initial;
           }
 
           i {
-            padding-left: $padding * 2;
+            padding-left: $padding;
           }
         }
       }
@@ -185,6 +226,7 @@
   }
   .header-row {
     position: relative;
+    margin: 0;
   }
 }
 
@@ -197,4 +239,26 @@
   background-color: $color-gray-lightest;
   max-width: 1040px;
   padding-left: 16px;
+}
+
+/**********************
+  Autosave Banner
+**********************/
+.save {
+  &-container {
+    background: $lily-white;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;
+
+    @media print {
+      display: none;
+    }
+  }
+  &-status {
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: $font-weight-bold;
+    padding-top: 0.1rem;
+    text-align: right;
+    width: auto;
+  }
 }

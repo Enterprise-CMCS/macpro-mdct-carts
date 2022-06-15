@@ -6,11 +6,12 @@ import { Button } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-import axios from "../../authenticatedAxios";
+import { API } from "aws-amplify";
 import statesArray from "../Utils/statesArray";
 import { loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import requestOptions from "../../hooks/authHooks/requestOptions";
 
 /**
  * Generate data and load entire form based on user information
@@ -23,10 +24,13 @@ import { Helmet } from "react-helmet";
 const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
   const search = useLocation().search;
-  const stateInitials = new URLSearchParams(search).get("state");
+  const searchParams = new URLSearchParams(search);
+  const stateInitials = searchParams.get("state");
   const stateName =
     name || statesArray.find(({ value }) => value === stateInitials)?.label;
-  const formYear = new URLSearchParams(search).get("year");
+  const formYear = searchParams.get("year");
+  const sectionId = searchParams.get("sectionId");
+  const subsectionId = searchParams.get("subsectionId");
 
   const openPdf = (basePdf) => {
     let byteCharacters = atob(basePdf);
@@ -68,9 +72,12 @@ const Print = ({ currentUser, state, name }) => {
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const res = await axios.post("prince", {
+    const opts = await requestOptions();
+    opts.body = {
       encodedHtml: base64String,
-    });
+    };
+
+    const res = await API.post("carts-api", "/print_pdf", opts);
     openPdf(res.data);
   };
   // Load formData via side effect
@@ -79,7 +86,6 @@ const Print = ({ currentUser, state, name }) => {
     const retrieveUserData = async () => {
       // Get user details
       const { stateUser } = state;
-      // const stateCode = stateUser.abbr;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
@@ -110,28 +116,42 @@ const Print = ({ currentUser, state, name }) => {
   const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
     sections.push(<Title urlStateName={stateName} />);
-    // Loop through each section to get sectionId
-    /* eslint-disable no-plusplus */
-    for (let i = 0; i < formData.length; i++) {
-      const sectionId = formData[i].contents.section.id;
 
-      // Loop through subsections to get subsectionId
+    if (sectionId) {
+      // Add section to sections array
+      sections.push(
+        <Section
+          data-testid="print-section"
+          sectionId={sectionId}
+          subsectionId={subsectionId}
+          readonly="false"
+        />
+      );
+    } else {
+      // Loop through each section to get sectionId
       /* eslint-disable no-plusplus */
-      for (
-        let j = 0;
-        j < formData[i].contents.section.subsections.length;
-        j++
-      ) {
-        const subsectionId = formData[i].contents.section.subsections[j].id;
+      for (let i = 0; i < formData.length; i++) {
+        const sectionId = formData[i].contents.section.id;
 
-        // Add section to sections array
-        sections.push(
-          <Section
-            sectionId={sectionId}
-            subsectionId={subsectionId}
-            readonly="false"
-          />
-        );
+        // Loop through subsections to get subsectionId
+        /* eslint-disable no-plusplus */
+        for (
+          let j = 0;
+          j < formData[i].contents.section.subsections.length;
+          j++
+        ) {
+          const subsectionId = formData[i].contents.section.subsections[j].id;
+
+          // Add section to sections array
+          sections.push(
+            <Section
+              data-testid="print-section"
+              sectionId={sectionId}
+              subsectionId={subsectionId}
+              readonly="false"
+            />
+          );
+        }
       }
     }
   }

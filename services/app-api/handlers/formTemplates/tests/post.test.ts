@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 import { UserRoles } from "../../../types";
@@ -5,6 +6,7 @@ import dynamodbLib from "../../../libs/dynamodb-lib";
 import { post } from "../post";
 
 const mockedRoleFn = jest.fn();
+const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
@@ -73,9 +75,13 @@ jest.mock("../../../libs/authorization", () => ({
 
 describe("Test Form Template Generation Handlers", () => {
   beforeEach(() => {
+    console.error = jest.fn();
     mockedRoleFn.mockReturnValue({
       role: UserRoles.BUSINESS_OWNER_REP,
     });
+  });
+  afterEach(() => {
+    console.error = originalError;
   });
 
   test("Forms for uncreated states <=> years should be created", async () => {

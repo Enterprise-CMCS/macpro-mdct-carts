@@ -5,6 +5,7 @@ class FillForm extends Component {
     return (
       <div className="fill-form">
         <a
+          data-testid="form-action"
           href="javascript:void(0)"
           onClick={this.props.onClick}
           name={this.props.name}

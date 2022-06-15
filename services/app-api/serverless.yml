@@ -33,6 +33,8 @@ custom:
       - main
       - val
       - prod
+  princeApiHost: ${env:princeApiHost, ssm:/${self:custom.stage}/prince_api_host, ssm:/default/prince_api_host}
+  princeApiPath: ${env:princeApiPath, ssm:/${self:custom.stage}/prince_api_path, ssm:/default/prince_api_path}
   stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
   stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
@@ -83,7 +85,13 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - execute-api:Invoke
+          Resource: "*"
   environment:
+    princeApiHost: ${self:custom.princeApiHost}
+    princeApiPath: ${self:custom.princeApiPath}
     stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
@@ -169,6 +177,15 @@ functions:
     events:
       - http:
           path: uploads/{year}/{state}
+          method: post
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  printPdf:
+    handler: handlers/printing/printPdf.print
+    timeout: 30
+    events:
+      - http:
+          path: print_pdf
           method: post
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}

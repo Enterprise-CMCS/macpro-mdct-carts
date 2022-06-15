@@ -43,6 +43,7 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
+          CODE_CLIMATE_CMS_ID: ${{secrets.CODE_CLIMATE_CMS_ID}}
       - name: Configure AWS credentials for GitHub Actions
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -68,6 +69,15 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov
+            ${{github.workspace}}/services/ui-src/coverage/lcov.info:lcov
+      - name: publish test coverage to private CMS code climate
+        if: env.CODE_CLIMATE_CMS_ID != ''
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_CMS_ID }}
         with:
           coverageLocations: |
             ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov

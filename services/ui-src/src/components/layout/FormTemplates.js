@@ -33,11 +33,11 @@ const FormTemplates = () => {
           className="ds-c-field"
           name="selectedYear"
           id="selectedYear"
+          data-testid="generate-forms-options"
+          defaultValue="2022"
           // onChange={loadSectionBaseBySection}
         >
-          <option value="2022" selected>
-            2022
-          </option>
+          <option value="2022">2022</option>
           <option value="2021">2021</option>
         </select>
         <Button
@@ -45,6 +45,7 @@ const FormTemplates = () => {
           className="ds-c-button ds-c-button--primary"
           onClick={handleUpdateTemplates}
           disabled={inProgress}
+          data-testid="generate-forms-button"
         >
           Generate New Section Forms
         </Button>
