@@ -1,25 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ContactCard = ({ icon, iconAlt, description, action }) => {
+const ActionCard = ({ icon, iconAlt, children }) => {
   return (
     <div className="contact-card">
       <div className="contact-card-img">
         <img src={icon} alt={iconAlt} />
       </div>
-      <div className="contact-card-info">
-        {description}
-        {action}
-      </div>
+      <div className="contact-card-info">{children}</div>
     </div>
   );
 };
 
-ContactCard.propTypes = {
+ActionCard.propTypes = {
   icon: PropTypes.string.isRequired,
   iconAlt: PropTypes.string.isRequired,
-  description: PropTypes.element.isRequired,
-  action: PropTypes.string.isRequired,
 };
 
-export default ContactCard;
+export default ActionCard;
