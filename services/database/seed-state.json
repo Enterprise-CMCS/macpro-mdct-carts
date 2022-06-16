@@ -4,18 +4,44 @@
     "code": "AL",
     "name": "Alabama",
     "programNames": {},
-    "fmap_set": [
+    "fmapSet": [
       {
         "fiscal_year": 2020,
         "enhanced_FMAP": 80.81
       }
     ],
-    "acs_set": [
+    "acsSet": [
       {
+        "state_id": "AL",
         "year": 2015,
         "number_uninsured": 24000,
         "number_uninsured_moe": 4000,
         "percent_uninsured": 2.1,
+        "percent_uninsured_moe": 0.3
+      },
+      {
+        "state_id": "AL",
+        "year": 2016,
+        "number_uninsured": 20000,
+        "number_uninsured_moe": 3000,
+        "percent_uninsured": 1.7,
+        "percent_uninsured_moe": 0.3
+      },
+
+      {
+        "state_id": "AL",
+        "year": 2018,
+        "number_uninsured": 25000,
+        "number_uninsured_moe": 4000,
+        "percent_uninsured": 2.2,
+        "percent_uninsured_moe": 0.4
+      },
+      {
+        "state_id": "AL",
+        "year": 2019,
+        "number_uninsured": 22000,
+        "number_uninsured_moe": 3000,
+        "percent_uninsured": 2.0,
         "percent_uninsured_moe": 0.3
       }
     ]
