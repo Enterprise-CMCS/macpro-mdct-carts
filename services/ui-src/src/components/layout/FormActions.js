@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 /**
  * Display available options for form (print)
@@ -82,7 +82,7 @@ const FormActions = (props) => {
   ) => {
     let stateId = "";
 
-    if (currentUser.role === UserRoles.STATE) {
+    if (currentUser.role === AppRoles.STATE) {
       stateId = currentUser.state.id;
     } else {
       stateId = window.location.href.split("/")[5];
