@@ -1,6 +1,8 @@
+import { SSM } from "aws-sdk";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import jwt_decode from "jwt-decode";
-import { UserRoles, RequestMethods } from "../types";
+import { UserRoles } from "../types";
+import { CognitoJwtVerifier } from "aws-jwt-verify";
 
 // prettier-ignore
 interface DecodedToken {
@@ -30,8 +32,65 @@ class UserCredentials {
   }
 }
 
-export const isAuthorized = (event: APIGatewayProxyEvent) => {
+/*
+ * Resolving a circular dependency in deployment order
+ *   ui-auth requires API-Gateway to be defined from here
+ *   app-api requires the Cognito resources to be created
+ * Get the cognito info if it hasn't been defined
+ */
+const loadCognitoValues = async () => {
+  if (
+    process.env.COGNITO_USER_POOL_ID &&
+    process.env.COGNITO_USER_POOL_CLIENT_ID
+  ) {
+    return {
+      userPoolId: process.env.COGNITO_USER_POOL_ID,
+      userPoolClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
+    };
+  } else {
+    const ssm = new SSM();
+    const stage = process.env.STAGE!;
+    const userPoolIdParamName = "/" + stage + "/ui-auth/cognito_user_pool_id";
+    const userPoolClientIdParamName =
+      "/" + stage + "/ui-auth/cognito_user_pool_client_id";
+    const userPoolIdParams = {
+      Name: userPoolIdParamName,
+    };
+    const userPoolClientIdParams = {
+      Name: userPoolClientIdParamName,
+    };
+    const userPoolId = await ssm.getParameter(userPoolIdParams).promise();
+    const userPoolClientId = await ssm
+      .getParameter(userPoolClientIdParams)
+      .promise();
+    if (userPoolId.Parameter?.Value && userPoolClientId.Parameter?.Value) {
+      process.env["COGNITO_USER_POOL_ID"] = userPoolId.Parameter?.Value;
+      process.env["COGNITO_USER_POOL_CLIENT_ID"] =
+        userPoolClientId.Parameter?.Value;
+      return {
+        userPoolId: userPoolId.Parameter.Value,
+        userPoolClientId: userPoolClientId.Parameter.Value,
+      };
+    } else {
+      throw new Error("cannot load cognito values");
+    }
+  }
+};
+
+export const isAuthorized = async (event: APIGatewayProxyEvent) => {
   if (!event.headers["x-api-key"]) return false;
+
+  // Verifier that expects valid access tokens:
+  const verifier = CognitoJwtVerifier.create({
+    userPoolId: process.env.COGNITO_USER_POOL_ID ?? "",
+    tokenUse: "id",
+    clientId: process.env.COGNITO_USER_POOL_CLIENT_ID ?? "",
+  });
+  try {
+    await verifier.verify(event.headers["x-api-key"]);
+  } catch {
+    console.log("Token not valid!"); // eslint-disable-line
+  }
 
   // get state and method from the event
   const requestState = event.pathParameters?.state;

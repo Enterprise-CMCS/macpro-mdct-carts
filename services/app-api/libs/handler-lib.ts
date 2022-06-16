@@ -14,7 +14,7 @@ export default function handler(lambda: LambdaFunction) {
     // Start debugger
     debug.init(event, context);
 
-    if (isAuthorized(event)) {
+    if (await isAuthorized(event)) {
       try {
         // Run the Lambda
         const body = await lambda(event, context);
