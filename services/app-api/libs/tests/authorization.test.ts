@@ -1,6 +1,6 @@
 import { testEvent } from "../../test-util/testEvents";
 import { isAuthorized } from "../authorization";
-import { UserRoles } from "../../types";
+import { IdmRoles } from "../../types";
 
 const mockedDecode = jest.fn();
 
@@ -20,7 +20,7 @@ describe("Authorization Lib Function", () => {
       event.headers = { "x-api-key": "test" };
       event.pathParameters = { state: "AL" };
       mockedDecode.mockReturnValue({
-        "custom:cms_roles": UserRoles.STATE,
+        "custom:cms_roles": IdmRoles.STATE,
         "custom:cms_state": "AL",
       });
     });
@@ -53,7 +53,7 @@ describe("Authorization Lib Function", () => {
       event.headers = { "x-api-key": "test" };
       event.pathParameters = { state: "AL" };
       mockedDecode.mockReturnValue({
-        "custom:cms_roles": UserRoles.BUSINESS_OWNER_REP,
+        "custom:cms_roles": IdmRoles.BUSINESS_OWNER_REP,
         "custom:cms_state": "AL",
       });
     });

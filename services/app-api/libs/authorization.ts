@@ -1,10 +1,10 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import jwt_decode from "jwt-decode";
-import { UserRoles, RequestMethods } from "../types";
+import { IdmRoles, AppRoles } from "../types";
 
 // prettier-ignore
 interface DecodedToken {
-  "custom:cms_roles": UserRoles;
+  "custom:cms_roles": IdmRoles;
   "custom:cms_state"?: string;
   given_name?: string;
   family_name?: string;
@@ -13,38 +13,35 @@ interface DecodedToken {
 }
 
 class UserCredentials {
-  role?: string;
+  role?: AppRoles;
   state?: string;
   identities?: [{ userId?: string }];
   email?: string;
 
   constructor(decoded?: DecodedToken) {
     if (decoded === undefined) return;
-    const role = decoded["custom:cms_roles"]
+    const idmRole = decoded["custom:cms_roles"]
       .split(",")
-      .find((r) => r.includes("mdctcarts"));
-    this.role = role;
+      .find((r) => r.includes("mdctcarts")) as IdmRoles;
+    this.role = mapIdmRoleToAppRole(idmRole);
     this.state = decoded["custom:cms_state"];
     this.identities = decoded.identities;
     this.email = decoded.email;
   }
 }
 
-export const isAuthorized = (event: APIGatewayProxyEvent) => {
+export const isAuthorized = async (event: APIGatewayProxyEvent) => {
   if (!event.headers["x-api-key"]) return false;
 
   // get state and method from the event
   const requestState = event.pathParameters?.state;
 
-  // decode the idToken
+  // If a state user, always reject if their state does not match a state query param
   const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;
-
-  // get the role / state from the decoded token
-  const userRole = decoded["custom:cms_roles"];
+  const idmRole = decoded["custom:cms_roles"];
   const userState = decoded["custom:cms_state"];
-
-  // if user is a state user - check they are requesting a resource from their state
-  if (userRole === UserRoles.STATE && userState && requestState) {
+  const appRole = mapIdmRoleToAppRole(idmRole);
+  if (appRole === AppRoles.STATE_USER && userState && requestState) {
     return userState.toLowerCase() === requestState.toLowerCase();
   }
   return true;
@@ -75,4 +72,20 @@ export const getUserCredentialsFromJwt = (event: APIGatewayProxyEvent) => {
   const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;
   const credentials = new UserCredentials(decoded);
   return credentials;
+};
+
+export const mapIdmRoleToAppRole = (idmRole: IdmRoles) => {
+  switch (idmRole) {
+    case IdmRoles.APPROVER:
+    case IdmRoles.HELP:
+      return AppRoles.HELP_DESK;
+    case IdmRoles.BUSINESS_OWNER_REP:
+      return AppRoles.CMS_USER;
+    case IdmRoles.STATE:
+      return AppRoles.STATE_USER;
+    case IdmRoles.PROJECT_OFFICER:
+      return AppRoles.CMS_ADMIN;
+    default:
+      throw new Error("No App role configured for the provided IDM Role");
+  }
 };

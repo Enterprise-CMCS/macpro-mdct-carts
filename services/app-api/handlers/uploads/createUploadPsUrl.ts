@@ -2,7 +2,7 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 import { UnauthorizedError } from "../../libs/httpErrors";
 /**
@@ -10,7 +10,7 @@ import { UnauthorizedError } from "../../libs/httpErrors";
  */
 export const psUpload = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
-  if (user.role !== UserRoles.STATE) {
+  if (user.role !== AppRoles.STATE_USER) {
     throw new UnauthorizedError("Unauthorized");
   }
 
