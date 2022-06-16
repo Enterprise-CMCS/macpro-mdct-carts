@@ -91,6 +91,7 @@ export const isAuthorized = async (event: APIGatewayProxyEvent) => {
     await verifier.verify(event.headers["x-api-key"]);
   } catch {
     console.log("Token not valid!"); // eslint-disable-line
+    return false;
   }
 
   // get state and method from the event
@@ -112,7 +113,7 @@ export const isAuthorized = async (event: APIGatewayProxyEvent) => {
 
 export const getUserNameFromJwt = (event: APIGatewayProxyEvent) => {
   let userName = "branchUser";
-  if (!event?.headers || !event.headers?.["x-api-key"]) return userName;
+  if (!event.headers?.["x-api-key"]) return userName;
 
   const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;
 
@@ -122,7 +123,7 @@ export const getUserNameFromJwt = (event: APIGatewayProxyEvent) => {
   }
 
   if (decoded.identities && decoded.identities[0]?.userId) {
-    userName = decoded?.identities[0].userId;
+    userName = decoded.identities[0].userId;
     return userName;
   }
 

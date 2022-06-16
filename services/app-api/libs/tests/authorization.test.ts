@@ -6,6 +6,7 @@ import {
   UserCredentials,
 } from "../authorization";
 import { UserRoles } from "../../types";
+import { APIGatewayProxyEvent } from "aws-lambda";
 
 const mockedDecode = jest.fn();
 
@@ -16,15 +17,38 @@ jest.mock("jwt-decode", () => ({
   },
 }));
 
+let verifyMock = jest.fn();
+verifyMock.mockImplementation(() => {
+  return true;
+});
 jest.mock("aws-jwt-verify", () => ({
   __esModule: true,
   CognitoJwtVerifier: {
     create: jest.fn().mockImplementation(() => ({
-      verify: jest.fn().mockImplementation(() => {
-        return true;
-      }),
+      verify: verifyMock,
     })),
   },
+}));
+
+const { SSM } = require("aws-sdk");
+
+jest.mock("aws-sdk");
+const ssmParamPromise = jest.fn().mockResolvedValue({
+  Parameter: {
+    Name: "NAME",
+    Type: "SecureString",
+    Value: "VALUE",
+    Version: 1,
+    LastModifiedDate: 1546551668.495,
+    ARN: "arn:aws:ssm:ap-southeast-2:123:NAME",
+  },
+});
+const ssmGetParameterPromise = jest.fn().mockReturnValue({
+  promise: ssmParamPromise,
+});
+
+SSM.mockImplementation(() => ({
+  getParameter: ssmGetParameterPromise,
 }));
 
 describe("Authorization Lib", () => {
@@ -34,6 +58,7 @@ describe("Authorization Lib", () => {
     beforeEach(() => {
       process.env["COGNITO_USER_POOL_ID"] = "fakeId";
       process.env["COGNITO_USER_POOL_CLIENT_ID"] = "fakeClientId";
+      process.env.STAGE = "test";
       event.httpMethod = "GET";
       event.headers = { "x-api-key": "test" };
       event.pathParameters = { state: "AL" };
@@ -87,13 +112,26 @@ describe("Authorization Lib", () => {
       expect(await isAuthorized(event)).toBeTruthy();
     });
 
-    test("authorization should fail without any cognito info", async () => {
-      delete process.env["COGNITO_USER_POOL_ID"];
-      delete process.env["COGNITO_USER_POOL_CLIENT_ID"];
+    test("authorization should catch given an invalid jwt", async () => {
+      verifyMock.mockImplementationOnce(() => {
+        throw Error("Bad token, bad!");
+      });
+      expect(await isAuthorized(event)).toBeFalsy();
+    });
 
-      const spy = jest.fn();
-      await isAuthorized(event).catch(spy);
-      expect(spy).toHaveBeenCalled(); // SUCCESS
+    test("authorization should reach out to SSM when missing cognito info", async () => {
+      delete process.env["COGNITO_USER_POOL_ID"];
+      delete process.env["COGNITO_USER_POOL_ID"];
+
+      await isAuthorized(event);
+      expect(ssmGetParameterPromise).toHaveBeenCalled();
+    });
+
+    test("authorization should throw error if no values exist in SSM or env", async () => {
+      delete process.env["COGNITO_USER_POOL_ID"];
+      delete process.env["COGNITO_USER_POOL_ID"];
+      ssmParamPromise.mockReturnValueOnce({});
+      await expect(isAuthorized(event)).rejects.toThrow(Error);
     });
   });
 
@@ -143,10 +181,14 @@ describe("Authorization Lib", () => {
       mockedDecode.mockReturnValue(decodedUser);
     });
 
-    it("should not return the user's name if x-api-key is missing", () => {
+    it("should not return the user's name if header or x-api-key is missing", () => {
       event.headers = {};
       const result = getUserNameFromJwt(event);
       expect(result).not.toEqual("Amos Burton");
+      expect(result).toEqual("branchUser");
+
+      const resultHeaderless = getUserNameFromJwt({} as APIGatewayProxyEvent);
+      expect(resultHeaderless).toEqual("branchUser");
     });
     it("should compose a given and family name into a username", () => {
       const result = getUserNameFromJwt(event);
@@ -160,6 +202,14 @@ describe("Authorization Lib", () => {
       });
       const result = getUserNameFromJwt(event);
       expect(result).toEqual("amos@rocinante.io");
+    });
+    it("should return default text if all else is missing", () => {
+      mockedDecode.mockReturnValueOnce({
+        "custom:cms_roles": UserRoles.STATE,
+        "custom:cms_state": "AL",
+      });
+      const result = getUserNameFromJwt(event);
+      expect(result).toEqual("branchUser");
     });
   });
 });
