@@ -14,7 +14,7 @@ interface DecodedToken {
   email?: string
 }
 
-class UserCredentials {
+export class UserCredentials {
   role?: string;
   state?: string;
   identities?: [{ userId?: string }];
@@ -81,10 +81,11 @@ export const isAuthorized = async (event: APIGatewayProxyEvent) => {
   if (!event.headers["x-api-key"]) return false;
 
   // Verifier that expects valid access tokens:
+  const cognitoValues = await loadCognitoValues();
   const verifier = CognitoJwtVerifier.create({
-    userPoolId: process.env.COGNITO_USER_POOL_ID ?? "",
+    userPoolId: cognitoValues.userPoolId,
     tokenUse: "id",
-    clientId: process.env.COGNITO_USER_POOL_CLIENT_ID ?? "",
+    clientId: cognitoValues.userPoolClientId,
   });
   try {
     await verifier.verify(event.headers["x-api-key"]);
