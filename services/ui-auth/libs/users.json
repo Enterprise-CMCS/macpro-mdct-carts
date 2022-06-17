@@ -1,10 +1,10 @@
 [
   {
-    "username": "bouser@test.com",
+    "username": "cms.user@test.com",
     "attributes": [
       {
         "Name": "email",
-        "Value": "bouser@test.com"
+        "Value": "cms.user@test.com"
       },
       {
         "Name": "given_name",
@@ -21,6 +21,56 @@
       {
         "Name": "custom:cms_roles",
         "Value": "mdctcarts-bor"
+      }
+    ]
+  },
+  {
+    "username": "cms.admin@test.com",
+    "attributes": [
+      {
+        "Name": "email",
+        "Value": "cms.admin@test.com"
+      },
+      {
+        "Name": "given_name",
+        "Value": "BO"
+      },
+      {
+        "Name": "family_name",
+        "Value": "Admin"
+      },
+      {
+        "Name": "email_verified",
+        "Value": "true"
+      },
+      {
+        "Name": "custom:cms_roles",
+        "Value": "mdctcarts-project-officer"
+      }
+    ]
+  }
+  {
+    "username": "help.desk@test.com",
+    "attributes": [
+      {
+        "Name": "email",
+        "Value": "help.desk@test.com"
+      },
+      {
+        "Name": "given_name",
+        "Value": "George"
+      },
+      {
+        "Name": "family_name",
+        "Value": "Harrison"
+      },
+      {
+        "Name": "email_verified",
+        "Value": "true"
+      },
+      {
+        "Name": "custom:cms_roles",
+        "Value": "mdctcarts-help-desk"
       }
     ]
   },
@@ -278,11 +328,11 @@
     ]
   },
   {
-    "username": "approver@test.com",
+    "username": "help.approver@test.com",
     "attributes": [
       {
         "Name": "email",
-        "Value": "approver@test.com"
+        "Value": "help.approver@test.com"
       },
       {
         "Name": "given_name",
