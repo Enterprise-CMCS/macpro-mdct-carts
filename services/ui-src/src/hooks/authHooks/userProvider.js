@@ -43,7 +43,7 @@ export const UserProvider = ({ children }) => {
     }
   }, [isProduction]);
 
-  // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to qmr
+  // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to carts
   const idmRole = user?.signInUserSession?.idToken?.payload?.[
     "custom:cms_roles"
   ]
@@ -89,6 +89,6 @@ export const mapIdmRoleToAppRole = (idmRole) => {
     case IdmRoles.PROJECT_OFFICER:
       return AppRoles.CMS_ADMIN;
     default:
-      throw new Error("No App role configured for the provided IDM Role");
+      return "";
   }
 };

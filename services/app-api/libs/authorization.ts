@@ -86,6 +86,8 @@ export const mapIdmRoleToAppRole = (idmRole: IdmRoles) => {
     case IdmRoles.PROJECT_OFFICER:
       return AppRoles.CMS_ADMIN;
     default:
-      throw new Error("No App role configured for the provided IDM Role");
+      throw new Error(
+        `No App role configured for the provided IDM Role ${idmRole}`
+      );
   }
 };
