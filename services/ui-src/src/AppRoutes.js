@@ -48,7 +48,7 @@ const AppRoutes = () => {
           <Route path="/profile" component={Profile} />
           <Route path="/user/profile" component={UserProfile} />
           <Route path="/print" component={Print} />
-          <Route path="/gethelp" component={GetHelp} />
+          <Route path="/get-help" component={GetHelp} />
         </Router>
       </div>
       {VisibleFooter}

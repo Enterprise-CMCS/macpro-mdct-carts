@@ -5,7 +5,7 @@ import ActionCard from "../Utils/ActionCard";
 
 const GetHelp = () => {
   return (
-    <main className="page-info ds-l-container">
+    <main className="help-page ds-l-container">
       <div className="ds-l-col--12">
         <Alert heading="Informative status">
           <p className="ds-c-alert__text">
@@ -13,35 +13,37 @@ const GetHelp = () => {
             eiusmod.
           </p>
         </Alert>
-        <h1>How can we help you?</h1>
-        <p>
-          Question or feedback? Please email us and we will respond as soon as
-          possible. You can also review our frequently asked questions below.
-        </p>
-        <ActionCard icon={techIcon} iconAlt="Technical Contact Info Icon">
-          <p> For technical support and login issues: </p>
+        <div className="help-page-container ds-l-container">
+          <h1 className="help-page-title">How can we help you?</h1>
           <p>
-            <strong>
-              Email{" "}
-              <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>
-            </strong>
+            Question or feedback? Please email us and we will respond as soon as
+            possible. You can also review our frequently asked questions below.
           </p>
-        </ActionCard>
-
-        <Accordion bordered>
-          <AccordionItem heading="First FAQ Question">
+          <ActionCard icon={techIcon} iconAlt="Technical Contact Info Icon">
+            <p> For technical support and login issues: </p>
             <p>
-              This is the first FAQ Answer. It's quite a verbose one, really. In
-              fact, wouldn't you know that the person is simply using this as
-              example text for what the accordion could possibly reveal? Pretty
-              meta right? The worlds crazy and we're living in crazy times.
-              Calls for crazy meta accordion measures.
+              <strong>
+                Email{" "}
+                <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>
+              </strong>
             </p>
-          </AccordionItem>
-          <AccordionItem heading="Second FAQ Question">
-            <p>Hello world!</p>
-          </AccordionItem>
-        </Accordion>
+          </ActionCard>
+
+          <Accordion>
+            <AccordionItem heading="First FAQ Question">
+              <p>
+                This is the first FAQ Answer. It's quite a verbose one, really.
+                In fact, wouldn't you know that the person is simply using this
+                as example text for what the accordion could possibly reveal?
+                Pretty meta right? The worlds crazy and we're living in crazy
+                times. Calls for crazy meta accordion measures.
+              </p>
+            </AccordionItem>
+            <AccordionItem heading="Second FAQ Question">
+              <p>Hello world!</p>
+            </AccordionItem>
+          </Accordion>
+        </div>
       </div>
     </main>
   );
