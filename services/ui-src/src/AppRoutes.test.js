@@ -7,7 +7,6 @@ import AppRoutes from "./AppRoutes";
 import { mockInitialState } from "./util/testing/testUtils";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import { AppRoles } from "./types";
 
 const mockStore = configureMockStore();
 const store = mockStore(mockInitialState);
@@ -15,7 +14,7 @@ const user = { id: "123" }; // just needs an obj
 jest.mock("./hooks/authHooks", () => ({
   useUser: jest.fn(() => ({
     user: user,
-    userRole: AppRoles.STATE_USER,
+    userRole: "STATE_USER",
     showLocalLogins: false,
   })),
 }));
