@@ -5,7 +5,7 @@ import {
   isAuthorized,
   UserCredentials,
 } from "../authorization";
-import { IdmRoles } from "../../types";
+import { AppRoles, IdmRoles } from "../../types";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 const mockedDecode = jest.fn();
@@ -158,7 +158,7 @@ describe("Authorization Lib", () => {
       const result = getUserCredentialsFromJwt(event);
       expect(result).toEqual(
         expect.objectContaining({
-          role: IdmRoles.STATE,
+          role: AppRoles.STATE_USER,
           state: "AL",
         })
       );
