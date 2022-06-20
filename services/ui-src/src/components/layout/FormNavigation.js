@@ -90,6 +90,7 @@ const FormNavigation = (props) => {
                 onClick={() => {
                   history.push(previousUrl);
                 }}
+                data-testid="previous"
               >
                 <FontAwesomeIcon icon={faAngleLeft} /> Previous
               </Button>
@@ -104,6 +105,7 @@ const FormNavigation = (props) => {
                 onClick={() => {
                   history.push(nextUrl);
                 }}
+                data-testid="next"
               >
                 Next <FontAwesomeIcon icon={faAngleRight} />
               </Button>
