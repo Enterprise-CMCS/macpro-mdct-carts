@@ -108,6 +108,7 @@ const FormActions = (props) => {
           className="ds-c-button--primary ds-c-button--small"
           onClick={togglePrintDialogue}
           title="Print"
+          data-testid="print-show"
         >
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
@@ -118,6 +119,7 @@ const FormActions = (props) => {
             <Button
               className="ds-c-button--transparent ds-c-button--small"
               onClick={togglePrintDialogue}
+              data-testid="print-hide"
               title="close"
             >
               <FontAwesomeIcon icon={faWindowClose} />
@@ -137,6 +139,7 @@ const FormActions = (props) => {
                 title="This Section"
                 target="_blank"
                 onClick={togglePrintDialogue}
+                data-testid="print-page"
               >
                 <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
@@ -148,6 +151,7 @@ const FormActions = (props) => {
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDialogue}
+                data-testid="print-form"
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>
