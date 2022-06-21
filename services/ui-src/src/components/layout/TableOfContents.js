@@ -80,7 +80,7 @@ class TableOfContents extends Component {
     }
 
     return (
-      <div className="toc">
+      <div className="toc" data-testid="toc">
         <VerticalNav selectedId="toc" items={items} />
       </div>
     );
