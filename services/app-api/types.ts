@@ -22,6 +22,8 @@ export interface State {
   programType: string;
   name: string;
   programNames?: any;
+  fmapSet?: any;
+  acsSet?: any;
 }
 
 export interface StateStatus {

@@ -3,11 +3,11 @@ import dynamoDb from "../../libs/dynamodb-lib";
 import { State } from "../../types";
 
 export const getStates = handler(async (_event, _context) => {
-  let stateParams = {
+  const params = {
     TableName: process.env.stateTableName!,
   };
 
-  let stateQueryValue = await dynamoDb.scan(stateParams);
+  const queryValue = await dynamoDb.scan(params);
 
   // eslint-disable-next-line
   // let acsParams = {
@@ -22,9 +22,9 @@ export const getStates = handler(async (_event, _context) => {
   // let fmapQueryValue = await dynamoDb.scan(fmapParams);
   // console.log("fmap", fmapQueryValue);
 
-  const states = stateQueryValue.Items?.map((state) => ({
+  const states = queryValue.Items?.map((state) => ({
     ...(state as State),
-    ...{ fmapSet: [], acsSet: [] },
+    //...{ fmapSet: [], acsSet: [] },
   })).sort((a, b) => a.name.localeCompare(b.name));
   return states;
 });

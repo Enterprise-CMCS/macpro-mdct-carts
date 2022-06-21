@@ -26,8 +26,8 @@ custom:
   sectionTableName: ${self:custom.stage}-section
   sectionBaseTableName: ${self:custom.stage}-section-base
   uploadsTableName: ${self:custom.stage}-uploads
-  acsTableName: ${self:custom.stage}-acs
-  fmapTableName: ${self:custom.stage}-fmap
+  # acsTableName: ${self:custom.stage}-acs
+  # fmapTableName: ${self:custom.stage}-fmap
   seedOptions:
     prod: false
     val: false
@@ -42,10 +42,10 @@ custom:
             sources: [./seed-section.json]
           - table: ${self:custom.sectionBaseTableName}
             sources: [./seed-section-base.json]
-          - table: ${self:custom.acsTableName}
-            sources: [./seed-acs.json]
-          - table: ${self:custom.fmapTableName}
-            sources: [./seed-fmap.json]
+          # - table: ${self:custom.acsTableName}
+          #   sources: [./seed-acs.json]
+          # - table: ${self:custom.fmapTableName}
+          #   sources: [./seed-fmap.json]
   dynamodb:
     stages:
       - local
@@ -153,54 +153,54 @@ resources:
           - AttributeName: fileId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
-    AcsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.acsTableName}
-        PointInTimeRecoverySpecification:
-          PointInTimeRecoveryEnabled: true
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
-        AttributeDefinitions:
-          - AttributeName: stateId
-            AttributeType: S
-          - AttributeName: year
-            AttributeType: N
-          - AttributeName: numberUninsured
-            AttributeType: N
-          - AttributeName: numberUninsuredMoe
-            AttributeType: N
-          - AttributeName: percentUninsured
-            AttributeType: N
-          - AttributeName: percentUninsuredMoe
-            AttributeType: N
-        KeySchema:
-          - AttributeName: stateId
-            KeyType: HASH
-          - AttributeName: year
-            KeyType: RANGE
-        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
-    FmapTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.fmapTableName}
-        PointInTimeRecoverySpecification:
-          PointInTimeRecoveryEnabled: true
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
-        AttributeDefinitions:
-          - AttributeName: stateId
-            AttributeType: S
-          - AttributeName: fiscalYear
-            AttributeType: N
-          - AttributeName: enhancedFmap
-            AttributeType: N
-        KeySchema:
-          - AttributeName: stateId
-            KeyType: HASH
-          - AttributeName: fiscalYear
-            KeyType: RANGE
-        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    # AcsTable:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     TableName: ${self:custom.acsTableName}
+    #     PointInTimeRecoverySpecification:
+    #       PointInTimeRecoveryEnabled: true
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
+    #     AttributeDefinitions:
+    #       - AttributeName: stateId
+    #         AttributeType: S
+    #       - AttributeName: year
+    #         AttributeType: N
+    #       - AttributeName: numberUninsured
+    #         AttributeType: N
+    #       - AttributeName: numberUninsuredMoe
+    #         AttributeType: N
+    #       - AttributeName: percentUninsured
+    #         AttributeType: N
+    #       - AttributeName: percentUninsuredMoe
+    #         AttributeType: N
+    #     KeySchema:
+    #       - AttributeName: stateId
+    #         KeyType: HASH
+    #       - AttributeName: year
+    #         KeyType: RANGE
+    #     BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    # FmapTable:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     TableName: ${self:custom.fmapTableName}
+    #     PointInTimeRecoverySpecification:
+    #       PointInTimeRecoveryEnabled: true
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
+    #     AttributeDefinitions:
+    #       - AttributeName: stateId
+    #         AttributeType: S
+    #       - AttributeName: fiscalYear
+    #         AttributeType: N
+    #       - AttributeName: enhancedFmap
+    #         AttributeType: N
+    #     KeySchema:
+    #       - AttributeName: stateId
+    #         KeyType: HASH
+    #       - AttributeName: fiscalYear
+    #         KeyType: RANGE
+    #     BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
   Outputs:
     StateTableName:
       Value: !Ref StateTable
@@ -222,13 +222,13 @@ resources:
       Value: !Ref UploadsTable
     UploadsTableArn:
       Value: !GetAtt UploadsTable.Arn
-    AcsTable:
-      Value: !Ref AcsTable
-    AcsTableArn:
-      Value: !GetAtt AcsTable.Arn
-    FmapTable:
-      Value: !Ref FmapTable
-    FmapTableArn:
-      Value: !GetAtt FmapTable.Arn
+    # AcsTable:
+    #   Value: !Ref AcsTable
+    # AcsTableArn:
+    #   Value: !GetAtt AcsTable.Arn
+    # FmapTable:
+    #   Value: !Ref FmapTable
+    # FmapTableArn:
+    #   Value: !GetAtt FmapTable.Arn
     Region:
       Value: !Sub ${AWS::Region}
