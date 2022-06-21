@@ -28,6 +28,7 @@ jest.mock("../../../libs/authorization", () => ({
 }));
 
 jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
+  __esModule: true,
   convertToDynamoExpression: jest.fn(),
 }));
 
