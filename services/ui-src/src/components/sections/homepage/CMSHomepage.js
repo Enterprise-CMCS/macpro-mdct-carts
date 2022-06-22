@@ -16,11 +16,9 @@ const CMSHomepage = ({
   yearList,
 }) => {
   const statusList = [
-    { label: "Accepted", value: "accepted" },
     { label: "Certified", value: "certified" },
     { label: "In Progress", value: "in_progress" },
     { label: "Not Started", value: "not_started" },
-    { label: "Published", value: "published" },
   ];
 
   const [currentlySelectedStates, setCurrentlySelectedStates] = useState([]);
