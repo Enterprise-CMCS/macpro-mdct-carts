@@ -2,7 +2,10 @@
   GLOBALS
 **********************/
 
-html, body, #root, #app-wrapper {
+html,
+body,
+#root,
+#app-wrapper {
   height: 100%;
 }
 
@@ -91,6 +94,10 @@ img {
       font-weight: bold;
       margin-top: 0;
     }
+  }
+
+  .smaller-page {
+    max-width: 680px;
   }
 }
 
@@ -554,4 +561,17 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 .filter-div {
   width: 100%;
+}
+
+.help-page {
+  margin-top: $margin * 2;
+  margin-bottom: $margin * 8;
+
+  &-container {
+    max-width: 700px;
+  }
+
+  &-title {
+    margin-top: $margin * 8;
+  }
 }
