@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { UserRoles } from "../../../types";
+import { AppRoles } from "../../../types";
 import { print } from "../printPdf";
 import axios from "axios";
 import AWS from "aws-sdk";
@@ -11,7 +11,7 @@ jest.mock("axios", () => jest.fn());
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
   getUserCredentialsFromJwt: jest.fn().mockReturnValue({
-    role: UserRoles.STATE,
+    role: AppRoles.STATE_USER,
     state: "AL",
   }),
 }));

@@ -2,7 +2,7 @@
 import { updateStateStatus } from "../update";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { UserRoles } from "../../../types";
+import { AppRoles } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 
 const originalError = console.error; // cache to restore, we're testing an error
@@ -16,7 +16,7 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
   getUserCredentialsFromJwt: jest.fn().mockReturnValue({
-    role: UserRoles.STATE,
+    role: AppRoles.STATE_USER,
     state: "AL",
   }),
 }));

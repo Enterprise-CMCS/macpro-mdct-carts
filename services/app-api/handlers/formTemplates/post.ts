@@ -1,7 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { State, StateStatus, UserRoles } from "../../types";
+import { State, StateStatus, AppRoles } from "../../types";
 import { NotFoundError, UnauthorizedError } from "../../libs/httpErrors";
 
 /**
@@ -13,7 +13,7 @@ export const post = handler(async (event, _context) => {
 
   // Validate user
   const user = getUserCredentialsFromJwt(event);
-  if (user.role != UserRoles.BUSINESS_OWNER_REP) {
+  if (user.role != AppRoles.CMS_ADMIN) {
     throw new UnauthorizedError("Unauthorized Request");
   }
 

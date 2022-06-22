@@ -1,7 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 /**
  * Returns the report Sections associated with a given year and state
@@ -16,7 +16,7 @@ export const getSections = handler(async (event, _context) => {
   const { year, state } = event.pathParameters;
 
   // only return the report if a state user is associated with the given state
-  if (user.role === UserRoles.STATE && user.state !== state) {
+  if (user.role === AppRoles.STATE_USER && user.state !== state) {
     return [];
   } else {
     const params = {
