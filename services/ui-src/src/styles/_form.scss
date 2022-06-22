@@ -76,6 +76,14 @@
   }
 }
 
+.ds-c-accordion__button {
+  font-weight: 400;
+}
+
+.ds-c-accordion__heading:not(:first-child) {
+  margin-top: $margin * 3;
+}
+
 .question-container {
   margin-bottom: ($padding * 4);
   padding-right: ($padding * 3);
@@ -168,7 +176,7 @@
       height: 100%;
       width: 100%;
     }
-    
+
     a:after {
       content: "\f0e2";
     }

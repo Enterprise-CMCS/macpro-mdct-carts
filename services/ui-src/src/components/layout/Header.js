@@ -93,7 +93,7 @@ class Header extends Component {
                   data-testid={"userDetailsRow"}
                 >
                   <div className="get-help-container">
-                    <Link to="/" className="ds-u-display--block">
+                    <Link to="/get-help" className="ds-u-display--block">
                       <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
                       Get Help
                     </Link>
