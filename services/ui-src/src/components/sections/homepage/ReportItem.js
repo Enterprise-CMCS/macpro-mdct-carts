@@ -23,35 +23,24 @@ const ReportItem = ({
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
   const { isShowing, toggleModal } = useModal();
-  let theDateTime = "";
-  let tempTime = "";
+  let lastEditedNote = "";
   let stateUser = false;
   if (userRole === UserRoles.STATE) {
     stateUser = true;
   }
-  if (lastChanged && lastChanged.toString().includes("T")) {
-    theDateTime = lastChanged.split("T");
-    tempTime = theDateTime[1].split(":");
-    if (Number(tempTime[0]) >= 12) {
-      // convert from military time
-      if (Number(tempTime[0] === "12")) {
-        theDateTime[1] = theDateTime[1].substring(0, 8) + " pm";
-      } else {
-        theDateTime[1] =
-          String(Number(tempTime[0]) - 12) +
-          ":" +
-          tempTime[1] +
-          ":" +
-          tempTime[2].substring(0, 2) +
-          " pm";
-      }
-    } else {
-      if (Number(tempTime[0] === "00")) {
-        theDateTime[1] =
-          "12:" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
-      } else {
-        theDateTime[1] = theDateTime[1].substring(0, 8) + " am";
-      }
+
+  if (lastChanged) {
+    let date = new Date(lastChanged);
+    let time = new Intl.DateTimeFormat("default", {
+      hour12: true,
+      hour: "numeric",
+      minute: "numeric",
+    }).format(date);
+    lastEditedNote = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()} at ${time}`;
+    if (username) {
+      lastEditedNote += ` by ${username}`;
     }
   }
 
@@ -74,9 +63,7 @@ const ReportItem = ({
           >
             {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
           </div>
-          <div className="actions ds-l-col--3">
-            {theDateTime[0]} at {theDateTime[1]} by {username}
-          </div>
+          <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--auto">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
@@ -122,9 +109,7 @@ const ReportItem = ({
           >
             {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
           </div>
-          <div className="actions ds-l-col--3">
-            {lastChanged && new Date(lastChanged)?.toLocaleDateString("en-US")}
-          </div>
+          <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--1">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
