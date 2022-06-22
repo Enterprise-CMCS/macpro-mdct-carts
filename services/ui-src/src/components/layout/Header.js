@@ -78,7 +78,7 @@ class Header extends Component {
         <header className="header">
           <div className="ds-l-container">
             <div className="ds-l-row header-row">
-              <div className="site-title ds-l-col--4 ds-u-padding-x--2 ds-u-padding-top--1">
+              <div className="site-title ds-l-col--4 ds-u-padding-right--2 ds-u-padding-top--1">
                 <Link to="/" className="ds-u-display--block">
                   <img
                     id="carts-logo"
