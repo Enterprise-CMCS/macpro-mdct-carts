@@ -82,7 +82,7 @@ const FormActions = (props) => {
   ) => {
     let stateId = "";
 
-    if (currentUser.role === AppRoles.STATE) {
+    if (currentUser.role === AppRoles.STATE_USER) {
       stateId = currentUser.state.id;
     } else {
       stateId = window.location.href.split("/")[5];
@@ -125,7 +125,7 @@ const FormActions = (props) => {
               <FontAwesomeIcon icon={faWindowClose} />
             </Button>
           </div>
-          <h4>Print</h4>
+          <h4 data-testid="print-title">Print</h4>
           <div className="print-options">
             <div className="print-page">
               <Button
