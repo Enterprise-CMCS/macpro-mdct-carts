@@ -14,7 +14,11 @@
   }
 
   .adverts {
-    padding: ($padding * 4) $padding;
+    padding: ($padding * 4) $padding * 2;
+
+    @media only screen and (min-width: 544px) {
+      padding: ($padding * 4) 0;
+    }
   }
 
   .cms-logo {
@@ -93,7 +97,11 @@
   .info {
     background-color: $brand-tertiary;
     color: $white;
-    padding: ($padding * 2) $padding;
+    padding: ($padding * 2) $padding * 2;
+
+    @media only screen and (min-width: 544px) {
+      padding: ($padding * 2) 0;
+    }
 
     a,
     a:visited {
