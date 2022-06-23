@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router";
 import configureMockStore from "redux-mock-store";
 import CertifyAndSubmit from "./CertifyAndSubmit";
 import { screen, render } from "@testing-library/react";
+import { AppRoles } from "../../types";
 
 jest.mock("../../actions/initial", () => ({
   loadForm: () => ({ type: "none" }),
@@ -23,7 +24,7 @@ const store = mockStore({
   stateUser: {
     abbr: "KY",
     currentUser: {
-      role: "mdctcarts-state-user",
+      role: AppRoles.STATE_USER,
     },
   },
   global: {
@@ -43,7 +44,7 @@ const submittedStore = mockStore({
   stateUser: {
     abbr: "KY",
     currentUser: {
-      role: "mdctcarts-state-user",
+      role: AppRoles.STATE_USER,
     },
   },
   global: {
