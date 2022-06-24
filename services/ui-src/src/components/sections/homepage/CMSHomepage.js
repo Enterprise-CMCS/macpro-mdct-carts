@@ -6,7 +6,7 @@ import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system";
 import { MultiSelect } from "react-multi-select-component";
-import { STATUS_MAPPING, UserRoles } from "../../../types";
+import { STATUS_MAPPING, AppRoles } from "../../../types";
 
 const CMSHomepage = ({
   getStatuses,
@@ -106,10 +106,20 @@ const CMSHomepage = ({
     stateStatuses = filteredStatuses;
   }
 
+  let roleName;
+  switch (currentUserRole) {
+    case AppRoles.HELP_DESK:
+      roleName = "Help Desk";
+      break;
+    case AppRoles.CMS_USER:
+    default:
+      roleName = "CMS User";
+      break;
+  }
   return (
     <div className="homepage ds-l-col--12">
-      <div className="ds-l-container-large">
-        {currentUserRole !== UserRoles.BUSINESS_OWNER_REP ? (
+      <div className="homepage-filter ds-l-container-large">
+        {currentUserRole !== AppRoles.CMS_ADMIN ? (
           <>
             <div className="ds-l-row ds-u-padding-left--2">
               <h1 className="page-title ds-u-margin-bottom--0">
@@ -117,7 +127,7 @@ const CMSHomepage = ({
               </h1>
             </div>
             <div className="page-info ds-u-padding-left--2">
-              <div className="edit-info">CMS user</div>
+              <div className="edit-info">{roleName}</div>
             </div>
           </>
         ) : null}

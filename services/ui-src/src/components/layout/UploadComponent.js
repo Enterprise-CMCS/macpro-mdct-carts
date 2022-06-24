@@ -5,7 +5,7 @@ import { Button, TextField } from "@cmsgov/design-system";
 import { API } from "aws-amplify";
 import requestOptions from "../../hooks/authHooks/requestOptions";
 import { setAnswerEntry } from "../../actions/initial";
-import { REPORT_STATUS, UserRoles } from "../../types";
+import { REPORT_STATUS, AppRoles } from "../../types";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -246,7 +246,7 @@ class UploadComponent extends Component {
       const stateReportStatus = reportStatus[`${stateCode}${year}`];
       submissionsAllowed =
         stateReportStatus.status !== REPORT_STATUS.certified &&
-        user.role === UserRoles.STATE;
+        user.role === AppRoles.STATE_USER;
     }
 
     return (

@@ -3,7 +3,7 @@ import { getSections } from "../get";
 import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { UserRoles } from "../../../types";
+import { AppRoles } from "../../../types";
 
 const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
@@ -18,7 +18,7 @@ jest.mock("../../../libs/authorization", () => ({
   __esModule: true,
   isAuthorized: jest.fn().mockReturnValue(true),
   getUserCredentialsFromJwt: jest.fn().mockReturnValue({
-    role: UserRoles.STATE,
+    role: AppRoles.STATE_USER,
     state: "AL",
   }),
 }));

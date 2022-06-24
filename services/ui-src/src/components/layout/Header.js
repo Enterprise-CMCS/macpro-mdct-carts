@@ -6,7 +6,7 @@ import Logout from "./Logout";
 import UsaBanner from "@cmsgov/design-system/dist/components/UsaBanner/UsaBanner";
 import { Link, withRouter } from "react-router-dom";
 import { getCurrentReportStatus } from "../../store/selectors";
-import { REPORT_STATUS, UserRoles } from "../../types";
+import { REPORT_STATUS, AppRoles } from "../../types";
 import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +33,10 @@ class Header extends Component {
 
   showAutoSaveOnReport = (location, currentUser, reportStatus) => {
     const { role } = currentUser;
-    if (location.pathname.includes("/sections/") && role === UserRoles.STATE) {
+    if (
+      location.pathname.includes("/sections/") &&
+      role === AppRoles.STATE_USER
+    ) {
       switch (reportStatus.status) {
         case REPORT_STATUS.not_started:
         case REPORT_STATUS.in_progress:
@@ -78,7 +81,7 @@ class Header extends Component {
         <header className="header">
           <div className="ds-l-container">
             <div className="ds-l-row header-row">
-              <div className="site-title ds-l-col--4 ds-u-padding-x--2 ds-u-padding-top--1">
+              <div className="site-title ds-l-col--4 ds-u-padding-right--2 ds-u-padding-top--1">
                 <Link to="/" className="ds-u-display--block">
                   <img
                     id="carts-logo"
