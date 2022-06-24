@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { UserContext } from "./userContext";
-import { UserRoles } from "../../types";
+import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 
@@ -43,14 +43,15 @@ export const UserProvider = ({ children }) => {
     }
   }, [isProduction]);
 
-  // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to qmr
-  const userRole = user?.signInUserSession?.idToken?.payload?.[
+  // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to carts
+  const idmRole = user?.signInUserSession?.idToken?.payload?.[
     "custom:cms_roles"
   ]
     ?.split(",")
     .find((r) => r.includes("mdctcarts"));
 
-  const isStateUser = userRole === UserRoles.STATE;
+  const userRole = mapIdmRoleToAppRole(idmRole);
+  const isStateUser = userRole === AppRoles.STATE_USER;
 
   const userState =
     user?.signInUserSession?.idToken?.payload?.["custom:cms_state"];
@@ -74,4 +75,20 @@ export const UserProvider = ({ children }) => {
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
+};
+
+export const mapIdmRoleToAppRole = (idmRole) => {
+  switch (idmRole) {
+    case IdmRoles.APPROVER:
+    case IdmRoles.HELP:
+      return AppRoles.HELP_DESK;
+    case IdmRoles.BUSINESS_OWNER_REP:
+      return AppRoles.CMS_USER;
+    case IdmRoles.STATE:
+      return AppRoles.STATE_USER;
+    case IdmRoles.PROJECT_OFFICER:
+      return AppRoles.CMS_ADMIN;
+    default:
+      return "";
+  }
 };

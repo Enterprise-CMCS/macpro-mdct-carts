@@ -14,7 +14,7 @@ const user = { id: "123" }; // just needs an obj
 jest.mock("./hooks/authHooks", () => ({
   useUser: jest.fn(() => ({
     user: user,
-    userRole: "mdctcarts-state-user",
+    userRole: "STATE_USER",
     showLocalLogins: false,
   })),
 }));

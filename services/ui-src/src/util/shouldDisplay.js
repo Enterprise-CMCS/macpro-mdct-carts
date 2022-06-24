@@ -1,4 +1,4 @@
-import { UserRoles } from "../types";
+import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
 import { compareACS } from "./synthesize";
 
@@ -155,10 +155,10 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
  */
 const shouldDisplay = (state, context, programType = null) => {
   let program, reportStatusCode;
-  if (state.stateUser.currentUser.role === UserRoles.APPROVER) return true;
+  if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
   if (!programType) {
     // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
-    if (state.stateUser.currentUser.role === UserRoles.STATE) {
+    if (state.stateUser.currentUser.role === AppRoles.STATE_USER) {
       reportStatusCode = state.stateUser.abbr + state.global.formYear;
     } else {
       reportStatusCode = state.formData[0].stateId + state.formData[0].year;

@@ -5,7 +5,7 @@ import {
   isAuthorized,
   UserCredentials,
 } from "../authorization";
-import { UserRoles } from "../../types";
+import { AppRoles, IdmRoles } from "../../types";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 const mockedDecode = jest.fn();
@@ -63,7 +63,7 @@ describe("Authorization Lib", () => {
       event.headers = { "x-api-key": "test" };
       event.pathParameters = { state: "AL" };
       mockedDecode.mockReturnValue({
-        "custom:cms_roles": UserRoles.STATE,
+        "custom:cms_roles": IdmRoles.STATE,
         "custom:cms_state": "AL",
       });
     });
@@ -98,7 +98,7 @@ describe("Authorization Lib", () => {
       process.env["COGNITO_USER_POOL_ID"] = "fakeId";
       process.env["COGNITO_USER_POOL_CLIENT_ID"] = "fakeClientId";
       mockedDecode.mockReturnValue({
-        "custom:cms_roles": UserRoles.BUSINESS_OWNER_REP,
+        "custom:cms_roles": IdmRoles.BUSINESS_OWNER_REP,
         "custom:cms_state": "AL",
       });
     });
@@ -138,7 +138,7 @@ describe("Authorization Lib", () => {
   describe("getUserCredentialsFromJwt", () => {
     const event = { ...testEvent };
     const decodedUser = {
-      "custom:cms_roles": UserRoles.STATE,
+      "custom:cms_roles": IdmRoles.STATE,
       "custom:cms_state": "AL",
     };
 
@@ -158,7 +158,7 @@ describe("Authorization Lib", () => {
       const result = getUserCredentialsFromJwt(event);
       expect(result).toEqual(
         expect.objectContaining({
-          role: UserRoles.STATE,
+          role: AppRoles.STATE_USER,
           state: "AL",
         })
       );
@@ -168,7 +168,7 @@ describe("Authorization Lib", () => {
   describe("getUserNameFromJwt", () => {
     const event = { ...testEvent };
     const decodedUser = {
-      "custom:cms_roles": UserRoles.STATE,
+      "custom:cms_roles": IdmRoles.STATE,
       "custom:cms_state": "AL",
       given_name: "Amos",
       family_name: "Burton",
@@ -196,7 +196,7 @@ describe("Authorization Lib", () => {
     });
     it("should fallback to identities and userId if other info is missing", () => {
       mockedDecode.mockReturnValueOnce({
-        "custom:cms_roles": UserRoles.STATE,
+        "custom:cms_roles": IdmRoles.STATE,
         "custom:cms_state": "AL",
         identities: [{ userId: "amos@rocinante.io" }],
       });
@@ -205,7 +205,7 @@ describe("Authorization Lib", () => {
     });
     it("should return default text if all else is missing", () => {
       mockedDecode.mockReturnValueOnce({
-        "custom:cms_roles": UserRoles.STATE,
+        "custom:cms_roles": IdmRoles.STATE,
         "custom:cms_state": "AL",
       });
       const result = getUserNameFromJwt(event);

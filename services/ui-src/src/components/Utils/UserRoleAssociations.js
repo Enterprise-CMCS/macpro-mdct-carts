@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CSVReader } from "react-papaparse";
 import postDataToEndpointWithToken from "../../util/postDataToEndpointWithToken";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 const buttonRef = React.createRef();
 
@@ -74,7 +74,7 @@ const UserRoleAssociation = ({ currentUser }) => {
   const unauthorized = <p>You do not have access to this functionality.</p>;
 
   const userRole = currentUser.role;
-  return userRole === UserRoles.APPROVER ? authorized : unauthorized;
+  return userRole === AppRoles.CMS_ADMIN ? authorized : unauthorized;
 };
 
 UserRoleAssociation.propTypes = {

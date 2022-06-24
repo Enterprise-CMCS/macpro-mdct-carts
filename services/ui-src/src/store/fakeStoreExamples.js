@@ -1,3 +1,5 @@
+import { AppRoles } from "../types";
+
 export const stateUserSimple = {
   stateUser: {
     currentUser: {
@@ -54,7 +56,7 @@ export const stateUserWithReportInProgress = {
       state: {
         id: "AL",
       },
-      role: "mdctcarts-state-user",
+      role: AppRoles.STATE_USER,
       lastname: "States",
       firstname: "Frank",
       email: "stateuser2@test.com",
@@ -97,7 +99,7 @@ export const stateUserWithReportCertified = {
       state: {
         id: "AL",
       },
-      role: "mdctcarts-state-user",
+      role: AppRoles.STATE_USER,
       lastname: "States",
       firstname: "Frank",
       email: "stateuser2@test.com",
@@ -138,7 +140,7 @@ export const adminUserWithReportInProgress = {
     currentUser: {
       username: "adminuser@test.com",
       state: {},
-      role: "mdctcarts-approver",
+      role: AppRoles.CMS_ADMIN,
       lastname: "Admins",
       firstname: "Adam",
       email: "adminuser@test.com",

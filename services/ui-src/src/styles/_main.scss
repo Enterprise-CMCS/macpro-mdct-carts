@@ -243,6 +243,14 @@ img {
 }
 
 .homepage {
+  &-filter {
+    padding: 0 16px;
+
+    @media only screen and (min-width: 544px) {
+      padding: 0;
+    }
+  }
+
   .page-title {
     margin-top: ($margin * 4);
     margin-bottom: $margin;
@@ -561,6 +569,10 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 .filter-div {
   width: 100%;
+
+  .ds-c-label {
+    margin-left: $margin * 2;
+  }
 }
 
 .help-page {
