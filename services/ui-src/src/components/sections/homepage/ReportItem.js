@@ -39,7 +39,7 @@ const ReportItem = ({
     }).format(date);
     const splitTime = time.split(",");
     lastEditedNote = splitTime?.[1]
-      ? `${splitTime[0]} at ${splitTime[1]}`
+      ? `${splitTime[0]} at ${splitTime[1].trim()}`
       : `${splitTime[0]}`;
     lastEditedNote += username ? ` by ${username}` : "";
   }
@@ -66,7 +66,11 @@ const ReportItem = ({
               userRole === AppRoles.CMS_USER && (
                 <span>
                   {" "}
-                  <button className="link" onClick={toggleModal}>
+                  <button
+                    data-testid={"uncertifyButton"}
+                    className="link"
+                    onClick={toggleModal}
+                  >
                     Uncertify
                   </button>
                 </span>
@@ -75,6 +79,7 @@ const ReportItem = ({
 
           {isShowing && (
             <Dialog
+              data-testid={"uncertifyModal"}
               isShowing={isShowing}
               onExit={toggleModal}
               heading="Uncertify this Report?"

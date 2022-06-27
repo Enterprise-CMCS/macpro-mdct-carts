@@ -1,52 +1,27 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { MemoryRouter } from "react-router";
-import { axe } from "jest-axe";
+import { screen, render, fireEvent } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import ReportItem from "./ReportItem";
 import { Provider } from "react-redux";
 import {
-  stateUserWithReportCertified,
-  stateUserWithReportInProgress,
+  adminUserWithMultipleReports,
+  cmsUserWithMultipleReports,
+  helpdeskUserWithMultipleReports,
+  stateUserWithMultipleReports,
 } from "../../../store/fakeStoreExamples";
 
 const mockStore = configureMockStore();
 
-// const cmsUser = mockStore(cmsUserWithReportInProgress);
-const CMSHomepageCMSUserAl2020Props = {
-  link1URL: "/views/sections/AL/2020/00/a",
-  name: "Alabama",
-  year: 2020,
-  statusText: "In Progress",
-  userRole: "CMS_USER",
-  username: "al@test.com",
-  lastChanged: "Mon Jun 27 2022 12:24:11 GMT-0400 (Eastern Daylight Time)",
-};
-
-// const adminUser = mockStore(cmsUserWithReportInProgress);
-const CMSHomepageAdminUserProps = {
-  link1URL: "/views/sections/AL/2020/00/a",
-  name: "Alabama",
-  year: 2020,
-  statusText: "In Progress",
-  userRole: "HELP_DESK",
-  username: "al@test.com",
-  lastChanged: "Mon Jun 27 2022 12:24:11 GMT-0400 (Eastern Daylight Time)",
-};
-
-// const helpdeskUser = mockStore(helpDeskUserWithReportInProgress);
-const CMSHomepageHelpDeskUserProps = {
-  link1URL: "/views/sections/AL/2020/00/a",
-  name: "Alabama",
-  year: 2020,
-  statusText: "Not Started",
-  userRole: "HELP_DESK",
-  username: "al@test.com",
-  lastChanged: "Mon Jun 27 2022 12:24:11 GMT-0400 (Eastern Daylight Time)",
-};
+/**
+ *********************
+ *State User (stateuser2@test.com)
+ *********************
+ */
 
 // As of 2022-06-27, only State users can access the homepage view
-const stateUserProg = mockStore(stateUserWithReportInProgress);
+const stateUser = mockStore(stateUserWithMultipleReports);
 const HomepageStateUserInProgProps = {
   name: 2021,
   lastChanged: "2021-01-04 18:28:18.524133+00",
@@ -57,55 +32,30 @@ const HomepageStateUserInProgProps = {
   year: 2021,
 };
 
-const stateUserCert = mockStore(stateUserWithReportCertified);
 const HomepageStateUserCertProps = {
-  name: 2021,
-  lastChanged: "2021-01-04 18:28:18.524133+00",
-  link1URL: "/sections/2021/00",
-  link1Text: "Edit",
-  statusText: "In Progress",
+  name: 2020,
+  lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  link1URL: "/sections/2020/00",
+  link1Text: "View",
+  statusText: "Certified and Submitted",
   userRole: "STATE_USER",
-  year: 2021,
+  year: 2020,
 };
-
-describe("ReportItem viewed by a CMS User", () => {
-  const cmsUserAl2020wrapper = (
-    <Provider>
-      <ReportItem {...CMSHomepageCMSUserAl2020Props} />
-    </Provider>
-  );
-
-  it("should render AL2020 correctly", () => {
-    expect(shallow(cmsUserAl2020wrapper).exists()).toBe(true);
-  });
-});
-
-describe("ReportItem viewed by a Admin User", () => {
-  const adminUserWrapper = <ReportItem {...CMSHomepageAdminUserProps} />;
-
-  it("should render correctly", () => {
-    expect(shallow(adminUserWrapper).exists()).toBe(true);
-  });
-});
-
-describe("ReportItem viewed by a Help Desk User", () => {
-  const helpdeskUserWrapper = <ReportItem {...CMSHomepageHelpDeskUserProps} />;
-
-  it("should render correctly", () => {
-    expect(shallow(helpdeskUserWrapper).exists()).toBe(true);
-  });
-});
 
 describe("ReportItem viewed by a State User", () => {
   const stateUserInProgWrapper = (
-    <Provider store={stateUserProg}>
-      <ReportItem {...HomepageStateUserInProgProps} />
+    <Provider store={stateUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...HomepageStateUserInProgProps} />
+      </MemoryRouter>
     </Provider>
   );
 
   const stateUserCertWrapper = (
-    <Provider store={stateUserCert}>
-      <ReportItem {...HomepageStateUserCertProps} />
+    <Provider store={stateUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...HomepageStateUserCertProps} />
+      </MemoryRouter>
     </Provider>
   );
 
@@ -113,21 +63,382 @@ describe("ReportItem viewed by a State User", () => {
     expect(shallow(stateUserInProgWrapper).exists()).toBe(true);
   });
 
-  it("should render Certified correctly", () => {
+  it("should render report other statuses correctly", () => {
     expect(shallow(stateUserCertWrapper).exists()).toBe(true);
   });
+
+  it("should render an In Progress report with passed props", () => {
+    const report = mount(stateUserInProgWrapper);
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("2021");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2021-01-04 at 1:28:18 p.m."
+    );
+    expect(report.find("div.actions.ds-l-col--1").find("a").text()).toBe(
+      "Edit"
+    );
+    expect(report.find("div.actions.ds-l-col--1").find("a").prop("href")).toBe(
+      "/sections/2021/00"
+    );
+  });
+
+  it("should render other reports statuses and time staps properly", () => {
+    const report = mount(stateUserCertWrapper);
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("2020");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe(
+      "Certified and Submitted"
+    );
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2022-06-27 at 2:43:08 p.m."
+    );
+    expect(report.find("div.actions.ds-l-col--1").find("a").text()).toBe(
+      "View"
+    );
+    expect(report.find("div.actions.ds-l-col--1").find("a").prop("href")).toBe(
+      "/sections/2020/00"
+    );
+  });
+
+  /*
+   * it("Should not have basic accessibility issues", async () => {
+   *   const reportInProg = mount(stateUserInProgWrapper);
+   *   const stateInProgResults = await axe(reportInProg.html());
+   *   expect(stateInProgResults).toHaveNoViolations();
+   */
+
+  /*
+   *   const reportCert = mount(stateUserCertWrapper);
+   *   const stateCertResults = await axe(reportCert.html());
+   *   expect(stateCertResults).toHaveNoViolations();
+   * });
+   */
 });
 
-describe("Test <ActionCard /> accessibility", () => {
-  it("Should not have basic accessibility issues", async () => {
-    const stateUserInProgWrapper = (
-      <Provider store={stateUserProg}>
-        <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...HomepageStateUserInProgProps} />
-        </MemoryRouter>
-      </Provider>
-    );
-    const stateResults = await axe(mount(stateUserInProgWrapper).html());
-    expect(stateResults).toHaveNoViolations();
+/**
+ *********************
+ *CMS User (cms.user@test.com)
+ *********************
+ */
+
+const cmsUser = mockStore(cmsUserWithMultipleReports);
+const CMSHomepageCMSUserAl2020Props = {
+  link1URL: "/views/sections/AL/2020/00/a",
+  name: "Alabama",
+  year: 2020,
+  statusText: "Certified and Submitted",
+  userRole: "CMS_USER",
+  username: "Frank States",
+  lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+};
+
+const CMSHomepageCMSUserAL2021Props = {
+  link1URL: "/views/sections/AL/2021/00/a",
+  name: "Alabama",
+  year: 2021,
+  statusText: "In Progress",
+  userRole: "CMS_USER",
+  username: "al@test.com",
+  lastChanged: "2021-01-04 18:28:18.524133+00",
+};
+
+describe("ReportItem viewed by a CMS User", () => {
+  const cmsUserInProgWrapper = (
+    <Provider store={cmsUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageCMSUserAL2021Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  const cmsUserCertWrapper = (
+    <Provider store={cmsUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageCMSUserAl2020Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  it("should render In Progress correctly", () => {
+    expect(shallow(cmsUserInProgWrapper).exists()).toBe(true);
   });
+
+  it("should render report other statuses correctly", () => {
+    expect(shallow(cmsUserCertWrapper).exists()).toBe(true);
+  });
+
+  it("should render an In Progress report with passed props", () => {
+    const report = mount(cmsUserInProgWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2021-01-04 at 1:28:18 p.m. by al@test.com"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2021/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+      "Uncertify"
+    );
+  });
+
+  it("should render other reports statuses and time staps properly", () => {
+    const report = mount(cmsUserCertWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe(
+      "Certified and Submitted"
+    );
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2022-06-27 at 2:43:08 p.m. by Frank States"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2020/00/a");
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("button").text()
+    ).toBe("Uncertify");
+  });
+
+  it("should handle uncertify being clicked and show new modal", () => {
+    render(cmsUserCertWrapper);
+    const uncertifyButton = screen.getByTestId("uncertifyButton");
+    fireEvent.click(uncertifyButton);
+    const uncertifyModal = screen.getByTestId("uncertifyModal");
+    expect(uncertifyModal).toHaveTextContent("Yes, Uncertify");
+  });
+
+  /*
+   * it("Should not have basic accessibility issues", async () => {
+   *   const reportInProg = mount(cmsUserInProgWrapper);
+   *   const stateInProgResults = await axe(reportInProg.html());
+   *   expect(stateInProgResults).toHaveNoViolations();
+   */
+
+  /*
+   *   const reportCert = mount(cmsUserCertWrapper);
+   *   const stateCertResults = await axe(reportCert.html());
+   *   expect(stateCertResults).toHaveNoViolations();
+   * });
+   */
+});
+
+/**
+ *********************
+ *Admin User (adminuser@test.com)
+ *********************
+ */
+
+const adminUser = mockStore(adminUserWithMultipleReports);
+const CMSHomepageAdminAl2020Props = {
+  link1URL: "/views/sections/AL/2020/00/a",
+  name: "Alabama",
+  year: 2020,
+  statusText: "Certified and Submitted",
+  userRole: "HELP_DESK",
+  username: "Frank States",
+  lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+};
+
+const CMSHomepageAdminAL2021Props = {
+  link1URL: "/views/sections/AL/2021/00/a",
+  name: "Alabama",
+  year: 2021,
+  statusText: "In Progress",
+  userRole: "HELP_DESK",
+  username: "al@test.com",
+  lastChanged: "2021-01-04 18:28:18.524133+00",
+};
+
+describe("ReportItem viewed by an Admin User", () => {
+  const adminUserInProgWrapper = (
+    <Provider store={adminUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageAdminAL2021Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  const adminUserCertWrapper = (
+    <Provider store={adminUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageAdminAl2020Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  it("should render In Progress correctly", () => {
+    expect(shallow(adminUserInProgWrapper).exists()).toBe(true);
+  });
+
+  it("should render report other statuses correctly", () => {
+    expect(shallow(adminUserCertWrapper).exists()).toBe(true);
+  });
+
+  it("should render an In Progress report with passed props", () => {
+    const report = mount(adminUserInProgWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2021-01-04 at 1:28:18 p.m. by al@test.com"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2021/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+      "Uncertify"
+    );
+  });
+
+  it("should render other reports statuses and time staps properly", () => {
+    const report = mount(adminUserCertWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe(
+      "Certified and Submitted"
+    );
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2022-06-27 at 2:43:08 p.m. by Frank States"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2020/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+      "Uncertify"
+    );
+  });
+
+  /*
+   * it("Should not have basic accessibility issues", async () => {
+   *   const reportInProg = mount(adminUserInProgWrapper);
+   *   const stateInProgResults = await axe(reportInProg.html());
+   *   expect(stateInProgResults).toHaveNoViolations();
+   */
+
+  /*
+   *   const reportCert = mount(adminUserCertWrapper);
+   *   const stateCertResults = await axe(reportCert.html());
+   *   expect(stateCertResults).toHaveNoViolations();
+   * });
+   */
+});
+
+/**
+ *********************
+ *Help Desk User (help.desk@test.com)
+ *********************
+ */
+
+const helpdeskUser = mockStore(helpdeskUserWithMultipleReports);
+const CMSHomepageHelpdeskAl2020Props = {
+  link1URL: "/views/sections/AL/2020/00/a",
+  name: "Alabama",
+  year: 2020,
+  statusText: "Certified and Submitted",
+  userRole: "HELP_DESK",
+  username: "Frank States",
+  lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+};
+
+const CMSHomepageHelpdeskAL2021Props = {
+  link1URL: "/views/sections/AL/2021/00/a",
+  name: "Alabama",
+  year: 2021,
+  statusText: "In Progress",
+  userRole: "HELP_DESK",
+  username: "al@test.com",
+  lastChanged: "2021-01-04 18:28:18.524133+00",
+};
+
+describe("ReportItem viewed by an Help Desk User", () => {
+  const helpdeskUserInProgWrapper = (
+    <Provider store={helpdeskUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageHelpdeskAL2021Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  const helpdeskUserCertWrapper = (
+    <Provider store={helpdeskUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageHelpdeskAl2020Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  it("should render In Progress correctly", () => {
+    expect(shallow(helpdeskUserInProgWrapper).exists()).toBe(true);
+  });
+
+  it("should render report other statuses correctly", () => {
+    expect(shallow(helpdeskUserCertWrapper).exists()).toBe(true);
+  });
+
+  it("should render an In Progress report with passed props", () => {
+    const report = mount(helpdeskUserInProgWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2021-01-04 at 1:28:18 p.m. by al@test.com"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2021/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+      "Uncertify"
+    );
+  });
+
+  it("should render other reports statuses and time staps properly", () => {
+    const report = mount(helpdeskUserCertWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe(
+      "Certified and Submitted"
+    );
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2022-06-27 at 2:43:08 p.m. by Frank States"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2020/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+      "Uncertify"
+    );
+  });
+
+  /*
+   * it("Should not have basic accessibility issues", async () => {
+   *   const reportInProg = mount(helpdeskUserInProgWrapper);
+   *   const stateInProgResults = await axe(reportInProg.html());
+   *   expect(stateInProgResults).toHaveNoViolations();
+   */
+
+  /*
+   *   const reportCert = mount(helpdeskUserCertWrapper);
+   *   const stateCertResults = await axe(reportCert.html());
+   *   expect(stateCertResults).toHaveNoViolations();
+   * });
+   */
 });
