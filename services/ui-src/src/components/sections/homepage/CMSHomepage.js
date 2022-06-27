@@ -221,25 +221,21 @@ const CMSHomepage = ({
                     }) => {
                       return (
                         <div>
-                          {
-                            // eslint-disable-next-line
-                            // with statement below we don't get the three default records (username, status, and lastchanged)
-                            stateCode !== "status" &&
-                              stateCode !== "lastChanged" &&
-                              stateCode !== "username" &&
-                              stateCode !== undefined && (
-                                <ReportItem
-                                  key={`${stateCode} - ${year}`}
-                                  link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                                  name={state}
-                                  year={year}
-                                  statusText={STATUS_MAPPING[status]}
-                                  userRole={currentUserRole}
-                                  username={username}
-                                  lastChanged={lastChanged}
-                                />
-                              )
-                          }
+                          {stateCode !== "status" &&
+                            stateCode !== "lastChanged" &&
+                            stateCode !== "username" &&
+                            stateCode !== undefined && (
+                              <ReportItem
+                                key={`${stateCode} - ${year}`}
+                                link1URL={`/views/sections/${stateCode}/${year}/00/a`}
+                                name={state}
+                                year={year}
+                                statusText={STATUS_MAPPING[status]}
+                                userRole={currentUserRole}
+                                username={username}
+                                lastChanged={lastChanged}
+                              />
+                            )}
                         </div>
                       );
                     }
