@@ -27,18 +27,22 @@ const ReportItem = ({
   let stateUser = userRole === AppRoles.STATE_USER;
 
   if (lastChanged) {
-    let date = new Date(lastChanged);
-    let time = new Intl.DateTimeFormat("default", {
+    const date = new Date(lastChanged);
+    // Using en-CA as they format the date to YYYY-MM-DD, HH:MM:SS where as en-US formats to DD/MM/YYYY, HH:MM:SS
+    const time = new Intl.DateTimeFormat("en-CA", {
       hour12: true,
+      second: "numeric",
       hour: "numeric",
       minute: "numeric",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     }).format(date);
-    lastEditedNote = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()} at ${time}`;
-    if (username) {
-      lastEditedNote += ` by ${username}`;
-    }
+    const splitTime = time.split(",");
+    lastEditedNote = splitTime?.[1]
+      ? `${splitTime[0]} at ${splitTime[1]}`
+      : `${splitTime[0]}`;
+    lastEditedNote += username ? ` by ${username}` : "";
   }
 
   const uncertify = () => {
@@ -67,13 +71,13 @@ const ReportItem = ({
             </Link>
           </div>
           {statusText === "Certified and Submitted" &&
-          userRole === AppRoles.CMS_USER ? (
-            <div className="actions ds-l-col--auto">
-              <button className="link" onClick={toggleModal}>
-                Uncertify
-              </button>
-            </div>
-          ) : null}
+            userRole === AppRoles.CMS_USER && (
+              <div className="actions ds-l-col--auto">
+                <button className="link" onClick={toggleModal}>
+                  Uncertify
+                </button>
+              </div>
+            )}
           {isShowing && (
             <Dialog
               isShowing={isShowing}
