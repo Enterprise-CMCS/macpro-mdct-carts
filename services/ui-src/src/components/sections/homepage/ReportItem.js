@@ -64,9 +64,12 @@ const ReportItem = ({
             </Link>
             {statusText === "Certified and Submitted" &&
               userRole === AppRoles.CMS_USER && (
-                <button className="link" onClick={toggleModal}>
-                  Uncertify
-                </button>
+                <span>
+                  {" "}
+                  <button className="link" onClick={toggleModal}>
+                    Uncertify
+                  </button>
+                </span>
               )}
           </div>
 
@@ -125,6 +128,10 @@ ReportItem.defaultProps = {
   statusText: "Missing Status",
 };
 
+const mapState = (state) => ({
+  user: state.reportStatus.username,
+});
+
 const mapDispatch = { theUncertify };
 
-export default connect(null, mapDispatch)(ReportItem);
+export default connect(mapState, mapDispatch)(ReportItem);
