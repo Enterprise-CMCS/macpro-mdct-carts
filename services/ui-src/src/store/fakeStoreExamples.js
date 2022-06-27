@@ -78,7 +78,7 @@ export const stateUserWithReportInProgress = {
       status: "in_progress",
       year: 2021,
       stateCode: "AL",
-      lastChanged: "2021-01-04 18:28:18.524133+00",
+      lastChanged: "Mon Jun 27 2022 12:24:11 GMT-0400 (Eastern Daylight Time)",
       username: "al@test.com",
       programType: "combo",
     },

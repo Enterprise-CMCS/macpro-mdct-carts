@@ -62,15 +62,14 @@ const ReportItem = ({
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
             </Link>
-          </div>
-          {statusText === "Certified and Submitted" &&
-            userRole === AppRoles.CMS_USER && (
-              <div className="actions ds-l-col--auto">
+            {statusText === "Certified and Submitted" &&
+              userRole === AppRoles.CMS_USER && (
                 <button className="link" onClick={toggleModal}>
                   Uncertify
                 </button>
-              </div>
-            )}
+              )}
+          </div>
+
           {isShowing && (
             <Dialog
               isShowing={isShowing}
@@ -96,7 +95,7 @@ const ReportItem = ({
       {stateUser && (
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--2">{name}</div>
-          <div className="status ds-l-col--2">statusText</div>
+          <div className="status ds-l-col--2">{statusText}</div>
           <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--1">
             <Link to={link1URL} target={anchorTarget}>
@@ -126,10 +125,6 @@ ReportItem.defaultProps = {
   statusText: "Missing Status",
 };
 
-const mapState = (state) => ({
-  user: state.reportStatus.username,
-});
-
 const mapDispatch = { theUncertify };
 
-export default connect(mapState, mapDispatch)(ReportItem);
+export default connect(null, mapDispatch)(ReportItem);

@@ -13,7 +13,7 @@ function formatStateStatus(item) {
       item.status === REPORT_STATUS.uncertified;
     return (
       <ReportItem
-        key={item.stateId + "-" + item.year}
+        key={item.stateCode + "-" + item.year}
         name={item.year}
         lastChanged={item.lastChanged}
         link1URL={`/sections/${item.year}/00`}
