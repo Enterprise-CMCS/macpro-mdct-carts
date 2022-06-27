@@ -106,30 +106,15 @@ const CMSHomepage = ({
     stateStatuses = filteredStatuses;
   }
 
-  let roleName;
-  switch (currentUserRole) {
-    case AppRoles.HELP_DESK:
-      roleName = "Help Desk";
-      break;
-    case AppRoles.CMS_USER:
-    default:
-      roleName = "CMS User";
-      break;
-  }
   return (
     <div className="homepage ds-l-col--12">
-      <div className="homepage-filter ds-l-container-large">
+      <div className="ds-l-container-large">
         {currentUserRole !== AppRoles.CMS_ADMIN ? (
-          <>
-            <div className="ds-l-row ds-u-padding-left--2">
-              <h1 className="page-title ds-u-margin-bottom--0">
-                CHIP Annual Reporting Template System (CARTS)
-              </h1>
-            </div>
-            <div className="page-info ds-u-padding-left--2">
-              <div className="edit-info">{roleName}</div>
-            </div>
-          </>
+          <div className="ds-l-row ds-u-padding-left--2">
+            <h1 className="page-title ds-u-margin-bottom--0">
+              CHIP Annual Reporting Template System (CARTS)
+            </h1>
+          </div>
         ) : null}
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">

@@ -24,9 +24,6 @@ const AdminHome = () => {
                 CHIP Annual Reporting Template System (CARTS)
               </h1>
             </div>
-            <div className="page-info">
-              <div className="edit-info">admin</div>
-            </div>
             <div className="ds-l-row">
               <ul>
                 <li>
