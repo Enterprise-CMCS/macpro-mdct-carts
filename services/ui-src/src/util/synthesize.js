@@ -218,7 +218,7 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
     // if admin and in a print view get state param
     const urlSearchParams = new URLSearchParams(window.location.search);
     const stateFromParams = urlSearchParams.get("state");
-    
+
     // Get stateUser state or fallback to the URL, if an admin
     const stateAbbr =
       state.stateUser.abbr ||
