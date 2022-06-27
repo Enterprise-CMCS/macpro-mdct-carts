@@ -3,174 +3,42 @@
     "programType": "combo",
     "code": "AL",
     "name": "Alabama",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "stateId": "AL",
-        "fiscalYear": 2020,
-        "enhancedFmap": 80.81
-      }
-    ],
-    "acsSet": [
-      {
-        "state_id": "AL",
-        "year": 2015,
-        "number_uninsured": 24000,
-        "number_uninsured_moe": 4000,
-        "percent_uninsured": 2.1,
-        "percent_uninsured_moe": 0.3
-      },
-      {
-        "state_id": "AL",
-        "year": 2016,
-        "number_uninsured": 20000,
-        "number_uninsured_moe": 3000,
-        "percent_uninsured": 1.7,
-        "percent_uninsured_moe": 0.3
-      },
-
-      {
-        "state_id": "AL",
-        "year": 2018,
-        "number_uninsured": 25000,
-        "number_uninsured_moe": 4000,
-        "percent_uninsured": 2.2,
-        "percent_uninsured_moe": 0.4
-      },
-      {
-        "state_id": "AL",
-        "year": 2019,
-        "number_uninsured": 22000,
-        "number_uninsured_moe": 3000,
-        "percent_uninsured": 2.0,
-        "percent_uninsured_moe": 0.3
-      }
-    ]
+    "programNames": {}
   },
   {
     "programType": "combo",
     "code": "AK",
     "name": "Alaska",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "fiscal_year": 2020,
-        "enhanced_FMAP": 65.0
-      }
-    ],
-    "acsSet": [
-      {
-        "year": 2015,
-        "number_uninsured": 8000,
-        "number_uninsured_moe": 1000,
-        "percent_uninsured": 3.9,
-        "percent_uninsured_moe": 0.7
-      }
-    ]
+    "programNames": {}
   },
   {
     "programType": "combo",
     "code": "CA",
     "name": "California",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "fiscal_year": 2020,
-        "enhanced_FMAP": 65.0
-      }
-    ],
-    "acsSet": [
-      {
-        "year": 2015,
-        "number_uninsured": 193000,
-        "number_uninsured_moe": 12000,
-        "percent_uninsured": 2.0,
-        "percent_uninsured_moe": 0.1
-      }
-    ]
+    "programNames": {}
   },
   {
     "programType": "combo",
     "code": "CT",
     "name": "Connecticut",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "fiscal_year": 2020,
-        "enhanced_FMAP": 65.0
-      }
-    ],
-    "acsSet": [
-      {
-        "year": 2015,
-        "number_uninsured": 12000,
-        "number_uninsured_moe": 3000,
-        "percent_uninsured": 1.6,
-        "percent_uninsured_moe": 0.4
-      }
-    ]
+    "programNames": {}
   },
   {
     "programType": "combo",
     "code": "NJ",
     "name": "New Jersey",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "fiscal_year": 2020,
-        "enhanced_FMAP": 65.0
-      }
-    ],
-    "acsSet": [
-      {
-        "year": 2015,
-        "number_uninsured": 45000,
-        "number_uninsured_moe": 5000,
-        "percent_uninsured": 2.2,
-        "percent_uninsured_moe": 0.3
-      }
-    ]
+    "programNames": {}
   },
   {
     "programType": "combo",
     "code": "PA",
     "name": "Pennsylvania",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "fiscal_year": 2020,
-        "enhanced_FMAP": 66.54
-      }
-    ],
-    "acsSet": [
-      {
-        "year": 2015,
-        "number_uninsured": 66000,
-        "number_uninsured_moe": 6000,
-        "percent_uninsured": 2.4,
-        "percent_uninsured_moe": 0.2
-      }
-    ]
+    "programNames": {}
   },
   {
     "programType": "combo",
     "code": "TX",
     "name": "Texas",
-    "programNames": {},
-    "fmapSet": [
-      {
-        "fiscal_year": 2020,
-        "enhanced_FMAP": 73.27
-      }
-    ],
-    "acsSet": [
-      {
-        "year": 2015,
-        "number_uninsured": 450000,
-        "number_uninsured_moe": 20000,
-        "percent_uninsured": 6.0,
-        "percent_uninsured_moe": 0.3
-      }
-    ]
+    "programNames": {}
   }
 ]
