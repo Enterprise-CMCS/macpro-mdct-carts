@@ -12,7 +12,6 @@ const ReportItem = ({
   link1URL,
   name,
   statusText,
-  statusURL,
   theUncertify: uncertifyAction,
   userRole,
   year,
@@ -57,13 +56,7 @@ const ReportItem = ({
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--1">{year}</div>
           <div className="name ds-l-col--2">{name}</div>
-          <div
-            className={`status ds-l-col--2 ${
-              statusText === "Overdue" && `alert`
-            }`}
-          >
-            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-          </div>
+          <div className="status ds-l-col--2">{statusText}</div>
           <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--auto">
             <Link to={link1URL} target={anchorTarget}>
@@ -103,13 +96,7 @@ const ReportItem = ({
       {stateUser && (
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--2">{name}</div>
-          <div
-            className={`status ds-l-col--2 ${
-              statusText === "Overdue" && `alert`
-            }`}
-          >
-            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-          </div>
+          <div className="status ds-l-col--2">statusText</div>
           <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--1">
             <Link to={link1URL} target={anchorTarget}>
@@ -128,7 +115,6 @@ ReportItem.propTypes = {
   link1URL: PropTypes.string,
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   statusText: PropTypes.string,
-  statusURL: PropTypes.string,
   userRole: PropTypes.string,
   year: PropTypes.number.isRequired,
   username: PropTypes.string,
@@ -138,7 +124,6 @@ ReportItem.defaultProps = {
   link1Text: "View",
   link1URL: "#",
   statusText: "Missing Status",
-  statusURL: "",
 };
 
 const mapState = (state) => ({

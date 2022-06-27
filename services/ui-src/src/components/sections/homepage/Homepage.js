@@ -18,8 +18,6 @@ function formatStateStatus(item) {
         lastChanged={item.lastChanged}
         link1URL={`/sections/${item.year}/00`}
         link1Text={editable ? "Edit" : "View"}
-        link2URL="#"
-        link2Text={null}
         statusText={STATUS_MAPPING[item.status]}
         userRole={AppRoles.STATE_USER}
         year={item.year}
