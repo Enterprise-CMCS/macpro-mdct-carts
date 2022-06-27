@@ -213,11 +213,13 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
     const stateFromURL = windowPathName.split("/")[3];
 
     // if admin and in a print view get state param
-    const urlSearchParams = new URLSearchParams(window.location.search)
-    const stateFromParams = urlSearchParams.get('state')
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const stateFromParams = urlSearchParams.get("state");
 
     // Get stateUser state or fallback to the URL, if an admin
-    const stateAbbr = state.stateUser.abbr || (windowPathName.includes("print") ? stateFromParams : stateFromURL );
+    const stateAbbr =
+      state.stateUser.abbr ||
+      (windowPathName.includes("print") ? stateFromParams : stateFromURL);
 
     // Filter for only matching state
     const stateData = state.allStatesData.filter(
