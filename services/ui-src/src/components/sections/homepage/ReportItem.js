@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { theUncertify } from "../../../actions/uncertify";
-import { UserRoles } from "../../../types";
+import { AppRoles } from "../../../types";
 import { Dialog } from "@cmsgov/design-system";
 import useModal from "../../../hooks/useModal";
 
@@ -24,10 +24,7 @@ const ReportItem = ({
   const stateYear = link1URL.toString().split("/")[4];
   const { isShowing, toggleModal } = useModal();
   let lastEditedNote = "";
-  let stateUser = false;
-  if (userRole === UserRoles.STATE) {
-    stateUser = true;
-  }
+  let stateUser = userRole === AppRoles.STATE_USER;
 
   if (lastChanged) {
     let date = new Date(lastChanged);
@@ -70,7 +67,7 @@ const ReportItem = ({
             </Link>
           </div>
           {statusText === "Certified and Submitted" &&
-          userRole === UserRoles.APPROVER ? (
+          userRole === AppRoles.CMS_USER ? (
             <div className="actions ds-l-col--auto">
               <button className="link" onClick={toggleModal}>
                 Uncertify

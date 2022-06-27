@@ -1,7 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { UserRoles, StateStatus } from "../../types";
+import { AppRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 import { UnauthorizedError } from "../../libs/httpErrors";
 
@@ -22,8 +22,8 @@ export const updateSections = handler(async (event, _context) => {
 
   // only state users can update reports associated with their assigned state
   if (
-    (user.role === UserRoles.STATE && user.state !== state) ||
-    user.role !== UserRoles.STATE
+    (user.role === AppRoles.STATE_USER && user.state !== state) ||
+    user.role !== AppRoles.STATE_USER
   ) {
     throw new UnauthorizedError("Unauthorized Request");
   }

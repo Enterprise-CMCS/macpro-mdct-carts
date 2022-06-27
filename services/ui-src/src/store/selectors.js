@@ -1,5 +1,5 @@
 import jsonpath from "../util/jsonpath";
-import { REPORT_STATUS, UserRoles } from "../types";
+import { REPORT_STATUS, AppRoles } from "../types";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
@@ -150,7 +150,7 @@ export const getCurrentReportStatus = (state) => {
   const { reportStatus, formData, stateUser, global } = state;
 
   let currentReport = "";
-  if (stateUser.currentUser.role === UserRoles.STATE) {
+  if (stateUser.currentUser.role === AppRoles.STATE_USER) {
     currentReport = `${stateUser.abbr}${global.formYear}`;
   } else {
     if (formData?.[0] === undefined) return {};
@@ -180,7 +180,7 @@ export const selectIsFormEditable = (state) => {
        * Forms can only be edited if the current user is a state user AND the
        * form is in one of the statuses above.
        */
-      return role === UserRoles.STATE;
+      return role === AppRoles.STATE_USER;
     default:
       return false;
   }
