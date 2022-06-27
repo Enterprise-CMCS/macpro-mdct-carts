@@ -18,10 +18,7 @@ const Section = ({ subsectionId, title }) => {
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
         <PageInfo />
-        <h2 data-testid="section-print-title">{title}</h2>
-        <h2 className="screen-only" data-testid="section-screen-title">
-          {title}
-        </h2>
+        <h2 data-testid="section-title">{title}</h2>
         <Subsection key={subsectionId} subsectionId={subsectionId} />
       </div>
       <div className="form-footer">

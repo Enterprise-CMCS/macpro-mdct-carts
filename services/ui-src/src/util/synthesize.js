@@ -221,9 +221,9 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
     
     // Get stateUser state or fallback to the URL, if an admin
     const stateAbbr =
-    state.stateUser.abbr ||
-    (windowPathName.includes("print") ? stateFromParams : stateFromURL);
-    
+      state.stateUser.abbr ||
+      (windowPathName.includes("print") ? stateFromParams : stateFromURL);
+
     // Filter for only matching state
     const stateData = state.allStatesData.filter(
       (st) => st.code === stateAbbr
