@@ -30,6 +30,7 @@ const HomepageStateUserInProgProps = {
   statusText: "In Progress",
   userRole: "STATE_USER",
   year: 2021,
+  timeZone: "America/New_York",
 };
 
 const HomepageStateUserCertProps = {
@@ -40,6 +41,7 @@ const HomepageStateUserCertProps = {
   statusText: "Certified and Submitted",
   userRole: "STATE_USER",
   year: 2020,
+  timeZone: "America/New_York",
 };
 
 describe("ReportItem viewed by a State User", () => {
@@ -129,6 +131,7 @@ const CMSHomepageCMSUserAl2020Props = {
   userRole: "CMS_USER",
   username: "Frank States",
   lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  timeZone: "America/New_York",
 };
 
 const CMSHomepageCMSUserAL2021Props = {
@@ -139,6 +142,7 @@ const CMSHomepageCMSUserAL2021Props = {
   userRole: "CMS_USER",
   username: "al@test.com",
   lastChanged: "2021-01-04 18:28:18.524133+00",
+  timeZone: "America/New_York",
 };
 
 describe("ReportItem viewed by a CMS User", () => {
@@ -244,6 +248,7 @@ const CMSHomepageAdminAl2020Props = {
   userRole: "HELP_DESK",
   username: "Frank States",
   lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  timeZone: "America/New_York",
 };
 
 const CMSHomepageAdminAL2021Props = {
@@ -254,6 +259,7 @@ const CMSHomepageAdminAL2021Props = {
   userRole: "HELP_DESK",
   username: "al@test.com",
   lastChanged: "2021-01-04 18:28:18.524133+00",
+  timeZone: "America/New_York",
 };
 
 describe("ReportItem viewed by an Admin User", () => {
@@ -351,6 +357,7 @@ const CMSHomepageHelpdeskAl2020Props = {
   userRole: "HELP_DESK",
   username: "Frank States",
   lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  timeZone: "America/New_York",
 };
 
 const CMSHomepageHelpdeskAL2021Props = {
@@ -361,6 +368,7 @@ const CMSHomepageHelpdeskAL2021Props = {
   userRole: "HELP_DESK",
   username: "al@test.com",
   lastChanged: "2021-01-04 18:28:18.524133+00",
+  timeZone: "America/New_York",
 };
 
 describe("ReportItem viewed by an Help Desk User", () => {

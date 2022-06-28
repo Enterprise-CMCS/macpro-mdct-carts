@@ -17,6 +17,7 @@ const ReportItem = ({
   year,
   username,
   lastChanged,
+  timeZone,
 }) => {
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
@@ -36,6 +37,7 @@ const ReportItem = ({
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
+      timeZone,
     }).format(date);
     const splitTime = time.split(",");
     lastEditedNote = splitTime?.[1]
@@ -119,13 +121,14 @@ const ReportItem = ({
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
-  link1URL: PropTypes.string,
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  link1URL: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   statusText: PropTypes.string,
-  userRole: PropTypes.string,
+  userRole: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   username: PropTypes.string,
-  lastChanged: PropTypes.string,
+  lastChanged: PropTypes.string.isRequired,
+  timeZone: PropTypes.string,
 };
 ReportItem.defaultProps = {
   link1Text: "View",
