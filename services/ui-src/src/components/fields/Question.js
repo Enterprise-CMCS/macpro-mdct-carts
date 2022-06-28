@@ -122,6 +122,8 @@ const Question = ({
 
         <Component
           {...props}
+          label={undefined}
+          hint={undefined}
           question={question}
           name={question.id}
           onChange={onChange}
