@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDown,
@@ -6,7 +7,7 @@ import {
   faFileAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const TemplateDownload = () => {
+export const TemplateDownload = ({ templateDownloadLink }) => {
   return (
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
@@ -33,7 +34,7 @@ export const TemplateDownload = () => {
             <div className="download">
               <a
                 tabIndex={-1}
-                href={"docs/FFY_2021_CARTS_Template.pdf"}
+                href={templateDownloadLink}
                 download
                 aria-label="Download Template"
               >
@@ -59,4 +60,8 @@ export const TemplateDownload = () => {
       </div>
     </div>
   );
+};
+
+TemplateDownload.propTypes = {
+  templateDownloadLink: PropTypes.string.isRequired,
 };
