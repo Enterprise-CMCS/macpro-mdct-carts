@@ -48,7 +48,7 @@ class TableOfContents extends Component {
                   onClick: this.click,
                   selected: location.pathname
                     .toLowerCase()
-                    .startsWith(idToUrl(location, subsectionId)),
+                    .startsWith(idToUrl(location, subsectionId).toLowerCase()),
                   url: idToUrl(location, subsectionId),
                 })
               ),
@@ -57,7 +57,7 @@ class TableOfContents extends Component {
         onClick: this.click,
         selected: location.pathname
           .toLowerCase()
-          .startsWith(idToUrl(location, sectionId)),
+          .startsWith(idToUrl(location, sectionId).toLowerCase()),
       }))
       .map(({ id, items: childItems, ...rest }) => {
         const updated = { id, items: childItems, ...rest };
@@ -78,10 +78,11 @@ class TableOfContents extends Component {
         url: `/sections/${formYear}/certify-and-submit`,
       });
     }
-
+    
+    const foundSelectedId = items.find((item) => item.selected)?.id;
     return (
       <div className="toc" data-testid="toc">
-        <VerticalNav selectedId="toc" items={items} />
+        <VerticalNav selectedId={foundSelectedId} items={items} />
       </div>
     );
   }
