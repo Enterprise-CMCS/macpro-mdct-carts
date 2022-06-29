@@ -51,7 +51,7 @@ custom:
     seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: us-east-1
 
 resources:
