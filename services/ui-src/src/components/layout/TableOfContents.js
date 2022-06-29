@@ -82,7 +82,7 @@ class TableOfContents extends Component {
     const foundSelectedId = items.find((item) => item.selected)?.id;
     return (
       <div className="toc" data-testid="toc">
-        <VerticalNav selectedId={foundSelectedId} items={items} />
+        <VerticalNav selectedId={foundSelectedId} ariaNavLabel="Vertical Navigation Element" items={items} />
       </div>
     );
   }
