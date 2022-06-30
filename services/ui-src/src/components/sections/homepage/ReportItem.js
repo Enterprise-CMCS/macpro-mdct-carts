@@ -75,7 +75,11 @@ const ReportItem = ({
             {theDateTime[0]} at {theDateTime[1]} by {username}
           </div>
           <div className="actions ds-l-col--auto">
-            <Link to={link1URL} target={anchorTarget}>
+            <Link
+              to={link1URL}
+              target={anchorTarget}
+              aria-label={`${link1Text} ${name} ${year}`}
+            >
               {link1Text}
             </Link>
           </div>
