@@ -25,7 +25,7 @@ const SaveError = ({ saveError }) => {
         variation="warn"
         data-test="component-header"
       >
-        <div class="flex">
+        <div className="flex">
           <div>
             We weren&lsquo;t able to save your latest changes. Try saving in a
             few minutes. If you continue to see this message, refresh your
@@ -34,7 +34,7 @@ const SaveError = ({ saveError }) => {
           </div>
           <button
             aria-label="Close alert"
-            class="hide-alert-button"
+            className="hide-alert-button"
             onClick={() => setShowErrorAlert(false)}
           >
             X
