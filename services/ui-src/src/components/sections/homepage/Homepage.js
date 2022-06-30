@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import { TemplateDownload } from "./TemplateDownload";
-import { REPORT_STATUS, STATUS_MAPPING, UserRoles } from "../../../types";
+import { REPORT_STATUS, STATUS_MAPPING, AppRoles } from "../../../types";
 
 function formatStateStatus(item) {
   if (item) {
@@ -21,7 +21,7 @@ function formatStateStatus(item) {
         link2URL="#"
         link2Text={null}
         statusText={STATUS_MAPPING[item.status]}
-        userRole={UserRoles.STATE}
+        userRole={AppRoles.STATE_USER}
         year={item.year}
       />
     );

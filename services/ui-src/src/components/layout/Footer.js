@@ -59,7 +59,7 @@ class Footer extends Component {
           <div className="ds-l-container">
             <div className="ds-l-row">
               <div className="help ds-l-col--6">
-                <a href="/">Contact Us</a>
+                <a href="/get-help">Contact Us</a>
 
                 <a href="https://www.cms.gov/About-CMS/Agency-Information/Aboutwebsite/CMSNondiscriminationNotice">
                   Accessibility Statement

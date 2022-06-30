@@ -1,7 +1,7 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
 import Home from "./Home";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 import HomeAdmin from "./HomeAdmin";
 import Unauthorized from "./Unauthorized";
 import CMSHome from "./HomeCMS";
@@ -35,11 +35,10 @@ describe("Home Component", () => {
     expect(shallow(<Home />).exists()).toBe(true);
   });
   it.each([
-    [UserRoles.APPROVER, <CMSHome />],
-    [UserRoles.BUSINESS_OWNER_REP, <HomeAdmin />],
-    [UserRoles.HELP, <CMSHome />],
-    [UserRoles.PROJECT_OFFICER, <CMSHome />],
-    [UserRoles.STATE, <StateHome />],
+    [AppRoles.CMS_USER, <CMSHome />],
+    [AppRoles.CMS_ADMIN, <HomeAdmin />],
+    [AppRoles.HELP_DESK, <CMSHome />],
+    [AppRoles.STATE_USER, <StateHome />],
     ["", <Unauthorized />],
   ])("User role %s should see the matching homepage)", (role, expected) => {
     const wrapper = mount(

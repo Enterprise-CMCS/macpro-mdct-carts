@@ -6,7 +6,7 @@ import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system";
 import { MultiSelect } from "react-multi-select-component";
-import { STATUS_MAPPING, UserRoles } from "../../../types";
+import { STATUS_MAPPING, AppRoles } from "../../../types";
 
 const CMSHomepage = ({
   getStatuses,
@@ -16,11 +16,9 @@ const CMSHomepage = ({
   yearList,
 }) => {
   const statusList = [
-    { label: "Accepted", value: "accepted" },
     { label: "Certified", value: "certified" },
     { label: "In Progress", value: "in_progress" },
     { label: "Not Started", value: "not_started" },
-    { label: "Published", value: "published" },
   ];
 
   const [currentlySelectedStates, setCurrentlySelectedStates] = useState([]);
@@ -111,17 +109,12 @@ const CMSHomepage = ({
   return (
     <div className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
-        {currentUserRole !== UserRoles.BUSINESS_OWNER_REP ? (
-          <>
-            <div className="ds-l-row ds-u-padding-left--2">
-              <h1 className="page-title ds-u-margin-bottom--0">
-                CHIP Annual Reporting Template System (CARTS)
-              </h1>
-            </div>
-            <div className="page-info ds-u-padding-left--2">
-              <div className="edit-info">CMS user</div>
-            </div>
-          </>
+        {currentUserRole !== AppRoles.CMS_ADMIN ? (
+          <div className="ds-l-row ds-u-padding-left--2">
+            <h1 className="page-title ds-u-margin-bottom--0">
+              CHIP Annual Reporting Template System (CARTS)
+            </h1>
+          </div>
         ) : null}
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">

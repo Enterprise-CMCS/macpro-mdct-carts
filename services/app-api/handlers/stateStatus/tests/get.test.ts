@@ -1,7 +1,7 @@
 import { getStateStatus } from "../get";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { UserRoles } from "../../../types";
+import { AppRoles } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 
 jest.mock("../../../libs/dynamodb-lib", () => ({
@@ -17,11 +17,11 @@ jest.mock("../../../libs/authorization", () => ({
   getUserCredentialsFromJwt: jest
     .fn()
     .mockReturnValueOnce({
-      role: UserRoles.STATE,
+      role: AppRoles.STATE_USER,
       state: "AL",
     })
     .mockReturnValueOnce({
-      role: UserRoles.BUSINESS_OWNER_REP,
+      role: AppRoles.CMS_USER,
     }),
 }));
 
