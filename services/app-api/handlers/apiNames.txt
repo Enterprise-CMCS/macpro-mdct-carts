@@ -1,8 +1,8 @@
 -- formTemplates
 POST /formTemplates - create the sections for a given year for all known states
 
--- downloads
-GET downloads/fiscalYearTemplate - get the download link for the Fiscal Year Report Template
+-- fiscalYearTemplate
+GET /fiscalYearTemplate - get the download link for the Fiscal Year Report Template
 
 -- state
 GET /state - return info on all states and territories

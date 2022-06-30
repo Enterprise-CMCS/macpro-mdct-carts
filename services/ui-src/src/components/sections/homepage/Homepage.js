@@ -38,9 +38,6 @@ const Homepage = ({
     getFiscalYearTemplateLink();
   }, []);
 
-  const showTemplateDownloadLink =
-    fiscalYearTemplateLink && typeof fiscalYearTemplateLink === "string";
-
   return (
     <div className="homepage">
       <div className="ds-l-container">
@@ -49,9 +46,7 @@ const Homepage = ({
             CHIP Annual Reporting Template System (CARTS)
           </h1>
         </div>
-        {showTemplateDownloadLink && (
-          <TemplateDownload templateDownloadLink={fiscalYearTemplateLink} />
-        )}
+        <TemplateDownload templateDownloadLink={fiscalYearTemplateLink} />
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
             <div className="carts-report preview__grid">

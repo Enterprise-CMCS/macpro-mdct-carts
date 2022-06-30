@@ -90,6 +90,7 @@ provider:
             - execute-api:Invoke
           Resource: "*"
   environment:
+    fiscalYearTemplateS3BucketName: ${ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
     princeApiHost: ${self:custom.princeApiHost}
     princeApiPath: ${self:custom.princeApiPath}
     stateTableName: ${self:custom.stateTableName}
@@ -109,10 +110,10 @@ functions:
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getFiscalYearTemplateLink:
-    handler: handlers/downloads/get.getFiscalYearTemplateLink
+    handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
     events:
       - http:
-          path: downloads/fiscalYearTemplate
+          path: fiscalYearTemplate
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
