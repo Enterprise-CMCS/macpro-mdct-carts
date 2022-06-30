@@ -1697,25 +1697,25 @@
                           {
                             "lookupAcs": {
                               "ffy": "2015",
-                              "acsProperty": "number_uninsured"
+                              "acsProperty": "numberUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2015",
-                              "acsProperty": "number_uninsured_moe"
+                              "acsProperty": "numberUninsuredMoe"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2015",
-                              "acsProperty": "percent_uninsured"
+                              "acsProperty": "percentUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2015",
-                              "acsProperty": "percent_uninsured_moe"
+                              "acsProperty": "percentUninsuredMoe"
                             }
                           }
                         ],
@@ -1726,25 +1726,25 @@
                           {
                             "lookupAcs": {
                               "ffy": "2016",
-                              "acsProperty": "number_uninsured"
+                              "acsProperty": "numberUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2016",
-                              "acsProperty": "number_uninsured_moe"
+                              "acsProperty": "numberUninsuredMoe"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2016",
-                              "acsProperty": "percent_uninsured"
+                              "acsProperty": "percentUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2016",
-                              "acsProperty": "percent_uninsured_moe"
+                              "acsProperty": "percentUninsuredMoe"
                             }
                           }
                         ],
@@ -1755,25 +1755,25 @@
                           {
                             "lookupAcs": {
                               "ffy": "2017",
-                              "acsProperty": "number_uninsured"
+                              "acsProperty": "numberUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2017",
-                              "acsProperty": "number_uninsured_moe"
+                              "acsProperty": "numberUninsuredMoe"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2017",
-                              "acsProperty": "percent_uninsured"
+                              "acsProperty": "percentUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2017",
-                              "acsProperty": "percent_uninsured_moe"
+                              "acsProperty": "percentUninsuredMoe"
                             }
                           }
                         ],
@@ -1784,25 +1784,25 @@
                           {
                             "lookupAcs": {
                               "ffy": "2018",
-                              "acsProperty": "number_uninsured"
+                              "acsProperty": "numberUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2018",
-                              "acsProperty": "number_uninsured_moe"
+                              "acsProperty": "numberUninsuredMoe"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2018",
-                              "acsProperty": "percent_uninsured"
+                              "acsProperty": "percentUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2018",
-                              "acsProperty": "percent_uninsured_moe"
+                              "acsProperty": "percentUninsuredMoe"
                             }
                           }
                         ],
@@ -1813,25 +1813,25 @@
                           {
                             "lookupAcs": {
                               "ffy": "2019",
-                              "acsProperty": "number_uninsured"
+                              "acsProperty": "numberUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2019",
-                              "acsProperty": "number_uninsured_moe"
+                              "acsProperty": "numberUninsuredMoe"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2019",
-                              "acsProperty": "percent_uninsured"
+                              "acsProperty": "percentUninsured"
                             }
                           },
                           {
                             "lookupAcs": {
                               "ffy": "2019",
-                              "acsProperty": "percent_uninsured_moe"
+                              "acsProperty": "percentUninsuredMoe"
                             }
                           }
                         ]
@@ -1867,7 +1867,7 @@
                             "compareACS": {
                               "ffy1": "2018",
                               "ffy2": "2019",
-                              "acsProperty": "percent_uninsured"
+                              "acsProperty": "percentUninsured"
                             }
                           }
                         ]
