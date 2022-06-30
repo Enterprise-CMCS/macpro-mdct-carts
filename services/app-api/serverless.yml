@@ -87,6 +87,10 @@ provider:
           Resource: "*"
         - Effect: "Allow"
           Action:
+            - ssm:GetParameter
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
             - execute-api:Invoke
           Resource: "*"
   environment:
