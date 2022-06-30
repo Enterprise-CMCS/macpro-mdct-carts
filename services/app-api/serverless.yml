@@ -101,7 +101,7 @@ provider:
     sectionTableName: ${self:custom.sectionTableName}
     sectionBaseName: ${self:custom.sectionBaseTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
-    stage: ${opt:stage, self:provider.stage}
+    stage: ${self:custom.stage}
 
 functions:
   getStates:
