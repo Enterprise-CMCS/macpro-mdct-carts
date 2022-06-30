@@ -11,6 +11,7 @@ import {
   helpdeskUserWithMultipleReports,
   stateUserWithMultipleReports,
 } from "../../../store/fakeStoreExamples";
+import { axe } from "jest-axe";
 
 const mockStore = configureMockStore();
 
@@ -101,19 +102,17 @@ describe("ReportItem viewed by a State User", () => {
     );
   });
 
-  /*
-   * it("Should not have basic accessibility issues", async () => {
-   *   const reportInProg = mount(stateUserInProgWrapper);
-   *   const stateInProgResults = await axe(reportInProg.html());
-   *   expect(stateInProgResults).toHaveNoViolations();
-   */
+  test("In Progress report items should not have basic accessibility issues", async () => {
+    const { container } = render(stateUserInProgWrapper);
+    const stateInProgResults = await axe(container);
+    expect(stateInProgResults).toHaveNoViolations();
+  });
 
-  /*
-   *   const reportCert = mount(stateUserCertWrapper);
-   *   const stateCertResults = await axe(reportCert.html());
-   *   expect(stateCertResults).toHaveNoViolations();
-   * });
-   */
+  test("Certified report items  should not have basic accessibility issues", async () => {
+    const { container } = render(stateUserCertWrapper);
+    const stateCertResults = await axe(container);
+    expect(stateCertResults).toHaveNoViolations();
+  });
 });
 
 /**
@@ -218,19 +217,17 @@ describe("ReportItem viewed by a CMS User", () => {
     expect(uncertifyModal).toHaveTextContent("Yes, Uncertify");
   });
 
-  /*
-   * it("Should not have basic accessibility issues", async () => {
-   *   const reportInProg = mount(cmsUserInProgWrapper);
-   *   const stateInProgResults = await axe(reportInProg.html());
-   *   expect(stateInProgResults).toHaveNoViolations();
-   */
+  test("In Progress report items should not have basic accessibility issues", async () => {
+    const { container } = render(cmsUserCertWrapper);
+    const stateInProgResults = await axe(container);
+    expect(stateInProgResults).toHaveNoViolations();
+  });
 
-  /*
-   *   const reportCert = mount(cmsUserCertWrapper);
-   *   const stateCertResults = await axe(reportCert.html());
-   *   expect(stateCertResults).toHaveNoViolations();
-   * });
-   */
+  test("Certified report items  should not have basic accessibility issues", async () => {
+    const { container } = render(cmsUserCertWrapper);
+    const stateCertResults = await axe(container);
+    expect(stateCertResults).toHaveNoViolations();
+  });
 });
 
 /**
@@ -327,19 +324,17 @@ describe("ReportItem viewed by an Admin User", () => {
     );
   });
 
-  /*
-   * it("Should not have basic accessibility issues", async () => {
-   *   const reportInProg = mount(adminUserInProgWrapper);
-   *   const stateInProgResults = await axe(reportInProg.html());
-   *   expect(stateInProgResults).toHaveNoViolations();
-   */
+  test("In Progress report items should not have basic accessibility issues", async () => {
+    const { container } = render(adminUserInProgWrapper);
+    const stateInProgResults = await axe(container);
+    expect(stateInProgResults).toHaveNoViolations();
+  });
 
-  /*
-   *   const reportCert = mount(adminUserCertWrapper);
-   *   const stateCertResults = await axe(reportCert.html());
-   *   expect(stateCertResults).toHaveNoViolations();
-   * });
-   */
+  test("Certified report items  should not have basic accessibility issues", async () => {
+    const { container } = render(adminUserCertWrapper);
+    const stateCertResults = await axe(container);
+    expect(stateCertResults).toHaveNoViolations();
+  });
 });
 
 /**
@@ -436,17 +431,15 @@ describe("ReportItem viewed by an Help Desk User", () => {
     );
   });
 
-  /*
-   * it("Should not have basic accessibility issues", async () => {
-   *   const reportInProg = mount(helpdeskUserInProgWrapper);
-   *   const stateInProgResults = await axe(reportInProg.html());
-   *   expect(stateInProgResults).toHaveNoViolations();
-   */
+  test("In Progress report items should not have basic accessibility issues", async () => {
+    const { container } = render(helpdeskUserInProgWrapper);
+    const stateInProgResults = await axe(container);
+    expect(stateInProgResults).toHaveNoViolations();
+  });
 
-  /*
-   *   const reportCert = mount(helpdeskUserCertWrapper);
-   *   const stateCertResults = await axe(reportCert.html());
-   *   expect(stateCertResults).toHaveNoViolations();
-   * });
-   */
+  test("Certified report items  should not have basic accessibility issues", async () => {
+    const { container } = render(helpdeskUserCertWrapper);
+    const stateCertResults = await axe(container);
+    expect(stateCertResults).toHaveNoViolations();
+  });
 });
