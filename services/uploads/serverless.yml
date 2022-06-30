@@ -117,6 +117,27 @@ resources:
             - Event: s3:ObjectCreated:Put
               Function: !GetAtt AvScanLambdaFunction.Arn
       DependsOn: LambdaInvokePermission
+
+    FiscalYearTemplateBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: !Sub ${self:service.name}-${self:custom.stage}-carts-download-${AWS::AccountId}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        CorsConfiguration: # Set the CORS policy
+          CorsRules:
+            - AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+              MaxAge: 3000
+              ExposedHeaders:
+                - ETag
+
     AVBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -203,6 +224,29 @@ resources:
               Condition:
                 Bool:
                   aws:SecureTransport: false
+
+    FiscalYearTemplateBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref FiscalYearTemplateBucket
+        PolicyDocument:
+          Statement:
+            - Action:
+                - "s3:GetObject"
+              Effect: "Deny"
+              Resource: !Sub ${FiscalYearTemplateBucket.Arn}/*
+              Principal: "*"
+            - Sid: "AllowSSLRequestsOnly"
+              Effect: Deny
+              Action: "s3:*"
+              Principal: "*"
+              Resource:
+                - !Sub arn:aws:s3:::${FiscalYearTemplateBucket}/*
+                - !Sub arn:aws:s3:::${FiscalYearTemplateBucket}
+              Condition:
+                Bool:
+                  aws:SecureTransport: false
+
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
