@@ -33,6 +33,10 @@ custom:
       - main
       - val
       - prod
+  acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
+  acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
+  fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
+  fmapTableArn: ${env:fmapTableArn, cf:database-${self:custom.stage}.FmapTableArn}
   princeApiHost: ${env:princeApiHost, ssm:/${self:custom.stage}/prince_api_host, ssm:/default/prince_api_host}
   princeApiPath: ${env:princeApiPath, ssm:/${self:custom.stage}/prince_api_path, ssm:/default/prince_api_path}
   stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
@@ -90,6 +94,8 @@ provider:
             - execute-api:Invoke
           Resource: "*"
   environment:
+    acsTableName: ${self:custom.acsTableName}
+    fmapTableName: ${self:custom.fmapTableName}
     princeApiHost: ${self:custom.princeApiHost}
     princeApiPath: ${self:custom.princeApiPath}
     stateTableName: ${self:custom.stateTableName}

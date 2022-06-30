@@ -191,8 +191,8 @@ const lookupFMAP = (state, fy) => {
     )[0];
 
     const fmap =
-      stateData?.fmap_set.filter((year) => year.fiscal_year === +fy)[0]
-        ?.enhanced_FMAP || NaN;
+      stateData?.fmapSet.filter((year) => year.fiscalYear === +fy)[0]
+        ?.enhancedFmap || NaN;
 
     return fmap;
   }
@@ -200,7 +200,7 @@ const lookupFMAP = (state, fy) => {
 };
 
 /**
- * Retrieve acs_set from state and return for individual state.
+ * Retrieve acsSet from state and return for individual state.
  *
  * @param {string} state
  * @param {string} ffy
@@ -208,7 +208,7 @@ const lookupFMAP = (state, fy) => {
  * @returns {string}
  */
 const lookupAcs = (state, { ffy, acsProperty }) => {
-  let returnValue = "";
+  let returnValue = "Not Available";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
     const windowPathName = window.location.pathname;
@@ -230,7 +230,7 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
     )[0];
 
     // Filter for matching state from JSON
-    const acs = stateData?.acs_set.filter((year) => year.year === +ffy)[0];
+    const acs = stateData?.acsSet.filter((year) => year.year === +ffy)[0];
 
     // If acs exists, return the value from the object
     if (acs) {
@@ -244,7 +244,7 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
 };
 
 /**
- * Retrieve acs_set from state and return percentage change for 2 given years.
+ * Retrieve acsSet from state and return percentage change for 2 given years.
  *
  * @param {string} state
  * @param {string} ffy1
@@ -266,10 +266,10 @@ export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
     )[0];
 
     // Filter for the correct year of state data
-    const startACS = stateData?.acs_set.filter(
+    const startACS = stateData?.acsSet.filter(
       (year) => year.year === parseInt(ffy1, 10)
     )[0];
-    const endACS = stateData?.acs_set.filter(
+    const endACS = stateData?.acsSet.filter(
       (year) => year.year === parseInt(ffy2, 10)
     )[0];
 
