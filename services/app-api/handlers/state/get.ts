@@ -3,14 +3,23 @@ import dynamoDb from "../../libs/dynamodb-lib";
 import { State } from "../../types";
 
 export const getStates = handler(async (_event, _context) => {
-  const params = {
+  const stateParams = {
     TableName: process.env.stateTableName!,
   };
-  const queryValue = await dynamoDb.scan(params);
-  // TODO collect map fmap & acs values
-  const states = queryValue.Items?.map((state) => ({
+  const acsParams = {
+    TableName: process.env.acsTableName!,
+  };
+  const fmapParams = {
+    TableName: process.env.fmapTableName!,
+  };
+
+  const stateQueryValue = await dynamoDb.scan(stateParams);
+  const acsQueryValue = await dynamoDb.scan(acsParams);
+  const fmapQueryValue = await dynamoDb.scan(fmapParams);
+
+  const states = stateQueryValue.Items?.map((state) => ({
     ...(state as State),
-    ...{ fmap_set: [], acs_set: [] },
+    ...{ fmapSet: fmapQueryValue.Items, acsSet: acsQueryValue.Items },
   })).sort((a, b) => a.name.localeCompare(b.name));
   return states;
 });

@@ -23,6 +23,7 @@ export interface State {
   name: string;
   programNames?: any;
 }
+
 export interface StateStatus {
   year: number;
   status: string;
