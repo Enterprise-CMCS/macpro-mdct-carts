@@ -108,6 +108,14 @@ functions:
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getFiscalYearTemplateLink:
+    handler: handlers/downloads/get.getFiscalYearTemplateLink
+    events:
+      - http:
+          path: downloads/fiscalYearTemplate
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getStateStatus:
     handler: handlers/stateStatus/get.getStateStatus
     events:
