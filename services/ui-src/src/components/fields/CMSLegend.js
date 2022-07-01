@@ -16,7 +16,11 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
     return (
       <div>
         {!hideNumber && <p>{labelBits}</p>}
-        {!questionType.includes("text") && <p>{label}</p>}
+        {!questionType.includes("text") && (
+          <h4 className="label-header" aria-label="Label Text">
+            {label}
+          </h4>
+        )}
         {hint && (
           <div className="ds-c-field__hint">
             <Text>{hint}</Text>
