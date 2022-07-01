@@ -68,7 +68,7 @@ custom:
     prod: aws_iam
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: us-east-1
   tracing:
     apiGateway: true
@@ -91,6 +91,10 @@ provider:
           Resource: "*"
         - Effect: "Allow"
           Action:
+            - ssm:GetParameter
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
             - execute-api:Invoke
           Resource: "*"
   environment:
@@ -103,7 +107,7 @@ provider:
     sectionTableName: ${self:custom.sectionTableName}
     sectionBaseName: ${self:custom.sectionBaseTableName}
     uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
-    stage: ${opt:stage, self:provider.stage}
+    stage: ${self:custom.stage}
 
 functions:
   getStates:

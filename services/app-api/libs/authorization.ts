@@ -49,7 +49,7 @@ const loadCognitoValues = async () => {
     };
   } else {
     const ssm = new SSM();
-    const stage = process.env.STAGE!;
+    const stage = process.env.stage!;
     const userPoolIdParamName = "/" + stage + "/ui-auth/cognito_user_pool_id";
     const userPoolClientIdParamName =
       "/" + stage + "/ui-auth/cognito_user_pool_client_id";
