@@ -3,10 +3,6 @@
  */
 
 .print-all {
-  textarea {
-    display: none !important;
-  }
-
   .ds-c-alert,
   .form-footer,
   .page-info {
@@ -45,7 +41,7 @@
 }
 
 @media print {
-  textarea {
+  .no-print {
     display: none !important;
   }
   .action-buttons,
@@ -70,7 +66,7 @@
   }
 
   .screen-only {
-    display: none;
+    display: none !important;
   }
 
   .content {

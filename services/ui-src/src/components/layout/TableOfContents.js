@@ -48,7 +48,7 @@ class TableOfContents extends Component {
                   onClick: this.click,
                   selected: location.pathname
                     .toLowerCase()
-                    .startsWith(idToUrl(location, subsectionId)),
+                    .startsWith(idToUrl(location, subsectionId).toLowerCase()),
                   url: idToUrl(location, subsectionId),
                 })
               ),
@@ -57,7 +57,7 @@ class TableOfContents extends Component {
         onClick: this.click,
         selected: location.pathname
           .toLowerCase()
-          .startsWith(idToUrl(location, sectionId)),
+          .startsWith(idToUrl(location, sectionId).toLowerCase()),
       }))
       .map(({ id, items: childItems, ...rest }) => {
         const updated = { id, items: childItems, ...rest };
@@ -79,9 +79,14 @@ class TableOfContents extends Component {
       });
     }
 
+    const foundSelectedId = items.find((item) => item.selected)?.id;
     return (
-      <div className="toc" data-testid="toc">
-        <VerticalNav selectedId="toc" items={items} />
+      <div className="toc" data-testid="toc" aria-label="Table of Contents">
+        <VerticalNav
+          selectedId={foundSelectedId}
+          ariaNavLabel="Vertical Navigation Element"
+          items={items}
+        />
       </div>
     );
   }

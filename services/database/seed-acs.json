@@ -1,0 +1,82 @@
+[
+  {
+    "stateId": "AL",
+    "year": 2015,
+    "numberUninsured": 24000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.1,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "AL",
+    "year": 2016,
+    "numberUninsured": 20000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 1.7,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "AL",
+    "year": 2018,
+    "numberUninsured": 25000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.2,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "AL",
+    "year": 2019,
+    "numberUninsured": 22000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 2.0,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "AK",
+    "year": 2015,
+    "numberUninsured": 8000,
+    "numberUninsuredMoe": 1000,
+    "percentUninsured": 3.9,
+    "percentUninsuredMoe": 0.7
+  },
+  {
+    "stateId": "CA",
+    "year": 2015,
+    "numberUninsured": 193000,
+    "numberUninsuredMoe": 12000,
+    "percentUninsured": 2.0,
+    "percentUninsuredMoe": 0.1
+  },
+  {
+    "stateId": "CT",
+    "year": 2015,
+    "numberUninsured": 12000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 1.6,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "NJ",
+    "year": 2015,
+    "numberUninsured": 45000,
+    "numberUninsuredMoe": 5000,
+    "percentUninsured": 2.2,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "PA",
+    "year": 2015,
+    "numberUninsured": 66000,
+    "numberUninsuredMoe": 6000,
+    "percentUninsured": 2.4,
+    "percentUninsuredMoe": 0.2
+  },
+  {
+    "stateId": "TX",
+    "year": 2015,
+    "numberUninsured": 450000,
+    "numberUninsuredMoe": 20000,
+    "percentUninsured": 6.0,
+    "percentUninsuredMoe": 0.3
+  }
+]

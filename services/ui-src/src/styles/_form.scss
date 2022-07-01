@@ -6,6 +6,14 @@
   color: #e31c3d;
 }
 
+.label-radio {
+  margin: 2rem;
+}
+
+.radio-container {
+  margin: 2rem 0;
+}
+
 .ds-u-color--error {
   position: absolute;
   top: -24px;
@@ -354,7 +362,7 @@
   }
 }
 
-.autosave {
+.form-footer .autosave {
   float: left;
   margin: 64px 0 16px;
   text-align: center;
