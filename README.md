@@ -71,7 +71,8 @@ FiscalYearCreateBucketCondition:
 ```
 
 - Git add/commit/push the branch with the above change to git.
-- After the deploy action runs on branch being pushed, you should see the bucket now lives in s3 with a name taht resembles uploads-AddYourBranchNameHere!-carts-download
+- After the deploy action runs on branch being pushed, you should see the bucket now lives in s3 with a name that resembles uploads-AddYourBranchNameHere!-carts-download
+- You'll then want to actually upload the document you want to see! Currently, the key is set to look for a file called "FFY_2021_CARTS_Template.pdf", but you can swap that out in the services/app-api/handlers/fiscalYearTemplate/get.ts file.
 
 ## Copyright and license
 
