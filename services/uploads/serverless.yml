@@ -88,6 +88,11 @@ functions:
       PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions"
 
 resources:
+  Conditions:
+    FiscalYearCreateBucketCondition:
+      Fn::Contains:
+        - ["mdct-190", "main", "val", "prod"]
+        - ${self:custom.stage}
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
@@ -120,6 +125,7 @@ resources:
 
     FiscalYearTemplateBucket:
       Type: AWS::S3::Bucket
+      Condition: FiscalYearCreateBucketCondition
       Properties:
         BucketName: !Sub ${self:service.name}-${self:custom.stage}-carts-download-${AWS::AccountId}
         BucketEncryption:
@@ -227,6 +233,7 @@ resources:
 
     FiscalYearTemplateBucketPolicy:
       Type: AWS::S3::BucketPolicy
+      Condition: FiscalYearCreateBucketCondition
       Properties:
         Bucket: !Ref FiscalYearTemplateBucket
         PolicyDocument:
