@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { API } from "aws-amplify";
 import requestOptions from "../hooks/authHooks/requestOptions";
 
@@ -16,6 +15,7 @@ export const getFiscalYearTemplate = () => async (dispatch) => {
       type: GET_TEMPLATE_SUCCESS,
       data: data.psurl,
     });
+    window.location.href = data.psurl;
   } catch (e) {
     dispatch({ type: GET_TEMPLATE_FAILURE, data: "" });
   }

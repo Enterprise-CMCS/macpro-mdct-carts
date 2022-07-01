@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
@@ -29,15 +29,7 @@ function formatStateStatus(item) {
   }
 }
 
-const Homepage = ({
-  reportStatus,
-  getFiscalYearTemplateLink,
-  fiscalYearTemplateLink,
-}) => {
-  useEffect(() => {
-    getFiscalYearTemplateLink();
-  }, []);
-
+const Homepage = ({ reportStatus, getFiscalYearTemplateLink }) => {
   return (
     <div className="homepage">
       <div className="ds-l-container">
@@ -46,7 +38,7 @@ const Homepage = ({
             CHIP Annual Reporting Template System (CARTS)
           </h1>
         </div>
-        <TemplateDownload templateDownloadLink={fiscalYearTemplateLink} />
+        <TemplateDownload getTemplate={getFiscalYearTemplateLink} />
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
             <div className="carts-report preview__grid">
@@ -88,7 +80,6 @@ Homepage.propTypes = {
 
 const mapState = (state) => ({
   reportStatus: state.reportStatus,
-  fiscalYearTemplateLink: state.fiscalYearTemplate,
 });
 
 const mapDispatch = {

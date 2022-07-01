@@ -7,7 +7,7 @@ import {
   faFileAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const TemplateDownload = ({ templateDownloadLink }) => {
+export const TemplateDownload = ({ getTemplate }) => {
   return (
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
@@ -32,28 +32,24 @@ export const TemplateDownload = ({ templateDownloadLink }) => {
               with any questions.
             </p>
             <div className="download">
-              <a
-                tabIndex={-1}
-                href={templateDownloadLink}
-                download
-                aria-label="Download Template"
+              <button
+                className="ds-c-button ds-c-button--primary"
+                onClick={() => getTemplate()}
               >
-                <button className="ds-c-button ds-c-button--primary">
-                  <span className="button-display">Download template</span>
-                  <span className="fa-layers fa-fw">
-                    <FontAwesomeIcon
-                      icon={faArrowDown}
-                      transform="up-2 right-2"
-                      position
-                    />
-                    <FontAwesomeIcon
-                      icon={faMinus}
-                      transform="down-10 right-2"
-                      size="sm"
-                    />
-                  </span>
-                </button>
-              </a>
+                <span className="button-display">Download template</span>
+                <span className="fa-layers fa-fw">
+                  <FontAwesomeIcon
+                    icon={faArrowDown}
+                    transform="up-2 right-2"
+                    position
+                  />
+                  <FontAwesomeIcon
+                    icon={faMinus}
+                    transform="down-10 right-2"
+                    size="sm"
+                  />
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -63,5 +59,5 @@ export const TemplateDownload = ({ templateDownloadLink }) => {
 };
 
 TemplateDownload.propTypes = {
-  templateDownloadLink: PropTypes.string.isRequired,
+  getTemplate: PropTypes.func.isRequired,
 };
