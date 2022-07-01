@@ -231,11 +231,6 @@ resources:
         Bucket: !Ref FiscalYearTemplateBucket
         PolicyDocument:
           Statement:
-            - Action:
-                - "s3:GetObject"
-              Effect: "Deny"
-              Resource: !Sub ${FiscalYearTemplateBucket.Arn}/*
-              Principal: "*"
             - Sid: "AllowSSLRequestsOnly"
               Effect: Deny
               Action: "s3:*"
@@ -354,5 +349,9 @@ resources:
       Value: !Ref AttachmentsBucket
     AttachmentsBucketArn:
       Value: !GetAtt AttachmentsBucket.Arn
+    FiscalYearTemplateBucket: # Print out the name of the bucket that is created
+      Value: !Ref FiscalYearTemplateBucket
+    FiscalYearTemplateBucketArn:
+      Value: !GetAtt FiscalYearTemplateBucket.Arn
     Region:
       Value: !Sub ${AWS::Region}
