@@ -9,13 +9,13 @@ jest.mock("../../../libs/authorization", () => ({
 }));
 
 describe("Test Get Fiscal Year Template Handlers", () => {
-  test("fetching fiscal year template should a signed link to the template", async () => {
+  test("fetching fiscal year template should return a link", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
     };
 
     const res = await getFiscalYearTemplateLink(event, null);
     expect(res.statusCode).toBe(200);
-    expect(res.body).toContain("s3.amazonaws.com/FFY_2021_CARTS_Template.pdf?");
+    expect(res.body).toContain("s3.amazonaws.com");
   });
 });
