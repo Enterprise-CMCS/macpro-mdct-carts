@@ -44,13 +44,6 @@ custom:
       - master
       - val
       - prod
-  # createsServerlessBlock:
-  #   main: True
-  #   master: True
-  #   val: True
-  #   prod: True
-  #   default: False
-  # shouldCreateServerlessBlock: ${self:custom.createsServerlessBlock[${self:custom.stage}], self:custom.createsServerlessBlock['default']}
   scripts:
     hooks:
       # This script is run locally when running 'serverless deploy'
