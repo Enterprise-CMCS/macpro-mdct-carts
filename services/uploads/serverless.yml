@@ -94,7 +94,7 @@ resources:
         - Fn::Contains:
             - ["mdct-190", "main", "val", "prod"]
             - ${self:custom.stage}
-        - true
+        - ""
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
