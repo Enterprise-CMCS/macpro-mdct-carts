@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
-import { TemplateDownload } from "./TemplateDownload";
+import TemplateDownload from "./TemplateDownload";
 import { getFiscalYearTemplate } from "../../../actions/download";
 import { REPORT_STATUS, STATUS_MAPPING, AppRoles } from "../../../types";
 
