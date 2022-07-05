@@ -94,7 +94,7 @@ resources:
         - Fn::Contains:
             - ["mdct-190", "main", "val", "prod"]
             - ${self:custom.stage}
-        - FN::Equals:
+        - Fn::Equals:
             - ""
             - ""
   Resources:
