@@ -206,26 +206,21 @@ const CMSHomepage = ({
                     }) => {
                       return (
                         <div>
-                          {
-                            // eslint-disable-next-line
-                            // with statement below we don't get the three default records (username, status, and lastchanged)
-                            stateCode !== "status" &&
+                          {stateCode !== "status" &&
                             stateCode !== "lastChanged" &&
                             stateCode !== "username" &&
-                            stateCode !== undefined ? (
+                            stateCode !== undefined && (
                               <ReportItem
-                                key={stateCode}
+                                key={`${stateCode} - ${year}`}
                                 link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                                name={`${state}`}
+                                name={state}
                                 year={year}
                                 statusText={STATUS_MAPPING[status]}
-                                editor="x@y.z"
                                 userRole={currentUserRole}
                                 username={username}
                                 lastChanged={lastChanged}
                               />
-                            ) : null
-                          }
+                            )}
                         </div>
                       );
                     }

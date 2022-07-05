@@ -12,44 +12,38 @@ const ReportItem = ({
   link1URL,
   name,
   statusText,
-  statusURL,
   theUncertify: uncertifyAction,
   userRole,
   year,
   username,
   lastChanged,
+  timeZone,
 }) => {
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
   const { isShowing, toggleModal } = useModal();
-  let theDateTime = "";
-  let tempTime = "";
+  let lastEditedNote = "";
   let stateUser = userRole === AppRoles.STATE_USER;
-  if (lastChanged && lastChanged.toString().includes("T")) {
-    theDateTime = lastChanged.split("T");
-    tempTime = theDateTime[1].split(":");
-    if (Number(tempTime[0]) >= 12) {
-      // convert from military time
-      if (Number(tempTime[0] === "12")) {
-        theDateTime[1] = theDateTime[1].substring(0, 8) + " pm";
-      } else {
-        theDateTime[1] =
-          String(Number(tempTime[0]) - 12) +
-          ":" +
-          tempTime[1] +
-          ":" +
-          tempTime[2].substring(0, 2) +
-          " pm";
-      }
-    } else {
-      if (Number(tempTime[0] === "00")) {
-        theDateTime[1] =
-          "12:" + tempTime[1] + ":" + tempTime[2].substring(0, 2) + " am";
-      } else {
-        theDateTime[1] = theDateTime[1].substring(0, 8) + " am";
-      }
-    }
+
+  if (lastChanged) {
+    const date = new Date(lastChanged);
+    // Using en-CA as they format the date to YYYY-MM-DD, HH:MM:SS where as en-US formats to DD/MM/YYYY, HH:MM:SS
+    const time = new Intl.DateTimeFormat("en-CA", {
+      hour12: true,
+      second: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone,
+    }).format(date);
+    const splitTime = time.split(",");
+    lastEditedNote = splitTime?.[1]
+      ? `${splitTime[0]} at ${splitTime[1].trim()}`
+      : `${splitTime[0]}`;
+    lastEditedNote += username ? ` by ${username}` : "";
   }
 
   const uncertify = () => {
@@ -64,16 +58,8 @@ const ReportItem = ({
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--1">{year}</div>
           <div className="name ds-l-col--2">{name}</div>
-          <div
-            className={`status ds-l-col--2 ${
-              statusText === "Overdue" && `alert`
-            }`}
-          >
-            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-          </div>
-          <div className="actions ds-l-col--3">
-            {theDateTime[0]} at {theDateTime[1]} by {username}
-          </div>
+          <div className="status ds-l-col--2">{statusText}</div>
+          <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--auto">
             <Link
               to={link1URL}
@@ -82,17 +68,24 @@ const ReportItem = ({
             >
               {link1Text}
             </Link>
+            {statusText === "Certified and Submitted" &&
+              userRole === AppRoles.CMS_USER && (
+                <span>
+                  {" "}
+                  <button
+                    data-testid={"uncertifyButton"}
+                    className="link"
+                    onClick={toggleModal}
+                  >
+                    Uncertify
+                  </button>
+                </span>
+              )}
           </div>
-          {statusText === "Certified and Submitted" &&
-          userRole === AppRoles.CMS_USER ? (
-            <div className="actions ds-l-col--auto">
-              <button className="link" onClick={toggleModal}>
-                Uncertify
-              </button>
-            </div>
-          ) : null}
+
           {isShowing && (
             <Dialog
+              data-testid={"uncertifyModal"}
               isShowing={isShowing}
               onExit={toggleModal}
               heading="Uncertify this Report?"
@@ -116,16 +109,8 @@ const ReportItem = ({
       {stateUser && (
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--2">{name}</div>
-          <div
-            className={`status ds-l-col--2 ${
-              statusText === "Overdue" && `alert`
-            }`}
-          >
-            {statusURL ? <a href={statusURL}> {statusText} </a> : statusText}
-          </div>
-          <div className="actions ds-l-col--3">
-            {lastChanged && new Date(lastChanged)?.toLocaleDateString("en-US")}
-          </div>
+          <div className="status ds-l-col--2">{statusText}</div>
+          <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--1">
             <Link to={link1URL} target={anchorTarget}>
               {link1Text}
@@ -140,20 +125,19 @@ const ReportItem = ({
 ReportItem.propTypes = {
   theUncertify: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
-  link1URL: PropTypes.string,
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  link1URL: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   statusText: PropTypes.string,
-  statusURL: PropTypes.string,
-  userRole: PropTypes.string,
+  userRole: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   username: PropTypes.string,
-  lastChanged: PropTypes.string,
+  lastChanged: PropTypes.string.isRequired,
+  timeZone: PropTypes.string,
 };
 ReportItem.defaultProps = {
   link1Text: "View",
   link1URL: "#",
   statusText: "Missing Status",
-  statusURL: "",
 };
 
 const mapState = (state) => ({
