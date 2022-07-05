@@ -64,10 +64,14 @@ It should be noted that while logged in as a state user, the download template b
 - Update the services/uploads/serverless.yml file's FiscalYearCreateBucketCondition to be so:
 
 ```
-FiscalYearCreateBucketCondition:
-  Fn::Contains:
-    - ["AddYourBranchNameHere!", "main", "val", "prod"]
-    - ${self:custom.stage}
+    !YourNewConditionHere!: !Equals
+      - !AddYourBranchNameHere!
+      - ${self:custom.stage}
+    FiscalYearCreateBucketCondition: !Or
+      - !Condition !YourNewConditionHere!
+      - !Condition IsMainCondition
+      - !Condition IsValCondition
+      - !Condition IsProdCondition
 ```
 
 - Git add/commit/push the branch with the above change to git.
