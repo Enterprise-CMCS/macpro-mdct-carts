@@ -44,6 +44,13 @@ custom:
       - master
       - val
       - prod
+  # createsServerlessBlock:
+  #   main: True
+  #   master: True
+  #   val: True
+  #   prod: True
+  #   default: False
+  # shouldCreateServerlessBlock: ${self:custom.createsServerlessBlock[${self:custom.stage}], self:custom.createsServerlessBlock['default']}
   scripts:
     hooks:
       # This script is run locally when running 'serverless deploy'
@@ -89,20 +96,23 @@ functions:
 
 resources:
   Conditions:
-    FiscalYearCreateBucketCondition:
-      - Fn::Or:
-          - Fn::Equals:
-              - "mdct-190"
-              - ${self:custom.stage}
-          - Fn::Equals:
-              - "main"
-              - ${self:custom.stage}
-          - Fn::Equals:
-              - "val"
-              - ${self:custom.stage}
-          - Fn::Equals:
-              - "prod"
-              - ${self:custom.stage}
+    IsBranchCondition: !Equals
+      - "mdct-190"
+      - ${self:custom.stage}
+    IsMainCondition: !Equals
+      - "main"
+      - ${self:custom.stage}
+    IsValCondition: !Equals
+      - "val"
+      - ${self:custom.stage}
+    IsProdCondition: !Equals
+      - "prod"
+      - ${self:custom.stage}
+    FiscalYearCreateBucketCondition: !Or
+      - !Condition IsBranchCondition
+      - !Condition IsMainCondition
+      - !Condition IsValCondition
+      - !Condition IsProdCondition
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
