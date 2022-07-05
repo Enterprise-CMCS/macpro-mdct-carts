@@ -17,6 +17,6 @@ describe("Test Get Fiscal Year Template Handlers", () => {
     const res = await getFiscalYearTemplateLink(event, null);
     console.log(res.body);
     expect(res.statusCode).toBe(200);
-    expect(res.body).toMatch('"psurl":"https://s3.amazonaws.com/"');
+    expect(res.body).toContain("amazonaws.com");
   });
 });
