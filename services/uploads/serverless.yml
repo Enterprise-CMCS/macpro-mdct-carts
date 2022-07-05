@@ -90,11 +90,11 @@ functions:
 resources:
   Conditions:
     FiscalYearCreateBucketCondition:
-      Fn::Equals:
+      Fn::Or:
         - Fn::Contains:
             - ["mdct-190", "main", "val", "prod"]
             - ${self:custom.stage}
-        - ""
+        - false
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
