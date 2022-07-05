@@ -15,11 +15,7 @@ describe("Test Get Fiscal Year Template Handlers", () => {
     };
 
     const res = await getFiscalYearTemplateLink(event, null);
-    console.log(res.body);
     expect(res.statusCode).toBe(200);
-    expect(res.body).toContain(
-      "https://local-fiscal-year-template.s3.amazonaws.com/FFY_2021_CARTS_Template.pdf?" ||
-        "s3.amazonaws.com/"
-    );
+    expect(res.body).toContain("s3.amazonaws.com/FFY_2021_CARTS_Template.pdf?");
   });
 });
