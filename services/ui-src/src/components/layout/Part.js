@@ -30,6 +30,7 @@ const Part = ({
   show,
   text,
   title,
+  nestedSubsectionTitle,
 }) => {
   let innards = null;
 
@@ -59,12 +60,18 @@ const Part = ({
 
   return (
     <div id={partId}>
-      {title && (
-        <h4 className="h4-pdf-bookmark">
-          {+section !== 0 && partNumber && `Part ${partNumber}: `}
-          {title}
-        </h4>
-      )}
+      {title &&
+        (nestedSubsectionTitle ? (
+          <h4 className="h4-pdf-bookmark">
+            {+section !== 0 && partNumber && `Part ${partNumber}: `}
+            {title}
+          </h4>
+        ) : (
+          <h3 className="h4-pdf-bookmark">
+            {+section !== 0 && partNumber && `Part ${partNumber}: `}
+            {title}
+          </h3>
+        ))}
       {innards}
     </div>
   );
