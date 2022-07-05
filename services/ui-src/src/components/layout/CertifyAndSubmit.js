@@ -106,7 +106,7 @@ const CertifyAndSubmit = ({
                 aria-label="Review Report"
                 onClick={toggleModal}
               >
-                Review Form
+                Review Report
               </button>,
               <button
                 className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
