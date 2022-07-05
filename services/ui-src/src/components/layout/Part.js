@@ -67,7 +67,7 @@ const Part = ({
             {title}
           </h4>
         ) : (
-          <h3 className="h4-pdf-bookmark">
+          <h3 className="h3-pdf-bookmark">
             {+section !== 0 && partNumber && `Part ${partNumber}: `}
             {title}
           </h3>
