@@ -88,6 +88,24 @@ functions:
       PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions"
 
 resources:
+  Conditions:
+    IsBranchCondition: !Equals
+      - "mdct-190"
+      - ${self:custom.stage}
+    IsMainCondition: !Equals
+      - "main"
+      - ${self:custom.stage}
+    IsValCondition: !Equals
+      - "val"
+      - ${self:custom.stage}
+    IsProdCondition: !Equals
+      - "prod"
+      - ${self:custom.stage}
+    FiscalYearCreateBucketCondition: !Or
+      - !Condition IsBranchCondition
+      - !Condition IsMainCondition
+      - !Condition IsValCondition
+      - !Condition IsProdCondition
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
@@ -117,6 +135,28 @@ resources:
             - Event: s3:ObjectCreated:Put
               Function: !GetAtt AvScanLambdaFunction.Arn
       DependsOn: LambdaInvokePermission
+
+    FiscalYearTemplateBucket:
+      Type: AWS::S3::Bucket
+      Condition: FiscalYearCreateBucketCondition
+      Properties:
+        BucketName: !Sub ${self:service.name}-${self:custom.stage}-carts-download-${AWS::AccountId}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        CorsConfiguration: # Set the CORS policy
+          CorsRules:
+            - AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+              MaxAge: 3000
+              ExposedHeaders:
+                - ETag
+
     AVBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -203,6 +243,25 @@ resources:
               Condition:
                 Bool:
                   aws:SecureTransport: false
+
+    FiscalYearTemplateBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Condition: FiscalYearCreateBucketCondition
+      Properties:
+        Bucket: !Ref FiscalYearTemplateBucket
+        PolicyDocument:
+          Statement:
+            - Sid: "AllowSSLRequestsOnly"
+              Effect: Deny
+              Action: "s3:*"
+              Principal: "*"
+              Resource:
+                - !Sub arn:aws:s3:::${FiscalYearTemplateBucket}/*
+                - !Sub arn:aws:s3:::${FiscalYearTemplateBucket}
+              Condition:
+                Bool:
+                  aws:SecureTransport: false
+
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
@@ -310,5 +369,9 @@ resources:
       Value: !Ref AttachmentsBucket
     AttachmentsBucketArn:
       Value: !GetAtt AttachmentsBucket.Arn
+    FiscalYearTemplateBucket: # Print out the name of the bucket that is created
+      Value: !Ref FiscalYearTemplateBucket
+    FiscalYearTemplateBucketArn:
+      Value: !GetAtt FiscalYearTemplateBucket.Arn
     Region:
       Value: !Sub ${AWS::Region}
