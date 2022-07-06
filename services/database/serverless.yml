@@ -212,7 +212,7 @@ resources:
       Value: !Ref SectionTable
     SectionTableArn:
       Value: !GetAtt SectionTable.Arn
-    SectionBaseTable:
+    SectionBaseTableName:
       Value: !Ref SectionBaseTable
     SectionBaseTableArn:
       Value: !GetAtt SectionBaseTable.Arn
