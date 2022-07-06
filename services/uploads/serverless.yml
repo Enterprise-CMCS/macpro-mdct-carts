@@ -89,9 +89,6 @@ functions:
 
 resources:
   Conditions:
-    IsBranchCondition: !Equals
-      - "mdct-190"
-      - ${self:custom.stage}
     IsMainCondition: !Equals
       - "main"
       - ${self:custom.stage}
