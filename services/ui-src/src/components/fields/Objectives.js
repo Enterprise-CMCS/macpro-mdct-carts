@@ -70,7 +70,7 @@ const Objectives = ({
 
         <div
           className="ds-c-field__hint"
-          aria-label="Hint, this field is optional"
+          aria-label="Add another objective Hint"
         >
           Optional
         </div>
