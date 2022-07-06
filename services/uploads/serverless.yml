@@ -99,7 +99,6 @@ resources:
       - "prod"
       - ${self:custom.stage}
     FiscalYearCreateBucketCondition: !Or
-      - !Condition IsBranchCondition
       - !Condition IsMainCondition
       - !Condition IsValCondition
       - !Condition IsProdCondition
