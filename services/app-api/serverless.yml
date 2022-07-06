@@ -20,8 +20,8 @@ plugins:
 
 s3BucketHelper:
   loggingConfiguration:
-    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket, ssm:/configuration/default/s3/accessLogsBucket}
-    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
+    destinationBucketName: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket, ssm:/configuration/default/s3/accessLogsBucket}
+    logFilePrefix: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
   serverlessPluginTypescript:
@@ -59,8 +59,8 @@ custom:
       enabled: true
       prewarm: true
       events:
-        - schedule: rate(${ssm:/configuration/${self:custom.stage}/warmup/schedule, ssm:/configuration/default/warmup/schedule, "60 minutes"})
-      concurrency: ${ssm:/configuration/${self:custom.stage}/warmup/concurrency, ssm:/configuration/default/warmup/concurrency, 5}
+        - schedule: rate(${env:warmupSchedule, ssm:/configuration/${self:custom.stage}/warmup/schedule, ssm:/configuration/default/warmup/schedule, "60 minutes"})
+      concurrency: ${env:warmupConcurrency, ssm:/configuration/${self:custom.stage}/warmup/concurrency, ssm:/configuration/default/warmup/concurrency, 5}
   authValue:
     main: aws_iam
     master: aws_iam
@@ -76,8 +76,8 @@ provider:
     restApi: true
   iam:
     role:
-      path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
-      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+      path: ${env:iamPath, ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+      permissionsBoundary: ${env:iamPermissionsBoundary, ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
       statements:
         - Effect: "Allow"
           Action:
@@ -106,7 +106,7 @@ provider:
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
     sectionBaseName: ${self:custom.sectionBaseTableName}
-    uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
+    uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${self:custom.stage}
 
 functions:
