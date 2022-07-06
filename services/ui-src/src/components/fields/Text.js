@@ -78,7 +78,11 @@ const Text = ({ question, state, ...props }) => {
       <label htmlFor={question.id}>{`${generateQuestionNumber(question.id)} ${
         question.label
       }`}</label>
-      {question.hint && <p className="ds-c-field__hint">{question.hint}</p>}
+      {question.hint && (
+        <p aria-label={`${question.label} hint`} className="ds-c-field__hint">
+          {question.hint}
+        </p>
+      )}
       <TextField
         id={question.id}
         value={
