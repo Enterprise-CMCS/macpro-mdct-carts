@@ -99,7 +99,7 @@ provider:
           Resource: "*"
   environment:
     acsTableName: ${self:custom.acsTableName}
-    fiscalYearTemplateS3BucketName: ${ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
+    fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
     fmapTableName: ${self:custom.fmapTableName}
     princeApiHost: ${self:custom.princeApiHost}
     princeApiPath: ${self:custom.princeApiPath}

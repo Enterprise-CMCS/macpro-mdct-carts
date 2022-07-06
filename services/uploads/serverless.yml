@@ -140,7 +140,7 @@ resources:
       Type: AWS::S3::Bucket
       Condition: FiscalYearCreateBucketCondition
       Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-carts-download-${AWS::AccountId}
+        BucketName: !Sub ${self:service}-${self:custom.stage}-carts-download-${AWS::AccountId}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
