@@ -1,7 +1,7 @@
 # Refer to the README.md file in within this service directory to configure all ssm parameters required for this service.
 service: uploads
 
-frameworkVersion: "2"
+frameworkVersion: "3"
 
 plugins:
   - serverless-plugin-scripts
@@ -16,8 +16,8 @@ provider:
   region: us-east-1
   iam:
     role:
-      path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
-      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+      path: ${env:iamPath, ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+      permissionsBoundary: ${env:iamPermissionsBoundary, ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
       statements:
         - Effect: "Allow"
           Action:
@@ -32,8 +32,8 @@ provider:
 
 s3BucketHelper:
   loggingConfiguration:
-    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket~true, ssm:/configuration/default/s3/accessLogsBucket~true}
-    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix~true, ssm:/configuration/default/s3/accessLogsPrefix~true}
+    destinationBucketName: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket, ssm:/configuration/default/s3/accessLogsBucket}
+    logFilePrefix: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
@@ -67,7 +67,7 @@ layers:
 functions:
   avScan:
     handler: src/antivirus.lambdaHandleEvent
-    name: ${self:service.name}-${self:custom.stage}-avScan
+    name: ${self:service}-${self:custom.stage}-avScan
     timeout: 300 # 300 seconds = 5 minutes. Average scan is 25 seconds.
     memorySize: 3008
     layers:
@@ -106,7 +106,7 @@ resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+        BucketName: !Sub ${self:service}-${self:custom.stage}-attachments-${AWS::AccountId}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
@@ -136,7 +136,7 @@ resources:
       Type: AWS::S3::Bucket
       Condition: FiscalYearCreateBucketCondition
       Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-carts-download-${AWS::AccountId}
+        BucketName: !Sub ${self:service}-${self:custom.stage}-carts-download-${AWS::AccountId}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
@@ -265,11 +265,11 @@ resources:
         Action: lambda:InvokeFunction
         Principal: s3.amazonaws.com
         SourceAccount: !Sub ${AWS::AccountId}
-        SourceArn: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
+        SourceArn: !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-attachments-${AWS::AccountId}
     ClamDefsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-avscan-${AWS::AccountId}
+        BucketName: !Sub ${self:service}-${self:custom.stage}-avscan-${AWS::AccountId}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
