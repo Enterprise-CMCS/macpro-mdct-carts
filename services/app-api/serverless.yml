@@ -33,6 +33,7 @@ custom:
       - main
       - val
       - prod
+  accountId: ${AWS::AccountId}
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
   fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
@@ -108,7 +109,7 @@ provider:
           Action:
             - "s3:GetObject"
           Resource:
-            - "arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}/*"
+            - "arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${self:custom.accountId}/*"
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket}
