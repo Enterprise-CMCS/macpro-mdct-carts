@@ -51,11 +51,12 @@ custom:
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
-  fiscalBucketEnv:
+  fiscalBucketEnvMap:
     prod: prod
     val: val
     main: main
     default: main
+  fiscalBucketEnv: ${self:custom.fiscalBucketEnvMap.${self:custom.stage}, self:custom.fiscalBucketEnvMap.default}
   serverlessApiClientCertificate:
     rotateCerts: true
     daysLeft: 30
