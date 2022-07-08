@@ -35,7 +35,7 @@ custom:
       - prod
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
-  # fiscalTemplateBucket: ${env:fiscalYearTemplateS3BucketName}
+  fiscalTemplateBucket: ${self:custom.stage}
   fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
   fmapTableArn: ${env:fmapTableArn, cf:database-${self:custom.stage}.FmapTableArn}
   princeApiHost: ${env:princeApiHost, ssm:/${self:custom.stage}/prince_api_host, ssm:/default/prince_api_host}
@@ -102,7 +102,7 @@ provider:
           Action:
             - "s3:GetObject"
           Resource:
-            - "arn:aws:s3:::uploads-${self:custom.stage}-carts-download-519095364708/*"
+            - "arn:aws:s3:::uploads-${self:custom.fiscalTemplateBucket}-carts-download-519095364708/*"
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
