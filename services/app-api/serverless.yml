@@ -101,9 +101,10 @@ provider:
         - Effect: "Allow"
           Action:
             - "s3:GetObject"
+            - "s3:ListBucket"
           Resource:
-            - "arn:aws:s3:::${uploads-${self:custom.stage}-carts-download-${AWS::AccountId}}"
-            - "arn:aws:s3:::${uploads-${self:custom.stage}-carts-download-${AWS::AccountId}}/*"
+            - "arn:aws:s3:::uploads-${self:custom.stage}-carts-download-${AWS::AccountId}"
+            - "arn:aws:s3:::uploads-${self:custom.stage}-carts-download-${AWS::AccountId}/*"
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
