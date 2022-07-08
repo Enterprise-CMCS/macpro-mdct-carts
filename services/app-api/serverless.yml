@@ -33,6 +33,7 @@ custom:
       - main
       - val
       - prod
+  accountId: ${AWS::AccountId}
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
   fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
@@ -51,6 +52,12 @@ custom:
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
+  fiscalBucketEnvMap:
+    prod: prod
+    val: val
+    main: main
+    default: main
+  fiscalBucketEnv: ${self:custom.fiscalBucketEnvMap.${self:custom.stage}, self:custom.fiscalBucketEnvMap.default}
   serverlessApiClientCertificate:
     rotateCerts: true
     daysLeft: 30
@@ -68,6 +75,7 @@ custom:
     prod: aws_iam
 provider:
   name: aws
+  lambdaHashingVersion: 20200924
   runtime: nodejs14.x
   region: us-east-1
   tracing:
@@ -97,6 +105,10 @@ provider:
           Action:
             - execute-api:Invoke
           Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - "s3:GetObject"
+          Resource: !Sub arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}/*
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket}

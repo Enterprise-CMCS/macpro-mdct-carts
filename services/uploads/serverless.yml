@@ -12,6 +12,7 @@ plugins:
 
 provider:
   name: aws
+  lambdaHashingVersion: 20200924
   runtime: nodejs14.x
   region: us-east-1
   iam:
@@ -89,9 +90,6 @@ functions:
 
 resources:
   Conditions:
-    IsBranchCondition: !Equals
-      - "mdct-190"
-      - ${self:custom.stage}
     IsMainCondition: !Equals
       - "main"
       - ${self:custom.stage}
@@ -102,7 +100,6 @@ resources:
       - "prod"
       - ${self:custom.stage}
     FiscalYearCreateBucketCondition: !Or
-      - !Condition IsBranchCondition
       - !Condition IsMainCondition
       - !Condition IsValCondition
       - !Condition IsProdCondition
