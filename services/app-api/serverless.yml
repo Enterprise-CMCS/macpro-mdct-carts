@@ -99,6 +99,7 @@ provider:
           Resource: "*"
   environment:
     acsTableName: ${self:custom.acsTableName}
+    fiscalYearTemplateS3BucketName: ${ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
     fmapTableName: ${self:custom.fmapTableName}
     princeApiHost: ${self:custom.princeApiHost}
     princeApiPath: ${self:custom.princeApiPath}
@@ -115,6 +116,14 @@ functions:
     events:
       - http:
           path: state
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getFiscalYearTemplateLink:
+    handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
+    events:
+      - http:
+          path: fiscalYearTemplate
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}

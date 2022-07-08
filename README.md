@@ -59,6 +59,25 @@ Local dev is built around the Serverless plugin [`serverless-offline`](https://g
 
 When run locally, auth bypasses Cognito. The frontend mimics login in local storage with a mock user and sends an id in the `cognito-identity-id` header on every request. `serverless-offline` expects that and sets it as the cognitoId in the requestContext for your lambdas, just like Cognito would in AWS.
 
+It should be noted that while logged in as a state user, the download template button will not actually trigger a download of the fiscal year template in localhost. The way the download is setup is that it is looking for an s3 bucket in main, val, or prod. Localhost is not supported. If you want to support localhost for testing purposes, you can do the following steps:
+
+- Update the services/uploads/serverless.yml file's FiscalYearCreateBucketCondition to be so:
+
+```
+    !YourNewConditionHere!: !Equals
+      - !AddYourBranchNameHere!
+      - ${self:custom.stage}
+    FiscalYearCreateBucketCondition: !Or
+      - !Condition !YourNewConditionHere!
+      - !Condition IsMainCondition
+      - !Condition IsValCondition
+      - !Condition IsProdCondition
+```
+
+- Git add/commit/push the branch with the above change to git.
+- After the deploy action runs on branch being pushed, you should see the bucket now lives in s3 with a name that resembles uploads-AddYourBranchNameHere!-carts-download
+- You'll then want to actually upload the document you want to see! Currently, the key is set to look for a file called "FFY_2021_CARTS_Template.pdf", but you can swap that out in the services/app-api/handlers/fiscalYearTemplate/get.ts file.
+
 ## Copyright and license
 
 [![License](https://img.shields.io/badge/License-CC0--1.0--Universal-blue.svg)](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
