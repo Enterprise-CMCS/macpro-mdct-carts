@@ -9,6 +9,7 @@ import stateUser from "./stateUser";
 import global from "./globalVariables";
 import saveMiddleware from "./saveMiddleware";
 import allStatesData from "./allStatesData";
+import fiscalYearTemplate from "./fiscalYearTemplate";
 import reportStatus from "./reportStatus";
 
 // Consolidate reducers
@@ -18,6 +19,7 @@ export const reducer = combineReducers({
   stateUser,
   global,
   allStatesData,
+  fiscalYearTemplate,
   reportStatus,
   lastYearFormData,
   lastYearTotals,
