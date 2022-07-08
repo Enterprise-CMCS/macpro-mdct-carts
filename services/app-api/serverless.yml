@@ -108,7 +108,7 @@ provider:
           Action:
             - "s3:GetObject"
           Resource:
-            - "arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-519095364708/*"
+            - "arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}/*"
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket}
