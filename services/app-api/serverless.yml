@@ -51,6 +51,11 @@ custom:
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
+  fiscalBucketEnv:
+    prod: prod
+    val: val
+    main: main
+    default: main
   serverlessApiClientCertificate:
     rotateCerts: true
     daysLeft: 30
@@ -101,9 +106,7 @@ provider:
           Action:
             - "s3:GetObject"
           Resource:
-            - "arn:aws:s3:::uploads-main-carts-download-519095364708/*"
-            - "arn:aws:s3:::uploads-val-carts-download-519095364708/*"
-            - "arn:aws:s3:::uploads-prod-carts-download-519095364708/*"
+            - "arn:aws:s3:::uploads-${self.custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}*"
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket~true, ssm:/configuration/default/s3/fiscalYearTemplateBucket~true}
