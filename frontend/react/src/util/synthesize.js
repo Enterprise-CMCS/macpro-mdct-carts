@@ -176,11 +176,19 @@ const sum = (values) => {
 };
 
 const lookupFMAP = (state, fy) => {
-  if (state.allStatesData && (state.global.stateName || state.stateUser.abbr)) {
-    let stateData = "";
+  // if admin and in a print view get state param
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const stateFromParams = urlSearchParams.get("state");
+
+  if (state.allStatesData && (state.global.stateName || state.stateUser.abbr || stateFromParams)) {
+  let stateData = "";
     if (state.stateUser.abbr) {
       stateData = state.allStatesData.filter(
         (st) => st.code === state.stateUser.abbr
+      )[0];
+    } else if (stateFromParams) {
+      stateData = state.allStatesData.filter(
+        (st) => st.code.toLowerCase() === stateFromParams.toLowerCase()
       )[0];
     } else {
       stateData = state.allStatesData.filter(
