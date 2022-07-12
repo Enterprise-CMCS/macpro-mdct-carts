@@ -74,7 +74,9 @@ const Repeatables = ({
           Do you have another{type ? ` ${type}` : ""} in this list?
         </span>
 
-        <div className="ds-c-field__hint">Optional</div>
+        <div className="ds-c-field__hint" aria-label="Hint">
+          Optional
+        </div>
         <button
           disabled={disabled}
           onClick={add}
