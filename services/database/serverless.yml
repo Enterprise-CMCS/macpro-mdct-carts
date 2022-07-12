@@ -57,7 +57,6 @@ custom:
     seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
-  lambdaHashingVersion: 20200924
   runtime: nodejs14.x
   region: us-east-1
 
