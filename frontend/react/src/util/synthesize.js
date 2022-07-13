@@ -180,8 +180,11 @@ const lookupFMAP = (state, fy) => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const stateFromParams = urlSearchParams.get("state");
 
-  if (state.allStatesData && (state.global.stateName || state.stateUser.abbr || stateFromParams)) {
-  let stateData = "";
+  if (
+    state.allStatesData &&
+    (state.global.stateName || state.stateUser.abbr || stateFromParams)
+  ) {
+    let stateData = "";
     if (state.stateUser.abbr) {
       stateData = state.allStatesData.filter(
         (st) => st.code === state.stateUser.abbr
