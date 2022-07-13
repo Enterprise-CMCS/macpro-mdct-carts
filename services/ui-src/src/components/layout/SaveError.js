@@ -20,6 +20,7 @@ const SaveError = ({ saveError }) => {
       }`}
     >
       <Alert
+        autoFocus
         heading="There's been an unexpected error."
         role="alertdialog"
         variation="warn"

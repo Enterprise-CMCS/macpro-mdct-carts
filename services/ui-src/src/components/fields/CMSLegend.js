@@ -18,7 +18,7 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
         {!hideNumber && <p>{labelBits}</p>}
         {!questionType.includes("text") && <p>{label}</p>}
         {hint && (
-          <div className="ds-c-field__hint">
+          <div className="ds-c-field__hint" aria-label={`${label} hint`}>
             <Text>{hint}</Text>
           </div>
         )}
