@@ -59,7 +59,7 @@ Local dev is built around the Serverless plugin [`serverless-offline`](https://g
 
 When run locally, auth bypasses Cognito. The frontend mimics login in local storage with a mock user and sends an id in the `cognito-identity-id` header on every request. `serverless-offline` expects that and sets it as the cognitoId in the requestContext for your lambdas, just like Cognito would in AWS.
 
-It should be noted that while logged in as a state user, the download template button will not actually trigger a download of the fiscal year template in localhost. The way the download is setup is that it is looking for an s3 bucket in main, val, or prod. Localhost is not supported. If you want to support localhost for testing purposes, you can do the following steps:
+It should be noted that while logged in as a state user, the download template button will not actually trigger a download of a fiscal year template in localhost, it will instead look at the main branches s3 bucket for the fiscal year template. The way the download is setup is that it is looking for an s3 bucket in main, val, or prod. Localhosting of the file is not supported. If you want to support localhost for testing purposes, you can do the following steps:
 
 - Update the services/uploads/serverless.yml file's FiscalYearCreateBucketCondition to be so:
 
