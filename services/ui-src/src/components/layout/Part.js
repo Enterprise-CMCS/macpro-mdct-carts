@@ -30,6 +30,7 @@ const Part = ({
   show,
   text,
   title,
+  nestedSubsectionTitle,
 }) => {
   let innards = null;
 
@@ -48,7 +49,7 @@ const Part = ({
   } else {
     if (contextData) {
       innards = (
-        <Alert>
+        <Alert autoFocus>
           <div className="ds-c-alert__text">
             {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
           </div>
@@ -59,12 +60,18 @@ const Part = ({
 
   return (
     <div id={partId}>
-      {title && (
-        <h3 className="h4-pdf-bookmark">
-          {+section !== 0 && partNumber && `Part ${partNumber}: `}
-          {title}
-        </h3>
-      )}
+      {title &&
+        (nestedSubsectionTitle ? (
+          <h4 className="h4-pdf-bookmark">
+            {+section !== 0 && partNumber && `Part ${partNumber}: `}
+            {title}
+          </h4>
+        ) : (
+          <h3 className="h3-pdf-bookmark">
+            {+section !== 0 && partNumber && `Part ${partNumber}: `}
+            {title}
+          </h3>
+        ))}
       {innards}
     </div>
   );
