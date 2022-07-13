@@ -18,7 +18,7 @@ An example of environment specific information is the id of a VPC into which we 
 This project has also implemented a pattern for specifying defaults for variables, while allowing for branch (environment specific overrides). That pattern looks like this:
 
 ```
-sesSourceEmailAddress: ${ssm:/configuration/${self:custom.stage}/sesSourceEmailAddress~true, ssm:/configuration/default/sesSourceEmailAddress~true}
+sesSourceEmailAddress: ${ssm:/configuration/${self:custom.stage}/sesSourceEmailAddress, ssm:/configuration/default/sesSourceEmailAddress}
 ```
 
 The above syntax says "look for an ssm parameter at /configuration/<branch name>/sesSourceEmailAddress; if there isn't one, look for a parameter at /configuration/default/sesSourceEmailAddress". With this logic, we can specify a generic value for this variable that would apply to all environments deployed to a given account, but if we wish to set a different value for a specific environment (branch), we can create a parameter at the branch specific path and it will take precedence.

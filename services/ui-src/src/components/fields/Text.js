@@ -78,16 +78,25 @@ const Text = ({ question, state, ...props }) => {
       <label htmlFor={question.id}>{`${generateQuestionNumber(question.id)} ${
         question.label
       }`}</label>
-      {question.hint && <p className="ds-c-field__hint">{question.hint}</p>}
-      <TextField
-        id={question.id}
-        value={
-          prevYearValue || (question.answer && question.answer.entry) || ""
-        }
-        type="text"
-        {...props}
-        disabled={prevYearDisabled || !!props.disabled}
-      />
+      {question.hint && (
+        <p aria-label={`${question.label} hint`} className="ds-c-field__hint">
+          {question.hint}
+        </p>
+      )}
+      <div className="non-print-textarea">
+        <TextField
+          id={question.id}
+          value={
+            prevYearValue || (question.answer && question.answer.entry) || ""
+          }
+          type="text"
+          {...props}
+          disabled={prevYearDisabled || !!props.disabled}
+        />
+      </div>
+      <p className="print-text-area">
+        {prevYearValue || (question.answer && question.answer.entry) || ""}
+      </p>
     </>
   );
 };
