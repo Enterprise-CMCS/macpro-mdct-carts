@@ -19,6 +19,7 @@ const Subsection = ({ partIds, subsectionId, title, text }) => {
           key={partId}
           partId={partId}
           partNumber={partIds.length > 1 ? index + 1 : null}
+          nestedSubsectionTitle={!!title}
         />
       ))}
     </div>

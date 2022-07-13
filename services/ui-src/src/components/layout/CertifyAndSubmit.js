@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { Button } from "@cmsgov/design-system";
+import { Button, Dialog } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
 import { loadForm } from "../../actions/initial";
 import { certifyAndSubmit } from "../../actions/certify";
@@ -13,8 +13,9 @@ import {
 } from "../../store/selectors";
 import FormActions from "./FormActions";
 import { AppRoles } from "../../types";
+import useModal from "../../hooks/useModal";
 
-const Submit = ({ certify }) => (
+const Submit = ({ openCertifyConfirmation }) => (
   <>
     <h3>Ready to certify and submit?</h3>
     <p>
@@ -27,13 +28,17 @@ const Submit = ({ certify }) => (
       compliance with Title XXI of the Social Security Act (Section 2109(a) and
       Section 2108(e)).
     </p>
-    <Button data-testid="certifySubmit" onClick={certify} variation="primary">
+    <Button
+      data-testid="certifySubmit"
+      onClick={openCertifyConfirmation}
+      variation="primary"
+    >
       Certify and Submit
     </Button>
   </>
 );
 
-Submit.propTypes = { certify: PropTypes.func.isRequired };
+Submit.propTypes = { openCertifyConfirmation: PropTypes.func.isRequired };
 
 const Thanks = ({ done: doneDispatch, lastSave, user }) => {
   return (
@@ -70,13 +75,15 @@ const CertifyAndSubmit = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { isShowing, toggleModal } = useModal();
 
   useEffect(() => {
     dispatch(loadForm(state));
   }, [user]);
 
-  const certify = () => {
+  const confirmCertifyAction = () => {
     certifyAction();
+    toggleModal();
   };
 
   const doneClick = () => {
@@ -87,12 +94,40 @@ const CertifyAndSubmit = ({
   return (
     <div className="section-basic-info ds-l-col--9 content">
       <div className="main">
+        {isShowing && (
+          <Dialog
+            isShowing={isShowing}
+            onExit={toggleModal}
+            heading="Certify and Submit this Report?"
+            actions={[
+              <button
+                className="ds-c-button ds-u-margin-right--1"
+                key="Review Report"
+                aria-label="Review Report"
+                onClick={toggleModal}
+              >
+                Review Report
+              </button>,
+              <button
+                className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
+                key="Confirm Certify"
+                aria-label="Confirm Certify and Submit"
+                onClick={confirmCertifyAction}
+              >
+                Confirm Certify and Submit
+              </button>,
+            ]}
+          >
+            You won’t be able to make any edits after submitting, unless you
+            send a request to CMS to uncertify your report
+          </Dialog>
+        )}
         <PageInfo />
         {currentUserRole === AppRoles.STATE_USER && <h2>Certify and Submit</h2>}
         {isCertified ? (
           <Thanks done={doneClick} lastSave={lastSave} user={user} />
         ) : (
-          <Submit certify={certify} />
+          <Submit openCertifyConfirmation={toggleModal} />
         )}
       </div>
       <FormActions />

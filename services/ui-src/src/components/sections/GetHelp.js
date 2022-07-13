@@ -7,7 +7,7 @@ const GetHelp = () => {
   return (
     <main className="help-page ds-l-container">
       <div className="ds-l-col--12">
-        <Alert heading="Informative status">
+        <Alert autoFocus heading="Informative status">
           <p className="ds-c-alert__text">
             Lorem ipsum dolor sit link text, consectetur adipiscing elit, sed do
             eiusmod.
