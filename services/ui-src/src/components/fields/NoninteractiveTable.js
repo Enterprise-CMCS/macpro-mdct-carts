@@ -36,7 +36,7 @@ const NoninteractiveTable = ({ question }) => {
             count = -1;
             return (
               <tr key={count}>
-                {row.map((value) => {
+                {row.map((value, index) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
                   if (percentLocation[count] === true) {
@@ -58,28 +58,60 @@ const NoninteractiveTable = ({ question }) => {
                       }
                       if (row[1] === 0 && row[2] > 0) {
                         returnValue = "-";
-                        return (
+                        return index === 0 ? (
+                          <th
+                            className="row-header"
+                            aria-label="Row header"
+                            width={`${columnWidth}%`}
+                          >
+                            {returnValue.toLocaleString()}
+                          </th>
+                        ) : (
                           <td width={`${columnWidth}%`}>
                             {returnValue.toLocaleString()}
                           </td>
                         );
                       }
                       returnValue = Math.round(returnValue * 1000) / 1000;
-                      return (
+                      return index === 0 ? (
+                        <th
+                          className="row-header"
+                          aria-label="Row header"
+                          width={`${columnWidth}%`}
+                        >
+                          {returnValue.toLocaleString()}%
+                        </th>
+                      ) : (
                         <td width={`${columnWidth}%`}>
                           {returnValue.toLocaleString()}%
                         </td>
                       );
                     }
                     //End of the custom logic, that should really never have been done in the first place
-                    return (
+                    return index === 0 ? (
+                      <th
+                        className="row-header"
+                        aria-label="Row header"
+                        width={`${columnWidth}%`}
+                      >
+                        {value.toLocaleString()}%
+                      </th>
+                    ) : (
                       <td width={`${columnWidth}%`}>
                         {value.toLocaleString()}%
                       </td>
                     );
                     // eslint-disable-next-line
                   } else {
-                    return (
+                    return index === 0 ? (
+                      <th
+                        className="row-header"
+                        aria-label="Row header"
+                        width={`${columnWidth}%`}
+                      >
+                        {value.toLocaleString()}
+                      </th>
+                    ) : (
                       <td width={`${columnWidth}%`}>
                         {value.toLocaleString()}
                       </td>

@@ -24,9 +24,19 @@ const SynthesizedTable = ({ rows, question }) => {
           {rows.map((row, index) => {
             return (
               <tr key={index}>
-                {row.map((cell, index) => (
-                  <td key={index}>{cell.contents}</td>
-                ))}
+                {row.map((cell, index) =>
+                  index === 0 ? (
+                    <th
+                      className="row-header"
+                      aria-label="Row header"
+                      key={index}
+                    >
+                      {cell.contents}
+                    </th>
+                  ) : (
+                    <td key={index}>{cell.contents}</td>
+                  )
+                )}
               </tr>
             );
           })}
