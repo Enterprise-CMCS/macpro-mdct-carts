@@ -207,8 +207,8 @@ const lookupFMAP = (state, fy) => {
       )[0];
     }
     const fmap =
-      stateData?.fmap_set.filter((year) => year.fiscal_year === +fy)[0]
-        ?.enhanced_FMAP || NaN;
+      stateData?.fmapSet.filter((year) => year.fiscalYear === +fy)[0]
+        ?.enhancedFmap || NaN;
 
     return fmap;
   }
