@@ -6,6 +6,8 @@ plugins:
   - serverless-dynamodb-local
   - serverless-stack-termination-protection
   - serverless-s3-bucket-helper
+  - serverless-plugin-scripts
+  - serverless-offline
 
 s3BucketHelper:
   loggingConfiguration:
@@ -46,6 +48,20 @@ custom:
             sources: [./seed-section.json]
           - table: ${self:custom.sectionBaseTableName}
             sources: [./seed-section-base.json]
+  dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, ssm:/configuration/default/runV2DataMigration}
+  dataMigrationEnvMap:
+    prod: prod
+    val: staging
+    main: master
+    default: master
+  dataMigrationEnv: ${self:custom.dataMigrationEnvMap.${self:custom.stage}, self:custom.dataMigrationEnvMap.default}
+  scripts:
+    hooks:
+      deploy:finalize: |
+        if [ ${self:custom.dataMigrationEnabled} = "true" ];
+        then
+          serverless invoke --stage ${self:custom.stage} --function dataMigration
+        fi
   dynamodb:
     stages:
       - local
@@ -59,6 +75,18 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-1
+
+functions:
+  dataMigration:
+    handler: handlers/dataMigration/dataMigration.handler
+    environment:
+      postgresDb: ${env:postgresDatabase, ssm:/${self:custom.dataMigrationEnv}/postgres_db}
+      postgresHost: ${env:postgresHost, ssm:/${self:custom.dataMigrationEnv}/postgres_host}
+      postgresUser: ${env:postgresUser, ssm:/${self:custom.dataMigrationEnv}/postgres_user}
+      postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
+      postgresPrefix: ${self:custom.dataMigrationEnv}
+      dynamoPrefix: ${self:custom.stage}
+    # timeout: 60 - do we need a long timeout
 
 resources:
   Resources:
