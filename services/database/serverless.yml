@@ -89,7 +89,7 @@ functions:
       postgresUser: ${env:postgresUser, ssm:/${self:custom.dataMigrationEnv}/postgres_user}
       postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
       dynamoPrefix: ${self:custom.stage}
-    # timeout: 60 - do we need a long timeout
+    timeout: 60
 
 resources:
   Resources:
