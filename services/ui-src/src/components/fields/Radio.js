@@ -44,7 +44,11 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
         }`}
         id={props.name + "-" + value}
       />
-      <label className="label-radio" htmlFor={props.name + "-" + value}>
+      <label
+        aria-label={`Question: ${question.label}, Answer: ${label}`}
+        className="label-radio"
+        htmlFor={props.name + "-" + value}
+      >
         {label}
       </label>
     </div>
