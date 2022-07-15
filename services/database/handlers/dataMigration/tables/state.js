@@ -1,16 +1,11 @@
-const query = `select distinct on (code) code, name, program_type as programType from carts_api_state`;
+const query = `select distinct on (code) code, name, program_type as "programType" 
+                    from carts_api_state`;
 
-const stateMigration = {
-  name: "State Migration",
+const migration = {
+  name: "State",
   query,
-  transform: (rows) => {
-    return rows.map((state) => ({
-      name: state["name"],
-      programType: state["program_type"],
-      code: state["code"],
-    }));
-  },
   tableNameBuilder: (stage) => `${stage}-state`,
+  keys: ["code"],
 };
 
-module.exports = stateMigration;
+module.exports = migration;

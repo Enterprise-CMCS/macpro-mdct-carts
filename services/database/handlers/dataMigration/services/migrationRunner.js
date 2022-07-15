@@ -3,41 +3,68 @@ let pgClient;
 let dynamoPrefix;
 
 const runMigration = async (migrationInstructions) => {
-  const { name, query, transform, tableNameBuilder } = migrationInstructions;
+  const { name, query, transform, tableNameBuilder, keys } =
+    migrationInstructions;
   // eslint-disable-next-line no-console
-  console.log(`  - Loading data from ${name} in postgres v2`);
+  console.log(`  - ${name}: Loading data from postgres (v2)`);
 
+  // Extract
   const result = await pgClient.query(query);
   const rows = result.rows;
   if (!rows || rows.length <= 0) return;
-  // eslint-disable-next-line no-console
-  console.log(rows[0]);
+
+  // Transform
   const transformed = transform ? transform(rows) : rows;
+
+  // Load
   if (transformed && transformed.length > 0) {
     const tableName = tableNameBuilder(dynamoPrefix);
     // eslint-disable-next-line no-console
-    console.log(`  - Saving data to ${tableName} in v3`);
-    await saveBatch(tableName, transformed);
+    console.log(`  -  ${tableName}: Saving ${rows.length} entries (v3)`);
+    await updateItems(tableName, transformed, keys);
   }
 };
 
-const saveBatch = async (tableName, items) => {
-  // DynamoDB batchWriteItem takes 25 items max
-  var batch = [];
-  for (let i = 0; i < items.length; i++) {
-    batch.push({ PutRequest: { Item: items[i] } });
-    // Submit every 25, or when you're on the last item
-    if (i == items.length - 1 || batch.length == 25) {
-      await dynamoClient
-        .batchWrite({
-          RequestItems: {
-            [tableName]: batch,
-          },
-        })
-        .promise();
-      batch = []; // clear queue
+const updateItems = async (tableName, items, keys) => {
+  try {
+    for (const item of items) {
+      let key = {};
+      for (const k of keys) {
+        key[k] = item[k];
+        delete item[k];
+      }
+
+      const params = {
+        TableName: tableName,
+        Key: key,
+        ...convertToDynamoExpression(item),
+      };
+      await dynamoClient.update(params).promise();
     }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(` -- ERROR UPLOADING ${tableName}\n`, e);
   }
+};
+
+const convertToDynamoExpression = (listOfVars) => {
+  let expressionAttributeNames = {};
+  let expressionAttributeValues = {};
+  let updateExpression = "";
+  Object.keys(listOfVars).forEach((key, index) => {
+    expressionAttributeNames[`#${key}`] = key;
+    expressionAttributeValues[`:${key}`] = listOfVars[key];
+
+    updateExpression =
+      index === 0
+        ? `set #${key}=:${key}`
+        : `${updateExpression}, #${key}=:${key}`;
+  });
+  return {
+    UpdateExpression: updateExpression,
+    ExpressionAttributeNames: expressionAttributeNames,
+    ExpressionAttributeValues: expressionAttributeValues,
+  };
 };
 
 const buildMigrationRunner = () => {
