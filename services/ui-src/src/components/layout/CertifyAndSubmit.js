@@ -93,7 +93,7 @@ const CertifyAndSubmit = ({
 
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <div className="main">
+      <main className="main">
         {isShowing && (
           <Dialog
             isShowing={isShowing}
@@ -129,7 +129,7 @@ const CertifyAndSubmit = ({
         ) : (
           <Submit openCertifyConfirmation={toggleModal} />
         )}
-      </div>
+      </main>
       <FormActions />
     </div>
   );
