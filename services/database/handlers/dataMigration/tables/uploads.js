@@ -7,9 +7,9 @@ const migration = {
   query,
   transform: (rows) => {
     rows.map((row) => {
-      // TODO: compose fileId
-      row.fileId = "a";
-      // row.fileId = `${year}-${questionId}_${awsFilename}`;
+      row.fileId = `${row.questionId.slice(0, 4)}-${row.questionId}_${
+        row.awsFilename
+      }`;
       row.uploadedDate = row.uploadedDate?.toString();
     });
     return rows;
