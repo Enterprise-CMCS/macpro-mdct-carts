@@ -24,6 +24,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
           key={props.name + "-" + value + "-" + idx}
         >
           <input
+            aria-label={`Question: ${question.label}, Answer: ${label}`}
             id={`${props.name}-${value}`}
             key={value}
             type="checkbox"
@@ -33,7 +34,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
             name={props.name + value}
             {...props}
           />
-          <label className="label-radio" htmlFor={props.name + "-" + value}>
+          <label className="label-radio" htmlFor={`${props.name}-${value}`}>
             {label}
           </label>
         </div>

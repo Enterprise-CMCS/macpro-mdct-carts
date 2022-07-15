@@ -37,6 +37,11 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
         {...props}
         onChange={onCheck}
         onClick={unCheck}
+        aria-label={`Question: ${
+          question.label
+        }, Answer: ${label} Radio Button with a status of ${
+          checked === value ? "Checked" : "unchecked"
+        }`}
         id={props.name + "-" + value}
       />
       <label className="label-radio" htmlFor={props.name + "-" + value}>
