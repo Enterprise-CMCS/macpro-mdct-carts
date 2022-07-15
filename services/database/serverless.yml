@@ -75,6 +75,10 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-1
+  iam:
+    role:
+      path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
 
 functions:
   dataMigration:
@@ -84,7 +88,6 @@ functions:
       postgresHost: ${env:postgresHost, ssm:/${self:custom.dataMigrationEnv}/postgres_host}
       postgresUser: ${env:postgresUser, ssm:/${self:custom.dataMigrationEnv}/postgres_user}
       postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
-      postgresPrefix: ${self:custom.dataMigrationEnv}
       dynamoPrefix: ${self:custom.stage}
     # timeout: 60 - do we need a long timeout
 
