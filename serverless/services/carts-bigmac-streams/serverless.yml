@@ -178,6 +178,10 @@ resources:
                 Value: mgmt.connect.cms-carts-seds.${self:service}-${self:custom.stage}.offsets
               - Name: CONNECT_STATUS_STORAGE_TOPIC
                 Value: mgmt.connect.cms-carts-seds.${self:service}-${self:custom.stage}.status
+              - Name: CONNECT_OFFSET_STORAGE_PARTITIONS
+                Value: 5
+              - Name: CONNECT_STATUS_STORAGE_PARTITIONS
+                Value: 1
               - Name: CONNECT_KEY_CONVERTER
                 Value: org.apache.kafka.connect.json.JsonConverter
               - Name: CONNECT_VALUE_CONVERTER
