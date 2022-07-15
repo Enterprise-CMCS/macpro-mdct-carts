@@ -7,9 +7,9 @@ async function myHandler(event, context, callback) {
   const migrationRunner = buildRunner();
 
   const { tables } = require("./tables/index");
-  tables.forEach((table) => {
-    migrationRunner.executeMigration(table);
-  });
+  for (const table of tables) {
+    await migrationRunner.executeMigration(table);
+  }
 
   // eslint-disable-next-line no-console
   console.log("V2 Migration Finished");
