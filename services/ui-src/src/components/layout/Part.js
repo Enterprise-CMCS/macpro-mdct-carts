@@ -42,7 +42,7 @@ const Part = ({
         {text ? <Text>{text}</Text> : null}
 
         {questions.map((question) => (
-          <Question key={question.id} question={question} />
+          <Question key={question.id} question={question} tableTitle={title} />
         ))}
       </>
     );

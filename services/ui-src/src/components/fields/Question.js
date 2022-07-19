@@ -67,6 +67,7 @@ const Question = ({
   readonly,
   setAnswer,
   prevYear,
+  tableTitle,
   ...props
 }) => {
   let Component = Text;
@@ -128,6 +129,7 @@ const Question = ({
           name={question.id}
           onChange={onChange}
           onClick={onClick}
+          tableTitle={tableTitle}
           disabled={
             prevYearDisabled ||
             pageDisable ||
@@ -159,6 +161,7 @@ Question.propTypes = {
   readonly: PropTypes.bool.isRequired,
   setAnswer: PropTypes.func.isRequired,
   prevYear: PropTypes.object,
+  tableTitle: PropTypes.string,
 };
 Question.defaultProps = {
   hideNumber: false,
