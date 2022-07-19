@@ -90,6 +90,11 @@ functions:
       postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
       dynamoPrefix: ${self:custom.stage}
     timeout: 60
+    vpc:
+      securityGroupIds:
+        - ${env:postgresDatabase, ssm:/default/migrationSecurityGroup}
+      subnetIds:
+        - ${env:postgresDatabase, ssm:/default/migrationSecurityGroup}
 
 resources:
   Resources:
