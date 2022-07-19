@@ -92,9 +92,9 @@ functions:
     timeout: 120
     vpc:
       securityGroupIds:
-        - ${env:postgresDatabase, ssm:/default/migrationSecurityGroup}
+        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:configuration/default/migrationSecurityGroup}
       subnetIds:
-        - ${env:postgresDatabase, ssm:/default/migrationSubnet}
+        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:configuration/default/migrationSubnet}
 
 resources:
   Resources:
