@@ -94,7 +94,7 @@ functions:
       securityGroupIds:
         - ${env:postgresDatabase, ssm:/default/migrationSecurityGroup}
       subnetIds:
-        - ${env:postgresDatabase, ssm:/default/migrationSecurityGroup}
+        - ${env:postgresDatabase, ssm:/default/migrationSubnet}
 
 resources:
   Resources:
