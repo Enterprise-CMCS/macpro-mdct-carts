@@ -51,6 +51,16 @@ If you want to a visual view of your dynamodb after the application is up and ru
 
 - to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin` in a new terminal window
 
+### V2 Data Migration
+
+The data migration for v2 -> v3 is controlled via ssm parameters, and can be kicked off in an env on deploy by setting /configuration/{env}/runV2DataMigration. If you have access to the v2 databases.
+, it can also be run to write v2 data into the local database by setting the runV2DataMigration env flag to true, and invoking the function with:
+
+```aws lambda invoke /dev/null \
+  --endpoint-url http://localhost:3003 \
+  --function-name database-local-dataMigration
+```
+
 ### Local Development Random Info
 
 Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
