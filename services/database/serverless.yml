@@ -102,9 +102,9 @@ functions:
     timeout: 120
     vpc:
       securityGroupIds:
-        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:configuration/default/migrationSecurityGroup}
+        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:/configuration/default/migrationSecurityGroup}
       subnetIds:
-        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:configuration/default/migrationSubnet}
+        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:/configuration/default/migrationSubnet}
 
 resources:
   Resources:
