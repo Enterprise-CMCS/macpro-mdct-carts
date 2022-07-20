@@ -9,12 +9,9 @@
   "author": "",
   "license": "CC0-1.0",
   "devDependencies": {
-    "serverless-dynamodb-local": "0.2.40",
-    "serverless-offline": "^8.8.1",
-    "serverless-offline-ssm": "^6.2.0"
+    "serverless-dynamodb-local": "0.2.40"
   },
   "dependencies": {
-    "pg": "^8.7.3",
-    "serverless-plugin-scripts": "^1.0.2"
+    "pg": "^8.7.3"
   }
 }
