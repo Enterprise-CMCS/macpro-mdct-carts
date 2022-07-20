@@ -25,7 +25,7 @@ custom:
     stages:
       - main
       - val
-      - prod
+      - production
   githubAccessToken: ${ssm:/configuration/${self:custom.stage}/sechub/githubAccessToken, ssm:/configuration/default/sechub/githubAccessToken}
   githubRepository: ${ssm:/configuration/${self:custom.stage}/sechub/githubRepository, ssm:/configuration/default/sechub/githubRepository, env:GITHUB_REPOSITORY}
   githubRepositoryProjects: ${ssm:/configuration/${self:custom.stage}/sechub/githubRepositoryProjects, ssm:/configuration/default/sechub/githubRepositoryProjects, ""}
