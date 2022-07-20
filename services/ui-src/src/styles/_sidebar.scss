@@ -5,6 +5,9 @@
 .sidebar {
   margin: ($margin * 3) 0;
 
+  .skip-content {
+    margin-bottom: ($margin * 3);
+  }
   .state-header {
     margin-bottom: ($margin * 3);
     position: relative;

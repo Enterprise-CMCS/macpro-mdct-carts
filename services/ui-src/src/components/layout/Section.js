@@ -16,11 +16,11 @@ const selectSectionNumber = (sectionId) => {
 const Section = ({ subsectionId, title }) => {
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <div className="main">
+      <main id="main-content" className="main">
         <PageInfo />
         <h2 data-testid="section-title">{title}</h2>
         <Subsection key={subsectionId} subsectionId={subsectionId} />
-      </div>
+      </main>
       <div className="form-footer">
         <Autosave />
         <FormNavigation />
