@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { UserRoles } from "../../../types";
+import { AppRoles } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 import { post } from "../post";
 
@@ -77,7 +77,7 @@ describe("Test Form Template Generation Handlers", () => {
   beforeEach(() => {
     console.error = jest.fn();
     mockedRoleFn.mockReturnValue({
-      role: UserRoles.BUSINESS_OWNER_REP,
+      role: AppRoles.CMS_ADMIN,
     });
   });
   afterEach(() => {
@@ -106,7 +106,7 @@ describe("Test Form Template Generation Handlers", () => {
     };
 
     mockedRoleFn.mockReturnValue({
-      role: UserRoles.STATE,
+      role: AppRoles.STATE_USER,
     });
     const res = await post(event, null);
 

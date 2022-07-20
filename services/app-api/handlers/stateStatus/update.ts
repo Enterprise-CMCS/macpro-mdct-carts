@@ -1,7 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 
 /**
@@ -25,7 +25,7 @@ export const updateStateStatus = handler(async (event, _context) => {
   const { year, state } = event.pathParameters;
 
   // state users can only update a state status associated with their assigned state
-  if (user.role === UserRoles.STATE && user.state === state) {
+  if (user.role === AppRoles.STATE_USER && user.state === state) {
     const updateStateStatusparams = {
       TableName: process.env.stateStatusTableName!,
       Key: {
@@ -43,14 +43,10 @@ export const updateStateStatus = handler(async (event, _context) => {
     };
 
     await dynamoDb.update(updateStateStatusparams);
-  }
-
-  /**
-   * Approver uncertifies a CARTS report
-   */
-  // eslint-disable-next-line
-  // TODO: update ADMIN with APPROVER role
-  else if (user.role === UserRoles.APPROVER) {
+  } else if (user.role === AppRoles.CMS_USER) {
+    /**
+     * CMS_User uncertifies a CARTS report
+     */
     const uncertifyReportParams = {
       TableName: process.env.stateStatusTableName!,
       Key: {

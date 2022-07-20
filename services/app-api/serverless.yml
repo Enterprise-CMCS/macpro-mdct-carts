@@ -1,14 +1,14 @@
 # Refer to the README.md file in within this service directory to configure all ssm parameters required for this service.
 service: app-api
 
-frameworkVersion: "2"
+frameworkVersion: "3"
 
 package:
   individually: true
 
+useDotenv: true
 plugins:
   - serverless-plugin-typescript
-  - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-associate-waf
   - serverless-offline
@@ -20,8 +20,8 @@ plugins:
 
 s3BucketHelper:
   loggingConfiguration:
-    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket~true, ssm:/configuration/default/s3/accessLogsBucket~true}
-    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix~true, ssm:/configuration/default/s3/accessLogsPrefix~true}
+    destinationBucketName: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket, ssm:/configuration/default/s3/accessLogsBucket}
+    logFilePrefix: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
   serverlessPluginTypescript:
@@ -33,6 +33,11 @@ custom:
       - main
       - val
       - prod
+  accountId: ${AWS::AccountId}
+  acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
+  acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
+  fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
+  fmapTableArn: ${env:fmapTableArn, cf:database-${self:custom.stage}.FmapTableArn}
   princeApiHost: ${env:princeApiHost, ssm:/${self:custom.stage}/prince_api_host, ssm:/default/prince_api_host}
   princeApiPath: ${env:princeApiPath, ssm:/${self:custom.stage}/prince_api_path, ssm:/default/prince_api_path}
   stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
@@ -47,6 +52,12 @@ custom:
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
+  fiscalBucketEnvMap:
+    prod: prod
+    val: val
+    main: main
+    default: main
+  fiscalBucketEnv: ${self:custom.fiscalBucketEnvMap.${self:custom.stage}, self:custom.fiscalBucketEnvMap.default}
   serverlessApiClientCertificate:
     rotateCerts: true
     daysLeft: 30
@@ -55,8 +66,8 @@ custom:
       enabled: true
       prewarm: true
       events:
-        - schedule: rate(${ssm:/configuration/${self:custom.stage}/warmup/schedule~true, ssm:/configuration/default/warmup/schedule~true, "60 minutes"})
-      concurrency: ${ssm:/configuration/${self:custom.stage}/warmup/concurrency~true, ssm:/configuration/default/warmup/concurrency~true, 5}
+        - schedule: rate(${env:warmupSchedule, ssm:/configuration/${self:custom.stage}/warmup/schedule, ssm:/configuration/default/warmup/schedule, "60 minutes"})
+      concurrency: ${env:warmupConcurrency, ssm:/configuration/${self:custom.stage}/warmup/concurrency, ssm:/configuration/default/warmup/concurrency, 5}
   authValue:
     main: aws_iam
     master: aws_iam
@@ -64,7 +75,7 @@ custom:
     prod: aws_iam
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: us-east-1
   tracing:
     apiGateway: true
@@ -72,8 +83,8 @@ provider:
     restApi: true
   iam:
     role:
-      path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
+      path: ${env:iamPath, ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+      permissionsBoundary: ${env:iamPermissionsBoundary, ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
       statements:
         - Effect: "Allow"
           Action:
@@ -87,17 +98,28 @@ provider:
           Resource: "*"
         - Effect: "Allow"
           Action:
+            - ssm:GetParameter
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
             - execute-api:Invoke
           Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - "s3:GetObject"
+          Resource: !Sub arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}/*
   environment:
+    acsTableName: ${self:custom.acsTableName}
+    fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket}
+    fmapTableName: ${self:custom.fmapTableName}
     princeApiHost: ${self:custom.princeApiHost}
     princeApiPath: ${self:custom.princeApiPath}
     stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
     sectionBaseName: ${self:custom.sectionBaseTableName}
-    uploadS3BucketName: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
-    stage: ${opt:stage, self:provider.stage}
+    uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
+    stage: ${self:custom.stage}
 
 functions:
   getStates:
@@ -105,6 +127,14 @@ functions:
     events:
       - http:
           path: state
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getFiscalYearTemplateLink:
+    handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
+    events:
+      - http:
+          path: fiscalYearTemplate
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}

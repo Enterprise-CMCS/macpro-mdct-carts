@@ -1,0 +1,37 @@
+[
+  {
+    "stateId": "AL",
+    "fiscalYear": 2020,
+    "enhancedFmap": 80.81
+  },
+  {
+    "stateId": "AK",
+    "fiscalYear": 2020,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CA",
+    "fiscalYear": 2020,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CT",
+    "fiscalYear": 2020,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NJ",
+    "fiscalYear": 2020,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "PA",
+    "fiscalYear": 2020,
+    "enhancedFmap": 66.54
+  },
+  {
+    "stateId": "TX",
+    "fiscalYear": 2020,
+    "enhancedFmap": 73.27
+  }
+]

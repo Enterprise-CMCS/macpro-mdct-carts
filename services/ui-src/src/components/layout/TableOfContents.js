@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { VerticalNav } from "@cmsgov/design-system";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 const idToUrl = (location, id) => {
   const endOfPath = id.replace(/-/g, "/");
@@ -48,7 +48,7 @@ class TableOfContents extends Component {
                   onClick: this.click,
                   selected: location.pathname
                     .toLowerCase()
-                    .startsWith(idToUrl(location, subsectionId)),
+                    .startsWith(idToUrl(location, subsectionId).toLowerCase()),
                   url: idToUrl(location, subsectionId),
                 })
               ),
@@ -57,7 +57,7 @@ class TableOfContents extends Component {
         onClick: this.click,
         selected: location.pathname
           .toLowerCase()
-          .startsWith(idToUrl(location, sectionId)),
+          .startsWith(idToUrl(location, sectionId).toLowerCase()),
       }))
       .map(({ id, items: childItems, ...rest }) => {
         const updated = { id, items: childItems, ...rest };
@@ -68,7 +68,7 @@ class TableOfContents extends Component {
       });
 
     // If the user can certify and submit AND the form is not yet submitted...
-    if (userRole === UserRoles.STATE) {
+    if (userRole === AppRoles.STATE_USER) {
       items.push({
         id: "certify-and-submit",
         label: "Certify and Submit",
@@ -79,9 +79,14 @@ class TableOfContents extends Component {
       });
     }
 
+    const foundSelectedId = items.find((item) => item.selected)?.id;
     return (
-      <div className="toc">
-        <VerticalNav selectedId="toc" items={items} />
+      <div className="toc" data-testid="toc" aria-label="Table of Contents">
+        <VerticalNav
+          selectedId={foundSelectedId}
+          ariaNavLabel="Vertical Navigation Element"
+          items={items}
+        />
       </div>
     );
   }

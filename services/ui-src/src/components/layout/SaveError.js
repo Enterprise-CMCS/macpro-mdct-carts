@@ -1,18 +1,23 @@
 import { Alert } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
 import { selectHasError } from "../../store/save.selectors";
 
-const SaveError = ({ hasError }) => {
-  const className = hasError ? "alert--unexpected-error__active" : "";
+const SaveError = ({ saveError }) => {
+  const [showSaveErrorAlert, setShowErrorAlert] = useState(saveError);
+
+  useEffect(() => {
+    setShowErrorAlert(saveError);
+  }, [saveError]);
 
   return (
     <div
-      aria-hidden={!hasError}
+      aria-hidden={!showSaveErrorAlert}
       aria-live="polite"
-      className={`alert--unexpected-error ${className}`}
+      className={`alert--unexpected-error ${
+        showSaveErrorAlert ? "alert--unexpected-error__active" : ""
+      }`}
     >
       <Alert
         heading="There's been an unexpected error."
@@ -20,10 +25,21 @@ const SaveError = ({ hasError }) => {
         variation="warn"
         data-test="component-header"
       >
-        We weren&lsquo;t able to save your latest changes. Try saving in a few
-        minutes. If you continue to see this message, refresh your browser.
-        Before this issue is resolved, new changes may be lost if you continue
-        to make edits or if you refresh your browser.
+        <div className="flex">
+          <div>
+            We weren&lsquo;t able to save your latest changes. Try saving in a
+            few minutes. If you continue to see this message, refresh your
+            browser. Before this issue is resolved, new changes may be lost if
+            you continue to make edits or if you refresh your browser.
+          </div>
+          <button
+            aria-label="Close alert"
+            className="hide-alert-button"
+            onClick={() => setShowErrorAlert(false)}
+          >
+            X
+          </button>
+        </div>
       </Alert>
     </div>
   );
@@ -34,7 +50,7 @@ SaveError.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  hasError: selectHasError(state),
+  saveError: selectHasError(state),
 });
 
 export default connect(mapStateToProps)(SaveError);

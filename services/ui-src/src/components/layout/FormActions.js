@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 /**
  * Display available options for form (print)
@@ -82,7 +82,7 @@ const FormActions = (props) => {
   ) => {
     let stateId = "";
 
-    if (currentUser.role === UserRoles.STATE) {
+    if (currentUser.role === AppRoles.STATE_USER) {
       stateId = currentUser.state.id;
     } else {
       stateId = window.location.href.split("/")[5];
@@ -108,6 +108,7 @@ const FormActions = (props) => {
           className="ds-c-button--primary ds-c-button--small"
           onClick={togglePrintDialogue}
           title="Print"
+          data-testid="print-show"
         >
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
@@ -118,12 +119,13 @@ const FormActions = (props) => {
             <Button
               className="ds-c-button--transparent ds-c-button--small"
               onClick={togglePrintDialogue}
+              data-testid="print-hide"
               title="close"
             >
               <FontAwesomeIcon icon={faWindowClose} />
             </Button>
           </div>
-          <h4>Print</h4>
+          <h4 data-testid="print-title">Print</h4>
           <div className="print-options">
             <div className="print-page">
               <Button
@@ -137,6 +139,7 @@ const FormActions = (props) => {
                 title="This Section"
                 target="_blank"
                 onClick={togglePrintDialogue}
+                data-testid="print-page"
               >
                 <FontAwesomeIcon icon={faPrint} /> This Section
               </Button>
@@ -148,6 +151,7 @@ const FormActions = (props) => {
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDialogue}
+                data-testid="print-form"
               >
                 <FontAwesomeIcon icon={faPrint} /> Entire Form
               </Button>

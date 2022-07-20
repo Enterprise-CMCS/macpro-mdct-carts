@@ -116,11 +116,14 @@ const Question = ({
             hint={question.hint}
             id={fieldsetId || question.id}
             label={question.label}
+            questionType={question.type}
           />
         )}
 
         <Component
           {...props}
+          label={undefined}
+          hint={undefined}
           question={question}
           name={question.id}
           onChange={onChange}

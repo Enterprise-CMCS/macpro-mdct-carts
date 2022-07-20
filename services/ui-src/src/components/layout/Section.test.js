@@ -57,16 +57,10 @@ describe("Section Component", () => {
       })
     );
   });
-  it("displays the title in screen-only view", () => {
+  it("displays the title in screen and print view", () => {
     const { getByTestId } = render(section);
-    const headerComponent = getByTestId("section-screen-title");
+    const headerComponent = getByTestId("section-title");
     expect(headerComponent).toHaveTextContent("Section Title");
-  });
-  it("displays the trimmed sectionId and title in print-only view", () => {
-    const { getByTestId } = render(section);
-    const headerComponent = getByTestId("section-print-title");
-    expect(headerComponent).toHaveTextContent("Section Title");
-    expect(headerComponent).toHaveTextContent("123");
     expect(headerComponent).not.toHaveTextContent("2020-123");
   });
 });

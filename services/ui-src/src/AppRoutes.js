@@ -12,6 +12,7 @@ import { LocalLogins } from "./components/sections/login/LocalLogins";
 import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
+import GetHelp from "./components/sections/GetHelp";
 
 const AppRoutes = () => {
   const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
@@ -47,6 +48,7 @@ const AppRoutes = () => {
           <Route path="/profile" component={Profile} />
           <Route path="/user/profile" component={UserProfile} />
           <Route path="/print" component={Print} />
+          <Route path="/get-help" component={GetHelp} />
         </Router>
       </div>
       {VisibleFooter}

@@ -6,7 +6,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectSectionsForNav } from "../../store/selectors";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
@@ -29,10 +29,9 @@ const FormNavigation = (props) => {
 
   // If admin, DO NOT ADD
   if (
-    role !== UserRoles.BUSINESS_OWNER_REP &&
-    role !== UserRoles.HELP &&
-    role !== UserRoles.PROJECT_OFFICER &&
-    role !== UserRoles.APPROVER
+    role !== AppRoles.CMS_ADMIN &&
+    role !== AppRoles.HELP_DESK &&
+    role !== AppRoles.CMS_USER
   ) {
     // Add certify and submit page to items array
     items.push(`/sections/${year}/certify-and-submit`);
@@ -91,6 +90,7 @@ const FormNavigation = (props) => {
                 onClick={() => {
                   history.push(previousUrl);
                 }}
+                data-testid="previous"
               >
                 <FontAwesomeIcon icon={faAngleLeft} /> Previous
               </Button>
@@ -105,6 +105,7 @@ const FormNavigation = (props) => {
                 onClick={() => {
                   history.push(nextUrl);
                 }}
+                data-testid="next"
               >
                 Next <FontAwesomeIcon icon={faAngleRight} />
               </Button>
