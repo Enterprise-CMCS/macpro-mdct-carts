@@ -17,11 +17,16 @@
     top: 60px;
     margin-top: 0;
   }
+
+  .flex {
+    display: flex;
+  }
 }
 
 .hide-alert-button {
-  display: block;
-  margin-left: -25px;
-  margin-top: 15px;
-  margin-bottom: -10px;
+  font-weight: 900;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
 }

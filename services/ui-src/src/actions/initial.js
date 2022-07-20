@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle, no-console */
 import { API } from "aws-amplify";
 import axios from "../authenticatedAxios";
+import { mapIdmRoleToAppRole } from "../hooks/authHooks";
 import requestOptions from "../hooks/authHooks/requestOptions";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 
@@ -187,14 +188,13 @@ export const loadUser = (user) => async (dispatch) => {
     state: {
       id: user.attributes["custom:cms_state"],
     },
-    role: user.attributes["custom:cms_roles"],
+    role: mapIdmRoleToAppRole(user.attributes["custom:cms_roles"]),
     lastname: user.attributes?.family_name,
     firstname: user.attributes?.given_name,
     email: user.attributes?.email,
   };
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
-    // TODO: Get Program and State data
     dispatch(getStateData(flattenedUser)),
     dispatch(getProgramData(user)),
     dispatch(getAllStatesData()),

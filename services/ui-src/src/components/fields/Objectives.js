@@ -68,7 +68,12 @@ const Objectives = ({
           Do you have another objective in your State Plan?
         </span>
 
-        <div className="ds-c-field__hint">Optional</div>
+        <div
+          className="ds-c-field__hint"
+          aria-label="Add another objective Hint"
+        >
+          Optional
+        </div>
         <button
           disabled={disabled}
           onClick={add}

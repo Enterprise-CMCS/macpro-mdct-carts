@@ -5,7 +5,7 @@ import { Button, TextField } from "@cmsgov/design-system";
 import { API } from "aws-amplify";
 import requestOptions from "../../hooks/authHooks/requestOptions";
 import { setAnswerEntry } from "../../actions/initial";
-import { REPORT_STATUS, UserRoles } from "../../types";
+import { REPORT_STATUS, AppRoles } from "../../types";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -246,7 +246,7 @@ class UploadComponent extends Component {
       const stateReportStatus = reportStatus[`${stateCode}${year}`];
       submissionsAllowed =
         stateReportStatus.status !== REPORT_STATUS.certified &&
-        user.role === UserRoles.STATE;
+        user.role === AppRoles.STATE_USER;
     }
 
     return (
@@ -301,8 +301,15 @@ class UploadComponent extends Component {
           {this.state.displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
         </Button>
 
-        {this.state.displayUploadedFiles ? (
-          <table key={"uploadedFilesContainer"}>
+        {this.state.displayUploadedFiles &&
+        this.state.uploadedFiles?.length > 0 ? (
+          <table
+            key={"uploadedFilesContainer"}
+            summary={
+              this.props.question.label ||
+              "This is a table for the CARTS Application"
+            }
+          >
             <tbody>
               {!this.state.uploadedFilesRetrieved ? (
                 <tr>

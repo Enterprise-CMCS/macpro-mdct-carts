@@ -8,7 +8,7 @@ import Question from "../fields/Question";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 import Text from "./Text";
-import { UserRoles } from "../../types";
+import { AppRoles } from "../../types";
 
 const showPart = (contextData, programType, state) => {
   if (
@@ -60,10 +60,10 @@ const Part = ({
   return (
     <div id={partId}>
       {title && (
-        <h4 className="h4-pdf-bookmark">
+        <h3 className="h4-pdf-bookmark">
           {+section !== 0 && partNumber && `Part ${partNumber}: `}
           {title}
-        </h4>
+        </h3>
       )}
       {innards}
     </div>
@@ -120,10 +120,10 @@ const showPartBasedOnUserType = (contextData, programData, state) => {
 
   if (
     programData &&
-    (role === UserRoles.BUSINESS_OWNER_REP ||
-      role === UserRoles.HELP ||
-      role === UserRoles.STATE ||
-      role === UserRoles.PROJECT_OFFICER)
+    (role === AppRoles.CMS_ADMIN ||
+      role === AppRoles.HELP_DESK ||
+      role === AppRoles.CMS_USER ||
+      role === AppRoles.STATE_USER)
   ) {
     // program type from programData object, for bus_user and co_user
     return showPart(contextData, programData.program_type, state);

@@ -50,7 +50,9 @@ const Print = ({ currentUser, state, name }) => {
       noscriptTag.remove();
     }
     document.querySelectorAll("input").forEach((element) => {
-      element.style.height = "50px";
+      if (element.type === "text") {
+        element.style.height = "50px";
+      }
     });
     document.querySelectorAll("button").forEach((element) => {
       if (element.title !== "Print") {

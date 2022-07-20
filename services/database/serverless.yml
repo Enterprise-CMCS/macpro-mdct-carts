@@ -1,6 +1,6 @@
 service: database
 
-frameworkVersion: "2"
+frameworkVersion: "3"
 
 plugins:
   - serverless-dynamodb-local
@@ -9,8 +9,8 @@ plugins:
 
 s3BucketHelper:
   loggingConfiguration:
-    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket~true, ssm:/configuration/default/s3/accessLogsBucket~true}
-    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix~true, ssm:/configuration/default/s3/accessLogsPrefix~true}
+    destinationBucketName: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket, ssm:/configuration/default/s3/accessLogsBucket}
+    logFilePrefix: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
@@ -21,6 +21,8 @@ custom:
       - master
       - val
       - prod
+  acsTableName: ${self:custom.stage}-acs
+  fmapTableName: ${self:custom.stage}-fmap
   stateTableName: ${self:custom.stage}-state
   stateStatusTableName: ${self:custom.stage}-state-status
   sectionTableName: ${self:custom.stage}-section
@@ -32,6 +34,10 @@ custom:
     default:
       domain:
         sources:
+          - table: ${self:custom.acsTableName}
+            sources: [./seed-acs.json]
+          - table: ${self:custom.fmapTableName}
+            sources: [./seed-fmap.json]
           - table: ${self:custom.stateTableName}
             sources: [./seed-state.json]
           - table: ${self:custom.stateStatusTableName}
@@ -51,11 +57,49 @@ custom:
     seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: us-east-1
 
 resources:
   Resources:
+    AcsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.acsTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: stateId
+            AttributeType: S
+          - AttributeName: year
+            AttributeType: N
+        KeySchema:
+          - AttributeName: stateId
+            KeyType: HASH
+          - AttributeName: year
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    FmapTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.fmapTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: fiscalYear
+            AttributeType: N
+          - AttributeName: stateId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: fiscalYear
+            KeyType: HASH
+          - AttributeName: stateId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
     StateTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -148,6 +192,14 @@ resources:
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
   Outputs:
+    AcsTableName:
+      Value: !Ref AcsTable
+    AcsTableArn:
+      Value: !GetAtt AcsTable.Arn
+    FmapTableName:
+      Value: !Ref FmapTable
+    FmapTableArn:
+      Value: !GetAtt FmapTable.Arn
     StateTableName:
       Value: !Ref StateTable
     StateTableArn:
@@ -160,7 +212,7 @@ resources:
       Value: !Ref SectionTable
     SectionTableArn:
       Value: !GetAtt SectionTable.Arn
-    SectionBaseTable:
+    SectionBaseTableName:
       Value: !Ref SectionBaseTable
     SectionBaseTableArn:
       Value: !GetAtt SectionBaseTable.Arn

@@ -1,9 +1,22 @@
-export const UserRoles = {
+/*
+ * Roles directly from IDM, their names do not 1:1 match with expected behavior
+ */
+export const IdmRoles = {
   APPROVER: "mdctcarts-approver",
   BUSINESS_OWNER_REP: "mdctcarts-bor",
   HELP: "mdctcarts-help-desk",
   STATE: "mdctcarts-state-user",
   PROJECT_OFFICER: "mdctcarts-project-officer",
+};
+
+/*
+ * Carts App roles, naming conveying an expected behavior
+ */
+export const AppRoles = {
+  CMS_USER: "CMS_USER", // User who can view and reject state submissions
+  CMS_ADMIN: "CMS_ADMIN", // Biz Owner - View all, release forms
+  HELP_DESK: "HELP_DESK", // Help Desk - View all
+  STATE_USER: "STATE_USER", // Enter and certifies data for a year
 };
 
 export const REPORT_STATUS = {

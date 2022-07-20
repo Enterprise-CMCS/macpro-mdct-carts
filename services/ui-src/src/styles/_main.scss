@@ -2,7 +2,10 @@
   GLOBALS
 **********************/
 
-html, body, #root, #app-wrapper {
+html,
+body,
+#root,
+#app-wrapper {
   height: 100%;
 }
 
@@ -91,6 +94,10 @@ img {
       font-weight: bold;
       margin-top: 0;
     }
+  }
+
+  .smaller-page {
+    max-width: 680px;
   }
 }
 
@@ -236,6 +243,14 @@ img {
 }
 
 .homepage {
+  &-filter {
+    padding: 0 16px;
+
+    @media only screen and (min-width: 544px) {
+      padding: 0;
+    }
+  }
+
   .page-title {
     margin-top: ($margin * 4);
     margin-bottom: $margin;
@@ -554,4 +569,21 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 .filter-div {
   width: 100%;
+
+  .ds-c-label {
+    margin-left: $margin * 2;
+  }
+}
+
+.help-page {
+  margin-top: $margin * 2;
+  margin-bottom: $margin * 8;
+
+  &-container {
+    max-width: 700px;
+  }
+
+  &-title {
+    margin-top: $margin * 8;
+  }
 }
