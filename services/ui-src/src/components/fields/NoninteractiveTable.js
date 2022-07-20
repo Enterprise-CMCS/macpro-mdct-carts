@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const NoninteractiveTable = ({ question }) => {
+const NoninteractiveTable = ({ question, tableTitle }) => {
   const columnWidth = 100 / question.fieldset_info.headers.length;
   // eslint-disable-next-line
   let percentLocation = [];
@@ -11,7 +11,11 @@ const NoninteractiveTable = ({ question }) => {
       <table
         className="ds-c-table"
         width="100%"
-        summary={question.label || "This is a table for the CARTS Application"}
+        summary={
+          question.label ||
+          tableTitle ||
+          "This is a table for the CARTS Application"
+        }
       >
         <thead>
           <tr>
@@ -34,9 +38,10 @@ const NoninteractiveTable = ({ question }) => {
         <tbody>
           {question.fieldset_info.rows.map((row) => {
             count = -1;
+            let rowLabel = "";
             return (
               <tr key={count}>
-                {row.map((value) => {
+                {row.map((value, index) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
                   if (percentLocation[count] === true) {
@@ -58,29 +63,77 @@ const NoninteractiveTable = ({ question }) => {
                       }
                       if (row[1] === 0 && row[2] > 0) {
                         returnValue = "-";
-                        return (
-                          <td width={`${columnWidth}%`}>
+                        return index === 0 ? (
+                          <th
+                            className="row-header"
+                            aria-label="Row header:"
+                            width={`${columnWidth}%`}
+                          >
+                            {returnValue.toLocaleString()}
+                          </th>
+                        ) : (
+                          <td
+                            aria-label={`Row: ${rowLabel}, `}
+                            width={`${columnWidth}%`}
+                          >
                             {returnValue.toLocaleString()}
                           </td>
                         );
                       }
                       returnValue = Math.round(returnValue * 1000) / 1000;
-                      return (
-                        <td width={`${columnWidth}%`}>
+                      return index === 0 ? (
+                        <th
+                          className="row-header"
+                          aria-label="Row header:"
+                          width={`${columnWidth}%`}
+                        >
+                          {returnValue.toLocaleString()}%
+                        </th>
+                      ) : (
+                        <td
+                          aria-label={`Row: ${rowLabel}, `}
+                          width={`${columnWidth}%`}
+                        >
                           {returnValue.toLocaleString()}%
                         </td>
                       );
                     }
                     //End of the custom logic, that should really never have been done in the first place
-                    return (
-                      <td width={`${columnWidth}%`}>
+                    return index === 0 ? (
+                      <th
+                        className="row-header"
+                        aria-label="Row header:"
+                        width={`${columnWidth}%`}
+                      >
+                        {value.toLocaleString()}%
+                      </th>
+                    ) : (
+                      <td
+                        aria-label={`Row: ${rowLabel}, `}
+                        width={`${columnWidth}%`}
+                      >
                         {value.toLocaleString()}%
                       </td>
                     );
                     // eslint-disable-next-line
                   } else {
-                    return (
-                      <td width={`${columnWidth}%`}>
+                    if (index === 0) {
+                      value.toLocaleString();
+                      rowLabel = `${value.toLocaleString()}`;
+                    }
+                    return index === 0 ? (
+                      <th
+                        className="row-header"
+                        aria-label="Row header:"
+                        width={`${columnWidth}%`}
+                      >
+                        {value.toLocaleString()}
+                      </th>
+                    ) : (
+                      <td
+                        aria-label={`Row: ${rowLabel}, `}
+                        width={`${columnWidth}%`}
+                      >
                         {value.toLocaleString()}
                       </td>
                     );
@@ -96,6 +149,7 @@ const NoninteractiveTable = ({ question }) => {
 };
 NoninteractiveTable.propTypes = {
   question: PropTypes.object.isRequired,
+  tableTitle: PropTypes.string,
 };
 export { NoninteractiveTable };
 export default NoninteractiveTable;

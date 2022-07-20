@@ -3,13 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import synthesizeValue from "../../util/synthesize";
 
-const SynthesizedTable = ({ rows, question }) => {
+const SynthesizedTable = ({ rows, question, tableTitle }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <table
         className="ds-c-table ds-u-margin-top--2"
         id="synthesized-table-1"
-        summary={question.label || "This is a table for the CARTS Application"}
+        summary={
+          question.label ||
+          tableTitle ||
+          "This is a table for the CARTS Application"
+        }
       >
         <thead>
           <tr>
@@ -22,11 +26,30 @@ const SynthesizedTable = ({ rows, question }) => {
         </thead>
         <tbody>
           {rows.map((row, index) => {
+            let rowLabel;
             return (
               <tr key={index}>
-                {row.map((cell, index) => (
-                  <td key={index}>{cell.contents}</td>
-                ))}
+                {row.map((cell, index) => {
+                  if (index === 0) {
+                    rowLabel = cell.contents;
+                    return (
+                      <th
+                        className="row-header"
+                        aria-label={`Row Header:`}
+                        key={index}
+                      >
+                        {" "}
+                        {cell.contents}
+                      </th>
+                    );
+                  } else {
+                    return (
+                      <td key={index} aria-label={`Row: ${rowLabel}, `}>
+                        {cell.contents}
+                      </td>
+                    );
+                  }
+                })}
               </tr>
             );
           })}

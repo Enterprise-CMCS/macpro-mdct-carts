@@ -106,6 +106,7 @@ const FormNavigation = (props) => {
                   history.push(nextUrl);
                 }}
                 data-testid="next"
+                href="#main-content"
               >
                 Next <FontAwesomeIcon icon={faAngleRight} />
               </Button>
