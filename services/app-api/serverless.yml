@@ -32,7 +32,7 @@ custom:
     stages:
       - main
       - val
-      - prod
+      - production
   accountId: ${AWS::AccountId}
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
@@ -53,7 +53,7 @@ custom:
     name: ${self:custom.webAclName}
     version: V2
   fiscalBucketEnvMap:
-    prod: prod
+    production: production
     val: val
     main: main
     default: main
@@ -110,7 +110,7 @@ provider:
           Resource: !Sub arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}/*
   environment:
     acsTableName: ${self:custom.acsTableName}
-    fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket}
+    fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket, ""}
     fmapTableName: ${self:custom.fmapTableName}
     princeApiHost: ${self:custom.princeApiHost}
     princeApiPath: ${self:custom.princeApiPath}

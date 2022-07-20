@@ -34,6 +34,10 @@
 
 .ds-c-table {
   margin: 1.2rem 0;
+
+  .row-header {
+    font-weight: 650;
+  }
 }
 
 .synthesized-table,
@@ -485,4 +489,13 @@
   .objective-accordion div[hidden] {
     display: block;
   }
+}
+
+.label-header {
+  font-weight: normal;
+  color: black;
+}
+
+.print-text-area {
+  display: none;
 }

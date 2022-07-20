@@ -83,15 +83,23 @@ const Text = ({ question, state, ...props }) => {
           {question.hint}
         </p>
       )}
-      <TextField
-        id={question.id}
-        value={
-          prevYearValue || (question.answer && question.answer.entry) || ""
-        }
-        type="text"
-        {...props}
-        disabled={prevYearDisabled || !!props.disabled}
-      />
+      <div className="non-print-textarea">
+        <TextField
+          aria-label={`${question.label}${
+            question.hint ? ` ${question.hint}` : ""
+          }`}
+          id={question.id}
+          value={
+            prevYearValue || (question.answer && question.answer.entry) || ""
+          }
+          type="text"
+          {...props}
+          disabled={prevYearDisabled || !!props.disabled}
+        />
+      </div>
+      <p className="print-text-area">
+        {prevYearValue || (question.answer && question.answer.entry) || ""}
+      </p>
     </>
   );
 };

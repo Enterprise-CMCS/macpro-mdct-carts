@@ -184,12 +184,28 @@ const sum = (values) => {
 };
 
 const lookupFMAP = (state, fy) => {
-  if (state.allStatesData && state.stateUser) {
-    const stateAbbr = state.stateUser.abbr;
-    const stateData = state.allStatesData.filter(
-      (st) => st.code === stateAbbr
-    )[0];
+  // if admin and in a print view get state param
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const stateFromParams = urlSearchParams.get("state");
 
+  if (
+    state.allStatesData &&
+    (state.global.stateName || state.stateUser.abbr || stateFromParams)
+  ) {
+    let stateData = "";
+    if (state.stateUser.abbr) {
+      stateData = state.allStatesData.filter(
+        (st) => st.code === state.stateUser.abbr
+      )[0];
+    } else if (stateFromParams) {
+      stateData = state.allStatesData.filter(
+        (st) => st.code.toLowerCase() === stateFromParams.toLowerCase()
+      )[0];
+    } else {
+      stateData = state.allStatesData.filter(
+        (st) => st.name === state.global.stateName
+      )[0];
+    }
     const fmap =
       stateData?.fmapSet.filter((year) => year.fiscalYear === +fy)[0]
         ?.enhancedFmap || NaN;
