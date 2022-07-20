@@ -22,7 +22,7 @@ custom:
       - main
       - master
       - val
-      - prod
+      - production
   acsTableName: ${self:custom.stage}-acs
   fmapTableName: ${self:custom.stage}-fmap
   stateTableName: ${self:custom.stage}-state
@@ -50,7 +50,7 @@ custom:
             sources: [./seed-section-base.json]
   dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, ssm:/configuration/default/runV2DataMigration}
   dataMigrationEnvMap:
-    prod: prod
+    production: prod
     val: staging
     main: master
     default: master

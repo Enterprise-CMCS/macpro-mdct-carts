@@ -43,7 +43,7 @@ custom:
       - main
       - master
       - val
-      - prod
+      - production
   scripts:
     hooks:
       # This script is run locally when running 'serverless deploy'
@@ -96,7 +96,7 @@ resources:
       - "val"
       - ${self:custom.stage}
     IsProdCondition: !Equals
-      - "prod"
+      - "production"
       - ${self:custom.stage}
     FiscalYearCreateBucketCondition: !Or
       - !Condition IsMainCondition

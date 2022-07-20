@@ -32,7 +32,7 @@ custom:
     stages:
       - main
       - val
-      - prod
+      - production
   accountId: ${AWS::AccountId}
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
@@ -53,7 +53,7 @@ custom:
     name: ${self:custom.webAclName}
     version: V2
   fiscalBucketEnvMap:
-    prod: prod
+    production: production
     val: val
     main: main
     default: main
