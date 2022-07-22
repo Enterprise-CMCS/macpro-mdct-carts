@@ -204,7 +204,8 @@ jobs:
           OIDC_ISSUER: ${{secrets.STAGING_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.STAGING_TF_VAR_OPENID_DISCOVERY_URL}}
           APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-          TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
+          # UI Domain can only be set in one at the time. Should currently be the new environment
+          # TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
           TF_VAR_use_custom_db_password_info: ${{ env.USE_CUSTOM_PASSWORD }}
   frontend-new:
@@ -212,6 +213,7 @@ jobs:
       - data
       - uploads-new
       - scan-postgres_django
+      - frontend-legacy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -240,9 +242,7 @@ jobs:
           OIDC_ISSUER: ${{secrets.STAGING_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.STAGING_TF_VAR_OPENID_DISCOVERY_URL}}
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
-          # UI Domain can only be set in one at the time. Should currently be the legacy environment
-          # TODO: Uncomment after domain switch over.
-          # TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
+          TF_VAR_acm_certificate_domain_ui: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.STAGING_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
           TF_VAR_use_custom_db_password_info: ${{ env.USE_CUSTOM_PASSWORD }}
           TF_VAR_postgres_django_registry_id: ${{secrets.STAGING_POSTGRES_DJANGO_ACCOUNT_ID}}
