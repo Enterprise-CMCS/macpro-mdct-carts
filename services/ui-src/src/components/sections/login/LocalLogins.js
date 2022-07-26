@@ -56,7 +56,7 @@ const LocalLogin = () => {
           data-testid="login-button"
           data-cy="login-with-cognito-button"
         >
-          Login with Cognito
+          Log In with Cognito
         </button>
       </form>
     </div>
