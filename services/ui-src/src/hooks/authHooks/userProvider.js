@@ -13,7 +13,9 @@ const authenticateWithIDM = () => {
 export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
-  const isProduction = window.location.origin.includes("mdctqmr.cms.gov");
+  const isProduction =
+    window.location.origin.includes("mdctcarts.cms.gov") ||
+    window.location.origin.includes("dt4brcxdimpa0.cloudfront.net"); // TODO: remove once v3 is at the former address
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
