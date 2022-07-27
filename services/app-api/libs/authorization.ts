@@ -99,7 +99,9 @@ export const isAuthorized = async (event: APIGatewayProxyEvent) => {
 
   // If a state user, always reject if their state does not match a state query param
   const decoded = jwt_decode(event.headers["x-api-key"]) as DecodedToken;
-  const idmRole = decoded["custom:cms_roles"];
+  const idmRole = decoded["custom:cms_roles"]
+    .split(",")
+    .find((r) => r.includes("mdctcarts")) as IdmRoles;
   const userState = decoded["custom:cms_state"];
   const appRole = mapIdmRoleToAppRole(idmRole);
   if (appRole === AppRoles.STATE_USER && userState && requestState) {
