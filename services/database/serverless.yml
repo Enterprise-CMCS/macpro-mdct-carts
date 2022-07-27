@@ -98,7 +98,7 @@ functions:
       postgresDb: ${env:postgresDatabase, ssm:/${self:custom.dataMigrationEnv}/postgres_db}
       postgresHost: ${env:postgresHost, ssm:/${self:custom.dataMigrationEnv}/postgres_host}
       postgresUser: ${env:postgresUser, ssm:/${self:custom.dataMigrationEnv}/postgres_user}
-      postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
+      postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/custom/postgres_custom_password, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
       dynamoPrefix: ${self:custom.stage}
     timeout: 120
     vpc:

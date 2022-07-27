@@ -1,3 +1,21 @@
 .local-login__wrapper {
   padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 83.33333%;
+
+  hr {
+    flex-grow: 1;
+    min-width: 20%;
+  }
+
+  .login-option {
+    min-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 1em;
+  }
 }

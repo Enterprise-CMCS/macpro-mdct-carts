@@ -183,12 +183,15 @@ export const loadSections = ({ stateCode, selectedYear }) => {
 };
 
 export const loadUser = (user) => async (dispatch) => {
+  const idmRole = user.attributes["custom:cms_state"]
+    .split(",")
+    .find((r) => r.includes("mdctcarts"));
   const flattenedUser = {
     username: user.attributes.email,
     state: {
       id: user.attributes["custom:cms_state"],
     },
-    role: mapIdmRoleToAppRole(user.attributes["custom:cms_roles"]),
+    role: mapIdmRoleToAppRole(idmRole),
     lastname: user.attributes?.family_name,
     firstname: user.attributes?.given_name,
     email: user.attributes?.email,
