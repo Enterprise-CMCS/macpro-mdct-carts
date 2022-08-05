@@ -1,0 +1,28 @@
+[
+  {
+    "pk": "AK-2022",
+    "indexToUpdate": 1,
+    "stateId": "AK",
+    "typeOfEnrollment": "Medicaid Expansion CHIP",
+    "enrollmentCount": 123,
+    "filterId": "2022-02",
+    "yearToModify": "2022"
+  },
+  {
+    "pk": "AK-2022",
+    "indexToUpdate": 2,
+    "stateId": "AK",
+    "typeOfEnrollment": "Medicaid Expansion CHIP",
+    "enrollmentCount": 123,
+    "filterId": "2021-02",
+    "yearToModify": "2022"
+  },
+  {
+    "pk": "AK-2022",
+    "indexToUpdate": 3,
+    "typeOfEnrollment": "Medicaid Expansion CHIP",
+    "enrollmentCount": 123,
+    "filterId": "2022-02",
+    "yearToModify": "2022"
+  }
+]

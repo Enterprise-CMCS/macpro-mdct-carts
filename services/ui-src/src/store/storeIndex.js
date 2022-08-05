@@ -11,6 +11,7 @@ import saveMiddleware from "./saveMiddleware";
 import allStatesData from "./allStatesData";
 import fiscalYearTemplate from "./fiscalYearTemplate";
 import reportStatus from "./reportStatus";
+import enrollmentCounts from "./enrollmentCounts";
 
 // Consolidate reducers
 export const reducer = combineReducers({
@@ -23,6 +24,7 @@ export const reducer = combineReducers({
   reportStatus,
   lastYearFormData,
   lastYearTotals,
+  enrollmentCounts,
 });
 
 // Consolidate middleware

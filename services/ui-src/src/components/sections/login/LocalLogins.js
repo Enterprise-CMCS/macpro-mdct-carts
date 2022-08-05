@@ -21,7 +21,7 @@ const LocalLogin = () => {
 
   return (
     <div className="login-option">
-      <h2>Login with Cognito</h2>
+      <h2>Log In with Cognito</h2>
       <form onSubmit={(event) => handleLogin(event)}>
         <label for="email">
           <p className="ds-c-field__hint">Email:</p>

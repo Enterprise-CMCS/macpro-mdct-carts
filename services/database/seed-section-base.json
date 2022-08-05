@@ -1627,8 +1627,58 @@
                     "fieldset_id": "noninteractive-table-2-1",
                     "fieldset_info": {
                       "rows": [
-                        ["Medicaid Expansion CHIP", 284143, 300579, 5.78],
-                        ["Separate CHIP", 478542, 511473, 6.88]
+                        [
+                          {
+                            "contents": "Medicaid Expansion CHIP"
+                          },
+                          {
+                            "lookupChipEnrollments": {
+                              "ffy": "2022",
+                              "enrollmentType": "Medicaid Expansion CHIP",
+                              "index": 1
+                            }
+                          },
+                          {
+                            "lookupChipEnrollments": {
+                              "ffy": "2022",
+                              "enrollmentType": "Medicaid Expansion CHIP",
+                              "index": 2
+                            }
+                          },
+                          {
+                            "lookupChipEnrollments": {
+                              "ffy": "2022",
+                              "enrollmentType": "Medicaid Expansion CHIP",
+                              "index": 3
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "Separate CHIP"
+                          },
+                          {
+                            "lookupChipEnrollments": {
+                              "ffy": "2022",
+                              "enrollmentType": "Separate CHIP",
+                              "index": 1
+                            }
+                          },
+                          {
+                            "lookupChipEnrollments": {
+                              "ffy": "2022",
+                              "enrollmentType": "Separate CHIP",
+                              "index": 2
+                            }
+                          },
+                          {
+                            "lookupChipEnrollments": {
+                              "ffy": "2022",
+                              "enrollmentType": "Separate CHIP",
+                              "index": 3
+                            }
+                          }
+                        ]
                       ],
                       "headers": [
                         "Program",
