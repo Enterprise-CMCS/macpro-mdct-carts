@@ -306,7 +306,7 @@ export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   return returnValue;
 };
 
-const lookupChipEnrollments = (
+export const lookupChipEnrollments = (
   state,
   { ffy, enrollmentType, index, valueType }
 ) => {

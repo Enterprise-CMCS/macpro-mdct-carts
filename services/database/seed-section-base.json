@@ -1716,7 +1716,7 @@
                         "type": "conditional_display",
                         "hide_if_table_value": {
                           "target": "$..*[?(@.fieldset_id=='synthesized-table-2-1')].fieldset_info.rows",
-                          "computed": false,
+                          "computed": true,
                           "variations": [
                             {
                               "row": "*",
