@@ -233,12 +233,12 @@ resources:
         AttributeDefinitions:
           - AttributeName: pk
             AttributeType: S
-          - AttributeName: indexToUpdate
-            AttributeType: N
+          - AttributeName: entryKey
+            AttributeType: S
         KeySchema:
           - AttributeName: pk
             KeyType: HASH
-          - AttributeName: indexToUpdate
+          - AttributeName: entryKey
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
     UploadsTable:

@@ -1624,7 +1624,7 @@
                   {
                     "type": "fieldset",
                     "questions": [],
-                    "fieldset_id": "noninteractive-table-2-1",
+                    "fieldset_id": "synthesized-table-2-1",
                     "fieldset_info": {
                       "rows": [
                         [
@@ -1635,21 +1635,24 @@
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Medicaid Expansion CHIP",
-                              "index": 1
+                              "index": 1,
+                              "valueType": "number"
                             }
                           },
                           {
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Medicaid Expansion CHIP",
-                              "index": 2
+                              "index": 2,
+                              "valueType": "number"
                             }
                           },
                           {
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Medicaid Expansion CHIP",
-                              "index": 3
+                              "index": 3,
+                              "valueType": "percent"
                             }
                           }
                         ],
@@ -1661,33 +1664,44 @@
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Separate CHIP",
-                              "index": 1
+                              "index": 1,
+                              "valueType": "number"
                             }
                           },
                           {
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Separate CHIP",
-                              "index": 2
+                              "index": 2,
+                              "valueType": "number"
                             }
                           },
                           {
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Separate CHIP",
-                              "index": 3
+                              "index": 3,
+                              "valueType": "percent"
                             }
                           }
                         ]
                       ],
                       "headers": [
-                        "Program",
-                        "Number of children enrolled in FFY 2019",
-                        "Number of children enrolled in FFY 2022",
-                        "Percent change"
+                        {
+                          "contents": "Program"
+                        },
+                        {
+                          "contents": "Number of children enrolled in FFY 2019"
+                        },
+                        {
+                          "contents": "Number of children enrolled in FFY 2022"
+                        },
+                        {
+                          "contents": "Percent change"
+                        }
                       ]
                     },
-                    "fieldset_type": "noninteractive_table"
+                    "fieldset_type": "synthesized_table"
                   },
                   {
                     "id": "2022-02-a-01-01",
@@ -1701,7 +1715,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "hide_if_table_value": {
-                          "target": "$..*[?(@.fieldset_id=='noninteractive-table-2-1')].fieldset_info.rows",
+                          "target": "$..*[?(@.fieldset_id=='synthesized-table-2-1')].fieldset_info.rows",
                           "computed": false,
                           "variations": [
                             {
@@ -1737,7 +1751,7 @@
                     "type": "fieldset",
                     "label": "",
                     "questions": [],
-                    "fieldset_id": "synthesized-table-2-1",
+                    "fieldset_id": "synthesized-table-2-2",
                     "fieldset_info": {
                       "rows": [
                         [
@@ -1909,7 +1923,7 @@
                   {
                     "type": "fieldset",
                     "questions": [],
-                    "fieldset_id": "synthesized-table-2-2",
+                    "fieldset_id": "synthesized-table-2-3",
                     "fieldset_info": {
                       "rows": [
                         [
@@ -1942,7 +1956,7 @@
                       "conditional_display": {
                         "type": "conditional_display",
                         "hide_if_table_value": {
-                          "target": "$..*[?(@.fieldset_id=='synthesized-table-2-2')].fieldset_info.rows",
+                          "target": "$..*[?(@.fieldset_id=='synthesized-table-2-3')].fieldset_info.rows",
                           "computed": true,
                           "variations": [
                             {

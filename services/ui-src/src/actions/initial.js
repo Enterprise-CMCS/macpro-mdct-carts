@@ -197,7 +197,8 @@ export const loadEnrollmentCounts = ({ stateCode, selectedYear }) => {
 };
 
 export const loadUser = (user) => async (dispatch) => {
-  const idmRole = user.attributes["custom:cms_state"]
+  console.log(user);
+  const idmRole = user.attributes["custom:cms_roles"]
     .split(",")
     .find((r) => r.includes("mdctcarts"));
   const flattenedUser = {

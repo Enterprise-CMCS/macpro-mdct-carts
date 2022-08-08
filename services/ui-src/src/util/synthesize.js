@@ -306,20 +306,25 @@ export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   return returnValue;
 };
 
-const lookupChipEnrollments = (state, { ffy, enrollmentType, index }) => {
+const lookupChipEnrollments = (
+  state,
+  { ffy, enrollmentType, index, valueType }
+) => {
   let returnValue = "Not Available";
-
   if (
     state.enrollmentCounts &&
     state.enrollmentCounts.chipEnrollments.length > 0
   ) {
     const targetValue = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToAssign === ffy &&
+        enrollment.yearToModify === ffy &&
         enrollment.indexToUpdate === index &&
         enrollment.typeOfEnrollment === enrollmentType
     );
-    if (targetValue) returnValue = targetValue;
+    if (targetValue) {
+      returnValue = targetValue.enrollmentCount;
+      if (valueType === "percent") returnValue += "%";
+    }
   }
   return returnValue;
 };
