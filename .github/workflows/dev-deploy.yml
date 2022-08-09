@@ -85,15 +85,6 @@ jobs:
           key: ${{ runner.os }}-postgres_django-docker-cache-{hash}
           restore-keys: |
             ${{ runner.os }}-postgres_django-docker-cache-
-      - name: Configure AWS credentials (legacy)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Login to Amazon ECR
-        id: login-ecr-legacy
-        uses: aws-actions/amazon-ecr-login@v1
       - name: Configure AWS credentials (new account)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -105,14 +96,12 @@ jobs:
       - name: Build, tag, and push postgres_django(frontend/api_postgres) image
         id: postgres_django_build
         env:
-          ECR_REGISTRY_LEGACY: ${{ steps.login-ecr-legacy.outputs.registry }}
           ECR_REGISTRY_NEW: ${{ steps.login-ecr-new.outputs.registry }}
           ECR_REPOSITORY: ${{env.ECR_REPOSITORY_API_POSTGRESS}}
           IMAGE_TAG: ${{env.BUILD_TAG}}
         working-directory: frontend/api_postgres
         run: |
-          docker build . -t $ECR_REGISTRY_LEGACY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY_LEGACY/$ECR_REPOSITORY:${{env.BRANCH_NAME}} -t $ECR_REGISTRY_NEW/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY_NEW/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
-          docker push $ECR_REGISTRY_LEGACY/$ECR_REPOSITORY --all-tags
+          docker build . -t $ECR_REGISTRY_NEW/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY_NEW/$ECR_REPOSITORY:${{env.BRANCH_NAME}}
           docker push $ECR_REGISTRY_NEW/$ECR_REPOSITORY --all-tags
       - name: Scan postgres_django(frontend/api_postgres) Docker image
         env:
@@ -139,18 +128,6 @@ jobs:
         run: |
           docker run --rm -w /app -v $(pwd):/app node:14.4.0 /bin/bash -c "rm -rf build && npm ci && npm run build && cp env.sh .env build/"
           tar -zcvf cartsbuild.tar.gz build
-      - name: Configure AWS credentials (legacy)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Push react artifacts (legacy).
-        env:
-          IMAGE_TAG: ${{env.BUILD_TAG}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
-        working-directory: frontend/react
-        run: aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
       - name: Configure AWS credentials (new account)
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -162,34 +139,6 @@ jobs:
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
         working-directory: frontend/react
         run: aws s3 cp cartsbuild.tar.gz s3://$APPLICATION_BUCKET/artifacts/$IMAGE_TAG/cartsbuild.tar.gz
-  uploads-legacy:
-    needs:
-      - prevalidate
-    runs-on: ubuntu-latest
-    env:
-      SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
-    steps:
-      - uses: actions/checkout@v3
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v3
-        with:
-          path: serverless-uploads/**/node_modules
-          key: ${{ runner.os }}-serverless-uploads-modules-${{ hashFiles('serverless-uploads/**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-serverless-uploads-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Deploy Uploads Scan
-        working-directory: serverless-uploads
-        run: ./deploy.sh ${{env.BRANCH_NAME}}
   uploads-new:
     needs:
       - prevalidate
@@ -240,45 +189,6 @@ jobs:
           VPC_NAME: ${{secrets.NEW_DEV_VPC }}
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
           TF_VAR_postgres_restore_snapshot_id: ${{secrets.DEV_RESTORE_SNAPSHOT_ID}}
-  frontend-legacy:
-    needs:
-      - prevalidate
-      - data
-      - uploads-legacy
-      - build-react
-      - build-push-scan-postgres_django
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Configure datalayer AWS credentials (new account)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Configure Terraform Datalayer Provider Credentials
-        run: |
-          echo "TF_VAR_datalayer_aws_access_key=${{env.AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
-          echo "TF_VAR_datalayer_aws_secret_key=${{env.AWS_SECRET_ACCESS_KEY}}" >> $GITHUB_ENV
-          echo "TF_VAR_datalayer_aws_session_token=${{env.AWS_SESSION_TOKEN}}" >> $GITHUB_ENV
-      - name: Configure frontend AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Terraform setup
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.0.11
-          terraform_wrapper: false
-      - name: Deploy Frontend Layer
-        run: ./frontend_deploy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} apply application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
-        env:
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
-          OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
-          OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
-          TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
   frontend-new:
     needs:
       - prevalidate
