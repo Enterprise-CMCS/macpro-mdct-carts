@@ -3,7 +3,7 @@
 
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const execSync = require("child_process").execSync;
+const spawnSync = require("child_process").spawnSync;
 const path = require("path");
 const constants = require("./constants");
 const utils = require("./utils");
@@ -198,9 +198,12 @@ async function uploadAVDefinitions() {
  */
 function scanLocalFile(pathToFile) {
   try {
-    let avResult = execSync(
-      `${constants.PATH_TO_CLAMAV} -v -a --stdout -d /tmp/ ${pathToFile}`
-    );
+    let avResult = spawnSync(constants.PATH_TO_CLAMAV, [
+      "--stdout",
+      "-v",
+      "-a",
+      `-d ${pathToFile}`,
+    ]);
 
     utils.generateSystemMessage("SUCCESSFUL SCAN, FILE CLEAN");
     console.log(avResult.toString());
