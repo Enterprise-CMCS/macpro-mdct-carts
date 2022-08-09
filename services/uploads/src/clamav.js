@@ -37,7 +37,7 @@ async function listBucketFiles(bucketName) {
  */
 function updateAVDefinitonsWithFreshclam() {
   try {
-    let executionResult = execSync(
+    let executionResult = spawnSync(
       `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
     );
 
