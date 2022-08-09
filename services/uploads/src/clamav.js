@@ -203,6 +203,7 @@ function scanLocalFile(pathToFile) {
       "-v",
       "-a",
       `-d ${pathToFile}`,
+      `-d /tmp/ ${pathToFile}`,
     ]);
 
     utils.generateSystemMessage("SUCCESSFUL SCAN, FILE CLEAN");
