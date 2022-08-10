@@ -3,12 +3,12 @@ name: "CodeQL"
 on:
   push:
     branches:
-      - master
+      - main
       - val
       - production
   pull_request:
     branches:
-      - master
+      - main
       - val
       - production
   schedule:
@@ -34,4 +34,4 @@ jobs:
           languages: ${{ matrix.language }}
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
