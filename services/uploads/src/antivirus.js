@@ -40,6 +40,16 @@ async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
 }
 
 /**
+ * Check if S3 object name is valid
+ * @param {string} s3ObjectKey       Key of S3 Object
+ * @return {boolean} True if S3 object key is invalid
+ */
+async function isS3FileNameValid(s3ObjectKey) {
+  let fileNameRegex = new RegExp("^[0-9a-zA-z-_.]*$");
+  return fileNameRegex.test(s3ObjectKey);
+}
+
+/**
  * Download a file from S3 to a local temp directory.
  * @param {string} s3ObjectKey       Key of S3 Object
  * @param {string} s3ObjectBucket    Bucket of S3 object
@@ -100,6 +110,11 @@ async function lambdaHandleEvent(event, _context) {
     virusScanStatus = constants.STATUS_SKIPPED_FILE;
     utils.generateSystemMessage(
       `S3 File is too big. virusScanStatus=${virusScanStatus}`
+    );
+  } else if (await isS3FileNameValid(s3ObjectKey)) {
+    virusScanStatus = constants.STATUS_SKIPPED_FILE;
+    utils.generateSystemMessage(
+      `S3 Filename is invalid. virusScanStatus=${virusScanStatus}`
     );
   } else {
     //No need to act on file unless you are able to.
