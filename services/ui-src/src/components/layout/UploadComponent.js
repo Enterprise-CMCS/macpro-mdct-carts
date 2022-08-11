@@ -26,6 +26,7 @@ class UploadComponent extends Component {
     this.submitUpload = this.submitUpload.bind(this);
     this.viewUploaded = this.viewUploaded.bind(this);
     this.isFileTypeAllowed = this.isFileTypeAllowed.bind(this);
+    this.isFileNameValid = this.isFileNameValid.bind(this);
     this.deleteFile = this.deleteFile.bind(this);
     await this.viewUploaded();
   };
@@ -45,6 +46,11 @@ class UploadComponent extends Component {
       "xls",
     ];
     return allowedFileTypes.indexOf(extension) > -1;
+  };
+
+  isFileNameValid = (fileName) => {
+    let fileNameRegex = new RegExp("^[0-9a-zA-z-_.]*$");
+    return fileNameRegex.test(fileName);
   };
 
   submitUpload = async () => {
@@ -206,6 +212,10 @@ class UploadComponent extends Component {
         const mediaSize = file.size / 1024 / 1024;
         const mediaExtension = uploadName.split(".").pop();
         const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
+        const fileNameInvalid = !this.isFileNameValid(uploadName);
+
+        // eslint-disable-next-line
+        console.log("INVALID FILENAME", fileNameValid);
 
         if (fileTypeAllowed === true) {
           if (mediaSize <= maxFileSize) {
@@ -215,6 +225,12 @@ class UploadComponent extends Component {
               `${uploadName} exceeds ${maxFileSize}MB file size maximum`
             );
           }
+        } else if (fileNameValid === false) {
+          // eslint-disable-next-line
+          console.log("INVALID FILENAME");
+          errorString = errorString.concat(
+            `The file name (${uploadName}) contains invalid characters. Only the following characters are allowed: A-Z, a-z, 0-9, -, _, and .`
+          );
         } else {
           errorString = errorString.concat(
             "Your file is not an approved file type. See below for a list of approved file types."
