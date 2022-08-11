@@ -9,6 +9,7 @@ export const LOAD_SECTIONS = "LOAD SECTIONS";
 export const GET_ALL_STATES_DATA = "GET_ALL_STATES_DATA";
 export const SET_STATE_STATUS = "SET_STATE_STATUS";
 export const SET_STATE_STATUSES = "SET_STATE_STATUSES";
+export const SET_ENROLLMENT_COUNTS = "SET_ENROLLMENT_COUNTS";
 export const QUESTION_ANSWERED = "QUESTION ANSWERED";
 export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
 
@@ -182,8 +183,22 @@ export const loadSections = ({ stateCode, selectedYear }) => {
   };
 };
 
+export const loadEnrollmentCounts = ({ stateCode, selectedYear }) => {
+  return async (dispatch) => {
+    const opts = await requestOptions();
+    const data = await API.get(
+      "carts-api",
+      `/enrollment_counts/${selectedYear}/${stateCode}`,
+      opts
+    );
+
+    dispatch({ type: SET_ENROLLMENT_COUNTS, data });
+  };
+};
+
 export const loadUser = (user) => async (dispatch) => {
-  const idmRole = user.attributes["custom:cms_state"]
+  console.log(user);
+  const idmRole = user.attributes["custom:cms_roles"]
     .split(",")
     .find((r) => r.includes("mdctcarts"));
   const flattenedUser = {
@@ -220,6 +235,7 @@ export const loadForm = (state) => async (dispatch, getState) => {
 
   try {
     await dispatch(loadSections({ stateCode, selectedYear }));
+    await dispatch(loadEnrollmentCounts({ stateCode, selectedYear }));
   } finally {
     // End isFetching for spinner
     dispatch({ type: "CONTENT_FETCHING_FINISHED" });

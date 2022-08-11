@@ -306,6 +306,29 @@ export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   return returnValue;
 };
 
+export const lookupChipEnrollments = (
+  state,
+  { ffy, enrollmentType, index, valueType }
+) => {
+  let returnValue = "Not Available";
+  if (
+    state.enrollmentCounts &&
+    state.enrollmentCounts.chipEnrollments.length > 0
+  ) {
+    const targetValue = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === index &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    if (targetValue) {
+      returnValue = targetValue.enrollmentCount;
+      if (valueType === "percent") returnValue += "%";
+    }
+  }
+  return returnValue;
+};
+
 const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
@@ -321,6 +344,12 @@ const synthesizeValue = (value, state) => {
 
   if (value.compareACS) {
     return { contents: [compareACS(state, value.compareACS)] };
+  }
+
+  if (value.lookupChipEnrollments) {
+    return {
+      contents: [lookupChipEnrollments(state, value.lookupChipEnrollments)],
+    };
   }
 
   if (value.targets) {

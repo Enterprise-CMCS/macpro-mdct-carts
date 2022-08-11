@@ -29,6 +29,7 @@ custom:
   stateStatusTableName: ${self:custom.stage}-state-status
   sectionTableName: ${self:custom.stage}-section
   sectionBaseTableName: ${self:custom.stage}-section-base
+  stageEnrollmentCountsTableName: ${self:custom.stage}-stg-enrollment-counts
   uploadsTableName: ${self:custom.stage}-uploads
   seedOptions:
     prod: false
@@ -48,6 +49,8 @@ custom:
             sources: [./seed-section.json]
           - table: ${self:custom.sectionBaseTableName}
             sources: [./seed-section-base.json]
+          - table: ${self:custom.stageEnrollmentCountsTableName}
+            sources: [./seed-stg-enrollment-counts.json]
   dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, ssm:/configuration/default/runV2DataMigration}
   dataMigrationEnvMap:
     production: prod
@@ -219,6 +222,25 @@ resources:
           - AttributeName: sectionId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
+    StageEnrollmentCountsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.stageEnrollmentCountsTableName}
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: entryKey
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: entryKey
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST # Set the capacity to auto-scale
     UploadsTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -263,6 +285,10 @@ resources:
       Value: !Ref SectionBaseTable
     SectionBaseTableArn:
       Value: !GetAtt SectionBaseTable.Arn
+    StageEnrollmentCountsTableName:
+      Value: !Ref StageEnrollmentCountsTable
+    StageEnrollmentCountsArn:
+      Value: !GetAtt StageEnrollmentCountsTable.Arn
     UploadsTable:
       Value: !Ref UploadsTable
     UploadsTableArn:

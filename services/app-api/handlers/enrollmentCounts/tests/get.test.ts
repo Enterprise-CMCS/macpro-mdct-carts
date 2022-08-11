@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { getSections } from "../get";
 import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
 import { AppRoles } from "../../../types";
+import { getEnrollmentCounts } from "../get";
 
 const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
@@ -28,7 +28,7 @@ jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
   convertToDynamoExpression: jest.fn(),
 }));
 
-describe("Test Get Sections Handlers", () => {
+describe("Test Get Enrollment Count Handlers", () => {
   beforeEach(() => {
     console.error = jest.fn();
   });
@@ -36,13 +36,13 @@ describe("Test Get Sections Handlers", () => {
     console.error = originalError;
   });
 
-  test("fetching sections should use state and year", async () => {
+  test("fetching enrollment counts should use state and year", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL" },
     };
 
-    const res = await getSections(event, null);
+    const res = await getEnrollmentCounts(event, null);
 
     expect(res.statusCode).toBe(200);
     expect(dbLib.query).toHaveBeenCalledWith({
@@ -53,13 +53,13 @@ describe("Test Get Sections Handlers", () => {
     });
   });
 
-  test("fetching sections without state and year throws error", async () => {
+  test("fetching enrollment counts without state and year throws error", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: {},
     };
 
-    const res = await getSections(event, null);
+    const res = await getEnrollmentCounts(event, null);
 
     expect(res.statusCode).toBe(500);
     expect(res.body).toBe(
@@ -73,7 +73,7 @@ describe("Test Get Sections Handlers", () => {
       pathParameters: { year: "2022", state: "CO" },
     };
 
-    const res = await getSections(event, null);
+    const res = await getEnrollmentCounts(event, null);
     expect(res.body).toBe("[]");
   });
 });
