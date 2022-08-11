@@ -6,7 +6,7 @@ import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 
-const cartsProdDomain = "mdctcarts.cms.gov";
+const cartsProdDomain = "https://mdctcarts.cms.gov";
 
 const authenticateWithIDM = () => {
   Auth.federatedSignIn({ customProvider: "Okta" });
@@ -15,7 +15,7 @@ const authenticateWithIDM = () => {
 export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
-  const isProduction = window.location.origin.includes(cartsProdDomain);
+  const isProduction = window.location.origin === cartsProdDomain;
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
