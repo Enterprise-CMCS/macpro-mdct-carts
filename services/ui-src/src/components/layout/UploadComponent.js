@@ -214,23 +214,18 @@ class UploadComponent extends Component {
         const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
         const fileNameInvalid = !this.isFileNameValid(uploadName);
 
-        // eslint-disable-next-line
-        console.log("INVALID FILENAME", fileNameValid);
-
         if (fileTypeAllowed === true) {
-          if (mediaSize <= maxFileSize) {
+          if (fileNameInvalid === true) {
+            errorString = errorString.concat(
+              `The file name (${uploadName}) contains invalid characters. Only the following characters are allowed: A-Z, a-z, 0-9, -, _, and .`
+            );
+          } else if (mediaSize <= maxFileSize) {
             filePayload.push(file);
           } else {
             errorString = errorString.concat(
               `${uploadName} exceeds ${maxFileSize}MB file size maximum`
             );
           }
-        } else if (fileNameValid === false) {
-          // eslint-disable-next-line
-          console.log("INVALID FILENAME");
-          errorString = errorString.concat(
-            `The file name (${uploadName}) contains invalid characters. Only the following characters are allowed: A-Z, a-z, 0-9, -, _, and .`
-          );
         } else {
           errorString = errorString.concat(
             "Your file is not an approved file type. See below for a list of approved file types."
