@@ -15,7 +15,7 @@ import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
 
 const AppRoutes = () => {
-  const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
+  const { user, showLocalLogins, loginWithIDM } = useUser();
 
   if (!user && showLocalLogins) {
     return <LocalLogins loginWithIDM={loginWithIDM} />;
@@ -42,7 +42,7 @@ const AppRoutes = () => {
         <Spinner />
         <Router>
           {VisibleHeader}
-          <Home user={user} role={userRole} />
+          <Home role={user?.userRole || ""} />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />
           <Route path="/profile" component={Profile} />
