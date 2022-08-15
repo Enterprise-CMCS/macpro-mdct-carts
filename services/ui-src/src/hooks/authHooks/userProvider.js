@@ -5,6 +5,7 @@ import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
+import config from "../../config";
 
 const authenticateWithIDM = () => {
   Auth.federatedSignIn({ customProvider: "Okta" });
@@ -33,9 +34,23 @@ export const UserProvider = ({ children }) => {
 
   const checkAuthState = useCallback(async () => {
     try {
-      const authenticatedUser = await Auth.currentAuthenticatedUser();
-      setUser(authenticatedUser);
-      dispatch(loadUser(authenticatedUser));
+      const session = await Auth.currentSession();
+      const payload = session.getIdToken().payload;
+      const { email, given_name, family_name } = payload;
+      // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to CARTS
+      const cms_role = payload["custom:cms_roles"] ?? "";
+      let userRole = cms_role.split(",").find((r) => r.includes("mdctcarts"));
+      userRole = mapIdmRoleToAppRole(userRole);
+      const state = payload["custom:cms_state"];
+      const currentUser = {
+        email,
+        given_name,
+        family_name,
+        userRole,
+        state,
+      };
+      setUser(currentUser);
+      dispatch(loadUser(currentUser));
     } catch (e) {
       if (isProduction) {
         authenticateWithIDM();
@@ -45,18 +60,23 @@ export const UserProvider = ({ children }) => {
     }
   }, [isProduction]);
 
-  // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to carts
-  const idmRole = user?.signInUserSession?.idToken?.payload?.[
-    "custom:cms_roles"
-  ]
-    ?.split(",")
-    .find((r) => r.includes("mdctcarts"));
-
-  const userRole = mapIdmRoleToAppRole(idmRole);
-  const isStateUser = userRole === AppRoles.STATE_USER;
-
-  const userState =
-    user?.signInUserSession?.idToken?.payload?.["custom:cms_state"];
+  // single run configuration
+  useEffect(() => {
+    Auth.configure({
+      mandatorySignIn: true,
+      region: config.cognito.REGION,
+      userPoolId: config.cognito.USER_POOL_ID,
+      identityPoolId: config.cognito.IDENTITY_POOL_ID,
+      userPoolWebClientId: config.cognito.APP_CLIENT_ID,
+      oauth: {
+        domain: config.cognito.APP_CLIENT_DOMAIN,
+        redirectSignIn: config.cognito.REDIRECT_SIGNIN,
+        redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
+        scope: ["email", "openid", "profile"],
+        responseType: "token",
+      },
+    });
+  });
 
   // rerender on auth state change, checking router location
   useEffect(() => {
@@ -69,11 +89,8 @@ export const UserProvider = ({ children }) => {
       logout,
       showLocalLogins,
       loginWithIDM: authenticateWithIDM,
-      isStateUser,
-      userState,
-      userRole,
     }),
-    [user, logout, showLocalLogins, isStateUser, userState, userRole]
+    [user, logout, showLocalLogins]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
