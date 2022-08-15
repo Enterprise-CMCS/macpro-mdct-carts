@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle, no-console */
 import { API } from "aws-amplify";
 import axios from "../authenticatedAxios";
-import { mapIdmRoleToAppRole } from "../hooks/authHooks";
 import requestOptions from "../hooks/authHooks/requestOptions";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 
@@ -198,27 +197,23 @@ export const loadEnrollmentCounts = ({ stateCode, selectedYear }) => {
 
 export const loadUser = (user) => async (dispatch) => {
   console.log(user);
-  const idmRole = user.attributes["custom:cms_roles"]
-    .split(",")
-    .find((r) => r.includes("mdctcarts"));
+  const { email, given_name, family_name, userRole, state } = user;
   const flattenedUser = {
-    username: user.attributes.email,
+    username: email,
     state: {
-      id: user.attributes["custom:cms_state"],
+      id: state,
     },
-    role: mapIdmRoleToAppRole(idmRole),
-    lastname: user.attributes?.family_name,
-    firstname: user.attributes?.given_name,
-    email: user.attributes?.email,
+    role: userRole,
+    lastname: family_name,
+    firstname: given_name,
+    email: email,
   };
   await Promise.all([
     dispatch(getUserData(flattenedUser)),
     dispatch(getStateData(flattenedUser)),
     dispatch(getProgramData(user)),
     dispatch(getAllStatesData()),
-    dispatch(
-      getStateAllStatuses({ stateCode: user?.attributes["custom:cms_state"] })
-    ),
+    dispatch(getStateAllStatuses({ stateCode: state })),
   ]);
 };
 

@@ -1,6 +1,10 @@
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
-import { compareACS, lookupChipEnrollments } from "./synthesize";
+import {
+  compareACS,
+  lookupChipEnrollments,
+  compareChipEnrollements,
+} from "./synthesize";
 
 /**
  * This function determines whether a radio's conditional subquestion should hide
@@ -65,6 +69,10 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
         } else if (item.lookupChipEnrollments) {
           computedRow.push(
             lookupChipEnrollments(state, item.lookupChipEnrollments)
+          );
+        } else if (item.compareChipEnrollements) {
+          computedRow.push(
+            compareChipEnrollements(state, item.compareChipEnrollements)
           );
         } else {
           // Let non-computed entries pass through with the other data transparently
