@@ -1635,24 +1635,20 @@
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Medicaid Expansion CHIP",
-                              "index": 1,
-                              "valueType": "number"
+                              "index": 1
                             }
                           },
                           {
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Medicaid Expansion CHIP",
-                              "index": 2,
-                              "valueType": "number"
+                              "index": 2
                             }
                           },
                           {
-                            "lookupChipEnrollments": {
+                            "compareChipEnrollements": {
                               "ffy": "2022",
-                              "enrollmentType": "Medicaid Expansion CHIP",
-                              "index": 3,
-                              "valueType": "percent"
+                              "enrollmentType": "Medicaid Expansion CHIP"
                             }
                           }
                         ],
@@ -1664,24 +1660,20 @@
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Separate CHIP",
-                              "index": 1,
-                              "valueType": "number"
+                              "index": 1
                             }
                           },
                           {
                             "lookupChipEnrollments": {
                               "ffy": "2022",
                               "enrollmentType": "Separate CHIP",
-                              "index": 2,
-                              "valueType": "number"
+                              "index": 2
                             }
                           },
                           {
-                            "lookupChipEnrollments": {
+                            "compareChipEnrollements": {
                               "ffy": "2022",
-                              "enrollmentType": "Separate CHIP",
-                              "index": 3,
-                              "valueType": "percent"
+                              "enrollmentType": "Separate CHIP"
                             }
                           }
                         ]
