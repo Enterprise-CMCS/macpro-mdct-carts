@@ -17,7 +17,7 @@
   "env": {
     "STATE_USER_EMAIL": "stateuser1@test.com",
     "STATE_USER_PASSWORD": "p@55W0rd!",
-    "ADMIN_USER_EMAIL": "adminuser@test.com",
+    "ADMIN_USER_EMAIL": "cms.admin@test.com",
     "ADMIN_USER_PASSWORD": "p@55W0rd!"
   }
 }
