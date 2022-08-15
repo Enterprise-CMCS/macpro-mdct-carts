@@ -322,7 +322,7 @@ export const lookupChipEnrollments = (
         enrollment.typeOfEnrollment === enrollmentType
     );
     if (targetValue) {
-      returnValue = targetValue.enrollmentCount;
+      returnValue = targetValue.enrollmentCount.toLocaleString();
     }
   }
   return returnValue;
@@ -351,7 +351,8 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
         ((newCount.enrollmentCount - oldCount.enrollmentCount) /
           oldCount.enrollmentCount) *
         100;
-      returnValue = Math.round(returnValue * 1000) / 1000 + "%";
+      returnValue =
+        (Math.round(returnValue * 1000) / 1000).toLocaleString() + "%";
     }
   }
   return returnValue;
