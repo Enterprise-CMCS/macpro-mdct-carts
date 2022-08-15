@@ -8,7 +8,7 @@ import Title from "../layout/Title";
 import Section from "../layout/Section";
 import { API } from "aws-amplify";
 import statesArray from "../Utils/statesArray";
-import { loadSections } from "../../actions/initial";
+import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import requestOptions from "../../hooks/authHooks/requestOptions";
@@ -100,7 +100,10 @@ const Print = ({ currentUser, state, name }) => {
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
       // Pull data based on user details
-      await Promise.all([dispatch(loadSections({ stateCode, selectedYear }))]);
+      await Promise.all([
+        dispatch(loadSections({ stateCode, selectedYear })),
+        dispatch(loadEnrollmentCounts({ stateCode, selectedYear })),
+      ]);
 
       // End isFetching for spinner
       dispatch({ type: "CONTENT_FETCHING_FINISHED" });
