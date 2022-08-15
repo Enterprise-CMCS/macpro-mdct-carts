@@ -15,7 +15,9 @@ const authenticateWithIDM = () => {
 export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
-  const isProduction = window.location.origin === cartsProdDomain;
+  const isProduction =
+    window.location.origin === cartsProdDomain ||
+    window.location.origin.includes("dt4brcxdimpa0.cloudfront.net");
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
