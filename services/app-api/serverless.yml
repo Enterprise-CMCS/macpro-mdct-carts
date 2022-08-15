@@ -130,6 +130,14 @@ functions:
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getEnrollmentCounts:
+    handler: handlers/enrollmentCounts/get.getEnrollmentCounts
+    events:
+      - http:
+          path: enrollment_counts/{year}/{state}
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   getFiscalYearTemplateLink:
     handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
     events:

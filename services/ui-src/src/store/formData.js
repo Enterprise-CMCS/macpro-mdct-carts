@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SECTIONS:
       updatedData = action.data.sort(sortByOrdinal);
-      if (action.lastYearData) {
+      if (action.lastYearData && action.lastYearData.length > 0) {
         let lastYearData = action.lastYearData.sort(sortByOrdinal);
         const twoYearCycle = action.lastYearData.year % 2 == 0;
         if (
