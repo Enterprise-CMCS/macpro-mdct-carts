@@ -5,7 +5,7 @@ describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
   });
 
   beforeEach(() => {
-    cy.get('[data-cy="cms-homepage-filter-clear"]').click();
+    cy.get('[data-cy="cms-homepage-filter-clear"]').click({ force: true });
   });
 
   it("Should display all provided reports when no filters activated", () => {
