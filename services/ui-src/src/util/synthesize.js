@@ -346,7 +346,8 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
         enrollment.indexToUpdate === 2 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
-    if (oldCount && newCount && oldCount.enrollmentCounts !== 0) {
+    if (oldCount && newCount) {
+      if (oldCount.enrollmentCount === 0) return "-";
       returnValue =
         ((newCount.enrollmentCount - oldCount.enrollmentCount) /
           oldCount.enrollmentCount) *
