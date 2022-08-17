@@ -19,6 +19,8 @@ _Our main branch is for development of CARTSv3. Head to the [`master` branch](ht
 
 TODO: Add all the status badges here
 
+[![CodeQL](https://github.com/CMSgov/cms-carts-seds/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/CMSgov/cms-carts-seds/actions/workflows/codeql-analysis.yml)
+
 ## Quick Start
 
 ### One time only
