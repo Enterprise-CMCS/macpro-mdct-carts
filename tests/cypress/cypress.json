@@ -5,6 +5,7 @@
   "retries": 2,
   "watchForFileChanges": true,
   "testFiles": ["**/*.feature", "**/*.spec.js"],
+  "ignoreTestFiles": "filterReports.spec.js",
   "fixturesFolder": "fixtures",
   "integrationFolder": "tests",
   "pluginsFile": "plugins/index.js",
