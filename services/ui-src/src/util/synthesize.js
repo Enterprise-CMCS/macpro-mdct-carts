@@ -308,7 +308,7 @@ export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
 
 export const lookupChipEnrollments = (
   state,
-  { ffy, enrollmentType, index, valueType }
+  { ffy, enrollmentType, index }
 ) => {
   let returnValue = "Not Available";
   if (
@@ -322,8 +322,38 @@ export const lookupChipEnrollments = (
         enrollment.typeOfEnrollment === enrollmentType
     );
     if (targetValue) {
-      returnValue = targetValue.enrollmentCount;
-      if (valueType === "percent") returnValue += "%";
+      returnValue = targetValue.enrollmentCount.toLocaleString();
+    }
+  }
+  return returnValue;
+};
+
+export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
+  let returnValue = "Not Available";
+  if (
+    state.enrollmentCounts &&
+    state.enrollmentCounts.chipEnrollments.length > 0
+  ) {
+    const oldCount = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === 1 &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    const newCount = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === 2 &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    if (oldCount && newCount) {
+      if (oldCount.enrollmentCount === 0) return "-";
+      returnValue =
+        ((newCount.enrollmentCount - oldCount.enrollmentCount) /
+          oldCount.enrollmentCount) *
+        100;
+      returnValue =
+        (Math.round(returnValue * 1000) / 1000).toLocaleString() + "%";
     }
   }
   return returnValue;
@@ -349,6 +379,12 @@ const synthesizeValue = (value, state) => {
   if (value.lookupChipEnrollments) {
     return {
       contents: [lookupChipEnrollments(state, value.lookupChipEnrollments)],
+    };
+  }
+
+  if (value.compareChipEnrollements) {
+    return {
+      contents: [compareChipEnrollements(state, value.compareChipEnrollements)],
     };
   }
 
