@@ -334,19 +334,32 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
     state.enrollmentCounts &&
     state.enrollmentCounts.chipEnrollments.length > 0
   ) {
-    const oldCount = state.enrollmentCounts.chipEnrollments.find(
+    let oldCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
         enrollment.yearToModify === ffy &&
         enrollment.indexToUpdate === 1 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
+    if (!oldCount) {
+      /*
+       * In case data for prior year hasn't been set with the current set,
+       * we still can look it up as the last year's current value
+       */
+      oldCount = state.enrollmentCounts.chipEnrollments.find(
+        (enrollment) =>
+          enrollment.yearToModify === ffy - 1 &&
+          enrollment.indexToUpdate === 2 &&
+          enrollment.typeOfEnrollment === enrollmentType
+      );
+    }
     const newCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
         enrollment.yearToModify === ffy &&
         enrollment.indexToUpdate === 2 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
-    if (oldCount && newCount && oldCount.enrollmentCounts !== 0) {
+
+    if (oldCount && newCount && oldCount.enrollmentCount !== 0) {
       returnValue =
         ((newCount.enrollmentCount - oldCount.enrollmentCount) /
           oldCount.enrollmentCount) *
