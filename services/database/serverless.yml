@@ -287,7 +287,7 @@ resources:
       Value: !GetAtt SectionBaseTable.Arn
     StageEnrollmentCountsTableName:
       Value: !Ref StageEnrollmentCountsTable
-    StageEnrollmentCountsArn:
+    StageEnrollmentCountsTableArn:
       Value: !GetAtt StageEnrollmentCountsTable.Arn
     UploadsTable:
       Value: !Ref UploadsTable

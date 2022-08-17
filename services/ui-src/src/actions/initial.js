@@ -196,7 +196,6 @@ export const loadEnrollmentCounts = ({ stateCode, selectedYear }) => {
 };
 
 export const loadUser = (user) => async (dispatch) => {
-  console.log(user);
   const { email, given_name, family_name, userRole, state } = user;
   const flattenedUser = {
     username: email,
