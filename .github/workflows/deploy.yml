@@ -112,6 +112,35 @@ jobs:
     outputs:
       application_endpoint: ${{ steps.endpoint.outputs.application_endpoint}}
 
+  e2e-test:
+    name: E2E Integration Tests (Cypress)
+    needs: deploy
+    if: ${{ github.ref != 'refs/heads/production' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v3.0.3
+        with:
+          working-directory: tests/cypress
+          spec: tests/integration/*.spec.js
+          browser: chrome
+          headless: true
+          config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
+          wait-on: ${{ needs.deploy.outputs.application_endpoint }}
+          env: true
+        env:
+          CYPRESS_STATE_USER_EMAIL: ${{ secrets.CYPRESS_STATE_USER_EMAIL }}
+          CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
+          CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
+          CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots/
+
   a11y-tests:
     name: A11y Tests
     needs: deploy
