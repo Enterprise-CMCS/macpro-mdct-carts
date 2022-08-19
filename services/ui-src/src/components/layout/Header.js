@@ -163,7 +163,7 @@ function renderDropDownMenu(isMenuOpen, toggleDropDownMenu) {
           <li className="manage-account">
             <Link to="/user/profile">Manage Account</Link>
           </li>
-          <li className="logout">
+          <li className="logout" data-testid="header-menu-option-log-out">
             <Logout />
           </li>
         </ul>

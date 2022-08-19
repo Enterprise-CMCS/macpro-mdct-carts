@@ -7,6 +7,9 @@ import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
 
+const cartsProdDomain = "https://mdctcarts.cms.gov";
+const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
+
 const authenticateWithIDM = () => {
   Auth.federatedSignIn({ customProvider: "Okta" });
 };
@@ -15,8 +18,8 @@ export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
   const isProduction =
-    window.location.origin.includes("mdctcarts.cms.gov") ||
-    window.location.origin.includes("dt4brcxdimpa0.cloudfront.net"); // TODO: remove once v3 is at the former address
+    window.location.origin === cartsProdDomain ||
+    window.location.origin === tempEndpoint;
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
