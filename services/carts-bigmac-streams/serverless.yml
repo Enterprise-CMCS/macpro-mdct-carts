@@ -44,6 +44,8 @@ custom:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
+  stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
+  sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
   scripts:
     hooks:
       deploy:finalize: |
@@ -79,6 +81,21 @@ functions:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
+  postKafkaData:
+    handler: handlers/kafka/post/postKafkaData.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn: ${self:custom.stateStatusTableArn}
+          startingPosition: TRIM_HORIZON
+          maximumRetryAttempts: 2
+          enabled: true
+      - stream:
+          type: dynamodb
+          arn: ${self:custom.sectionTableArn}
+          startingPosition: TRIM_HORIZON
+          maximumRetryAttempts: 2
+          enabled: true
 resources:
   Conditions:
     CreatePermissionsBoundary:
