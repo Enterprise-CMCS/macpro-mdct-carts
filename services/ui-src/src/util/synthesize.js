@@ -334,15 +334,22 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
     state.enrollmentCounts &&
     state.enrollmentCounts.chipEnrollments.length > 0
   ) {
+    // Retrieve Values
     let oldCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
         enrollment.yearToModify === ffy &&
         enrollment.indexToUpdate === 1 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
-    if (!oldCount) {
+    const newCount = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === 2 &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    if (newCount && !oldCount) {
       /*
-       * In case data for prior year hasn't been set with the current set,
+       * In case this year's data has been sent, but last year's wasn't included
        * we still can look it up as the last year's current value
        */
       oldCount = state.enrollmentCounts.chipEnrollments.find(
@@ -352,14 +359,10 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
           enrollment.typeOfEnrollment === enrollmentType
       );
     }
-    const newCount = state.enrollmentCounts.chipEnrollments.find(
-      (enrollment) =>
-        enrollment.yearToModify === ffy &&
-        enrollment.indexToUpdate === 2 &&
-        enrollment.typeOfEnrollment === enrollmentType
-    );
+
+    // Calculate
     if (oldCount && newCount) {
-      if (oldCount.enrollmentCount === 0) return "-";
+      if (oldCount.enrollmentCount === 0) return "-"; // Don't divide by 0
       returnValue =
         ((newCount.enrollmentCount - oldCount.enrollmentCount) /
           oldCount.enrollmentCount) *

@@ -21,7 +21,17 @@ provider:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
       permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
-
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "*"
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
@@ -32,11 +42,8 @@ custom:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
-  postgresHost: ${ssm:/${self:custom.stage}/postgres_host}
-  postgresDb: ${ssm:/${self:custom.stage}/postgres_db}
-  postgresUser: ${ssm:/${self:custom.stage}/custom/postgres_custom_user, ssm:/${self:custom.stage}/postgres_user}
-  postgresPassword: ${ssm:/${self:custom.stage}/custom/postgres_custom_password, ssm:/${self:custom.stage}/postgres_password}
-  postgresSecurityGroupId: ${ssm:/${self:custom.stage}/postgres_security_group}
+  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
+  stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
   scripts:
     hooks:
       deploy:finalize: |
@@ -46,10 +53,6 @@ functions:
     handler: handlers/configureConnectors.handler
     role: LambdaConfigureConnectorsRole
     environment:
-      postgresHost: ${self:custom.postgresHost}
-      postgresDb: ${self:custom.postgresDb}
-      postgresUser: ${self:custom.postgresUser}
-      postgresPassword: ${self:custom.postgresPassword}
       cluster: !Ref KafkaConnectCluster
       connectorPrefix: carts-${self:custom.stage}-
       sinkTopics: aws.mdct.seds.cdc.state-forms.v0
@@ -69,6 +72,7 @@ functions:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
       STAGE: ${self:custom.stage}
       TOPIC: aws.mdct.seds.cdc.enrollment-counts.v0
+      stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
     maximumRetryAttempts: 2
     timeout: 120
     vpc:
@@ -92,14 +96,6 @@ resources:
       Properties:
         GroupDescription: Security Group for the Fargate Connect Workers.
         VpcId: ${self:custom.vpcId}
-    KafkaConnectWorkerSecurityGroupIngressPostgres:
-      Type: AWS::EC2::SecurityGroupIngress
-      Properties:
-        GroupId: ${self:custom.postgresSecurityGroupId}
-        IpProtocol: tcp
-        FromPort: 5432
-        ToPort: 5432
-        SourceSecurityGroupId: !Sub "${KafkaConnectWorkerSecurityGroup}"
     KafkaConnectWorkerSecurityGroupIngressLambda:
       Type: AWS::EC2::SecurityGroupIngress
       Properties:
@@ -280,6 +276,16 @@ resources:
                     - "ec2:DetachNetworkInterface"
                     - "ec2:DeleteNetworkInterface"
                     - "ec2:DescribeSecurityGroups"
+                  Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - dynamodb:DescribeTable
+                    - dynamodb:Query
+                    - dynamodb:Scan
+                    - dynamodb:GetItem
+                    - dynamodb:PutItem
+                    - dynamodb:UpdateItem
+                    - dynamodb:DeleteItem
                   Resource: "*"
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"

@@ -1,9 +1,20 @@
-import { kafkaConnect } from "../libs/kafka-connect";
-import { v4 as uuidv4 } from "uuid";
+const {
+  buildClient,
+  convertToDynamoExpression,
+} = require("../libs/dynamo-lib");
 
+/**
+ * Handler for enrollment count events that come across kafka from SEDS
+ * The enrollment counts are loaded into a seperate table to be loaded alongside
+ * section 2 in CARTS.
+ *
+ * @param {*} event
+ * @param {*} _context
+ * @param {*} _callback
+ */
 async function myHandler(event, _context, _callback) {
   const json = JSON.parse(event.value);
-  const currentYear = 2021;
+  const currentYear = 2021; // TODO: pull from env
 
   if (
     json.NewImage.enrollmentCounts &&
@@ -11,78 +22,52 @@ async function myHandler(event, _context, _callback) {
     json.NewImage.quarter === 4
   ) {
     try {
-      const { producer } = await kafkaConnect();
-
-      const yearToSelect =
+      // eslint-disable-next-line no-console
+      console.log("Sink message received", json);
+      const indexToUpdate =
         json.NewImage.enrollmentCounts.year === currentYear ? 2 : 1;
-      const typeOfEnrollment =
-        json.NewImage.enrollmentCounts.type === "separate"
-          ? "Separate CHIP"
-          : "Medicaid Expansion CHIP";
-      const enrollmentCount = json.NewImage.enrollmentCounts.count;
+      let typeOfEnrollment = "Medicaid Expansion CHIP";
+      let typeKey = "medicaid_exp_chip";
+      if (json.NewImage.enrollmentCounts.type === "separate") {
+        typeKey = "Separate CHIP";
+        typeOfEnrollment = "separate_chip";
+      }
       const stateId = json.NewImage.state_id;
+      const createdTime = new Date().toLocaleString();
 
-      await producer.send({
-        topic: "aws.mdct.seds.cdc.enrollment-counts.v0",
-        messages: [
-          {
-            key: uuidv4(),
-            value: JSON.stringify({
-              schema: {
-                type: "struct",
-                optional: false,
-                name: "enrollment_counts",
-                fields: [
-                  {
-                    type: "int32",
-                    optional: false,
-                    field: "year_to_modify",
-                  },
-                  {
-                    type: "string",
-                    optional: false,
-                    field: "type_of_enrollment",
-                  },
-                  {
-                    type: "int32",
-                    optional: false,
-                    field: "enrollment_count",
-                  },
-                  {
-                    type: "string",
-                    optional: false,
-                    field: "filter_id",
-                  },
-                  {
-                    type: "int32",
-                    optional: false,
-                    field: "index_to_update",
-                  },
-                  {
-                    type: "string",
-                    optional: false,
-                    field: "state_id",
-                  },
-                ],
-              },
-              payload: {
-                year_to_modify: currentYear,
-                type_of_enrollment: typeOfEnrollment,
-                enrollment_count: enrollmentCount,
-                filter_id: `${currentYear}-02`,
-                index_to_update: yearToSelect,
-                state_id: stateId,
-              },
-            }),
-          },
-        ],
-      });
-      await producer.disconnect();
+      const pk = `${stateId}-${currentYear}`;
+      const entryKey = `${typeKey}-${indexToUpdate}`;
+
+      const enrollmentEntry = {
+        filterId: `${currentYear}-02`,
+        typeOfEnrollment,
+        indexToUpdate,
+        stateId,
+        yearToModify: currentYear,
+        enrollmentCount: json.NewImage.enrollmentCounts.count,
+        createdTime,
+        // TODO: messageId
+      };
+
+      updateEnrollment(pk, entryKey, enrollmentEntry);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
     }
   }
 }
+
+export const updateEnrollment = (pk, entryKey, enrollmentData) => {
+  const dynamoClient = buildClient();
+  const params = {
+    TableName: process.env.stageEnrollmentCountsTableName,
+    Key: {
+      pk: pk,
+      entryKey: entryKey,
+    },
+    ...convertToDynamoExpression(enrollmentData),
+  };
+  await dynamoClient.update(params);
+};
 
 exports.handler = myHandler;

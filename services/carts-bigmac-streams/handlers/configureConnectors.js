@@ -20,41 +20,28 @@ const connectors = [
         " com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
     },
   },
-  {
-    name: `${process.env.connectorPrefix}sink.jdbc.postgres-1`,
-    config: {
-      "tasks.max": "1",
-      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-      topics: process.env.jdbcSinkTopics,
-      "connection.user": process.env.postgresUser,
-      "connection.password": process.env.postgresPassword,
-      "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
-      "table.name.format": "stg_enrollment_counts",
-      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-      "key.converter.schemas.enable": true,
-      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-      "value.converter.schemas.enable": true,
-      "insert.mode": "insert",
-    },
-  },
-  {
-    name: `${process.env.connectorPrefix}source.jdbc.postgres-1`,
-    config: {
-      "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-      "tasks.max": 1,
-      "connection.user": process.env.postgresUser,
-      "connection.password": process.env.postgresPassword,
-      "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
-      "topic.prefix": "aws.carts.chip.cdc.postgres-",
-      "poll.interval.ms": 2000,
-      "batch.max.rows": 1000,
-      "table.whitelist": "carts_api_section, carts_api_statestatus",
-      mode: "timestamp+incrementing",
-      "incrementing.column.name": "id",
-      "timestamp.column.name": "modified_on",
-      "validate.non.null": false,
-    },
-  },
+  /*
+   * TODO: Implement this chunk the way SEDS implements its output, rather than db
+   * },
+   * {
+   *   name: `${process.env.connectorPrefix}source.jdbc.postgres-1`,
+   *   config: {
+   *     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+   *     "tasks.max": 1,
+   *     "connection.user": process.env.postgresUser,
+   *     "connection.password": process.env.postgresPassword,
+   *     "connection.url": `jdbc:postgresql://${process.env.postgresHost}:5432/${process.env.postgresDb}`,
+   *     "topic.prefix": "aws.carts.chip.cdc.postgres-",
+   *     "poll.interval.ms": 2000,
+   *     "batch.max.rows": 1000,
+   *     "table.whitelist": "carts_api_section, carts_api_statestatus",
+   *     mode: "timestamp+incrementing",
+   *     "incrementing.column.name": "id",
+   *     "timestamp.column.name": "modified_on",
+   *     "validate.non.null": false,
+   *   },
+   * },
+   */
 ];
 
 // eslint-disable-next-line no-unused-vars
