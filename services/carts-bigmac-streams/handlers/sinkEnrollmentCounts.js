@@ -49,7 +49,7 @@ async function myHandler(event, _context, _callback) {
         // TODO: messageId
       };
 
-      updateEnrollment(pk, entryKey, enrollmentEntry);
+      await updateEnrollment(pk, entryKey, enrollmentEntry);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -57,7 +57,7 @@ async function myHandler(event, _context, _callback) {
   }
 }
 
-export const updateEnrollment = (pk, entryKey, enrollmentData) => {
+const updateEnrollment = async (pk, entryKey, enrollmentData) => {
   const dynamoClient = buildClient();
   const params = {
     TableName: process.env.stageEnrollmentCountsTableName,
