@@ -276,7 +276,7 @@ resources:
     StateStatusTableName:
       Value: !Ref StateStatusTable
     StateStatusTableStreamArn:
-      Value: !Ref StateStatusTable.StreamArn
+      Value: !GetAtt StateStatusTable.StreamArn
     StateStatusTableArn:
       Value: !GetAtt StateStatusTable.Arn
     SectionTableName:
@@ -284,7 +284,7 @@ resources:
     SectionTableArn:
       Value: !GetAtt SectionTable.Arn
     SectionTableStreamArn:
-      Value: !Ref SectionTable.StreamArn
+      Value: !GetAtt SectionTable.StreamArn
     SectionBaseTableName:
       Value: !Ref SectionBaseTable
     SectionBaseTableArn:
@@ -297,6 +297,6 @@ resources:
       Value: !Ref UploadsTable
     UploadsTableArn:
       Value: !GetAtt UploadsTable.Arn
-      
+
     Region:
       Value: !Sub ${AWS::Region}
