@@ -46,7 +46,7 @@ async function myHandler(event, _context, _callback) {
         yearToModify: currentYear,
         enrollmentCount: json.NewImage.enrollmentCounts.count,
         createdTime,
-        // TODO: messageId
+        messageStatusDate: json.NewImage.status_date,
       };
 
       await updateEnrollment(pk, entryKey, enrollmentEntry);

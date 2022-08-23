@@ -1,9 +1,9 @@
 import KafkaSourceLib from "../../../libs/kafka-source-lib";
 
 class PostKafkaData extends KafkaSourceLib {
-  topicPrefix = "aws.mdct.seds.cdc";
+  topicPrefix = "aws.carts.chip.cdc.dynamodb-";
   version = "v0";
-  tables = ["state", "state-status"];
+  tables = ["section", "state-status"];
 }
 
 const postKafkaData = new PostKafkaData();
