@@ -13,6 +13,25 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+  kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
+  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
+  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  privateSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
+  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
+  stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
+  stateStatusTableStreamArn: ${env:stateStatusTableStreamArn, cf:database-${self:custom.stage}.StateStatusTableStreamArn}
+  sectionTableStreamArn: ${env:sectionTableStreamArn, cf:database-${self:custom.stage}.SectionTableStreamArn}
+  scripts:
+    hooks:
+      deploy:finalize: |
+        serverless invoke --stage ${self:custom.stage} --function configureConnectors
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -32,24 +51,17 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "*"
-custom:
-  stage: ${opt:stage, self:provider.stage}
-  region: ${opt:region, self:provider.region}
-  kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
-  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
-  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
-  privateSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
-  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
-  stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
-  stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
-  sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
-  scripts:
-    hooks:
-      deploy:finalize: |
-        serverless invoke --stage ${self:custom.stage} --function configureConnectors
+        - Effect: "Allow"
+          Action:
+            - dynamodb:DescribeStream
+            - dynamodb:GetRecords
+            - dynamodb:GetShardIterator
+            - dynamodb:ListShards
+            - dynamodb:ListStreams
+          Resource:
+            - ${self:custom.stateStatusTableStreamArn}
+            - ${self:custom.sectionTableStreamArn}
+
 functions:
   configureConnectors:
     handler: handlers/configureConnectors.handler
@@ -86,13 +98,13 @@ functions:
     events:
       - stream:
           type: dynamodb
-          arn: ${self:custom.stateStatusTableArn}
+          arn: ${self:custom.stateStatusTableStreamArn}
           startingPosition: TRIM_HORIZON
           maximumRetryAttempts: 2
           enabled: true
       - stream:
           type: dynamodb
-          arn: ${self:custom.sectionTableArn}
+          arn: ${self:custom.sectionTableStreamArn}
           startingPosition: TRIM_HORIZON
           maximumRetryAttempts: 2
           enabled: true
