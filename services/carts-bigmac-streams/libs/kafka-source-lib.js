@@ -111,6 +111,8 @@ class KafkaSourceLib {
 
   async handler(event) {
     if (!connected) {
+      // eslint-disable-next-line no-console
+      console.log("Attempting connection...");
       await producer.connect();
       connected = true;
     }
