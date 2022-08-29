@@ -109,6 +109,24 @@ class KafkaSourceLib {
     return outboundEvents;
   }
 
+  createTopics() {
+    const admin = kafka.admin();
+    await admin.connect();
+
+    const topicConfigs = this.tables.map((table) => {
+      return {
+        topic: this.topic(table),
+        numPartitions: 1,
+      };
+    });
+    admin.create;
+    admin.createTopics({
+      topics: topicConfigs,
+    });
+
+    await admin.disconnect();
+  }
+
   async handler(event) {
     if (!connected) {
       // eslint-disable-next-line no-console

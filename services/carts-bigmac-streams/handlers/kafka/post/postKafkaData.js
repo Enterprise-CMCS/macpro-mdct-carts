@@ -1,11 +1,8 @@
-import KafkaSourceLib from "../../../libs/kafka-source-lib";
+const { PostKafkaData } = require("../../../libs/PostKafkaData");
 
-class PostKafkaData extends KafkaSourceLib {
-  topicPrefix = "aws.carts.chip.cdc.dynamodb-";
-  version = "v0";
-  tables = ["section", "state-status"];
-}
-
+/**
+ * Binds the topics for Kafka output to a handler, triggered by data streams
+ */
 const postKafkaData = new PostKafkaData();
 
 exports.handler = postKafkaData.handler.bind(postKafkaData);

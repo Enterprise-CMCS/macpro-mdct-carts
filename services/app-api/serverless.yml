@@ -125,6 +125,10 @@ provider:
     stage: ${self:custom.stage}
 
 functions:
+  forceKafkaSync:
+    handler: handlers/kafka/post/forceKafkaSync.main
+    timeout: 900
+    memorySize: 3072
   getStates:
     handler: handlers/state/get.getStates
     events:

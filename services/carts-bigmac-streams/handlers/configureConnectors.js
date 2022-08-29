@@ -2,6 +2,7 @@
 var aws = require("aws-sdk");
 var lodash = require("lodash");
 var http = require("http");
+const { PostKafkaData } = require("../libs/PostKafkaData");
 
 const connectors = [
   {
@@ -62,6 +63,10 @@ function myHandler(event, context, callback) {
       });
     }
   });
+
+  // Create Output topics if necessary
+  const postKafkaData = new PostKafkaData();
+  postKafkaData.createTopics();
 }
 
 function putConnectorConfig(workerIp, config, callback) {
