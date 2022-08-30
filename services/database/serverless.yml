@@ -48,7 +48,7 @@ custom:
           - table: ${self:custom.sectionTableName}
             sources: [./data/seed-local/seed-section.json]
           - table: ${self:custom.sectionBaseTableName}
-            sources: [./data/seed-local/seed-section-base.json]
+            sources: [./data/seed/seed-section-base.json]
           - table: ${self:custom.stageEnrollmentCountsTableName}
             sources: [./data/seed-local/seed-stg-enrollment-counts.json]
   dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, ssm:/configuration/default/runV2DataMigration}
