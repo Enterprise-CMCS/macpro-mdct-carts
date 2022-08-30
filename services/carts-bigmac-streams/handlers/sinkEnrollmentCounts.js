@@ -14,7 +14,7 @@ const {
  */
 async function myHandler(event, _context, _callback) {
   const json = JSON.parse(event.value);
-  const currentYear = 2021; // TODO: pull from env
+  const currentYear = getFiscalYear();
 
   if (
     json.NewImage.enrollmentCounts &&
@@ -68,6 +68,21 @@ const updateEnrollment = async (pk, entryKey, enrollmentData) => {
     ...convertToDynamoExpression(enrollmentData),
   };
   await dynamoClient.update(params);
+};
+
+/**
+ * SEDS Data is reported for Q4 (July 1 - Sep 30) starting on Oct 1
+ * Forms are not available to SEDS users before that date.
+ *
+ * @returns fiscalYear
+ */
+const getFiscalYear = () => {
+  const today = new Date();
+  const month = today.getMonth() + 1;
+
+  let fiscalyear = today.getFullYear();
+  if (month < 10) fiscalyear -= 1;
+  return fiscalyear;
 };
 
 exports.handler = myHandler;
