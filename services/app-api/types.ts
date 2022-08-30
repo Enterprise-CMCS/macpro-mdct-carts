@@ -123,4 +123,12 @@ export const enum RequestMethods {
   PUT = "PUT",
   DELETE = "DELETE",
 }
+
+/**
+ * Preseving historic filenames in case we need to make them available on demand or switch between available forms.
+ */
+export const ReportPdfs = {
+  2021: "FFY_2021_CARTS_Template.pdf",
+  2022: "FFY_2022_CARTS_Template.pdf",
+};
 /* eslint-enable no-unused-vars */
