@@ -14,9 +14,19 @@ async function myHandler(event, context, callback) {
 
   const buildRunner = require("./services/seedRunner");
   const seedRunner = buildRunner();
+  const data = [];
 
   const { tables } = require("./tables/index");
-  for (const table of tables) {
+  data.concat(tables);
+
+  if (process.env.seedTestData) {
+    // eslint-disable-next-line no-console
+    console.log("Including test data");
+    const { testTables } = require("./test-tables/index");
+    data.concat(testTables);
+  }
+
+  for (const table of data) {
     await seedRunner.executeSeed(table);
   }
 

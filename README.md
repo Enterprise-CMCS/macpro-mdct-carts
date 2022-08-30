@@ -59,8 +59,10 @@ There are two mechanisms for seeding data.
 
 - Locally, seed data is controlled by the `database/serverless.yaml` seed section. Note the data is pulled from both the /seed and /seed-local folders.
   - The seed and seed-local folders are just seperated for convention and clarity, they have no special behavior
+  - This relies on a serveless plugin for dynamo that does not work in deployed envs.
 - Seeding deployed environments is controlled with the seed lambda in the database service, and can be added to with the `handlers/seed/tables/index`, and pulling in data from the `data/seed` folder.
   - This is useful for deploying data such as section base templates, and keeping it up to date with the code base.
+  - Adding specific test seed data to environments may be useful for things like cypress tests. This can be accomplished with the test-tables directory, referencing the same seed-local tables if desired.
 
 ### V2 Data Migration
 
