@@ -38,19 +38,19 @@ custom:
       domain:
         sources:
           - table: ${self:custom.acsTableName}
-            sources: [./seed-acs.json]
+            sources: [./data/seed-local/seed-acs.json]
           - table: ${self:custom.fmapTableName}
-            sources: [./seed-fmap.json]
+            sources: [./data/seed-local/seed-fmap.json]
           - table: ${self:custom.stateTableName}
-            sources: [./seed-state.json]
+            sources: [./data/seed-local/seed-state.json]
           - table: ${self:custom.stateStatusTableName}
-            sources: [./seed-status.json]
+            sources: [./data/seed-local/seed-status.json]
           - table: ${self:custom.sectionTableName}
-            sources: [./seed-section.json]
+            sources: [./data/seed-local/seed-section.json]
           - table: ${self:custom.sectionBaseTableName}
-            sources: [./seed-section-base.json]
+            sources: [./data/seed-local/seed-section-base.json]
           - table: ${self:custom.stageEnrollmentCountsTableName}
-            sources: [./seed-stg-enrollment-counts.json]
+            sources: [./data/seed-local/seed-stg-enrollment-counts.json]
   dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, ssm:/configuration/default/runV2DataMigration}
   dataMigrationEnvMap:
     production: prod
@@ -61,6 +61,7 @@ custom:
   scripts:
     hooks:
       deploy:finalize: |
+        serverless invoke --stage ${self:custom.stage} --function seed
         if [ ${self:custom.dataMigrationEnabled} = "true" ];
         then
           serverless invoke --stage ${self:custom.stage} --function dataMigration
@@ -109,6 +110,11 @@ functions:
         - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:/configuration/default/migrationSecurityGroup}
       subnetIds:
         - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSubnet, ssm:/configuration/default/migrationSubnet}
+  seed:
+    handler: handlers/seed/seed.handler
+    environment:
+      dynamoPrefix: ${self:custom.stage}
+    timeout: 120
 
 resources:
   Resources:
