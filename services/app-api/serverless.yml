@@ -119,7 +119,7 @@ provider:
     stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
-    sectionBaseName: ${self:custom.sectionBaseTableName}
+    sectionBaseTableName: ${self:custom.sectionBaseTableName}
     stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
     uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${self:custom.stage}
