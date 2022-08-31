@@ -14,7 +14,8 @@ const {
  */
 async function myHandler(event, _context, _callback) {
   const json = JSON.parse(event.value);
-  const currentYear = getFiscalYear();
+  const currentYear = getReportingYear();
+  const dynamoClient = buildClient();
 
   if (
     json.NewImage.enrollmentCounts &&
@@ -49,7 +50,7 @@ async function myHandler(event, _context, _callback) {
         lastSynced: json.NewImage.lastSynced,
       };
 
-      await updateEnrollment(pk, entryKey, enrollmentEntry);
+      await updateEnrollment(pk, entryKey, enrollmentEntry, dynamoClient);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -57,8 +58,7 @@ async function myHandler(event, _context, _callback) {
   }
 }
 
-const updateEnrollment = async (pk, entryKey, enrollmentData) => {
-  const dynamoClient = buildClient();
+const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
   const params = {
     TableName: process.env.stageEnrollmentCountsTableName,
     Key: {
@@ -67,7 +67,8 @@ const updateEnrollment = async (pk, entryKey, enrollmentData) => {
     },
     ...convertToDynamoExpression(enrollmentData),
   };
-  await dynamoClient.update(params);
+  // eslint-disable-next-line no-console
+  console.log("Saved:", await dynamoClient.update(params));
 };
 
 /**
@@ -76,7 +77,7 @@ const updateEnrollment = async (pk, entryKey, enrollmentData) => {
  *
  * @returns fiscalYear
  */
-const getFiscalYear = () => {
+const getReportingYear = () => {
   const today = new Date();
   const month = today.getMonth() + 1;
 
