@@ -5,7 +5,7 @@ import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/Utils/statesArray";
 
 export const selectById = (state, id) => {
-  const jspath = `$..formData[*].contents..*[?(@.id==='${id}')]`;
+  const jspath = `$..formData[*].contents..*[?(@ && @.id==='${id}')]`;
   const item = jsonpath.query(state, jspath);
 
   if (item.length) {
@@ -15,7 +15,7 @@ export const selectById = (state, id) => {
 };
 
 export const selectSectionTitle = (state, sectionId) => {
-  const jspath = `$..formData[*].contents.section[?(@.id=='${sectionId}')].title`;
+  const jspath = `$..formData[*].contents.section[?(@ && @.id=='${sectionId}')].title`;
   const sectionTitles = jsonpath.query(state, jspath);
 
   if (sectionTitles.length) {
@@ -50,7 +50,7 @@ export const selectPartTitle = (state, partId) => {
 };
 
 export const selectQuestion = (state, id) => {
-  const jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@.id=='${id}')]`;
+  const jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@ && @.id=='${id}')]`;
   const questions = jsonpath.query(state, jp);
   if (questions.length) {
     return questions[0];
@@ -95,7 +95,7 @@ const filterDisplay = (question, state) => {
     return false; // return false to exclude this question from filtered array
   }
 
-  if (question.questions) {
+  if (question.questions && question.questions.length > 0) {
     // if the current question has subquestions, filter them recursively
     question.questions = question.questions
       .map((singleQuestion) => {
@@ -109,7 +109,7 @@ const filterDisplay = (question, state) => {
 
 // Returns an array of questions for the QuestionComponent to map through
 export const selectQuestionsForPart = (state, partId) => {
-  const jp = `$..[*].contents.section.subsections[*].parts[?(@.id=='${partId}')].questions[*]`;
+  const jp = `$..[*].contents.section.subsections[*].parts[?(@ && @.id=='${partId}')].questions[*]`;
   const unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
 
   // Filter the array of questions based on conditional logic

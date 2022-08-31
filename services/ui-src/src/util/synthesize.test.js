@@ -69,8 +69,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item4')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item4')].answer.entry",
  *           ],
  *           actions: ["identity"],
  *         },
@@ -88,9 +88,9 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item7')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item7')].answer.entry",
  *           ],
  *           actions: ["sum"],
  *         },
@@ -106,9 +106,9 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item8')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item8')].answer.entry",
  *           ],
  *           actions: ["sum"],
  *         },
@@ -124,9 +124,9 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item6')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item6')].answer.entry",
  *           ],
  *           actions: ["sum"],
  *         },
@@ -142,9 +142,9 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item5')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item5')].answer.entry",
  *           ],
  *           actions: ["sum"],
  *         },
@@ -161,7 +161,7 @@ describe("placeholder test", () => {
  *       // No denominator, no percenator
  *       const out = synthesize(
  *         {
- *           targets: ["$..*[?(@.id==='item4')].answer.entry"],
+ *           targets: ["$..*[?(@ && @.id==='item4')].answer.entry"],
  *           actions: ["percentage"],
  *         },
  *         state
@@ -176,8 +176,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item4')].answer.entry",
- *             "$..*[?(@.id==='item0')].answer.entry",
+ *             "$..*[?(@ && @.id==='item4')].answer.entry",
+ *             "$..*[?(@ && @.id==='item0')].answer.entry",
  *           ],
  *           actions: ["percentage"],
  *         },
@@ -193,8 +193,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["percentage"],
  *         },
@@ -210,8 +210,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["percentage"],
  *           precision: 4,
@@ -228,8 +228,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["percentage"],
  *           precision: 0,
@@ -246,8 +246,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["percentage"],
  *           precision: -3,
@@ -268,8 +268,8 @@ describe("placeholder test", () => {
 //       const out = synthesize(
 //         {
 //           targets: [
-//             "$..*[?(@.id==='item1')].answer.entry",
-//             "$..*[?(@.id==='item3')].answer.entry",
+//             "$..*[?(@ && @.id==='item1')].answer.entry",
+//             "$..*[?(@ && @.id==='item3')].answer.entry",
 //           ],
 //           actions: ["rpn"],
 //           rpn: "@ @ + + -",
@@ -288,10 +288,10 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["rpn"],
  *           rpn: "@ @ +",
@@ -313,10 +313,10 @@ describe("placeholder test", () => {
 //       const out = synthesize(
 //         {
 //           targets: [
-//             "$..*[?(@.id==='item1')].answer.entry",
-//             "$..*[?(@.id==='item2')].answer.entry",
-//             "$..*[?(@.id==='item3')].answer.entry",
-//             "$..*[?(@.id==='item4')].answer.entry",
+//             "$..*[?(@ && @.id==='item1')].answer.entry",
+//             "$..*[?(@ && @.id==='item2')].answer.entry",
+//             "$..*[?(@ && @.id==='item3')].answer.entry",
+//             "$..*[?(@ && @.id==='item4')].answer.entry",
 //           ],
 //           actions: ["rpn"],
 //           rpn: "@ @ @ @ @ - + * /",
@@ -335,11 +335,11 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item2')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
- *             "$..*[?(@.id==='item4')].answer.entry",
- *             "$..*[?(@.id==='item5')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item2')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item4')].answer.entry",
+ *             "$..*[?(@ && @.id==='item5')].answer.entry",
  *           ],
  *           actions: ["rpn"],
  *           rpn: "@ @ @ @ @ - + * /",
@@ -359,9 +359,9 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item2')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item2')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["rpn"],
  *           rpn: "@ @ @ 2 + + *",
@@ -385,11 +385,11 @@ describe("placeholder test", () => {
 //       const out = synthesize(
 //         {
 //           targets: [
-//             "$..*[?(@.id==='item1')].answer.entry",
-//             "$..*[?(@.id==='item2')].answer.entry",
-//             "$..*[?(@.id==='item3')].answer.entry",
-//             "$..*[?(@.id==='item4')].answer.entry",
-//             "$..*[?(@.id==='item5')].answer.entry",
+//             "$..*[?(@ && @.id==='item1')].answer.entry",
+//             "$..*[?(@ && @.id==='item2')].answer.entry",
+//             "$..*[?(@ && @.id==='item3')].answer.entry",
+//             "$..*[?(@ && @.id==='item4')].answer.entry",
+//             "$..*[?(@ && @.id==='item5')].answer.entry",
 //           ],
 //           actions: ["rpn"],
 //           rpn: "- + @ @ * / @ @ @",
@@ -408,8 +408,8 @@ describe("placeholder test", () => {
  *       const out = synthesize(
  *         {
  *           targets: [
- *             "$..*[?(@.id==='item1')].answer.entry",
- *             "$..*[?(@.id==='item3')].answer.entry",
+ *             "$..*[?(@ && @.id==='item1')].answer.entry",
+ *             "$..*[?(@ && @.id==='item3')].answer.entry",
  *           ],
  *           actions: ["rpn"],
  *           rpn: "@ @ / 100 *",
