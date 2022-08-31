@@ -1,4 +1,4 @@
-const tables = [
+const testTables = [
   require("./acs"),
   require("./enrollmentCounts"),
   require("./fmap"),
@@ -7,4 +7,4 @@ const tables = [
   require("./stateStatus"),
 ];
 
-module.exports = { testTables: tables };
+module.exports = { testTables };
