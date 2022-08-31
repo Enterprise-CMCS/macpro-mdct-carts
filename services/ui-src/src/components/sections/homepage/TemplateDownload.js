@@ -20,7 +20,7 @@ const TemplateDownload = ({ getTemplate }) => (
         </div>
         <div className="update-contents ds-l-col--10">
           <div className="title">
-            <h3>Your fiscal year 2021 template is ready for download</h3>
+            <h3>Your fiscal year 2022 template is ready for download</h3>
           </div>
           <p>
             Download your template for the current reporting period below.

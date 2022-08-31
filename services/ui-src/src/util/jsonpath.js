@@ -51,7 +51,7 @@ const fullPathFromIDPath = (originalPath) => {
     }
     if (question) {
       // If there's a question part, then the whole ID is for a question. Yay!
-      pathParts.push(`..questions[?(@.id==='${id}')]`);
+      pathParts.push(`..questions[?(@ && @.id==='${id}')]`);
     }
 
     // Now tack on anything at the end and push it all together.
