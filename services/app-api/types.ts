@@ -73,6 +73,7 @@ export interface DynamoScan {
   FilterExpression?: string;
   ExpressionAttributeNames?: { [key: string]: string };
   ExpressionAttributeValues?: { [key: string]: any };
+  ExclusiveStartKey?: any;
 }
 
 export interface DynamoFetch {

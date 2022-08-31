@@ -97,6 +97,7 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
           Resource: "*"
         - Effect: "Allow"
           Action:
@@ -119,7 +120,7 @@ provider:
     stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
-    sectionBaseName: ${self:custom.sectionBaseTableName}
+    sectionBaseTableName: ${self:custom.sectionBaseTableName}
     stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
     uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${self:custom.stage}
@@ -183,6 +184,7 @@ functions:
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   generateFormTemplates:
     handler: handlers/formTemplates/post.post
+    timeout: 30
     events:
       - http:
           path: formTemplates
