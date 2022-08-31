@@ -97,6 +97,7 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
           Resource: "*"
         - Effect: "Allow"
           Action:
