@@ -122,13 +122,12 @@ const saveBatch = async (tableName: string, items: any) => {
     batch.push({ PutRequest: { Item: items[i] } });
     // Submit every 25, or when you're on the last item
     if (i == items.length - 1 || batch.length == 25) {
-      const result = dynamoDb.batchWriteItem({
+      await dynamoDb.batchWriteItem({
         RequestItems: {
           [tableName]: batch,
         },
       });
       // eslint-disable-next-line no-console
-      console.log(result);
       batch = []; // clear queue
     }
   }

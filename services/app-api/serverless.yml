@@ -183,6 +183,7 @@ functions:
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   generateFormTemplates:
     handler: handlers/formTemplates/post.post
+    timeout: 30
     events:
       - http:
           path: formTemplates
