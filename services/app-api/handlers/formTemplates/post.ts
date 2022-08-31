@@ -63,8 +63,12 @@ export const post = handler(async (event, _context) => {
     });
   }
 
-  await saveBatch(process.env.sectionTableName!, forms);
-  await saveBatch(process.env.stateStatusTableName!, stateStatuses);
+  // eslint-disable-next-line no-console
+  console.log(await saveBatch(process.env.sectionTableName!, forms));
+  // eslint-disable-next-line no-console
+  console.log(
+    await saveBatch(process.env.stateStatusTableName!, stateStatuses)
+  );
 
   return {
     message: `State templates generated for year ${year}`,
