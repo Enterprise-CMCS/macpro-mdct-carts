@@ -57,7 +57,7 @@ custom:
             sources: [./data/seed/seed-section-base.json]
           - table: ${self:custom.stageEnrollmentCountsTableName}
             sources: [./data/seed-local/seed-stg-enrollment-counts.json]
-  dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, false}
+  dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, "false"}
   dataMigrationEnvMap:
     production: prod
     val: staging

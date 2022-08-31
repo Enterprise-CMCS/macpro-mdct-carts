@@ -19,7 +19,7 @@ async function myHandler(event, context, callback) {
   const { tables } = require("./tables/index");
   data.concat(tables);
 
-  if (process.env.seedTestData) {
+  if (process.env.seedTestData === "true") {
     // eslint-disable-next-line no-console
     console.log("Including test data");
     const { testTables } = require("./test-tables/index");
