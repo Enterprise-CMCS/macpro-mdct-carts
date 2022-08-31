@@ -127,7 +127,6 @@ const saveBatch = async (tableName: string, items: any) => {
           [tableName]: batch,
         },
       });
-      // eslint-disable-next-line no-console
       batch = []; // clear queue
     }
   }
