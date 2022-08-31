@@ -63,12 +63,8 @@ export const post = handler(async (event, _context) => {
     });
   }
 
-  // eslint-disable-next-line no-console
-  console.log(await saveBatch(process.env.sectionTableName!, forms));
-  // eslint-disable-next-line no-console
-  console.log(
-    await saveBatch(process.env.stateStatusTableName!, stateStatuses)
-  );
+  await saveBatch(process.env.sectionTableName!, forms);
+  await saveBatch(process.env.stateStatusTableName!, stateStatuses);
 
   return {
     message: `State templates generated for year ${year}`,
@@ -126,11 +122,13 @@ const saveBatch = async (tableName: string, items: any) => {
     batch.push({ PutRequest: { Item: items[i] } });
     // Submit every 25, or when you're on the last item
     if (i == items.length - 1 || batch.length == 25) {
-      dynamoDb.batchWriteItem({
+      const result = dynamoDb.batchWriteItem({
         RequestItems: {
           [tableName]: batch,
         },
       });
+      // eslint-disable-next-line no-console
+      console.log(result);
       batch = []; // clear queue
     }
   }
