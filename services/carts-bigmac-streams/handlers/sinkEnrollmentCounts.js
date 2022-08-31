@@ -30,8 +30,8 @@ async function myHandler(event, _context, _callback) {
       let typeOfEnrollment = "Medicaid Expansion CHIP";
       let typeKey = "medicaid_exp_chip";
       if (json.NewImage.enrollmentCounts.type === "separate") {
-        typeKey = "Separate CHIP";
-        typeOfEnrollment = "separate_chip";
+        typeOfEnrollment = "Separate CHIP";
+        typeKey = "separate_chip";
       }
       const stateId = json.NewImage.state_id;
       const createdTime = new Date().toLocaleString();
@@ -67,8 +67,7 @@ const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
     },
     ...convertToDynamoExpression(enrollmentData),
   };
-  // eslint-disable-next-line no-console
-  console.log("Saved:", await dynamoClient.update(params));
+  await dynamoClient.update(params).promise();
 };
 
 /**
