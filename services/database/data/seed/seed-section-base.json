@@ -1633,21 +1633,21 @@
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": "2022",
+                              "ffy": 2022,
                               "enrollmentType": "Medicaid Expansion CHIP",
                               "index": 1
                             }
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": "2022",
+                              "ffy": 2022,
                               "enrollmentType": "Medicaid Expansion CHIP",
                               "index": 2
                             }
                           },
                           {
                             "compareChipEnrollements": {
-                              "ffy": "2022",
+                              "ffy": 2022,
                               "enrollmentType": "Medicaid Expansion CHIP"
                             }
                           }
@@ -1658,21 +1658,21 @@
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": "2022",
+                              "ffy": 2022,
                               "enrollmentType": "Separate CHIP",
                               "index": 1
                             }
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": "2022",
+                              "ffy": 2022,
                               "enrollmentType": "Separate CHIP",
                               "index": 2
                             }
                           },
                           {
                             "compareChipEnrollements": {
-                              "ffy": "2022",
+                              "ffy": 2022,
                               "enrollmentType": "Separate CHIP"
                             }
                           }

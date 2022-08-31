@@ -11,6 +11,7 @@ services=(
   'ui'
   'ui-auth'
   'ui-src'
+  'carts-bigmac-streams'
 )
 
 install_deps() {
