@@ -120,7 +120,7 @@ functions:
     handler: handlers/seed/seed.handler
     environment:
       dynamoPrefix: ${self:custom.stage}
-      seedTestData: ${self:seedTestData}
+      seedTestData: ${self:custom.seedTestData}
     timeout: 120
 
 resources:
