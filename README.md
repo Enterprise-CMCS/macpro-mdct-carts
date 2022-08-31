@@ -53,6 +53,15 @@ If you want to a visual view of your dynamodb after the application is up and ru
 
 - to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin` in a new terminal window
 
+### Seed Data
+
+There are two mechanisms for seeding data.
+
+- Locally, seed data is controlled by the `database/serverless.yml` seed section. Note the data is pulled from both the /seed and /seed-local folders.
+  - The seed and seed-local folders are just separated for convention and clarity, they have no special behavior
+- Seeding deployed environments is controlled with the seed lambda in the database service, and can be added to with the `handlers/seed/tables/index`, and pulling in data from the `data/seed` folder.
+  - This is useful for deploying data such as section base templates, and keeping it up to date with the code base.
+
 ### V2 Data Migration
 
 The data migration for v2 -> v3 is controlled via ssm parameters, and can be kicked off in an env on deploy by setting /configuration/{env}/runV2DataMigration. If you have access to the v2 databases.
