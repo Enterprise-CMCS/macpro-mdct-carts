@@ -4,6 +4,8 @@ import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 import { UnauthorizedError } from "../../libs/httpErrors";
+import { Validator } from "jsonschema";
+import { sectionSchema } from "../../libs/validation/backend-section.schema";
 
 /**
  * Updates the Sections associated with a given year and state
@@ -26,6 +28,17 @@ export const updateSections = handler(async (event, _context) => {
     user.role !== AppRoles.STATE_USER
   ) {
     throw new UnauthorizedError("Unauthorized Request");
+  }
+
+  // Check validity of post
+  const validator = new Validator();
+  for (let section = 0; section < reportData.length; section++) {
+    const validationResults = validator.validate(
+      reportData[section].contents,
+      sectionSchema
+    );
+    if (validationResults.errors && validationResults.errors.length > 0)
+      throw new Error("Invalid section object.");
   }
 
   // Update each of the Sections for the report associated with the given year and state
