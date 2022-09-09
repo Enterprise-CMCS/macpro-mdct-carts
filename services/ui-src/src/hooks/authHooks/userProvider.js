@@ -6,9 +6,11 @@ import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
+import { AuthManager } from ".";
 
 const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
+let authManager;
 
 const authenticateWithIDM = () => {
   Auth.federatedSignIn({ customProvider: "Okta" });
@@ -24,6 +26,10 @@ export const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [showLocalLogins, setShowLocalLogins] = useState(false);
+
+  if (!authManager) {
+    authManager = new AuthManager();
+  }
 
   const logout = useCallback(async () => {
     try {
@@ -76,7 +82,7 @@ export const UserProvider = ({ children }) => {
         redirectSignIn: config.cognito.REDIRECT_SIGNIN,
         redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
         scope: ["email", "openid", "profile"],
-        responseType: "token",
+        responseType: "code",
       },
     });
   });
