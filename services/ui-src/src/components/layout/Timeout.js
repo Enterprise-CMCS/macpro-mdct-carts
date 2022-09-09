@@ -1,21 +1,19 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Dialog } from "@cmsgov/design-system";
-import { setTimeout } from "../../store/stateUser";
-import { useUser } from "../../hooks/authHooks";
+import { refreshCredentials, useUser } from "../../hooks/authHooks";
 
 const Timeout = ({ showTimeout, expiresAt }) => {
-  const dispatch = useDispatch();
   const { logout } = useUser();
 
   const logoutClick = () => {
     logout();
   };
 
-  const refreshCredentials = () => {
+  const refreshAuth = () => {
     // dispatch show timeout action
-    dispatch(setTimeout(false));
+    refreshCredentials();
   };
 
   return (
@@ -30,7 +28,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
               className="ds-c-button ds-u-margin-right--1"
               key="Stay Logged In"
               aria-label="Stay Logged In"
-              onClick={refreshCredentials}
+              onClick={refreshAuth}
             >
               Stay Logged In
             </button>,
@@ -61,6 +59,4 @@ const mapState = (state) => ({
   expiresAt: state.stateUser.expiresAt,
 });
 
-const mapDispatch = { setTimeout };
-
-export default connect(mapState, mapDispatch)(Timeout);
+export default connect(mapState)(Timeout);

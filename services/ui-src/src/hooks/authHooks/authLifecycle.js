@@ -1,12 +1,17 @@
-import { Hub } from "aws-amplify";
+import { Auth, Hub } from "aws-amplify";
+import moment from "moment";
 import { setTimeout } from "../../store/stateUser";
+
+const REFRESH_VALIDITY = 6;
+// const ID_VALIDITY = 3;
+
+let authManager;
 
 /**
  * Singleton service for tracking auth events and emitting any relevant actions to store
  * Tracks login/timeouts
  */
-export class AuthManager {
-  expiration = 0;
+class AuthManager {
   refreshed = null;
   showTimeoutPanel = false;
   setShowTimeoutPanel = null;
@@ -26,14 +31,24 @@ export class AuthManager {
   onAuthEvent(payload) {
     switch (payload.event) {
       case "signIn":
-        this.expiration = 1000;
         this.refreshed = Date.now();
-        this.store.dispatch(setTimeout(true, this.expiration));
+        this.store.dispatch(setTimeout(true, this.getNewExpiration()));
         break;
       // TODO: Update with refresh action & time
       default:
         break;
     }
+  }
+
+  refreshCredentials() {
+    const newTime = this.getNewExpiration();
+    this.store.dispatch(setTimeout(false, newTime));
+
+    Auth.currentSession();
+  }
+
+  getNewExpiration() {
+    return moment().add(REFRESH_VALIDITY).minutes();
   }
 
   // Convenience function for local debugging
@@ -52,3 +67,11 @@ export class AuthManager {
     }
   }
 }
+
+export const initAuthManager = (store) => {
+  authManager = new AuthManager(store);
+};
+
+export const refreshCredentials = () => {
+  authManager.refreshCredentials();
+};
