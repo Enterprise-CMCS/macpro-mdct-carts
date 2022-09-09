@@ -17,6 +17,9 @@ jest.mock("./hooks/authHooks", () => ({
     userRole: "STATE_USER",
     showLocalLogins: false,
   })),
+  AuthManager: jest.fn().mockImplementation(() => {
+    return {};
+  }),
 }));
 jest.mock("./components/layout/Home", () => () => {
   const MockName = "default-home";
