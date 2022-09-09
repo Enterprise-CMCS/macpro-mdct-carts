@@ -15,9 +15,9 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.authenticate("stateUser");
 
     // certify and submit report
-    cy.get(actionButton).contains("Edit").click();
+    cy.get(actionButton).should("be.visible").contains("Edit").click();
     cy.contains("Certify and Submit").click();
-    cy.get(certifySubmitButton).click();
+    cy.get(certifySubmitButton).should("be.visible").click();
     cy.get("button").contains("Confirm Certify and Submit").click();
     cy.get("button").contains("Return Home").click();
 
@@ -29,7 +29,11 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.authenticate("reviewer");
 
     // uncertify report
-    cy.get(uncertifyButton).first().contains("Uncertify").click();
+    cy.get(uncertifyButton)
+      .first()
+      .should("be.visible")
+      .contains("Uncertify")
+      .click();
     cy.get("button").contains("Yes, Uncertify").click();
 
     // log back out
