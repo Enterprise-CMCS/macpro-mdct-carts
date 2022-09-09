@@ -28,7 +28,7 @@ export class AuthManager {
       case "signIn":
         this.expiration = 1000;
         this.refreshed = Date.now();
-        this.store.dispatch(setTimeout(false, this.expiration));
+        this.store.dispatch(setTimeout(true, this.expiration));
         break;
       // TODO: Update with refresh action & time
       default:

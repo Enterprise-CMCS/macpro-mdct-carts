@@ -13,6 +13,7 @@ import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
+import Timeout from "./components/layout/Timeout";
 
 const AppRoutes = () => {
   const { user, showLocalLogins, loginWithIDM } = useUser();
@@ -40,6 +41,7 @@ const AppRoutes = () => {
     >
       <div className="app-content">
         <Spinner />
+        <Timeout />
         <Router>
           {VisibleHeader}
           <Home role={user?.userRole || ""} />
