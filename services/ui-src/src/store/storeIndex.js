@@ -12,6 +12,7 @@ import allStatesData from "./allStatesData";
 import fiscalYearTemplate from "./fiscalYearTemplate";
 import reportStatus from "./reportStatus";
 import enrollmentCounts from "./enrollmentCounts";
+import { AuthManager } from "../hooks/authHooks";
 
 // Consolidate reducers
 export const reducer = combineReducers({
@@ -40,6 +41,9 @@ const middleware = composeWithDevTools(applyMiddleware(...middlewareArray));
 
 // Create store with reducers and middleware
 const store = createStore(reducer, middleware);
+
+// Create singleton for tracking auth events
+const authManager = new AuthManager(store); // eslint-disable-line no-unused-vars
 
 // Export the store to be picked up by the root component in index.js
 export default store;
