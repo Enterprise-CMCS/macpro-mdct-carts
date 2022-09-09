@@ -15,7 +15,10 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.authenticate("stateUser");
 
     // certify and submit report
-    cy.get(actionButton).should("be.visible").contains("Edit").click();
+    cy.get(actionButton, { timeout: 30000 })
+      .should("be.visible")
+      .contains("Edit")
+      .click();
     cy.contains("Certify and Submit").click();
     cy.get(certifySubmitButton).should("be.visible").click();
     cy.get("button").contains("Confirm Certify and Submit").click();
