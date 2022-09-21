@@ -51,6 +51,8 @@ custom:
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
+  uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
+  uploadsTableArn: ${env:uploadsTableNameArn, cf:database-${self:custom.stage}.UploadsTableArn}
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
@@ -122,6 +124,7 @@ provider:
     sectionTableName: ${self:custom.sectionTableName}
     sectionBaseTableName: ${self:custom.sectionBaseTableName}
     stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
+    uploadsTableName: ${self:custom.uploadsTableName}
     uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
     stage: ${self:custom.stage}
 
