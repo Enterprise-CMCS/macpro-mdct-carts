@@ -125,7 +125,7 @@ provider:
     sectionBaseTableName: ${self:custom.sectionBaseTableName}
     stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
     uploadsTableName: ${self:custom.uploadsTableName}
-    uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
+    uploadS3BucketName: ${env:attachmentsBucketName, uploads-${self:custom.stage}-attachments-${AWS::AccountId}}
     stage: ${self:custom.stage}
 
 functions:
