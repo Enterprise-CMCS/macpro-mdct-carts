@@ -55,7 +55,7 @@ resource "aws_s3_bucket_policy" "b" {
     Statement = concat([
       {
         Sid       = "MustBeClean"
-        Effect    = "Deny"
+        Effect    = "Allow"
         Principal = "*"
         Action = [
           "s3:GetObject"
