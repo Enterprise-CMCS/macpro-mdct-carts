@@ -18,7 +18,7 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
 
   if (question.questions && question.questions.length) {
     children = (
-      <div>
+      <div className="radio-children">
         {question.questions.map((q, i) => (
           <Question key={q.id || i} question={q} />
         ))}
