@@ -16,9 +16,11 @@
   "defaultCommandTimeout": 15000,
   "types": ["cypress", "cypress-axe"],
   "env": {
-    "STATE_USER_EMAIL": "stateuser1@test.com",
+    "STATE_USER_EMAIL": "stateuser2@test.com",
     "STATE_USER_PASSWORD": "p@55W0rd!",
     "ADMIN_USER_EMAIL": "cms.admin@test.com",
-    "ADMIN_USER_PASSWORD": "p@55W0rd!"
+    "ADMIN_USER_PASSWORD": "p@55W0rd!",
+    "REVIEWER_EMAIL": "cms.user@test.com",
+    "REVIEWER_PASSWORD": "p@55W0rd!"
   }
 }

@@ -46,8 +46,8 @@ const ReportItem = ({
     lastEditedNote += username ? ` by ${username}` : "";
   }
 
-  const uncertify = () => {
-    uncertifyAction(stateCode, stateYear);
+  const uncertify = async () => {
+    await uncertifyAction(stateCode, stateYear);
     toggleModal();
     window.location.reload(false);
   };
@@ -112,7 +112,11 @@ const ReportItem = ({
           <div className="status ds-l-col--2">{statusText}</div>
           <div className="actions ds-l-col--3">{lastEditedNote}</div>
           <div className="actions ds-l-col--1">
-            <Link to={link1URL} target={anchorTarget}>
+            <Link
+              to={link1URL}
+              target={anchorTarget}
+              data-testid="report-action-button"
+            >
               {link1Text}
             </Link>
           </div>

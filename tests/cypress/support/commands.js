@@ -21,6 +21,11 @@ const adminUser = {
   password: Cypress.env("ADMIN_USER_PASSWORD"),
 };
 
+const reviewer = {
+  email: Cypress.env("REVIEWER_EMAIL"),
+  password: Cypress.env("REVIEWER_PASSWORD"),
+};
+
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   let credentials = {};
   if (userType && userCredentials) {
@@ -36,6 +41,9 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
         break;
       case "stateUser":
         credentials = stateUser;
+        break;
+      case "reviewer":
+        credentials = reviewer;
         break;
       default:
         throw new Error("Provided userType not recognized.");
