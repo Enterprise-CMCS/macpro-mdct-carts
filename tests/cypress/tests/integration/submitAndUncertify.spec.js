@@ -32,6 +32,8 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.get(uncertifyButton).first().contains("Uncertify").click();
     cy.get("button").contains("Yes, Uncertify").click();
 
+    cy.wait(3000);
+
     // log back out
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
