@@ -52,7 +52,7 @@ custom:
   stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
   uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
-  uploadsTableArn: ${env:uploadsTableNameArn, cf:database-${self:custom.stage}.UploadsTableArn}
+  uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
