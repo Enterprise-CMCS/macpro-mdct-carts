@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
     case UNCERTIFY_SUCCESS:
       return {
         ...state,
-        [action.report]: REPORT_STATUS.in_progress,
+        [action.stateCode]: REPORT_STATUS.in_progress,
       };
     default:
       return state;
