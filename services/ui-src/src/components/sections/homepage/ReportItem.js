@@ -49,7 +49,6 @@ const ReportItem = ({
   const uncertify = () => {
     uncertifyAction(stateCode, stateYear);
     toggleModal();
-    window.location.reload(false);
   };
 
   return (
