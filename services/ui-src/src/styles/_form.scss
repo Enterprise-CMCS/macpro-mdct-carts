@@ -96,6 +96,10 @@
   margin-top: $margin * 3;
 }
 
+.radio-container .radio-children {
+  margin-left: ($margin * 8);
+}
+
 .question-container {
   margin-bottom: ($padding * 4);
   padding-right: ($padding * 3);
