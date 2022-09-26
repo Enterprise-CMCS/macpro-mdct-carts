@@ -15,6 +15,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
 
   useEffect(() => {
+    if (!showTimeout) return;
     // eslint-disable-next-line no-unused-vars
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft(expiresAt));
