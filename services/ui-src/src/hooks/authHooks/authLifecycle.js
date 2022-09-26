@@ -1,9 +1,10 @@
 import { Auth, Hub } from "aws-amplify";
 import moment from "moment";
-import { setTimeout } from "../../store/stateUser";
+import { setAuthTimeout } from "../../store/stateUser";
 
-const REFRESH_VALIDITY = 6;
-// const ID_VALIDITY = 3;
+const REFRESH_TOKEN_VALIDITY = 60 * 1000; // ms
+const PROMPT_AT = 10 * 1000; //ms
+// const ID_TOKEN_VALIDITY = 3000; // ms
 
 let authManager;
 
@@ -12,11 +13,9 @@ let authManager;
  * Tracks login/timeouts
  */
 class AuthManager {
-  refreshed = null;
-  showTimeoutPanel = false;
-  setShowTimeoutPanel = null;
   store = null;
   verboseLogging = true; // TODO: false
+  timeoutId = null;
 
   constructor(store) {
     this.store = store;
@@ -26,29 +25,43 @@ class AuthManager {
       this.onAuthEvent(payload);
       if (this.verboseLogging) this.logEvent(payload);
     });
+    this.updateTimeout();
   }
 
   onAuthEvent(payload) {
+    // Track events that issue new tokens and keep our timers accurate
     switch (payload.event) {
       case "signIn":
-        this.refreshed = Date.now();
-        this.store.dispatch(setTimeout(true, this.getNewExpiration()));
+      case "tokenRefresh":
+        this.updateTimeout();
         break;
-      // TODO: Update with refresh action & time
       default:
         break;
     }
   }
 
-  refreshCredentials() {
-    const newTime = this.getNewExpiration();
-    this.store.dispatch(setTimeout(false, newTime));
-
-    Auth.currentSession();
+  async refreshCredentials() {
+    await Auth.currentAuthenticatedUser({ bypassCache: true }); // Force a token refresh
   }
 
-  getNewExpiration() {
-    return moment().add(REFRESH_VALIDITY).minutes();
+  updateTimeout() {
+    const expiration = moment().add(REFRESH_TOKEN_VALIDITY, "milliseconds");
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+    this.timeoutId = setTimeout(
+      (exp) => {
+        this.promptTimeout(exp);
+      },
+      PROMPT_AT,
+      expiration
+    );
+
+    this.store.dispatch(setAuthTimeout(false, expiration));
+  }
+
+  promptTimeout(expirationTime) {
+    this.store.dispatch(setAuthTimeout(true, expirationTime));
   }
 
   // Convenience function for local debugging
@@ -72,6 +85,6 @@ export const initAuthManager = (store) => {
   authManager = new AuthManager(store);
 };
 
-export const refreshCredentials = () => {
-  authManager.refreshCredentials();
+export const refreshCredentials = async () => {
+  await authManager.refreshCredentials();
 };

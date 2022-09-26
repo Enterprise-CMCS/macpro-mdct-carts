@@ -1,31 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Dialog } from "@cmsgov/design-system";
 import { refreshCredentials, useUser } from "../../hooks/authHooks";
+import moment from "moment";
+
+const calculateTimeLeft = (expiresAt) => {
+  return expiresAt.diff(moment()) / 1000;
+};
 
 const Timeout = ({ showTimeout, expiresAt }) => {
   const { logout } = useUser();
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
+
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-vars
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft(expiresAt));
+    }, 500);
+  });
 
   const logoutClick = () => {
     logout();
   };
-
-  const refreshAuth = () => {
-    // dispatch show timeout action
-    refreshCredentials();
+  const refreshAuth = async () => {
+    await refreshCredentials();
   };
+
+  const expired = expiresAt.isBefore();
+  const body = expired
+    ? "You have been logged out due to inactivity. Please log in again."
+    : `You will be logged out in ${Math.floor(timeLeft)} seconds.`;
 
   return (
     <>
       {showTimeout && (
         <Dialog
           isShowing={showTimeout}
-          onExit={refreshCredentials}
+          onExit={refreshAuth}
           heading="You are about to time out."
           actions={[
             <button
               className="ds-c-button ds-u-margin-right--1"
+              disabled={expired}
               key="Stay Logged In"
               aria-label="Stay Logged In"
               onClick={refreshAuth}
@@ -42,7 +59,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
             </button>,
           ]}
         >
-          You are about to be logged out at {expiresAt}
+          {body}
         </Dialog>
       )}
     </>
