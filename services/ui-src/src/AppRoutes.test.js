@@ -16,6 +16,8 @@ jest.mock("./hooks/authHooks", () => ({
     user: user,
     userRole: "STATE_USER",
     showLocalLogins: false,
+    showTimeout: false,
+    expiresAt: null,
   })),
   initAuthManager: jest.fn(),
 }));

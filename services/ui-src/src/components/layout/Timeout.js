@@ -6,6 +6,7 @@ import { refreshCredentials, useUser } from "../../hooks/authHooks";
 import moment from "moment";
 
 const calculateTimeLeft = (expiresAt) => {
+  if (!expiresAt) return 0;
   return expiresAt.diff(moment()) / 1000;
 };
 
@@ -18,6 +19,9 @@ const Timeout = ({ showTimeout, expiresAt }) => {
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft(expiresAt));
     }, 500);
+    return () => {
+      clearInterval(timer);
+    };
   });
 
   const logoutClick = () => {
@@ -27,18 +31,22 @@ const Timeout = ({ showTimeout, expiresAt }) => {
     await refreshCredentials();
   };
 
+  if (!showTimeout) return <></>;
+
   const expired = expiresAt.isBefore();
   const body = expired
     ? "You have been logged out due to inactivity. Please log in again."
-    : `You will be logged out in ${Math.floor(timeLeft)} seconds.`;
-
+    : `Due to inactivity, you will be logged out in ${Math.floor(
+        timeLeft
+      )} seconds.`;
+  const logOutText = expired ? "Log In" : "Log Out";
   return (
     <>
       {showTimeout && (
         <Dialog
           isShowing={showTimeout}
           onExit={refreshAuth}
-          heading="You are about to time out."
+          heading="You are about to be logged out."
           actions={[
             <button
               className="ds-c-button ds-u-margin-right--1"
@@ -52,10 +60,10 @@ const Timeout = ({ showTimeout, expiresAt }) => {
             <button
               className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
               key="Log Out"
-              aria-label="Log out"
+              aria-label={logOutText}
               onClick={logoutClick}
             >
-              Log Out
+              {logOutText}
             </button>,
           ]}
         >
