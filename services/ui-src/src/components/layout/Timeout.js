@@ -47,6 +47,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
         <Dialog
           isShowing={showTimeout}
           onExit={refreshAuth}
+          data-testid="timeout-dialog"
           heading="You are about to be logged out."
           actions={[
             <button
@@ -55,6 +56,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
               key="Stay Logged In"
               aria-label="Stay Logged In"
               onClick={refreshAuth}
+              data-testid="timeout-stay-logged-in"
             >
               Stay Logged In
             </button>,
@@ -63,6 +65,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
               key="Log Out"
               aria-label={logOutText}
               onClick={logoutClick}
+              data-testid="timeout-log-out"
             >
               {logOutText}
             </button>,

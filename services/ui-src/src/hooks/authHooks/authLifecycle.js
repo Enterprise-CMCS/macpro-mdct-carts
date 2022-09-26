@@ -2,9 +2,8 @@ import { Auth, Hub } from "aws-amplify";
 import moment from "moment";
 import { setAuthTimeout } from "../../store/stateUser";
 
-const REFRESH_TOKEN_VALIDITY = 6 * 60 * 1000; // ms
-const PROMPT_AT = 5 * 60 * 1000; //ms
-// const ID_TOKEN_VALIDITY = 3000; // ms
+const REFRESH_TOKEN_VALIDITY = 60 * 60 * 1000; // ms
+const PROMPT_AT = 59 * 60 * 1000; //ms
 
 let authManager;
 
