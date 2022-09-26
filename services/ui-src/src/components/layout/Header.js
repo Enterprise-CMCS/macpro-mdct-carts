@@ -9,7 +9,7 @@ import { getCurrentReportStatus } from "../../store/selectors";
 import { REPORT_STATUS, AppRoles } from "../../types";
 import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 class Header extends Component {
   constructor() {
@@ -95,12 +95,12 @@ class Header extends Component {
                   className="user-details-container ds-l-row"
                   data-testid={"userDetailsRow"}
                 >
-                  <div className="get-help-container">
+                  {/* <div className="get-help-container">
                     <Link to="/get-help" className="ds-u-display--block">
                       <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
                       Get Help
                     </Link>
-                  </div>
+                  </div> */}
                   {isLoggedIn &&
                     renderDropDownMenu(isMenuOpen, this.toggleDropDownMenu)}
                 </div>
