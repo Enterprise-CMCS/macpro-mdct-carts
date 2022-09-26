@@ -143,9 +143,9 @@ resources:
         IdTokenValidity: 3
         RefreshTokenValidity: 6
         TokenValidityUnits: 
-          AccessToken: minutes
-          IdToken: minutes
-          RefreshToken: minutes
+          AccessToken: "minutes"
+          IdToken: "minutes"
+          RefreshToken: "minutes"
     UserPoolDomain:
       Type: AWS::Cognito::UserPoolDomain
       Properties:
