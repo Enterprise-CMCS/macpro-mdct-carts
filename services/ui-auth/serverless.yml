@@ -139,13 +139,13 @@ resources:
               - BackWithOkta
               - !Ref OktaUserPoolIdentityProvider
               - COGNITO
-        AccessTokenValidity: 180
-        IdTokenValidity: 180
-        RefreshTokenValidity: 360
+        AccessTokenValidity: 30
+        IdTokenValidity: 30
+        RefreshTokenValidity: 60
         TokenValidityUnits: 
-          AccessToken: "seconds"
-          IdToken: "seconds"
-          RefreshToken: "seconds"
+          AccessToken: "minutes"
+          IdToken: "minutes"
+          RefreshToken: "minutes"
     UserPoolDomain:
       Type: AWS::Cognito::UserPoolDomain
       Properties:
