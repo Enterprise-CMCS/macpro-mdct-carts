@@ -28,6 +28,7 @@ export const UserProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       setUser(null);
+      localStorage.removeItem("mdctcarts_session_exp");
       await Auth.signOut();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console

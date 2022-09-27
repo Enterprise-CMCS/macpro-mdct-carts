@@ -2,8 +2,14 @@ import { Auth, Hub } from "aws-amplify";
 import moment from "moment";
 import { setAuthTimeout } from "../../store/stateUser";
 
-const REFRESH_TOKEN_VALIDITY = 60 * 60 * 1000; // ms
+/*
+ * After the token expires, refresh tokens will be used in the allotted idle window.
+ * If not retireved, they will bre prompted at the specified time to refresh or logout.
+ */
+const AUTH_TOKEN_VALIDITY = 30 * 60 * 1000; // ms
+const IDLE_WINDOW = 30 * 60 * 1000; // ms
 const PROMPT_AT = 59 * 60 * 1000; //ms
+const SESSION_DURATION = AUTH_TOKEN_VALIDITY + IDLE_WINDOW;
 
 let authManager;
 
@@ -14,20 +20,30 @@ let authManager;
 class AuthManager {
   store = null;
   verboseLogging = true; // TODO: false
-  timeoutId = null;
+  timeoutPromptId = null;
+  timoutForceId = null;
 
   constructor(store) {
+    // Force users with stale tokens > then the timeout to log in for a fresh session
+    const exp = localStorage.getItem("mdctcarts_session_exp");
+    if (exp && moment(exp).isBefore()) {
+      localStorage.removeItem("mdctcarts_session_exp");
+      Auth.signOut().then(() => {
+        window.location.href = "/";
+      });
+    }
+
     this.store = store;
     // Setup hub listeners
     Hub.listen("auth", (data) => {
       const { payload } = data;
-      this.onAuthEvent(payload);
+      this.onHubEvent(payload);
       if (this.verboseLogging) this.logEvent(payload);
     });
     this.updateTimeout();
   }
 
-  onAuthEvent(payload) {
+  onHubEvent(payload) {
     // Track events that issue new tokens and keep our timers accurate
     switch (payload.event) {
       case "signIn":
@@ -44,17 +60,22 @@ class AuthManager {
   }
 
   updateTimeout() {
-    const expiration = moment().add(REFRESH_TOKEN_VALIDITY, "milliseconds");
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
+    const expiration = moment().add(SESSION_DURATION, "milliseconds");
+    if (this.timeoutPromptId) {
+      clearTimeout(this.timeoutPromptId);
+      clearTimeout(this.timeoutForceId);
     }
-    this.timeoutId = setTimeout(
+    localStorage.setItem("mdctcarts_session_exp", expiration);
+    this.timeoutPromptId = setTimeout(
       (exp) => {
         this.promptTimeout(exp);
       },
       PROMPT_AT,
       expiration
     );
+    this.timeoutForceId = setTimeout(() => {
+      Auth.signOut();
+    }, SESSION_DURATION);
 
     this.store.dispatch(setAuthTimeout(false, expiration));
   }
