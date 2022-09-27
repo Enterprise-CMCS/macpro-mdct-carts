@@ -19,7 +19,6 @@ let authManager;
  */
 class AuthManager {
   store = null;
-  verboseLogging = true; // TODO: false
   timeoutPromptId = null;
   timoutForceId = null;
 
@@ -38,7 +37,6 @@ class AuthManager {
     Hub.listen("auth", (data) => {
       const { payload } = data;
       this.onHubEvent(payload);
-      if (this.verboseLogging) this.logEvent(payload);
     });
     this.updateTimeout();
   }
@@ -82,22 +80,6 @@ class AuthManager {
 
   promptTimeout(expirationTime) {
     this.store.dispatch(setAuthTimeout(true, expirationTime));
-  }
-
-  // Convenience function for local debugging
-  logEvent(payload) {
-    if (this.verboseLogging) {
-      if (!payload.data) {
-        // eslint-disable-next-line no-console
-        console.log("auth payload: ", payload);
-        return;
-      }
-      // eslint-disable-next-line no-console
-      console.log(
-        "Auth event - user:",
-        payload.data.username + "- event: " + payload.event
-      );
-    }
   }
 }
 
