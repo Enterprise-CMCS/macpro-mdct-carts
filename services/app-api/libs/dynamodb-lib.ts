@@ -12,6 +12,7 @@ import {
   StateStatus,
   Section,
   AcsData,
+  FmapData,
 } from "../types";
 /* eslint-enable no-unused-vars */
 
@@ -44,7 +45,9 @@ export default {
   },
   put: (params: DynamoCreate) => client.put(params).promise(),
   post: (params: DynamoCreate) => client.put(params).promise(),
-  scan: async <Result = StateStatus | Section | Measure | State | AcsData>(
+  scan: async <
+    Result = StateStatus | Section | Measure | State | AcsData | FmapData
+  >(
     params: DynamoScan
   ) => {
     const result = await client.scan(params).promise();
