@@ -46,7 +46,14 @@ export default {
   put: (params: DynamoCreate) => client.put(params).promise(),
   post: (params: DynamoCreate) => client.put(params).promise(),
   scan: async <
-    Result = StateStatus | Section | Measure | State | AcsData | FmapData
+    Result =
+      | StateStatus
+      | Section
+      | Measure
+      | State
+      | AcsData
+      | FmapData
+      | State
   >(
     params: DynamoScan
   ) => {

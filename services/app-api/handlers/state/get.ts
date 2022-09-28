@@ -21,10 +21,10 @@ export const getStates = handler(async (_event, _context) => {
     ...(state as State),
     ...{
       fmapSet: fmapQueryValue.Items?.filter(
-        (fmapData) => (fmapData as FmapData).stateId === state.code
+        (fmapData) => (fmapData as FmapData).stateId === (state as State).code
       ),
       acsSet: acsQueryValue.Items?.filter(
-        (acsData) => (acsData as AcsData).stateId === state.code
+        (acsData) => (acsData as AcsData).stateId === (state as State).code
       ),
     },
   })).sort((a, b) => a.name.localeCompare(b.name));
