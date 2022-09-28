@@ -24,6 +24,21 @@ export interface State {
   programNames?: any;
 }
 
+export interface AcsData {
+  numberUninsuredMoe: number;
+  percentUninsured: number;
+  year: number;
+  percentageUninsuredMoe: number;
+  stateId: string;
+  numberUninsured: number;
+}
+
+export interface FmapData {
+  enhancedFmap: number;
+  fiscalYear: number;
+  stateId: string;
+}
+
 export interface StateStatus {
   year: number;
   status: string;
