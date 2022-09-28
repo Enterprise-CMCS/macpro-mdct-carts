@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Dialog } from "@cmsgov/design-system";
-import { refreshCredentials, useUser } from "../../hooks/authHooks";
+import { useHistory } from "react-router-dom";
+import {
+  refreshCredentials,
+  updateTimeout,
+  useUser,
+} from "../../hooks/authHooks";
 import moment from "moment";
 
 const calculateTimeLeft = (expiresAt) => {
@@ -13,14 +18,19 @@ const calculateTimeLeft = (expiresAt) => {
 const Timeout = ({ showTimeout, expiresAt }) => {
   const { logout } = useUser();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
-
+  const history = useHistory();
   useEffect(() => {
+    const unlisten = history.listen(() => {
+      updateTimeout();
+    });
+
     if (!showTimeout) return;
     // eslint-disable-next-line no-unused-vars
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft(expiresAt));
     }, 500);
     return () => {
+      unlisten();
       clearInterval(timer);
     };
   });

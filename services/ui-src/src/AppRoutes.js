@@ -41,10 +41,10 @@ const AppRoutes = () => {
     >
       <div className="app-content">
         <Spinner />
-        <Timeout />
         <Router>
           {VisibleHeader}
           <Home role={user?.userRole || ""} />
+          <Timeout />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />
           <Route path="/profile" component={Profile} />
