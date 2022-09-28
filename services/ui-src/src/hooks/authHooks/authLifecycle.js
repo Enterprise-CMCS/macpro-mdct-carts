@@ -1,4 +1,4 @@
-import { Auth, Hub } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import moment from "moment";
 import { setAuthTimeout } from "../../store/stateUser";
 
@@ -6,10 +6,8 @@ import { setAuthTimeout } from "../../store/stateUser";
  * After the token expires, refresh tokens will be used in the allotted idle window.
  * If not retireved, they will bre prompted at the specified time to refresh or logout.
  */
-const AUTH_TOKEN_VALIDITY = 30 * 60 * 1000; // ms
 const IDLE_WINDOW = 30 * 60 * 1000; // ms
-const PROMPT_AT = 59 * 60 * 1000; //ms
-const SESSION_DURATION = AUTH_TOKEN_VALIDITY + IDLE_WINDOW;
+const PROMPT_AT = 29 * 60 * 1000; //ms
 
 let authManager;
 
@@ -21,7 +19,6 @@ class AuthManager {
   store = null;
   timeoutPromptId = null;
   timoutForceId = null;
-  lockRefresh = false;
 
   constructor(store) {
     // Force users with stale tokens > then the timeout to log in for a fresh session
@@ -33,33 +30,16 @@ class AuthManager {
       });
     }
     this.store = store;
-    // Setup hub listeners
-    Hub.listen("auth", (data) => {
-      const { payload } = data;
-      this.onHubEvent(payload);
-    });
     this.updateTimeout();
-  }
-
-  onHubEvent(payload) {
-    // Track events that issue new tokens and keep our timers accurate
-    switch (payload.event) {
-      case "signIn":
-      case "tokenRefresh":
-        this.updateTimeout();
-        break;
-      default:
-        break;
-    }
   }
 
   async refreshCredentials() {
     await Auth.currentAuthenticatedUser({ bypassCache: true }); // Force a token refresh
+    updateTimeout();
   }
 
   updateTimeout() {
-    if (this.lockRefresh) return;
-    const expiration = moment().add(SESSION_DURATION, "milliseconds");
+    const expiration = moment().add(IDLE_WINDOW, "milliseconds");
     if (this.timeoutPromptId) {
       clearTimeout(this.timeoutPromptId);
       clearTimeout(this.timeoutForceId);
@@ -74,10 +54,8 @@ class AuthManager {
     );
     this.timeoutForceId = setTimeout(() => {
       localStorage.removeItem("mdctcarts_session_exp");
-      this.lockRefresh = true;
       Auth.signOut();
-      this.lockRefresh = false;
-    }, SESSION_DURATION);
+    }, IDLE_WINDOW);
 
     this.store.dispatch(setAuthTimeout(false, expiration));
   }
@@ -93,4 +71,8 @@ export const initAuthManager = (store) => {
 
 export const refreshCredentials = async () => {
   await authManager.refreshCredentials();
+};
+
+export const updateTimeout = async () => {
+  await authManager.updateTimeout();
 };

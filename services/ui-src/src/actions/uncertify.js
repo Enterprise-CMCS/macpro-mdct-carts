@@ -1,6 +1,6 @@
-import { API } from "aws-amplify";
 import requestOptions from "../hooks/authHooks/requestOptions";
 import { REPORT_STATUS } from "../types";
+import { apiLib } from "../util/apiLib";
 
 export const UNCERTIFY = "UNCERTIFY";
 export const UNCERTIFY_SUCCESS = "UNCERTIFY_SUCCESS";
@@ -24,7 +24,7 @@ export const theUncertify =
         state: state,
       };
 
-      await API.post("carts-api", `/state_status/${year}/${state}`, opts);
+      await apiLib.post("carts-api", `/state_status/${year}/${state}`, opts);
       dispatch({
         type: UNCERTIFY_SUCCESS,
         user: username,
