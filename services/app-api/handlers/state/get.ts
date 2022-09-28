@@ -19,7 +19,14 @@ export const getStates = handler(async (_event, _context) => {
 
   const states = stateQueryValue.Items?.map((state) => ({
     ...(state as State),
-    ...{ fmapSet: fmapQueryValue.Items, acsSet: acsQueryValue.Items },
+    ...{
+      fmapSet: fmapQueryValue.Items?.filter(
+        (fmapData) => fmapData.stateId === state.code
+      ),
+      acsSet: acsQueryValue.Items?.filter(
+        (acsData) => acsData.stateId === state.code
+      ),
+    },
   })).sort((a, b) => a.name.localeCompare(b.name));
   return states;
 });
