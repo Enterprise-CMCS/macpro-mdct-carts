@@ -21,6 +21,7 @@ class AuthManager {
   store = null;
   timeoutPromptId = null;
   timoutForceId = null;
+  lockRefresh = false;
 
   constructor(store) {
     // Force users with stale tokens > then the timeout to log in for a fresh session
@@ -31,7 +32,6 @@ class AuthManager {
         window.location.href = "/";
       });
     }
-
     this.store = store;
     // Setup hub listeners
     Hub.listen("auth", (data) => {
@@ -58,6 +58,7 @@ class AuthManager {
   }
 
   updateTimeout() {
+    if (this.lockRefresh) return;
     const expiration = moment().add(SESSION_DURATION, "milliseconds");
     if (this.timeoutPromptId) {
       clearTimeout(this.timeoutPromptId);
@@ -72,7 +73,10 @@ class AuthManager {
       expiration
     );
     this.timeoutForceId = setTimeout(() => {
+      localStorage.removeItem("mdctcarts_session_exp");
+      this.lockRefresh = true;
       Auth.signOut();
+      this.lockRefresh = false;
     }, SESSION_DURATION);
 
     this.store.dispatch(setAuthTimeout(false, expiration));
