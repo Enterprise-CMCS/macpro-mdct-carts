@@ -13,9 +13,10 @@ import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
+import Timeout from "./components/layout/Timeout";
 
 const AppRoutes = () => {
-  const { user, userRole, showLocalLogins, loginWithIDM } = useUser();
+  const { user, showLocalLogins, loginWithIDM } = useUser();
 
   if (!user && showLocalLogins) {
     return <LocalLogins loginWithIDM={loginWithIDM} />;
@@ -42,7 +43,8 @@ const AppRoutes = () => {
         <Spinner />
         <Router>
           {VisibleHeader}
-          <Home user={user} role={userRole} />
+          <Home role={user?.userRole || ""} />
+          <Timeout />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />
           <Route path="/profile" component={Profile} />

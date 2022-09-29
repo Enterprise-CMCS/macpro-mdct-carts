@@ -60,9 +60,9 @@ export const extractJsonPathExpressionFromQuestionLike = (
   index
 ) => {
   if (questionLikeId) {
-    return `$..*[?(@.id=='${questionLikeId}')]`;
+    return `$..*[?(@ && @.id=='${questionLikeId}')]`;
   }
-  return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
+  return `$..*[?(@ && @.id=='${parentId}')].questions[${index}]`;
 };
 
 export const selectFragmentByJsonPath = (
@@ -80,7 +80,7 @@ export const selectFragmentByJsonPath = (
 
 export const selectFragmentById = (state, id) => {
   const sectionOrdinal = extractSectionOrdinalFromId(id);
-  const jpexpr = `$..*[?(@.id=='${id}')]`;
+  const jpexpr = `$..*[?(@ && @.id=='${id}')]`;
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 };
 
@@ -146,7 +146,7 @@ export const selectFragment = (state, id = null, jp = null) => {
   }
   // TODO: account for objectives/repeatables here.
 
-  const path = jp || `$..*[?(@.id=='${idValue}')]`;
+  const path = jp || `$..*[?(@ && @.id=='${idValue}')]`;
   return selectFragmentFromTarget(targetObject, path);
 };
 

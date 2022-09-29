@@ -66,4 +66,14 @@ describe("Test Get Sections Handlers", () => {
       '{"error":"Be sure to include state, year in the path"}'
     );
   });
+
+  test("state users should not get results for other states", async () => {
+    const event: APIGatewayProxyEvent = {
+      ...testEvent,
+      pathParameters: { year: "2022", state: "CO" },
+    };
+
+    const res = await getSections(event, null);
+    expect(res.body).toBe("[]");
+  });
 });

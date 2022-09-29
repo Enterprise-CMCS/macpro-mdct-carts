@@ -1,6 +1,6 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
-import { State } from "../../types";
+import { AcsData, FmapData, State } from "../../types";
 
 export const getStates = handler(async (_event, _context) => {
   const stateParams = {
@@ -19,7 +19,14 @@ export const getStates = handler(async (_event, _context) => {
 
   const states = stateQueryValue.Items?.map((state) => ({
     ...(state as State),
-    ...{ fmapSet: fmapQueryValue.Items, acsSet: acsQueryValue.Items },
+    ...{
+      fmapSet: fmapQueryValue.Items?.filter(
+        (fmapData) => (fmapData as FmapData).stateId === (state as State).code
+      ),
+      acsSet: acsQueryValue.Items?.filter(
+        (acsData) => (acsData as AcsData).stateId === (state as State).code
+      ),
+    },
   })).sort((a, b) => a.name.localeCompare(b.name));
   return states;
 });

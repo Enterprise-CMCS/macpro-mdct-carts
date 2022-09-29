@@ -1,6 +1,10 @@
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
-import { compareACS } from "./synthesize";
+import {
+  compareACS,
+  lookupChipEnrollments,
+  compareChipEnrollements,
+} from "./synthesize";
 
 /**
  * This function determines whether a radio's conditional subquestion should hide
@@ -51,18 +55,35 @@ const hideIfNot = (state, hideIfNotInfo) => {
 const hideIfTableValue = (state, hideIfTableValueInfo) => {
   // Get table values
   const targetValues = jsonpath.query(state, hideIfTableValueInfo.target)[0];
-  let computedValue = [];
+  let computedValues = [];
 
   // If target needs to be calculated
   if (hideIfTableValueInfo.computed) {
-    const type = targetValues[0][0];
-
-    if (type.compareACS) {
-      // get computed value via compareACS and push into a multidimensional array
-      computedValue.push([compareACS(state, type.compareACS)]);
+    targetValues.forEach(() => {});
+    for (const targetRow of targetValues) {
+      const computedRow = [];
+      for (const item of targetRow) {
+        // get computed value via lookup function and push into a multidimensional array
+        if (item.compareACS) {
+          computedRow.push(compareACS(state, item.compareACS));
+        } else if (item.lookupChipEnrollments) {
+          computedRow.push(
+            lookupChipEnrollments(state, item.lookupChipEnrollments)
+          );
+        } else if (item.compareChipEnrollements) {
+          computedRow.push(
+            compareChipEnrollements(state, item.compareChipEnrollements)
+          );
+        } else {
+          // Let non-computed entries pass through with the other data transparently
+          computedRow.push(item);
+        }
+      }
+      computedValues.push(computedRow);
     }
+    // Handle every entry in case we are calculating off of a table
   } else {
-    computedValue = targetValues;
+    computedValues = targetValues;
   }
 
   const { variations } = hideIfTableValueInfo;
@@ -76,7 +97,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
   for (let i = 0; i < variations.length; i++) {
     // Loop through table rows for matches
     /* eslint-disable no-plusplus */
-    for (let j = 0; j < computedValue.length; j++) {
+    for (let j = 0; j < computedValues.length; j++) {
       // Check if current variation corresponds with targetValue row
       let rowValue;
       if (variations[i].row === "*") {
@@ -89,7 +110,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
         // get row key
         const rowKey = parseFloat(variations[i].row_key, 10);
         const threshold = parseFloat(variations[i].threshold, 10);
-        const comparisonValue = parseFloat(computedValue[j][rowKey], 10);
+        const comparisonValue = parseFloat(computedValues[j][rowKey], 10);
 
         // Check if threshold is met
         switch (variations[i].operator) {

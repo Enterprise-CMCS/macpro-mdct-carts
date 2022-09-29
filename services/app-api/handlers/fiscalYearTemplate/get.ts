@@ -1,15 +1,17 @@
 import handler from "../../libs/handler-lib";
 import s3 from "../../libs/s3-lib";
+import { ReportPdfs } from "../../types";
 
 export const getFiscalYearTemplateLink = handler(async (_context) => {
+  const filename = ReportPdfs[2022];
   const url = s3.getSignedUrl(
     "getObject",
     {
       Bucket:
         process.env.fiscalYearTemplateS3BucketName ??
         "local-fiscal-year-template",
-      Key: "FFY_2021_CARTS_Template.pdf",
-      ResponseContentDisposition: `attachment; filename = FFY_2021_CARTS_Template.pdf`,
+      Key: filename,
+      ResponseContentDisposition: `attachment; filename = ${filename}`,
       Expires: 3600,
     },
     true

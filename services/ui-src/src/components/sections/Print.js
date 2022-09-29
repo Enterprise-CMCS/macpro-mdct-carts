@@ -6,12 +6,12 @@ import { Button } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-import { API } from "aws-amplify";
 import statesArray from "../Utils/statesArray";
-import { loadSections } from "../../actions/initial";
+import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import requestOptions from "../../hooks/authHooks/requestOptions";
+import { apiLib } from "../../util/apiLib";
 
 /**
  * Generate data and load entire form based on user information
@@ -77,7 +77,7 @@ const Print = ({ currentUser, state, name }) => {
       encodedHtml: base64String,
     };
 
-    const res = await API.post("carts-api", "/print_pdf", opts);
+    const res = await apiLib.post("carts-api", "/print_pdf", opts);
     openPdf(res.data);
   };
   // Load formData via side effect
@@ -100,7 +100,10 @@ const Print = ({ currentUser, state, name }) => {
       dispatch({ type: "CONTENT_FETCHING_STARTED" });
 
       // Pull data based on user details
-      await Promise.all([dispatch(loadSections({ stateCode, selectedYear }))]);
+      await Promise.all([
+        dispatch(loadSections({ stateCode, selectedYear })),
+        dispatch(loadEnrollmentCounts({ stateCode, selectedYear })),
+      ]);
 
       // End isFetching for spinner
       dispatch({ type: "CONTENT_FETCHING_FINISHED" });

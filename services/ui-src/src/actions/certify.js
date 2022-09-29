@@ -1,6 +1,6 @@
-import { API } from "aws-amplify";
 import requestOptions from "../hooks/authHooks/requestOptions";
 import { REPORT_STATUS } from "../types";
+import { apiLib } from "../util/apiLib";
 
 export const CERTIFY_AND_SUBMIT = "CERTIFY_AND_SUBMIT";
 export const CERTIFY_AND_SUBMIT_SUCCESS = "CERTIFY_AND_SUBMIT_SUCCESS";
@@ -25,7 +25,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
       username: username,
     };
 
-    API.post("carts-api", `/state_status/${year}/${state}`, opts);
+    apiLib.post("carts-api", `/state_status/${year}/${state}`, opts);
     dispatch({
       type: CERTIFY_AND_SUBMIT_SUCCESS,
       user: username,

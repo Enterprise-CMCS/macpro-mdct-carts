@@ -306,6 +306,74 @@ export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   return returnValue;
 };
 
+export const lookupChipEnrollments = (
+  state,
+  { ffy, enrollmentType, index }
+) => {
+  let returnValue = "Not Available";
+  if (
+    state.enrollmentCounts &&
+    state.enrollmentCounts.chipEnrollments.length > 0
+  ) {
+    const targetValue = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === index &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    if (targetValue) {
+      returnValue = targetValue.enrollmentCount.toLocaleString();
+    }
+  }
+  return returnValue;
+};
+
+export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
+  let returnValue = "Not Available";
+  if (
+    state.enrollmentCounts &&
+    state.enrollmentCounts.chipEnrollments.length > 0
+  ) {
+    // Retrieve Values
+    let oldCount = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === 1 &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    const newCount = state.enrollmentCounts.chipEnrollments.find(
+      (enrollment) =>
+        enrollment.yearToModify === ffy &&
+        enrollment.indexToUpdate === 2 &&
+        enrollment.typeOfEnrollment === enrollmentType
+    );
+    if (newCount && !oldCount) {
+      /*
+       * In case this year's data has been sent, but last year's wasn't included
+       * we still can look it up as the last year's current value
+       */
+      oldCount = state.enrollmentCounts.chipEnrollments.find(
+        (enrollment) =>
+          enrollment.yearToModify === ffy - 1 &&
+          enrollment.indexToUpdate === 2 &&
+          enrollment.typeOfEnrollment === enrollmentType
+      );
+    }
+
+    // Calculate
+    if (oldCount && newCount) {
+      if (oldCount.enrollmentCount === 0) return "-"; // Don't divide by 0
+      returnValue =
+        ((newCount.enrollmentCount - oldCount.enrollmentCount) /
+          oldCount.enrollmentCount) *
+        100;
+      returnValue =
+        (Math.round(returnValue * 1000) / 1000).toLocaleString() + "%";
+    }
+  }
+  return returnValue;
+};
+
 const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
@@ -321,6 +389,18 @@ const synthesizeValue = (value, state) => {
 
   if (value.compareACS) {
     return { contents: [compareACS(state, value.compareACS)] };
+  }
+
+  if (value.lookupChipEnrollments) {
+    return {
+      contents: [lookupChipEnrollments(state, value.lookupChipEnrollments)],
+    };
+  }
+
+  if (value.compareChipEnrollements) {
+    return {
+      contents: [compareChipEnrollements(state, value.compareChipEnrollements)],
+    };
   }
 
   if (value.targets) {

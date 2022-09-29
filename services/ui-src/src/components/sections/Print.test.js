@@ -14,7 +14,9 @@ jest.mock("../layout/Section", () => () => {
 });
 jest.mock("../../actions/initial", () => ({
   loadSections: () => ({ type: "none" }),
+  loadEnrollmentCounts: () => ({ type: "none" }),
 }));
+
 const mockStore = configureMockStore([thunk]);
 const formState = {
   formData: [

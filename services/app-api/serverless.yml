@@ -48,7 +48,11 @@ custom:
   sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
   sectionBaseTableName: ${env:sectionBaseTableName, cf:database-${self:custom.stage}.SectionBaseTableName}
   sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
+  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
+  stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
   webAclName: ${self:service}-${self:custom.stage}-webacl
+  uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
+  uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
@@ -95,6 +99,7 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
           Resource: "*"
         - Effect: "Allow"
           Action:
@@ -108,6 +113,12 @@ provider:
           Action:
             - "s3:GetObject"
           Resource: !Sub arn:aws:s3:::uploads-${self:custom.fiscalBucketEnv}-carts-download-${AWS::AccountId}/*
+        - Effect: "Allow"
+          Action:
+            - "s3:GetObject"
+            - "s3:PutObject"
+            - "s3:DeleteObject"
+          Resource: !Sub arn:aws:s3:::uploads-${self:custom.stage}-attachments-${AWS::AccountId}/*
   environment:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket, ""}
@@ -117,8 +128,10 @@ provider:
     stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
-    sectionBaseName: ${self:custom.sectionBaseTableName}
-    uploadS3BucketName: ${env:attachmentsBucketName, cf:uploads-${self:custom.stage}.AttachmentsBucketName, ""}
+    sectionBaseTableName: ${self:custom.sectionBaseTableName}
+    stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
+    uploadsTableName: ${self:custom.uploadsTableName}
+    uploadS3BucketName: !Sub ${env:attachmentsBucketName, "uploads-${self:custom.stage}-attachments-${AWS::AccountId}"}
     stage: ${self:custom.stage}
 
 functions:
@@ -127,6 +140,14 @@ functions:
     events:
       - http:
           path: state
+          method: get
+          cors: true
+          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+  getEnrollmentCounts:
+    handler: handlers/enrollmentCounts/get.getEnrollmentCounts
+    events:
+      - http:
+          path: enrollment_counts/{year}/{state}
           method: get
           cors: true
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
@@ -172,6 +193,7 @@ functions:
           authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
   generateFormTemplates:
     handler: handlers/formTemplates/post.post
+    timeout: 30
     events:
       - http:
           path: formTemplates

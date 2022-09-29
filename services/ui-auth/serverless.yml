@@ -121,12 +121,12 @@ resources:
         GenerateSecret: false # pragma: allowlist secret
         AllowedOAuthFlows:
           - implicit
+          - code
         AllowedOAuthFlowsUserPoolClient: true
         AllowedOAuthScopes:
           - email
           - openid
           - profile
-          - aws.cognito.signin.user.admin # needed for retrieving user attributes in IDM flow
         CallbackURLs:
           - ${self:custom.application_endpoint_url}
           - http://localhost:3000/
@@ -139,6 +139,13 @@ resources:
               - BackWithOkta
               - !Ref OktaUserPoolIdentityProvider
               - COGNITO
+        AccessTokenValidity: 30
+        IdTokenValidity: 30
+        RefreshTokenValidity: 24
+        TokenValidityUnits: 
+          AccessToken: "minutes"
+          IdToken: "minutes"
+          RefreshToken: "hours"
     UserPoolDomain:
       Type: AWS::Cognito::UserPoolDomain
       Properties:
