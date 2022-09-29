@@ -6,6 +6,13 @@ import { screen, render, fireEvent } from "@testing-library/react";
 import Timeout from "./Timeout";
 import moment from "moment";
 
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useHistory: () => ({
+    listen: jest.fn().mockReturnValue(() => {}),
+  }),
+}));
+
 const mockStore = configureMockStore();
 const store = mockStore({
   stateUser: {
