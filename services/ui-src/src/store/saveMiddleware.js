@@ -1,8 +1,8 @@
-import { API } from "aws-amplify";
 import requestOptions from "../hooks/authHooks/requestOptions";
 
 import { QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables";
+import { apiLib } from "../util/apiLib";
 
 export const SAVE_STARTED = "automatic save has started";
 export const SAVE_FINISHED = "automated save has finished";
@@ -53,7 +53,7 @@ const saveMiddleware = (store) => {
         // get the state and year from basic state info section
         const { stateId, year } = opts.body[0];
 
-        await API.put("carts-api", `/save_report/${year}/${stateId}`, opts);
+        await apiLib.put("carts-api", `/save_report/${year}/${stateId}`, opts);
 
         /*
          * If the save is successful, we can clear out the list of pending

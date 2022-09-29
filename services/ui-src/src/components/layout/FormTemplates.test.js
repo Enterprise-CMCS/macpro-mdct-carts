@@ -9,7 +9,7 @@ jest.mock("aws-amplify", () => ({
     post: () => mockPost(),
   },
 }));
-jest.mock("../../hooks/authHooks/requestOptions");
+jest.mock("../../hooks/authHooks");
 window.alert = jest.fn();
 
 const mockHistoryPush = jest.fn();

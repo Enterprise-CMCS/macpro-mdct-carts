@@ -121,6 +121,7 @@ resources:
         GenerateSecret: false # pragma: allowlist secret
         AllowedOAuthFlows:
           - implicit
+          - code
         AllowedOAuthFlowsUserPoolClient: true
         AllowedOAuthScopes:
           - email
@@ -138,6 +139,13 @@ resources:
               - BackWithOkta
               - !Ref OktaUserPoolIdentityProvider
               - COGNITO
+        AccessTokenValidity: 30
+        IdTokenValidity: 30
+        RefreshTokenValidity: 24
+        TokenValidityUnits: 
+          AccessToken: "minutes"
+          IdToken: "minutes"
+          RefreshToken: "hours"
     UserPoolDomain:
       Type: AWS::Cognito::UserPoolDomain
       Properties:
