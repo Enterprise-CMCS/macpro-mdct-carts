@@ -51,6 +51,7 @@ describe("Test Update Sections Handler", () => {
       1,
       {
         contents: { test: "test" },
+        lastChanged: new Date().toString(),
       },
       "post"
     );
