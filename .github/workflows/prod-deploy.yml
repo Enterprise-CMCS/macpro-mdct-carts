@@ -170,7 +170,7 @@ jobs:
           OIDC_ISSUER: ${{secrets.PROD_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.PROD_TF_VAR_OPENID_DISCOVERY_URL}}
           APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
-          TF_VAR_acm_certificate_domain_ui: ${{secrets.PROD_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
+          # TF_VAR_acm_certificate_domain_ui: ${{secrets.PROD_TF_VAR_ACM_CERTIFICATE_DOMAIN_UI}}
           TF_VAR_acm_certificate_domain_api_postgres: ${{secrets.PROD_TF_VAR_ACM_CERTIFICATE_DOMAIN_API_POSTGRES}}
           TF_VAR_use_custom_db_password_info: ${{ env.USE_CUSTOM_PASSWORD }}
           TF_VAR_postgres_django_registry_id: ${{secrets.PROD_POSTGRES_DJANGO_ACCOUNT_ID}}
