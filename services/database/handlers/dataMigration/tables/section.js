@@ -1,4 +1,4 @@
-const query = `select contents->'section'->'state' as "stateId", contents->'section'->'year' as year, contents->'section'->'ordinal' as "sectionId", contents
+const query = `select contents->'section'->'state' as "stateId", contents->'section'->'year' as year, contents->'section'->'ordinal' as "sectionId", modified_on as "lastChanged", contents
 from carts_api_section`;
 
 const migration = {
@@ -7,6 +7,7 @@ const migration = {
   transform: (rows) => {
     rows.map((row) => {
       row.pk = `${row.stateId}-${row.year}`;
+      row.lastChanged = row.lastChanged?.toString();
     });
     return rows;
   },
