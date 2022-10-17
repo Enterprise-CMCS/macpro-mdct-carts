@@ -49,7 +49,7 @@ const Part = ({
   } else {
     if (contextData) {
       innards = (
-        <Alert autoFocus>
+        <Alert>
           <div className="ds-c-alert__text">
             {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
           </div>

@@ -13,20 +13,19 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
     !questionType.includes("email") &&
     !questionType.includes("percentage")
   ) {
+    let legend = [];
+    if (!hideNumber) legend.push(labelBits);
+    legend.push(label);
+
     return (
-      <div>
-        {!hideNumber && <p>{labelBits}</p>}
-        {!questionType.includes("text") && (
-          <h4 className="label-header" aria-label="Label Text">
-            {label}
-          </h4>
-        )}
+      <>
+        <legend className="label-header">{legend.join(" ")}</legend>
         {hint && (
           <div className="ds-c-field__hint" aria-label={`${label} hint`}>
             <Text>{hint}</Text>
           </div>
         )}
-      </div>
+      </>
     );
   } else {
     return null;
