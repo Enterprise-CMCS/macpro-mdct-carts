@@ -40,6 +40,16 @@
   }
 }
 
+.ds-c-button:disabled {
+  color: #262626;
+  border-color: #b6b6bd;
+  background: #e1e1e3;
+}
+
+.ds-c-field__hint {
+  color: #262626;
+}
+
 .synthesized-table,
 .non-interactive-table {
   table {
