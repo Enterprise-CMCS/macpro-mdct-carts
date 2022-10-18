@@ -19,9 +19,15 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
 
     return (
       <>
-        <legend className="label-header">{legend.join(" ")}</legend>
+        <legend className="label-header" data-testid="question-legend">
+          {legend.join(" ")}
+        </legend>
         {hint && (
-          <div className="ds-c-field__hint" aria-label={`${label} hint`}>
+          <div
+            className="ds-c-field__hint"
+            data-testid="legend-hint"
+            aria-label={`${label} hint`}
+          >
             <Text>{hint}</Text>
           </div>
         )}
