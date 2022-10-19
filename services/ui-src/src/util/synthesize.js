@@ -215,6 +215,13 @@ const lookupFMAP = (state, fy) => {
   return "";
 };
 
+const snakeToCamel = (str) =>
+  str
+    .toLowerCase()
+    .replace(/([-_][a-z])/g, (group) =>
+      group.toUpperCase().replace("-", "").replace("_", "")
+    );
+
 /**
  * Retrieve acsSet from state and return for individual state.
  *
@@ -225,6 +232,11 @@ const lookupFMAP = (state, fy) => {
  */
 const lookupAcs = (state, { ffy, acsProperty }) => {
   let returnValue = "Not Available";
+  // Support prior lookup syntax in form lookups
+  const acsPropQuery = acsProperty.includes("_")
+    ? snakeToCamel(acsProperty)
+    : acsProperty;
+
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
     const windowPathName = window.location.pathname;
@@ -250,7 +262,7 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
 
     // If acs exists, return the value from the object
     if (acs) {
-      returnValue = Number(`${acs[acsProperty]}`).toLocaleString();
+      returnValue = Number(`${acs[acsPropQuery]}`).toLocaleString();
       if (acsProperty.includes("percent")) {
         returnValue += "%";
       }

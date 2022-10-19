@@ -21,7 +21,6 @@ export const updateSections = handler(async (event, _context) => {
 
   const user = getUserCredentialsFromJwt(event);
   const { year, state } = event.pathParameters;
-
   // only state users can update reports associated with their assigned state
   if (
     (user.role === AppRoles.STATE_USER && user.state !== state) ||
@@ -42,6 +41,7 @@ export const updateSections = handler(async (event, _context) => {
   }
 
   // Update each of the Sections for the report associated with the given year and state
+  const lastChanged = new Date().toString();
   for (let section = 0; section < reportData.length; section++) {
     const params = {
       TableName: process.env.sectionTableName!,
@@ -52,6 +52,7 @@ export const updateSections = handler(async (event, _context) => {
       ...convertToDynamoExpression(
         {
           contents: reportData[section].contents,
+          lastChanged: lastChanged,
         },
         "post"
       ),
@@ -75,23 +76,23 @@ export const updateSections = handler(async (event, _context) => {
 
   const queryValue = await dynamoDb.query(params);
   const stateStatus = queryValue.Items![0] as StateStatus;
+  const moveToInProgress =
+    queryValue.Items && stateStatus.status === "not_started";
 
-  if (queryValue.Items && stateStatus.status === "not_started") {
-    const params = {
-      TableName: process.env.stateStatusTableName!,
-      Key: {
-        stateId: state,
-        year: parseInt(year),
+  const statusParams = {
+    TableName: process.env.stateStatusTableName!,
+    Key: {
+      stateId: state,
+      year: parseInt(year),
+    },
+    ...convertToDynamoExpression(
+      {
+        status: moveToInProgress ? "in_progress" : stateStatus.status,
+        lastChanged: lastChanged,
       },
-      ...convertToDynamoExpression(
-        {
-          status: "in_progress",
-          lastChanged: new Date().toString(),
-        },
-        "post"
-      ),
-    };
+      "post"
+    ),
+  };
 
-    await dynamoDb.update(params);
-  }
+  await dynamoDb.update(statusParams);
 });

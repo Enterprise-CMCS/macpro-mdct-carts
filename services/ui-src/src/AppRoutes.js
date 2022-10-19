@@ -13,6 +13,7 @@ import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
+import Timeout from "./components/layout/Timeout";
 
 const AppRoutes = () => {
   const { user, showLocalLogins, loginWithIDM } = useUser();
@@ -43,6 +44,7 @@ const AppRoutes = () => {
         <Router>
           {VisibleHeader}
           <Home role={user?.userRole || ""} />
+          <Timeout />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />
           <Route path="/profile" component={Profile} />
