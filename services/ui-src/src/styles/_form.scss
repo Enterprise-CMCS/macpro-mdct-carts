@@ -41,6 +41,10 @@
   color: #262626;
 }
 
+.ds-u-padding--2 {
+  color: #262626;
+}
+
 .ds-c-table {
   margin: 1.2rem 0;
 
@@ -322,6 +326,11 @@
   padding: 0 2.2rem 0.6rem;
 }
 
+.multi-select {
+  --rmsc-gray: #262626;
+  --rmsc-border: #262626;
+}
+
 .nav-buttons {
   float: right;
   margin: ($margin * 8) 0 ($margin * 2);
@@ -399,8 +408,13 @@
 .dropdown-container {
   max-width: 320px;
 
+  .dropdown-heading-value {
+    color: #262626;
+  }
+
   .dropdown-content {
     z-index: 100;
+    color: #262626;
   }
 }
 
