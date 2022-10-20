@@ -107,7 +107,7 @@ const CMSHomepage = ({
   }
 
   return (
-    <div className="homepage ds-l-col--12">
+    <main className="homepage ds-l-col--12">
       <div className="ds-l-container-large">
         {currentUserRole !== AppRoles.CMS_ADMIN ? (
           <div className="ds-l-row ds-u-padding-left--2">
@@ -230,7 +230,7 @@ const CMSHomepage = ({
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
