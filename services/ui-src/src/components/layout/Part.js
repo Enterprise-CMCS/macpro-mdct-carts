@@ -39,18 +39,23 @@ const Part = ({
   if (show) {
     innards = (
       <>
-        {text ? <Text>{text}</Text> : null}
+        {text ? <Text data-testid="part-text">{text}</Text> : null}
 
         {questions.map((question) => (
-          <Question key={question.id} question={question} tableTitle={title} />
+          <Question
+            key={question.id}
+            question={question}
+            tableTitle={title}
+            data-testid="part-question"
+          />
         ))}
       </>
     );
   } else {
     if (contextData) {
       innards = (
-        <Alert autoFocus>
-          <div className="ds-c-alert__text">
+        <Alert>
+          <div className="ds-c-alert__text" data-testid="part-alert">
             {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
           </div>
         </Alert>
@@ -59,15 +64,15 @@ const Part = ({
   }
 
   return (
-    <div id={partId}>
+    <div id={partId} data-testid="part">
       {title &&
         (nestedSubsectionTitle ? (
-          <h4 className="h4-pdf-bookmark">
+          <h4 className="h4-pdf-bookmark" data-testid="part-sub-header">
             {+section !== 0 && partNumber && `Part ${partNumber}: `}
             {title}
           </h4>
         ) : (
-          <h3 className="h3-pdf-bookmark">
+          <h3 className="h3-pdf-bookmark" data-testid="part-header">
             {+section !== 0 && partNumber && `Part ${partNumber}: `}
             {title}
           </h3>
