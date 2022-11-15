@@ -3,6 +3,36 @@
 import synthesize from "../util/synthesize";
 
 const state = {
+  allStatesData: [
+    {
+      name: "Alabama",
+      programNames: {},
+      programType: "combo",
+      code: "AL",
+      fmapSet: [],
+      acsSet: [
+        {
+          percentUninsured: "2.1",
+          numberUninsuredMoe: 4000,
+          year: 2021,
+          percentUninsuredMoe: "0.3",
+          stateId: "AL",
+          numberUninsured: 27000,
+        },
+        {
+          percentUninsured: "3.1",
+          numberUninsuredMoe: 5000,
+          year: 2020,
+          percentUninsuredMoe: "0.3",
+          stateId: "AL",
+          numberUninsured: 28000,
+        },
+      ],
+    },
+  ],
+  stateUser: {
+    abbr: "AL",
+  },
   items: [
     {
       id: "item0",
@@ -350,6 +380,85 @@ describe("value synthesization utility", () => {
       );
 
       expect(out).toEqual({ contents: 1.6 });
+    });
+  });
+
+  describe("handles ACS Data", () => {
+    it("handles a lookup for a ffy and property", () => {
+      const out = synthesize(
+        {
+          lookupAcs: {
+            ffy: 2021,
+            acsProperty: "numberUninsured",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["27,000"] });
+    });
+
+    it("returns results for properties in other cases", () => {
+      const out = synthesize(
+        {
+          lookupAcs: {
+            ffy: 2021,
+            acsProperty: "number_uninsured",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["27,000"] });
+    });
+
+    it("returns 'Not Available' when no data found", () => {
+      const out = synthesize(
+        {
+          lookupAcs: {
+            ffy: 2555,
+            acsProperty: "cyborgsCreated",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["Not Available"] });
+      const outCompare = synthesize(
+        {
+          compareACS: {
+            ffy1: 2555,
+            ffy2: 1900,
+            acsProperty: "cyborgsCreated",
+          },
+        },
+        state
+      );
+      expect(outCompare).toEqual({ contents: ["Not Available"] });
+    });
+
+    it("formats percents on lookup", () => {
+      const out = synthesize(
+        {
+          lookupAcs: {
+            ffy: 2021,
+            acsProperty: "percentUninsured",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["2.1%"] });
+    });
+
+    it("compares two ffys", () => {
+      const out = synthesize(
+        {
+          compareACS: {
+            ffy1: 2021,
+            ffy2: 2020,
+            acsProperty: "numberUninsured",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["3.70%"] });
     });
   });
 });
