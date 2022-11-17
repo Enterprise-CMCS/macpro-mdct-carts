@@ -17,7 +17,7 @@ const AdminHome = () => {
     <>
       <ScrollToTop />
       <Route exact path="/">
-        <div className="homepage ds-l-col--12">
+        <main className="homepage ds-l-col--12">
           <div className="ds-l-container">
             <div className="ds-l-row">
               <h1 className="page-title ds-u-margin-bottom--0">
@@ -35,7 +35,7 @@ const AdminHome = () => {
               <CMSHomepage />
             </div>
           </div>
-        </div>
+        </main>
       </Route>
       <Switch>
         <Route
