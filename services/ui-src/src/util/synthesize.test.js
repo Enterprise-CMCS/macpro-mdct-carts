@@ -67,6 +67,57 @@ const state = {
       answer: { entry: "abc" },
     },
   ],
+  enrollmentCounts: {
+    chipEnrollments: [
+      {
+        pk: "AL-2022",
+        entryKey: "medicaid_exp_chip-1",
+        indexToUpdate: 1,
+        stateId: "AL",
+        typeOfEnrollment: "Medicaid Expansion CHIP",
+        enrollmentCount: 301,
+        filterId: "2022-02",
+        yearToModify: "2022",
+      },
+      {
+        pk: "AL-2022",
+        entryKey: "medicaid_exp_chip-2",
+        indexToUpdate: 2,
+        stateId: "AL",
+        typeOfEnrollment: "Medicaid Expansion CHIP",
+        enrollmentCount: 333,
+        filterId: "2022-02",
+        yearToModify: "2022",
+      },
+    ],
+  },
+};
+
+const fallbackChipState = {
+  enrollmentCounts: {
+    chipEnrollments: [
+      {
+        pk: "AL-2021",
+        entryKey: "medicaid_exp_chip-2",
+        indexToUpdate: 2,
+        stateId: "AL",
+        typeOfEnrollment: "Medicaid Expansion CHIP",
+        enrollmentCount: 301,
+        filterId: "2021-02",
+        yearToModify: "2021",
+      },
+      {
+        pk: "AL-2022",
+        entryKey: "medicaid_exp_chip-2",
+        indexToUpdate: 2,
+        stateId: "AL",
+        typeOfEnrollment: "Medicaid Expansion CHIP",
+        enrollmentCount: 333,
+        filterId: "2022-02",
+        yearToModify: "2022",
+      },
+    ],
+  },
 };
 
 describe("value synthesization utility", () => {
@@ -459,6 +510,72 @@ describe("value synthesization utility", () => {
         state
       );
       expect(out).toEqual({ contents: ["3.70%"] });
+    });
+  });
+
+  describe("handles CHIPS Enrollment Data", () => {
+    it("performs a lookup for a given year", () => {
+      const out = synthesize(
+        {
+          lookupChipEnrollments: {
+            ffy: 2022,
+            enrollmentType: "Medicaid Expansion CHIP",
+            index: 2,
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["333"] });
+    });
+    it("performs a lookup for a past years data if current year does not provide it", () => {
+      const out = synthesize(
+        {
+          lookupChipEnrollments: {
+            ffy: 2022,
+            enrollmentType: "Medicaid Expansion CHIP",
+            index: 1,
+          },
+        },
+        fallbackChipState
+      );
+      expect(out).toEqual({ contents: ["301"] });
+    });
+    it("performs a comparison between two years", () => {
+      const out = synthesize(
+        {
+          compareChipEnrollements: {
+            ffy: 2022,
+            enrollmentType: "Medicaid Expansion CHIP",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["10.631%"] });
+    });
+
+    it("performs a comparison between two years and is able to fall back to past data", () => {
+      const out = synthesize(
+        {
+          compareChipEnrollements: {
+            ffy: 2022,
+            enrollmentType: "Medicaid Expansion CHIP",
+          },
+        },
+        fallbackChipState
+      );
+      expect(out).toEqual({ contents: ["10.631%"] });
+    });
+    it("returns Not Available when data is missing", () => {
+      const out = synthesize(
+        {
+          compareChipEnrollements: {
+            ffy: 2050,
+            enrollmentType: "Medicaid Expansion CHIP",
+          },
+        },
+        state
+      );
+      expect(out).toEqual({ contents: ["Not Available"] });
     });
   });
 });

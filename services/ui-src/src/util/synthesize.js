@@ -327,12 +327,21 @@ export const lookupChipEnrollments = (
     state.enrollmentCounts &&
     state.enrollmentCounts.chipEnrollments.length > 0
   ) {
-    const targetValue = state.enrollmentCounts.chipEnrollments.find(
+    let targetValue = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToModify === ffy &&
+        enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === index &&
         enrollment.typeOfEnrollment === enrollmentType
     );
+    // Lookup the primary stat for the past year if missing
+    if (!targetValue && index == 1) {
+      targetValue = state.enrollmentCounts.chipEnrollments.find(
+        (enrollment) =>
+          enrollment.yearToModify == ffy - 1 &&
+          enrollment.indexToUpdate === index + 1 &&
+          enrollment.typeOfEnrollment === enrollmentType
+      );
+    }
     if (targetValue) {
       returnValue = targetValue.enrollmentCount.toLocaleString();
     }
@@ -349,13 +358,13 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
     // Retrieve Values
     let oldCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToModify === ffy &&
+        enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === 1 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
     const newCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToModify === ffy &&
+        enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === 2 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
@@ -366,7 +375,7 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
        */
       oldCount = state.enrollmentCounts.chipEnrollments.find(
         (enrollment) =>
-          enrollment.yearToModify === ffy - 1 &&
+          enrollment.yearToModify == ffy - 1 &&
           enrollment.indexToUpdate === 2 &&
           enrollment.typeOfEnrollment === enrollmentType
       );
