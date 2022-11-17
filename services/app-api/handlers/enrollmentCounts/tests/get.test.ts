@@ -10,7 +10,30 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
     get: jest.fn(),
-    query: jest.fn().mockReturnValue({ Items: [] }),
+    query: jest.fn().mockReturnValue({
+      Items: [
+        {
+          pk: "AL-2022",
+          entryKey: "separate_chip-1",
+          indexToUpdate: 1,
+          stateId: "AL",
+          typeOfEnrollment: "Separate CHIP",
+          enrollmentCount: 5,
+          filterId: "2022-02",
+          yearToModify: "2022",
+        },
+        {
+          pk: "AL-2021",
+          entryKey: "separate_chip-2",
+          indexToUpdate: 2,
+          stateId: "AL",
+          typeOfEnrollment: "Separate CHIP",
+          enrollmentCount: 5,
+          filterId: "2021-02",
+          yearToModify: "2021",
+        },
+      ],
+    }),
   },
 }));
 
@@ -51,6 +74,8 @@ describe("Test Get Enrollment Count Handlers", () => {
         ":pk": "AL-2022",
       },
     });
+    const body = JSON.parse(res.body);
+    expect(body.length).toEqual(4); // get should be called 2x to populate
   });
 
   test("fetching enrollment counts without state and year throws error", async () => {

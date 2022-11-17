@@ -16,7 +16,7 @@
     "stateId": "AK",
     "typeOfEnrollment": "Medicaid Expansion CHIP",
     "enrollmentCount": 123,
-    "filterId": "2021-02",
+    "filterId": "2022-02",
     "yearToModify": "2022"
   },
   {
@@ -46,7 +46,7 @@
     "stateId": "AL",
     "typeOfEnrollment": "Medicaid Expansion CHIP",
     "enrollmentCount": 333,
-    "filterId": "2021-02",
+    "filterId": "2022-02",
     "yearToModify": "2022"
   },
   {
@@ -76,7 +76,7 @@
     "stateId": "AL",
     "typeOfEnrollment": "Separate CHIP",
     "enrollmentCount": 123,
-    "filterId": "2021-02",
+    "filterId": "2022-02",
     "yearToModify": "2022"
   }
 ]
