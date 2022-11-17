@@ -29,21 +29,20 @@ export const getEnrollmentCounts = handler(async (event, _context) => {
     };
     const currentYearQuery = await dynamoDb.query(currentParams);
     if (currentYearQuery.Items) {
-      counts.concat(currentYearQuery.Items);
+      counts.push(...currentYearQuery.Items);
     }
-
     // Provide past year values as fallback
     const pastYear = parseInt(year) - 1;
     const pastParams = {
       TableName: process.env.stageEnrollmentCountsTableName!,
       KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
-        ":pk": `${state}-${pastYear - 1}`,
+        ":pk": `${state}-${pastYear}`,
       },
     };
     const pastYearQuery = await dynamoDb.query(pastParams);
     if (pastYearQuery.Items) {
-      counts.concat(currentYearQuery.Items);
+      counts.push(...pastYearQuery.Items);
     }
   }
   return counts;
