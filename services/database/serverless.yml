@@ -44,7 +44,8 @@ custom:
       domain:
         sources:
           - table: ${self:custom.acsTableName}
-            sources: [./data/seed-local/seed-acs.json, ./data/seed/seed-acs-2021.json]
+            sources:
+              [./data/seed-local/seed-acs.json, ./data/seed/seed-acs-2021.json]
           - table: ${self:custom.fmapTableName}
             sources: [./data/seed-local/seed-fmap.json]
           - table: ${self:custom.stateTableName}
@@ -57,13 +58,15 @@ custom:
             sources: [./data/seed/seed-section-base.json]
           - table: ${self:custom.stageEnrollmentCountsTableName}
             sources: [./data/seed-local/seed-stg-enrollment-counts.json]
-  dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, "false"}
-  dataMigrationEnvMap:
-    production: prod
-    val: staging
-    main: master
-    default: master
-  dataMigrationEnv: ${self:custom.dataMigrationEnvMap.${self:custom.stage}, self:custom.dataMigrationEnvMap.default}
+  # Disabling migration handler to unattach from v2 security group for teardown. Remove this and dataMigration folder in future
+  # dataMigrationEnabled: ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/runV2DataMigration, "false"}
+  # dataMigrationEnvMap:
+  #   production: prod
+  #   val: staging
+  #   main: master
+  #   default: master
+  # dataMigrationEnv: ${self:custom.dataMigrationEnvMap.${self:custom.stage}, self:custom.dataMigrationEnvMap.default}
+  dataMigrationEnabled: false
   scripts:
     hooks:
       deploy:finalize: |
@@ -102,20 +105,21 @@ provider:
           Resource: "*"
 
 functions:
-  dataMigration:
-    handler: handlers/dataMigration/dataMigration.handler
-    environment:
-      postgresDb: ${env:postgresDatabase, ssm:/${self:custom.dataMigrationEnv}/postgres_db}
-      postgresHost: ${env:postgresHost, ssm:/${self:custom.dataMigrationEnv}/postgres_host}
-      postgresUser: ${env:postgresUser, ssm:/${self:custom.dataMigrationEnv}/postgres_user}
-      postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/custom/postgres_custom_password, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
-      dynamoPrefix: ${self:custom.stage}
-    timeout: 120
-    vpc:
-      securityGroupIds:
-        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:/configuration/default/migrationSecurityGroup}
-      subnetIds:
-        - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSubnet, ssm:/configuration/default/migrationSubnet}
+  # Disabling migration handler to unattach from v2 security group for teardown. Remove this and dataMigration folder in future
+  # dataMigration:
+  #   handler: handlers/dataMigration/dataMigration.handler
+  #   environment:
+  #     postgresDb: ${env:postgresDatabase, ssm:/${self:custom.dataMigrationEnv}/postgres_db}
+  #     postgresHost: ${env:postgresHost, ssm:/${self:custom.dataMigrationEnv}/postgres_host}
+  #     postgresUser: ${env:postgresUser, ssm:/${self:custom.dataMigrationEnv}/postgres_user}
+  #     postgresPassword: ${env:postgresPassword, ssm:/${self:custom.dataMigrationEnv}/custom/postgres_custom_password, ssm:/${self:custom.dataMigrationEnv}/postgres_password}
+  #     dynamoPrefix: ${self:custom.stage}
+  #   timeout: 120
+  #   vpc:
+  #     securityGroupIds:
+  #       - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSecurityGroup, ssm:/configuration/default/migrationSecurityGroup}
+  #     subnetIds:
+  #       - ${env:runV2DataMigration, ssm:/configuration/${self:custom.stage}/migrationSubnet, ssm:/configuration/default/migrationSubnet}
   seed:
     handler: handlers/seed/seed.handler
     environment:
