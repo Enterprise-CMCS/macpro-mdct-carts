@@ -13,7 +13,8 @@ locals {
 # Create a postgres_deployer ECS Task Def to bootstrap postgres RDS with users, tables, etc
 ####################################################################################################
 data "aws_ecr_repository" "postgres_deployer" {
-  name = "postgres_deployer"
+  name        = "postgres_deployer"
+  registry_id = var.postgres_deployer_registry_id
 }
 
 resource "aws_ecs_task_definition" "postgres_deployer" {

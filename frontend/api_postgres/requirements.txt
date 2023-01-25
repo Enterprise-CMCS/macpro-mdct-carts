@@ -4,7 +4,7 @@ psycopg2-binary==2.8.3
 djangorestframework
 markdown
 django-json-widget
-django-filter
+django-filter==21.1
 django-cors-headers==3.11.0
 jsonschema==4.4.0
 jsonpath_ng

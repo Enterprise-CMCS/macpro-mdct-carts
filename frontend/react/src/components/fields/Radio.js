@@ -30,6 +30,11 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
   const radioButttonList = question.answer.options.map(({ label, value }) => (
     <div className="radio-container" key={props.name + "-" + value}>
       <input
+        aria-label={`Question: ${
+          question.label
+        }, Answer: ${label} Radio Button with a status of ${
+          checked === value ? "Checked" : "unchecked"
+        }`}
         key={value}
         checked={checked === value}
         type="radio"

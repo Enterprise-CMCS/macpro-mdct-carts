@@ -1,7 +1,7 @@
 locals {
   postgres_password     = var.use_custom_db_password_info ? "/${terraform.workspace}/custom/postgres_custom_password" : "/${terraform.workspace}/postgres_password"
   postgres_user         = var.use_custom_db_user_info ? "/${terraform.workspace}/custom/postgres_custom_user" : "/${terraform.workspace}/postgres_user"
-  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}:8000" : "https://${var.acm_certificate_domain_api_postgres}"
+  endpoint_api_postgres = var.acm_certificate_domain_api_postgres == "" ? "http://${aws_alb.api_postgres.dns_name}" : "https://${var.acm_certificate_domain_api_postgres}"
   django_settings_module = {
     "prod" : "carts.settings"
   }
@@ -39,7 +39,8 @@ data "aws_ssm_parameter" "postgres_security_group" {
 }
 
 data "aws_ecr_repository" "postgres_django" {
-  name = "postgres_django"
+  name        = "postgres_django"
+  registry_id = var.postgres_django_registry_id
 }
 
 resource "aws_ecs_task_definition" "api_postgres" {
@@ -157,10 +158,10 @@ resource "aws_security_group_rule" "alb_api_postgres_egress" {
   security_group_id        = aws_security_group.alb_api_postgres.id
 }
 
-resource "aws_security_group_rule" "alb_api_postgres_ingress_8000" {
+resource "aws_security_group_rule" "alb_api_postgres_ingress_80" {
   type              = "ingress"
-  from_port         = 8000
-  to_port           = 8000
+  from_port         = 80
+  to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.alb_api_postgres.id
@@ -219,7 +220,7 @@ resource "aws_alb_listener" "https_forward_api_postgres" {
 resource "aws_alb_listener" "http_forward_api_postgres" {
   count             = var.acm_certificate_domain_api_postgres == "" ? 1 : 0
   load_balancer_arn = aws_alb.api_postgres.id
-  port              = "8000"
+  port              = "80"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api_postgres.id
@@ -230,7 +231,7 @@ resource "aws_alb_listener" "http_forward_api_postgres" {
 resource "aws_alb_listener" "http_to_https_redirect_api_postgres" {
   count             = var.acm_certificate_domain_api_postgres == "" ? 0 : 1
   load_balancer_arn = aws_alb.api_postgres.id
-  port              = "8000"
+  port              = "80"
   protocol          = "HTTP"
   default_action {
     target_group_arn = aws_alb_target_group.api_postgres.id
@@ -376,6 +377,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   account_id        = data.aws_caller_identity.current.account_id
+  new_account_id    = data.aws_caller_identity.datalayer.account_id # Data Layer is always in new account now
   is_legacy_account = local.account_id == "730373213083"
 }
 

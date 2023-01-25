@@ -52,7 +52,7 @@ resource "aws_s3_bucket_policy" "b" {
   policy = jsonencode({
     Version = "2012-10-17"
     Id      = "MYBUCKETPOLICY"
-    Statement = [
+    Statement = concat([
       {
         Sid       = "MustBeClean"
         Effect    = "Deny"
@@ -118,6 +118,35 @@ resource "aws_s3_bucket_policy" "b" {
           }
         }
       }
-    ]
+      ],
+      # Allow new accounts to access uploads bucket for legacy account
+      local.is_legacy_account ? [
+        {
+          Sid    = "AllowNewAccountS3SyncObjects",
+          Effect = "Allow",
+          Principal = {
+            AWS = "arn:aws:iam::${local.new_account_id}:root"
+          }
+          Action = [
+            "s3:GetObject*"
+          ]
+          Resource = [
+            "${aws_s3_bucket.uploads.arn}/*"
+          ]
+        },
+        {
+          Sid    = "AllowNewAccountS3SyncBucket",
+          Effect = "Allow",
+          Principal = {
+            AWS = "arn:aws:iam::${local.new_account_id}:root"
+          }
+          Action = [
+            "s3:ListBucket"
+          ]
+          Resource = [
+            "${aws_s3_bucket.uploads.arn}"
+          ]
+        }
+    ] : [])
   })
 }

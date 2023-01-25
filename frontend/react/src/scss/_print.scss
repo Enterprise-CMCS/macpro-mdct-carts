@@ -3,13 +3,10 @@
  */
 
 .print-all {
-  textarea {
-    display: none !important;
-  }
-
   .ds-c-alert,
   .form-footer,
-  .page-info {
+  .page-info,
+  .non-print-textarea {
     display: none;
   }
   .print-only,
@@ -42,13 +39,17 @@
       margin: 0 2.2rem 1.2rem 2.2rem;
     }
   }
+
+  .print-text-area {
+    display: block;
+    padding: 10px;
+    border: black solid 1px;
+  }
 }
 
 @media print {
-  .no-print {
-    display: none !important;
-  }
-  textarea {
+  .no-print,
+  .non-print-textarea {
     display: none !important;
   }
   .action-buttons,
@@ -121,5 +122,11 @@
   }
   .question {
     break-inside: avoid;
+  }
+
+  .print-text-area {
+    display: block;
+    padding: 10px;
+    border: black solid 1px;
   }
 }

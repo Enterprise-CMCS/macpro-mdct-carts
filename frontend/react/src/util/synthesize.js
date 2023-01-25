@@ -176,11 +176,22 @@ const sum = (values) => {
 };
 
 const lookupFMAP = (state, fy) => {
-  if (state.allStatesData && (state.global.stateName || state.stateUser.abbr)) {
+  // if admin and in a print view get state param
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const stateFromParams = urlSearchParams.get("state");
+
+  if (
+    state.allStatesData &&
+    (state.global.stateName || state.stateUser.abbr || stateFromParams)
+  ) {
     let stateData = "";
     if (state.stateUser.abbr) {
       stateData = state.allStatesData.filter(
         (st) => st.code === state.stateUser.abbr
+      )[0];
+    } else if (stateFromParams) {
+      stateData = state.allStatesData.filter(
+        (st) => st.code.toLowerCase() === stateFromParams.toLowerCase()
       )[0];
     } else {
       stateData = state.allStatesData.filter(
@@ -208,11 +219,18 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
   let returnValue = "";
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
+    const windowPathName = window.location.pathname;
     // if admin, grab the state from the URL
-    const stateFromURL = window.location.pathname.split("/")[3];
+    const stateFromURL = windowPathName.split("/")[3];
+
+    // if admin and in a print view get state param
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const stateFromParams = urlSearchParams.get("state");
 
     // Get stateUser state or fallback to the URL, if an admin
-    const stateAbbr = state.stateUser.abbr || stateFromURL;
+    const stateAbbr =
+      state.stateUser.abbr ||
+      (windowPathName.includes("print") ? stateFromParams : stateFromURL);
 
     // Filter for only matching state
     const stateData = state.allStatesData.filter(

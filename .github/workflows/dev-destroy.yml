@@ -17,10 +17,9 @@ env:
   BUILD_TAG: ${{ github.event.ref }}.${{ github.sha }}
   ECR_REPOSITORY_POSTGRESS_DEPLOYER: "postgres_deployer"
   ECR_REPOSITORY_API_POSTGRESS: "postgres_django"
-  DATALAYER_IN_NEW_ACCOUNTS: ${{ secrets.DEV_DATALAYER_IN_NEW_ACCOUNTS == 'dev-datalayer-in-new-accounts' }}
 
 jobs:
-  destroy-frontend:
+  destroy-frontend-new:
     # Protected branches should be designated as such in the GitHub UI.
     # So, a protected branch should never have this workflow run, since the branch should never be deleted.
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
@@ -34,42 +33,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Configure datalayer AWS credentials (new account)
-        if: env.DATALAYER_IN_NEW_ACCOUNTS == 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Configure datalayer AWS credentials (legacy account)
-        if: env.DATALAYER_IN_NEW_ACCOUNTS != 'true'
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Configure Terraform Datalayer Provider Credentials
         run: |
           echo "TF_VAR_datalayer_aws_access_key=${{env.AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
           echo "TF_VAR_datalayer_aws_secret_key=${{env.AWS_SECRET_ACCESS_KEY}}" >> $GITHUB_ENV
           echo "TF_VAR_datalayer_aws_session_token=${{env.AWS_SESSION_TOKEN}}" >> $GITHUB_ENV
-      - name: Configure frontend AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Destroy frontend
-        run: ./frontend_destroy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
+        run: ./frontend_destroy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}} ${{env.BUILD_TAG}}
         env:
-          VPC_NAME: ${{secrets.DEV_VPC_NAME}}
+          VPC_NAME: ${{secrets.NEW_DEV_VPC }}
           OIDC_CLIENT_ID: ${{secrets.MASTER_OIDC_CLIENT_ID}}
           OIDC_ISSUER: ${{secrets.MASTER_OIDC_ISSUER}}
           TF_VAR_openid_discovery_url: ${{secrets.MASTER_TF_VAR_OPENID_DISCOVERY_URL}}
-          APPLICATION_BUCKET: ${{secrets.APPLICATION_BUCKET}}
+          APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
   destroy-data:
     # Protected branches should be designated as such in the GitHub UI.
     # So, a protected branch should never have this workflow run, since the branch should never be deleted.
@@ -78,27 +63,19 @@ jobs:
     # Add/remove names from this list as appropriate.
     if: |
       always() &&
-      (needs.destroy-frontend.result == 'success' || needs.destroy-frontend.result == 'skipped') &&
+      (needs.destroy-frontend-new.result == 'success' || needs.destroy-frontend-new.result == 'skipped') &&
       github.event.ref_type == 'branch' &&
       !contains(fromJson('["master", "main", "staging", "production", "prod"]'), github.event.ref) &&
       startsWith(github.event.ref,'dev-')
     runs-on: ubuntu-latest
     needs:
-      - destroy-frontend
+      - destroy-frontend-new
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS credentials (new account)
-        if: env.DATALAYER_IN_NEW_ACCOUNTS == 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.DEV_NEW_AWS_OIDC_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Configure AWS credentials (legacy account)
-        if: env.DATALAYER_IN_NEW_ACCOUNTS != 'true'
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v2
@@ -106,47 +83,11 @@ jobs:
           terraform_version: 1.0.11
           terraform_wrapper: false
       - name: Destroy data Layer
-        run: ./data_layer_deploy.sh ${{secrets.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
+        run: ./data_layer_deploy.sh ${{env.APPLICATION_BUCKET}} ${{env.BRANCH_NAME}} destroy application_version=${{env.BUILD_TAG}} vpc_name=${{env.VPC_NAME}}
         env:
-          VPC_NAME: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_DEV_VPC || secrets.DEV_VPC_NAME}}
-          APPLICATION_BUCKET: ${{env.DATALAYER_IN_NEW_ACCOUNTS == 'true' && secrets.NEW_APPLICATION_BUCKET || secrets.APPLICATION_BUCKET}}
+          VPC_NAME: ${{secrets.NEW_DEV_VPC}}
+          APPLICATION_BUCKET: ${{secrets.NEW_APPLICATION_BUCKET}}
           TF_VAR_postgres_restore_snapshot_id: ${{secrets.DEV_RESTORE_SNAPSHOT_ID}}
-  destroy-serverless-legacy-account:
-    # Protected branches should be designated as such in the GitHub UI.
-    # So, a protected branch should never have this workflow run, since the branch should never be deleted.
-    # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
-    # This is a list of branch names that are commonly used for protected branches/environments.
-    # Add/remove names from this list as appropriate.
-    if: |
-      always() &&
-      (needs.destroy-data.result == 'success' || needs.destroy-data.result == 'skipped') &&
-      github.event.ref_type == 'branch' &&
-      !contains(fromJson('["master", "main", "staging", "production", "prod"]'), github.event.ref)
-    runs-on: ubuntu-latest
-    needs:
-      - destroy-data
-    steps:
-      - uses: actions/checkout@v3
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v3
-        with:
-          path: serverless/**/node_modules
-          key: ${{ runner.os }}-serverless-modules-${{ hashFiles('serverless/**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-serverless-modules-
-      - name: Configure AWS credentials (legacy account)
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Destroy serverless
-        working-directory: serverless
-        run: ./destroy.sh ${{env.BRANCH_NAME}}
   destroy-serverless-new-account:
     # Protected branches should be designated as such in the GitHub UI.
     # So, a protected branch should never have this workflow run, since the branch should never be deleted.
@@ -182,3 +123,10 @@ jobs:
       - name: Destroy serverless
         working-directory: serverless
         run: ./destroy.sh ${{env.BRANCH_NAME}}
+      - name: Delete topics from bigmac
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Delete Topics
+          repo: cmsgov/cms-bigmac
+          token: ${{ secrets.AUTOMATION_ACCESS_TOKEN }}
+          inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
