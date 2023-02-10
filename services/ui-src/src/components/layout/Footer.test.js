@@ -17,7 +17,7 @@ describe("<Footer />", () => {
   it("includes federal website disclaimer", () => {
     const wrapper = mount(footer);
     expect(wrapper.find(".cms-copy").text()).toBe(
-      "A federal government website managed and paid for by the U.S. Centers for Medicare and Medicaid Services and part of the MACPro suite."
+      "A federal government website managed and paid for by the U.S. Centers for Medicare and Medicaid Services and part of the MDCT suite."
     );
   });
 
