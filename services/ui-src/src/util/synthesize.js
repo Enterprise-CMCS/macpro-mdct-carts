@@ -215,6 +215,13 @@ const lookupFMAP = (state, fy) => {
   return "";
 };
 
+const snakeToCamel = (str) =>
+  str
+    .toLowerCase()
+    .replace(/([-_][a-z])/g, (group) =>
+      group.toUpperCase().replace("-", "").replace("_", "")
+    );
+
 /**
  * Retrieve acsSet from state and return for individual state.
  *
@@ -225,6 +232,11 @@ const lookupFMAP = (state, fy) => {
  */
 const lookupAcs = (state, { ffy, acsProperty }) => {
   let returnValue = "Not Available";
+  // Support prior lookup syntax in form lookups
+  const acsPropQuery = acsProperty.includes("_")
+    ? snakeToCamel(acsProperty)
+    : acsProperty;
+
   // if allStatesData and stateUser are available
   if (state.allStatesData && state.stateUser) {
     const windowPathName = window.location.pathname;
@@ -250,7 +262,7 @@ const lookupAcs = (state, { ffy, acsProperty }) => {
 
     // If acs exists, return the value from the object
     if (acs) {
-      returnValue = Number(`${acs[acsProperty]}`).toLocaleString();
+      returnValue = Number(`${acs[acsPropQuery]}`).toLocaleString();
       if (acsProperty.includes("percent")) {
         returnValue += "%";
       }
@@ -315,12 +327,21 @@ export const lookupChipEnrollments = (
     state.enrollmentCounts &&
     state.enrollmentCounts.chipEnrollments.length > 0
   ) {
-    const targetValue = state.enrollmentCounts.chipEnrollments.find(
+    let targetValue = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToModify === ffy &&
+        enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === index &&
         enrollment.typeOfEnrollment === enrollmentType
     );
+    // Lookup the primary stat for the past year if missing
+    if (!targetValue && index == 1) {
+      targetValue = state.enrollmentCounts.chipEnrollments.find(
+        (enrollment) =>
+          enrollment.yearToModify == ffy - 1 &&
+          enrollment.indexToUpdate === index + 1 &&
+          enrollment.typeOfEnrollment === enrollmentType
+      );
+    }
     if (targetValue) {
       returnValue = targetValue.enrollmentCount.toLocaleString();
     }
@@ -334,20 +355,35 @@ export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
     state.enrollmentCounts &&
     state.enrollmentCounts.chipEnrollments.length > 0
   ) {
-    const oldCount = state.enrollmentCounts.chipEnrollments.find(
+    // Retrieve Values
+    let oldCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToModify === ffy &&
+        enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === 1 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
     const newCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
-        enrollment.yearToModify === ffy &&
+        enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === 2 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
+    if (newCount && !oldCount) {
+      /*
+       * In case this year's data has been sent, but last year's wasn't included
+       * we still can look it up as the last year's current value
+       */
+      oldCount = state.enrollmentCounts.chipEnrollments.find(
+        (enrollment) =>
+          enrollment.yearToModify == ffy - 1 &&
+          enrollment.indexToUpdate === 2 &&
+          enrollment.typeOfEnrollment === enrollmentType
+      );
+    }
+
+    // Calculate
     if (oldCount && newCount) {
-      if (oldCount.enrollmentCount === 0) return "-";
+      if (oldCount.enrollmentCount === 0) return "-"; // Don't divide by 0
       returnValue =
         ((newCount.enrollmentCount - oldCount.enrollmentCount) /
           oldCount.enrollmentCount) *

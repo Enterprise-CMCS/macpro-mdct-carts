@@ -42,7 +42,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
     }
   );
 
-  return <fieldset className="ds-c-fieldset">{radioButttonList}</fieldset>;
+  return <div className="ds-c-fieldset">{radioButttonList}</div>;
 };
 Checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,

@@ -39,7 +39,7 @@ const createNewRepeatableItem = (parentId, getState) => {
   // Set all the answers throughout the new item to null.
   jsonpath.apply(
     newItem,
-    "$..questions[?(@.answer.entry)].answer.entry",
+    "$..questions[?(@ && @.answer.entry)].answer.entry",
     () => null
   );
 

@@ -24,6 +24,21 @@ export interface State {
   programNames?: any;
 }
 
+export interface AcsData {
+  numberUninsuredMoe: number;
+  percentUninsured: number;
+  year: number;
+  percentageUninsuredMoe: number;
+  stateId: string;
+  numberUninsured: number;
+}
+
+export interface FmapData {
+  enhancedFmap: number;
+  fiscalYear: number;
+  stateId: string;
+}
+
 export interface StateStatus {
   year: number;
   status: string;
@@ -73,6 +88,7 @@ export interface DynamoScan {
   FilterExpression?: string;
   ExpressionAttributeNames?: { [key: string]: string };
   ExpressionAttributeValues?: { [key: string]: any };
+  ExclusiveStartKey?: any;
 }
 
 export interface DynamoFetch {
@@ -123,4 +139,12 @@ export const enum RequestMethods {
   PUT = "PUT",
   DELETE = "DELETE",
 }
+
+/**
+ * Preseving historic filenames in case we need to make them available on demand or switch between available forms.
+ */
+export const ReportPdfs = {
+  2021: "FFY_2021_CARTS_Template.pdf",
+  2022: "FFY_2022_CARTS_Template.pdf",
+};
 /* eslint-enable no-unused-vars */

@@ -50,12 +50,9 @@ const questionTypes = new Map([
   ["text_small", TextSmall],
 ]);
 
-const Container = ({ question, children }) =>
-  question.type === "fieldset" ? (
-    <>{children}</>
-  ) : (
-    <fieldset className="ds-c-fieldset">{children}</fieldset>
-  );
+const Container = ({ children }) => (
+  <fieldset className="ds-c-fieldset">{children}</fieldset>
+);
 Container.propTypes = {
   question: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,

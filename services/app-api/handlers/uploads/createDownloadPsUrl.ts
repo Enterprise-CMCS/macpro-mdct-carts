@@ -30,7 +30,7 @@ export const getSignedFileUrl = handler(async (event, _context) => {
   const document = results.Items[0];
   // Pre-sign url
   const url = s3.getSignedUrl("getObject", {
-    Bucket: process.env.S3_ATTACHMENTS_BUCKET_NAME ?? "local-uploads",
+    Bucket: process.env.uploadS3BucketName ?? "local-uploads",
     Key: document.awsFilename,
     ResponseContentDisposition: `attachment; filename = ${document.filename}`,
     Expires: 3600,

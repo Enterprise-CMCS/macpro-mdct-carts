@@ -38,6 +38,7 @@ export const post = handler(async (event, _context) => {
   // Copy out report string and populate state data
   const forms = [];
   const stateStatuses = [];
+  const creationTime = new Date().toString();
   for (const state of queuedStates) {
     for (const section of baseSections) {
       state;
@@ -47,6 +48,7 @@ export const post = handler(async (event, _context) => {
       sectionObj.year = yearNumber;
       sectionObj.stateId = state.code;
       sectionObj.contents.section.state = state.code;
+      sectionObj.lastChanged = creationTime;
 
       // Section 0 Special Case - Program Type should be read from State
       if (sectionObj.sectionId === 0) {
@@ -60,6 +62,7 @@ export const post = handler(async (event, _context) => {
       year: yearNumber,
       programType: state.programType,
       status: "not_started",
+      lastChanged: creationTime,
     });
   }
 
@@ -122,7 +125,7 @@ const saveBatch = async (tableName: string, items: any) => {
     batch.push({ PutRequest: { Item: items[i] } });
     // Submit every 25, or when you're on the last item
     if (i == items.length - 1 || batch.length == 25) {
-      dynamoDb.batchWriteItem({
+      await dynamoDb.batchWriteItem({
         RequestItems: {
           [tableName]: batch,
         },

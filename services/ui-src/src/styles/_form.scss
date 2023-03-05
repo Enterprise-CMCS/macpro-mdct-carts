@@ -26,10 +26,23 @@
 .ds-c-label {
   max-width: 100%;
   position: relative;
+  color: #262626;
 }
 
 .ds-l-col fieldset .ds-c-label {
   white-space: nowrap;
+}
+
+.ds-l-col--2 {
+  color: #262626;
+}
+
+.ds-l-col--3 {
+  color: #262626;
+}
+
+.ds-u-padding--2 {
+  color: #262626;
 }
 
 .ds-c-table {
@@ -38,6 +51,16 @@
   .row-header {
     font-weight: 650;
   }
+}
+
+.ds-c-button:disabled {
+  color: #262626;
+  border-color: #b6b6bd;
+  background: #e1e1e3;
+}
+
+.ds-c-field__hint {
+  color: #262626;
 }
 
 .synthesized-table,
@@ -94,6 +117,10 @@
 
 .ds-c-accordion__heading:not(:first-child) {
   margin-top: $margin * 3;
+}
+
+.radio-container .radio-children {
+  margin-left: ($margin * 8);
 }
 
 .question-container {
@@ -299,6 +326,11 @@
   padding: 0 2.2rem 0.6rem;
 }
 
+.multi-select {
+  --rmsc-gray: #262626;
+  --rmsc-border: #262626;
+}
+
 .nav-buttons {
   float: right;
   margin: ($margin * 8) 0 ($margin * 2);
@@ -376,8 +408,13 @@
 .dropdown-container {
   max-width: 320px;
 
+  .dropdown-heading-value {
+    color: #262626;
+  }
+
   .dropdown-content {
     z-index: 100;
+    color: #262626;
   }
 }
 

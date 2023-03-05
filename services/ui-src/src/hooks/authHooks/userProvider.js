@@ -7,6 +7,9 @@ import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
 
+const cartsProdDomain = "https://mdctcarts.cms.gov";
+const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
+
 const authenticateWithIDM = () => {
   Auth.federatedSignIn({ customProvider: "Okta" });
 };
@@ -15,8 +18,8 @@ export const UserProvider = ({ children }) => {
   const history = useHistory();
   const location = useLocation();
   const isProduction =
-    window.location.origin.includes("mdctcarts.cms.gov") ||
-    window.location.origin.includes("dt4brcxdimpa0.cloudfront.net"); // TODO: remove once v3 is at the former address
+    window.location.origin === cartsProdDomain ||
+    window.location.origin === tempEndpoint;
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
@@ -25,6 +28,7 @@ export const UserProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       setUser(null);
+      localStorage.removeItem("mdctcarts_session_exp");
       await Auth.signOut();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
@@ -73,7 +77,7 @@ export const UserProvider = ({ children }) => {
         redirectSignIn: config.cognito.REDIRECT_SIGNIN,
         redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
         scope: ["email", "openid", "profile"],
-        responseType: "token",
+        responseType: "code",
       },
     });
   });

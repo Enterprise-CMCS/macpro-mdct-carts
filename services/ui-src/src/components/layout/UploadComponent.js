@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system";
-import { API } from "aws-amplify";
 import requestOptions from "../../hooks/authHooks/requestOptions";
 import { setAnswerEntry } from "../../actions/initial";
 import { REPORT_STATUS, AppRoles } from "../../types";
+import { apiLib } from "../../util/apiLib";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class UploadComponent extends Component {
     this.submitUpload = this.submitUpload.bind(this);
     this.viewUploaded = this.viewUploaded.bind(this);
     this.isFileTypeAllowed = this.isFileTypeAllowed.bind(this);
+    this.isFileNameValid = this.isFileNameValid.bind(this);
     this.deleteFile = this.deleteFile.bind(this);
     await this.viewUploaded();
   };
@@ -47,6 +48,11 @@ class UploadComponent extends Component {
     return allowedFileTypes.indexOf(extension) > -1;
   };
 
+  isFileNameValid = (fileName) => {
+    let fileNameRegex = new RegExp("^[0-9a-zA-z-_.]*$");
+    return fileNameRegex.test(fileName);
+  };
+
   submitUpload = async () => {
     const { loadedFiles } = this.state;
     const { year, stateCode } = this.props;
@@ -60,7 +66,7 @@ class UploadComponent extends Component {
         questionId,
       };
       const opts = await requestOptions(body);
-      const response = await API.post(
+      const response = await apiLib.post(
         "carts-api",
         `/psUrlUpload/${year}/${stateCode}`,
         opts
@@ -139,7 +145,7 @@ class UploadComponent extends Component {
   downloadFile = async (fileId) => {
     const { year, stateCode } = this.props;
     const opts = await requestOptions({ fileId });
-    const response = await API.post(
+    const response = await apiLib.post(
       "carts-api",
       `/psUrlDownload/${year}/${stateCode}`,
       opts
@@ -161,13 +167,11 @@ class UploadComponent extends Component {
       questionId,
     };
     const opts = await requestOptions(body);
-    const response = await API.post(
-      "carts-api",
-      `/uploads/${year}/${stateCode}`,
-      opts
-    ).catch((error) => {
-      console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
-    });
+    const response = await apiLib
+      .post("carts-api", `/uploads/${year}/${stateCode}`, opts)
+      .catch((error) => {
+        console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
+      });
     const uploadedFiles = response ? response : [];
     // *** hide the loading preloader
     this.setState({
@@ -180,11 +184,11 @@ class UploadComponent extends Component {
     const { year, stateCode } = this.props;
 
     const opts = await requestOptions({ fileId });
-    await API.del("carts-api", `/uploads/${year}/${stateCode}`, opts).catch(
-      (error) => {
+    await apiLib
+      .del("carts-api", `/uploads/${year}/${stateCode}`, opts)
+      .catch((error) => {
         console.log("!!!Error retrieving files: ", error); // eslint-disable-line no-console
-      }
-    );
+      });
 
     await this.retrieveUploadedFiles();
   };
@@ -206,9 +210,14 @@ class UploadComponent extends Component {
         const mediaSize = file.size / 1024 / 1024;
         const mediaExtension = uploadName.split(".").pop();
         const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
+        const fileNameInvalid = !this.isFileNameValid(uploadName);
 
         if (fileTypeAllowed === true) {
-          if (mediaSize <= maxFileSize) {
+          if (fileNameInvalid === true) {
+            errorString = errorString.concat(
+              `The file name (${uploadName}) contains invalid characters. Only the following characters are allowed: A-Z, a-z, 0-9, -, _, and .`
+            );
+          } else if (mediaSize <= maxFileSize) {
             filePayload.push(file);
           } else {
             errorString = errorString.concat(

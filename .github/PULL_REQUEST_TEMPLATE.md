@@ -1,31 +1,20 @@
-# Description
+## Summary
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context.
+### Description
+<!-- Detailed description of changes and related context -->
 
-## How to test
+### Related ticket
+<!-- Link to related ticket or issue -->
 
-The more detail here the better on how to test
+### How to test
+<!-- Step-by-step instructions on how to test -->
 
-## Dependencies
+### Important updates
+<!-- Any changed dependencies, .env files, local configs, etc. and
+instructions for other engineers, e.g. requires new installs in directories -->
 
-Please spell out any dependencies for this change -- ex -- requires an install / update / migration etc
-
-# Get it done
-
-Now that the PR is open this is what happens next
-
-## Code authors checklist
-
+### Author checklist
+<!-- Complete the following before marking ready for review -->
 - [ ] I have performed a self-review of my code
-- [ ] I have added thorough tests. [Testing Doc](https://qmacbis.atlassian.net/wiki/spaces/CM/pages/2914025525/Test+Suite+and+Testing+Research)
-- [ ] Necessary analytics were added, or no new analytics were required
-- [ ] I have made corresponding changes to the documentation
-
-## Reviewers Checklist (Two different people)
-
-- [ ] I have done the deep review and verified the items in the above checklist are g2g
-- [ ] I have done the lgtm review
-
-## Assignee
-
-- [ ] I have closed the PR after the review and necessary changes (squashing preferred)
+- [ ] I have added [thorough](https://bit.ly/3zPrxuZ) tests, if necessary
+- [ ] I have updated the documentation, if necessary

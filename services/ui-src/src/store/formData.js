@@ -49,8 +49,10 @@ export default (state = initialState, action) => {
             lastYearData[3].contents.section.subsections[2].parts[5].questions[2].answer; // Do you have data for individual age groups?
         }
         // Added mid year as a quick fix for 2021 forms see: https://qmacbis.atlassian.net/browse/OY2-12744 Should be removed ASAP!!
-        updatedData[2].contents.section.subsections[0].parts[1].text =
-          "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";
+        if (updatedData[2].year === 2021) {
+          updatedData[2].contents.section.subsections[0].parts[1].text =
+            "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the 2020 children's uninsurance rates are currently unavailable. Please skip to Question 3.";
+        }
       }
 
       var chgsection1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -103,7 +105,7 @@ export default (state = initialState, action) => {
       return JSON.parse(JSON.stringify(state));
     }
     case SET_FRAGMENT:
-      jsonpath.apply(state, `$..*[?(@.id==='${action.id}')]`, () => {
+      jsonpath.apply(state, `$..*[?(@ && @.id==='${action.id}')]`, () => {
         return action.value;
       });
       return JSON.parse(JSON.stringify(state));
@@ -158,9 +160,9 @@ export const extractJsonPathExpressionFromQuestionLike = (
   index
 ) => {
   if (questionLikeId) {
-    return `$..*[?(@.id=='${questionLikeId}')]`;
+    return `$..*[?(@ && @.id=='${questionLikeId}')]`;
   }
-  return `$..*[?(@.id=='${parentId}')].questions[${index}]`;
+  return `$..*[?(@ && @.id=='${parentId}')].questions[${index}]`;
 };
 
 export const selectFragmentByJsonPath = (
@@ -178,7 +180,7 @@ export const selectFragmentByJsonPath = (
 
 export const selectFragmentById = (state, id) => {
   const sectionOrdinal = extractSectionOrdinalFromId(id);
-  const jpexpr = `$..*[?(@.id=='${id}')]`;
+  const jpexpr = `$..*[?(@ && @.id=='${id}')]`;
   return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
 };
 
@@ -244,7 +246,7 @@ export const selectFragment = (state, id = null, jp = null) => {
   }
   // TODO: account for objectives/repeatables here.
 
-  const path = jp || `$..*[?(@.id=='${idValue}')]`;
+  const path = jp || `$..*[?(@ && @.id=='${idValue}')]`;
   return selectFragmentFromTarget(targetObject, path);
 };
 

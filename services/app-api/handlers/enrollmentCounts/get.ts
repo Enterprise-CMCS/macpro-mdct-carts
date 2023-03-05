@@ -14,19 +14,36 @@ export const getEnrollmentCounts = handler(async (event, _context) => {
 
   const user = getUserCredentialsFromJwt(event);
   const { year, state } = event.pathParameters;
+  const counts: any[] = [];
 
   if (user.role === AppRoles.STATE_USER && user.state !== state) {
-    return [];
+    return counts;
   } else {
-    const params = {
+    // Current year values
+    const currentParams = {
       TableName: process.env.stageEnrollmentCountsTableName!,
       KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
         ":pk": `${state}-${year}`,
       },
     };
-
-    const queryValue = await dynamoDb.query(params);
-    return queryValue.Items;
+    const currentYearQuery = await dynamoDb.query(currentParams);
+    if (currentYearQuery.Items) {
+      counts.push(...currentYearQuery.Items);
+    }
+    // Provide past year values as fallback
+    const pastYear = parseInt(year) - 1;
+    const pastParams = {
+      TableName: process.env.stageEnrollmentCountsTableName!,
+      KeyConditionExpression: "pk = :pk",
+      ExpressionAttributeValues: {
+        ":pk": `${state}-${pastYear}`,
+      },
+    };
+    const pastYearQuery = await dynamoDb.query(pastParams);
+    if (pastYearQuery.Items) {
+      counts.push(...pastYearQuery.Items);
+    }
   }
+  return counts;
 });

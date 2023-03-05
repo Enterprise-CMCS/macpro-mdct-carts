@@ -1,7 +1,8 @@
 import statesArray from "../components/Utils/statesArray";
 
 // Storing global variables that will be the same regardless of users
-const activeYears = ["2020", "2021", "2022", "2023", "2024"];
+const earliestYear = 2020;
+
 // eslint-disable-next-line no-extend-native
 String.prototype.containsAny =
   String.prototype.containsAny ||
@@ -42,7 +43,13 @@ export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
   state.url = document.location.pathname.toString();
   state.queryParams = document.location.search.toString();
-  state.currentYear = 2021;
+  state.currentYear = 2022;
+
+  const activeYears = [];
+  for (let i = earliestYear; i <= state.currentYear; i++) {
+    activeYears.push(i);
+  }
+
   for (let activeYear in activeYears) {
     if (
       state.url.indexOf(activeYears[activeYear]) !== -1 ||

@@ -19,7 +19,8 @@ jobs:
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
-    if: github.event.ref_type == 'branch' && !contains(fromJson('["main", "master", "val", "production"]'), github.event.ref)
+    # Names include current v3 branches (main/val/production) and v2 branches in an effort to protect any preserved resources like saved databases
+    if: github.event.ref_type == 'branch' && !contains(fromJson('["master", "main", "staging", "val", "production", "prod"]'), github.event.ref)
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
@@ -43,4 +44,12 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: Delete topics from bigmac
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Delete Topics
+          repo: cmsgov/cms-bigmac
+          token: ${{ secrets.AUTOMATION_ACCESS_TOKEN }}
+          inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
+          ref: refs/heads/master # Otherwise workflow-dispatch tries to operate off of our default name
       - run: ./destroy.sh $STAGE_PREFIX$branch_name

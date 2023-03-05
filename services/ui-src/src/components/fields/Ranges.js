@@ -221,12 +221,22 @@ const Ranges = ({ onChange, question, ...props }) => {
       )}
 
       {values.length < max || max === 0 ? (
-        <Button onClick={addRow} type="button" variation="primary" {...props}>
+        <Button
+          onClick={addRow}
+          type="button"
+          variation="primary"
+          disabled={props.disabled}
+        >
           Add another? <FontAwesomeIcon icon={faPlus} />
         </Button>
       ) : null}
       {values.length > min || min === 0 ? (
-        <Button onClick={removeRow} type="button" variation="primary">
+        <Button
+          onClick={removeRow}
+          type="button"
+          variation="primary"
+          disabled={props.disabled}
+        >
           Remove Last Entry <FontAwesomeIcon icon={faMinusCircle} />
         </Button>
       ) : null}
