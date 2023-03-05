@@ -1,5 +1,5 @@
 {
-  "name": "macpro-quickstart-serverless",
+  "name": "macpro-mdct-carts",
   "version": "1.0.0",
   "type": "module",
   "description": "",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CMSgov/macpro-quickstart-serverless.git"
+    "url": "git+https://github.com/Enterprise-CMCS/macpro-mdct-carts.git"
   },
   "author": "",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/CMSgov/macpro-quickstart-serverless/issues"
+    "url": "https://github.com/Enterprise-CMCS/macpro-mdct-carts/issues"
   },
-  "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
+  "homepage": "https://github.com/Enterprise-CMCS/macpro-mdct-carts#readme",
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/flat": "^5.0.2",

@@ -1,11 +1,14 @@
-# CHIP Annual Reporting Template System
+# MDCT CARTS (CHIP Annual Reporting Template System)
+
+[![CodeQL](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/codeql-analysis.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2ee6ff969103d1f75834/maintainability)](https://codeclimate.com/repos/6403de6fb30d392803e318dd/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2ee6ff969103d1f75834/test_coverage)](https://codeclimate.com/repos/6403de6fb30d392803e318dd/test_coverage)
+
+CARTS is the CMCS MDCT application for collecting state data related to coverage of CHIP state plans on an annual basis. The collected data assists CMCS in monitoring, managing, and better understanding Medicaid and CHIP programs.
 
 Under section 2108(a) of the Act, states must assess the operation of their separate CHIP and Medicaid expansion programs and the progress made in reducing the number of uncovered, low-income children. The results of the assessment are reported to the Secretary by January 1 following the end of the FY in the CHIP Annual Reporting Template System (CARTS). CARTS collects information about programmatic changes, performance goals, program operation, program financing, program challenges and accomplishments.
 
-_Our main branch is for development of CARTSv3. Head to the [`master` branch](https://github.com/cmsgov/cms-carts-seds/tree/master) to view the readme, documentation, and source code fo CARTSv2._
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/6bd409a85fe7b9b7d1ff/maintainability)](https://codeclimate.com/github/CMSgov/cms-carts-seds/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6bd409a85fe7b9b7d1ff/test_coverage)](https://codeclimate.com/github/CMSgov/cms-carts-seds/test_coverage)
+_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`master`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/master) branch._
 
 ## Table of contents
 
@@ -14,10 +17,6 @@ _Our main branch is for development of CARTSv3. Head to the [`master` branch](ht
 - [Contributing](#contributing)
 - [Architecture] (#architecture)
 - [Copyright and license](#copyright-and-license)
-
-## Status
-
-TODO: Add all the status badges here
 
 ## Quick Start
 
@@ -32,7 +31,7 @@ Before starting the project install some tools
 
 TODO: Fix the phone a friend instructions below
 
-1. Clone the repo: `git clone https://github.com/CMSgov/cms-carts-seds.git`
+1. Clone the repo
 2. In the root directory copy the .env_example file and name it .env
 3. In the services/ui-src directory copy the .env_example file and name it .env
 4. Overwrite the values here with an example from another developer
