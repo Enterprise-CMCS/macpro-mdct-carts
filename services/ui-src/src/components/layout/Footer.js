@@ -39,7 +39,7 @@ class Footer extends Component {
                     <div className="cms-copy">
                       A federal government website managed and paid for by the
                       U.S. Centers for Medicare and Medicaid Services and part
-                      of the MACPro suite.
+                      of the MDCT suite.
                     </div>
                   </div>
                 </div>
