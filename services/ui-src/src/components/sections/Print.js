@@ -109,8 +109,12 @@ const Print = ({ currentUser, state, name }) => {
       dispatch({ type: "CONTENT_FETCHING_FINISHED" });
     };
 
-    // Call async function to load data
-    retrieveUserData();
+    //NOTE: Every time setAuthTimeout is called, it causes the useEffect to re-run even after data is retrieved
+    if(!formData.length){
+      // Call async function to load data
+      retrieveUserData();
+    }
+
   }, [currentUser]);
 
   const sections = [];
