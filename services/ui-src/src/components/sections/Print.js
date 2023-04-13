@@ -110,11 +110,10 @@ const Print = ({ currentUser, state, name }) => {
     };
 
     //NOTE: Every time setAuthTimeout is called, it causes the useEffect to re-run even after data is retrieved
-    if(!formData.length){
+    if (!formData.length) {
       // Call async function to load data
       retrieveUserData();
     }
-
   }, [currentUser]);
 
   const sections = [];
