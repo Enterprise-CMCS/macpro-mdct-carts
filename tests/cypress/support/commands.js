@@ -12,18 +12,18 @@ const emailForCognito = "//input[@name='email']";
 const passwordForCognito = "//input[@name='password']";
 
 const stateUser = {
-  email: Cypress.env("STATE_USER_EMAIL"),
-  password: Cypress.env("STATE_USER_PASSWORD"),
+  email: Cypress.env("CYPRESS_STATE_USER_EMAIL"),
+  password: Cypress.env("CYPRESS_STATE_USER_PASSWORD"),
 };
 
 const adminUser = {
-  email: Cypress.env("ADMIN_USER_EMAIL"),
-  password: Cypress.env("ADMIN_USER_PASSWORD"),
+  email: Cypress.env("CYPRESS_ADMIN_USER_EMAIL"),
+  password: Cypress.env("CYPRESS_ADMIN_USER_PASSWORD"),
 };
 
 const reviewer = {
-  email: Cypress.env("REVIEWER_EMAIL"),
-  password: Cypress.env("REVIEWER_PASSWORD"),
+  email: Cypress.env("CYPRESS_REVIEWER_USER_EMAIL"),
+  password: Cypress.env("CYPRESS_REVIEWER_USER_PASSWORD"),
 };
 
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
