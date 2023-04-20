@@ -96,5 +96,4 @@ Cypress.Commands.add("checkA11yOfPage", () => {
     threshold: 10,
     standard: "WCAG2AA",
   });
-
 });
