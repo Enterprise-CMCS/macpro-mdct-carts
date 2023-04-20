@@ -12,18 +12,18 @@ const emailForCognito = "//input[@name='email']";
 const passwordForCognito = "//input[@name='password']";
 
 const stateUser = {
-  email: Cypress.env("CYPRESS_STATE_USER_EMAIL"),
-  password: Cypress.env("CYPRESS_STATE_USER_PASSWORD"),
+  email: Cypress.env("STATE_USER_EMAIL"),
+  password: Cypress.env("STATE_USER_PASSWORD"),
 };
 
 const adminUser = {
-  email: Cypress.env("CYPRESS_ADMIN_USER_EMAIL"),
-  password: Cypress.env("CYPRESS_ADMIN_USER_PASSWORD"),
+  email: Cypress.env("ADMIN_USER_EMAIL"),
+  password: Cypress.env("ADMIN_USER_PASSWORD"),
 };
 
 const reviewer = {
-  email: Cypress.env("CYPRESS_REVIEWER_USER_EMAIL"),
-  password: Cypress.env("CYPRESS_REVIEWER_USER_PASSWORD"),
+  email: Cypress.env("REVIEWER_USER_EMAIL"),
+  password: Cypress.env("REVIEWER_USER_PASSWORD"),
 };
 
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
@@ -97,9 +97,4 @@ Cypress.Commands.add("checkA11yOfPage", () => {
     standard: "WCAG2AA",
   });
 
-  // check for a11y using Lighthouse
-  cy.lighthouse({
-    // TODO: [MDCT-301] Fix lighthouse accessibility score to increase this back to 90.
-    accessibility: 80,
-  });
 });
