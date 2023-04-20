@@ -1,0 +1,33 @@
+name: Sync Security Hub findings and Jira issues
+
+
+
+permissions:
+  id-token: write
+
+jobs:
+  sync:
+    name: Run sync
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.PRODUCTION_AWS_OIDC_ROLE_TO_ASSUME }}
+
+      - name: Sync Security Hub and Jira
+        uses: Enterprise-CMCS/security-hub-visibility@v1.0.1
+        with:
+          jira-token: ${{ secrets.JIRA_SERVICE_USER_TOKEN }}
+          jira-username: ${{ secrets.JIRA_SERVICE_USERNAME }}
+          jira-host: qmacbis.atlassian.net
+          jira-project-key: MDCT 
+          jira-epic-key: MDCT-2280 
+          jira-ignore-statuses: Done
+          jira-custom-fields: '{ "application" : "CARTS" }'
+          aws-region: us-east-1
+          aws-severities: CRITICAL, HIGH, MEDIUM
