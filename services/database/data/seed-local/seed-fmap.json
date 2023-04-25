@@ -33,5 +33,25 @@
     "stateId": "TX",
     "fiscalYear": 2020,
     "enhancedFmap": 73.27
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2021,
+    "enhancedFmap": 80.81
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2022,
+    "enhancedFmap": 80.66
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2023,
+    "enhancedFmap": 80.70
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2024,
+    "enhancedFmap": 81.81
   }
 ]
