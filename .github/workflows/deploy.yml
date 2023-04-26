@@ -124,12 +124,16 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
+          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
+          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
-          path: tests/cypress/screenshots/
+          path: |
+            tests/cypress/screenshots/
+            tests/cypress/videos/
 
   a11y-tests:
     name: A11y Tests
@@ -153,9 +157,13 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
+          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
+          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
-          path: tests/cypress/screenshots/
+          path: |
+            tests/cypress/screenshots/
+            tests/cypress/videos/

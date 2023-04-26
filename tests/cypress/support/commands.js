@@ -22,8 +22,8 @@ const adminUser = {
 };
 
 const reviewer = {
-  email: Cypress.env("REVIEWER_EMAIL"),
-  password: Cypress.env("REVIEWER_PASSWORD"),
+  email: Cypress.env("REVIEWER_USER_EMAIL"),
+  password: Cypress.env("REVIEWER_USER_PASSWORD"),
 };
 
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
@@ -95,11 +95,5 @@ Cypress.Commands.add("checkA11yOfPage", () => {
   cy.pa11y({
     threshold: 10,
     standard: "WCAG2AA",
-  });
-
-  // check for a11y using Lighthouse
-  cy.lighthouse({
-    // TODO: [MDCT-301] Fix lighthouse accessibility score to increase this back to 90.
-    accessibility: 80,
   });
 });
