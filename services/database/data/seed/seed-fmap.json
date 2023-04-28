@@ -1,0 +1,1102 @@
+[
+  {
+    "stateId": "AL",
+    "fiscalYear": 2021,
+    "enhancedFmap": 80.81
+  },
+  {
+    "stateId": "AK",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AS",
+    "fiscalYear": 2021,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "AZ",
+    "fiscalYear": 2021,
+    "enhancedFmap": 79.01
+  },
+  {
+    "stateId": "AR",
+    "fiscalYear": 2021,
+    "enhancedFmap": 79.86
+  },
+  {
+    "stateId": "CA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CO",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CT",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "DE",
+    "fiscalYear": 2021,
+    "enhancedFmap": 70.42
+  },
+  {
+    "stateId": "DC",
+    "fiscalYear": 2021,
+    "enhancedFmap": 79.0
+  },
+  {
+    "stateId": "FL",
+    "fiscalYear": 2021,
+    "enhancedFmap": 73.37
+  },
+  {
+    "stateId": "GA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 76.92
+  },
+  {
+    "stateId": "GU",
+    "fiscalYear": 2021,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "HI",
+    "fiscalYear": 2021,
+    "enhancedFmap": 67.11
+  },
+  {
+    "stateId": "ID",
+    "fiscalYear": 2021,
+    "enhancedFmap": 79.29
+  },
+  {
+    "stateId": "IL",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.67
+  },
+  {
+    "stateId": "IN",
+    "fiscalYear": 2021,
+    "enhancedFmap": 76.08
+  },
+  {
+    "stateId": "IA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 73.23
+  },
+  {
+    "stateId": "KS",
+    "fiscalYear": 2021,
+    "enhancedFmap": 71.78
+  },
+  {
+    "stateId": "KY",
+    "fiscalYear": 2021,
+    "enhancedFmap": 80.44
+  },
+  {
+    "stateId": "LA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 77.19
+  },
+  {
+    "stateId": "ME",
+    "fiscalYear": 2021,
+    "enhancedFmap": 74.58
+  },
+  {
+    "stateId": "MD",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MI",
+    "fiscalYear": 2021,
+    "enhancedFmap": 74.86
+  },
+  {
+    "stateId": "MN",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MS",
+    "fiscalYear": 2021,
+    "enhancedFmap": 84.43
+  },
+  {
+    "stateId": "MO",
+    "fiscalYear": 2021,
+    "enhancedFmap": 75.47
+  },
+  {
+    "stateId": "MT",
+    "fiscalYear": 2021,
+    "enhancedFmap": 75.92
+  },
+  {
+    "stateId": "NE",
+    "fiscalYear": 2021,
+    "enhancedFmap": 69.53
+  },
+  {
+    "stateId": "NV",
+    "fiscalYear": 2021,
+    "enhancedFmap": 74.31
+  },
+  {
+    "stateId": "NH",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NJ",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NM",
+    "fiscalYear": 2021,
+    "enhancedFmap": 81.42
+  },
+  {
+    "stateId": "NY",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NC",
+    "fiscalYear": 2021,
+    "enhancedFmap": 77.18
+  },
+  {
+    "stateId": "ND",
+    "fiscalYear": 2021,
+    "enhancedFmap": 66.68
+  },
+  {
+    "stateId": "OH",
+    "fiscalYear": 2021,
+    "enhancedFmap": 74.54
+  },
+  {
+    "stateId": "OK",
+    "fiscalYear": 2021,
+    "enhancedFmap": 77.59
+  },
+  {
+    "stateId": "OR",
+    "fiscalYear": 2021,
+    "enhancedFmap": 72.59
+  },
+  {
+    "stateId": "PA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 66.54
+  },
+  {
+    "stateId": "PR",
+    "fiscalYear": 2021,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "RI",
+    "fiscalYear": 2021,
+    "enhancedFmap": 67.86
+  },
+  {
+    "stateId": "SC",
+    "fiscalYear": 2021,
+    "enhancedFmap": 79.44
+  },
+  {
+    "stateId": "SD",
+    "fiscalYear": 2021,
+    "enhancedFmap": 70.8
+  },
+  {
+    "stateId": "TN",
+    "fiscalYear": 2021,
+    "enhancedFmap": 76.27
+  },
+  {
+    "stateId": "TX",
+    "fiscalYear": 2021,
+    "enhancedFmap": 73.27
+  },
+  {
+    "stateId": "UT",
+    "fiscalYear": 2021,
+    "enhancedFmap": 77.26
+  },
+  {
+    "stateId": "VT",
+    "fiscalYear": 2021,
+    "enhancedFmap": 77.26
+  },
+  {
+    "stateId": "VI",
+    "fiscalYear": 2021,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "VA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WA",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WV",
+    "fiscalYear": 2021,
+    "enhancedFmap": 82.49
+  },
+  {
+    "stateId": "WI",
+    "fiscalYear": 2021,
+    "enhancedFmap": 71.56
+  },
+  {
+    "stateId": "WY",
+    "fiscalYear": 2021,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2022,
+    "enhancedFmap": 80.66
+  },
+  {
+    "stateId": "AK",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AS",
+    "fiscalYear": 2022,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "AZ",
+    "fiscalYear": 2022,
+    "enhancedFmap": 79.01
+  },
+  {
+    "stateId": "AR",
+    "fiscalYear": 2022,
+    "enhancedFmap": 80.13
+  },
+  {
+    "stateId": "CA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CO",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CT",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "DE",
+    "fiscalYear": 2022,
+    "enhancedFmap": 70.4
+  },
+  {
+    "stateId": "DC",
+    "fiscalYear": 2022,
+    "enhancedFmap": 79.0
+  },
+  {
+    "stateId": "FL",
+    "fiscalYear": 2022,
+    "enhancedFmap": 72.72
+  },
+  {
+    "stateId": "GA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 76.8
+  },
+  {
+    "stateId": "GU",
+    "fiscalYear": 2022,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "HI",
+    "fiscalYear": 2022,
+    "enhancedFmap": 67.55
+  },
+  {
+    "stateId": "ID",
+    "fiscalYear": 2022,
+    "enhancedFmap": 79.15
+  },
+  {
+    "stateId": "IL",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.76
+  },
+  {
+    "stateId": "IN",
+    "fiscalYear": 2022,
+    "enhancedFmap": 76.41
+  },
+  {
+    "stateId": "IA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 73.5
+  },
+  {
+    "stateId": "KS",
+    "fiscalYear": 2022,
+    "enhancedFmap": 72.11
+  },
+  {
+    "stateId": "KY",
+    "fiscalYear": 2022,
+    "enhancedFmap": 80.93
+  },
+  {
+    "stateId": "LA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 77.61
+  },
+  {
+    "stateId": "ME",
+    "fiscalYear": 2022,
+    "enhancedFmap": 74.8
+  },
+  {
+    "stateId": "MD",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MI",
+    "fiscalYear": 2022,
+    "enhancedFmap": 75.84
+  },
+  {
+    "stateId": "MN",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.36
+  },
+  {
+    "stateId": "MS",
+    "fiscalYear": 2022,
+    "enhancedFmap": 84.82
+  },
+  {
+    "stateId": "MO",
+    "fiscalYear": 2022,
+    "enhancedFmap": 76.45
+  },
+  {
+    "stateId": "MT",
+    "fiscalYear": 2022,
+    "enhancedFmap": 75.43
+  },
+  {
+    "stateId": "NE",
+    "fiscalYear": 2022,
+    "enhancedFmap": 70.46
+  },
+  {
+    "stateId": "NV",
+    "fiscalYear": 2022,
+    "enhancedFmap": 73.81
+  },
+  {
+    "stateId": "NH",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NJ",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NM",
+    "fiscalYear": 2022,
+    "enhancedFmap": 81.6
+  },
+  {
+    "stateId": "NY",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NC",
+    "fiscalYear": 2022,
+    "enhancedFmap": 77.36
+  },
+  {
+    "stateId": "ND",
+    "fiscalYear": 2022,
+    "enhancedFmap": 67.51
+  },
+  {
+    "stateId": "OH",
+    "fiscalYear": 2022,
+    "enhancedFmap": 74.87
+  },
+  {
+    "stateId": "OK",
+    "fiscalYear": 2022,
+    "enhancedFmap": 77.82
+  },
+  {
+    "stateId": "OR",
+    "fiscalYear": 2022,
+    "enhancedFmap": 72.15
+  },
+  {
+    "stateId": "PA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 66.88
+  },
+  {
+    "stateId": "PR",
+    "fiscalYear": 2022,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "RI",
+    "fiscalYear": 2022,
+    "enhancedFmap": 68.42
+  },
+  {
+    "stateId": "SC",
+    "fiscalYear": 2022,
+    "enhancedFmap": 79.53
+  },
+  {
+    "stateId": "SD",
+    "fiscalYear": 2022,
+    "enhancedFmap": 71.08
+  },
+  {
+    "stateId": "TN",
+    "fiscalYear": 2022,
+    "enhancedFmap": 76.45
+  },
+  {
+    "stateId": "TX",
+    "fiscalYear": 2022,
+    "enhancedFmap": 72.56
+  },
+  {
+    "stateId": "UT",
+    "fiscalYear": 2022,
+    "enhancedFmap": 76.78
+  },
+  {
+    "stateId": "VT",
+    "fiscalYear": 2022,
+    "enhancedFmap": 69.53
+  },
+  {
+    "stateId": "VI",
+    "fiscalYear": 2022,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "VA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WA",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WV",
+    "fiscalYear": 2022,
+    "enhancedFmap": 82.28
+  },
+  {
+    "stateId": "WI",
+    "fiscalYear": 2022,
+    "enhancedFmap": 82.28
+  },
+  {
+    "stateId": "WY",
+    "fiscalYear": 2022,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2023,
+    "enhancedFmap": 80.7
+  },
+  {
+    "stateId": "AK",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AS",
+    "fiscalYear": 2023,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "AZ",
+    "fiscalYear": 2023,
+    "enhancedFmap": 78.69
+  },
+  {
+    "stateId": "AR",
+    "fiscalYear": 2023,
+    "enhancedFmap": 79.92
+  },
+  {
+    "stateId": "CA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CO",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CT",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "DE",
+    "fiscalYear": 2023,
+    "enhancedFmap": 70.94
+  },
+  {
+    "stateId": "DC",
+    "fiscalYear": 2023,
+    "enhancedFmap": 79.0
+  },
+  {
+    "stateId": "FL",
+    "fiscalYear": 2023,
+    "enhancedFmap": 72.04
+  },
+  {
+    "stateId": "GA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 76.21
+  },
+  {
+    "stateId": "GU",
+    "fiscalYear": 2023,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "HI",
+    "fiscalYear": 2023,
+    "enhancedFmap": 69.24
+  },
+  {
+    "stateId": "ID",
+    "fiscalYear": 2023,
+    "enhancedFmap": 79.08
+  },
+  {
+    "stateId": "IL",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "IN",
+    "fiscalYear": 2023,
+    "enhancedFmap": 75.96
+  },
+  {
+    "stateId": "IA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 74.19
+  },
+  {
+    "stateId": "KS",
+    "fiscalYear": 2023,
+    "enhancedFmap": 71.83
+  },
+  {
+    "stateId": "KY",
+    "fiscalYear": 2023,
+    "enhancedFmap": 80.52
+  },
+  {
+    "stateId": "LA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 77.10
+  },
+  {
+    "stateId": "ME",
+    "fiscalYear": 2023,
+    "enhancedFmap": 74.30
+  },
+  {
+    "stateId": "MD",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MI",
+    "fiscalYear": 2023,
+    "enhancedFmap": 75.30
+  },
+  {
+    "stateId": "MN",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.55
+  },
+  {
+    "stateId": "MS",
+    "fiscalYear": 2023,
+    "enhancedFmap": 84.50
+  },
+  {
+    "stateId": "MO",
+    "fiscalYear": 2023,
+    "enhancedFmap": 76.07
+  },
+  {
+    "stateId": "MT",
+    "fiscalYear": 2023,
+    "enhancedFmap": 74.88
+  },
+  {
+    "stateId": "NE",
+    "fiscalYear": 2023,
+    "enhancedFmap": 70.51
+  },
+  {
+    "stateId": "NV",
+    "fiscalYear": 2023,
+    "enhancedFmap": 73.86
+  },
+  {
+    "stateId": "NH",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NJ",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NM",
+    "fiscalYear": 2023,
+    "enhancedFmap": 81.28
+  },
+  {
+    "stateId": "NY",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NC",
+    "fiscalYear": 2023,
+    "enhancedFmap": 77.40
+  },
+  {
+    "stateId": "ND",
+    "fiscalYear": 2023,
+    "enhancedFmap": 66.09
+  },
+  {
+    "stateId": "OH",
+    "fiscalYear": 2023,
+    "enhancedFmap": 74.51
+  },
+  {
+    "stateId": "OK",
+    "fiscalYear": 2023,
+    "enhancedFmap": 77.15
+  },
+  {
+    "stateId": "OR",
+    "fiscalYear": 2023,
+    "enhancedFmap": 72.22
+  },
+  {
+    "stateId": "PA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 66.40
+  },
+  {
+    "stateId": "PR",
+    "fiscalYear": 2023,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "RI",
+    "fiscalYear": 2023,
+    "enhancedFmap": 67.77
+  },
+  {
+    "stateId": "SC",
+    "fiscalYear": 2023,
+    "enhancedFmap": 79.41
+  },
+  {
+    "stateId": "SD",
+    "fiscalYear": 2023,
+    "enhancedFmap": 69.72
+  },
+  {
+    "stateId": "TN",
+    "fiscalYear": 2023,
+    "enhancedFmap": 76.27
+  },
+  {
+    "stateId": "TX",
+    "fiscalYear": 2023,
+    "enhancedFmap": 71.91
+  },
+  {
+    "stateId": "UT",
+    "fiscalYear": 2023,
+    "enhancedFmap": 76.13
+  },
+  {
+    "stateId": "VT",
+    "fiscalYear": 2023,
+    "enhancedFmap": 69.07
+  },
+  {
+    "stateId": "VI",
+    "fiscalYear": 2023,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "VA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.46
+  },
+  {
+    "stateId": "WA",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WV",
+    "fiscalYear": 2023,
+    "enhancedFmap": 81.81
+  },
+  {
+    "stateId": "WI",
+    "fiscalYear": 2023,
+    "enhancedFmap": 72.07
+  },
+  {
+    "stateId": "WY",
+    "fiscalYear": 2023,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2024,
+    "enhancedFmap": 81.18
+  },
+  {
+    "stateId": "AK",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.01
+  },
+  {
+    "stateId": "AS",
+    "fiscalYear": 2024,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "AZ",
+    "fiscalYear": 2024,
+    "enhancedFmap": 76.40
+  },
+  {
+    "stateId": "AR",
+    "fiscalYear": 2024,
+    "enhancedFmap": 80.40
+  },
+  {
+    "stateId": "CA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CO",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CT",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "DE",
+    "fiscalYear": 2024,
+    "enhancedFmap": 71.80
+  },
+  {
+    "stateId": "DC",
+    "fiscalYear": 2024,
+    "enhancedFmap": 79.0
+  },
+  {
+    "stateId": "FL",
+    "fiscalYear": 2024,
+    "enhancedFmap": 72
+  },
+  {
+    "stateId": "GA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 76.8
+  },
+  {
+    "stateId": "GU",
+    "fiscalYear": 2024,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "HI",
+    "fiscalYear": 2024,
+    "enhancedFmap": 67.55
+  },
+  {
+    "stateId": "ID",
+    "fiscalYear": 2024,
+    "enhancedFmap": 79.15
+  },
+  {
+    "stateId": "IL",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.76
+  },
+  {
+    "stateId": "IN",
+    "fiscalYear": 2024,
+    "enhancedFmap": 76.41
+  },
+  {
+    "stateId": "IA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 73.5
+  },
+  {
+    "stateId": "KS",
+    "fiscalYear": 2024,
+    "enhancedFmap": 72.11
+  },
+  {
+    "stateId": "KY",
+    "fiscalYear": 2024,
+    "enhancedFmap": 80.93
+  },
+  {
+    "stateId": "LA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 77.61
+  },
+  {
+    "stateId": "ME",
+    "fiscalYear": 2024,
+    "enhancedFmap": 74.8
+  },
+  {
+    "stateId": "MD",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MI",
+    "fiscalYear": 2024,
+    "enhancedFmap": 75.84
+  },
+  {
+    "stateId": "MN",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.36
+  },
+  {
+    "stateId": "MS",
+    "fiscalYear": 2024,
+    "enhancedFmap": 84.82
+  },
+  {
+    "stateId": "MO",
+    "fiscalYear": 2024,
+    "enhancedFmap": 76.45
+  },
+  {
+    "stateId": "MT",
+    "fiscalYear": 2024,
+    "enhancedFmap": 75.43
+  },
+  {
+    "stateId": "NE",
+    "fiscalYear": 2024,
+    "enhancedFmap": 70.46
+  },
+  {
+    "stateId": "NV",
+    "fiscalYear": 2024,
+    "enhancedFmap": 73.81
+  },
+  {
+    "stateId": "NH",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NJ",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NM",
+    "fiscalYear": 2024,
+    "enhancedFmap": 81.6
+  },
+  {
+    "stateId": "NY",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NC",
+    "fiscalYear": 2024,
+    "enhancedFmap": 77.36
+  },
+  {
+    "stateId": "ND",
+    "fiscalYear": 2024,
+    "enhancedFmap": 67.51
+  },
+  {
+    "stateId": "OH",
+    "fiscalYear": 2024,
+    "enhancedFmap": 74.87
+  },
+  {
+    "stateId": "OK",
+    "fiscalYear": 2024,
+    "enhancedFmap": 77.82
+  },
+  {
+    "stateId": "OR",
+    "fiscalYear": 2024,
+    "enhancedFmap": 72.15
+  },
+  {
+    "stateId": "PA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 66.88
+  },
+  {
+    "stateId": "PR",
+    "fiscalYear": 2024,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "RI",
+    "fiscalYear": 2024,
+    "enhancedFmap": 68.42
+  },
+  {
+    "stateId": "SC",
+    "fiscalYear": 2024,
+    "enhancedFmap": 79.53
+  },
+  {
+    "stateId": "SD",
+    "fiscalYear": 2024,
+    "enhancedFmap": 71.08
+  },
+  {
+    "stateId": "TN",
+    "fiscalYear": 2024,
+    "enhancedFmap": 76.45
+  },
+  {
+    "stateId": "TX",
+    "fiscalYear": 2024,
+    "enhancedFmap": 72.56
+  },
+  {
+    "stateId": "UT",
+    "fiscalYear": 2024,
+    "enhancedFmap": 76.78
+  },
+  {
+    "stateId": "VT",
+    "fiscalYear": 2024,
+    "enhancedFmap": 69.53
+  },
+  {
+    "stateId": "VI",
+    "fiscalYear": 2024,
+    "enhancedFmap": 68.50
+  },
+  {
+    "stateId": "VA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WA",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WV",
+    "fiscalYear": 2024,
+    "enhancedFmap": 82.28
+  },
+  {
+    "stateId": "WI",
+    "fiscalYear": 2024,
+    "enhancedFmap": 82.28
+  },
+  {
+    "stateId": "WY",
+    "fiscalYear": 2024,
+    "enhancedFmap": 65.0
+  }
+]
