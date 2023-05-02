@@ -109,12 +109,6 @@ do
   aws s3 rm s3://$i/ --recursive
 done
 
-# Trigger a delete for each cloudformation stack
-for i in "${stackList[@]}"
-do
-  echo $i
-  aws cloudformation delete-stack --stack-name $i
-done
 # Delete Client Certificates associated with a branch
 certToDestroy=$(aws apigateway get-client-certificates\
     | grep \"app-api-${stage}\" -B 2 \
@@ -130,3 +124,10 @@ do
     | grep -o '"clientCertificateId": "[^"]*' \
     | grep -o '[^"]*$' || true) 
 done 
+
+# Trigger a delete for each cloudformation stack
+for i in "${stackList[@]}"
+do
+  echo $i
+  aws cloudformation delete-stack --stack-name $i
+done
