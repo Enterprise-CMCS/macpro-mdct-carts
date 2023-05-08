@@ -22,13 +22,13 @@ async function myHandler(event, context, callback) {
   dynamoClient = new aws.DynamoDB.DocumentClient(dynamoConfig);
 
   const results = await scan(dynamoClient);
-  console.log(results);
+  console.log(results, 'results');
 
-  const transformed = transform(items);
-  console.log(transformed);
+  const transformed = transform(results);
+  console.log(transformed, 'transformed');
 
-//   const keys = ["pk", "sectionId"];
-//   updateItems(`${dynamoPrefix}-section`, items, keys)
+  // const keys = ["pk", "sectionId"];
+  // updateItems(`${dynamoPrefix}-section`, items, keys)
   return results;
   // eslint-disable-next-line no-console
 //   console.log("Completed data fix");
@@ -36,7 +36,14 @@ async function myHandler(event, context, callback) {
 
 async function transform(items) {
     const transformed = items.map((item) => {
-        
+      item.contents.section.subsections.parts.questions[2].questions[7].fieldset_info.headers.contents[0] = "";
+      item.contents.section.subsections.parts.questions[0].questions[7].fieldset_info.headers.contents[1] = "FFY 2022";
+      item.contents.section.subsections.parts.questions[0].questions[7].fieldset_info.headers.contents[2] = "FFY 2023";
+      item.contents.section.subsections.parts.questions[0].questions[7].fieldset_info.headers.contents[3] = "FFY 2024";
+      // item.contents.section.subsections.parts.questions.questions.fieldset_info.rows.targets.lookupFmapFy[0] = "2022";
+      // item.contents.section.subsections.parts.questions.questions.fieldset_info.rows.targets.lookupFmapFy[1] = "2023";
+      // item.contents.section.subsections.parts.questions.questions.fieldset_info.rows.targets.lookupFmapFy[2] = "2024";
+
     });
     
     return transformed;
