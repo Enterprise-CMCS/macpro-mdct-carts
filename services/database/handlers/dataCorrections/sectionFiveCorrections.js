@@ -22,15 +22,19 @@ async function myHandler(event, context, callback) {
   dynamoClient = new aws.DynamoDB.DocumentClient(dynamoConfig);
 
   const results = await scan(dynamoClient);
+  // eslint-disable-next-line no-console
   console.log(results, "results");
 
-  const transformed = transform(results);
+  const transformed = await transform(results);
+  // eslint-disable-next-line no-console
   console.log(transformed, "transformed");
 
-  // const keys = ["pk", "sectionId"];
-  // updateItems(`${dynamoPrefix}-section`, items, keys)
+  /*
+   *   const keys = ["pk", "sectionId"];
+   *   updateItems(`${dynamoPrefix}-section`, items, keys)
+   */
+  //
   return results;
-  // eslint-disable-next-line no-console
   //   console.log("Completed data fix");
 }
 
@@ -94,6 +98,7 @@ async function scan(dynamoClient) {
   return existingItems;
 }
 
+// eslint-disable-next-line no-unused-vars
 const updateItems = async (tableName, items, keys) => {
   try {
     for (const item of items) {
