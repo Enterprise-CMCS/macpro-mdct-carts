@@ -109,6 +109,27 @@ do
   aws s3 rm s3://$i/ --recursive
 done
 
+echo "Removing certificate from stage"
+
+restApiId=$(aws apigateway get-rest-apis | jq -r '.[] | .[] |  select(.name=="fix-destroy-issues-app-api") | .id|tostring')
+
+echo $restApiId
+
+aws apigateway update-stage \
+  --rest-api-id $restApiId \
+  --stage-name $stage \
+  --patch-operations op=replace,path=/clientCertificateId,value="" \
+  &> /dev/null
+
+echo "Removed certificate from stage"
+
+# Trigger a delete for each cloudformation stack
+for i in "${stackList[@]}"
+do
+  echo "Triggered stack deletion for stack: ' $i
+  aws cloudformation delete-stack --stack-name $i
+done
+
 # Delete Client Certificates associated with a branch
 certToDestroy=$(aws apigateway get-client-certificates\
     | grep \"app-api-${stage}\" -B 2 \
@@ -124,10 +145,3 @@ do
     | grep -o '"clientCertificateId": "[^"]*' \
     | grep -o '[^"]*$' || true) 
 done 
-
-# Trigger a delete for each cloudformation stack
-for i in "${stackList[@]}"
-do
-  echo $i
-  aws cloudformation delete-stack --stack-name $i
-done
