@@ -11,8 +11,12 @@ services=(
   'ui'
   'ui-auth'
   'ui-src'
-  'carts-bigmac-streams'
 )
+
+# Only deploy resources for kafka ingestion in real envs
+if [[ "$stage" == "main" || "$stage" == "val" || "$stage" == "production" ]]; then
+  services+=('carts-bigmac-streams')
+fi
 
 install_deps() {
   if [ "$CI" == "true" ]; then # If we're in a CI system
