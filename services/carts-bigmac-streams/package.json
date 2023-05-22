@@ -8,7 +8,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "serverless-bundle": "^3.1.0",
+    "serverless-bundle": "^6.0.0",
     "serverless-dotenv-plugin": "^3.0.0",
     "serverless-online": "CMSgov/serverless-online",
     "serverless-plugin-scripts": "^1.0.2",
