@@ -30,7 +30,7 @@ jobs:
           else
             echo "branch_name=${{ github.event.ref }}" >> $GITHUB_ENV
           fi
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values
@@ -48,7 +48,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: Delete Topics
-          repo: cmsgov/cms-bigmac
+          repo: Enterprise-CMCS/bigmac
           token: ${{ secrets.AUTOMATION_ACCESS_TOKEN }}
           inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
           ref: refs/heads/master # Otherwise workflow-dispatch tries to operate off of our default name

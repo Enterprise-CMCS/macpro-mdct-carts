@@ -30,7 +30,7 @@ jobs:
           else
             echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
           fi
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
@@ -72,7 +72,7 @@ jobs:
           coverageLocations: |
             ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov
             ${{github.workspace}}/services/ui-src/coverage/lcov.info:lcov
-      - name: Store unit test reults
+      - name: Store unit test results
         uses: actions/upload-artifact@v2
         with:
           name: unit_test_results
@@ -108,7 +108,7 @@ jobs:
     if: ${{ github.ref != 'refs/heads/production' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v3.0.3
         with:
@@ -124,12 +124,16 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
+          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
+          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
-          path: tests/cypress/screenshots/
+          path: |
+            tests/cypress/screenshots/
+            tests/cypress/videos/
 
   a11y-tests:
     name: A11y Tests
@@ -153,9 +157,13 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
+          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
+          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
-          path: tests/cypress/screenshots/
+          path: |
+            tests/cypress/screenshots/
+            tests/cypress/videos/
