@@ -29,31 +29,58 @@ async function myHandler(event, context, callback) {
   // eslint-disable-next-line no-console
   console.log(transformed, "transformed");
 
-  /*
-   *   const keys = ["pk", "sectionId"];
-   *   updateItems(`${dynamoPrefix}-section`, items, keys)
-   */
-  //
+  const keys = ["pk", "sectionId"];
+  await updateItems(`${dynamoPrefix}-section`, transformed, keys);
+
   return results;
-  //   console.log("Completed data fix");
+  // console.log("Completed data fix");
 }
 
 async function transform(items) {
   const transformed = items.map((item) => {
-    item.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[0].contents[0] =
-      "";
-    item.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[0].contents[1] =
-      "FFY 2022";
-    item.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[0].contents[2] =
-      "FFY 2023";
-    item.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[0].contents[3] =
+    const corrected = { ...item };
+
+    // header contents 1
+    corrected.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[2].contents =
       "FFY 2024";
-    item.contents.section.subsections[0].parts[0].questions[8].fieldset_info.rows[0].targets[0].lookupFmapFy =
-      "2022";
-    item.contents.section.subsections[0].parts[0].questions[8].fieldset_info.rows[0].targets[1].lookupFmapFy =
-      "2023";
-    item.contents.section.subsections[0].parts[0].questions[8].fieldset_info.rows[0].targets[2].lookupFmapFy =
+    corrected.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[3].contents =
+      "FFY 2025";
+    // header contents 2
+    corrected.contents.section.subsections[0].parts[1].questions[7].fieldset_info.headers[2].contents =
+      "FFY 2024";
+    corrected.contents.section.subsections[0].parts[1].questions[7].fieldset_info.headers[3].contents =
+      "FFY 2025";
+    // header contents 3
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.headers[2].contents =
+      "FFY 2024";
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.headers[3].contents =
+      "FFY 2025";
+    // header contents 4
+    corrected.contents.section.subsections[0].parts[2].questions[2].fieldset_info.headers[2].contents =
+      "FFY 2024";
+    corrected.contents.section.subsections[0].parts[2].questions[2].fieldset_info.headers[3].contents =
+      "FFY 2025";
+    // header contents 5
+    corrected.contents.section.subsections[0].parts[3].questions[2].fieldset_info.headers[2].contents =
+      "FFY 2024";
+    corrected.contents.section.subsections[0].parts[3].questions[2].fieldset_info.headers[3].contents =
+      "FFY 2025";
+    // lookupFmapFy for calculations
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[1][2].targets[0].lookupFmapFy =
       "2024";
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[1][3].targets[0].lookupFmapFy =
+      "2025";
+    // lookupFmapFy for calculations 2
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[2][2].targets[0].lookupFmapFy =
+      "2024";
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[2][3].targets[0].lookupFmapFy =
+      "2025";
+    // lookupFmapFy for calculations 3
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][2].targets[0].lookupFmapFy =
+      "2024";
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][3].targets[0].lookupFmapFy =
+      "2025";
+    return corrected;
   });
 
   return transformed;
