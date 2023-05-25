@@ -22,13 +22,7 @@ async function myHandler(event, context, callback) {
   dynamoClient = new aws.DynamoDB.DocumentClient(dynamoConfig);
 
   const results = await scan(dynamoClient);
-  // eslint-disable-next-line no-console
-  console.log(results, "results");
-
   const transformed = await transform(results);
-  // eslint-disable-next-line no-console
-  console.log(transformed, "transformed");
-
   const keys = ["pk", "sectionId"];
   await updateItems(`${dynamoPrefix}-section`, transformed, keys);
 
@@ -42,44 +36,44 @@ async function transform(items) {
 
     // header contents 1
     corrected.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[2].contents =
-      "FFY 2024";
+      "FFY 2023";
     corrected.contents.section.subsections[0].parts[0].questions[5].fieldset_info.headers[3].contents =
-      "FFY 2025";
+      "FFY 2024";
     // header contents 2
     corrected.contents.section.subsections[0].parts[1].questions[7].fieldset_info.headers[2].contents =
-      "FFY 2024";
+      "FFY 2023";
     corrected.contents.section.subsections[0].parts[1].questions[7].fieldset_info.headers[3].contents =
-      "FFY 2025";
+      "FFY 2024";
     // header contents 3
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.headers[2].contents =
-      "FFY 2024";
+      "FFY 2023";
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.headers[3].contents =
-      "FFY 2025";
+      "FFY 2024";
     // header contents 4
     corrected.contents.section.subsections[0].parts[2].questions[2].fieldset_info.headers[2].contents =
-      "FFY 2024";
+      "FFY 2023";
     corrected.contents.section.subsections[0].parts[2].questions[2].fieldset_info.headers[3].contents =
-      "FFY 2025";
+      "FFY 2024";
     // header contents 5
     corrected.contents.section.subsections[0].parts[3].questions[2].fieldset_info.headers[2].contents =
-      "FFY 2024";
+      "FFY 2023";
     corrected.contents.section.subsections[0].parts[3].questions[2].fieldset_info.headers[3].contents =
-      "FFY 2025";
+      "FFY 2024";
     // lookupFmapFy for calculations
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[1][2].targets[0].lookupFmapFy =
-      "2024";
+      "2023";
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[1][3].targets[0].lookupFmapFy =
-      "2025";
+      "2024";
     // lookupFmapFy for calculations 2
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[2][2].targets[0].lookupFmapFy =
-      "2024";
+      "2023";
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[2][3].targets[0].lookupFmapFy =
-      "2025";
-    // lookupFmapFy for calculations 3
-    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][2].targets[0].lookupFmapFy =
       "2024";
-    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][3].targets[0].lookupFmapFy =
-      "2025";
+    // lookupFmapFy for calculations 3
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][2].targets[11].lookupFmapFy =
+      "2023";
+    corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][3].targets[11].lookupFmapFy =
+      "2024";
     return corrected;
   });
 
