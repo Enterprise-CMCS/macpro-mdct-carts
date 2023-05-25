@@ -59,17 +59,17 @@ async function transform(items) {
       "FFY 2023";
     corrected.contents.section.subsections[0].parts[3].questions[2].fieldset_info.headers[3].contents =
       "FFY 2024";
-    // lookupFmapFy for calculations
+    // lookupFmapFy label
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[1][2].targets[0].lookupFmapFy =
       "2023";
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[1][3].targets[0].lookupFmapFy =
       "2024";
-    // lookupFmapFy for calculations 2
+    // lookupFmapFy label 2
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[2][2].targets[0].lookupFmapFy =
       "2023";
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[2][3].targets[0].lookupFmapFy =
       "2024";
-    // lookupFmapFy for calculations 3
+    // lookupFmapFy label 3
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][2].targets[11].lookupFmapFy =
       "2023";
     corrected.contents.section.subsections[0].parts[1].questions[8].fieldset_info.rows[3][3].targets[11].lookupFmapFy =
