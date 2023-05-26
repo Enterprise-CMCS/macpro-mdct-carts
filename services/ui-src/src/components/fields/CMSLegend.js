@@ -10,8 +10,7 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
     !questionType.includes("text") &&
     !questionType.includes("mailing_address") &&
     !questionType.includes("phone_number") &&
-    !questionType.includes("email") &&
-    !questionType.includes("percentage")
+    !questionType.includes("email")
   ) {
     let legend = [];
     if (!hideNumber) legend.push(labelBits);
