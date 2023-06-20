@@ -25,7 +25,7 @@ describe("CMS Legend", () => {
     ["mailing_address", false],
     ["phone_number", false],
     ["email", false],
-    ["percentage", false],
+    ["percentage", true],
     ["radio", true],
     ["fieldset", true],
   ])(
