@@ -11,6 +11,7 @@ services=(
   'ui'
   'ui-auth'
   'ui-src'
+  'carts-bigmac-streams'
 )
 
 # Only deploy resources for kafka ingestion in real envs
