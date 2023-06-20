@@ -19,7 +19,7 @@ custom:
   kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
-  bigmacRoleArn: ${ssm:/aws/reference/secretsmanager/onemac/${sls:stage}/bigmacRoleArn, ssm:/aws/reference/secretsmanager/onemac/default/bigmacRoleArn}
+  bigmacRoleArn: ${ssm:/aws/reference/secretsmanager/carts/${sls:stage}/bigmacRoleArn, ssm:/aws/reference/secretsmanager/carts/default/bigmacRoleArn}
   privateSubnets:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
