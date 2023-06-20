@@ -11,11 +11,10 @@ services=(
   'ui'
   'ui-auth'
   'ui-src'
-  'carts-bigmac-streams'
 )
 
 # Only deploy resources for kafka ingestion in real envs
-if [[ "$stage" == "main" || "$stage" == "val" || "$stage" == "production" ]]; then
+if [[ "$stage" == "main" || "$stage" == "val" || "$stage" == "production" || "$stage" == "iam" ]]; then
   services+=('carts-bigmac-streams')
 fi
 

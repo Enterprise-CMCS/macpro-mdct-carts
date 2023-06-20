@@ -244,7 +244,7 @@ resources:
               - Name: CONNECT_PLUGIN_PATH
                 Value: /usr/share/java,/usr/local/share/kafka/plugins
               - Name: CLASSPATH
-                Value: /etc/kafka-connect/jars/*:/usr/share/java/cp-base-new/aws-msk-iam-auth-1.1.3-
+                Value: /etc/kafka-connect/jars/*:/usr/share/java/cp-base-new/aws-msk-iam-auth-1.1.3-all.jar
               - Name: CONNECT_SECURITY_PROTOCOL
                 Value: SASL_SSL
               - Name: CONNECT_SASL_MECHANISM
