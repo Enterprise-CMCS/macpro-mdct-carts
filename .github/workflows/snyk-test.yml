@@ -83,7 +83,7 @@ jobs:
         working-directory: .github/workflows/
       
       - name: use the custom github  action to parse Snyk output
-        uses: Enterprise-CMCS/macfc-security-scan-report@v1.0.0
+        uses: Enterprise-CMCS/macfc-security-scan-report@v1.0.1
         with:
           jira-username: ${{ secrets.JIRA_SERVICE_USERNAME }}
           jira-token: ${{ secrets.JIRA_SERVICE_USER_TOKEN }}
@@ -92,7 +92,7 @@ jobs:
           jira-issue-type: 'Task'
           jira-custom-field-key-value: '{ "customfield_10007" : "MDCT-2280"  }'
           jira-labels: 'MCR,snyk'
-          jira-title-prefix: '[MCR] - Snyk :'
+          jira-title-prefix: '[CARTS] - Snyk :'
           scan-output-path: 'snyk_output.txt'
           scan-type: 'snyk'
     
