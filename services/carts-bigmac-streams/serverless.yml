@@ -88,7 +88,7 @@ functions:
     role: SinkEnrollmentCountsRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
-      bigmacRoleArn: ${self:custom.bigmacRoleArn}
+      #bigmacRoleArn: ${self:custom.bigmacRoleArn}
       STAGE: ${self:custom.stage}
       TOPIC: aws.mdct.seds.cdc.enrollment-counts.v0
       stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
@@ -362,6 +362,11 @@ resources:
                     - dynamodb:UpdateItem
                     - dynamodb:DeleteItem
                   Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - sts:AssumeRole
+                  Resource:
+                    - ${self:custom.bigmacRoleArn}
     LambdaConfigureConnectorsRole:
       Type: "AWS::IAM::Role"
       Properties:
