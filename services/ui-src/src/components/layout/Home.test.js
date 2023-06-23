@@ -38,6 +38,7 @@ describe("Home Component", () => {
     [AppRoles.CMS_USER, <CMSHome />],
     [AppRoles.CMS_ADMIN, <HomeAdmin />],
     [AppRoles.HELP_DESK, <CMSHome />],
+    [AppRoles.CMS_APPROVER, <CMSHome />],
     [AppRoles.STATE_USER, <StateHome />],
     ["", <Unauthorized />],
   ])("User role %s should see the matching homepage)", (role, expected) => {

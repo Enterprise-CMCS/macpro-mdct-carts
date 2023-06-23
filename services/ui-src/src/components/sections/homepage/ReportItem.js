@@ -52,6 +52,12 @@ const ReportItem = ({
     window.location.reload(false);
   };
 
+  const rolesThatUncertify = [
+    AppRoles.CMS_ADMIN,
+    AppRoles.CMS_USER,
+    AppRoles.CMS_APPROVER,
+  ];
+
   return (
     <>
       {!stateUser && (
@@ -69,7 +75,7 @@ const ReportItem = ({
               {link1Text}
             </Link>
             {statusText === "Certified and Submitted" &&
-              userRole === AppRoles.CMS_USER && (
+              rolesThatUncertify.includes(userRole) && (
                 <span>
                   {" "}
                   <button
