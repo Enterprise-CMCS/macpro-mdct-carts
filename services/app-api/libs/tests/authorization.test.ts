@@ -3,6 +3,7 @@ import {
   getUserCredentialsFromJwt,
   getUserNameFromJwt,
   isAuthorized,
+  mapIdmRoleToAppRole,
   UserCredentials,
 } from "../authorization";
 import { AppRoles, IdmRoles } from "../../types";
@@ -210,6 +211,13 @@ describe("Authorization Lib", () => {
       });
       const result = getUserNameFromJwt(event);
       expect(result).toEqual("branchUser");
+    });
+  });
+
+  describe("mapIdmRoleToAppRole", () => {
+    it("should return AppRole if IdmRole exists", () => {
+      const result = mapIdmRoleToAppRole(IdmRoles.APPROVER);
+      expect(result).toEqual(AppRoles.CMS_APPROVER);
     });
   });
 });
