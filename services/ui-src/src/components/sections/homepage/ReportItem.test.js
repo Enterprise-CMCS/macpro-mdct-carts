@@ -7,6 +7,7 @@ import ReportItem from "./ReportItem";
 import { Provider } from "react-redux";
 import {
   adminUserWithMultipleReports,
+  approverUserWithMultipleReports,
   cmsUserWithMultipleReports,
   helpdeskUserWithMultipleReports,
   stateUserWithMultipleReports,
@@ -242,7 +243,7 @@ const CMSHomepageAdminAl2020Props = {
   name: "Alabama",
   year: 2020,
   statusText: "Certified and Submitted",
-  userRole: "HELP_DESK",
+  userRole: "CMS_ADMIN",
   username: "Frank States",
   lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
   timeZone: "America/New_York",
@@ -253,7 +254,7 @@ const CMSHomepageAdminAL2021Props = {
   name: "Alabama",
   year: 2021,
   statusText: "In Progress",
-  userRole: "HELP_DESK",
+  userRole: "CMS_ADMIN",
   username: "al@test.com",
   lastChanged: "2021-01-04 18:28:18.524133+00",
   timeZone: "America/New_York",
@@ -319,7 +320,7 @@ describe("ReportItem viewed by an Admin User", () => {
     expect(
       report.find("div.actions.ds-l-col--auto").find("a").prop("href")
     ).toBe("/views/sections/AL/2020/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+    expect(report.find("div.actions.ds-l-col--auto").text()).toContain(
       "Uncertify"
     );
   });
@@ -439,6 +440,113 @@ describe("ReportItem viewed by an Help Desk User", () => {
 
   test("Certified report items  should not have basic accessibility issues", async () => {
     const { container } = render(helpdeskUserCertWrapper);
+    const stateCertResults = await axe(container);
+    expect(stateCertResults).toHaveNoViolations();
+  });
+});
+
+/**
+ *********************
+ *Approver User (help.approver@test.com)
+ *********************
+ */
+
+const approverUser = mockStore(approverUserWithMultipleReports);
+const CMSHomepageApproverAl2020Props = {
+  link1URL: "/views/sections/AL/2020/00/a",
+  name: "Alabama",
+  year: 2020,
+  statusText: "Certified and Submitted",
+  userRole: "CMS_APPROVER",
+  username: "Frank States",
+  lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  timeZone: "America/New_York",
+};
+
+const CMSHomepageApproverAL2021Props = {
+  link1URL: "/views/sections/AL/2021/00/a",
+  name: "Alabama",
+  year: 2021,
+  statusText: "In Progress",
+  userRole: "CMS_APPROVER",
+  username: "al@test.com",
+  lastChanged: "2021-01-04 18:28:18.524133+00",
+  timeZone: "America/New_York",
+};
+
+describe("ReportItem viewed by an Admin User", () => {
+  const approverUserInProgWrapper = (
+    <Provider store={approverUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageApproverAL2021Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  const approverUserCertWrapper = (
+    <Provider store={approverUser}>
+      <MemoryRouter initialEntries={["/"]}>
+        <ReportItem {...CMSHomepageApproverAl2020Props} />
+      </MemoryRouter>
+    </Provider>
+  );
+
+  it("should render In Progress correctly", () => {
+    expect(shallow(approverUserInProgWrapper).exists()).toBe(true);
+  });
+
+  it("should render report other statuses correctly", () => {
+    expect(shallow(approverUserCertWrapper).exists()).toBe(true);
+  });
+
+  it("should render an In Progress report with passed props", () => {
+    const report = mount(approverUserInProgWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2021-01-04 at 1:28:18 p.m. by al@test.com"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2021/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
+      "Uncertify"
+    );
+  });
+
+  it("should render other reports statuses and time staps properly", () => {
+    const report = mount(approverUserCertWrapper);
+    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
+    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
+    expect(report.find("div.status.ds-l-col--2").text()).toBe(
+      "Certified and Submitted"
+    );
+    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
+      "2022-06-27 at 2:43:08 p.m. by Frank States"
+    );
+    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
+      "View"
+    );
+    expect(
+      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
+    ).toBe("/views/sections/AL/2020/00/a");
+    expect(report.find("div.actions.ds-l-col--auto").text()).toContain(
+      "Uncertify"
+    );
+  });
+
+  test("In Progress report items should not have basic accessibility issues", async () => {
+    const { container } = render(approverUserCertWrapper);
+    const stateInProgResults = await axe(container);
+    expect(stateInProgResults).toHaveNoViolations();
+  });
+
+  test("Certified report items  should not have basic accessibility issues", async () => {
+    const { container } = render(approverUserCertWrapper);
     const stateCertResults = await axe(container);
     expect(stateCertResults).toHaveNoViolations();
   });

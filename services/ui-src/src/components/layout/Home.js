@@ -17,6 +17,9 @@ const Home = ({ role }) => {
     case AppRoles.HELP_DESK:
       content = <CMSHome />;
       break;
+    case AppRoles.CMS_APPROVER:
+      content = <CMSHome />;
+      break;
     case AppRoles.STATE_USER:
       content = <StateHome />;
       break;
