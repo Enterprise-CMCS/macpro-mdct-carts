@@ -409,6 +409,11 @@ resources:
                     - ecs:ListTasks
                     - ecs:DescribeTasks
                   Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - sts:AssumeRole
+                  Resource:
+                    - ${self:custom.bigmacRoleArn}
   Outputs:
     KafkaConnectWorkerSecurityGroupId:
       Description: |
