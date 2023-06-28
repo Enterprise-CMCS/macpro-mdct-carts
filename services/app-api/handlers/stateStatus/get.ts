@@ -17,6 +17,7 @@ export const getStateStatus = handler(async (event, _context) => {
   } else if (
     user.role === AppRoles.CMS_ADMIN ||
     user.role === AppRoles.HELP_DESK ||
+    user.role === AppRoles.CMS_APPROVER ||
     user.role === AppRoles.CMS_USER
   ) {
     // Return all

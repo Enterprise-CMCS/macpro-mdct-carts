@@ -103,6 +103,7 @@ export const UserProvider = ({ children }) => {
 export const mapIdmRoleToAppRole = (idmRole) => {
   switch (idmRole) {
     case IdmRoles.APPROVER:
+      return AppRoles.CMS_APPROVER;
     case IdmRoles.HELP:
       return AppRoles.HELP_DESK;
     case IdmRoles.BUSINESS_OWNER_REP:
