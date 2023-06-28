@@ -6,140 +6,130 @@ const {
 const { STSClient, AssumeRoleCommand } = require("@aws-sdk/client-sts");
 
 const STAGE = process.env.STAGE;
-const kafka = new Kafka({
-  clientId: `carts-${STAGE}`,
-  brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
-  retry: {
-    initialRetryTime: 300,
-    retries: 8,
-  },
-  ssl: true,
-  sasl: await getMechanism("us-east-1", process.env.bigmacRoleArn),
-});
+let kafka; // Declare kafka variable
 
-const producer = kafka.producer();
-let connected = false;
-const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2", "beforeExit"];
+async function initializeKafka() {
+  const sasl = await getMechanism("us-east-1", process.env.bigmacRoleArn);
 
-signalTraps.map((type) => {
-  process.removeListener(type, producer.disconnect);
-});
+  kafka = new Kafka({
+    clientId: `carts-${STAGE}`,
+    brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
+    retry: {
+      initialRetryTime: 300,
+      retries: 8,
+    },
+    ssl: true,
+    sasl: sasl,
+  });
 
-signalTraps.map((type) => {
-  process.once(type, producer.disconnect);
-});
+  const producer = kafka.producer();
+  let connected = false;
+  const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2", "beforeExit"];
 
-class KafkaSourceLib {
-  /*
-   *Event types:
-   *cmd – command; restful publish
-   *cdc – change data capture; record upsert/delete in data store
-   *sys – system event; send email, archive logs
-   *fct – fact; user activity, notifications, logs
-   *
-   *topicPrefix = "[data_center].[system_of_record].[business_domain].[event_type]";
-   *version = "some version";
-   *tables = [list of tables];
-   */
+  signalTraps.map((type) => {
+    process.removeListener(type, producer.disconnect);
+  });
 
-  unmarshallOptions = {
-    convertEmptyValues: true,
-    wrapNumbers: true,
-  };
+  signalTraps.map((type) => {
+    process.once(type, producer.disconnect);
+  });
 
-  stringify(e, prettyPrint) {
-    if (prettyPrint === true) return JSON.stringify(e, null, 2);
-    return JSON.stringify(e);
-  }
-
-  determineTopicName(streamARN) {
-    for (const table of this.tables) {
-      if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
-    }
-  }
-
-  unmarshall(r) {
-    return AWS.DynamoDB.Converter.unmarshall(r, this.unmarshallOptions);
-  }
-
-  createPayload(record) {
-    return this.createDynamoPayload(record);
-  }
-
-  createDynamoPayload(record) {
-    const dynamodb = record.dynamodb;
-    const { eventID, eventName } = record;
-    const dynamoRecord = {
-      NewImage: this.unmarshall(dynamodb.NewImage),
-      OldImage: this.unmarshall(dynamodb.OldImage),
-      Keys: this.unmarshall(dynamodb.Keys),
+  class KafkaSourceLib {
+    unmarshallOptions = {
+      convertEmptyValues: true,
+      wrapNumbers: true,
     };
-    return {
-      key: Object.values(dynamoRecord.Keys).join("#"),
-      value: this.stringify(dynamoRecord),
-      partition: 0,
-      headers: { eventID: eventID, eventName: eventName },
-    };
-  }
 
-  topic(t) {
-    if (this.version) {
-      return `${this.topicPrefix}${t}.${this.version}`;
-    } else {
-      return `${this.topicPrefix}${t}`;
+    stringify(e, prettyPrint) {
+      if (prettyPrint === true) return JSON.stringify(e, null, 2);
+      return JSON.stringify(e);
+    }
+
+    determineTopicName(streamARN) {
+      for (const table of this.tables) {
+        if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
+      }
+    }
+
+    unmarshall(r) {
+      return AWS.DynamoDB.Converter.unmarshall(r, this.unmarshallOptions);
+    }
+
+    createPayload(record) {
+      return this.createDynamoPayload(record);
+    }
+
+    createDynamoPayload(record) {
+      const dynamodb = record.dynamodb;
+      const { eventID, eventName } = record;
+      const dynamoRecord = {
+        NewImage: this.unmarshall(dynamodb.NewImage),
+        OldImage: this.unmarshall(dynamodb.OldImage),
+        Keys: this.unmarshall(dynamodb.Keys),
+      };
+      return {
+        key: Object.values(dynamoRecord.Keys).join("#"),
+        value: this.stringify(dynamoRecord),
+        partition: 0,
+        headers: { eventID: eventID, eventName: eventName },
+      };
+    }
+
+    topic(t) {
+      if (this.version) {
+        return `${this.topicPrefix}${t}.${this.version}`;
+      } else {
+        return `${this.topicPrefix}${t}`;
+      }
+    }
+
+    createOutboundEvents(records) {
+      let outboundEvents = {};
+      for (const record of records) {
+        const topicName = this.determineTopicName(
+          String(record.eventSourceARN.toString())
+        );
+
+        const dynamoPayload = this.createPayload(record);
+
+        //initialize configuration object keyed to topic for quick lookup
+        if (!(outboundEvents[topicName] instanceof Object))
+          outboundEvents[topicName] = {
+            topic: topicName,
+            messages: [],
+          };
+
+        //add messages to messages array for corresponding topic
+        outboundEvents[topicName].messages.push(dynamoPayload);
+      }
+      return outboundEvents;
+    }
+
+    async handler(event) {
+      if (!connected) {
+        console.log("Attempting connection...");
+        await producer.connect();
+        connected = true;
+      }
+      console.log("Raw event", this.stringify(event, true));
+
+      if (event.Records) {
+        const outboundEvents = this.createOutboundEvents(event.Records);
+
+        const topicMessages = Object.values(outboundEvents);
+        console.log(
+          `Batch configuration: ${this.stringify(topicMessages, true)}`
+        );
+
+        await producer.sendBatch({ topicMessages });
+      }
+
+      console.log(`Successfully processed ${event.Records.length} records.`);
     }
   }
 
-  createOutboundEvents(records) {
-    let outboundEvents = {};
-    for (const record of records) {
-      const topicName = this.determineTopicName(
-        String(record.eventSourceARN.toString())
-      );
-
-      const dynamoPayload = this.createPayload(record);
-
-      //initialize configuration object keyed to topic for quick lookup
-      if (!(outboundEvents[topicName] instanceof Object))
-        outboundEvents[topicName] = {
-          topic: topicName,
-          messages: [],
-        };
-
-      //add messages to messages array for corresponding topic
-      outboundEvents[topicName].messages.push(dynamoPayload);
-    }
-    return outboundEvents;
-  }
-
-  async handler(event) {
-    if (!connected) {
-      // eslint-disable-next-line no-console
-      console.log("Attempting connection...");
-      await producer.connect();
-      connected = true;
-    }
-    // eslint-disable-next-line no-console
-    console.log("Raw event", this.stringify(event, true));
-
-    if (event.Records) {
-      const outboundEvents = this.createOutboundEvents(event.Records);
-
-      const topicMessages = Object.values(outboundEvents);
-      // eslint-disable-next-line no-console
-      console.log(
-        `Batch configuration: ${this.stringify(topicMessages, true)}`
-      );
-
-      await producer.sendBatch({ topicMessages });
-    }
-
-    // eslint-disable-next-line no-console
-    console.log(`Successfully processed ${event.Records.length} records.`);
-  }
+  return new KafkaSourceLib();
 }
-
-export default KafkaSourceLib;
 
 async function getMechanism(region, role) {
   const sts = new STSClient({
@@ -162,3 +152,19 @@ async function getMechanism(region, role) {
     },
   });
 }
+
+// Call the async function to initialize Kafka
+initializeKafka()
+  .then((kafkaSourceLib) => {
+    // Kafka initialization completed
+    // You can now use the kafkaSourceLib object and perform operations
+    // ...
+
+    // Example usage:
+    // kafkaSourceLib.handler(event);
+
+  })
+  .catch((error) => {
+    // Handle any errors that occurred during initialization
+    console.error("Failed to initialize Kafka:", error);
+  });
