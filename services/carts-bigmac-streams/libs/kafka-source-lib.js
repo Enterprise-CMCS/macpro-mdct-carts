@@ -1,4 +1,10 @@
 import AWS from "aws-sdk";
+import { Kafka, ConfigResourceTypes } from "kafkajs";
+const {
+  createMechanism,
+} = require("@jm18457/kafkajs-msk-iam-authentication-mechanism");
+const { STSClient, AssumeRoleCommand } = require("@aws-sdk/client-sts");
+
 const { Kafka } = require("kafkajs");
 
 const STAGE = process.env.STAGE;
@@ -9,9 +15,8 @@ const kafka = new Kafka({
     initialRetryTime: 300,
     retries: 8,
   },
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: true,
+  sasl: await getMechanism("us-east-1", process.env.bigmacRoleArn),
 });
 
 const producer = kafka.producer();
@@ -137,3 +142,25 @@ class KafkaSourceLib {
 }
 
 export default KafkaSourceLib;
+
+async function getMechanism(region, role) {
+  const sts = new STSClient({
+    region,
+  });
+  const crossAccountRoleData = await sts.send(
+    new AssumeRoleCommand({
+      RoleArn: role,
+      RoleSessionName: "LambdaSession",
+      ExternalId: "asdf",
+    })
+  );
+  return createMechanism({
+    region,
+    credentials: {
+      authorizationIdentity: crossAccountRoleData.AssumedRoleUser.AssumeRoleId,
+      accessKeyId: crossAccountRoleData.Credentials.AccessKeyId,
+      secretAccessKey: crossAccountRoleData.Credentials.SecretAccessKey,
+      sessionToken: crossAccountRoleData.Credentials.SessionToken,
+    },
+  });
+}
