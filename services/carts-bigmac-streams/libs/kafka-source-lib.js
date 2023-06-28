@@ -5,7 +5,7 @@ const {
 } = require("@jm18457/kafkajs-msk-iam-authentication-mechanism");
 const { STSClient, AssumeRoleCommand } = require("@aws-sdk/client-sts");
 
-const { Kafka } = require("kafkajs");
+//const { Kafka } = require("kafkajs");
 
 const STAGE = process.env.STAGE;
 const kafka = new Kafka({
