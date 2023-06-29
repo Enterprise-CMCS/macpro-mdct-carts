@@ -126,11 +126,6 @@ functions:
       dynamoPrefix: ${self:custom.stage}
       seedTestData: ${self:custom.seedTestData}
     timeout: 120
-  sectionFiveCorrections:
-    handler: handlers/dataCorrections/sectionFiveCorrections.handler
-    environment:
-      dynamoPrefix: ${self:custom.stage}
-    timeout: 120
 
 resources:
   Resources:
