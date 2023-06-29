@@ -159,10 +159,8 @@ initializeKafka()
     // Kafka initialization completed
     // You can now use the kafkaSourceLib object and perform operations
     // ...
-
     // Example usage:
     // kafkaSourceLib.handler(event);
-
   })
   .catch((error) => {
     // Handle any errors that occurred during initialization
