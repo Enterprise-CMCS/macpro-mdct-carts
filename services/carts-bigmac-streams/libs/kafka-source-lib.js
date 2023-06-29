@@ -156,11 +156,7 @@ async function getMechanism(region, role) {
 // Call the async function to initialize Kafka
 initializeKafka()
   .then((kafkaSourceLib) => {
-    // Kafka initialization completed
-    // You can now use the kafkaSourceLib object and perform operations
-    // ...
-    // Example usage:
-    // kafkaSourceLib.handler(event);
+ 
   })
   .catch((error) => {
     // Handle any errors that occurred during initialization
