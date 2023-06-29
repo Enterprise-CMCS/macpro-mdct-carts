@@ -155,7 +155,7 @@ async function getMechanism(region, role) {
 
 // Call the async function to initialize Kafka
 initializeKafka()
-  .then((kafkaSourceLib) => {})
+  .then(() => {})
   .catch((error) => {
     // Handle any errors that occurred during initialization
     console.error("Failed to initialize Kafka:", error);
