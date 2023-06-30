@@ -6,7 +6,7 @@ package:
   individually: true
 
 plugins:
-  - serverless-bundle
+ # - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
   - serverless-online
