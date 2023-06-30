@@ -121,7 +121,7 @@ async function initializeKafka() {
           `Batch configuration: ${this.stringify(topicMessages, true)}`
         );
 
-        await producer.sendBatch({ topicMessages });
+        await producer.sendBatch({ messages: topicMessages });
       }
 
       console.log(`Successfully processed ${event.Records.length} records.`);
