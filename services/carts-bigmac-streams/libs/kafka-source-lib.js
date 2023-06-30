@@ -5,6 +5,7 @@ const {
 } = require("@jm18457/kafkajs-msk-iam-authentication-mechanism");
 const { STSClient, AssumeRoleCommand } = require("@aws-sdk/client-sts");
 const STAGE = process.env.STAGE;
+const sasl = await getMechanism("us-east-1", process.env.bigmacRoleArn);
 const kafka = new Kafka({
   clientId: `carts-${STAGE}`,
   brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
@@ -13,7 +14,7 @@ const kafka = new Kafka({
     retries: 8,
   },
   ssl: true,
-  sasl: await getMechanism("us-east-1", process.env.bigmacRoleArn),
+  sasl: sasl,
   requestTimeout: 295000
 });
 const producer = kafka.producer();
