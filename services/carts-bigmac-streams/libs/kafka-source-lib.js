@@ -145,7 +145,7 @@ async function getMechanism(region, role) {
   return createMechanism({
     region,
     credentials: {
-      authorizationIdentity: crossAccountRoleData.AssumedRoleUser.AssumeRoleId,
+      authorizationIdentity: crossAccountRoleData.AssumedRoleUser.AssumedRoleId,
       accessKeyId: crossAccountRoleData.Credentials.AccessKeyId,
       secretAccessKey: crossAccountRoleData.Credentials.SecretAccessKey,
       sessionToken: crossAccountRoleData.Credentials.SessionToken,
