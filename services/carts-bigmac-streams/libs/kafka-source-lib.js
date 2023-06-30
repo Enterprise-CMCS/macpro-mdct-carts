@@ -160,3 +160,5 @@ initializeKafka()
     // Handle any errors that occurred during initialization
     console.error("Failed to initialize Kafka:", error);
   });
+
+export default KafkaSourceLib; // Export the KafkaSourceLib class
