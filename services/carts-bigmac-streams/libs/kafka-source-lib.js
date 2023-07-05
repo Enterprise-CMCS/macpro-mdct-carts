@@ -1,8 +1,6 @@
 import AWS from "aws-sdk";
 import { Kafka } from "kafkajs";
-import {
-  createMechanism,
-} from "@jm18457/kafkajs-msk-iam-authentication-mechanism";
+import { createMechanism } from "@jm18457/kafkajs-msk-iam-authentication-mechanism";
 import { STSClient, AssumeRoleCommand } from "@aws-sdk/client-sts";
 
 class KafkaSourceLib {
@@ -26,6 +24,8 @@ class KafkaSourceLib {
     return JSON.stringify(e);
   }
   determineTopicName(streamARN) {
+    const STAGE = process.env.STAGE;
+
     for (const table of this.tables) {
       if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
     }
@@ -88,7 +88,7 @@ class KafkaSourceLib {
       },
       ssl: true,
       sasl: sasl,
-      requestTimeout: 295000
+      requestTimeout: 295000,
     });
 
     const producer = kafka.producer();
@@ -101,7 +101,7 @@ class KafkaSourceLib {
     signalTraps.map((type) => {
       process.once(type, producer.disconnect);
     });
-    
+
     if (!connected) {
       // eslint-disable-next-line no-console
       console.log("Attempting connection...");
