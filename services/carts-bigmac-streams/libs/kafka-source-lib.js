@@ -4,28 +4,7 @@ import {
   createMechanism,
 } from "@jm18457/kafkajs-msk-iam-authentication-mechanism";
 import { STSClient, AssumeRoleCommand } from "@aws-sdk/client-sts";
-const STAGE = process.env.STAGE;
-const sasl = await getMechanism("us-east-1", process.env.bigmacRoleArn);
-const kafka = new Kafka({
-  clientId: `carts-${STAGE}`,
-  brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
-  retry: {
-    initialRetryTime: 300,
-    retries: 8,
-  },
-  ssl: true,
-  sasl: sasl,
-  requestTimeout: 295000
-});
-const producer = kafka.producer();
-let connected = false;
-const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2", "beforeExit"];
-signalTraps.map((type) => {
-  process.removeListener(type, producer.disconnect);
-});
-signalTraps.map((type) => {
-  process.once(type, producer.disconnect);
-});
+
 class KafkaSourceLib {
   /*
    *Event types:
@@ -98,6 +77,31 @@ class KafkaSourceLib {
     return outboundEvents;
   }
   async handler(event) {
+    const STAGE = process.env.STAGE;
+    const sasl = await getMechanism("us-east-1", process.env.bigmacRoleArn);
+    const kafka = new Kafka({
+      clientId: `carts-${STAGE}`,
+      brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
+      retry: {
+        initialRetryTime: 300,
+        retries: 8,
+      },
+      ssl: true,
+      sasl: sasl,
+      requestTimeout: 295000
+    });
+
+    const producer = kafka.producer();
+    let connected = false;
+    const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2", "beforeExit"];
+
+    signalTraps.map((type) => {
+      process.removeListener(type, producer.disconnect);
+    });
+    signalTraps.map((type) => {
+      process.once(type, producer.disconnect);
+    });
+    
     if (!connected) {
       // eslint-disable-next-line no-console
       console.log("Attempting connection...");
