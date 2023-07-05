@@ -1,7 +1,6 @@
 {
   "name": "carts-bigmac-streams",
   "version": "1.0.0",
-  "type": "commonjs",
   "description": "",
   "dependencies": {
     "@jm18457/kafkajs-msk-iam-authentication-mechanism": "^3.1.1",
