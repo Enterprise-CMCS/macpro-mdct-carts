@@ -31,6 +31,7 @@ const FormNavigation = (props) => {
   if (
     role !== AppRoles.CMS_ADMIN &&
     role !== AppRoles.HELP_DESK &&
+    role !== AppRoles.CMS_APPROVER &&
     role !== AppRoles.CMS_USER
   ) {
     // Add certify and submit page to items array

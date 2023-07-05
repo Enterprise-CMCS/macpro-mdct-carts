@@ -239,7 +239,7 @@ export const adminUserWithMultipleReports = {
     currentUser: {
       username: "adminuser@test.com",
       state: {},
-      role: "HELP_DESK",
+      role: "CMS_ADMIN",
       lastname: "Admins",
       firstname: "Adam",
       email: "adminuser@test.com",
@@ -497,6 +497,69 @@ export const helpdeskUserWithMultipleReports = {
       acs_set: [],
     },
   ],
+  reportStatus: {
+    AK2021: {
+      status: "in_progress",
+      year: 2021,
+      stateCode: "AK",
+      lastChanged: "2021-01-04 18:28:18.524133+00",
+      username: "al@test.com",
+      programType: "combo",
+    },
+    AL2021: {
+      status: "in_progress",
+      year: 2021,
+      stateCode: "AL",
+      lastChanged: "2021-01-04 18:28:18.524133+00",
+      username: "al@test.com",
+      programType: "combo",
+    },
+    AL2020: {
+      status: "certified",
+      year: 2020,
+      stateCode: "AL",
+      lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+      username: "Frank States",
+      programType: "combo",
+    },
+  },
+  lastYearFormData: [],
+  lastYearTotals: {
+    calculatedTotal: false,
+  },
+};
+
+export const approverUserWithMultipleReports = {
+  formData: [],
+  save: {
+    error: false,
+    errorMessage: null,
+    lastSave: null,
+    saving: false,
+  },
+  stateUser: {
+    name: null,
+    abbr: null,
+    imageURI: null,
+    currentUser: {
+      username: "help.approver@test.com",
+      state: {},
+      role: "CMS_APPROVER",
+      lastname: "Approver",
+      firstname: "Bobby",
+      email: "help.approver@test.com",
+    },
+    localLogin: false,
+  },
+  global: {
+    formName: "CARTS FY",
+    largeTextBoxHeight: 6,
+    isFetching: false,
+    url: "/",
+    queryParams: "",
+    currentYear: 2021,
+    formYear: 2020,
+  },
   reportStatus: {
     AK2021: {
       status: "in_progress",
