@@ -43,9 +43,13 @@ export const updateStateStatus = handler(async (event, _context) => {
     };
 
     await dynamoDb.update(updateStateStatusparams);
-  } else if (user.role === AppRoles.CMS_USER) {
+  } else if (
+    user.role === AppRoles.CMS_USER ||
+    user.role === AppRoles.CMS_ADMIN ||
+    user.role === AppRoles.CMS_APPROVER
+  ) {
     /**
-     * CMS_User uncertifies a CARTS report
+     * CMS_User, CMS_Admin, and CMS_Approver uncertifies a CARTS report
      */
     const uncertifyReportParams = {
       TableName: process.env.stateStatusTableName!,
