@@ -1,9 +1,9 @@
 import AWS from "aws-sdk";
 import { Kafka } from "kafkajs";
-const {
+import {
   createMechanism,
-} = require("@jm18457/kafkajs-msk-iam-authentication-mechanism");
-const { STSClient, AssumeRoleCommand } = require("@aws-sdk/client-sts");
+} from "@jm18457/kafkajs-msk-iam-authentication-mechanism";
+import { STSClient, AssumeRoleCommand } from "@aws-sdk/client-sts";
 const STAGE = process.env.STAGE;
 const sasl = await getMechanism("us-east-1", process.env.bigmacRoleArn);
 const kafka = new Kafka({
