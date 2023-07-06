@@ -24,7 +24,7 @@ rules:
   no-unused-vars: 
     - error
     - argsIgnorePattern: "^_"
- # no-console: error
+  no-console: error
   no-empty: error
   no-extra-semi: error
   multiline-comment-style:
