@@ -14,7 +14,7 @@ services=(
 )
 
 # Only deploy resources for kafka ingestion in real envs
-if [[ "$stage" == "main" || "$stage" == "val" || "$stage" == "production" || "$stage" == "iam" ]]; then
+if [[ "$stage" == "main" || "$stage" == "val" || "$stage" == "production" ]]; then
   services+=('carts-bigmac-streams')
 fi
 
