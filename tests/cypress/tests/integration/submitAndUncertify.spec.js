@@ -10,7 +10,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.visit("/");
   });
 
-  it("Should submit form as a State User and uncertify as a Reviewer", () => {
+  it("Should submit form as a State User", () => {
     // log in as State User
     cy.authenticate("stateUser");
 
