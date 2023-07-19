@@ -11,11 +11,6 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
   });
 
   it("Should submit form as a State User and uncertify as a Reviewer", () => {
-    // generate the forms
-    cy.authenticate("adminUser");
-    cy.get(headerDropdownMenu).click();
-    cy.get(logoutButton).click();
-
     // log in as State User
     cy.authenticate("stateUser");
 
