@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cd ../../ && ./dev local && cd -",
     "test:ci": "cypress install && cypress run --browser chrome --headless",
-    "cypress": "cypress open",
+    "cypress": "cypress open --config-file=cypress.config.js",
     "test": "concurrently --kill-others \"yarn start\" \"yarn cypress\""
   },
   "author": "",
