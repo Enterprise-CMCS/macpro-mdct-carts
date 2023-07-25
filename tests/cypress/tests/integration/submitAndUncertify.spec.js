@@ -15,7 +15,6 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
      * check if there is a certified program, if so, uncertify
      * so state user will always have an editable program
      */
-    cy.wait(15000);
 
     cy.get("body").then(($body) => {
       if ($body.text().includes("Uncertify")) {
@@ -32,11 +31,6 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
   });
 
   it("Should submit form as a State User and uncertify as a Reviewer", () => {
-    // generate the forms
-    cy.authenticate("adminUser");
-    cy.get(headerDropdownMenu).click();
-    cy.get(logoutButton).click();
-
     // log in as State User
     cy.authenticate("stateUser");
 
