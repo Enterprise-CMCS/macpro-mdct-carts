@@ -15,6 +15,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
      * check if there is a certified program, if so, uncertify
      * so state user will always have an editable program
      */
+    cy.wait(15000);
 
     cy.get("body").then(($body) => {
       if ($body.text().includes("Uncertify")) {
@@ -25,7 +26,6 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
       return;
     });
 
-    cy.wait(3000);
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
   });
