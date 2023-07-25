@@ -8,6 +8,27 @@ const uncertifyButton = "[data-testid='uncertifyButton']";
 describe("CARTS Submit and Uncertify Integration Tests", () => {
   before(() => {
     cy.visit("/");
+
+    // login as admin
+    cy.authenticate("adminUser");
+    /*
+     * check if there is a certified program, if so, uncertify
+     * so state user will always have an editable program
+     */
+    cy.wait(15000);
+
+    cy.get("body").then(($body) => {
+      if ($body.text().includes("Uncertify")) {
+        cy.wait(3000);
+        cy.get(uncertifyButton).first().click();
+        cy.get("button").contains("Yes, Uncertify").click();
+      }
+      return;
+    });
+
+    cy.wait(3000);
+    cy.get(headerDropdownMenu).click();
+    cy.get(logoutButton).click();
   });
 
   it("Should submit form as a State User and uncertify as a Reviewer", () => {
@@ -30,8 +51,8 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
 
-    // log in as CMS User (Reviewer)
-    cy.authenticate("reviewer");
+    // log in as CMS Admin (user who can uncertify)
+    cy.authenticate("adminUser");
 
     // uncertify report
     cy.get(uncertifyButton).first().contains("Uncertify").click();
