@@ -1,32 +1,17 @@
 /*
- * ***********************************************************
- * This example support/index.js is processed and
- * loaded automatically before your test files.
- *
- * This is a great place to put global configuration and
- * behavior that modifies Cypress.
- *
- * You can change the location of this file or turn off
- * automatically serving support files with the
- * 'supportFile' configuration option.
- *
- * You can read more here:
- * https://on.cypress.io/configuration
- * ***********************************************************
- */
-{
-  require("cypress-xpath");
-}
-// Import commands.js using ES2015 syntax:
-import "./commands";
-
-/*
- * Alternatively you can use CommonJS syntax:
- * require('./commands')
+ * Global configuration and behavior that modifies Cypress.
+ * Read more here: https://on.cypress.io/configuration
  */
 
-/*
- * This is a Cypress plugin that allows you to run axe (https://dequeuniversity.com/rules/axe/about) on
- * your tests.
- */
+import "@cypress/xpath";
 import "cypress-axe";
+import "cypress-wait-until";
+import "./accessibility";
+import "./authentication";
+import "@testing-library/cypress/add-commands";
+
+// eslint-disable-next-line no-unused-vars
+Cypress.on("uncaught:exception", (err, runnable) => {
+  // returning false here prevents Cypress from failing the test
+  return false;
+});

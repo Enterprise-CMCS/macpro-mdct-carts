@@ -160,7 +160,7 @@ function renderDropDownMenu(isMenuOpen, toggleDropDownMenu) {
           <li className="contact-us">
             <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
           </li>
-          <li className="manage-account">
+          <li className="manage-account" data-testid={"manageAccountButton"}>
             <Link to="/user/profile">Manage Account</Link>
           </li>
           <li className="logout" data-testid="header-menu-option-log-out">
