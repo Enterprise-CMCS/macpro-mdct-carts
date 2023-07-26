@@ -27,6 +27,7 @@ const reviewer = {
 };
 
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
+  cy.reload();
   let credentials = {};
   if (userType && userCredentials) {
     console.warn(

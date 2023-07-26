@@ -18,6 +18,10 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.wait(15000);
 
     cy.get("body").then(($body) => {
+      // Scope to test user's state
+      cy.get(".dropdown-heading").contains("State").click();
+      cy.wait(3000);
+      cy.contains("Alabama").click();
       if ($body.text().includes("Uncertify")) {
         cy.wait(3000);
         cy.get(uncertifyButton).first().click();
@@ -29,6 +33,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.wait(3000);
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
+    cy.wait(3000); // let logout settle
   });
 
   it("Should submit form as a State User and uncertify as a Reviewer", () => {
@@ -37,7 +42,10 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
 
     // certify and submit report
     cy.get(actionButton, { timeout: 30000 }).contains("Edit").click();
+    cy.wait(3000);
     cy.contains("Certify and Submit").click();
+    cy.wait(3000);
+
     cy.get(certifySubmitButton).click();
     cy.get("button").contains("Confirm Certify and Submit").click();
     cy.get("button").contains("Return Home").click();
@@ -45,11 +53,15 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     // log out
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
+    cy.wait(3000); // let logout settle
 
     // log in as CMS Admin (user who can uncertify)
     cy.authenticate("adminUser");
 
-    // uncertify report
+    // uncertify report - Scope to test user's state
+    cy.get(".dropdown-heading").contains("State").click();
+    cy.wait(3000);
+    cy.contains("Alabama").click();
     cy.get(uncertifyButton).first().contains("Uncertify").click();
     cy.get("button").contains("Yes, Uncertify").click();
 
@@ -58,6 +70,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     // log back out
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
+    cy.wait(3000); // let logout settle
 
     // log back in as State User
     cy.authenticate("stateUser");
