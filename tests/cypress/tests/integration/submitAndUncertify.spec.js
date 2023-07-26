@@ -21,8 +21,8 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
       // Scope to test user's state
       cy.get(".dropdown-heading").first().click();
       cy.contains("Alabama").click();
-      cy.contains("Filter").click();
       cy.get("body").click(0, 0);
+      cy.contains("Filter").click();
       cy.wait(3000);
 
       if ($body.find(uncertifyButton).length > 0) {
@@ -63,8 +63,8 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     // uncertify report - Scope to test user's state
     cy.get(".dropdown-heading").first().click();
     cy.contains("Alabama").click();
-    cy.contains("Filter").click();
     cy.get("body").click(0, 0);
+    cy.contains("Filter").click();
     cy.wait(3000);
 
     cy.get(uncertifyButton).first().contains("Uncertify").click();
