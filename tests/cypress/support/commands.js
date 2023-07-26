@@ -9,13 +9,13 @@ before(() => {
 });
 
 const stateUser = {
-  email: "stateuser2@test.com",
-  password: "Dm!H@wP2YBdQ",
+  email: Cypress.env("STATE_USER_EMAIL"),
+  password: Cypress.env("STATE_USER_PASSWORD"),
 };
 
 const adminUser = {
-  email: "cms.admin@test.com  ",
-  password: "Dm!H@wP2YBdQ",
+  email: Cypress.env("ADMIN_USER_EMAIL"),
+  password: Cypress.env("ADMIN_USER_PASSWORD"),
 };
 
 const reviewer = {
