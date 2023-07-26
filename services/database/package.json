@@ -9,15 +9,10 @@
   "author": "",
   "license": "CC0-1.0",
   "devDependencies": {
-    "dynamodb-localhost": "https://github.com/99x/dynamodb-localhost#db30898f8c40932c7177be7b2f1a81360d12876d",
-    "serverless-dynamodb-local": "0.2.40"
+    "aws-dynamodb-local": "^0.0.10",
+    "serverless-dynamodb": "^0.2.42"
   },
   "dependencies": {
     "pg": "^8.7.3"
-  },
-  "overrides": {
-    "serverless-dynamodb-local": {
-      "dynamodb-localhost": "https://github.com/99x/dynamodb-localhost#db30898f8c40932c7177be7b2f1a81360d12876d"
-    }
   }
 }

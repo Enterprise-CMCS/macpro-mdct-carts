@@ -82,8 +82,8 @@ describe("Test DynamoDB Interaction API Build Structure", () => {
       createDbClient();
       expect(AWS.DynamoDB.DocumentClient).toHaveBeenCalledWith({
         endpoint: "endpoint",
-        accessKeyId: "LOCAL_FAKE_KEY", // pragma: allowlist secret
-        secretAccessKey: "LOCAL_FAKE_SECRET", // pragma: allowlist secret
+        accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
+        secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
       });
     });
   });

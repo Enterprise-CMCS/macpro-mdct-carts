@@ -3,7 +3,7 @@ service: database
 frameworkVersion: "3"
 
 plugins:
-  - serverless-dynamodb-local
+  - serverless-dynamodb
   - serverless-stack-termination-protection
   - serverless-s3-bucket-helper
   - serverless-plugin-scripts
