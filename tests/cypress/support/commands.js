@@ -55,6 +55,7 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   cy.xpath(emailForCognito).type(credentials.email);
   cy.xpath(passwordForCognito).type(credentials.password);
   cy.get('[data-cy="login-with-cognito-button"]').click();
+  cy.wait(3000);
 });
 
 // Define at the top of the spec file or just import it
