@@ -5,8 +5,8 @@ const dyanmoConfig = {};
 const endpoint = process.env.DYNAMODB_URL;
 if (endpoint) {
   dyanmoConfig.endpoint = endpoint;
-  dyanmoConfig.accessKeyId = "LOCAL_FAKE_KEY"; // pragma: allowlist secret
-  dyanmoConfig.secretAccessKey = "LOCAL_FAKE_SECRET"; // pragma: allowlist secret
+  dyanmoConfig.accessKeyId = "LOCALFAKEKEY"; // pragma: allowlist secret
+  dyanmoConfig.secretAccessKey = "LOCALFAKESECRET"; // pragma: allowlist secret
 } else {
   dyanmoConfig["region"] = "us-east-1";
 }
