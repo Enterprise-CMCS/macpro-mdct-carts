@@ -4,7 +4,6 @@ const headerDropdownMenu = "[data-testid='headerDropDownMenu']";
 const actionButton = "[data-testid='report-action-button']";
 const certifySubmitButton = "[data-testid='certifySubmit']";
 const uncertifyButton = "[data-testid='uncertifyButton']";
-
 describe("CARTS Submit and Uncertify Integration Tests", () => {
   before(() => {
     cy.visit("/");
@@ -22,7 +21,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
       cy.get(".dropdown-heading").first().click();
       cy.contains("Alabama").click();
       cy.get("body").click(0, 0);
-      cy.contains("Filter").click();
+      cy.get(".filter-button").contains("Filter").click();
       cy.wait(3000);
 
       if ($body.find(uncertifyButton).length > 0) {
@@ -64,7 +63,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.get(".dropdown-heading").first().click();
     cy.contains("Alabama").click();
     cy.get("body").click(0, 0);
-    cy.contains("Filter").click();
+    cy.get(".filter-button").contains("Filter").click();
     cy.wait(3000);
 
     cy.get(uncertifyButton).first().contains("Uncertify").click();
