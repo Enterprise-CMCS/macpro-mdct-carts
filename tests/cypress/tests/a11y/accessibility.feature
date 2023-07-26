@@ -2,12 +2,6 @@
 Feature: Site Accessibility Audit
     Performs an accessibility audit on the various CARTS pages
 
-    Rule: Not Logged In
-        Scenario: Accessibility Verification
-            Given I am not logged in
-            When I visit "/"
-            Then the page is accessible on all device types
-
     Rule: Admin User
         Background: Logged in as Admin
             Given I am logged in as an admin user

@@ -148,7 +148,9 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           working-directory: tests/cypress
-          spec: tests/a11y/*.feature
+          spec: |
+            tests/a11y/*.feature
+            tests/a11y/*.spec.js
           browser: chrome
           headless: true
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
