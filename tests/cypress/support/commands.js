@@ -8,17 +8,14 @@ before(() => {
   cy.visit("/", { timeout: 60000 * 5 });
 });
 
-const emailForCognito = "//input[@name='email']";
-const passwordForCognito = "//input[@name='password']";
-
 const stateUser = {
-  email: Cypress.env("STATE_USER_EMAIL"),
-  password: Cypress.env("STATE_USER_PASSWORD"),
+  email: "stateuser2@test.com",
+  password: "Dm!H@wP2YBdQ",
 };
 
 const adminUser = {
-  email: Cypress.env("ADMIN_USER_EMAIL"),
-  password: Cypress.env("ADMIN_USER_PASSWORD"),
+  email: "cms.admin@test.com  ",
+  password: "Dm!H@wP2YBdQ",
 };
 
 const reviewer = {
@@ -51,8 +48,8 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   } else {
     throw new Error("Must specify either userType or userCredentials.");
   }
-  cy.xpath(emailForCognito).type(credentials.email);
-  cy.xpath(passwordForCognito).type(credentials.password);
+  cy.get('input[name="email"]').type(credentials.email);
+  cy.get('input[name="password"]').type(credentials.password);
   cy.get('[data-cy="login-with-cognito-button"]').click();
 });
 

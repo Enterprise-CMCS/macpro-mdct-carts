@@ -4,7 +4,7 @@ const logoutButton = "[data-testid='header-menu-option-log-out']";
 const headerDropdownMenu = "[data-testid='headerDropDownMenu']";
 
 describe("CARTS Login Integration Tests", () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit("/");
   });
 

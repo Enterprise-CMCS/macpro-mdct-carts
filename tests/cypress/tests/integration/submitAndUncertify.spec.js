@@ -6,7 +6,7 @@ const certifySubmitButton = "[data-testid='certifySubmit']";
 const uncertifyButton = "[data-testid='uncertifyButton']";
 
 describe("CARTS Submit and Uncertify Integration Tests", () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit("/");
 
     // login as admin
