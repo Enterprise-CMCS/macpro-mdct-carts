@@ -19,11 +19,13 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
 
     cy.get("body").then(($body) => {
       // Scope to test user's state
-      cy.get(".dropdown-heading").contains("State").click();
-      cy.wait(3000);
+      cy.get(".dropdown-heading").first().click();
       cy.contains("Alabama").click();
-      if ($body.text().includes("Uncertify")) {
-        cy.wait(3000);
+      cy.contains("Filter").click();
+      cy.get("body").click(0, 0);
+      cy.wait(3000);
+
+      if ($body.find(uncertifyButton).length > 0) {
         cy.get(uncertifyButton).first().click();
         cy.get("button").contains("Yes, Uncertify").click();
       }
@@ -59,9 +61,12 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.authenticate("adminUser");
 
     // uncertify report - Scope to test user's state
-    cy.get(".dropdown-heading").contains("State").click();
-    cy.wait(3000);
+    cy.get(".dropdown-heading").first().click();
     cy.contains("Alabama").click();
+    cy.contains("Filter").click();
+    cy.get("body").click(0, 0);
+    cy.wait(3000);
+
     cy.get(uncertifyButton).first().contains("Uncertify").click();
     cy.get("button").contains("Yes, Uncertify").click();
 
