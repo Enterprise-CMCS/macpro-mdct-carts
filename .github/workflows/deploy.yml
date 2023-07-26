@@ -115,7 +115,7 @@ jobs:
           working-directory: tests/cypress
           spec: |
             tests/integration/*.spec.js
-            tests/e2e/**/*.feature
+            tests/integration/*.feature
           browser: chrome
           # headless: true
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
