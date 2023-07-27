@@ -10,6 +10,9 @@ before(() => {
 
 const emailForCognito = "//input[@name='email']";
 const passwordForCognito = "//input[@name='password']";
+const uncertifyButton = "[data-testid='uncertifyButton']";
+const logoutButton = "[data-testid='header-menu-option-log-out']";
+const headerDropdownMenu = "[data-testid='headerDropDownMenu']";
 
 const stateUser = {
   email: Cypress.env("STATE_USER_EMAIL"),
@@ -55,7 +58,40 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   cy.xpath(emailForCognito).type(credentials.email);
   cy.xpath(passwordForCognito).type(credentials.password);
   cy.get('[data-cy="login-with-cognito-button"]').click();
+});
+
+Cypress.Commands.add("logout", () => {
   cy.wait(3000);
+  cy.get(headerDropdownMenu).click();
+  cy.get(logoutButton).click();
+  cy.wait(3000); // let logout settle
+});
+
+Cypress.Commands.add("ensureAvailableReport", () => {
+  // login as admin
+  cy.visit("/");
+  cy.authenticate("adminUser");
+
+  /*
+   * check if there is a certified program, if so, uncertify
+   * so state user will always have an editable program
+   */
+  // Scope to test user's state
+  cy.get(".dropdown-heading").first().click();
+  cy.contains("Alabama").click();
+  cy.get("body").click(0, 0);
+  cy.get(".filter-button").contains("Filter").click();
+  cy.wait(3000);
+
+  cy.get("body").then(($body) => {
+    if ($body.find(uncertifyButton).length > 0) {
+      cy.get(uncertifyButton).first().click();
+      cy.get("button").contains("Yes, Uncertify").click();
+    }
+    return;
+  });
+
+  cy.logout();
 });
 
 // Define at the top of the spec file or just import it
