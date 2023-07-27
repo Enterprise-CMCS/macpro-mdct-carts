@@ -63,5 +63,8 @@
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,
     "stepDefinitions": "tests"
+  },
+  "resolutions": {
+    "loader-utils": "^2.0.4"
   }
 }
