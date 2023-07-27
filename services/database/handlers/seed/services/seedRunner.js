@@ -63,8 +63,8 @@ const buildSeedRunner = () => {
   const endpoint = process.env.DYNAMODB_URL;
   if (endpoint) {
     dynamoConfig.endpoint = endpoint;
-    dynamoConfig.accessKeyId = "LOCAL_FAKE_KEY"; // pragma: allowlist secret
-    dynamoConfig.secretAccessKey = "LOCAL_FAKE_SECRET"; // pragma: allowlist secret
+    dynamoConfig.accessKeyId = "LOCALFAKEKEY"; // pragma: allowlist secret
+    dynamoConfig.secretAccessKey = "LOCALFAKESECRET"; // pragma: allowlist secret
     dynamoPrefix = "local";
   } else {
     dynamoConfig["region"] = "us-east-1";
