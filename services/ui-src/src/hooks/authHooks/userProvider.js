@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
@@ -15,7 +15,6 @@ const authenticateWithIDM = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const history = useHistory();
   const location = useLocation();
   const isProduction =
     window.location.origin === cartsProdDomain ||
@@ -33,8 +32,8 @@ export const UserProvider = ({ children }) => {
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
-    history.push("/");
-  }, [history]);
+    window.location.href = config.POST_SIGNOUT_REDIRECT;
+  }, []);
 
   const checkAuthState = useCallback(async () => {
     try {
