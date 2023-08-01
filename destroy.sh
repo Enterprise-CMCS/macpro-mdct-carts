@@ -26,7 +26,8 @@ if [[ $stage =~ $protected_stage_regex ]]; then
     """
   exit 1
 fi
-echo "\nCollecting information on stage $stage before attempting a destroy... This can take a minute or two..."
+
+echo "Collecting information on stage $stage before attempting a destroy... This can take a minute or two..."
 
 set -e
 
@@ -73,7 +74,6 @@ if [ "$CI" != "true" ]; then
 fi
 
 for i in "${bucketList[@]}"; do
-  echo $i
   set -e
 
   # Suspend bucket versioning.
@@ -81,14 +81,21 @@ for i in "${bucketList[@]}"; do
 
   # Remove all bucket versions.
   versions=$(aws s3api list-object-versions \
+    --max-items 200 \
     --bucket "$i" \
     --output=json \
     --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')
-  if ! echo $versions | grep -q '"Objects": null'; then
+  
+  while ! echo $versions | grep -q '"Objects": null'; do
     aws s3api delete-objects \
       --bucket $i \
       --delete "$versions" >/dev/null 2>&1
-  fi
+    versions=$(aws s3api list-object-versions \
+      --max-items 200 \
+      --bucket "$i" \
+      --output=json \
+      --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')
+  done
 
   # Remove all bucket delete markers.
   markers=$(aws s3api list-object-versions \
@@ -102,14 +109,16 @@ for i in "${bucketList[@]}"; do
   fi
 
   # Empty the bucket
+  echo "emptying bucket: $i"
   aws s3 rm s3://$i/ --recursive
 done
-
-echo "Removing certificate from stage"
 
 restApiName=$stage-app-api
 
 restApiId=$(aws apigateway get-rest-apis | jq -r ".[] | .[] |  select(.name==\"$restApiName\") | .id|tostring")
+
+if [ "$restApiId" != "" ]; then
+  echo "Removing certificate from stage"
 
 aws apigateway update-stage \
   --rest-api-id $restApiId \
@@ -117,11 +126,19 @@ aws apigateway update-stage \
   --patch-operations op=replace,path=/clientCertificateId,value="" \
   &>/dev/null
 
-echo "Removed certificate from stage"
+  restApiArn="arn:aws:apigateway:us-east-1::/restapis/$restApiId/stages/$stage"
+
+  echo "Disassociating web acl from api gateway"
+
+  aws wafv2 disassociate-web-acl \
+    --resource-arn $restApiArn &>/dev/null
+
+  echo "Removed certificate from stage and disassociated web acl"
+fi
 
 # Trigger a delete for each cloudformation stack
 for i in "${stackList[@]}"; do
-  echo "Triggered stack deletion for stack: $i" 
+  echo "triggering stack deletion for $i"
   aws cloudformation delete-stack --stack-name $i
 done
 
@@ -137,3 +154,17 @@ until [ -z $certToDestroy ]; do
     grep -o '"clientCertificateId": "[^"]*' |
     grep -o '[^"]*$' || true)
 done
+
+# Find hanging api-gateway log group
+apiGatewayLogGroupName="/aws/api-gateway/app-api-$stage"
+apiGatewayLogGroupExists=($(aws logs describe-log-groups --log-group-name-prefix $apiGatewayLogGroupName | jq -r ".logGroups[] | length"))
+if [[ -n $apiGatewayLogGroupExists ]]; then
+  aws logs delete-log-group --log-group-name $apiGatewayLogGroupName
+fi
+
+# Find hanging api-gateway execution logs
+apiGatewayExecutionLogRegex="^API-Gateway-Execution-Logs[^/]+\/$stage$"
+apiGatewayExecutionLogs=($(aws logs describe-log-groups --query "logGroups[*].logGroupName" --output json | jq -r --arg pattern "$apiGatewayExecutionLogRegex" '.[] | select(test($pattern))'))
+if [[ -n $apiGatewayExecutionLogs ]]; then
+  aws logs delete-log-group --log-group-name $apiGatewayExecutionLogs
+fi
