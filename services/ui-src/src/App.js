@@ -11,8 +11,8 @@ function App() {
     <div id="app-wrapper">
       <Router>
         <UserProvider>
-          <AppRoutes />
-          <Route path="postLogout" element={<PostLogoutRedirect />} />
+          <Route path="/" component={AppRoutes} />
+          <Route path="/postLogout" component={PostLogoutRedirect} />
         </UserProvider>
       </Router>
     </div>
