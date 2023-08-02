@@ -134,6 +134,7 @@ resources:
         LogoutURLs:
           - ${self:custom.application_endpoint_url}
           - http://localhost:3000/
+          - http://localhost:3000/postLogout
         SupportedIdentityProviders:
           - Fn::If:
               - BackWithOkta

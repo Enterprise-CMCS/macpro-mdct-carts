@@ -36,6 +36,13 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const checkAuthState = useCallback(async () => {
+    // Allow Post Logout flow alongside user login flow
+    if (location?.pathname.toLowerCase() === "/postlogout") {
+      window.location.href = config.POST_SIGNOUT_REDIRECT;
+      return;
+    }
+
+    // Authenticate
     try {
       const session = await Auth.currentSession();
       const payload = session.getIdToken().payload;
@@ -61,7 +68,7 @@ export const UserProvider = ({ children }) => {
         setShowLocalLogins(true);
       }
     }
-  }, [isProduction]);
+  }, [isProduction, location]);
 
   // single run configuration
   useEffect(() => {
