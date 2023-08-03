@@ -3,7 +3,7 @@ service: database
 frameworkVersion: "3"
 
 plugins:
-  - serverless-dynamodb-local
+  - serverless-dynamodb
   - serverless-stack-termination-protection
   - serverless-s3-bucket-helper
   - serverless-plugin-scripts
@@ -125,11 +125,6 @@ functions:
     environment:
       dynamoPrefix: ${self:custom.stage}
       seedTestData: ${self:custom.seedTestData}
-    timeout: 120
-  sectionFiveCorrections:
-    handler: handlers/dataCorrections/sectionFiveCorrections.handler
-    environment:
-      dynamoPrefix: ${self:custom.stage}
     timeout: 120
 
 resources:
