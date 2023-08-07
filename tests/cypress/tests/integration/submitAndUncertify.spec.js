@@ -18,5 +18,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.get(certifySubmitButton).click();
     cy.get("button").contains("Confirm Certify and Submit").click();
     cy.get("button").contains("Return Home").click();
+
+    cy.logout();
   });
 });
