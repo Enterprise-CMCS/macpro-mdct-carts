@@ -12,12 +12,16 @@ describe("CARTS Login Integration Tests", () => {
     cy.authenticate("stateUser");
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
+    cy.wait(3000); // let logout settle
+    cy.visit("/");
   });
 
   it("Should authenticate as Admin User", () => {
     cy.authenticate("adminUser");
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
+    cy.wait(3000); // let logout settle
+    cy.visit("/");
   });
 
   it("Should display Login screen after logging out", () => {
