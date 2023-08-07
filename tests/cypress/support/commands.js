@@ -41,10 +41,10 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   } else if (userType) {
     switch (userType) {
       case "adminUser":
-        credentials = "cms.admin@test.com";
+        credentials = adminUser;
         break;
       case "stateUser":
-        credentials = "stateuser2@test.com";
+        credentials = stateUser;
         break;
       case "reviewer":
         credentials = reviewer;
@@ -55,8 +55,8 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
   } else {
     throw new Error("Must specify either userType or userCredentials.");
   }
-  cy.xpath(emailForCognito).type(credentials);
-  cy.xpath(passwordForCognito).type("Dm!H@wP2YBdQ");
+  cy.xpath(emailForCognito).type(credentials.email);
+  cy.xpath(passwordForCognito).type(credentials.password);
   cy.get('[data-cy="login-with-cognito-button"]').click();
 });
 
