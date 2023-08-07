@@ -63,7 +63,9 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
 Cypress.Commands.add("logout", () => {
   cy.wait(3000);
   cy.get(headerDropdownMenu).click();
+  cy.get(logoutButton).click();
   cy.wait(3000); // let logout settle
+  cy.visit("/");
 });
 
 Cypress.Commands.add("ensureAvailableReport", () => {
