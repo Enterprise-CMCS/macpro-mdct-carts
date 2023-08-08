@@ -37,7 +37,7 @@ describe("Home Component", () => {
   it.each([
     [AppRoles.CMS_USER, <CMSHome />],
     [AppRoles.CMS_ADMIN, <HomeAdmin />],
-    [AppRoles.INTERNAL_USER, <HomeAdmin />],
+    [AppRoles.INTERNAL_USER, <CMSHome />],
     [AppRoles.HELP_DESK, <CMSHome />],
     [AppRoles.CMS_APPROVER, <CMSHome />],
     [AppRoles.STATE_USER, <StateHome />],
