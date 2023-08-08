@@ -104,6 +104,8 @@ export const mapIdmRoleToAppRole = (idmRole) => {
   switch (idmRole) {
     case IdmRoles.APPROVER:
       return AppRoles.CMS_APPROVER;
+    case IdmRoles.INTERNAL:
+      return AppRoles.INTERNAL_USER;
     case IdmRoles.HELP:
       return AppRoles.HELP_DESK;
     case IdmRoles.BUSINESS_OWNER_REP:
