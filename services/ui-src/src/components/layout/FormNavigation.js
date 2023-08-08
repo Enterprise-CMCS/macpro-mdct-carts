@@ -30,6 +30,7 @@ const FormNavigation = (props) => {
   // If admin, DO NOT ADD
   if (
     role !== AppRoles.CMS_ADMIN &&
+    role !== AppRoles.INTERNAL_USER &&
     role !== AppRoles.HELP_DESK &&
     role !== AppRoles.CMS_APPROVER &&
     role !== AppRoles.CMS_USER

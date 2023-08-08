@@ -133,6 +133,7 @@ const showPartBasedOnUserType = (contextData, programData, state) => {
   if (
     programData &&
     (role === AppRoles.CMS_ADMIN ||
+      role === AppRoles.INTERNAL_USER ||
       role === AppRoles.HELP_DESK ||
       role === AppRoles.CMS_APPROVER ||
       role === AppRoles.CMS_USER ||

@@ -14,6 +14,7 @@ const Home = ({ role }) => {
       content = <AdminHome />;
       break;
     case AppRoles.CMS_USER:
+    case AppRoles.INTERNAL_USER:
     case AppRoles.HELP_DESK:
       content = <CMSHome />;
       break;
