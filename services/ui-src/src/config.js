@@ -23,6 +23,7 @@ export const configToExport = {
     REDIRECT_SIGNIN: window.env.COGNITO_REDIRECT_SIGNIN,
     REDIRECT_SIGNOUT: window.env.COGNITO_REDIRECT_SIGNOUT,
   },
+  POST_SIGNOUT_REDIRECT: window.env.POST_SIGNOUT_REDIRECT,
   currentReportingYear: "2021",
 };
 

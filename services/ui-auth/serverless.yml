@@ -133,7 +133,9 @@ resources:
         DefaultRedirectURI: ${self:custom.application_endpoint_url}
         LogoutURLs:
           - ${self:custom.application_endpoint_url}
+          - "${self:custom.application_endpoint_url}postLogout"
           - http://localhost:3000/
+          - http://localhost:3000/postLogout
         SupportedIdentityProviders:
           - Fn::If:
               - BackWithOkta
@@ -142,7 +144,7 @@ resources:
         AccessTokenValidity: 30
         IdTokenValidity: 30
         RefreshTokenValidity: 24
-        TokenValidityUnits: 
+        TokenValidityUnits:
           AccessToken: "minutes"
           IdToken: "minutes"
           RefreshToken: "hours"
