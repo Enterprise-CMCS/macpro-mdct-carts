@@ -15,6 +15,5 @@
   "supportFile": "support/index.js",
   "defaultCommandTimeout": 15000,
   "types": ["cypress", "cypress-axe"],
-  "chromeWebSecurity": false,
-  "failOnStatusCode": false
+  "chromeWebSecurity": false
 }
