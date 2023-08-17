@@ -64,7 +64,7 @@ Cypress.Commands.add("logout", () => {
   cy.wait(3000);
   cy.get(headerDropdownMenu).click();
   cy.get(logoutButton).click();
-  cy.wait(3000); // let logout settle
+  cy.wait(5000); // let logout settle
   cy.visit("/");
 });
 

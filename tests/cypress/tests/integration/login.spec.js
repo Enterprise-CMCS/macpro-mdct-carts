@@ -5,6 +5,7 @@ const headerDropdownMenu = "[data-testid='headerDropDownMenu']";
 
 describe("CARTS Login Integration Tests", () => {
   before(() => {
+    cy.wait(5000);
     cy.visit("/");
   });
 
@@ -12,7 +13,7 @@ describe("CARTS Login Integration Tests", () => {
     cy.authenticate("stateUser");
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
-    cy.wait(3000); // let logout settle
+    cy.wait(5000); // let logout settle
     cy.visit("/");
   });
 
@@ -20,12 +21,13 @@ describe("CARTS Login Integration Tests", () => {
     cy.authenticate("adminUser");
     cy.get(headerDropdownMenu).click();
     cy.get(logoutButton).click();
-    cy.wait(3000); // let logout settle
+    cy.wait(5000); // let logout settle
     cy.visit("/");
   });
 
   it("Should display Login screen after logging out", () => {
     cy.location("pathname").should("match", /\//);
+    cy.wait(5000);
     cy.get(cognitoLoginButton).should("be.visible");
   });
 });
