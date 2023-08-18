@@ -118,6 +118,7 @@ export const enum MeasureStatus {
 export const enum IdmRoles {
   APPROVER = "mdctcarts-approver",
   BUSINESS_OWNER_REP = "mdctcarts-bor",
+  INTERNAL = "mdctcarts-internal-user",
   HELP = "mdctcarts-help-desk",
   STATE = "mdctcarts-state-user",
   PROJECT_OFFICER = "mdctcarts-project-officer",
@@ -130,6 +131,7 @@ export const enum AppRoles {
   CMS_USER = "CMS_USER", // User who can view and reject state submissions
   CMS_ADMIN = "CMS_ADMIN", // Biz Owner - View all, release forms
   CMS_APPROVER = "CMS_APPROVER", // Approver - view and uncertify
+  INTERNAL_USER = "INTERNAL_USER", // Internal User - View all
   HELP_DESK = "HELP_DESK", // Help Desk - View all
   STATE_USER = "STATE_USER", // Enter and certifies data for a year
 }
