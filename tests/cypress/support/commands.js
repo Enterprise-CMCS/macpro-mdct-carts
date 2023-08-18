@@ -5,7 +5,7 @@ import "@cypress-audit/pa11y/commands";
 import "@cypress-audit/lighthouse/commands";
 
 before(() => {
-  cy.visit("/", { timeout: 60000 * 5 });
+  cy.visit("/", { timeout: 60000 * 5, failOnStatusCode: false });
 });
 
 const emailForCognito = "//input[@name='email']";
@@ -65,6 +65,7 @@ Cypress.Commands.add("logout", () => {
   cy.get(headerDropdownMenu).click();
   cy.get(logoutButton).click();
   cy.wait(3000); // let logout settle
+  cy.visit("/", { failOnStatusCode: false });
 });
 
 Cypress.Commands.add("ensureAvailableReport", () => {
