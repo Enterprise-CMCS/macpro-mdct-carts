@@ -61,16 +61,6 @@ There are two mechanisms for seeding data.
   - This is useful for deploying data such as section base templates, and keeping it up to date with the code base.
   - Adding specific test seed data to environments may be useful for things like cypress tests. This can be accomplished with the test-tables directory, referencing the same seed-local tables if desired.
 
-### V2 Data Migration
-
-The data migration for v2 -> v3 is controlled via ssm parameters, and can be kicked off in an env on deploy by setting /configuration/{env}/runV2DataMigration. If you have access to the v2 databases.
-, it can also be run to write v2 data into the local database by setting the runV2DataMigration env flag to true, and invoking the function with:
-
-```aws lambda invoke /dev/null \
-  --endpoint-url http://localhost:3003 \
-  --function-name database-local-dataMigration
-```
-
 ### Local Development Random Info
 
 Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
