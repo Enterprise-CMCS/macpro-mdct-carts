@@ -177,7 +177,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-01-01 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-01-a-01-01 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-01-01')].answer.entry",
                               "values": {
@@ -247,7 +247,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-01-a-01-02-a is no or unanswered; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-01-a-01-02-a is no or unanswered; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-01-a-01-02-a')].answer.entry",
                                   "values": {
@@ -268,7 +268,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-01-a-01-02-a is yes or unanswered; noninteractive: hide if that's yes.",
+                                "comment": "Interactive: Hide if 2023-01-a-01-02-a is yes or unanswered; noninteractive: hide if that's yes.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-01-a-01-02-a')].answer.entry",
                                   "values": {
@@ -283,7 +283,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-01-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-01-02')].answer.entry",
                               "values": {
@@ -333,7 +333,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-01-03 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-01-a-01-03 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-01-03')].answer.entry",
                               "values": {
@@ -355,7 +355,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-01-03 is yes or unanswered; noninteractive: hide if that's yes.",
+                            "comment": "Interactive: Hide if 2023-01-a-01-03 is yes or unanswered; noninteractive: hide if that's yes.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-01-03')].answer.entry",
                               "values": {
@@ -449,7 +449,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-02-01 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-01-a-02-01 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-02-01')].answer.entry",
                               "values": {
@@ -519,7 +519,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-01-a-02-02-a is no or unanswered; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-01-a-02-02-a is no or unanswered; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-01-a-02-02-a')].answer.entry",
                                   "values": {
@@ -540,7 +540,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-01-a-02-02-a is yes or unanswered; noninteractive: hide if that's yes.",
+                                "comment": "Interactive: Hide if 2023-01-a-02-02-a is yes or unanswered; noninteractive: hide if that's yes.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-01-a-02-02-a')].answer.entry",
                                   "values": {
@@ -555,7 +555,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-01-a-02-02 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-02-02')].answer.entry",
                               "values": {
@@ -605,7 +605,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-02-03 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-01-a-02-03 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-02-03')].answer.entry",
                               "values": {
@@ -627,7 +627,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-02-03 is yes or unanswered; noninteractive: hide if that's yes.",
+                            "comment": "Interactive: Hide if 2023-01-a-02-03 is yes or unanswered; noninteractive: hide if that's yes.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-02-03')].answer.entry",
                               "values": {
@@ -1093,8 +1093,8 @@
                           ]
                         }
                       },
-                      "interactive_conditional": "Show if any 2022-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
-                      "noninteractive_conditional": "Show if any 2022-01-a-03 questions 1–16 has a yes answer, hide otherwise."
+                      "interactive_conditional": "Show if any 2023-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
+                      "noninteractive_conditional": "Show if any 2023-01-a-03 questions 1–16 has a yes answer, hide otherwise."
                     }
                   }
                 ],
@@ -1582,8 +1582,8 @@
                           ]
                         }
                       },
-                      "interactive_conditional": "Show if any 2022-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
-                      "noninteractive_conditional": "Show if any 2022-01-a-04 questions 1–19 has a yes answer, hide otherwise."
+                      "interactive_conditional": "Show if any 2023-01-a-04 questions 1–19 has a yes answer, hide otherwise.",
+                      "noninteractive_conditional": "Show if any 2023-01-a-04 questions 1–19 has a yes answer, hide otherwise."
                     }
                   }
                 ],
@@ -2115,7 +2115,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-02-a-02-02 is unanswered or no; noninteractive: hide if no.",
+                            "comment": "Interactive: Hide if 2023-02-a-02-02 is unanswered or no; noninteractive: hide if no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-02-a-02-02')].answer.entry",
                               "values": {
@@ -2218,7 +2218,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-02-a-02-03 is unanswered or no; noninteractive: hide if no.",
+                            "comment": "Interactive: Hide if 2023-02-a-02-03 is unanswered or no; noninteractive: hide if no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-02-a-02-03')].answer.entry",
                               "values": {
@@ -2304,7 +2304,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-a-01-01 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-03-a-01-01 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-a-01-01')].answer.entry",
                               "values": {
@@ -2346,7 +2346,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-03-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-a-01-02')].answer.entry",
                               "values": {
@@ -2430,7 +2430,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-b-01-01 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
+                            "comment": "Interactive: Hide if 2023-03-b-01-01 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-b-01-01')].answer.entry",
                               "values": {
@@ -2475,7 +2475,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-b-01-02 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
+                            "comment": "Interactive: Hide if 2023-03-b-01-02 is no, N/A, or unanswered; noninteractive: hide if that's no or N/A.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-b-01-02')].answer.entry",
                               "values": {
@@ -2536,7 +2536,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if the answer to 2022-03-b-01-04 is no or N/A.",
+                                "comment": "Interactive: Hide if the answer to 2023-03-b-01-04 is no or N/A.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-b-01-04')].answer.entry",
                                   "values": {
@@ -2557,7 +2557,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if the answer to 2022-03-b-01-04 is no or N/A.",
+                                "comment": "Interactive: Hide if the answer to 2023-03-b-01-04 is no or N/A.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-b-01-04')].answer.entry",
                                   "values": {
@@ -2578,7 +2578,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if the answer to 2022-03-b-01-04 is no or N/A.",
+                                "comment": "Interactive: Hide if the answer to 2023-03-b-01-04 is no or N/A.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-b-01-04')].answer.entry",
                                   "values": {
@@ -2599,7 +2599,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if the answer to 2022-03-b-01-04 is no or N/A.",
+                                "comment": "Interactive: Hide if the answer to 2023-03-b-01-04 is no or N/A.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-b-01-04')].answer.entry",
                                   "values": {
@@ -2697,7 +2697,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide these two subquestions if the answer to 2022-03-c-01-01 is no or N/A.",
+                            "comment": "Interactive: Hide these two subquestions if the answer to 2023-03-c-01-01 is no or N/A.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-c-01-01')].answer.entry",
                               "values": {
@@ -2769,7 +2769,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide these two subquestions if the answer to 2022-03-c-01-03 is no or N/A.",
+                            "comment": "Interactive: Hide these two subquestions if the answer to 2023-03-c-01-03 is no or N/A.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-c-01-03')].answer.entry",
                               "values": {
@@ -6877,7 +6877,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-d-01-02 is anything except families; noninteractive: same.",
+                                "comment": "Interactive: Hide if 2023-03-d-01-02 is anything except families; noninteractive: same.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-d-01-02')].answer.entry",
                                   "values": {
@@ -6909,7 +6909,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-d-01-02 is anything except other; noninteractive: same.",
+                                "comment": "Interactive: Hide if 2023-03-d-01-02 is anything except other; noninteractive: same.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-d-01-02')].answer.entry",
                                   "values": {
@@ -6976,7 +6976,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-d-01-05 is no or unanswered; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-d-01-05 is no or unanswered; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-d-01-05')].answer.entry",
                                   "values": {
@@ -7017,7 +7017,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-d-01-06 is no or unanswered; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-d-01-06 is no or unanswered; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-d-01-06')].answer.entry",
                                   "values": {
@@ -7040,7 +7040,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-01-a-04-08",
+                            "comment": "Interactive: Hide if 2023-01-a-04-08",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-01-a-04-08')].answer.entry",
                               "values": {
@@ -7050,7 +7050,7 @@
                             },
                             "skip_text": "Hidden based on your answer to the cost sharing questions in Section 1 Part 4."
                           },
-                          "interactive_conditional": "In addition to hiding this question if 2022-03-d-01-01 is no, this should also hide if 2022-01-a-04-08 is no",
+                          "interactive_conditional": "In addition to hiding this question if 2023-03-d-01-01 is no, this should also hide if 2023-01-a-04-08 is no",
                           "noninteractive_conditional": "See interactive conditional."
                         }
                       },
@@ -7074,7 +7074,7 @@
                     "context_data": {
                       "conditional_display": {
                         "type": "conditional_display",
-                        "comment": "Interactive: Hide if 2022-03-d-01-01 is no; noninteractive: hide if that's no.",
+                        "comment": "Interactive: Hide if 2023-03-d-01-01 is no; noninteractive: hide if that's no.",
                         "hide_if": {
                           "target": "$..*[?(@ && @.id=='2023-03-d-01-01')].answer.entry",
                           "values": {
@@ -7249,7 +7249,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-e-02-06 is unanswered or no; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-03-e-02-06 is unanswered or no; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-e-02-06')].answer.entry",
                               "values": {
@@ -7437,7 +7437,7 @@
                   "skip_text": "Part 2 was skipped because it only applies to states that offer ESI including a premium assistance program.",
                   "conditional_display": {
                     "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2022-03-e-01-01 is unanswered or no; noninteractive: hide if it's no",
+                    "comment": "Interactive: Hide if 2023-03-e-01-01 is unanswered or no; noninteractive: hide if it's no",
                     "hide_if": {
                       "target": "$..*[?(@ && @.id=='2023-03-e-01-01')].answer.entry",
                       "values": {
@@ -7560,7 +7560,7 @@
                                 "interactive": [null, "no", "na"],
                                 "noninteractive": ["no", "na"]
                               },
-                              "comment": "Interactive: Hide if 2022-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no."
+                              "comment": "Interactive: Hide if 2023-03-f-01-05 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no."
                             }
                           }
                         }
@@ -7698,7 +7698,7 @@
                                 "interactive": [null, "no"],
                                 "noninteractive": ["no"]
                               },
-                              "comment": "Interactive: Hide if 2022-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no."
+                              "comment": "Interactive: Hide if 2023-03-f-01-15 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no."
                             }
                           }
                         }
@@ -7739,7 +7739,7 @@
                                 "interactive": [null, "no"],
                                 "noninteractive": ["no"]
                               },
-                              "comment": "Interactive: Hide if 2022-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no."
+                              "comment": "Interactive: Hide if 2023-03-f-01-16 is unanswered, N/A, or no; noninteractive: hide if that's N/A or no."
                             }
                           }
                         }
@@ -8371,7 +8371,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-g-01-07 is null, or no; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-03-g-01-07 is null, or no; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-g-01-07')].answer.entry",
                               "values": {
@@ -8456,7 +8456,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-03-h-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
+                            "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or no; noninteractive: hide if that's N/A or no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-03-h-01-01')].answer.entry",
                               "values": {
@@ -8545,7 +8545,7 @@
                   "skip_text": "Part 2 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
                   "conditional_display": {
                     "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2022-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
+                    "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
                     "hide_if": {
                       "target": "$..*[?(@ && @.id=='2023-03-h-01-01')].answer.entry",
                       "values": {
@@ -8634,7 +8634,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8656,7 +8656,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8677,7 +8677,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8698,7 +8698,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8715,7 +8715,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8741,7 +8741,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is null or yes; noninteractive: hide if that's null or yes.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8762,7 +8762,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8783,7 +8783,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8804,7 +8804,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8825,7 +8825,7 @@
                             "context_data": {
                               "conditional_display": {
                                 "type": "conditional_display",
-                                "comment": "Interactive: Hide if 2022-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
+                                "comment": "Interactive: Hide if 2023-03-i-02-01-01-02 is no; noninteractive: hide if that's no.",
                                 "hide_if": {
                                   "target": "$..*[?(@ && @.id=='2023-03-i-02-01-01-02')].answer.entry",
                                   "values": {
@@ -8846,7 +8846,7 @@
                   "skip_text": "This part only applies to states with Health Service Initiatives.",
                   "conditional_display": {
                     "type": "conditional_display",
-                    "comment": "Interactive: Hide if 2022-03-i-01-01 is no; noninteractive: hide if that's no.",
+                    "comment": "Interactive: Hide if 2023-03-i-01-01 is no; noninteractive: hide if that's no.",
                     "hide_if": {
                       "target": "$..*[?(@ && @.id=='2023-03-i-01-01')].answer.entry",
                       "values": {
@@ -8956,7 +8956,7 @@
                                         "context_data": {
                                           "conditional_display": {
                                             "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2022-04-a-01-01-01-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                            "comment": "Interactive: Hide if 2023-04-a-01-01-01-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                             "hide_if": {
                                               "target": "$..*[?(@ && @.id=='2023-04-a-01-01-01-02-01-02')].answer.entry",
                                               "values": {
@@ -9168,7 +9168,7 @@
                                         "context_data": {
                                           "conditional_display": {
                                             "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2022-04-a-01-01-02-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                            "comment": "Interactive: Hide if 2023-04-a-01-01-02-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                             "hide_if": {
                                               "target": "$..*[?(@ && @.id=='2023-04-a-01-01-02-02-01-02')].answer.entry",
                                               "values": {
@@ -9380,7 +9380,7 @@
                                         "context_data": {
                                           "conditional_display": {
                                             "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2022-04-a-01-01-03-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                            "comment": "Interactive: Hide if 2023-04-a-01-01-03-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                             "hide_if": {
                                               "target": "$..*[?(@ && @.id=='2023-04-a-01-01-03-02-01-02')].answer.entry",
                                               "values": {
@@ -9590,7 +9590,7 @@
                                         "context_data": {
                                           "conditional_display": {
                                             "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2022-04-a-01-01-04-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                            "comment": "Interactive: Hide if 2023-04-a-01-01-04-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                             "hide_if": {
                                               "target": "$..*[?(@ && @.id=='2023-04-a-01-01-04-02-01-02')].answer.entry",
                                               "values": {
@@ -9798,7 +9798,7 @@
                                         "context_data": {
                                           "conditional_display": {
                                             "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2022-04-a-01-01-05-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                            "comment": "Interactive: Hide if 2023-04-a-01-01-05-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                             "hide_if": {
                                               "target": "$..*[?(@ && @.id=='2023-04-a-01-01-05-02-01-02')].answer.entry",
                                               "values": {
@@ -10006,7 +10006,7 @@
                                         "context_data": {
                                           "conditional_display": {
                                             "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2022-04-a-01-01-06-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
+                                            "comment": "Interactive: Hide if 2023-04-a-01-01-06-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
                                             "hide_if": {
                                               "target": "$..*[?(@ && @.id=='2023-04-a-01-01-06-02-01-02')].answer.entry",
                                               "values": {
@@ -11442,7 +11442,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-05-a-02-08 selection does not include 'other'; noninteractive: hide if NOT 'other'",
+                            "comment": "Interactive: Hide if 2023-05-a-02-08 selection does not include 'other'; noninteractive: hide if NOT 'other'",
                             "hide_if_not": {
                               "target": "$..*[?(@ && @.id=='2023-05-a-02-08')].answer.entry",
                               "values": {
@@ -11483,7 +11483,7 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2022-05-a-02-09 is null or no; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2023-05-a-02-09 is null or no; noninteractive: hide if that's no.",
                             "hide_if": {
                               "target": "$..*[?(@ && @.id=='2023-05-a-02-09')].answer.entry",
                               "values": {
