@@ -6,6 +6,7 @@ import ReportItem from "./ReportItem";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system";
 import { MultiSelect } from "react-multi-select-component";
+import { DropdownOption } from "../../fields/DropdownOption";
 import { STATUS_MAPPING, AppRoles } from "../../../types";
 
 const CMSHomepage = ({
@@ -134,6 +135,7 @@ const CMSHomepage = ({
                       labelledBy={"State"}
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "State" }}
+                      ItemRenderer={DropdownOption}
                     />
                   </div>
                   <div
@@ -147,6 +149,7 @@ const CMSHomepage = ({
                       labelledBy={"Year"}
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "Year" }}
+                      ItemRenderer={DropdownOption}
                     />
                   </div>
                   <div
@@ -160,6 +163,7 @@ const CMSHomepage = ({
                       labelledBy="Status"
                       hasSelectAll={false}
                       overrideStrings={{ selectSomeItems: "Status" }}
+                      ItemRenderer={DropdownOption}
                     />
                   </div>
                   <div>
