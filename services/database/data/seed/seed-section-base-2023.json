@@ -1633,21 +1633,21 @@
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": 2022,
+                              "ffy": 2023,
                               "enrollmentType": "Medicaid Expansion CHIP",
                               "index": 1
                             }
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": 2022,
+                              "ffy": 2023,
                               "enrollmentType": "Medicaid Expansion CHIP",
                               "index": 2
                             }
                           },
                           {
                             "compareChipEnrollements": {
-                              "ffy": 2022,
+                              "ffy": 2023,
                               "enrollmentType": "Medicaid Expansion CHIP"
                             }
                           }
@@ -1658,21 +1658,21 @@
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": 2022,
+                              "ffy": 2023,
                               "enrollmentType": "Separate CHIP",
                               "index": 1
                             }
                           },
                           {
                             "lookupChipEnrollments": {
-                              "ffy": 2022,
+                              "ffy": 2023,
                               "enrollmentType": "Separate CHIP",
                               "index": 2
                             }
                           },
                           {
                             "compareChipEnrollements": {
-                              "ffy": 2022,
+                              "ffy": 2023,
                               "enrollmentType": "Separate CHIP"
                             }
                           }
@@ -1683,10 +1683,10 @@
                           "contents": "Program"
                         },
                         {
-                          "contents": "Number of children enrolled in FFY 2021"
+                          "contents": "Number of children enrolled in FFY 2022"
                         },
                         {
-                          "contents": "Number of children enrolled in FFY 2022"
+                          "contents": "Number of children enrolled in FFY 2023"
                         },
                         {
                           "contents": "Percent change"
