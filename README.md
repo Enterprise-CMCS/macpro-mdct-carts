@@ -98,6 +98,10 @@ It should be noted that while logged in as a state user, the download template b
 - After the deploy action runs on branch being pushed, you should see the bucket now lives in s3 with a name that resembles uploads-AddYourBranchNameHere!-carts-download
 - You'll then want to actually upload the document you want to see! Currently, the key is set to look for a file called "FFY_2021_CARTS_Template.pdf", but you can swap that out in the services/app-api/handlers/fiscalYearTemplate/get.ts file.
 
+## Adding a new Yearly Form
+
+Refer to [this walkthrough](services/database/YEARLY_UPDATE.md) for steps to take when adding a new annual form.
+
 ## Copyright and license
 
 [![License](https://img.shields.io/badge/License-CC0--1.0--Universal-blue.svg)](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
