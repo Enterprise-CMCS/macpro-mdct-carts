@@ -30,7 +30,7 @@ Conditionals in the template are declared as follows:
 
 ## Chip Enrollments
 
-CHIP lookups are defined as followed
+CHIP lookups are defined as follows
 
 ```json
 {
