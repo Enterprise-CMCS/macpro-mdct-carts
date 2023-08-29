@@ -256,7 +256,7 @@ const mapState = (state) => ({
   }),
   currentUserRole: state.stateUser.currentUser.role,
   reportstate: state.reportStatus,
-  yearList: selectYears(),
+  yearList: selectYears(state),
 });
 
 const mapDispatch = {
