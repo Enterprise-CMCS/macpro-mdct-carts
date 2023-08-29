@@ -43,8 +43,14 @@ export default function global(state = initialState, action) {
   // Triggers isFetching which activates Spinner.js (reactRouter.js)
   state.url = document.location.pathname.toString();
   state.queryParams = document.location.search.toString();
-  state.currentYear = 2022;
+  state.currentYear = 2023;
 
+  /**
+   * Current Year is being used exclusively to determine what range of ints should be marked as years when
+   * trying to pull a year from the url or query params, as state user vs admin user have different pathings.
+   *
+   * Feels fragile, but the end result is either set that number high or change it yearly until refactored.
+   */
   const activeYears = [];
   for (let i = earliestYear; i <= state.currentYear; i++) {
     activeYears.push(i);
