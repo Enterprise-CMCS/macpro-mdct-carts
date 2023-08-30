@@ -7,6 +7,7 @@ import BrowserIssue from "./components/layout/BrowserIssue";
 import App from "./App";
 import Amplify from "aws-amplify";
 import config from "./config";
+import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 
 // Internet Explorer
 const isIE = /*@cc_on!@*/ false || !!document.documentMode;
@@ -45,14 +46,30 @@ Amplify.configure({
   },
 });
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {isIE || isEdge ? <BrowserIssue /> : <App />}
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+// LaunchDarkly configuration
+const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
+(async () => {
+  const LDProvider = await asyncWithLDProvider({
+    clientSideID: ldClientId,
+    options: {
+      baseUrl: "https://clientsdk.launchdarkly.us",
+      streamUrl: "https://clientstream.launchdarkly.us",
+      eventsUrl: "https://events.launchdarkly.us",
+    },
+    deferInitialization: false,
+  });
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <LDProvider>{isIE || isEdge ? <BrowserIssue /> : <App />}</LDProvider>
+      </Provider>
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+})().catch((e) => {
+  throw e;
+});
 
 /*
  * If you want your app to work offline and load faster, you can change
