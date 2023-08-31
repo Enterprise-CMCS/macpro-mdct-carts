@@ -61,16 +61,6 @@ There are two mechanisms for seeding data.
   - This is useful for deploying data such as section base templates, and keeping it up to date with the code base.
   - Adding specific test seed data to environments may be useful for things like cypress tests. This can be accomplished with the test-tables directory, referencing the same seed-local tables if desired.
 
-### V2 Data Migration
-
-The data migration for v2 -> v3 is controlled via ssm parameters, and can be kicked off in an env on deploy by setting /configuration/{env}/runV2DataMigration. If you have access to the v2 databases.
-, it can also be run to write v2 data into the local database by setting the runV2DataMigration env flag to true, and invoking the function with:
-
-```aws lambda invoke /dev/null \
-  --endpoint-url http://localhost:3003 \
-  --function-name database-local-dataMigration
-```
-
 ### Local Development Random Info
 
 Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
@@ -97,6 +87,10 @@ It should be noted that while logged in as a state user, the download template b
 - Git add/commit/push the branch with the above change to git.
 - After the deploy action runs on branch being pushed, you should see the bucket now lives in s3 with a name that resembles uploads-AddYourBranchNameHere!-carts-download
 - You'll then want to actually upload the document you want to see! Currently, the key is set to look for a file called "FFY_2021_CARTS_Template.pdf", but you can swap that out in the services/app-api/handlers/fiscalYearTemplate/get.ts file.
+
+## Adding a new Yearly Form
+
+Refer to [this walkthrough](services/database/YEARLY_UPDATE.md) for steps to take when adding a new annual form.
 
 ## Copyright and license
 

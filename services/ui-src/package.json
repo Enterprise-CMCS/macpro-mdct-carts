@@ -20,6 +20,7 @@
     "axios": "^0.21.1",
     "font-awesome": "^4.7.0",
     "jsonpath": "^1.0.2",
+    "launchdarkly-react-client-sdk": "^3.0.1",
     "mathjs": "^7.5.0",
     "moment": "^2.29.4",
     "prop-types": "^15.7.2",
