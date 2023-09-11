@@ -92,6 +92,29 @@ It should be noted that while logged in as a state user, the download template b
 
 Refer to [this walkthrough](services/database/YEARLY_UPDATE.md) for steps to take when adding a new annual form.
 
+## SEDS Data
+
+SEDS CHIP Data regarding enrollment counts is populated into Section 2 Part 1.
+
+This is accomplished by the setup in the `services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js` service, which sets up a listener on the topic `aws.mdct.seds.cdc.state-forms.v0`.
+
+When a message is kicked off, the process sorts the update into updates for the prior year or current year, and fills out an enrollments table based on that info.
+
+In the UI, when a user is filling out the form, those numbers are loaded into the table and require a user saving the submission to update the CARTS section.
+
+On the SEDS side, this topic is updated on every submission of seds data, but CARTS filters based the following:
+
+- current and prior year
+- 4th quarter data.
+- The rollover for a "new year" is October, and future submissions are not recognized until that threshold
+
+Updates outside of that time frame will need to be manually corrected in CARTS, or the integration will need to be modifed to collect data for old forms. CARTS additionally looks for the `enrollmentCounts` property which is only included in forms 21E and 64.21E (question 7), either by manual trigger or update. See SEDS files:
+
+- [generateEnrollmentTotals](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/generateEnrollmentTotals.js)
+- [updateStateForms](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/updateStateForms.js)
+
+For testing convenience, stateUser2 points at AL in CARTS and the dev user points at AL in SEDS.
+
 ## Copyright and license
 
 [![License](https://img.shields.io/badge/License-CC0--1.0--Universal-blue.svg)](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
