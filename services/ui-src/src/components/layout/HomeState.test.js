@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { mockInitialState } from "../../util/testing/testUtils";
-import InvokeSection from "../Utils/InvokeSection";
+import InvokeSection from "../utils/InvokeSection";
 import StateHome from "./HomeState";
 import CertifyAndSubmit from "./CertifyAndSubmit";
 import Homepage from "../sections/homepage/Homepage";
@@ -21,7 +21,7 @@ jest.mock("./CertifyAndSubmit", () => () => {
   const MockName = "default-cert";
   return <MockName />;
 });
-jest.mock("../Utils/InvokeSection", () => () => {
+jest.mock("../utils/InvokeSection", () => () => {
   const MockName = "default-invoke";
   return <MockName />;
 });

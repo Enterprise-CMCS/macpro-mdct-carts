@@ -2,7 +2,7 @@ import jsonpath from "../util/jsonpath";
 import { REPORT_STATUS, AppRoles } from "../types";
 import { selectFragment } from "./formData"; // eslint-disable-line
 import { shouldDisplay } from "../util/shouldDisplay";
-import statesArray from "../components/Utils/statesArray";
+import statesArray from "../components/utils/statesArray";
 
 export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@ && @.id==='${id}')]`;

@@ -5,7 +5,7 @@ import { MemoryRouter } from "react-router";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { mockInitialState } from "../../util/testing/testUtils";
-import InvokeSection from "../Utils/InvokeSection";
+import InvokeSection from "../utils/InvokeSection";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
 import HomeAdmin from "./HomeAdmin";
 
@@ -15,7 +15,7 @@ jest.mock("../sections/homepage/CMSHomepage", () => () => {
   const MockName = "default-cms-home";
   return <MockName />;
 });
-jest.mock("../Utils/InvokeSection", () => () => {
+jest.mock("../utils/InvokeSection", () => () => {
   const MockName = "default-invoke";
   return <MockName />;
 });

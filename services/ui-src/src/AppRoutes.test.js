@@ -25,7 +25,7 @@ jest.mock("./components/layout/Home", () => () => {
   const MockName = "default-home";
   return <MockName />;
 });
-jest.mock("./components/Utils/Spinner", () => () => {
+jest.mock("./components/utils/Spinner", () => () => {
   const MockName = "spin-to-win";
   return <MockName />;
 });

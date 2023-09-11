@@ -1,4 +1,4 @@
-import statesArray from "../components/Utils/statesArray";
+import statesArray from "../components/utils/statesArray";
 
 // ACTION TYPES
 const STATE_INFO = "STATE_INFO";
