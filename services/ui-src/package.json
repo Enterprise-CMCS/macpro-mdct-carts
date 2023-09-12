@@ -109,7 +109,7 @@
       "!src/types.js",
       "!src/config.js",
       "!src/**/index.js",
-      "!src/components/Utils/statesArray.js",
+      "!src/components/utils/statesArray.js",
       "!src/util/testing/**/*.js",
       "!src/actions/**/*.js",
       "!src/store/**/*.js",

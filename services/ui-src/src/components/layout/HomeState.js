@@ -3,9 +3,9 @@ import { Switch } from "react-router";
 import { Route } from "react-router-dom";
 import CertifyAndSubmit from "./CertifyAndSubmit";
 import Homepage from "../sections/homepage/Homepage";
-import InvokeSection from "../Utils/InvokeSection";
+import InvokeSection from "../utils/InvokeSection";
 import SaveError from "./SaveError";
-import ScrollToTop from "../Utils/ScrollToTop";
+import ScrollToTop from "../utils/ScrollToTop";
 import Sidebar from "./Sidebar";
 import Unauthorized from "./Unauthorized";
 

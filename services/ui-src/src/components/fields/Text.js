@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system";
 import axios from "../../authenticatedAxios";
 import { connect } from "react-redux";
-import { generateQuestionNumber } from "../Utils/helperFunctions";
+import { generateQuestionNumber } from "../utils/helperFunctions";
 
 const Text = ({ question, state, ...props }) => {
   const [prevYearValue, setPrevYearValue] = useState();

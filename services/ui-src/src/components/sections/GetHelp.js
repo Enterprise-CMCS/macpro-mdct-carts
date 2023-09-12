@@ -1,7 +1,7 @@
 import React from "react";
 import { Accordion, AccordionItem, Alert } from "@cmsgov/design-system";
 import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.png";
-import ActionCard from "../Utils/ActionCard";
+import ActionCard from "../utils/ActionCard";
 
 const GetHelp = () => {
   return (

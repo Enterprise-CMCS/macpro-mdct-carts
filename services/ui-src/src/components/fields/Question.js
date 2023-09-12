@@ -25,7 +25,7 @@ import { TextMedium, TextMultiline, TextSmall } from "./TextOther";
 
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
-import { showQuestionByPath } from "../Utils/helperFunctions";
+import { showQuestionByPath } from "../utils/helperFunctions";
 
 const questionTypes = new Map([
   ["checkbox", Checkbox],

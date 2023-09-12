@@ -6,7 +6,7 @@ import { Button } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-import statesArray from "../Utils/statesArray";
+import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
