@@ -113,7 +113,7 @@ Updates outside of that time frame will need to be manually corrected in CARTS, 
 - [generateEnrollmentTotals](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/generateEnrollmentTotals.js)
 - [updateStateForms](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/updateStateForms.js)
 
-For testing convenience, stateUser2 points at AL in CARTS and the dev user points at AL in SEDS.
+For testing convenience, stateuser2 points at AL in CARTS and the stateuser points at AL in SEDS.
 
 ## Copyright and license
 
