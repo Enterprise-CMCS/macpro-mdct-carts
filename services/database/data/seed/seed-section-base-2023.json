@@ -2823,7 +2823,7 @@
                 "questions": [
                   {
                     "id": "2023-03-c-02-01",
-                    "hint": "Don’t include applicants being considered for redetermination — these data will be collected in Part 3. Please note: numbers reported in questions 2-4 of this part are a subset of the total reported in question 1. Therefore, the totals reported in questions 2-4 should be smaller than the number reported in question 1.",
+                    "hint": "Don’t include applicants being considered for redetermination — these data will be collected in Part 3. \n\nPlease note: numbers reported in questions 2-4 of this part are a subset of the total reported in question 1. Therefore, the totals reported in questions 2-4 should be smaller than the number reported in question 1.",
                     "type": "integer",
                     "label": "How many applicants were denied CHIP coverage in FFY 2023? This number should be equal to the total of reported numbers for questions 2-4 below.",
                     "answer": {
