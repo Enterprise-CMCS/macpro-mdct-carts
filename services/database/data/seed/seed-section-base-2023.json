@@ -1698,7 +1698,7 @@
                   {
                     "id": "2023-02-a-01-01",
                     "type": "text_multiline",
-                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
+                    "label": "The percent change column in the table above calculates the rate of growth in enrollment over the previous federal fiscal year by subtracting the previous fiscal year enrollment total from the current fiscal year enrollment total (B - A), and dividing that by the previous fiscal year total (A). If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
                     "answer": {
                       "entry": null
                     },
@@ -1734,7 +1734,7 @@
               },
               {
                 "id": "2023-02-a-02",
-                "text": "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the Census Bureau did not release standard one-year ACS estimates in 2020 and that row is intentionally left blank.",
+                "text": "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey (ACS).",
                 "type": "part",
                 "title": "Number of Uninsured Children in Your State",
                 "questions": [
@@ -2006,6 +2006,35 @@
                               "acsProperty": "percentUninsuredMoe"
                             }
                           }
+                        ],
+                        [
+                          {
+                            "contents": "2022"
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "numberUninsured"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "numberUninsuredMoe"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "percentUninsured"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "percentUninsuredMoe"
+                            }
+                          }
                         ]
                       ],
                       "headers": [
@@ -2046,7 +2075,7 @@
                       ],
                       "headers": [
                         {
-                          "contents": "Percent change between 2019 and 2021"
+                          "contents": "Percent change between 2021 and 2022"
                         }
                       ]
                     },
@@ -2090,7 +2119,7 @@
                   {
                     "id": "2023-02-a-02-02",
                     "type": "radio",
-                    "label": "Are there any reasons why the American Community Survey estimates wouldn’t be a precise representation of the actual number of uninsured children in your state?",
+                    "label": "Are there any reasons why the ACS estimates wouldn’t be a precise representation of the actual number of uninsured children in your state?",
                     "answer": {
                       "entry": null,
                       "options": [
