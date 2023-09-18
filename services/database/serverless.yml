@@ -45,7 +45,11 @@ custom:
         sources:
           - table: ${self:custom.acsTableName}
             sources:
-              [./data/seed-local/seed-acs.json, ./data/seed/seed-acs-2021.json]
+              [
+                ./data/seed-local/seed-acs.json,
+                ./data/seed/seed-acs-2021.json,
+                ./data/seed/seed-acs-2022.json,
+              ]
           - table: ${self:custom.fmapTableName}
             sources: [./data/seed-local/seed-fmap.json]
           - table: ${self:custom.stateTableName}
