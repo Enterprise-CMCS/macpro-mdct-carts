@@ -7283,7 +7283,7 @@
                       },
                       {
                         "id": "2023-03-e-02-09",
-                        "type": "money",
+                        "type": "text",
                         "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                         "answer": {
                           "entry": null
@@ -7291,7 +7291,7 @@
                       },
                       {
                         "id": "2023-03-e-02-10",
-                        "type": "money",
+                        "type": "text",
                         "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                         "answer": {
                           "entry": null
