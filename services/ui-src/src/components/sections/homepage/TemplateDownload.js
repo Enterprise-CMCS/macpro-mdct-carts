@@ -11,7 +11,7 @@ const TemplateDownload = ({ getTemplate }) => (
   <div className="ds-l-row">
     <div className="updates ds-l-col--12">
       <h4>Updates from Central Office</h4>
-      <div className="update-date">Aug 2021</div>
+      <div className="update-date">Sep 2023</div>
       <div className="update ds-l-row">
         <div className="icon ds-l-col--2">
           <div className="icon-inner">
@@ -20,7 +20,7 @@ const TemplateDownload = ({ getTemplate }) => (
         </div>
         <div className="update-contents ds-l-col--10">
           <div className="title">
-            <h3>Your fiscal year 2022 template is ready for download</h3>
+            <h3>Your fiscal year 2023 template is ready for download</h3>
           </div>
           <p>
             Download your template for the current reporting period below.

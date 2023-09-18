@@ -1698,7 +1698,7 @@
                   {
                     "id": "2023-02-a-01-01",
                     "type": "text_multiline",
-                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
+                    "label": "The percent change column in the table above calculates the rate of growth in enrollment over the previous federal fiscal year by subtracting the previous fiscal year enrollment total from the current fiscal year enrollment total (B - A), and dividing that by the previous fiscal year total (A). If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
                     "answer": {
                       "entry": null
                     },
@@ -1734,7 +1734,7 @@
               },
               {
                 "id": "2023-02-a-02",
-                "text": "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the Census Bureau did not release standard one-year ACS estimates in 2020 and that row is intentionally left blank.",
+                "text": "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey (ACS).",
                 "type": "part",
                 "title": "Number of Uninsured Children in Your State",
                 "questions": [
@@ -2006,6 +2006,35 @@
                               "acsProperty": "percentUninsuredMoe"
                             }
                           }
+                        ],
+                        [
+                          {
+                            "contents": "2022"
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "numberUninsured"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "numberUninsuredMoe"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "percentUninsured"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "percentUninsuredMoe"
+                            }
+                          }
                         ]
                       ],
                       "headers": [
@@ -2037,8 +2066,8 @@
                         [
                           {
                             "compareACS": {
-                              "ffy1": "2019",
-                              "ffy2": "2021",
+                              "ffy1": "2021",
+                              "ffy2": "2022",
                               "acsProperty": "percentUninsured"
                             }
                           }
@@ -2046,7 +2075,7 @@
                       ],
                       "headers": [
                         {
-                          "contents": "Percent change between 2019 and 2021"
+                          "contents": "Percent change between 2021 and 2022"
                         }
                       ]
                     },
@@ -2090,7 +2119,7 @@
                   {
                     "id": "2023-02-a-02-02",
                     "type": "radio",
-                    "label": "Are there any reasons why the American Community Survey estimates wouldn’t be a precise representation of the actual number of uninsured children in your state?",
+                    "label": "Are there any reasons why the ACS estimates wouldn’t be a precise representation of the actual number of uninsured children in your state?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -2502,7 +2531,7 @@
                       {
                         "id": "2023-03-b-01-04",
                         "type": "radio",
-                        "label": "If you have a Separate CHIP program, do you require individuals to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
+                        "label": "Does the state implement a waiting period in its separate CHIP?",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -3482,7 +3511,7 @@
                 "title": "Tracking a CHIP cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -6810,7 +6839,7 @@
           },
           {
             "id": "2023-03-d",
-            "text": "States can choose whether or not to require cost sharing in their CHIP program. Cost sharing includes payments such as enrollment fees, premiums, deductibles, coinsurance, and copayments.",
+            "text": "States can choose to require cost sharing in their CHIP program. Cost sharing includes payments such as enrollment fees, premiums, deductibles, coinsurance, and copayments.",
             "type": "subsection",
             "parts": [
               {
@@ -7089,7 +7118,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
+                  "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
@@ -7266,7 +7295,7 @@
                   {
                     "id": "2023-03-e-02-07",
                     "type": "integer",
-                    "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2022?",
+                    "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7284,7 +7313,7 @@
                       },
                       {
                         "id": "2023-03-e-02-09",
-                        "type": "money",
+                        "type": "text",
                         "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                         "answer": {
                           "entry": null
@@ -7292,7 +7321,7 @@
                       },
                       {
                         "id": "2023-03-e-02-10",
-                        "type": "money",
+                        "type": "text",
                         "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                         "answer": {
                           "entry": null
@@ -7404,7 +7433,7 @@
                   {
                     "id": "2023-03-e-02-15",
                     "type": "text_multiline",
-                    "label": "What challenges did you experience with your premium assistance program in FFY 2022?",
+                    "label": "What challenges did you experience with your premium assistance program in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7412,7 +7441,7 @@
                   {
                     "id": "2023-03-e-02-16",
                     "type": "text_multiline",
-                    "label": "What accomplishments did you experience with your premium assistance program in FFY 2022?",
+                    "label": "What accomplishments did you experience with your premium assistance program in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
