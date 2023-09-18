@@ -162,10 +162,10 @@
   {
     "stateId": "ME",
     "year": 2022,
-    "numberUninsured": 1000,
-    "numberUninsuredMoe": 0,
-    "percentUninsured": 0.4,
-    "percentUninsuredMoe": 0.3
+    "numberUninsured": 5000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 2.2,
+    "percentUninsuredMoe": 0.9
   },
   {
     "stateId": "MD",
@@ -370,10 +370,10 @@
   {
     "stateId": "VT",
     "year": 2022,
-    "numberUninsured": 26000,
-    "numberUninsuredMoe": 5000,
-    "percentUninsured": 5.8,
-    "percentUninsuredMoe": 0.6
+    "numberUninsured": 1000,
+    "numberUninsuredMoe": 0,
+    "percentUninsured": 0.4,
+    "percentUninsuredMoe": 0.3
   },
   {
     "stateId": "VA",
