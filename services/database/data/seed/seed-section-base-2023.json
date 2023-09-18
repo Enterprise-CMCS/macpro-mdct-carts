@@ -8323,7 +8323,7 @@
                             "id": "2023-03-g-01-07-b",
                             "hint": "This is the total number for all children between 0-18 years from question 1.",
                             "type": "integer",
-                            "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2023?",
+                            "label": "How many children were enrolled in separate CHIP for at least 90 continuous days during FFY 2023?",
                             "answer": {
                               "entry": null
                             }
