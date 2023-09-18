@@ -8411,7 +8411,7 @@
           },
           {
             "id": "2023-03-h",
-            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction. For the 2022 CARTS report, the only option for reporting CAHPS results will be through the submission of raw data to the Agency for Healthcare Research and Quality (AHRQ) CAHPS Database.",
+            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction. For the 2024 CARTS report, the only option for reporting CAHPS results will be through the submission of raw data to the Agency for Healthcare Research and Quality (AHRQ) CAHPS Database.",
             "type": "subsection",
             "parts": [
               {
@@ -8439,7 +8439,7 @@
                       {
                         "id": "2023-03-h-01-01-a",
                         "type": "radio",
-                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2022.",
+                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2024 CAHPS reporting.\nIf you completed the CAHPS survey, please respond to questions in Part 2. If you did not complete the CAHPS survey, please skip to Part 3.",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -8470,6 +8470,27 @@
                     ]
                   }
                 ]
+              },
+              {
+                "id": "2023-03-h-02",
+                "text": "Since you collected the CAHPS survey, please complete Part 2.",
+                "type": "part",
+                "title": "You collected the CAHPS survey",
+                "questions": [],
+                "context_data": {
+                  "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
+                    "hide_if": {
+                      "target": "$..*[?(@ && @.id=='2023-03-h-01-01')].answer.entry",
+                      "values": {
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
+                }
               },
               {
                 "id": "2023-03-h-03",
