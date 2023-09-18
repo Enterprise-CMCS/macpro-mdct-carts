@@ -2823,7 +2823,7 @@
                 "questions": [
                   {
                     "id": "2023-03-c-02-01",
-                    "hint": "Don’t include applicants being considered for redetermination — these data will be collected in Part 3. \n\nPlease note: numbers reported in questions 2-4 of this part are a subset of the total reported in question 1. Therefore, the totals reported in questions 2-4 should be smaller than the number reported in question 1.",
+                    "hint": "Don’t include applicants who are being considered for redetermination — these data will be collected in Part 3. \n\nPlease note: numbers reported in questions 2-4 of this part are a subset of the total reported in question 1. Therefore, the totals reported in questions 2-4 should be smaller than the number reported in question 1.",
                     "type": "integer",
                     "label": "How many applicants were denied CHIP coverage in FFY 2023? This number should be equal to the total of reported numbers for questions 2-4 below.",
                     "answer": {
@@ -3482,7 +3482,7 @@
                 "title": "Tracking a CHIP cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -5147,7 +5147,7 @@
                 "title": "Tracking a Medicaid Cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
