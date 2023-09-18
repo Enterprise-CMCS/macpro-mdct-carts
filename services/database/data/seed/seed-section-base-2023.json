@@ -8620,7 +8620,7 @@
               },
               {
                 "id": "2023-03-i-02",
-                "text": "Tell us about your HSI program(s).",
+                "text": "Please answer the following questions for all of the state's approved HSIs as listed in section 2.2 of the CHIP state plan.",
                 "type": "part",
                 "questions": [
                   {
@@ -8765,7 +8765,7 @@
                           },
                           {
                             "type": "fieldset",
-                            "label": "Skip to the next section if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
+                            "label": "CARTS will auto-calculate the percent of children served by your HSI program who are below the CHIP FPL\n\n[Skip questions 6–8 if you're already reporting HSI metrics and outcomes to CMS through a monthly or quarterly CMS Lead HSI reporting template.]",
                             "questions": [],
                             "context_data": {
                               "conditional_display": {
