@@ -3,7 +3,7 @@ import s3 from "../../libs/s3-lib";
 import { ReportPdfs } from "../../types";
 
 export const getFiscalYearTemplateLink = handler(async (_context) => {
-  const filename = ReportPdfs[2022];
+  const filename = ReportPdfs[2023];
   const url = s3.getSignedUrl(
     "getObject",
     {
