@@ -40,11 +40,11 @@
                       "entry": null,
                       "options": [
                         {
-                          "label": "Both Medicaid Expansion CHIP and Separate CHIP",
+                          "label": "Both Medicaid expansion CHIP and separate CHIP",
                           "value": "combo"
                         },
                         {
-                          "label": "Medicaid Expansion CHIP only",
+                          "label": "Medicaid expansion CHIP only",
                           "value": "medicaid_exp_chip"
                         },
                         {
@@ -371,7 +371,7 @@
                   {
                     "id": "2023-01-a-01-04",
                     "type": "text_multiline",
-                    "label": "Do premiums differ for different Medicaid Expansion CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
+                    "label": "Do premiums differ for different Medicaid expansion CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
                     "answer": {
                       "entry": null
                     }
@@ -380,7 +380,7 @@
                     "id": "2023-01-a-01-05",
                     "hint": "Select all that apply.",
                     "type": "checkbox",
-                    "label": "Which delivery system(s) do you use?",
+                    "label": "Which delivery system(s) does your state use?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -389,11 +389,11 @@
                           "value": "mco"
                         },
                         {
-                          "label": "Primary Care Case Management",
+                          "label": "Primary Care Case Management (PCCM)",
                           "value": "pccm"
                         },
                         {
-                          "label": "Fee for Service",
+                          "label": "Fee-for-Service",
                           "value": "ffs"
                         }
                       ]
@@ -402,14 +402,14 @@
                   {
                     "id": "2023-01-a-01-06",
                     "type": "text_multiline",
-                    "label": "Which delivery system(s) are available to which Medicaid Expansion CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                    "label": "Which delivery system(s) are available to which Medicaid expansion CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
                     "answer": {
                       "entry": null
                     }
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 1 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 2.",
+                  "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program.",
                   "show_if_state_program_type_in": [
                     "medicaid_exp_chip",
                     "combo"
@@ -643,7 +643,7 @@
                   {
                     "id": "2023-01-a-02-04",
                     "type": "text_multiline",
-                    "label": "Do your premiums differ for different CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
+                    "label": "Do your premiums differ for different, separate CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
                     "answer": {
                       "entry": null
                     }
@@ -661,11 +661,11 @@
                           "value": "mco"
                         },
                         {
-                          "label": "Primary Care Case Management",
+                          "label": "Primary Care Case Management (PCCM)",
                           "value": "pccm"
                         },
                         {
-                          "label": "Fee for Service",
+                          "label": "Fee-for-Service",
                           "value": "ffs"
                         }
                       ]
@@ -674,20 +674,20 @@
                   {
                     "id": "2023-01-a-02-06",
                     "type": "text_multiline",
-                    "label": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                    "label": "Which delivery system(s) are available to which separate CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
                     "answer": {
                       "entry": null
                     }
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 2 only applies to states with a Separate CHIP program. Please skip to Part 3.",
+                  "skip_text": "Part 2 only applies to states with a separate CHIP program.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               },
               {
                 "id": "2023-01-a-03",
-                "text": "Indicate any changes you’ve made to your Medicaid Expansion CHIP program policies in the past federal fiscal year.",
+                "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP program policies in the past federal fiscal year.",
                 "type": "part",
                 "title": "Medicaid Expansion CHIP Program and Policy Changes",
                 "questions": [
@@ -780,7 +780,7 @@
                   {
                     "id": "2023-01-a-03-05",
                     "type": "radio",
-                    "label": "Have you made any changes to the single streamlined application?",
+                    "label": "Have you made any changes to the single, streamlined application?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -824,7 +824,7 @@
                     "id": "2023-01-a-03-07",
                     "hint": "For example: transitioning from Fee for Service to Managed Care for different Medicaid Expansion CHIP populations.",
                     "type": "radio",
-                    "label": "Have you made any changes to the delivery system(s)?",
+                    "label": "Have you made any changes to the delivery system(s)? For example: transitioning from fee-for-service to managed care for different Medicaid expansion CHIP populations.",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -975,7 +975,7 @@
                   {
                     "id": "2023-01-a-03-14",
                     "type": "radio",
-                    "label": "Have you made any changes to eligibility for “lawfully residing” pregnant individuals?",
+                    "label": "Have you made any changes to eligibility for “lawfully residing pregnant individuals”?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1041,7 +1041,7 @@
                       {
                         "id": "2023-01-a-03-17",
                         "type": "text_multiline",
-                        "label": "Briefly describe why you made these changes to your Medicaid Expansion CHIP program.",
+                        "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
                         "answer": {
                           "entry": null
                         }
@@ -1099,7 +1099,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 4.",
+                  "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program.",
                   "show_if_state_program_type_in": [
                     "medicaid_exp_chip",
                     "combo"
@@ -1108,7 +1108,7 @@
               },
               {
                 "id": "2023-01-a-04",
-                "text": "Indicate any changes you’ve made to your Separate CHIP program and policies in the past federal fiscal year.",
+                "text": "Indicate any changes you’ve made to your separate CHIP program and policies in the past federal fiscal year.",
                 "type": "part",
                 "title": "Separate CHIP Program and Policy Changes",
                 "questions": [
@@ -1245,7 +1245,7 @@
                     "id": "2023-01-a-04-07",
                     "hint": "For example: transitioning from Fee for Service to Managed Care for different Separate CHIP populations.",
                     "type": "radio",
-                    "label": "Have you made any changes to the delivery system(s)?",
+                    "label": "Have you made any changes to the delivery system(s)? For example: transitioning from fee-for-service to managed care for different separate CHIP populations.",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1527,7 +1527,7 @@
                       {
                         "id": "2023-01-a-04-20",
                         "type": "text_multiline",
-                        "label": "Briefly describe why you made these changes to your Separate CHIP program.",
+                        "label": "Briefly describe why you made these changes to your separate CHIP program (if applicable).",
                         "answer": {
                           "entry": null
                         }
@@ -1588,7 +1588,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 4 only applies to states with a Separate CHIP program and policies in the past federal fiscal year.",
+                  "skip_text": "Part 4 only applies to states with a separate CHIP program.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
