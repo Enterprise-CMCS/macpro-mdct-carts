@@ -8439,7 +8439,8 @@
                       {
                         "id": "2023-03-h-01-01-a",
                         "type": "radio",
-                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2024 CAHPS reporting.\nIf you completed the CAHPS survey, please respond to questions in Part 2. If you did not complete the CAHPS survey, please skip to Part 3.",
+                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2024 CAHPS reporting.",
+                        "hint": "If you completed the CAHPS survey, please respond to questions in Part 2. If you did not complete the CAHPS survey, please skip to Part 3.",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -8476,7 +8477,116 @@
                 "text": "Since you collected the CAHPS survey, please complete Part 2.",
                 "type": "part",
                 "title": "You collected the CAHPS survey",
-                "questions": [],
+                "questions": [
+                  {
+                    "id": "2023-03-h-02-01",
+                    "type": "file_upload",
+                    "label": "Upload a summary report of your CAHPS survey results. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database. Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-02",
+                    "type": "radio",
+                    "label": "Which CHIP population did you survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "Medicaid Expansion CHIP",
+                          "value": "medicaid_exp_chip"
+                        },
+                        {
+                          "label": "Separate CHIP",
+                          "value": "separate_chip"
+                        },
+                        {
+                          "label": "Both Separate CHIP and Medicaid Expansion CHIP",
+                          "value": "combo"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-03",
+                    "type": "radio",
+                    "label": "Which version of the CAHPS survey did you use?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "CAHPS 5.1",
+                          "value": "CAHPS 5.1"
+                        },
+                        {
+                          "label": "CAHPS 5.1H",
+                          "value": "CAHPS 5.1H"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-04",
+                    "type": "radio",
+                    "label": "Which supplemental items, if any, did you include in your survey? Select all that apply.",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "None",
+                          "value": "None"
+                        },
+                        {
+                          "label": "Children with Chronic Conditions",
+                          "value": "Children with Chronic Conditions"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-05",
+                    "type": "radio",
+                    "label": "Which administrative protocol did you use to administer the survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "NCQA HEDIS CAHPS 5.1H",
+                          "value": "NCQA HEDIS CAHPS 5.1H"
+                        },
+                        {
+                          "label": "HRQ CAHPS",
+                          "value": "HRQ CAHPS"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-06",
+                    "type": "text_multiline",
+                    "label": "Is there anything else you'd like to add about your CAHPS survey results?",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ],
                 "context_data": {
                   "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
                   "conditional_display": {
