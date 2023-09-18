@@ -8535,7 +8535,7 @@
                   },
                   {
                     "id": "2023-03-h-02-04",
-                    "type": "radio",
+                    "type": "checkbox",
                     "label": "Which supplemental items, if any, did you include in your survey? Select all that apply.",
                     "answer": {
                       "entry": null,
