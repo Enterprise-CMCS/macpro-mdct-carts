@@ -2066,8 +2066,8 @@
                         [
                           {
                             "compareACS": {
-                              "ffy1": "2019",
-                              "ffy2": "2021",
+                              "ffy1": "2021",
+                              "ffy2": "2022",
                               "acsProperty": "percentUninsured"
                             }
                           }
