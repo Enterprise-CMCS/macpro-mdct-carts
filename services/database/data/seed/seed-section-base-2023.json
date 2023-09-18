@@ -8912,7 +8912,7 @@
             "parts": [
               {
                 "id": "2023-04-a-01",
-                "text": "Tell us about the progress you’ve made on your performance goals in the past year. The objectives and goals you add to this section should match those reflected in your CHIP State Plan, Section 9. Submit a CHIP State Plan Amendment (SPA) if any of them are different. \nObjective 1 is required. We’ve provided examples for other objectives, but you can edit them so they match the objectives in your CHIP State Plan. You can add additional objectives and goals to fit what’s in your CHIP State Plan.",
+                "text": "Please tell us about the progress you’ve made on your performance goals in the past year. The objectives and goals you add to this section should match those reflected in your CHIP State Plan, Section 9. Submit a CHIP State Plan Amendment (SPA) if the goals and/or objectives listed in your CHIP state plan need to be updated to align with the goals and objectives you report in this section of CARTS.\n\nAll states must report on at least one goal related to Objective 1 to reduce the number of uninsured children. Please report outcomes for any additional goals related to Objective 1 and any other Objectives the state collects (for example, increasing access to care or increasing the use of preventative care). We've included these examples for other objectives, but you can update them to match the objectives the state measures. You can add additional objectives and goals as needed to align with yout CHIP State Plan.",
                 "type": "part",
                 "title": "Tell us about your goals and objectives",
                 "questions": [
@@ -9157,7 +9157,7 @@
                                 "questions": [
                                   {
                                     "id": "2023-04-a-01-01-02-02-01-01",
-                                    "hint": "For example: In an effort to increase access to care for underserved populations, our goal is to increase the number of children of Hispanic ethnicity who have visited a primary care physician by 5% annually over the next five years (ending in 2028).",
+                                    "hint": "For example: In an effort to increase access to care, our goal is to increase the number of children who have visited a primary care physician by 5% annually over the next five years (ending in 2029).",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal as it relates to this objective.",
                                     "answer": {
@@ -9246,7 +9246,7 @@
                                     "questions": [
                                       {
                                         "id": "2023-04-a-01-01-02-02-01-05",
-                                        "hint": "For example: The total number of children of Hispanic ethnicity enrolled in CHIP in the last federal fiscal year.",
+                                        "hint": "For example: The total number of children enrolled in CHIP in the last federal fiscal year.",
                                         "type": "text_medium",
                                         "label": "Which population are you measuring in the denominator?",
                                         "answer": {
@@ -9645,6 +9645,7 @@
                                     "questions": [
                                       {
                                         "id": "2023-04-a-01-01-04-02-01-03",
+                                        "hint": "For example: The number of children who received one or more well child visits in the last federal fiscal year.",
                                         "type": "text_medium",
                                         "label": "Which population are you measuring in the numerator?",
                                         "answer": {
@@ -9667,6 +9668,7 @@
                                     "questions": [
                                       {
                                         "id": "2023-04-a-01-01-04-02-01-05",
+                                        "hint": "For example: The total number of children enrolled in CHIP.",
                                         "type": "text_medium",
                                         "label": "Which population are you measuring in the denominator?",
                                         "answer": {
@@ -10211,7 +10213,7 @@
                   {
                     "id": "2023-04-a-02-03",
                     "type": "text_multiline",
-                    "label": "Have you conducted any focused studies on your CHIP population? (For example: studies on adolescents, attention deficit disorder, substance use, behavioral health services access, health care equity, special health care needs, or other emerging health care needs.) What have you discovered through this research?",
+                    "label": "Have you conducted any focused studies on your CHIP population? (For example: studies on adolescents, attention deficit disorder, substance use, behavioral health services access, health care disparities, special health care needs, or other emerging health care needs.) What have you discovered through this research?",
                     "answer": {
                       "entry": null
                     }
