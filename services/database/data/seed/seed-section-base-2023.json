@@ -8765,7 +8765,8 @@
                           },
                           {
                             "type": "fieldset",
-                            "label": "CARTS will auto-calculate the percent of children served by your HSI program who are below the CHIP FPL\n\n[Skip questions 6–8 if you're already reporting HSI metrics and outcomes to CMS through a monthly or quarterly CMS Lead HSI reporting template.]",
+                            "hint": "\n\n[Skip questions 6–8 if you're already reporting HSI metrics and outcomes to CMS through a monthly or quarterly CMS Lead HSI reporting template.]",
+                            "label": "CARTS will auto-calculate the percent of children served by your HSI program who are below the CHIP FPL",
                             "questions": [],
                             "context_data": {
                               "conditional_display": {
