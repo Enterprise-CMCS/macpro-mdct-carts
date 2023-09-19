@@ -1,3 +1,4 @@
+import { selectFragmentById } from "../store/formData";
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
 import {
@@ -177,6 +178,7 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 const shouldDisplay = (state, context, programType = null) => {
   let program, reportStatusCode;
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
+  programType = selectFragmentById(state, "2023-00-a-01-02").answer.entry;
   if (!programType) {
     // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
     if (state.stateUser.currentUser.role === AppRoles.STATE_USER) {

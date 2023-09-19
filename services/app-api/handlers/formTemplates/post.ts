@@ -60,7 +60,6 @@ export const post = handler(async (event, _context) => {
     stateStatuses.push({
       stateId: state.code,
       year: yearNumber,
-      programType: state.programType,
       status: "not_started",
       lastChanged: creationTime,
     });

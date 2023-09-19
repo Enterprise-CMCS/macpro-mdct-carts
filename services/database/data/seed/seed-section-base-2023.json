@@ -52,7 +52,6 @@
                           "value": "separate_chip"
                         }
                       ],
-                      "readonly": true,
                       "prepopulated": true
                     }
                   },
