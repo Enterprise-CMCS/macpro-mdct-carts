@@ -113,6 +113,9 @@ describe("shouldDisplay", () => {
 
   it("should infer programType for non-state users", () => {
     const state = {
+      global: {
+        formYear: "2023",
+      },
       stateUser: {
         currentUser: {
           role: "test role",

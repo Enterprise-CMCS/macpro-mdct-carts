@@ -178,8 +178,14 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 const shouldDisplay = (state, context, programType = null) => {
   let program;
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
-  program =
-    programType ?? selectFragmentById(state, "2023-00-a-01-02").answer.entry;
+  if (!programType) {
+    const formYear = state.global.formYear;
+    const programFromForm = selectFragmentById(state, `${formYear}-00-a-01-02`)
+      ?.answer.entry;
+    program = programFromForm;
+  } else {
+    program = programType;
+  }
 
   if (
     !context ||
