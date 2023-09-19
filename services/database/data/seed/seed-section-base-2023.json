@@ -7618,7 +7618,7 @@
                       {
                         "id": "2023-03-f-01-11",
                         "type": "integer",
-                        "label": "How many cases were referred to appropriate law enforcement officials in FFY 2023?",
+                        "label": "How many cases related to provider billing were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7777,7 +7777,7 @@
             "parts": [
               {
                 "id": "2023-03-g-01",
-                "text": "Tell us about the children receiving dental benefits in your Separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (managed care, PCCM, and fee-for-service).",
+                "text": "Tell us about the children receiving dental benefits in your separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (managed care, PCCM, and fee-for-service).",
                 "type": "part",
                 "questions": [
                   {
