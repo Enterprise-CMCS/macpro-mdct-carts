@@ -176,20 +176,10 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
 const shouldDisplay = (state, context, programType = null) => {
-  let program, reportStatusCode;
+  let program;
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
-  programType = selectFragmentById(state, "2023-00-a-01-02").answer.entry;
-  if (!programType) {
-    // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
-    if (state.stateUser.currentUser.role === AppRoles.STATE_USER) {
-      reportStatusCode = state.stateUser.abbr + state.global.formYear;
-    } else {
-      reportStatusCode = state.formData[0].stateId + state.formData[0].year;
-    }
-    program = state.reportStatus[reportStatusCode].programType;
-  } else {
-    program = programType;
-  }
+  program =
+    programType ?? selectFragmentById(state, "2023-00-a-01-02").answer.entry;
 
   if (
     !context ||

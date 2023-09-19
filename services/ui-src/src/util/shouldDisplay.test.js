@@ -1,6 +1,13 @@
 import { shouldDisplay } from "./shouldDisplay";
 import { AppRoles } from "../types";
 
+jest.mock("../store/formData", () => ({
+  ...jest.requireActual("../store/formData"),
+  selectFragmentById: () => ({
+    answer: { entry: "test program" },
+  }),
+}));
+
 describe("shouldDisplay", () => {
   it("should display everything for CMS Admins", () => {
     const state = {
