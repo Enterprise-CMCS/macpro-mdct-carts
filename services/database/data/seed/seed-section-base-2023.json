@@ -2852,9 +2852,9 @@
                 "questions": [
                   {
                     "id": "2023-03-c-02-01",
-                    "hint": "Don’t include applicants who are being considered for redetermination — these data will be collected in Part 3.",
+                    "hint": "Don’t include applicants who are being considered for redetermination — these data will be collected in Part 3. \n\nPlease note: numbers reported in questions 2-4 of this part are a subset of the total reported in question 1. Therefore, the totals reported in questions 2-4 should be smaller than the number reported in question 1.",
                     "type": "integer",
-                    "label": "How many applicants were denied CHIP coverage in FFY 2022?",
+                    "label": "How many applicants were denied CHIP coverage in FFY 2023? This number should be equal to the total of reported numbers for questions 2-4 below.",
                     "answer": {
                       "entry": null
                     }
@@ -2879,6 +2879,7 @@
                     "questions": [
                       {
                         "id": "2023-03-c-02-03-a",
+                        "hint": "Please note this is a subset of the number reported for question 3, and that a smaller number should be reported here than the total provided in response to question 3.",
                         "type": "integer",
                         "label": "How many applicants were denied CHIP (Title XXI) coverage and determined eligible for Medicaid (Title XIX) instead?",
                         "answer": {
@@ -3004,7 +3005,7 @@
                   {
                     "id": "2023-03-c-03-01",
                     "type": "integer",
-                    "label": "How many children were eligible for redetermination in CHIP in FFY 2022?",
+                    "label": "How many children were eligible for redetermination in CHIP in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -3258,7 +3259,7 @@
                   {
                     "id": "2023-03-c-04-01",
                     "type": "integer",
-                    "label": "How many children were eligible for redetermination in Medicaid in FFY 2022?",
+                    "label": "How many children were eligible for redetermination in Medicaid in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -3505,7 +3506,7 @@
               },
               {
                 "id": "2023-03-c-05",
-                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. This year you’ll report on the number of children at the start of the cohort (Jan - Mar 2022) and six months later (July - Sept 2022). Next year you’ll report numbers for the same cohort at 12 months (Jan - Mar 2023) and 18 months later (July - Sept 2023). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
+                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan — Mar 2022) and six months later (July — Sept 2022). This year, you'll report on the same cohort for their enrollment status 12 months later (Jan — Mar 2023) and 18 months later (July — Sept 2023). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a CHIP cohort over 18 months",
                 "questions": [
@@ -3554,7 +3555,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "January - March 2022 (start of the cohort)",
+                    "label": "January - March 2022 (start of the cohort): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -3654,7 +3655,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "July - September 2022 (6 months later)",
+                    "label": "July - September 2022 (6 months later): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -4143,9 +4144,9 @@
                     }
                   },
                   {
-                    "hint": "Next year you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "January - March 2023 (12 months later): to be completed next year",
+                    "label": "January - March 2023 (12 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -4651,9 +4652,9 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Next year you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "July - September of 2023 (18 months later): to be completed next year",
+                    "label": "July - September of 2023 (18 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -5170,12 +5171,12 @@
               },
               {
                 "id": "2023-03-c-06",
-                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. This year you’ll report the number of children identified at the start of the cohort (Jan–Mar 2022) and six months later (July–Sept 2022). Next year you’ll report numbers for the same cohort at 12 months (Jan–Mar 2023) and 18 months later (July–Sept 2023). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
+                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan – Mar 2022) and six months later (July – Sept 2022). This year, you'll report on the same cohort for their enrollment status 12 months later (Jan – Mar 2023) and 18 months later (July – Sept 2023). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
                 "type": "part",
                 "title": "Tracking a Medicaid Cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -5219,7 +5220,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "January - March 2022 (start of the cohort)",
+                    "label": "January - March 2022 (start of the cohort): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -5319,7 +5320,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "July - September 2022 (6 months later)",
+                    "label": "July - September 2022 (6 months later): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -5808,9 +5809,9 @@
                     }
                   },
                   {
-                    "hint": "Next year, you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "January - March 2023 (12 months later): to be completed next year",
+                    "label": "January - March 2023 (12 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -6316,7 +6317,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Next year you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
                     "label": "July - September of 2023 (18 months later): to be completed next year",
                     "questions": []
