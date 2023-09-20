@@ -7555,7 +7555,7 @@
                   {
                     "id": "2023-03-f-01-05",
                     "type": "radio",
-                    "label": "Do the Managed Care plans contracted by your Separate CHIP program have written plans with safeguards and procedures in place?",
+                    "label": "Do the managed care plans contracted by your separate CHIP program have written plans with safeguards and procedures in place?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -7577,7 +7577,7 @@
                       {
                         "id": "2023-03-f-01-05-a",
                         "type": "text_multiline",
-                        "label": "What safeguards and procedures do the Managed Care plans have in place?",
+                        "label": "What safeguards and procedures do the managed care plans have in place?",
                         "answer": {
                           "entry": null
                         },
@@ -7600,7 +7600,7 @@
                   {
                     "id": "2023-03-f-01-06",
                     "type": "integer",
-                    "label": "How many eligibility denials have been appealed in a fair hearing in FFY 2022?",
+                    "label": "How many eligibility denials have been appealed in a fair hearing in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7608,7 +7608,7 @@
                   {
                     "id": "2023-03-f-01-07",
                     "type": "integer",
-                    "label": "How many cases have been found in favor of the beneficiary in FFY 2022?",
+                    "label": "How many cases have been found in favor of the beneficiary in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7619,7 +7619,7 @@
                       {
                         "id": "2023-03-f-01-08",
                         "type": "integer",
-                        "label": "How many cases related to provider credentialing were investigated in FFY 2022?",
+                        "label": "How many cases related to provider credentialing were investigated in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7627,7 +7627,7 @@
                       {
                         "id": "2023-03-f-01-09",
                         "type": "integer",
-                        "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in FFY 2022?",
+                        "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7640,7 +7640,7 @@
                       {
                         "id": "2023-03-f-01-10",
                         "type": "integer",
-                        "label": "How many cases related to provider billing were investigated in FFY 2022?",
+                        "label": "How many cases related to provider billing were investigated in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7648,7 +7648,7 @@
                       {
                         "id": "2023-03-f-01-11",
                         "type": "integer",
-                        "label": "How many cases were referred to appropriate law enforcement officials in FFY 2022?",
+                        "label": "How many cases related to provider billing were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7661,7 +7661,7 @@
                       {
                         "id": "2023-03-f-01-12",
                         "type": "integer",
-                        "label": "How many cases related to beneficiary eligibility were investigated in FFY 2022?",
+                        "label": "How many cases related to beneficiary eligibility were investigated in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7669,7 +7669,7 @@
                       {
                         "id": "2023-03-f-01-13",
                         "type": "integer",
-                        "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in FFY 2022?",
+                        "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7738,7 +7738,7 @@
                   {
                     "id": "2023-03-f-01-16",
                     "type": "radio",
-                    "label": "Do you contract with Managed Care health plans and/or a third party contractor to provide this oversight? ",
+                    "label": "Do you contract with managed care health plans and/or a third party contractor to provide this oversight? ",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -7794,7 +7794,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
+                  "skip_text": "This section only applies to states with a separate CHIP program. Please skip to the next section.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
@@ -7807,13 +7807,13 @@
             "parts": [
               {
                 "id": "2023-03-g-01",
-                "text": "Tell us about the children receiving dental benefits in your Separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                "text": "Tell us about the children receiving dental benefits in your separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (managed care, PCCM, and fee-for-service).",
                 "type": "part",
                 "questions": [
                   {
                     "hint": "Children should be in age groups based on their age on September 30th, the end of the federal fiscal year (FFY). For example, if a child turns three years old on September 15th, the child should be included in the “ages 3–5' group. Even if the child received dental services on September 1st while they were still two years old, all dental services should be counted as their age at the end of the FFY.",
                     "type": "fieldset",
-                    "label": "Note on age groups",
+                    "label": "Helpful hint on age groups",
                     "questions": []
                   },
                   {
@@ -7837,7 +7837,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2022?",
+                    "label": "How many children were enrolled in separate CHIP for at least 90 continuous days during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-02-a",
@@ -7950,7 +7950,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one dental care service during FFY 2022?",
+                    "label": "How many children (who were enrolled in separate CHIP for at least 90 continuous days) received at least one dental care service during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-03-a",
@@ -8069,7 +8069,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one preventative dental care service during FFY 2022?",
+                    "label": "How many children (who were enrolled in separate CHIP for at least 90 continuous days) received at least one preventative dental care service during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-04-a",
@@ -8183,13 +8183,13 @@
                   {
                     "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                     "type": "fieldset",
-                    "label": "Dental care service codes and definitions",
+                    "label": "Preventive dental care service codes and definitions",
                     "questions": []
                   },
                   {
                     "hint": "This includes orthodontics, periodontics, implants, oral and maxillofacial surgery, and other treatments.",
                     "type": "fieldset",
-                    "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received dental treatment services during FFY 2022?",
+                    "label": "How many children (who were enrolled in separate CHIP for at least 90 continuous days) received dental treatment services during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-05-a",
@@ -8309,7 +8309,7 @@
                   {
                     "id": "2023-03-g-01-06",
                     "type": "integer",
-                    "label": "How many children in the “ages 6–9” group received a sealant on at least one permanent molar tooth during FFY 2022?",
+                    "label": "How many children in the “ages 6–9” group received a sealant on at least one permanent molar tooth during FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -8344,7 +8344,7 @@
                           {
                             "id": "2023-03-g-01-07-a",
                             "type": "integer",
-                            "label": "How many children were enrolled in supplemental dental coverage during FFY 2022?",
+                            "label": "How many children were enrolled in supplemental dental coverage during FFY 2023?",
                             "answer": {
                               "entry": null
                             }
@@ -8353,7 +8353,7 @@
                             "id": "2023-03-g-01-07-b",
                             "hint": "This is the total number for all children between 0-18 years from question 1.",
                             "type": "integer",
-                            "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2022?",
+                            "label": "How many children were enrolled in separate CHIP for at least 90 continuous days during FFY 2023?",
                             "answer": {
                               "entry": null
                             }
@@ -8432,7 +8432,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
+                  "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
