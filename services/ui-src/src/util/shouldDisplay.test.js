@@ -1,14 +1,18 @@
 import { shouldDisplay } from "./shouldDisplay";
 import { AppRoles } from "../types";
+import { selectFragmentById } from "../store/formData";
 
+const mockFragmentResult = {
+  answer: { entry: "test program" },
+};
 jest.mock("../store/formData", () => ({
   ...jest.requireActual("../store/formData"),
-  selectFragmentById: () => ({
-    answer: { entry: "test program" },
-  }),
+  selectFragmentById: jest.fn(),
 }));
 
 describe("shouldDisplay", () => {
+  beforeEach(() => jest.clearAllMocks());
+
   it("should display everything for CMS Admins", () => {
     const state = {
       stateUser: {
@@ -85,7 +89,8 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should infer programType for state users", () => {
+  it("should find programType for state users", () => {
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
       global: {
         formYear: "2023",
@@ -109,9 +114,11 @@ describe("shouldDisplay", () => {
     const programType = null;
     const result = shouldDisplay(state, context, programType);
     expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(1);
   });
 
-  it("should infer programType for non-state users", () => {
+  it("should find programType for non-state users", () => {
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
       global: {
         formYear: "2023",
@@ -140,6 +147,41 @@ describe("shouldDisplay", () => {
     const programType = null;
     const result = shouldDisplay(state, context, programType);
     expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(1);
+  });
+
+  it("should find programType from previous year if not in current year", () => {
+    selectFragmentById.mockReturnValueOnce({});
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
+    const state = {
+      global: {
+        formYear: "2023",
+      },
+      stateUser: {
+        currentUser: {
+          role: "test role",
+        },
+      },
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
+        },
+      ],
+      reportStatus: {
+        CO2023: {
+          programType: "test program",
+        },
+      },
+    };
+    const context = {
+      conditional_display: null,
+      show_if_state_program_type_in: ["test program"],
+    };
+    const programType = null;
+    const result = shouldDisplay(state, context, programType);
+    expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(2);
   });
 
   it("should not display if hide_if logic is specified, and the state satisfies it", () => {
