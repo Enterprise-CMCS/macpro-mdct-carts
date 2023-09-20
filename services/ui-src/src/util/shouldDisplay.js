@@ -1,3 +1,4 @@
+import { PROGRAM_TYPE_QUESTION_ID } from "../constants";
 import { selectFragmentById } from "../store/formData";
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
@@ -167,6 +168,26 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
   return result;
 };
 
+const getProgramTypeFromForm = (state) => {
+  // attempt to find programType from same year as form
+  const formYear = state.global.formYear;
+  const currentYearProgramType = selectFragmentById(
+    state,
+    `${formYear}${PROGRAM_TYPE_QUESTION_ID}`
+  )?.answer.entry;
+  if (currentYearProgramType) {
+    return currentYearProgramType;
+  }
+
+  // attempt to find programType from the previous year's form
+  const previousYear = parseInt(formYear) - 1;
+  const previousYearProgramType = selectFragmentById(
+    state,
+    `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`
+  )?.answer.entry;
+  return previousYearProgramType || "";
+};
+
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
@@ -179,10 +200,7 @@ const shouldDisplay = (state, context, programType = null) => {
   let program;
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
   if (!programType) {
-    const formYear = state.global.formYear;
-    const programFromForm = selectFragmentById(state, `${formYear}-00-a-01-02`)
-      ?.answer.entry;
-    program = programFromForm;
+    program = getProgramTypeFromForm(state);
   } else {
     program = programType;
   }
