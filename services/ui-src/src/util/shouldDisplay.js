@@ -176,9 +176,6 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 const shouldDisplay = (state, context) => {
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
 
-  const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
-  const program = state.reportStatus[reportStatusCode].programType;
-
   if (
     !context ||
     (!context.conditional_display && !context.show_if_state_program_type_in)
@@ -191,6 +188,8 @@ const shouldDisplay = (state, context) => {
    * displaying relies on that answer being included in the show_if_state_program_type_in array
    */
   if (context.show_if_state_program_type_in) {
+    const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
+    const program = state.reportStatus[reportStatusCode].programType;
     return context.show_if_state_program_type_in.includes(program);
   }
 
