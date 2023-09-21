@@ -26,6 +26,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
 
     // uncertify report - Scope to test user's state
     cy.get(".dropdown-heading").first().click();
+    cy.wait(500);
     cy.contains("Alabama").click();
     cy.get("body").click(0, 0);
     cy.get(".filter-button").contains("Filter").click();
