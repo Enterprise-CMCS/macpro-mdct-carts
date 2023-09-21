@@ -25,7 +25,6 @@ custom:
       - develop
       - main
       - impl
-      - val
       - prod
   kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
