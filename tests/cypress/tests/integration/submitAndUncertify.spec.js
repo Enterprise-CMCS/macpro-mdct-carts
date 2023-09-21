@@ -3,7 +3,7 @@ const actionButton = "[data-testid='report-action-button']";
 const certifySubmitButton = "[data-testid='certifySubmit']";
 const uncertifyButton = "[data-testid='uncertifyButton']";
 describe("CARTS Submit and Uncertify Integration Tests", () => {
-  it("Should submit form as a State User and uncertify as a Reviewer", () => {
+  it("Should submit form as a State User and uncertify as an Admin", () => {
     cy.ensureAvailableReport(); // Needs to happen each iteration of the test
 
     // log in as State User

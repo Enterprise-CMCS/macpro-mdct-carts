@@ -41,9 +41,6 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
       case "stateUser":
         credentials = stateUser;
         break;
-      case "reviewer":
-        credentials = reviewer;
-        break;
       default:
         throw new Error("Provided userType not recognized.");
     }
