@@ -1,5 +1,3 @@
-import { PROGRAM_TYPE_QUESTION_ID } from "../constants";
-import { selectFragmentById } from "../store/formData";
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
 import {
@@ -168,42 +166,18 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
   return result;
 };
 
-const getProgramTypeFromForm = (state) => {
-  // attempt to find programType from same year as form
-  const formYear = state.global.formYear;
-  const currentYearProgramType = selectFragmentById(
-    state,
-    `${formYear}${PROGRAM_TYPE_QUESTION_ID}`
-  )?.answer?.entry;
-  if (currentYearProgramType) {
-    return currentYearProgramType;
-  }
-
-  // attempt to find programType from the previous year's form
-  const previousYear = parseInt(formYear) - 1;
-  const previousYearProgramType = selectFragmentById(
-    state,
-    `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`
-  )?.answer?.entry;
-  return previousYearProgramType || "";
-};
-
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
  * @param {object} state - The application state from redux, the object required for jsonpath to query
  * @param {object} context - the context_data from a question
- * @param {string} programType - program type of the user's state
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
-const shouldDisplay = (state, context, programType = null) => {
-  let program;
+const shouldDisplay = (state, context) => {
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
-  if (!programType) {
-    program = getProgramTypeFromForm(state);
-  } else {
-    program = programType;
-  }
+
+  const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
+  const program = state.reportStatus[reportStatusCode].programType;
 
   if (
     !context ||

@@ -1,3 +1,4 @@
+import { JSONPath } from "jsonpath-plus";
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
@@ -89,6 +90,7 @@ export const updateSections = handler(async (event, _context) => {
       {
         status: moveToInProgress ? "in_progress" : stateStatus.status,
         lastChanged: lastChanged,
+        programType: getProgramType(year, reportData, stateStatus?.programType),
       },
       "post"
     ),
@@ -96,3 +98,29 @@ export const updateSections = handler(async (event, _context) => {
 
   await dynamoDb.update(statusParams);
 });
+
+const PROGRAM_TYPE_QUESTION_ID = "-00-a-01-02";
+
+const getProgramType = (
+  year: string,
+  reportData: any,
+  programType: string | undefined
+) => {
+  // attempt to find programType from same year as form
+  const currentProgramType = programType;
+  let idExpression = `${year}${PROGRAM_TYPE_QUESTION_ID}`;
+  let jpexpr = `$..*[?(@ && @.id=='${idExpression}')]`;
+  let fragment = JSONPath({ path: jpexpr, json: reportData[0].contents });
+  let currentYearProgramType = fragment?.[0]?.answer?.entry;
+
+  if (currentYearProgramType) {
+    return currentYearProgramType;
+  }
+  // attempt to find programType from the previous year's form
+  const previousYear = parseInt(year) - 1;
+  idExpression = `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`;
+  jpexpr = `$..*[?(@ && @.id=='${idExpression}')]`;
+  fragment = JSONPath({ path: jpexpr, json: reportData[0].contents });
+  const previousYearProgramType = fragment?.[0]?.answer?.entry;
+  return previousYearProgramType ?? currentProgramType;
+};
