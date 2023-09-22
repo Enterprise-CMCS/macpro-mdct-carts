@@ -20,11 +20,13 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000/",
     specPattern: "**/*.spec.js",
-    excludeSpecPattern: "filterReports.spec.js",
     supportFile: "support/index.js",
     async setupNodeEvents(on, config) {
       await preprocessor.addCucumberPreprocessorPlugin(on, config);
       on("file:preprocessor", browserify.default(config));
+      on("before:browser:launch", (_browser = {}, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
       on("task", {
         log(message) {
           // eslint-disable-next-line no-console
@@ -38,11 +40,6 @@ module.exports = defineConfig({
 
           return null;
         },
-      });
-      on("before:browser:launch", (_browser = {}, launchOptions) => {
-        prepareAudit(launchOptions);
-      });
-      on("task", {
         pa11y: pa11y(),
         lighthouse: lighthouse(),
       });
