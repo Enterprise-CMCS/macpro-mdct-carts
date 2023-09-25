@@ -10382,7 +10382,7 @@
         "subsections": [
           {
             "id": "2023-05-a",
-            "text": "Tell us how much you spent on your CHIP program in FFY 2022, and how much you anticipate spending in FFY 2023 and 2024.",
+            "text": "Tell us how much you spent on your CHIP program in FFY 2023, and how much you anticipate spending in FFY 2024 and 2025.\n\nStates with a combination program should combine costs for both Medicaid expansion CHIP and separate CHIP programs into one budget.",
             "type": "subsection",
             "parts": [
               {
@@ -10392,15 +10392,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
-                    "questions": [],
-                    "context_data": {
-                      "show_if_state_program_type_in": ["combo"]
-                    }
-                  },
-                  {
-                    "type": "fieldset",
-                    "label": "How much did you spend on Managed Care in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on Managed Care in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10408,7 +10400,7 @@
                           {
                             "id": "2023-05-a-01-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10417,7 +10409,7 @@
                           {
                             "id": "2023-05-a-01-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10425,7 +10417,7 @@
                           {
                             "id": "2023-05-a-01-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10441,7 +10433,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on Fee for Service in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on fee-for-service in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10449,7 +10441,7 @@
                           {
                             "id": "2023-05-a-01-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10458,7 +10450,7 @@
                           {
                             "id": "2023-05-a-01-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10466,7 +10458,7 @@
                           {
                             "id": "2023-05-a-01-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10482,7 +10474,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on anything else related to benefit costs in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on anything else related to benefit costs in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10490,7 +10482,7 @@
                           {
                             "id": "2023-05-a-01-03-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10499,7 +10491,7 @@
                           {
                             "id": "2023-05-a-01-03-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10507,7 +10499,7 @@
                           {
                             "id": "2023-05-a-01-03-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10523,7 +10515,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you receive in cost sharing from beneficiaries to offset your costs in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you receive in cost sharing from beneficiaries to offset your costs in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10531,7 +10523,7 @@
                           {
                             "id": "2023-05-a-01-04-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10540,7 +10532,7 @@
                           {
                             "id": "2023-05-a-01-04-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10548,7 +10540,7 @@
                           {
                             "id": "2023-05-a-01-04-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10699,13 +10691,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
@@ -10721,7 +10713,7 @@
                   {
                     "hint": "This includes wages, salaries, and other employee costs.",
                     "type": "fieldset",
-                    "label": "How much did you spend on personnel in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on personnel in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10729,7 +10721,7 @@
                           {
                             "id": "2023-05-a-02-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10738,7 +10730,7 @@
                           {
                             "id": "2023-05-a-02-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10746,7 +10738,7 @@
                           {
                             "id": "2023-05-a-02-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10762,7 +10754,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on general administration in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on general administration in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10770,7 +10762,7 @@
                           {
                             "id": "2023-05-a-02-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10779,7 +10771,7 @@
                           {
                             "id": "2023-05-a-02-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10787,7 +10779,7 @@
                           {
                             "id": "2023-05-a-02-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10803,7 +10795,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on contractors and brokers, such as enrollment contractors in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on contractors and brokers, such as enrollment contractors in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10811,7 +10803,7 @@
                           {
                             "id": "2023-05-a-02-03-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10820,7 +10812,7 @@
                           {
                             "id": "2023-05-a-02-03-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10828,7 +10820,7 @@
                           {
                             "id": "2023-05-a-02-03-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10844,7 +10836,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on claims processing in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on claims processing in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10852,7 +10844,7 @@
                           {
                             "id": "2023-05-a-02-04-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10861,7 +10853,7 @@
                           {
                             "id": "2023-05-a-02-04-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10869,7 +10861,7 @@
                           {
                             "id": "2023-05-a-02-04-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10885,7 +10877,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on outreach and marketing in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on outreach and marketing in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10893,7 +10885,7 @@
                           {
                             "id": "2023-05-a-02-05-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10902,7 +10894,7 @@
                           {
                             "id": "2023-05-a-02-05-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10910,7 +10902,7 @@
                           {
                             "id": "2023-05-a-02-05-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10926,7 +10918,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on your Health Services Initiatives (HSI) if you had any in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on your Health Services Initiatives (HSI) if you had any in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10934,7 +10926,7 @@
                           {
                             "id": "2023-05-a-02-06-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10943,7 +10935,7 @@
                           {
                             "id": "2023-05-a-02-06-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10951,7 +10943,7 @@
                           {
                             "id": "2023-05-a-02-06-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10967,7 +10959,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on anything else related to administrative costs in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on anything else related to administrative costs in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10975,7 +10967,7 @@
                           {
                             "id": "2023-05-a-02-07-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10984,7 +10976,7 @@
                           {
                             "id": "2023-05-a-02-07-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10992,7 +10984,7 @@
                           {
                             "id": "2023-05-a-02-07-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11259,20 +11251,20 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
                     "fieldset_type": "synthesized_table"
                   },
                   {
-                    "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the eFMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
+                    "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2023 will be calculated once the eFMAP rate for 2023 becomes available. In the meantime, these values will be blank.",
                     "type": "fieldset",
                     "label": "Table 3: Federal and State Shares",
                     "questions": [],
@@ -11298,7 +11290,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-a')].answer.entry"
                             ],
-                            "$comment": "Total benefit costs 2022 + total admin costs 2022"
+                            "$comment": "Total benefit costs 2023 + total admin costs 2023"
                           },
                           {
                             "actions": ["formula"],
@@ -11316,7 +11308,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-b')].answer.entry"
                             ],
-                            "$comment": "Total benefit costs 2022 + total admin costs 2022"
+                            "$comment": "Total benefit costs 2023 + total admin costs 2023"
                           },
                           {
                             "actions": ["formula"],
@@ -11334,7 +11326,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-c')].answer.entry"
                             ],
-                            "$comment": "Total benefit costs 2022 + total admin costs 2022"
+                            "$comment": "Total benefit costs 2023 + total admin costs 2023"
                           }
                         ],
                         [
@@ -11345,19 +11337,10 @@
                             "actions": ["identity"],
                             "targets": [
                               {
-                                "lookupFmapFy": "2022"
-                              }
-                            ],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
-                          },
-                          {
-                            "actions": ["identity"],
-                            "targets": [
-                              {
                                 "lookupFmapFy": "2023"
                               }
                             ],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21)"
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY23)"
                           },
                           {
                             "actions": ["identity"],
@@ -11366,7 +11349,16 @@
                                 "lookupFmapFy": "2024"
                               }
                             ],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY22)"
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY24)"
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              {
+                                "lookupFmapFy": "2025"
+                              }
+                            ],
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY25)"
                           }
                         ],
                         [
@@ -11378,7 +11370,7 @@
                             "formula": "(<0> / 100) * (<1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11>)",
                             "targets": [
                               {
-                                "lookupFmapFy": "2022"
+                                "lookupFmapFy": "2023"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-a')].answer.entry",
@@ -11399,7 +11391,7 @@
                             "formula": "(<0> / 100) * (<1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11>)",
                             "targets": [
                               {
-                                "lookupFmapFy": "2023"
+                                "lookupFmapFy": "2024"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-b')].answer.entry",
@@ -11420,7 +11412,7 @@
                             "formula": "(<0> / 100) * (<1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11>)",
                             "targets": [
                               {
-                                "lookupFmapFy": "2024"
+                                "lookupFmapFy": "2025"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-c')].answer.entry",
@@ -11457,7 +11449,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-a')].answer.entry",
                               {
-                                "lookupFmapFy": "2022"
+                                "lookupFmapFy": "2023"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-a')].answer.entry",
@@ -11489,7 +11481,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-b')].answer.entry",
                               {
-                                "lookupFmapFy": "2023"
+                                "lookupFmapFy": "2024"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-b')].answer.entry",
@@ -11521,7 +11513,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-c')].answer.entry",
                               {
-                                "lookupFmapFy": "2024"
+                                "lookupFmapFy": "2025"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-c')].answer.entry",
@@ -11544,13 +11536,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
@@ -11560,7 +11552,7 @@
                     "id": "2023-05-a-02-08",
                     "hint": "Select all that apply. ",
                     "type": "checkbox",
-                    "label": "What were your state funding sources in FFY 2022?",
+                    "label": "What were your state funding sources in FFY 2023?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -11669,7 +11661,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were eligible for managed care in FFY 2022? How many do you anticipate will be eligible in FFY 2023 and 2024?",
+                    "label": "How many children were eligible for managed care in FFY 2023? How many do you anticipate will be eligible in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11677,7 +11669,7 @@
                           {
                             "id": "2023-05-a-03-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11686,7 +11678,7 @@
                           {
                             "id": "2023-05-a-03-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11694,7 +11686,7 @@
                           {
                             "id": "2023-05-a-03-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11711,7 +11703,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for managed care in FFY 2022? What is your projected PMPM cost for FFY 2023 and 2024?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for managed care in FFY 2023? What is your projected PMPM cost for FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11719,7 +11711,7 @@
                           {
                             "id": "2023-05-a-03-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11728,7 +11720,7 @@
                           {
                             "id": "2023-05-a-03-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11736,7 +11728,7 @@
                           {
                             "id": "2023-05-a-03-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11807,13 +11799,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
@@ -11823,13 +11815,13 @@
               },
               {
                 "id": "2023-05-a-04",
-                "text": "Complete this section only if you have a fee for service delivery system.",
+                "text": "Complete this section only if you have a fee-for-service delivery system.",
                 "type": "part",
                 "title": "Fee for Service Costs",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were eligible for fee for service in FFY 2022? How many do you anticipate will be eligible in FFY 2023 and 2024?",
+                    "label": "How many children were eligible for fee-for-service in FFY 2023? How many do you anticipate will be eligible in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11837,7 +11829,7 @@
                           {
                             "id": "2023-05-a-04-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11846,7 +11838,7 @@
                           {
                             "id": "2023-05-a-04-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11854,7 +11846,7 @@
                           {
                             "id": "2023-05-a-04-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11871,7 +11863,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for fee for service in FFY 2022? What is your projected PMPM cost for FFY 2023 and 2024?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for fee-for-service in FFY 2023? What is your projected PMPM cost for FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11879,7 +11871,7 @@
                           {
                             "id": "2023-05-a-04-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11888,7 +11880,7 @@
                           {
                             "id": "2023-05-a-04-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11896,7 +11888,7 @@
                           {
                             "id": "2023-05-a-04-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11967,13 +11959,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
