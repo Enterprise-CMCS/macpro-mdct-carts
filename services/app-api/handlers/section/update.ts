@@ -1,3 +1,4 @@
+import { JSONPath } from "jsonpath-plus";
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
@@ -79,6 +80,16 @@ export const updateSections = handler(async (event, _context) => {
   const moveToInProgress =
     queryValue.Items && stateStatus.status === "not_started";
 
+  /*
+   * attempt to find programType from the reportData
+   * check current and previous year id
+   * otherwise use existing programType from state status
+   */
+  const programType =
+    getProgramType(year, reportData) ??
+    getProgramType(parseInt(year) - 1, reportData) ??
+    stateStatus?.programType;
+
   const statusParams = {
     TableName: process.env.stateStatusTableName!,
     Key: {
@@ -89,6 +100,7 @@ export const updateSections = handler(async (event, _context) => {
       {
         status: moveToInProgress ? "in_progress" : stateStatus.status,
         lastChanged: lastChanged,
+        programType: programType,
       },
       "post"
     ),
@@ -96,3 +108,12 @@ export const updateSections = handler(async (event, _context) => {
 
   await dynamoDb.update(statusParams);
 });
+
+const PROGRAM_TYPE_QUESTION_ID = "-00-a-01-02";
+
+const getProgramType = (year: string | number, reportData: any) => {
+  const idExpression = `${year}${PROGRAM_TYPE_QUESTION_ID}`;
+  const jpexpr = `$..*[?(@ && @.id=='${idExpression}')]`;
+  const fragment = JSONPath({ path: jpexpr, json: reportData[0].contents });
+  return fragment?.[0]?.answer?.entry;
+};

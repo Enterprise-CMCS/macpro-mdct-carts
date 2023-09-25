@@ -5,7 +5,7 @@ import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
 import Print from "./components/sections/Print";
 import Profile from "./Profile";
-import Spinner from "./components/Utils/Spinner";
+import Spinner from "./components/utils/Spinner";
 import Userinfo from "./components/sections/Userinfo";
 import UserProfile from "./components/sections/UserProfile";
 import { LocalLogins } from "./components/sections/login/LocalLogins";

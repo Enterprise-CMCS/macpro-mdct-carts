@@ -1,93 +1,36 @@
-// TODO: Update testing suite with DynamoDB endpoint (currently points to PostgreSQL endpoint)
+import React from "react";
+import { screen, render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
 
-describe("placeholder test", () => {
-  test("test suite runs", () => {
-    expect(1 + 2).toBe(3);
-  });
+import DateRange from "./DateRange";
+
+const mockStore = configureMockStore();
+const store = mockStore({
+  global: {
+    formYear: "2023",
+  },
 });
 
-/*
- * import React from "react";
- * import { shallow } from "enzyme";
- * import {
- *   storeFactory,
- *   findByTestAttribute,
- *   mockInitialState,
- * } from "../../testUtils";
- * import "../../setupTests";
- * import DateRange from "./DateRange";
- */
+const mockPropsExistingAnswer = {
+  question: {
+    answer: {
+      labels: ["Start Date", "End Date"],
+    },
+  },
+  onChange: jest.fn(),
+};
 
-// /**
-//  * Factory functon to create a ShallowWrapper for the Header component.
-//  * @function setup
-//  * @param {object} initialState - Component props specific to this setup.
-//  * @returns {ShallowWrapper}
-//  */
+const dateRangeComponent = (
+  <Provider store={store}>
+    <DateRange {...mockPropsExistingAnswer} />
+  </Provider>
+);
 
-// const defaultProps = { previousEntry: false };
-
-/*
- * const setup = (initialState = {}, props = {}) => {
- *   const setupProps = { ...defaultProps, ...props };
- *   const store = storeFactory(initialState);
- *   return shallow(<DateRange store={store} {...setupProps} />)
- *     .dive()
- *     .dive();
- * };
- */
-
-/*
- * const setupTopmostComponent = (initialState = {}, props = {}) => {
- *   const setupProps = { ...defaultProps, ...props };
- *   const store = storeFactory(initialState);
- *   return shallow(<DateRange store={store} {...setupProps} />);
- * };
- */
-
-/*
- * describe("DateRange Component (shallow)", () => {
- *   const wrapper = setup(mockInitialState);
- *   it("renders with test attributes", () => {
- *     const dateComponent = findByTestAttribute(wrapper, "component-date-range");
- *     expect(dateComponent.length).toBe(1);
- *   });
- *   it("has the appropriate classname", () => {
- *     const dateClassname = wrapper.find(".date-range");
- *     expect(dateClassname.length).toBe(1);
- *   });
- *   it("initializes as empty string when props.previousEntry is false", () => {
- *     const previousEntryDisplay = findByTestAttribute(
- *       wrapper,
- *       "component-daterange-monthstart"
- *     )
- *       .shallow()
- *       .props().children[1].props.value;
- *     expect(previousEntryDisplay).toBe("");
- *   });
- *   it("initializes as empty string when props.previousEntry is true", () => {
- *     const previousEntrywrapper = setup(mockInitialState, {
- *       previousEntry: true,
- *     });
- *     const previousEntryDisplay = findByTestAttribute(
- *       previousEntrywrapper,
- *       "component-daterange-monthstart"
- *     )
- *       .shallow()
- *       .props().children[1].props.value;
- *     expect(previousEntryDisplay).toBe(5);
- *   });
- * });
- */
-
-/*
- * describe("DateRange Component (shallow)", () => {
- *   it("starts with the initial props", () => {
- *     const wrapper = setupTopmostComponent(mockInitialState, {
- *       previousEntry: true,
- *     });
- *     let props = wrapper.props().children.props;
- *     expect(props.previousEntry).toBe(true);
- *   });
- * });
- */
+describe("DateRange Component", () => {
+  test("renders daterange component", () => {
+    render(dateRangeComponent);
+    expect(screen.getByText("Start Date")).toBeInTheDocument();
+    expect(screen.getByText("End Date")).toBeInTheDocument();
+  });
+});

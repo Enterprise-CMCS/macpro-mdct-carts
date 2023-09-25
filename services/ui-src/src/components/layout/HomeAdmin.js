@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, Route } from "react-router-dom";
-import JobCodeRoleAssociations from "../Utils/JobCodeRoleAssociations";
-import StateAssociations from "../Utils/StateAssociations";
-import UserRoleAssociations from "../Utils/UserRoleAssociations";
+import JobCodeRoleAssociations from "../utils/JobCodeRoleAssociations";
+import StateAssociations from "../utils/StateAssociations";
+import UserRoleAssociations from "../utils/UserRoleAssociations";
 import FormTemplates from "./FormTemplates";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
-import InvokeSection from "../Utils/InvokeSection";
+import InvokeSection from "../utils/InvokeSection";
 import Sidebar from "./Sidebar";
 import { Switch } from "react-router";
-import ScrollToTop from "../Utils/ScrollToTop";
+import ScrollToTop from "../utils/ScrollToTop";
 import { connect } from "react-redux";
 
 const AdminHome = () => {

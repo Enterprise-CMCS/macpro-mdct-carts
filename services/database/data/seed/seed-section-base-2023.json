@@ -40,11 +40,11 @@
                       "entry": null,
                       "options": [
                         {
-                          "label": "Both Medicaid Expansion CHIP and Separate CHIP",
+                          "label": "Both Medicaid expansion CHIP and separate CHIP",
                           "value": "combo"
                         },
                         {
-                          "label": "Medicaid Expansion CHIP only",
+                          "label": "Medicaid expansion CHIP only",
                           "value": "medicaid_exp_chip"
                         },
                         {
@@ -52,7 +52,6 @@
                           "value": "separate_chip"
                         }
                       ],
-                      "readonly": true,
                       "prepopulated": true
                     }
                   },
@@ -371,7 +370,7 @@
                   {
                     "id": "2023-01-a-01-04",
                     "type": "text_multiline",
-                    "label": "Do premiums differ for different Medicaid Expansion CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
+                    "label": "Do premiums differ for different Medicaid expansion CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
                     "answer": {
                       "entry": null
                     }
@@ -380,7 +379,7 @@
                     "id": "2023-01-a-01-05",
                     "hint": "Select all that apply.",
                     "type": "checkbox",
-                    "label": "Which delivery system(s) do you use?",
+                    "label": "Which delivery system(s) does your state use?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -389,11 +388,11 @@
                           "value": "mco"
                         },
                         {
-                          "label": "Primary Care Case Management",
+                          "label": "Primary Care Case Management (PCCM)",
                           "value": "pccm"
                         },
                         {
-                          "label": "Fee for Service",
+                          "label": "Fee-for-Service",
                           "value": "ffs"
                         }
                       ]
@@ -402,14 +401,14 @@
                   {
                     "id": "2023-01-a-01-06",
                     "type": "text_multiline",
-                    "label": "Which delivery system(s) are available to which Medicaid Expansion CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                    "label": "Which delivery system(s) are available to which Medicaid expansion CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
                     "answer": {
                       "entry": null
                     }
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 1 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 2.",
+                  "skip_text": "Part 1 only applies to states with a Medicaid expansion CHIP program.",
                   "show_if_state_program_type_in": [
                     "medicaid_exp_chip",
                     "combo"
@@ -643,7 +642,7 @@
                   {
                     "id": "2023-01-a-02-04",
                     "type": "text_multiline",
-                    "label": "Do your premiums differ for different CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
+                    "label": "Do your premiums differ for different, separate CHIP populations beyond FPL (for example, by eligibility group)? If so, briefly explain the fee structure breakdown.",
                     "answer": {
                       "entry": null
                     }
@@ -661,11 +660,11 @@
                           "value": "mco"
                         },
                         {
-                          "label": "Primary Care Case Management",
+                          "label": "Primary Care Case Management (PCCM)",
                           "value": "pccm"
                         },
                         {
-                          "label": "Fee for Service",
+                          "label": "Fee-for-Service",
                           "value": "ffs"
                         }
                       ]
@@ -674,20 +673,20 @@
                   {
                     "id": "2023-01-a-02-06",
                     "type": "text_multiline",
-                    "label": "Which delivery system(s) are available to which CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
+                    "label": "Which delivery system(s) are available to which separate CHIP populations? Indicate whether eligibility status, income level, age range, or other criteria determine which delivery system a population receives.",
                     "answer": {
                       "entry": null
                     }
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 2 only applies to states with a Separate CHIP program. Please skip to Part 3.",
+                  "skip_text": "Part 2 only applies to states with a separate CHIP program.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               },
               {
                 "id": "2023-01-a-03",
-                "text": "Indicate any changes you’ve made to your Medicaid Expansion CHIP program policies in the past federal fiscal year.",
+                "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP program policies in the past federal fiscal year.",
                 "type": "part",
                 "title": "Medicaid Expansion CHIP Program and Policy Changes",
                 "questions": [
@@ -780,7 +779,7 @@
                   {
                     "id": "2023-01-a-03-05",
                     "type": "radio",
-                    "label": "Have you made any changes to the single streamlined application?",
+                    "label": "Have you made any changes to the single, streamlined application?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -822,7 +821,7 @@
                   },
                   {
                     "id": "2023-01-a-03-07",
-                    "hint": "For example: transitioning from Fee for Service to Managed Care for different Medicaid Expansion CHIP populations.",
+                    "hint": "For example: transitioning from fee-for-service to managed care for different Medicaid expansion CHIP populations.",
                     "type": "radio",
                     "label": "Have you made any changes to the delivery system(s)?",
                     "answer": {
@@ -975,7 +974,7 @@
                   {
                     "id": "2023-01-a-03-14",
                     "type": "radio",
-                    "label": "Have you made any changes to eligibility for “lawfully residing” pregnant individuals?",
+                    "label": "Have you made any changes to eligibility for “lawfully residing pregnant individuals”?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1041,7 +1040,7 @@
                       {
                         "id": "2023-01-a-03-17",
                         "type": "text_multiline",
-                        "label": "Briefly describe why you made these changes to your Medicaid Expansion CHIP program.",
+                        "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
                         "answer": {
                           "entry": null
                         }
@@ -1099,7 +1098,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 3 only applies to states with a Medicaid Expansion CHIP program. Please skip to Part 4.",
+                  "skip_text": "Part 3 only applies to states with a Medicaid expansion CHIP program.",
                   "show_if_state_program_type_in": [
                     "medicaid_exp_chip",
                     "combo"
@@ -1108,7 +1107,7 @@
               },
               {
                 "id": "2023-01-a-04",
-                "text": "Indicate any changes you’ve made to your Separate CHIP program and policies in the past federal fiscal year.",
+                "text": "Indicate any changes you’ve made to your separate CHIP program and policies in the past federal fiscal year.",
                 "type": "part",
                 "title": "Separate CHIP Program and Policy Changes",
                 "questions": [
@@ -1243,7 +1242,7 @@
                   },
                   {
                     "id": "2023-01-a-04-07",
-                    "hint": "For example: transitioning from Fee for Service to Managed Care for different Separate CHIP populations.",
+                    "hint": "For example: transitioning from fee-for-service to managed care for different separate CHIP populations.",
                     "type": "radio",
                     "label": "Have you made any changes to the delivery system(s)?",
                     "answer": {
@@ -1527,7 +1526,7 @@
                       {
                         "id": "2023-01-a-04-20",
                         "type": "text_multiline",
-                        "label": "Briefly describe why you made these changes to your Separate CHIP program.",
+                        "label": "Briefly describe why you made these changes to your separate CHIP program (if applicable).",
                         "answer": {
                           "entry": null
                         }
@@ -1588,7 +1587,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 4 only applies to states with a Separate CHIP program and policies in the past federal fiscal year.",
+                  "skip_text": "Part 4 only applies to states with a separate CHIP program.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
@@ -1698,7 +1697,7 @@
                   {
                     "id": "2023-02-a-01-01",
                     "type": "text_multiline",
-                    "label": "If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
+                    "label": "The percent change column in the table above calculates the rate of growth in enrollment over the previous federal fiscal year by subtracting the previous fiscal year enrollment total from the current fiscal year enrollment total (B - A), and dividing that by the previous fiscal year total (A). If you had more than a 3% percent change from last year, what are some possible reasons why your enrollment numbers changed?",
                     "answer": {
                       "entry": null
                     },
@@ -1734,7 +1733,7 @@
               },
               {
                 "id": "2023-02-a-02",
-                "text": "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey. Due to the impacts of the COVID-19 PHE on collection of ACS data, the Census Bureau did not release standard one-year ACS estimates in 2020 and that row is intentionally left blank.",
+                "text": "This table is pre-filled with data on uninsured children (age 18 and under) who are below 200% of the Federal Poverty Level (FPL) based on annual estimates from the American Community Survey (ACS).",
                 "type": "part",
                 "title": "Number of Uninsured Children in Your State",
                 "questions": [
@@ -2006,6 +2005,35 @@
                               "acsProperty": "percentUninsuredMoe"
                             }
                           }
+                        ],
+                        [
+                          {
+                            "contents": "2022"
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "numberUninsured"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "numberUninsuredMoe"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "percentUninsured"
+                            }
+                          },
+                          {
+                            "lookupAcs": {
+                              "ffy": "2022",
+                              "acsProperty": "percentUninsuredMoe"
+                            }
+                          }
                         ]
                       ],
                       "headers": [
@@ -2037,8 +2065,8 @@
                         [
                           {
                             "compareACS": {
-                              "ffy1": "2019",
-                              "ffy2": "2021",
+                              "ffy1": "2021",
+                              "ffy2": "2022",
                               "acsProperty": "percentUninsured"
                             }
                           }
@@ -2046,7 +2074,7 @@
                       ],
                       "headers": [
                         {
-                          "contents": "Percent change between 2019 and 2021"
+                          "contents": "Percent change between 2021 and 2022"
                         }
                       ]
                     },
@@ -2090,7 +2118,7 @@
                   {
                     "id": "2023-02-a-02-02",
                     "type": "radio",
-                    "label": "Are there any reasons why the American Community Survey estimates wouldn’t be a precise representation of the actual number of uninsured children in your state?",
+                    "label": "Are there any reasons why the ACS estimates wouldn’t be a precise representation of the actual number of uninsured children in your state?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -2502,7 +2530,7 @@
                       {
                         "id": "2023-03-b-01-04",
                         "type": "radio",
-                        "label": "If you have a Separate CHIP program, do you require individuals to be uninsured for a minimum amount of time before enrollment (“the waiting period”)?",
+                        "label": "Does the state implement a waiting period in its separate CHIP?",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -2823,9 +2851,9 @@
                 "questions": [
                   {
                     "id": "2023-03-c-02-01",
-                    "hint": "Don’t include applicants being considered for redetermination — these data will be collected in Part 3.",
+                    "hint": "Don’t include applicants who are being considered for redetermination — these data will be collected in Part 3. \n\nPlease note: numbers reported in questions 2-4 of this part are a subset of the total reported in question 1. Therefore, the totals reported in questions 2-4 should be smaller than the number reported in question 1.",
                     "type": "integer",
-                    "label": "How many applicants were denied CHIP coverage in FFY 2022?",
+                    "label": "How many applicants were denied CHIP coverage in FFY 2023? This number should be equal to the total of reported numbers for questions 2-4 below.",
                     "answer": {
                       "entry": null
                     }
@@ -2850,6 +2878,7 @@
                     "questions": [
                       {
                         "id": "2023-03-c-02-03-a",
+                        "hint": "Please note this is a subset of the number reported for question 3, and that a smaller number should be reported here than the total provided in response to question 3.",
                         "type": "integer",
                         "label": "How many applicants were denied CHIP (Title XXI) coverage and determined eligible for Medicaid (Title XIX) instead?",
                         "answer": {
@@ -2975,7 +3004,7 @@
                   {
                     "id": "2023-03-c-03-01",
                     "type": "integer",
-                    "label": "How many children were eligible for redetermination in CHIP in FFY 2022?",
+                    "label": "How many children were eligible for redetermination in CHIP in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -3229,7 +3258,7 @@
                   {
                     "id": "2023-03-c-04-01",
                     "type": "integer",
-                    "label": "How many children were eligible for redetermination in Medicaid in FFY 2022?",
+                    "label": "How many children were eligible for redetermination in Medicaid in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -3476,12 +3505,12 @@
               },
               {
                 "id": "2023-03-c-05",
-                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. This year you’ll report on the number of children at the start of the cohort (Jan - Mar 2022) and six months later (July - Sept 2022). Next year you’ll report numbers for the same cohort at 12 months (Jan - Mar 2023) and 18 months later (July - Sept 2023). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
+                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan — Mar 2022) and six months later (July — Sept 2022). This year, you'll report on the same cohort for their enrollment status 12 months later (Jan — Mar 2023) and 18 months later (July — Sept 2023). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a CHIP cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13-16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -3525,7 +3554,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "January - March 2022 (start of the cohort)",
+                    "label": "January - March 2022 (start of the cohort): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -3625,7 +3654,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "July - September 2022 (6 months later)",
+                    "label": "July - September 2022 (6 months later): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -4114,9 +4143,9 @@
                     }
                   },
                   {
-                    "hint": "Next year you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "January - March 2023 (12 months later): to be completed next year",
+                    "label": "January - March 2023 (12 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -4622,9 +4651,9 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Next year you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "July - September of 2023 (18 months later): to be completed next year",
+                    "label": "July - September of 2023 (18 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -5141,12 +5170,12 @@
               },
               {
                 "id": "2023-03-c-06",
-                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. This year you’ll report the number of children identified at the start of the cohort (Jan–Mar 2022) and six months later (July–Sept 2022). Next year you’ll report numbers for the same cohort at 12 months (Jan–Mar 2023) and 18 months later (July–Sept 2023). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
+                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2022 (the second quarter of FFY 2022). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan – Mar 2022) and six months later (July – Sept 2022). This year, you'll report on the same cohort for their enrollment status 12 months later (Jan – Mar 2023) and 18 months later (July – Sept 2023). If data is unknown or unavailable, leave it blank — don’t enter a zero unless the data is known to be zero.",
                 "type": "part",
                 "title": "Tracking a Medicaid Cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old when they’re newly enrolled, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2022. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2022 must be born after January 2006. Similarly, children who are newly enrolled in February 2022 must be born after February 2006, and children newly enrolled in March 2022 must be born after March 2006.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -5190,7 +5219,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "January - March 2022 (start of the cohort)",
+                    "label": "January - March 2022 (start of the cohort): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -5290,7 +5319,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "July - September 2022 (6 months later)",
+                    "label": "July - September 2022 (6 months later): included in 2022 report.",
                     "questions": []
                   },
                   {
@@ -5779,9 +5808,9 @@
                     }
                   },
                   {
-                    "hint": "Next year, you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "January - March 2023 (12 months later): to be completed next year",
+                    "label": "January - March 2023 (12 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -6287,7 +6316,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Next year you’ll report data about your cohort for this section.",
+                    "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
                     "label": "July - September of 2023 (18 months later): to be completed next year",
                     "questions": []
@@ -6809,7 +6838,7 @@
           },
           {
             "id": "2023-03-d",
-            "text": "States can choose whether or not to require cost sharing in their CHIP program. Cost sharing includes payments such as enrollment fees, premiums, deductibles, coinsurance, and copayments.",
+            "text": "States can choose to require cost sharing in their CHIP program. Cost sharing includes payments such as enrollment fees, premiums, deductibles, coinsurance, and copayments.",
             "type": "subsection",
             "parts": [
               {
@@ -7088,7 +7117,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
+                  "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
@@ -7265,7 +7294,7 @@
                   {
                     "id": "2023-03-e-02-07",
                     "type": "integer",
-                    "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2022?",
+                    "label": "How many children were enrolled in the premium assistance program on average each month in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7283,7 +7312,7 @@
                       },
                       {
                         "id": "2023-03-e-02-09",
-                        "type": "money",
+                        "type": "text",
                         "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                         "answer": {
                           "entry": null
@@ -7291,7 +7320,7 @@
                       },
                       {
                         "id": "2023-03-e-02-10",
-                        "type": "money",
+                        "type": "text",
                         "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                         "answer": {
                           "entry": null
@@ -7403,7 +7432,7 @@
                   {
                     "id": "2023-03-e-02-15",
                     "type": "text_multiline",
-                    "label": "What challenges did you experience with your premium assistance program in FFY 2022?",
+                    "label": "What challenges did you experience with your premium assistance program in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7411,7 +7440,7 @@
                   {
                     "id": "2023-03-e-02-16",
                     "type": "text_multiline",
-                    "label": "What accomplishments did you experience with your premium assistance program in FFY 2022?",
+                    "label": "What accomplishments did you experience with your premium assistance program in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7525,7 +7554,7 @@
                   {
                     "id": "2023-03-f-01-05",
                     "type": "radio",
-                    "label": "Do the Managed Care plans contracted by your Separate CHIP program have written plans with safeguards and procedures in place?",
+                    "label": "Do the managed care plans contracted by your separate CHIP program have written plans with safeguards and procedures in place?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -7547,7 +7576,7 @@
                       {
                         "id": "2023-03-f-01-05-a",
                         "type": "text_multiline",
-                        "label": "What safeguards and procedures do the Managed Care plans have in place?",
+                        "label": "What safeguards and procedures do the managed care plans have in place?",
                         "answer": {
                           "entry": null
                         },
@@ -7570,7 +7599,7 @@
                   {
                     "id": "2023-03-f-01-06",
                     "type": "integer",
-                    "label": "How many eligibility denials have been appealed in a fair hearing in FFY 2022?",
+                    "label": "How many eligibility denials have been appealed in a fair hearing in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7578,7 +7607,7 @@
                   {
                     "id": "2023-03-f-01-07",
                     "type": "integer",
-                    "label": "How many cases have been found in favor of the beneficiary in FFY 2022?",
+                    "label": "How many cases have been found in favor of the beneficiary in FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -7589,7 +7618,7 @@
                       {
                         "id": "2023-03-f-01-08",
                         "type": "integer",
-                        "label": "How many cases related to provider credentialing were investigated in FFY 2022?",
+                        "label": "How many cases related to provider credentialing were investigated in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7597,7 +7626,7 @@
                       {
                         "id": "2023-03-f-01-09",
                         "type": "integer",
-                        "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in FFY 2022?",
+                        "label": "How many cases related to provider credentialing were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7610,7 +7639,7 @@
                       {
                         "id": "2023-03-f-01-10",
                         "type": "integer",
-                        "label": "How many cases related to provider billing were investigated in FFY 2022?",
+                        "label": "How many cases related to provider billing were investigated in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7618,7 +7647,7 @@
                       {
                         "id": "2023-03-f-01-11",
                         "type": "integer",
-                        "label": "How many cases were referred to appropriate law enforcement officials in FFY 2022?",
+                        "label": "How many cases related to provider billing were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7631,7 +7660,7 @@
                       {
                         "id": "2023-03-f-01-12",
                         "type": "integer",
-                        "label": "How many cases related to beneficiary eligibility were investigated in FFY 2022?",
+                        "label": "How many cases related to beneficiary eligibility were investigated in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7639,7 +7668,7 @@
                       {
                         "id": "2023-03-f-01-13",
                         "type": "integer",
-                        "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in FFY 2022?",
+                        "label": "How many cases related to beneficiary eligibility were referred to appropriate law enforcement officials in FFY 2023?",
                         "answer": {
                           "entry": null
                         }
@@ -7708,7 +7737,7 @@
                   {
                     "id": "2023-03-f-01-16",
                     "type": "radio",
-                    "label": "Do you contract with Managed Care health plans and/or a third party contractor to provide this oversight? ",
+                    "label": "Do you contract with managed care health plans and/or a third party contractor to provide this oversight? ",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -7764,7 +7793,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "This section only applies to states with a Separate CHIP program. Please skip to the next section.",
+                  "skip_text": "This section only applies to states with a separate CHIP program. Please skip to the next section.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
@@ -7777,13 +7806,13 @@
             "parts": [
               {
                 "id": "2023-03-g-01",
-                "text": "Tell us about the children receiving dental benefits in your Separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                "text": "Tell us about the children receiving dental benefits in your separate CHIP program. Include children who are receiving full benefits and those who are only receiving supplemental dental benefits. Include the unduplicated number of children enrolled in all types of delivery systems (managed care, PCCM, and fee-for-service).",
                 "type": "part",
                 "questions": [
                   {
                     "hint": "Children should be in age groups based on their age on September 30th, the end of the federal fiscal year (FFY). For example, if a child turns three years old on September 15th, the child should be included in the “ages 3–5' group. Even if the child received dental services on September 1st while they were still two years old, all dental services should be counted as their age at the end of the FFY.",
                     "type": "fieldset",
-                    "label": "Note on age groups",
+                    "label": "Helpful hint on age groups",
                     "questions": []
                   },
                   {
@@ -7807,7 +7836,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2022?",
+                    "label": "How many children were enrolled in separate CHIP for at least 90 continuous days during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-02-a",
@@ -7920,7 +7949,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one dental care service during FFY 2022?",
+                    "label": "How many children (who were enrolled in separate CHIP for at least 90 continuous days) received at least one dental care service during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-03-a",
@@ -8039,7 +8068,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received at least one preventative dental care service during FFY 2022?",
+                    "label": "How many children (who were enrolled in separate CHIP for at least 90 continuous days) received at least one preventative dental care service during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-04-a",
@@ -8153,13 +8182,13 @@
                   {
                     "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                     "type": "fieldset",
-                    "label": "Dental care service codes and definitions",
+                    "label": "Preventive dental care service codes and definitions",
                     "questions": []
                   },
                   {
                     "hint": "This includes orthodontics, periodontics, implants, oral and maxillofacial surgery, and other treatments.",
                     "type": "fieldset",
-                    "label": "How many children (who were enrolled in Separate CHIP for at least 90 continuous days) received dental treatment services during FFY 2022?",
+                    "label": "How many children (who were enrolled in separate CHIP for at least 90 continuous days) received dental treatment services during FFY 2023?",
                     "questions": [
                       {
                         "id": "2023-03-g-01-05-a",
@@ -8279,7 +8308,7 @@
                   {
                     "id": "2023-03-g-01-06",
                     "type": "integer",
-                    "label": "How many children in the “ages 6–9” group received a sealant on at least one permanent molar tooth during FFY 2022?",
+                    "label": "How many children in the “ages 6–9” group received a sealant on at least one permanent molar tooth during FFY 2023?",
                     "answer": {
                       "entry": null
                     }
@@ -8314,7 +8343,7 @@
                           {
                             "id": "2023-03-g-01-07-a",
                             "type": "integer",
-                            "label": "How many children were enrolled in supplemental dental coverage during FFY 2022?",
+                            "label": "How many children were enrolled in supplemental dental coverage during FFY 2023?",
                             "answer": {
                               "entry": null
                             }
@@ -8323,7 +8352,7 @@
                             "id": "2023-03-g-01-07-b",
                             "hint": "This is the total number for all children between 0-18 years from question 1.",
                             "type": "integer",
-                            "label": "How many children were enrolled in Separate CHIP for at least 90 continuous days during FFY 2022?",
+                            "label": "How many children were enrolled in separate CHIP for at least 90 continuous days during FFY 2023?",
                             "answer": {
                               "entry": null
                             }
@@ -8402,7 +8431,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "This section only applies to states with a Separate CHIP program. Skip to the next section.",
+                  "skip_text": "This section only applies to states with a separate CHIP program. Skip to the next section.",
                   "show_if_state_program_type_in": ["separate_chip", "combo"]
                 }
               }
@@ -8411,7 +8440,7 @@
           },
           {
             "id": "2023-03-h",
-            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction. For the 2022 CARTS report, the only option for reporting CAHPS results will be through the submission of raw data to the Agency for Healthcare Research and Quality (AHRQ) CAHPS Database.",
+            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction. For the 2024 CARTS report, the only option for reporting CAHPS results will be through the submission of raw data to the Agency for Healthcare Research and Quality (AHRQ) CAHPS Database.",
             "type": "subsection",
             "parts": [
               {
@@ -8439,7 +8468,8 @@
                       {
                         "id": "2023-03-h-01-01-a",
                         "type": "radio",
-                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2022.",
+                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2024 CAHPS reporting.",
+                        "hint": "If you completed the CAHPS survey, please respond to questions in Part 2. If you did not complete the CAHPS survey, please skip to Part 3.",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -8473,12 +8503,141 @@
               },
               {
                 "id": "2023-03-h-02",
-                "text": "Since you didn’t collect the CAHPS survey, please complete Part 2.",
+                "type": "part",
+                "title": "You collected the CAHPS survey",
+                "questions": [
+                  {
+                    "id": "2023-03-h-02-01",
+                    "type": "file_upload",
+                    "label": "Upload a summary report of your CAHPS survey results. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database. Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-02",
+                    "type": "radio",
+                    "label": "Which CHIP population did you survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "Medicaid Expansion CHIP",
+                          "value": "medicaid_exp_chip"
+                        },
+                        {
+                          "label": "Separate CHIP",
+                          "value": "separate_chip"
+                        },
+                        {
+                          "label": "Both Separate CHIP and Medicaid Expansion CHIP",
+                          "value": "combo"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-03",
+                    "type": "radio",
+                    "label": "Which version of the CAHPS survey did you use?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "CAHPS 5.1",
+                          "value": "CAHPS 5.1"
+                        },
+                        {
+                          "label": "CAHPS 5.1H",
+                          "value": "CAHPS 5.1H"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-04",
+                    "type": "checkbox",
+                    "label": "Which supplemental items, if any, did you include in your survey? Select all that apply.",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "None",
+                          "value": "None"
+                        },
+                        {
+                          "label": "Children with Chronic Conditions",
+                          "value": "Children with Chronic Conditions"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-05",
+                    "type": "radio",
+                    "label": "Which administrative protocol did you use to administer the survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "NCQA HEDIS CAHPS 5.1H",
+                          "value": "NCQA HEDIS CAHPS 5.1H"
+                        },
+                        {
+                          "label": "HRQ CAHPS",
+                          "value": "HRQ CAHPS"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-06",
+                    "type": "text_multiline",
+                    "label": "Is there anything else you'd like to add about your CAHPS survey results?",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ],
+                "context_data": {
+                  "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
+                    "hide_if": {
+                      "target": "$..*[?(@ && @.id=='2023-03-h-01-01')].answer.entry",
+                      "values": {
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "id": "2023-03-h-03",
+                "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
                 "type": "part",
                 "title": "You didn't collect the CAHPS survey",
                 "questions": [
                   {
-                    "id": "2023-03-h-02-01",
+                    "id": "2023-03-h-03-01",
                     "hint": "Check all that apply.",
                     "type": "checkbox",
                     "label": "Why didn't you collect the CAHPS survey?",
@@ -8533,7 +8692,7 @@
                     }
                   },
                   {
-                    "id": "2023-03-h-02-02",
+                    "id": "2023-03-h-03-02",
                     "type": "text_multiline",
                     "label": "Explain in more detail why you weren’t able to collect the CAHPS survey.",
                     "answer": {
@@ -8542,7 +8701,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 2 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
+                  "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
                   "conditional_display": {
                     "type": "conditional_display",
                     "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
@@ -8591,7 +8750,7 @@
               },
               {
                 "id": "2023-03-i-02",
-                "text": "Tell us about your HSI program(s).",
+                "text": "Please answer the following questions for all of the state's approved HSIs as listed in section 2.2 of the CHIP state plan.",
                 "type": "part",
                 "questions": [
                   {
@@ -8736,7 +8895,8 @@
                           },
                           {
                             "type": "fieldset",
-                            "label": "Skip to the next section if you’re already reporting HSI metrics and outcomes to CMS, such as in quarterly or monthly reports.",
+                            "hint": "\n\n[Skip questions 6–8 if you're already reporting HSI metrics and outcomes to CMS through a monthly or quarterly CMS Lead HSI reporting template.]",
+                            "label": "CARTS will auto-calculate the percent of children served by your HSI program who are below the CHIP FPL",
                             "questions": [],
                             "context_data": {
                               "conditional_display": {
@@ -8883,7 +9043,7 @@
             "parts": [
               {
                 "id": "2023-04-a-01",
-                "text": "Tell us about the progress you’ve made on your performance goals in the past year. The objectives and goals you add to this section should match those reflected in your CHIP State Plan, Section 9. Submit a CHIP State Plan Amendment (SPA) if any of them are different. \nObjective 1 is required. We’ve provided examples for other objectives, but you can edit them so they match the objectives in your CHIP State Plan. You can add additional objectives and goals to fit what’s in your CHIP State Plan.",
+                "text": "Please tell us about the progress you’ve made on your performance goals in the past year. The objectives and goals you add to this section should match those reflected in your CHIP State Plan, Section 9. Submit a CHIP State Plan Amendment (SPA) if the goals and/or objectives listed in your CHIP state plan need to be updated to align with the goals and objectives you report in this section of CARTS.\n\nAll states must report on at least one goal related to Objective 1 to reduce the number of uninsured children. Please report outcomes for any additional goals related to Objective 1 and any other Objectives the state collects (for example, increasing access to care or increasing the use of preventative care). We've included these examples for other objectives, but you can update them to match the objectives the state measures. You can add additional objectives and goals as needed to align with your CHIP State Plan.",
                 "type": "part",
                 "title": "Tell us about your goals and objectives",
                 "questions": [
@@ -9128,7 +9288,7 @@
                                 "questions": [
                                   {
                                     "id": "2023-04-a-01-01-02-02-01-01",
-                                    "hint": "For example: In an effort to increase access to care for underserved populations, our goal is to increase the number of children of Hispanic ethnicity who have visited a primary care physician by 5% annually over the next five years (ending in 2028).",
+                                    "hint": "For example: In an effort to increase access to care, our goal is to increase the number of children who have visited a primary care physician by 5% annually over the next five years (ending in 2029).",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal as it relates to this objective.",
                                     "answer": {
@@ -9217,7 +9377,7 @@
                                     "questions": [
                                       {
                                         "id": "2023-04-a-01-01-02-02-01-05",
-                                        "hint": "For example: The total number of children of Hispanic ethnicity enrolled in CHIP in the last federal fiscal year.",
+                                        "hint": "For example: The total number of children enrolled in CHIP in the last federal fiscal year.",
                                         "type": "text_medium",
                                         "label": "Which population are you measuring in the denominator?",
                                         "answer": {
@@ -9616,6 +9776,7 @@
                                     "questions": [
                                       {
                                         "id": "2023-04-a-01-01-04-02-01-03",
+                                        "hint": "For example: The number of children who received one or more well child visits in the last federal fiscal year.",
                                         "type": "text_medium",
                                         "label": "Which population are you measuring in the numerator?",
                                         "answer": {
@@ -9638,6 +9799,7 @@
                                     "questions": [
                                       {
                                         "id": "2023-04-a-01-01-04-02-01-05",
+                                        "hint": "For example: The total number of children enrolled in CHIP.",
                                         "type": "text_medium",
                                         "label": "Which population are you measuring in the denominator?",
                                         "answer": {
@@ -10182,7 +10344,7 @@
                   {
                     "id": "2023-04-a-02-03",
                     "type": "text_multiline",
-                    "label": "Have you conducted any focused studies on your CHIP population? (For example: studies on adolescents, attention deficit disorder, substance use, behavioral health services access, health care equity, special health care needs, or other emerging health care needs.) What have you discovered through this research?",
+                    "label": "Have you conducted any focused studies on your CHIP population? (For example: studies on adolescents, attention deficit disorder, substance use, behavioral health services access, health care disparities, special health care needs, or other emerging health care needs.) What have you discovered through this research?",
                     "answer": {
                       "entry": null
                     }
@@ -10219,7 +10381,7 @@
         "subsections": [
           {
             "id": "2023-05-a",
-            "text": "Tell us how much you spent on your CHIP program in FFY 2022, and how much you anticipate spending in FFY 2023 and 2024.",
+            "text": "Tell us how much you spent on your CHIP program in FFY 2023, and how much you anticipate spending in FFY 2024 and 2025.\n\nStates with a combination program should combine costs for both Medicaid expansion CHIP and separate CHIP programs into one budget.",
             "type": "subsection",
             "parts": [
               {
@@ -10229,15 +10391,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "Combine your costs for both Medicaid Expansion CHIP and Separate CHIP programs into one budget.",
-                    "questions": [],
-                    "context_data": {
-                      "show_if_state_program_type_in": ["combo"]
-                    }
-                  },
-                  {
-                    "type": "fieldset",
-                    "label": "How much did you spend on Managed Care in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on Managed Care in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10245,7 +10399,7 @@
                           {
                             "id": "2023-05-a-01-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10254,7 +10408,7 @@
                           {
                             "id": "2023-05-a-01-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10262,7 +10416,7 @@
                           {
                             "id": "2023-05-a-01-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10278,7 +10432,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on Fee for Service in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on fee-for-service in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10286,7 +10440,7 @@
                           {
                             "id": "2023-05-a-01-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10295,7 +10449,7 @@
                           {
                             "id": "2023-05-a-01-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10303,7 +10457,7 @@
                           {
                             "id": "2023-05-a-01-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10319,7 +10473,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on anything else related to benefit costs in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on anything else related to benefit costs in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10327,7 +10481,7 @@
                           {
                             "id": "2023-05-a-01-03-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10336,7 +10490,7 @@
                           {
                             "id": "2023-05-a-01-03-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10344,7 +10498,7 @@
                           {
                             "id": "2023-05-a-01-03-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10360,7 +10514,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you receive in cost sharing from beneficiaries to offset your costs in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you receive in cost sharing from beneficiaries to offset your costs in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10368,7 +10522,7 @@
                           {
                             "id": "2023-05-a-01-04-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10377,7 +10531,7 @@
                           {
                             "id": "2023-05-a-01-04-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10385,7 +10539,7 @@
                           {
                             "id": "2023-05-a-01-04-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10536,13 +10690,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
@@ -10558,7 +10712,7 @@
                   {
                     "hint": "This includes wages, salaries, and other employee costs.",
                     "type": "fieldset",
-                    "label": "How much did you spend on personnel in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on personnel in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10566,7 +10720,7 @@
                           {
                             "id": "2023-05-a-02-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10575,7 +10729,7 @@
                           {
                             "id": "2023-05-a-02-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10583,7 +10737,7 @@
                           {
                             "id": "2023-05-a-02-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10599,7 +10753,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on general administration in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on general administration in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10607,7 +10761,7 @@
                           {
                             "id": "2023-05-a-02-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10616,7 +10770,7 @@
                           {
                             "id": "2023-05-a-02-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10624,7 +10778,7 @@
                           {
                             "id": "2023-05-a-02-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10640,7 +10794,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on contractors and brokers, such as enrollment contractors in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on contractors and brokers, such as enrollment contractors in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10648,7 +10802,7 @@
                           {
                             "id": "2023-05-a-02-03-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10657,7 +10811,7 @@
                           {
                             "id": "2023-05-a-02-03-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10665,7 +10819,7 @@
                           {
                             "id": "2023-05-a-02-03-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10681,7 +10835,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on claims processing in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on claims processing in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10689,7 +10843,7 @@
                           {
                             "id": "2023-05-a-02-04-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10698,7 +10852,7 @@
                           {
                             "id": "2023-05-a-02-04-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10706,7 +10860,7 @@
                           {
                             "id": "2023-05-a-02-04-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10722,7 +10876,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on outreach and marketing in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on outreach and marketing in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10730,7 +10884,7 @@
                           {
                             "id": "2023-05-a-02-05-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10739,7 +10893,7 @@
                           {
                             "id": "2023-05-a-02-05-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10747,7 +10901,7 @@
                           {
                             "id": "2023-05-a-02-05-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10763,7 +10917,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on your Health Services Initiatives (HSI) if you had any in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on your Health Services Initiatives (HSI) if you had any in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10771,7 +10925,7 @@
                           {
                             "id": "2023-05-a-02-06-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10780,7 +10934,7 @@
                           {
                             "id": "2023-05-a-02-06-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10788,7 +10942,7 @@
                           {
                             "id": "2023-05-a-02-06-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -10804,7 +10958,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How much did you spend on anything else related to administrative costs in FFY 2022? How much do you anticipate spending in FFY 2023 and 2024?",
+                    "label": "How much did you spend on anything else related to administrative costs in FFY 2023? How much do you anticipate spending in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10812,7 +10966,7 @@
                           {
                             "id": "2023-05-a-02-07-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -10821,7 +10975,7 @@
                           {
                             "id": "2023-05-a-02-07-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -10829,7 +10983,7 @@
                           {
                             "id": "2023-05-a-02-07-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11096,20 +11250,20 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
                     "fieldset_type": "synthesized_table"
                   },
                   {
-                    "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2022 will be calculated once the eFMAP rate for 2022 becomes available. In the meantime, these values will be blank.",
+                    "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2023 will be calculated once the eFMAP rate for 2023 becomes available. In the meantime, these values will be blank.",
                     "type": "fieldset",
                     "label": "Table 3: Federal and State Shares",
                     "questions": [],
@@ -11135,7 +11289,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-a')].answer.entry"
                             ],
-                            "$comment": "Total benefit costs 2022 + total admin costs 2022"
+                            "$comment": "Total benefit costs 2023 + total admin costs 2023"
                           },
                           {
                             "actions": ["formula"],
@@ -11153,7 +11307,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-b')].answer.entry"
                             ],
-                            "$comment": "Total benefit costs 2022 + total admin costs 2022"
+                            "$comment": "Total benefit costs 2023 + total admin costs 2023"
                           },
                           {
                             "actions": ["formula"],
@@ -11171,7 +11325,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-c')].answer.entry"
                             ],
-                            "$comment": "Total benefit costs 2022 + total admin costs 2022"
+                            "$comment": "Total benefit costs 2023 + total admin costs 2023"
                           }
                         ],
                         [
@@ -11182,19 +11336,10 @@
                             "actions": ["identity"],
                             "targets": [
                               {
-                                "lookupFmapFy": "2022"
-                              }
-                            ],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY20)"
-                          },
-                          {
-                            "actions": ["identity"],
-                            "targets": [
-                              {
                                 "lookupFmapFy": "2023"
                               }
                             ],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY21)"
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY23)"
                           },
                           {
                             "actions": ["identity"],
@@ -11203,7 +11348,16 @@
                                 "lookupFmapFy": "2024"
                               }
                             ],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY22)"
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY24)"
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              {
+                                "lookupFmapFy": "2025"
+                              }
+                            ],
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY25)"
                           }
                         ],
                         [
@@ -11215,7 +11369,7 @@
                             "formula": "(<0> / 100) * (<1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11>)",
                             "targets": [
                               {
-                                "lookupFmapFy": "2022"
+                                "lookupFmapFy": "2023"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-a')].answer.entry",
@@ -11236,7 +11390,7 @@
                             "formula": "(<0> / 100) * (<1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11>)",
                             "targets": [
                               {
-                                "lookupFmapFy": "2023"
+                                "lookupFmapFy": "2024"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-b')].answer.entry",
@@ -11257,7 +11411,7 @@
                             "formula": "(<0> / 100) * (<1> + <2> + <3> - <4> + <5> + <6> + <7> + <8> + <9> + <10> + <11>)",
                             "targets": [
                               {
-                                "lookupFmapFy": "2024"
+                                "lookupFmapFy": "2025"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-c')].answer.entry",
@@ -11294,7 +11448,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-a')].answer.entry",
                               {
-                                "lookupFmapFy": "2022"
+                                "lookupFmapFy": "2023"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-a')].answer.entry",
@@ -11326,7 +11480,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-b')].answer.entry",
                               {
-                                "lookupFmapFy": "2023"
+                                "lookupFmapFy": "2024"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-b')].answer.entry",
@@ -11358,7 +11512,7 @@
                               "$..*[?(@ && @.id=='2023-05-a-02-06-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-02-07-c')].answer.entry",
                               {
-                                "lookupFmapFy": "2024"
+                                "lookupFmapFy": "2025"
                               },
                               "$..*[?(@ && @.id=='2023-05-a-01-01-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-c')].answer.entry",
@@ -11381,13 +11535,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
@@ -11397,7 +11551,7 @@
                     "id": "2023-05-a-02-08",
                     "hint": "Select all that apply. ",
                     "type": "checkbox",
-                    "label": "What were your state funding sources in FFY 2022?",
+                    "label": "What were your state funding sources in FFY 2023?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -11506,7 +11660,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were eligible for managed care in FFY 2022? How many do you anticipate will be eligible in FFY 2023 and 2024?",
+                    "label": "How many children were eligible for managed care in FFY 2023? How many do you anticipate will be eligible in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11514,7 +11668,7 @@
                           {
                             "id": "2023-05-a-03-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11523,7 +11677,7 @@
                           {
                             "id": "2023-05-a-03-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11531,7 +11685,7 @@
                           {
                             "id": "2023-05-a-03-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11548,7 +11702,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for managed care in FFY 2022? What is your projected PMPM cost for FFY 2023 and 2024?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for managed care in FFY 2023? What is your projected PMPM cost for FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11556,7 +11710,7 @@
                           {
                             "id": "2023-05-a-03-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11565,7 +11719,7 @@
                           {
                             "id": "2023-05-a-03-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11573,7 +11727,7 @@
                           {
                             "id": "2023-05-a-03-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11644,13 +11798,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
@@ -11660,13 +11814,13 @@
               },
               {
                 "id": "2023-05-a-04",
-                "text": "Complete this section only if you have a fee for service delivery system.",
+                "text": "Complete this section only if you have a fee-for-service delivery system.",
                 "type": "part",
                 "title": "Fee for Service Costs",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were eligible for fee for service in FFY 2022? How many do you anticipate will be eligible in FFY 2023 and 2024?",
+                    "label": "How many children were eligible for fee-for-service in FFY 2023? How many do you anticipate will be eligible in FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11674,7 +11828,7 @@
                           {
                             "id": "2023-05-a-04-01-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11683,7 +11837,7 @@
                           {
                             "id": "2023-05-a-04-01-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11691,7 +11845,7 @@
                           {
                             "id": "2023-05-a-04-01-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11708,7 +11862,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for fee for service in FFY 2022? What is your projected PMPM cost for FFY 2023 and 2024?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for fee-for-service in FFY 2023? What is your projected PMPM cost for FFY 2024 and 2025?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -11716,7 +11870,7 @@
                           {
                             "id": "2023-05-a-04-02-a",
                             "type": "money",
-                            "label": "2022",
+                            "label": "2023",
                             "answer": {
                               "entry": null
                             },
@@ -11725,7 +11879,7 @@
                           {
                             "id": "2023-05-a-04-02-b",
                             "type": "money",
-                            "label": "2023",
+                            "label": "2024",
                             "answer": {
                               "entry": null
                             }
@@ -11733,7 +11887,7 @@
                           {
                             "id": "2023-05-a-04-02-c",
                             "type": "money",
-                            "label": "2024",
+                            "label": "2025",
                             "answer": {
                               "entry": null
                             }
@@ -11804,13 +11958,13 @@
                           "contents": ""
                         },
                         {
-                          "contents": "FFY 2022"
-                        },
-                        {
                           "contents": "FFY 2023"
                         },
                         {
                           "contents": "FFY 2024"
+                        },
+                        {
+                          "contents": "FFY 2025"
                         }
                       ]
                     },
