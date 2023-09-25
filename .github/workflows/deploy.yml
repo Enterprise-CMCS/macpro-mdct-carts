@@ -44,17 +44,14 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
       - name: Configure AWS credentials for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v2
+          node-version-file: ".nvmrc"
+      - uses: actions/cache@v3
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
@@ -65,7 +62,7 @@ jobs:
         run: ./test-unit.sh
       - name: publish test coverage to code climate
         if: env.CODE_CLIMATE_ID != ''
-        uses: paambaati/codeclimate-action@v2.7.5
+        uses: paambaati/codeclimate-action@v5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
         with:
@@ -85,7 +82,7 @@ jobs:
       - id: endpoint
         run: |
           APPLICATION_ENDPOINT=$(./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name)
-          echo ::set-output name=application_endpoint::$APPLICATION_ENDPOINT
+          echo "application_endpoint=$APPLICATION_ENDPOINT" >> $GITHUB_OUTPUT
           echo "## Application Endpoint" >> $GITHUB_STEP_SUMMARY
           echo "<$APPLICATION_ENDPOINT>" >> $GITHUB_STEP_SUMMARY
         working-directory: services
