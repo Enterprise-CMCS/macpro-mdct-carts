@@ -8441,7 +8441,7 @@
           },
           {
             "id": "2023-03-h",
-            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction. For the 2022 CARTS report, the only option for reporting CAHPS results will be through the submission of raw data to the Agency for Healthcare Research and Quality (AHRQ) CAHPS Database.",
+            "text": "Children’s Health Insurance Program Reauthorization Act (CHIPRA) requires that all CHIP programs submit survey results from the Consumer Assessment of Healthcare Providers and Systems (CAHPS). The survey assesses your CHIP program quality and customer satisfaction. For the 2024 CARTS report, the only option for reporting CAHPS results will be through the submission of raw data to the Agency for Healthcare Research and Quality (AHRQ) CAHPS Database.",
             "type": "subsection",
             "parts": [
               {
@@ -8469,7 +8469,8 @@
                       {
                         "id": "2023-03-h-01-01-a",
                         "type": "radio",
-                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2022.",
+                        "label": "Did you submit your CAHPS raw data to the AHRQ CAHPS database? Please note this is a requirement for FFY 2024 CAHPS reporting.",
+                        "hint": "If you completed the CAHPS survey, please respond to questions in Part 2. If you did not complete the CAHPS survey, please skip to Part 3.",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -8503,12 +8504,141 @@
               },
               {
                 "id": "2023-03-h-02",
-                "text": "Since you didn’t collect the CAHPS survey, please complete Part 2.",
+                "type": "part",
+                "title": "You collected the CAHPS survey",
+                "questions": [
+                  {
+                    "id": "2023-03-h-02-01",
+                    "type": "file_upload",
+                    "label": "Upload a summary report of your CAHPS survey results. This is optional if you already submitted CAHPS raw data to the AHRQ CAHPS database. Submit results only for the CHIP population, not for both Medicaid (Title XIX) and CHIP (Title XXI) together. Your data should represent children enrolled in all types of delivery systems (Managed Care, PCCM, and Fee for Service).",
+                    "answer": {
+                      "entry": null
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-02",
+                    "type": "radio",
+                    "label": "Which CHIP population did you survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "Medicaid Expansion CHIP",
+                          "value": "medicaid_exp_chip"
+                        },
+                        {
+                          "label": "Separate CHIP",
+                          "value": "separate_chip"
+                        },
+                        {
+                          "label": "Both Separate CHIP and Medicaid Expansion CHIP",
+                          "value": "combo"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-03",
+                    "type": "radio",
+                    "label": "Which version of the CAHPS survey did you use?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "CAHPS 5.1",
+                          "value": "CAHPS 5.1"
+                        },
+                        {
+                          "label": "CAHPS 5.1H",
+                          "value": "CAHPS 5.1H"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-04",
+                    "type": "checkbox",
+                    "label": "Which supplemental items, if any, did you include in your survey? Select all that apply.",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "None",
+                          "value": "None"
+                        },
+                        {
+                          "label": "Children with Chronic Conditions",
+                          "value": "Children with Chronic Conditions"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-05",
+                    "type": "radio",
+                    "label": "Which administrative protocol did you use to administer the survey?",
+                    "answer": {
+                      "entry": null,
+                      "options": [
+                        {
+                          "label": "NCQA HEDIS CAHPS 5.1H",
+                          "value": "NCQA HEDIS CAHPS 5.1H"
+                        },
+                        {
+                          "label": "HRQ CAHPS",
+                          "value": "HRQ CAHPS"
+                        },
+                        {
+                          "label": "Other",
+                          "value": "Other"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "2023-03-h-02-06",
+                    "type": "text_multiline",
+                    "label": "Is there anything else you'd like to add about your CAHPS survey results?",
+                    "answer": {
+                      "entry": null
+                    }
+                  }
+                ],
+                "context_data": {
+                  "skip_text": "Part 2 was skipped because it only applies to states that collected the CAHPS survey.",
+                  "conditional_display": {
+                    "type": "conditional_display",
+                    "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or no; noninteractive: hide if it's no",
+                    "hide_if": {
+                      "target": "$..*[?(@ && @.id=='2023-03-h-01-01')].answer.entry",
+                      "values": {
+                        "interactive": ["no"],
+                        "noninteractive": ["no"]
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "id": "2023-03-h-03",
+                "text": "Since you didn’t collect the CAHPS survey, please complete Part 3.",
                 "type": "part",
                 "title": "You didn't collect the CAHPS survey",
                 "questions": [
                   {
-                    "id": "2023-03-h-02-01",
+                    "id": "2023-03-h-03-01",
                     "hint": "Check all that apply.",
                     "type": "checkbox",
                     "label": "Why didn't you collect the CAHPS survey?",
@@ -8563,7 +8693,7 @@
                     }
                   },
                   {
-                    "id": "2023-03-h-02-02",
+                    "id": "2023-03-h-03-02",
                     "type": "text_multiline",
                     "label": "Explain in more detail why you weren’t able to collect the CAHPS survey.",
                     "answer": {
@@ -8572,7 +8702,7 @@
                   }
                 ],
                 "context_data": {
-                  "skip_text": "Part 2 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
+                  "skip_text": "Part 3 was skipped because it only applies to states that didn’t collect the CAHPS survey.",
                   "conditional_display": {
                     "type": "conditional_display",
                     "comment": "Interactive: Hide if 2023-03-h-01-01 is unanswered or yes; noninteractive: hide if it's yes",
