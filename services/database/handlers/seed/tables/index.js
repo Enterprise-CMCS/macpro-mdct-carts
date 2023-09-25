@@ -1,5 +1,6 @@
 const tables = [
   require("./acs-2021"),
+  require("./acs-2022"),
   require("./fmap"),
   require("./sectionBase"),
 ];

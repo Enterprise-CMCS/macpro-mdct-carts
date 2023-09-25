@@ -73,7 +73,7 @@ jobs:
             ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov
             ${{github.workspace}}/services/ui-src/coverage/lcov.info:lcov
       - name: Store unit test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: unit_test_results
           path: ${{github.workspace}}/services/ui-src/coverage/lcov.info
@@ -110,12 +110,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v3.0.3
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
           spec: tests/integration/*.spec.js
           browser: chrome
-          headless: true
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
           wait-on: ${{ needs.deploy.outputs.application_endpoint }}
           env: true
@@ -124,10 +123,8 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
-          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
-          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
@@ -143,12 +140,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check Project A11y
-        uses: cypress-io/github-action@v3.0.3
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
           spec: tests/a11y/*.spec.js
           browser: chrome
-          headless: true
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
           wait-on: ${{ needs.deploy.outputs.application_endpoint }}
           env: true
@@ -157,10 +153,8 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
-          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
-          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots

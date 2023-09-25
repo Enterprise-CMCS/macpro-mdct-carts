@@ -8,8 +8,8 @@ before(() => {
   cy.visit("/", { timeout: 60000 * 5, failOnStatusCode: false });
 });
 
-const emailForCognito = "//input[@name='email']";
-const passwordForCognito = "//input[@name='password']";
+const emailForCognito = "input[name='email']";
+const passwordForCognito = "input[name='password']";
 const uncertifyButton = "[data-testid='uncertifyButton']";
 const logoutButton = "[data-testid='header-menu-option-log-out']";
 const headerDropdownMenu = "[data-testid='headerDropDownMenu']";
@@ -22,11 +22,6 @@ const stateUser = {
 const adminUser = {
   email: Cypress.env("ADMIN_USER_EMAIL"),
   password: Cypress.env("ADMIN_USER_PASSWORD"),
-};
-
-const reviewer = {
-  email: Cypress.env("REVIEWER_USER_EMAIL"),
-  password: Cypress.env("REVIEWER_USER_PASSWORD"),
 };
 
 Cypress.Commands.add("authenticate", (userType, userCredentials) => {
@@ -46,17 +41,14 @@ Cypress.Commands.add("authenticate", (userType, userCredentials) => {
       case "stateUser":
         credentials = stateUser;
         break;
-      case "reviewer":
-        credentials = reviewer;
-        break;
       default:
         throw new Error("Provided userType not recognized.");
     }
   } else {
     throw new Error("Must specify either userType or userCredentials.");
   }
-  cy.xpath(emailForCognito).type(credentials.email);
-  cy.xpath(passwordForCognito).type(credentials.password);
+  cy.get(emailForCognito).type(credentials.email);
+  cy.get(passwordForCognito).type(credentials.password);
   cy.get('[data-cy="login-with-cognito-button"]').click();
 });
 
