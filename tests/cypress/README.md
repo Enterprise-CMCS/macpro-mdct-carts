@@ -15,7 +15,7 @@
 
 ## Configuration
 
-`cypress.json` may use any of [these](https://docs.cypress.io/guides/references/configuration#Global) config options.
+`cypress.config.js` may use any of [these](https://docs.cypress.io/guides/references/configuration#Global) config options.
 
 ## Cypress CLI
 

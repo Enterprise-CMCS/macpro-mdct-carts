@@ -60,10 +60,6 @@
   "dependencies": {
     "aws-amplify": "^4.3.17"
   },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true,
-    "stepDefinitions": "tests"
-  },
   "resolutions": {
     "loader-utils": "^2.0.4"
   }

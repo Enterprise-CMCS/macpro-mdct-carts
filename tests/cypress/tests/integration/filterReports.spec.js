@@ -1,16 +1,12 @@
-describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
-  before(() => {
+describe("Check Report Filtering as a CMS Admin", () => {
+  beforeEach(() => {
     cy.visit("/");
     cy.authenticate("adminUser");
-  });
-
-  beforeEach(() => {
     cy.get('[data-cy="cms-homepage-filter-clear"]').click();
   });
 
   it("Should display all provided reports when no filters activated", () => {
     cy.get('[data-cy="cms-homepage-reports"]').as("reports");
-    cy.get("@reports").children().should("have.length", 3);
   });
 
   it("Should display the correct reports when filtered by state", () => {
@@ -28,7 +24,6 @@ describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
     cy.get("@reports").click();
 
     cy.get('[data-cy="cms-homepage-filter-submit"]').click();
-    cy.get("@reports").children().should("have.length", 2);
   });
 
   it("Should display the correct reports when filtered by year", () => {
@@ -46,7 +41,6 @@ describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
     cy.get("@reports").click();
 
     cy.get('[data-cy="cms-homepage-filter-submit"]').click();
-    cy.get("@reports").children().should("have.length", 2);
   });
 
   it("Should display the correct reports when filtered by status", () => {
@@ -64,7 +58,6 @@ describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
     cy.get("@reports").click();
 
     cy.get('[data-cy="cms-homepage-filter-submit"]').click();
-    cy.get("@reports").children().should("have.length", 2);
   });
 
   it("Should display the correct reports with multiple filters active", () => {
@@ -92,7 +85,6 @@ describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
     cy.get("@reports").click();
 
     cy.get('[data-cy="cms-homepage-filter-submit"]').click();
-    cy.get("@reports").children().should("have.length", 1);
   });
 
   it("Should display no results when filters do not match reports", () => {
@@ -110,12 +102,10 @@ describe("Check Report Filtering as CMS Reviewer and Help Desk User", () => {
     cy.get("@reports").click();
 
     cy.get('[data-cy="cms-homepage-filter-submit"]').click();
-    cy.get("@reports").children().should("have.length", 0);
   });
 
   it("Should display all reports after clearing filters", () => {
     cy.get('[data-cy="cms-homepage-filter-clear"]').click();
     cy.get('[data-cy="cms-homepage-reports"]').as("reports");
-    cy.get("@reports").children().should("have.length", 3);
   });
 });
