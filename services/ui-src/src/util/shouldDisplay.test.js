@@ -1,5 +1,15 @@
 import { shouldDisplay } from "./shouldDisplay";
 import { AppRoles } from "../types";
+import { selectFragmentById } from "../store/formData";
+
+const mockFragmentResult = {
+  answer: { entry: "test program" },
+};
+
+jest.mock("../store/formData", () => ({
+  ...jest.requireActual("../store/formData"),
+  selectFragmentById: jest.fn(),
+}));
 
 describe("shouldDisplay", () => {
   beforeEach(() => jest.clearAllMocks());
@@ -110,6 +120,7 @@ describe("shouldDisplay", () => {
   });
 
   it("should find programType for state users", () => {
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
       stateUser: {
         currentUser: {
@@ -134,9 +145,11 @@ describe("shouldDisplay", () => {
     };
     const result = shouldDisplay(state, context);
     expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(1);
   });
 
   it("should find programType for non-state users", () => {
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
       stateUser: {
         currentUser: {
@@ -161,6 +174,37 @@ describe("shouldDisplay", () => {
     };
     const result = shouldDisplay(state, context);
     expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(1);
+  });
+
+  it("should find programType from previous year if not in current year", () => {
+    selectFragmentById.mockReturnValueOnce({});
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
+    const state = {
+      stateUser: {
+        currentUser: {
+          role: "test role",
+        },
+      },
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
+        },
+      ],
+      reportStatus: {
+        CO2023: {
+          programType: "test program",
+        },
+      },
+    };
+    const context = {
+      conditional_display: null,
+      show_if_state_program_type_in: ["test program"],
+    };
+    const result = shouldDisplay(state, context);
+    expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(2);
   });
 
   it("should not display if hide_if logic is specified, and the state satisfies it", () => {

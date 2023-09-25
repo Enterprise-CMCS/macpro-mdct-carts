@@ -175,7 +175,7 @@ const getProgramTypeFromForm = (state) => {
   const currentYearProgramType = selectFragmentById(
     state,
     `${formYear}${PROGRAM_TYPE_QUESTION_ID}`
-  )?.answer.entry;
+  )?.answer?.entry;
   if (currentYearProgramType) {
     return currentYearProgramType;
   }
@@ -185,7 +185,7 @@ const getProgramTypeFromForm = (state) => {
   const previousYearProgramType = selectFragmentById(
     state,
     `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`
-  )?.answer.entry;
+  )?.answer?.entry;
   const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
   const programFromStatus = state.reportStatus[reportStatusCode].programType;
   return previousYearProgramType || programFromStatus;
