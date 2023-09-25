@@ -14,16 +14,8 @@
  * https://on.cypress.io/configuration
  * ***********************************************************
  */
-{
-  require("cypress-xpath");
-}
 // Import commands.js using ES2015 syntax:
 import "./commands";
-
-/*
- * Alternatively you can use CommonJS syntax:
- * require('./commands')
- */
 
 /*
  * This is a Cypress plugin that allows you to run axe (https://dequeuniversity.com/rules/axe/about) on
