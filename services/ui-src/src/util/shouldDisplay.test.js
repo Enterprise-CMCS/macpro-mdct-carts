@@ -1,7 +1,19 @@
 import { shouldDisplay } from "./shouldDisplay";
 import { AppRoles } from "../types";
+import { selectFragmentById } from "../store/formData";
+
+const mockFragmentResult = {
+  answer: { entry: "test program" },
+};
+
+jest.mock("../store/formData", () => ({
+  ...jest.requireActual("../store/formData"),
+  selectFragmentById: jest.fn(),
+}));
 
 describe("shouldDisplay", () => {
+  beforeEach(() => jest.clearAllMocks());
+
   it("should display everything for CMS Admins", () => {
     const state = {
       stateUser: {
@@ -10,7 +22,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(state, null, null);
+    const result = shouldDisplay(state, null);
     expect(result).toBe(true);
   });
 
@@ -22,8 +34,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, null, programType);
+    const result = shouldDisplay(state, null);
     expect(result).toBe(true);
   });
 
@@ -34,13 +45,23 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
+        },
+      ],
+      reportStatus: {
+        CO2023: {
+          programType: "test program",
+        },
+      },
     };
     const context = {
       conditional_display: null,
       show_if_state_program_type_in: null,
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -51,44 +72,12 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-    };
-    const context = {
-      conditional_display: null,
-      show_if_state_program_type_in: ["a different program"],
-    };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
-    expect(result).toBe(false);
-  });
-
-  it("should display specified programs", () => {
-    const state = {
-      stateUser: {
-        currentUser: {
-          role: "test role",
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
         },
-      },
-    };
-    const context = {
-      conditional_display: null,
-      show_if_state_program_type_in: ["test program"],
-    };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
-    expect(result).toBe(true);
-  });
-
-  it("should infer programType for state users", () => {
-    const state = {
-      global: {
-        formYear: "2023",
-      },
-      stateUser: {
-        abbr: "CO",
-        currentUser: {
-          role: AppRoles.STATE_USER,
-        },
-      },
+      ],
       reportStatus: {
         CO2023: {
           programType: "test program",
@@ -97,14 +86,13 @@ describe("shouldDisplay", () => {
     };
     const context = {
       conditional_display: null,
-      show_if_state_program_type_in: ["test program"],
+      show_if_state_program_type_in: ["a different program"],
     };
-    const programType = null;
-    const result = shouldDisplay(state, context, programType);
-    expect(result).toBe(true);
+    const result = shouldDisplay(state, context);
+    expect(result).toBe(false);
   });
 
-  it("should infer programType for non-state users", () => {
+  it("should display specified programs", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -127,9 +115,96 @@ describe("shouldDisplay", () => {
       conditional_display: null,
       show_if_state_program_type_in: ["test program"],
     };
-    const programType = null;
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
+  });
+
+  it("should find programType for state users", () => {
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
+    const state = {
+      stateUser: {
+        currentUser: {
+          role: "test role",
+        },
+      },
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
+        },
+      ],
+      reportStatus: {
+        CO2023: {
+          programType: "test program",
+        },
+      },
+    };
+    const context = {
+      conditional_display: null,
+      show_if_state_program_type_in: ["test program"],
+    };
+    const result = shouldDisplay(state, context);
+    expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(1);
+  });
+
+  it("should find programType for non-state users", () => {
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
+    const state = {
+      stateUser: {
+        currentUser: {
+          role: "test role",
+        },
+      },
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
+        },
+      ],
+      reportStatus: {
+        CO2023: {
+          programType: "test program",
+        },
+      },
+    };
+    const context = {
+      conditional_display: null,
+      show_if_state_program_type_in: ["test program"],
+    };
+    const result = shouldDisplay(state, context);
+    expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(1);
+  });
+
+  it("should find programType from previous year if not in current year", () => {
+    selectFragmentById.mockReturnValueOnce({});
+    selectFragmentById.mockReturnValueOnce(mockFragmentResult);
+    const state = {
+      stateUser: {
+        currentUser: {
+          role: "test role",
+        },
+      },
+      formData: [
+        {
+          stateId: "CO",
+          year: "2023",
+        },
+      ],
+      reportStatus: {
+        CO2023: {
+          programType: "test program",
+        },
+      },
+    };
+    const context = {
+      conditional_display: null,
+      show_if_state_program_type_in: ["test program"],
+    };
+    const result = shouldDisplay(state, context);
+    expect(result).toBe(true);
+    expect(selectFragmentById).toHaveBeenCalledTimes(2);
   });
 
   it("should not display if hide_if logic is specified, and the state satisfies it", () => {
@@ -153,8 +228,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -179,8 +253,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -208,8 +281,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -237,8 +309,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -264,8 +335,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -291,8 +361,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -307,8 +376,7 @@ describe("shouldDisplay", () => {
     const context = {
       conditional_display: {},
     };
-    const programType = "test program";
-    const result = shouldDisplay(state, context, programType);
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 });
