@@ -1,13 +1,13 @@
 const appLogo = "//a[contains(text(), 'CARTS')]";
 const headerAppLogo = "a[contains(text(), 'CARTS')]";
 const headerLoginButton = "a#loginButton";
-const footerAddress = '(//div[@class="footer-wrapper"]/div)[2]';
+const footerAddress = '(div[class="footer-wrapper"]/div)[2]';
 const footerEmail = ".footer-email";
 const footerHhsLogo = "img[alt='Department of Health and Human Services logo']";
-const footerMdctLogo = "//img[@alt='Mdct logo']";
-const footerMedicaidLogo = "//img[@alt='Medicaid.gov logo']";
+const footerMdctLogo = "img[alt='Mdct logo']";
+const footerMedicaidLogo = "img[alt='Medicaid.gov logo']";
 const medicaidLogo = "img[alt='Medicaid.gov logo']";
-const footerSentence = '(//div[@class="footer-fed-gov-text"])[1]';
+const footerSentence = '(div[class="footer-fed-gov-text"])[1]';
 
 export class Homepage {
   launch() {
@@ -15,9 +15,9 @@ export class Homepage {
   }
 
   verifyLogos() {
-    cy.xpath(appLogo).should("be.visible");
-    cy.xpath(footerMdctLogo).should("be.visible");
-    cy.xpath(footerMedicaidLogo).should("be.visible");
+    cy.get(appLogo).should("be.visible");
+    cy.get(footerMdctLogo).should("be.visible");
+    cy.get(footerMedicaidLogo).should("be.visible");
   }
 
   validateCoreSetReportingIcon() {
@@ -26,7 +26,7 @@ export class Homepage {
   }
 
   validatePageBanner() {
-    cy.xpath(headerAppLogo).should("be.visible");
+    cy.get(headerAppLogo).should("be.visible");
   }
 
   validateLoginButton() {
@@ -38,7 +38,7 @@ export class Homepage {
   }
 
   validateSupportSenence() {
-    cy.xpath(footerSentence).should("be.visible");
+    cy.get(footerSentence).should("be.visible");
   }
 
   validateMedicaidLogo() {
@@ -54,7 +54,7 @@ export class Homepage {
   }
 
   validateAddress() {
-    cy.xpath(footerAddress).contains(
+    cy.get(footerAddress).contains(
       "7500 Security Boulevard Baltimore, MD 21244"
     );
   }
