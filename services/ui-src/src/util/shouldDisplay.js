@@ -1,3 +1,4 @@
+import { selectFragmentById } from "../store/formData";
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
 import {
@@ -166,6 +167,30 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
   return result;
 };
 
+const PROGRAM_TYPE_QUESTION_ID = "-00-a-01-02";
+
+const getProgramTypeFromForm = (state) => {
+  // attempt to find programType from same year as form
+  const formYear = state.formData[0].year;
+  const currentYearProgramType = selectFragmentById(
+    state,
+    `${formYear}${PROGRAM_TYPE_QUESTION_ID}`
+  )?.answer.entry;
+  if (currentYearProgramType) {
+    return currentYearProgramType;
+  }
+
+  // attempt to find programType from the previous year's form, otherwise retrieve from status
+  const previousYear = parseInt(formYear) - 1;
+  const previousYearProgramType = selectFragmentById(
+    state,
+    `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`
+  )?.answer.entry;
+  const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
+  const programFromStatus = state.reportStatus[reportStatusCode].programType;
+  return previousYearProgramType || programFromStatus;
+};
+
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
@@ -188,8 +213,7 @@ const shouldDisplay = (state, context) => {
    * displaying relies on that answer being included in the show_if_state_program_type_in array
    */
   if (context.show_if_state_program_type_in) {
-    const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
-    const program = state.reportStatus[reportStatusCode].programType;
+    const program = getProgramTypeFromForm(state);
     return context.show_if_state_program_type_in.includes(program);
   }
 
