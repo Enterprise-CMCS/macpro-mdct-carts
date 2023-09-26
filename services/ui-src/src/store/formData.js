@@ -34,13 +34,6 @@ export default (state = initialState, action) => {
           updatedData[0].contents.section.subsections[0].parts[0].questions[0] =
             lastYearData[0].contents.section.subsections[0].parts[0].questions[0]; // Name
         }
-        if (
-          !updatedData[0].contents.section.subsections[0].parts[0].questions[1]
-            .answer.entry
-        ) {
-          updatedData[0].contents.section.subsections[0].parts[0].questions[1] =
-            lastYearData[0].contents.section.subsections[0].parts[0].questions[1]; // Type
-        }
         // Cohort Questions - These should be revolving around a 2 year cycle, but today just pull forward
         if (twoYearCycle) {
           updatedData[3].contents.section.subsections[2].parts[5].questions[1].answer =
