@@ -376,5 +376,59 @@
         "Value": "mdctcarts-approver"
       }
     ]
+  },
+  {
+    "username": "cypressstateuser@test.com",
+    "attributes": [
+      {
+          "Name": "email",
+          "Value": "cypressstateuser@test.com"
+      },
+      {
+          "Name": "given_name",
+          "Value": "CypressAutomatedIntegrationTests"
+      },
+      {
+          "Name": "family_name",
+          "Value": "State"
+      },
+      {
+          "Name": "email_verified",
+          "Value": "true"
+      },
+      {
+          "Name": "custom:cms_roles",
+          "Value": "mdctcarts-state-user"
+      },
+      {
+          "Name": "custom:cms_state",
+          "Value": "DC"
+      }
+    ]
+  },
+  {
+    "username": "cypressadminuser@test.com",
+    "attributes": [
+      {
+          "Name": "email",
+          "Value": "cypressadminuser@test.com"
+      },
+      {
+          "Name": "given_name",
+          "Value": "CypressAutomatedIntegrationTests"
+      },
+      {
+          "Name": "family_name",
+          "Value": "Admin"
+      },
+      {
+          "Name": "email_verified",
+          "Value": "true"
+      },
+      {
+          "Name": "custom:cms_roles",
+          "Value": "mdctcarts-project-officer"
+      }
+    ]
   }
 ]
