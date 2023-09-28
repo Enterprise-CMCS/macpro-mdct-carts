@@ -50,7 +50,7 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
       name={question.id}
       numeric
       onChange={change}
-      value={prevYear ? prevYear.value : renderAnswer(answer)}
+      value={answer != null ? renderAnswer(answer) : prevYear && prevYear.value}
       {...props}
     />
   );
