@@ -72,7 +72,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
       const temp = questionsToSet.push({
         hideNumber: true,
         question: item,
-        prevYear: { value: prevYearValue, disabled: true },
+        prevYear: { value: prevYearValue },
       });
 
       // Set cumulative array of questions to local state
@@ -94,12 +94,12 @@ const DataGrid = ({ question, lastYearFormData }) => {
   };
 
   // Takes in a section, fieldset ID, and item id to determine which value matches from larger data set
-  const getValueFromLastYear = (data, fieldsetId, itemId, partNumber) => {
+  const getValueFromLastYear = (data, fieldsetId, itemId, partIndex) => {
     let lastYearAnswer;
 
     // Get questions from last years JSON
     const questions =
-      data.contents.section.subsections[2].parts[partNumber].questions;
+      data.contents.section.subsections[2].parts[partIndex].questions;
 
     // Filter down to specific question
     let matchingQuestion = questions.filter(
