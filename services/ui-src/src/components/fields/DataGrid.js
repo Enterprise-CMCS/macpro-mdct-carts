@@ -29,22 +29,30 @@ const DataGrid = ({ question, lastYearFormData }) => {
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
 
+    // Custom handling for -03-c-05 and -03-c-06
     if (
       shouldGetPriorYear &&
       splitID[1] === "03" &&
       splitID[2] === "c" &&
-      splitID[3] === "06" &&
+      (splitID[3] === "05" || splitID[3] === "06") &&
       parseInt(splitID[4]) > 2 &&
       parseInt(splitID[4]) < 10
     ) {
       // Set year to last year
       splitID[0] = parseInt(splitID[0]) - 1;
       splitID.pop();
+
       const fieldsetId = splitID.join("-");
+      const partIndex = parseInt(splitID[3]) - 1;
 
       let prevYearValue =
         parseInt(
-          getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
+          getValueFromLastYear(
+            lastYearFormData[3],
+            fieldsetId,
+            questionId,
+            partIndex
+          )
         ) || "";
       const itemId = item.id.slice(0, -2);
 
