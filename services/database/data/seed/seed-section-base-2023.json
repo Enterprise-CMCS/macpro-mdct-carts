@@ -4158,8 +4158,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4197,8 +4196,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4206,8 +4204,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4215,8 +4212,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4224,8 +4220,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4258,8 +4253,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4297,8 +4291,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4306,8 +4299,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4315,8 +4307,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4324,8 +4315,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4358,8 +4348,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4397,8 +4386,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4406,8 +4394,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4415,8 +4402,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4424,8 +4410,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4459,8 +4444,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4498,8 +4482,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4507,8 +4490,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4516,8 +4498,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4525,8 +4506,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4559,8 +4539,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4598,8 +4577,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4607,8 +4585,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4616,8 +4593,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4625,8 +4601,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4666,8 +4641,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4705,8 +4679,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4714,8 +4687,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4723,8 +4695,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4732,8 +4703,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4766,8 +4736,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4805,8 +4774,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4814,8 +4782,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4823,8 +4790,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4832,8 +4798,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4866,8 +4831,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -4905,8 +4869,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4914,8 +4877,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4923,8 +4885,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -4932,8 +4893,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -4967,8 +4927,7 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null,
-                          "readonly": true
+                          "entry": null
                         },
                         "context_data": {
                           "conditional_display": {
@@ -5006,8 +4965,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5015,8 +4973,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5024,8 +4981,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5033,8 +4989,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -5106,8 +5061,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5115,8 +5069,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5124,8 +5077,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5133,8 +5085,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -5862,8 +5813,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5871,8 +5821,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5880,8 +5829,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5889,8 +5837,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -5962,8 +5909,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5971,8 +5917,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5980,8 +5925,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -5989,8 +5933,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6062,8 +6005,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6071,8 +6013,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6080,8 +6021,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6089,8 +6029,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6163,8 +6102,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6172,8 +6110,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6181,8 +6118,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6190,8 +6126,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6263,8 +6198,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6272,8 +6206,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6281,8 +6214,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6290,8 +6222,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6370,8 +6301,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6379,8 +6309,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6388,8 +6317,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6397,8 +6325,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6470,8 +6397,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6479,8 +6405,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6488,8 +6413,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6497,8 +6421,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6570,8 +6493,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6579,8 +6501,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6588,8 +6509,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6597,8 +6517,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6671,8 +6590,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6680,8 +6598,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6689,8 +6606,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6698,8 +6614,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
@@ -6771,8 +6686,7 @@
                             "type": "integer",
                             "label": "Ages 0-1",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6780,8 +6694,7 @@
                             "type": "integer",
                             "label": "Ages 1-5",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6789,8 +6702,7 @@
                             "type": "integer",
                             "label": "Ages 6-12",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           },
                           {
@@ -6798,8 +6710,7 @@
                             "type": "integer",
                             "label": "Ages 13-16",
                             "answer": {
-                              "entry": null,
-                              "readonly": true
+                              "entry": null
                             }
                           }
                         ],
