@@ -21,7 +21,7 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ secrets.PRODUCTION_SYNC_OIDC_ROLE }}
       - name: Sync Security Hub and Jira
-        uses: Enterprise-CMCS/mac-fc-security-hub-visibility@v1.0.3
+        uses: Enterprise-CMCS/mac-fc-security-hub-visibility@v1.0.5
         with:
           jira-token: ${{ secrets.JIRA_SERVICE_USER_TOKEN }}
           jira-username: ${{ secrets.JIRA_SERVICE_USERNAME }}
@@ -31,3 +31,4 @@ jobs:
           jira-ignore-statuses: Done, Closed, Canceled
           jira-custom-fields: '{ "customfield_14154" : [{"id": "16955", "value": "CARTS"}] }'
           aws-severities: CRITICAL, HIGH, MEDIUM
+          assign-jira-ticket-to: ${{ secrets.ACCOUNT_ID_REHMAN }}
