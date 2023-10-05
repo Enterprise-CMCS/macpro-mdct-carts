@@ -1616,7 +1616,7 @@
             "parts": [
               {
                 "id": "2023-02-a-01",
-                "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years (FFY). If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and then refresh this page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
+                "text": "This table is pre-filled with your SEDS data for the two most recent federal fiscal years (FFY). The percent change column in the table below calculates the rate of growth in enrollment over the previous federal fiscal year by subtracting the previous fiscal year enrollment total from the current fiscal year enrollment total (B - A), and dividing that by the previous fiscal year total (A). If the information is inaccurate, adjust your data in SEDS (go to line 7:  “Unduplicated Number Ever Enrolled” in your fourth quarter SEDS report) and then refresh this page. If you’re adjusting data in SEDS, allow one business day for the CARTS data below to update.",
                 "type": "part",
                 "title": "Number of Children Enrolled in CHIP",
                 "questions": [
@@ -1745,151 +1745,6 @@
                     "fieldset_id": "synthesized-table-2-2",
                     "fieldset_info": {
                       "rows": [
-                        [
-                          {
-                            "contents": "2013"
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2013",
-                              "acsProperty": "numberUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2013",
-                              "acsProperty": "numberUninsuredMoe"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2013",
-                              "acsProperty": "percentUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2013",
-                              "acsProperty": "percentUninsuredMoe"
-                            }
-                          }
-                        ],
-                        [
-                          {
-                            "contents": "2014"
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2014",
-                              "acsProperty": "numberUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2014",
-                              "acsProperty": "numberUninsuredMoe"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2014",
-                              "acsProperty": "percentUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2014",
-                              "acsProperty": "percentUninsuredMoe"
-                            }
-                          }
-                        ],
-                        [
-                          {
-                            "contents": "2015"
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2015",
-                              "acsProperty": "numberUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2015",
-                              "acsProperty": "numberUninsuredMoe"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2015",
-                              "acsProperty": "percentUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2015",
-                              "acsProperty": "percentUninsuredMoe"
-                            }
-                          }
-                        ],
-                        [
-                          {
-                            "contents": "2016"
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2016",
-                              "acsProperty": "numberUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2016",
-                              "acsProperty": "numberUninsuredMoe"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2016",
-                              "acsProperty": "percentUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2016",
-                              "acsProperty": "percentUninsuredMoe"
-                            }
-                          }
-                        ],
-                        [
-                          {
-                            "contents": "2017"
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2017",
-                              "acsProperty": "numberUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2017",
-                              "acsProperty": "numberUninsuredMoe"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2017",
-                              "acsProperty": "percentUninsured"
-                            }
-                          },
-                          {
-                            "lookupAcs": {
-                              "ffy": "2017",
-                              "acsProperty": "percentUninsuredMoe"
-                            }
-                          }
-                        ],
                         [
                           {
                             "contents": "2018"
@@ -8636,6 +8491,7 @@
             "parts": [
               {
                 "id": "2023-03-i-01",
+                "title": "\u00A0",
                 "type": "part",
                 "questions": [
                   {
@@ -8661,12 +8517,15 @@
               },
               {
                 "id": "2023-03-i-02",
+                "title": "\u00A0",
                 "text": "Please answer the following questions for all of the state's approved HSIs as listed in section 2.2 of the CHIP state plan.",
                 "type": "part",
                 "questions": [
                   {
                     "id": "2023-03-i-02-01",
                     "type": "repeatables",
+                    "addAnotherText": "Does the state have additional HSIs to report?",
+                    "hideOptionalHint": false,
                     "questions": [
                       {
                         "id": "2023-03-i-02-01-01",

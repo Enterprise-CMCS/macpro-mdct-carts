@@ -39,6 +39,15 @@ const Repeatables = ({
     removeRepeatableFrom(question.id);
   };
 
+  let doYouHaveAnotherVerbiage;
+  if (question.addAnotherText) {
+    doYouHaveAnotherVerbiage = question.addAnotherText;
+  } else if (question.typeLabel) {
+    doYouHaveAnotherVerbiage = `Do you have another ${question.typeLabel} in this list?`;
+  } else {
+    doYouHaveAnotherVerbiage = `Do you have another in this list?`;
+  }
+
   return (
     <>
       <Accordion
@@ -64,26 +73,28 @@ const Repeatables = ({
             type="button"
             className="add-objective ds-c-button ds-c-button--danger"
           >
-            Delete last {type || "item"}
+            Delete last {question.typeLabel || "item"}
           </button>
         )}
       </Accordion>
 
       <div className="section-footer">
         <span className="question-inner-header span-pdf-no-bookmark">
-          Do you have another{type ? ` ${type}` : ""} in this list?
+          {doYouHaveAnotherVerbiage}
         </span>
 
-        <div className="ds-c-field__hint" aria-label="Hint">
-          Optional
-        </div>
+        {!question.hideOptionalHint && (
+          <div className="ds-c-field__hint" aria-label="Hint">
+            Optional
+          </div>
+        )}
         <button
           disabled={disabled}
           onClick={add}
           type="button"
           className="add-objective ds-c-button ds-c-button--primary"
         >
-          Add another{type && ` ${type}`}
+          Add another{question.typeLabel && ` ${question.typeLabel}`}
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
