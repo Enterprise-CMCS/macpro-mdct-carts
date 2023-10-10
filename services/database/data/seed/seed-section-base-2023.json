@@ -8525,7 +8525,7 @@
                     "id": "2023-03-i-02-01",
                     "type": "repeatables",
                     "addAnotherText": "Does the state have additional HSIs to report?",
-                    "hideOptionalHint": false,
+                    "hideOptionalHint": true,
                     "questions": [
                       {
                         "id": "2023-03-i-02-01-01",
