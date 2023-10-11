@@ -4,7 +4,7 @@ const navigationLink = "[aria-label='Vertical Navigation Element'] a";
 
 describe("CARTS Report Fill Tests", () => {
   it("Should fill out some answers in Section 1", () => {
-    // cy.ensureAvailableReport(); // Needs to happen each iteration of the test
+    cy.ensureAvailableReport(); // Needs to happen each iteration of the test
 
     // log in as State User
     cy.authenticate("stateUser");
