@@ -128,12 +128,14 @@ describe("CARTS Report Fill Tests", () => {
      * We also have multiple inputs sharing the same ID!? Even wronger.
      * That means that clicking the <label> for Fee-for-Service
      * checks/unchecks the box for Managed Care. bug bug bug.
+     * It also means that this test gets screwy if it tries to check
+     * more than one box, because the DOM changes under its feet.
      */
     cy.get("legend")
       .contains("Which delivery system")
       .siblings()
       .find("input")
-      .each(($input) => {
+      .then(($input) => {
         cy.wrap($input).check();
       });
 
