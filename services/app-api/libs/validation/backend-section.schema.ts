@@ -218,6 +218,12 @@ export const sectionSchema = {
         comment: {
           type: "string",
         },
+        addAnotherText: {
+          type: ["string", "null"],
+        },
+        hideOptionalHint: {
+          type: ["boolean", "null"],
+        },
         questions: {
           type: "array",
           items: {

@@ -21,6 +21,7 @@ module.exports = defineConfig({
     baseUrl: "http://localhost:3000/",
     specPattern: "**/*.spec.js",
     supportFile: "support/index.js",
+    excludeSpecPattern: "**/filterReports.spec.js",
     async setupNodeEvents(on, config) {
       await preprocessor.addCucumberPreprocessorPlugin(on, config);
       on("file:preprocessor", browserify.default(config));

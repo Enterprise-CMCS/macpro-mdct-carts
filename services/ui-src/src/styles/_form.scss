@@ -147,7 +147,7 @@
       width: 100%;
 
       &:after {
-        background-image: url(/img/burger-arrow.svg);
+        background-image: "url(/img/burger-arrow.svg)";
         background-position: center;
         background-repeat: no-repeat;
         background-size: 85%;
