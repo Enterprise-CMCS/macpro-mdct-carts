@@ -135,6 +135,7 @@ describe("CARTS Report Fill Tests", () => {
       .contains("Which delivery system")
       .siblings()
       .find("input")
+      .first()
       .then(($input) => {
         cy.wrap($input).check();
       });
