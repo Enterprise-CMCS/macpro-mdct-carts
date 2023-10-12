@@ -426,6 +426,10 @@ export const sectionSchema = {
             ],
           },
         },
+        // If true, this prevents the first column from being bolded
+        all_columns_have_data: {
+          type: ["bool", "null"],
+        },
       },
       required: ["type", "questions"],
       additionalProperties: false,

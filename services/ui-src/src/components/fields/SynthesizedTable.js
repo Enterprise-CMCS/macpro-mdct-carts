@@ -30,7 +30,7 @@ const SynthesizedTable = ({ rows, question, tableTitle }) => {
             return (
               <tr key={index}>
                 {row.map((cell, index) => {
-                  if (index === 0) {
+                  if (index === 0 && !question.all_columns_have_data) {
                     rowLabel = cell.contents;
                     return (
                       <th

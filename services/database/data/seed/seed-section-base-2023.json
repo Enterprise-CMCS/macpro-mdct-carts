@@ -1922,6 +1922,13 @@
                             "compareACS": {
                               "ffy1": "2021",
                               "ffy2": "2022",
+                              "acsProperty": "numberUninsured"
+                            }
+                          },
+                          {
+                            "compareACS": {
+                              "ffy1": "2021",
+                              "ffy2": "2022",
                               "acsProperty": "percentUninsured"
                             }
                           }
@@ -1929,11 +1936,15 @@
                       ],
                       "headers": [
                         {
-                          "contents": "Percent change between 2021 and 2022"
+                          "contents": "Change in the number of uninsured children between 2021 and 2022"
+                        },
+                        {
+                          "contents": "Change in the percent of uninsured children between 2021 and 2022"
                         }
                       ]
                     },
-                    "fieldset_type": "synthesized_table"
+                    "fieldset_type": "synthesized_table",
+                    "all_columns_have_data": true
                   },
                   {
                     "id": "2023-02-a-02-01",
