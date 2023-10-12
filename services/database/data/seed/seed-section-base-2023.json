@@ -10427,31 +10427,37 @@
                             "contents": "Total benefit costs"
                           },
                           {
-                            "actions": ["sum"],
+                            "actions": ["formula"],
+                            "formula": "<0> + <1> + <2> - <3>",
                             "targets": [
                               "$..*[?(@ && @.id=='2023-05-a-01-01-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-03-a')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-04-a')].answer.entry"
-                            ]
+                            ],
+                            "$comment": "This is the sum of costs, minus the cost sharing"
                           },
                           {
-                            "actions": ["sum"],
+                            "actions": ["formula"],
+                            "formula": "<0> + <1> + <2> - <3>",
                             "targets": [
                               "$..*[?(@ && @.id=='2023-05-a-01-01-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-03-b')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-04-b')].answer.entry"
-                            ]
+                            ],
+                            "$comment": "This is the sum of costs, minus the cost sharing"
                           },
                           {
-                            "actions": ["sum"],
+                            "actions": ["formula"],
+                            "formula": "<0> + <1> + <2> - <3>",
                             "targets": [
                               "$..*[?(@ && @.id=='2023-05-a-01-01-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-02-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-03-c')].answer.entry",
                               "$..*[?(@ && @.id=='2023-05-a-01-04-c')].answer.entry"
-                            ]
+                            ],
+                            "$comment": "This is the sum of costs, minus the cost sharing"
                           }
                         ]
                       ],
