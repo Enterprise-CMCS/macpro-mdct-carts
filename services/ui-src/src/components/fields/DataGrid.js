@@ -29,22 +29,30 @@ const DataGrid = ({ question, lastYearFormData }) => {
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
 
+    // Custom handling for -03-c-05 and -03-c-06
     if (
       shouldGetPriorYear &&
       splitID[1] === "03" &&
       splitID[2] === "c" &&
-      splitID[3] === "06" &&
+      (splitID[3] === "05" || splitID[3] === "06") &&
       parseInt(splitID[4]) > 2 &&
       parseInt(splitID[4]) < 10
     ) {
       // Set year to last year
       splitID[0] = parseInt(splitID[0]) - 1;
       splitID.pop();
+
       const fieldsetId = splitID.join("-");
+      const partIndex = parseInt(splitID[3]) - 1;
 
       let prevYearValue =
         parseInt(
-          getValueFromLastYear(lastYearFormData[3], fieldsetId, questionId, 5)
+          getValueFromLastYear(
+            lastYearFormData[3],
+            fieldsetId,
+            questionId,
+            partIndex
+          )
         ) || "";
       const itemId = item.id.slice(0, -2);
 
@@ -64,7 +72,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
       const temp = questionsToSet.push({
         hideNumber: true,
         question: item,
-        prevYear: { value: prevYearValue, disabled: true },
+        prevYear: { value: prevYearValue },
       });
 
       // Set cumulative array of questions to local state
@@ -86,12 +94,12 @@ const DataGrid = ({ question, lastYearFormData }) => {
   };
 
   // Takes in a section, fieldset ID, and item id to determine which value matches from larger data set
-  const getValueFromLastYear = (data, fieldsetId, itemId, partNumber) => {
+  const getValueFromLastYear = (data, fieldsetId, itemId, partIndex) => {
     let lastYearAnswer;
 
     // Get questions from last years JSON
     const questions =
-      data.contents.section.subsections[2].parts[partNumber].questions;
+      data.contents.section.subsections[2].parts[partIndex].questions;
 
     // Filter down to specific question
     let matchingQuestion = questions.filter(

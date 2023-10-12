@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Text from "../layout/Text";
-import { generateQuestionNumber } from "../Utils/helperFunctions";
+import { generateQuestionNumber } from "../utils/helperFunctions";
 
 const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
   let labelBits = generateQuestionNumber(id);

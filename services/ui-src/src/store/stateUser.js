@@ -1,4 +1,4 @@
-import statesArray from "../components/Utils/statesArray";
+import statesArray from "../components/utils/statesArray";
 
 // ACTION TYPES
 const STATE_INFO = "STATE_INFO";
@@ -16,7 +16,6 @@ export const getUserData = (userObject) => {
 
 export const getProgramData = (programObject) => ({
   type: PROGRAM_INFO,
-  programType: programObject.programType,
   programName: programObject.programName,
   formName: programObject.formName,
 });
@@ -84,7 +83,6 @@ export default (state = initialState, action) => {
     case PROGRAM_INFO:
       return {
         ...state,
-        programType: action.programType,
         programName: action.programName,
         formName: action.formName,
       };

@@ -1,4 +1,4 @@
-import statesArray from "../components/Utils/statesArray";
+import statesArray from "../components/utils/statesArray";
 
 // Storing global variables that will be the same regardless of users
 const earliestYear = 2020;

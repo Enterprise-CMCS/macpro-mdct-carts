@@ -1,3 +1,4 @@
+import { selectFragmentById } from "../store/formData";
 import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
 import {
@@ -166,28 +167,39 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
   return result;
 };
 
+const PROGRAM_TYPE_QUESTION_ID = "-00-a-01-02";
+
+const getProgramTypeFromForm = (state) => {
+  // attempt to find programType from same year as form
+  const formYear = state.formData[0].year;
+  const currentYearProgramType = selectFragmentById(
+    state,
+    `${formYear}${PROGRAM_TYPE_QUESTION_ID}`
+  )?.answer?.entry;
+  if (currentYearProgramType) {
+    return currentYearProgramType;
+  }
+
+  // attempt to find programType from the previous year's form, otherwise retrieve from status
+  const previousYear = parseInt(formYear) - 1;
+  const previousYearProgramType = selectFragmentById(
+    state,
+    `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`
+  )?.answer?.entry;
+  const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
+  const programFromStatus = state.reportStatus[reportStatusCode].programType;
+  return previousYearProgramType || programFromStatus;
+};
+
 /**
  * This function checks to see if a question should display based on an answer from a different question
  * @function shouldDisplay
  * @param {object} state - The application state from redux, the object required for jsonpath to query
  * @param {object} context - the context_data from a question
- * @param {string} programType - program type of the user's state
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
-const shouldDisplay = (state, context, programType = null) => {
-  let program, reportStatusCode;
+const shouldDisplay = (state, context) => {
   if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
-  if (!programType) {
-    // If program type is not provided as an argument (the user is a bus_user, co_user), use the value for program type present in state
-    if (state.stateUser.currentUser.role === AppRoles.STATE_USER) {
-      reportStatusCode = state.stateUser.abbr + state.global.formYear;
-    } else {
-      reportStatusCode = state.formData[0].stateId + state.formData[0].year;
-    }
-    program = state.reportStatus[reportStatusCode].programType;
-  } else {
-    program = programType;
-  }
 
   if (
     !context ||
@@ -201,6 +213,7 @@ const shouldDisplay = (state, context, programType = null) => {
    * displaying relies on that answer being included in the show_if_state_program_type_in array
    */
   if (context.show_if_state_program_type_in) {
+    const program = getProgramTypeFromForm(state);
     return context.show_if_state_program_type_in.includes(program);
   }
 
