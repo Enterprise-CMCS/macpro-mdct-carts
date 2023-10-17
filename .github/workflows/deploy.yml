@@ -44,17 +44,14 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
       - name: Configure AWS credentials for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: read .nvmrc
-        id: node_version
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-      - uses: actions/cache@v2
+          node-version-file: ".nvmrc"
+      - uses: actions/cache@v3
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
@@ -65,7 +62,7 @@ jobs:
         run: ./test-unit.sh
       - name: publish test coverage to code climate
         if: env.CODE_CLIMATE_ID != ''
-        uses: paambaati/codeclimate-action@v2.7.5
+        uses: paambaati/codeclimate-action@v5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
         with:
@@ -73,7 +70,7 @@ jobs:
             ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov
             ${{github.workspace}}/services/ui-src/coverage/lcov.info:lcov
       - name: Store unit test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: unit_test_results
           path: ${{github.workspace}}/services/ui-src/coverage/lcov.info
@@ -85,7 +82,7 @@ jobs:
       - id: endpoint
         run: |
           APPLICATION_ENDPOINT=$(./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name)
-          echo ::set-output name=application_endpoint::$APPLICATION_ENDPOINT
+          echo "application_endpoint=$APPLICATION_ENDPOINT" >> $GITHUB_OUTPUT
           echo "## Application Endpoint" >> $GITHUB_STEP_SUMMARY
           echo "<$APPLICATION_ENDPOINT>" >> $GITHUB_STEP_SUMMARY
         working-directory: services
@@ -110,12 +107,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v3.0.3
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
           spec: tests/integration/*.spec.js
           browser: chrome
-          headless: true
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
           wait-on: ${{ needs.deploy.outputs.application_endpoint }}
           env: true
@@ -124,10 +120,8 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
-          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
-          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
@@ -143,12 +137,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check Project A11y
-        uses: cypress-io/github-action@v3.0.3
+        uses: cypress-io/github-action@v5
         with:
           working-directory: tests/cypress
           spec: tests/a11y/*.spec.js
           browser: chrome
-          headless: true
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
           wait-on: ${{ needs.deploy.outputs.application_endpoint }}
           env: true
@@ -157,10 +150,8 @@ jobs:
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
-          CYPRESS_REVIEWER_USER_EMAIL: ${{ secrets.CYPRESS_REVIEWER_USER_EMAIL }}
-          CYPRESS_REVIEWER_USER_PASSWORD: ${{ secrets.CYPRESS_REVIEWER_USER_PASSWORD }}
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots

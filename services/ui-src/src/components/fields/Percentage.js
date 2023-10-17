@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system";
-import { generateQuestionNumber } from "../Utils/helperFunctions";
+import { generateQuestionNumber } from "../utils/helperFunctions";
 
 const Percentage = ({ onChange, question, ...props }) => {
   const [error, setError] = useState(false);

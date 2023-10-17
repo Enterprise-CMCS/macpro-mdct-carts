@@ -266,7 +266,7 @@ class UploadComponent extends Component {
             className="file_upload"
             disabled={!submissionsAllowed}
             errorMessage={this.state.inputErrors}
-            hint="You can only upload PDF, Word, Excel, JPG or PNG files."
+            hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)."
             label="Click Choose Files and make your selection(s) then click Upload to attach your files. Click View Uploaded to see a list of all files attached here."
             multiple
             name={this.props.question.id}

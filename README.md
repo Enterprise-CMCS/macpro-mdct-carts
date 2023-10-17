@@ -61,16 +61,6 @@ There are two mechanisms for seeding data.
   - This is useful for deploying data such as section base templates, and keeping it up to date with the code base.
   - Adding specific test seed data to environments may be useful for things like cypress tests. This can be accomplished with the test-tables directory, referencing the same seed-local tables if desired.
 
-### V2 Data Migration
-
-The data migration for v2 -> v3 is controlled via ssm parameters, and can be kicked off in an env on deploy by setting /configuration/{env}/runV2DataMigration. If you have access to the v2 databases.
-, it can also be run to write v2 data into the local database by setting the runV2DataMigration env flag to true, and invoking the function with:
-
-```aws lambda invoke /dev/null \
-  --endpoint-url http://localhost:3003 \
-  --function-name database-local-dataMigration
-```
-
 ### Local Development Random Info
 
 Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
@@ -97,6 +87,33 @@ It should be noted that while logged in as a state user, the download template b
 - Git add/commit/push the branch with the above change to git.
 - After the deploy action runs on branch being pushed, you should see the bucket now lives in s3 with a name that resembles uploads-AddYourBranchNameHere!-carts-download
 - You'll then want to actually upload the document you want to see! Currently, the key is set to look for a file called "FFY_2021_CARTS_Template.pdf", but you can swap that out in the services/app-api/handlers/fiscalYearTemplate/get.ts file.
+
+## Adding a new Yearly Form
+
+Refer to [this walkthrough](services/database/YEARLY_UPDATE.md) for steps to take when adding a new annual form.
+
+## SEDS Data
+
+SEDS CHIP Data regarding enrollment counts is populated into Section 2 Part 1.
+
+This is accomplished by the setup in the `services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js` service, which sets up a listener on the topic `aws.mdct.seds.cdc.state-forms.v0`.
+
+When a message is kicked off, the process sorts the update into updates for the prior year or current year, and fills out an enrollments table based on that info.
+
+In the UI, when a user is filling out the form, those numbers are loaded into the table and require a user saving the submission to update the CARTS section.
+
+On the SEDS side, this topic is updated on every submission of seds data, but CARTS filters based the following:
+
+- current and prior year
+- 4th quarter data.
+- The rollover for a "new year" is October, and future submissions are not recognized until that threshold
+
+Updates outside of that time frame will need to be manually corrected in CARTS, or the integration will need to be modifed to collect data for old forms. CARTS additionally looks for the `enrollmentCounts` property which is only included in forms 21E and 64.21E (question 7), either by manual trigger or update. See SEDS files:
+
+- [generateEnrollmentTotals](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/generateEnrollmentTotals.js)
+- [updateStateForms](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/updateStateForms.js)
+
+For testing convenience, stateuser2 points at AL in CARTS and the stateuser points at AL in SEDS.
 
 ## Copyright and license
 
