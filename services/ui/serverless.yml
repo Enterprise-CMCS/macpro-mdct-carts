@@ -207,7 +207,7 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             FunctionAssociations:
               - EventType: viewer-response
-                FunctionARN: !GetAtt HstsCloudfrontFunction.FunctionMetadata.FunctionARN
+                FunctionARN: !GetAtt HeadersCloudfrontFunction.FunctionMetadata.FunctionARN
           ViewerCertificate:
             Fn::If:
               - CreateCustomCloudFrontDomain
@@ -234,7 +234,7 @@ resources:
           HostedZoneId: Z2FDTNDATAQYW2
           EvaluateTargetHealth: false
         Type: A
-    HstsCloudfrontFunction:
+    HeadersCloudfrontFunction:
       Type: AWS::CloudFront::Function
       Properties:
         AutoPublish: true
@@ -243,6 +243,7 @@ resources:
             var response = event.response;
             var headers = response.headers;
             headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload'};
+            headers['x-frame-options'] = { value: 'DENY' };
             return response;
           }
         FunctionConfig:
