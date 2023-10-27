@@ -88,9 +88,9 @@ class UploadComponent extends Component {
       });
 
       if (this.state.displayUploadedFiles === false) {
-        return await this.viewUploaded();
+        await this.viewUploaded();
       } else {
-        return await this.retrieveUploadedFiles();
+        await this.retrieveUploadedFiles();
       }
     }
   };
@@ -107,12 +107,12 @@ class UploadComponent extends Component {
 
       const xhr = new XMLHttpRequest();
       xhr.open("POST", presignedPostData.url, true);
-      xhr.send(formData);
       xhr.onload = function () {
         this.status === 204
           ? resolve(`Resolved: ${this.response}`)
           : reject(`Rejected: ${this.responseText}`);
       };
+      xhr.send(formData);
     });
   };
 
@@ -276,13 +276,14 @@ class UploadComponent extends Component {
         </div>
 
         {this.state.loadedFiles
-          ? this.state.loadedFiles.map((element) => (
+          ? this.state.loadedFiles.map((element, i) => (
               <div key={element.name}>
                 <a href={element.name} download>
                   {" "}
                   {element.name}{" "}
                 </a>
                 <Button
+                  data-testid={`unstage-${i}`}
                   name={element.name}
                   onClick={this.removeFile}
                   size="small"
@@ -313,6 +314,7 @@ class UploadComponent extends Component {
         {this.state.displayUploadedFiles &&
         this.state.uploadedFiles?.length > 0 ? (
           <table
+            data-testid="uploadedFilesContainer"
             key={"uploadedFilesContainer"}
             summary={
               this.props.question.label ||
