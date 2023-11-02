@@ -4,7 +4,6 @@ import "react-data-table-component-extensions/dist/index.css";
 import { Button } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
 import { apiLib } from "../../util/apiLib";
-import { useFlags } from "launchdarkly-react-client-sdk";
 
 const FormTemplates = () => {
   const history = useHistory();
@@ -25,8 +24,7 @@ const FormTemplates = () => {
     setInprogress(false);
   };
 
-  const release2023 = useFlags().release2023;
-  const defaultYear = release2023 ? "2023" : "2022";
+  const defaultYear = "2023";
 
   return (
     <>
@@ -40,7 +38,7 @@ const FormTemplates = () => {
           data-testid="generate-forms-options"
           defaultValue={defaultYear}
         >
-          {release2023 && <option value="2023">2023</option>}
+          <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
         </select>
