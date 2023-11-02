@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, TextField } from "@cmsgov/design-system";
-import requestOptions from "../../hooks/authHooks/requestOptions";
 import { setAnswerEntry } from "../../actions/initial";
 import { REPORT_STATUS, AppRoles } from "../../types";
-import { apiLib } from "../../util/apiLib";
+import {
+  recordFileInDatabaseAndGetUploadUrl,
+  uploadFileToS3,
+  getFileDownloadUrl,
+  getUploadedFiles,
+  deleteUploadedFile,
+} from "../../util/fileApi";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -59,24 +64,14 @@ class UploadComponent extends Component {
     const questionId = this.props.question.id;
 
     for (const uploadedFile of loadedFiles) {
-      // *** obtain signed URL
-      const body = {
-        uploadedFileName: uploadedFile.name,
-        uploadedFileType: uploadedFile.type,
+      const presignedPostData = await recordFileInDatabaseAndGetUploadUrl(
+        year,
+        stateCode,
         questionId,
-      };
-      const opts = await requestOptions(body);
-      const response = await apiLib.post(
-        "carts-api",
-        `/psUrlUpload/${year}/${stateCode}`,
-        opts
+        uploadedFile
       );
-      const presignedPostData = {
-        url: response.psurl,
-        fields: response.psdata,
-      };
 
-      await this.uploadFileToS3(presignedPostData, uploadedFile);
+      await uploadFileToS3(presignedPostData, uploadedFile);
 
       const filteredStateFiles = loadedFiles.filter(
         (e) => e.name !== uploadedFile.name
@@ -93,27 +88,6 @@ class UploadComponent extends Component {
         await this.retrieveUploadedFiles();
       }
     }
-  };
-
-  uploadFileToS3 = (presignedPostData, file) => {
-    return new Promise((resolve, reject) => {
-      const formData = new FormData();
-
-      Object.keys(presignedPostData.fields).forEach((key) => {
-        formData.append(key, presignedPostData.fields[key]);
-      });
-
-      formData.append("file", file);
-
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", presignedPostData.url, true);
-      xhr.onload = function () {
-        this.status === 204
-          ? resolve(`Resolved: ${this.response}`)
-          : reject(`Rejected: ${this.responseText}`);
-      };
-      xhr.send(formData);
-    });
   };
 
   viewUploaded = async () => {
@@ -144,14 +118,7 @@ class UploadComponent extends Component {
 
   downloadFile = async (fileId) => {
     const { year, stateCode } = this.props;
-    const opts = await requestOptions({ fileId });
-    const response = await apiLib.post(
-      "carts-api",
-      `/psUrlDownload/${year}/${stateCode}`,
-      opts
-    );
-    const { psurl } = response;
-    window.location.href = psurl;
+    window.location.href = await getFileDownloadUrl(year, stateCode, fileId);
   };
 
   retrieveUploadedFiles = async () => {
@@ -162,17 +129,7 @@ class UploadComponent extends Component {
       uploadedFilesRetrieved: false,
     });
 
-    const body = {
-      stateCode,
-      questionId,
-    };
-    const opts = await requestOptions(body);
-    const response = await apiLib
-      .post("carts-api", `/uploads/${year}/${stateCode}`, opts)
-      .catch((error) => {
-        console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
-      });
-    const uploadedFiles = response ? response : [];
+    const uploadedFiles = await getUploadedFiles(year, stateCode, questionId);
     // *** hide the loading preloader
     this.setState({
       uploadedFilesRetrieved: true,
@@ -183,12 +140,7 @@ class UploadComponent extends Component {
   deleteFile = async (fileId) => {
     const { year, stateCode } = this.props;
 
-    const opts = await requestOptions({ fileId });
-    await apiLib
-      .del("carts-api", `/uploads/${year}/${stateCode}`, opts)
-      .catch((error) => {
-        console.log("!!!Error retrieving files: ", error); // eslint-disable-line no-console
-      });
+    await deleteUploadedFile(year, stateCode, fileId);
 
     await this.retrieveUploadedFiles();
   };

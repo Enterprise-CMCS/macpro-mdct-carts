@@ -4,9 +4,9 @@ import userEventLib from "@testing-library/user-event";
 import { within } from "@testing-library/dom";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { updateTimeout } from "../../hooks/authHooks";
 import UploadComponent from "./UploadComponent";
 import { AppRoles, REPORT_STATUS } from "../../types";
+import fileApi from "../../util/fileApi";
 
 // TODO remove direct dependency on @testing-library/dom ?
 
@@ -17,130 +17,13 @@ import { AppRoles, REPORT_STATUS } from "../../types";
  */
 const userEvent = userEventLib.setup({ applyAccept: false });
 
-const mockApi = {
-  reset() {
-    this.uploadedFileList = [];
-    this.currentFileId = 0;
-  },
-  uploadedFileList: [],
-  currentFileId: 0,
-  generateId() {
-    this.currentFileId += 1;
-    return this.currentFileId;
-  },
-  getUploadUrl: jest.fn().mockImplementation((requestBody) => {
-    const { uploadedFileName, uploadedFileType, questionId } = requestBody;
-    expect(uploadedFileType).toBeTruthy();
-    mockApi.uploadedFileList.push({
-      aws_filename: `${questionId}-${uploadedFileName}`,
-      filename: uploadedFileName,
-      fileId: mockApi.generateId(),
-    });
-    return Promise.resolve({
-      psurl: `my/s3/path/${questionId}-${uploadedFileName}`,
-      psdata: { "X-Amz-Signature": "secret" },
-    });
-  }),
-  getDownloadUrl: jest.fn().mockImplementation((requestBody) => {
-    const { fileId } = requestBody;
-    return Promise.resolve({
-      psurl: `my/s3/path/${fileId}`,
-    });
-  }),
-  getUploadedFiles: jest.fn().mockImplementation((requestBody) => {
-    const { stateCode, questionId } = requestBody;
-    expect(stateCode).toBe("AL");
-    expect(questionId).toBe("mock-question-1");
-    return Promise.resolve([...mockApi.uploadedFileList]);
-  }),
-  deleteFile: jest.fn().mockImplementation((requestBody) => {
-    const { fileId } = requestBody;
-    mockApi.uploadedFileList = mockApi.uploadedFileList.filter(
-      (file) => file.fileId !== fileId
-    );
-    return Promise.resolve();
-  }),
-};
-
-jest.mock("aws-amplify", () => ({
-  Auth: {
-    currentSession: jest.fn().mockReturnValue({
-      getIdToken: () => ({
-        getJwtToken: () => {
-          return "eyJhdXRoIjoidHJ1c3QgbWUgYnJvIn0="; // pragma: allowlist secret
-        },
-      }),
-    }),
-  },
-  API: {
-    post: jest.fn((api, url, request) => {
-      expect(api).toBe("carts-api");
-      const token = JSON.parse(
-        Buffer.from(request.headers["x-api-key"], "base64")
-      );
-      expect(token.auth).toBe("trust me bro");
-
-      switch (url) {
-        case "/psUrlUpload/2023/AL":
-          return mockApi.getUploadUrl(request.body);
-        case "/psUrlDownload/2023/AL":
-          return mockApi.getDownloadUrl(request.body);
-        case "/uploads/2023/AL":
-          return mockApi.getUploadedFiles(request.body);
-        default:
-          throw new Error(`POST URL not mocked: ${url}`);
-      }
-    }),
-    del: jest.fn((api, url, request) => {
-      expect(api).toBe("carts-api");
-      const token = JSON.parse(
-        Buffer.from(request.headers["x-api-key"], "base64")
-      );
-      expect(token.auth).toBe("trust me bro");
-
-      switch (url) {
-        case "/uploads/2023/AL":
-          return mockApi.deleteFile(request.body);
-        default:
-          throw new Error(`DELETE URL not mocked: ${url}`);
-      }
-    }),
-  },
+jest.mock("../../util/fileApi", () => ({
+  recordFileInDatabaseAndGetUploadUrl: jest.fn(),
+  uploadFileToS3: jest.fn(),
+  getFileDownloadUrl: jest.fn(),
+  getUploadedFiles: jest.fn(),
+  deleteUploadedFile: jest.fn(),
 }));
-
-jest.mock("../../hooks/authHooks", () => ({
-  updateTimeout: jest.fn(),
-}));
-
-const s3PostRequestMock = {
-  reset() {
-    this.shouldSucceed = true;
-    this.status = undefined;
-    this.response = undefined;
-    this.responseText = undefined;
-    this.onload = undefined;
-  },
-  open: jest.fn().mockImplementation((verb, url, isAsync) => {
-    expect(verb).toBe("POST");
-    expect(url).toMatch(/my\/s3\/path\/mock-question-1-.+/);
-    expect(isAsync).toBe(true);
-  }),
-  send: jest.fn().mockImplementation((data) => {
-    expect(data instanceof FormData).toBe(true);
-    expect(data.get("X-Amz-Signature")).toBe("secret");
-    expect(data.get("file")).not.toBeUndefined();
-    expect(data.get("file").size).toBeGreaterThan(0);
-    expect(data.get("file").name).toBeTruthy();
-    if (s3PostRequestMock.shouldSucceed) {
-      s3PostRequestMock.status = 204;
-      s3PostRequestMock.response = "All good, yo";
-    } else {
-      s3PostRequestMock.status = 500;
-      s3PostRequestMock.responseText = "That's bad, yo";
-    }
-    s3PostRequestMock.onload();
-  }),
-};
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -189,22 +72,9 @@ const TestUploadComponent = (
 );
 
 describe("UploadComponent", () => {
-  jest
-    .spyOn(window, "XMLHttpRequest")
-    .mockImplementation(() => s3PostRequestMock);
   beforeEach(() => {
     jest.clearAllMocks();
-    mockApi.reset();
-    s3PostRequestMock.reset();
   });
-
-  const seedPreviouslyUploadedFile = async () => {
-    await mockApi.getUploadUrl({
-      uploadedFileName: "previousUpload.xls",
-      uploadedFileType: "application/vnd.ms-excel",
-      questionId: "mock-question-1",
-    });
-  };
 
   const getUploadInput = () =>
     screen.getByLabelText("Click Choose Files and make your selection(s)", {
@@ -230,15 +100,8 @@ describe("UploadComponent", () => {
     const uploadButton = screen.getByText("Upload");
     await userEvent.click(uploadButton);
 
-    // The file made it to the database
-    expect(mockApi.uploadedFileList.length).toBe(1);
-
-    // The file made it to S3
-    expect(s3PostRequestMock.open).toBeCalled();
-    expect(s3PostRequestMock.send).toBeCalled();
-
-    // The session timeout was updated
-    expect(updateTimeout).toBeCalled();
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalled();
+    expect(fileApi.uploadFileToS3).toBeCalled();
   });
 
   test("Should upload multiple files to the DB and S3", async () => {
@@ -250,11 +113,8 @@ describe("UploadComponent", () => {
     const uploadButton = screen.getByText("Upload");
     await userEvent.click(uploadButton);
 
-    // The files made it to the database
-    expect(mockApi.uploadedFileList.length).toBe(3);
-
-    // The files made it to S3
-    expect(s3PostRequestMock.send).toBeCalledTimes(3);
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalledTimes(3);
+    expect(fileApi.uploadFileToS3).toBeCalledTimes(3);
   });
 
   /**
@@ -263,7 +123,9 @@ describe("UploadComponent", () => {
    */
   test.skip("Should fail gracefully when S3 returns an error", async () => {
     render(TestUploadComponent);
-    s3PostRequestMock.shouldSucceed = false;
+    fileApi.uploadFileToS3.mockImplementationOnce(() => {
+      throw new Error("Upload failed");
+    });
 
     const input = getUploadInput();
     await userEvent.upload(input, mockJpg);
@@ -351,7 +213,11 @@ describe("UploadComponent", () => {
   });
 
   test("Should display previously-uploaded files", async () => {
-    await seedPreviouslyUploadedFile();
+    fileApi.getUploadedFiles.mockReturnValue([
+      {
+        filename: "previousUpload.xls",
+      },
+    ]);
 
     render(TestUploadComponent);
 
@@ -359,6 +225,18 @@ describe("UploadComponent", () => {
   });
 
   test("Should display files after uploading them", async () => {
+    fileApi.recordFileInDatabaseAndGetUploadUrl.mockImplementation(
+      (_year, _stateCode, _questionId, file) => {
+        fileApi.getUploadedFiles.mockImplementation(() => {
+          return [
+            {
+              filename: file.name,
+            },
+          ];
+        });
+      }
+    );
+
     render(TestUploadComponent);
 
     const input = getUploadInput();
@@ -383,7 +261,11 @@ describe("UploadComponent", () => {
   });
 
   test("Should not display uploaded files if told not to", async () => {
-    await seedPreviouslyUploadedFile();
+    fileApi.getUploadedFiles.mockReturnValue([
+      {
+        filename: "previousUpload.xls",
+      },
+    ]);
 
     render(TestUploadComponent);
 
@@ -409,9 +291,19 @@ describe("UploadComponent", () => {
     await userEvent.click(uploadButton);
 
     // Only those files made it to the database
-    const uploadedFileNames = mockApi.uploadedFileList.map((file) => file.name);
-    expect(uploadedFileNames.length).toBe(2);
-    expect(uploadedFileNames).not.toContain(mockPng.name);
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalledTimes(2);
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalledWith(
+      "2023",
+      "AL",
+      "mock-question-1",
+      mockJpg
+    );
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalledWith(
+      "2023",
+      "AL",
+      "mock-question-1",
+      mockPdf
+    );
   });
 
   test("Should allow users to download uploaded files", async () => {
@@ -424,7 +316,12 @@ describe("UploadComponent", () => {
     delete window.location;
     window.location = { href: "" };
 
-    await seedPreviouslyUploadedFile();
+    fileApi.getUploadedFiles.mockReturnValue([
+      {
+        filename: "previousUpload.xls",
+      },
+    ]);
+    fileApi.getFileDownloadUrl.mockReturnValue("my/s3/path/1");
 
     render(TestUploadComponent);
 
@@ -437,14 +334,18 @@ describe("UploadComponent", () => {
   });
 
   test("Should allow users to delete previously-uploaded files", async () => {
-    await seedPreviouslyUploadedFile();
+    fileApi.getUploadedFiles.mockReturnValue([
+      {
+        filename: "previousUpload.xls",
+      },
+    ]);
 
     render(TestUploadComponent);
 
     const deleteButton = await screen.findByText("Delete");
     await userEvent.click(deleteButton);
 
-    expect(mockApi.uploadedFileList.length).toBe(0);
+    expect(fileApi.deleteUploadedFile).toBeCalled();
   });
 
   test.skip("Should not allow admin users to upload files", () => {
