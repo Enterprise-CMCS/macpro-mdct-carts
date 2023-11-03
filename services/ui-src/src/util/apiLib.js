@@ -24,8 +24,8 @@ const del = (api, uri, opts) => {
 };
 
 export const apiLib = {
-  get,
   post,
   put,
+  get,
   del,
 };
