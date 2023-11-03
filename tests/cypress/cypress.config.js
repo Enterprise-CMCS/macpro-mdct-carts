@@ -14,7 +14,7 @@ module.exports = defineConfig({
   downloadsFolder: "downloads",
   types: ["cypress", "cypress-axe"],
   env: {
-    STATE_USER_EMAIL: "cypressstateuser@test.com",
+    STATE_USER_EMAIL: "stateuser2@test.com",
     ADMIN_USER_EMAIL: "cypressadminuser@test.com",
   },
   e2e: {
