@@ -99,8 +99,8 @@ const CMSHomepage = ({
   let stateStatuses;
 
   if (
-    filteredStatuses.length > 0 &&
-    filteredStatuses[0].stateCode === "status"
+    filteredStatuses?.length > 0 &&
+    filteredStatuses?.[0]?.stateCode === "status"
   ) {
     stateStatuses = allStateStatuses;
   } else {
@@ -170,7 +170,7 @@ const CMSHomepage = ({
                     <Button
                       type="button"
                       data-cy="cms-homepage-filter-submit"
-                      class="ds-c-button ds-c-button--primary filter-button"
+                      className="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => filterReports()}
                     >
                       Filter
@@ -178,7 +178,7 @@ const CMSHomepage = ({
                     <Button
                       type="button"
                       data-cy="cms-homepage-filter-clear"
-                      class="ds-c-button ds-c-button--primary filter-button"
+                      className="ds-c-button ds-c-button--primary filter-button"
                       onClick={() => clearFilter()}
                     >
                       Clear
@@ -198,7 +198,7 @@ const CMSHomepage = ({
               </div>
               <div data-cy="cms-homepage-reports" className="report-status">
                 {stateStatuses
-                  .sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
+                  ?.sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
                   .map(
                     ({
                       state,
@@ -241,10 +241,10 @@ const CMSHomepage = ({
 CMSHomepage.propTypes = {
   getStatuses: PropTypes.func.isRequired,
   allStateStatuses: PropTypes.object.isRequired,
-  currentYear: PropTypes.object.isRequired,
+  currentYear: PropTypes.number.isRequired,
   currentUserRole: PropTypes.string.isRequired,
-  stateList: PropTypes.object.isRequired,
-  yearList: PropTypes.object.isRequired,
+  stateList: PropTypes.array.isRequired,
+  yearList: PropTypes.array.isRequired,
   reportState: PropTypes.object.isRequired,
 };
 
