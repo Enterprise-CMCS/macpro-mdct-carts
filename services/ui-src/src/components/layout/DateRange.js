@@ -246,7 +246,7 @@ class DateRange extends Component {
               data-test="component-daterange-monthstart"
               name="monthStart"
               numeric
-              label=""
+              label="range start month"
               onChange={this.handleInput}
               onBlur={this.validateStartInput}
               value={monthStart}
@@ -256,7 +256,7 @@ class DateRange extends Component {
             <TextField
               className="ds-c-field--small"
               name="yearStart"
-              label=""
+              label="range start year"
               onChange={this.handleInput}
               onBlur={this.validateStartInput}
               numeric
@@ -289,7 +289,7 @@ class DateRange extends Component {
               className="ds-c-field--small"
               name="monthEnd"
               numeric
-              label=""
+              label="range end month"
               onChange={this.handleInput}
               onBlur={this.validateEndInput}
               value={monthEnd}
@@ -300,7 +300,7 @@ class DateRange extends Component {
             <TextField
               className="ds-c-field--small"
               name="yearEnd"
-              label=""
+              label="range end year"
               onChange={this.handleInput}
               onBlur={this.validateEndInput}
               numeric
