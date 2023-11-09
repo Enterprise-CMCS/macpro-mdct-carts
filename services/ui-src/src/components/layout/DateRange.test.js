@@ -1,10 +1,12 @@
 import React from "react";
 import { screen, render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import userEventLib from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
 import DateRange from "./DateRange";
+
+const userEvent = userEventLib.setup();
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -53,11 +55,11 @@ describe("DateRange Component", () => {
     mockPropsExistingAnswer.question.answer.entry = originalEntry;
   });
 
-  test("Displays error text when end month is empty", () => {
+  test("Displays error text when end month is empty", async () => {
     render(dateRangeComponent);
 
     const endYearInput = screen.getByLabelText("range end year");
-    userEvent.type(endYearInput, "2023");
+    await userEvent.type(endYearInput, "2023");
     endYearInput.dispatchEvent(new Event("blur"));
 
     // eslint-disable-next-line multiline-comment-style
@@ -66,11 +68,11 @@ describe("DateRange Component", () => {
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
-  test("Displays error text when end year is empty", () => {
+  test("Displays error text when end year is empty", async () => {
     render(dateRangeComponent);
 
     const endMonthInput = screen.getByLabelText("range end month");
-    userEvent.type(endMonthInput, "06");
+    await userEvent.type(endMonthInput, "06");
     endMonthInput.dispatchEvent(new Event("blur"));
 
     // eslint-disable-next-line multiline-comment-style
@@ -79,11 +81,11 @@ describe("DateRange Component", () => {
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
-  test("Displays error text when start month is empty", () => {
+  test("Displays error text when start month is empty", async () => {
     render(dateRangeComponent);
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "2023");
+    await userEvent.type(startYearInput, "2023");
     startYearInput.dispatchEvent(new Event("blur"));
 
     // eslint-disable-next-line multiline-comment-style
@@ -92,14 +94,14 @@ describe("DateRange Component", () => {
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
-  test("Displays error text when start month is too long", () => {
+  test("Displays error text when start month is too long", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "006");
+    await userEvent.type(startMonthInput, "006");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "2023");
+    await userEvent.type(startYearInput, "2023");
     startYearInput.dispatchEvent(new Event("blur"));
 
     expect(
@@ -107,27 +109,27 @@ describe("DateRange Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("Displays error text when start month is non-numeric", () => {
+  test("Displays error text when start month is non-numeric", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "🚮");
+    await userEvent.type(startMonthInput, "🚮");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "2023");
+    await userEvent.type(startYearInput, "2023");
     startYearInput.dispatchEvent(new Event("blur"));
 
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
-  test("Displays error text when start month is out of range", () => {
+  test("Displays error text when start month is out of range", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "13");
+    await userEvent.type(startMonthInput, "13");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "2023");
+    await userEvent.type(startYearInput, "2023");
     startYearInput.dispatchEvent(new Event("blur"));
 
     expect(
@@ -135,11 +137,11 @@ describe("DateRange Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("Displays error text when start year is empty", () => {
+  test("Displays error text when start year is empty", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "11");
+    await userEvent.type(startMonthInput, "11");
 
     const startYearInput = screen.getByLabelText("range start year");
     startYearInput.dispatchEvent(new Event("blur"));
@@ -150,14 +152,14 @@ describe("DateRange Component", () => {
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
-  test("Displays error text when start year is too long", () => {
+  test("Displays error text when start year is too long", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "11");
+    await userEvent.type(startMonthInput, "11");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "02023");
+    await userEvent.type(startYearInput, "02023");
     startYearInput.dispatchEvent(new Event("blur"));
 
     expect(
@@ -165,46 +167,46 @@ describe("DateRange Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("Displays error text when start year is non-numeric", () => {
+  test("Displays error text when start year is non-numeric", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "11");
+    await userEvent.type(startMonthInput, "11");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "twenty-twenty-three");
+    await userEvent.type(startYearInput, "twenty-twenty-three");
     startYearInput.dispatchEvent(new Event("blur"));
 
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
-  test("Displays error text when start year is out of range", () => {
+  test("Displays error text when start year is out of range", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "11");
+    await userEvent.type(startMonthInput, "11");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "1619");
+    await userEvent.type(startYearInput, "1619");
     startYearInput.dispatchEvent(new Event("blur"));
 
     expect(screen.queryByText("Please enter a valid Year")).toBeInTheDocument();
   });
 
-  test("Displays error text when the range start is after the range end", () => {
+  test("Displays error text when the range start is after the range end", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "10");
+    await userEvent.type(startMonthInput, "10");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "2022");
+    await userEvent.type(startYearInput, "2022");
 
     const endMonthInput = screen.getByLabelText("range end month");
-    userEvent.type(endMonthInput, "09");
+    await userEvent.type(endMonthInput, "09");
 
     const endYearInput = screen.getByLabelText("range end year");
-    userEvent.type(endYearInput, "2021");
+    await userEvent.type(endYearInput, "2021");
 
     endYearInput.dispatchEvent(new Event("blur"));
 
@@ -213,20 +215,20 @@ describe("DateRange Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("Fires onChange when all data is valid", () => {
+  test("Fires onChange when all data is valid", async () => {
     render(dateRangeComponent);
 
     const startMonthInput = screen.getByLabelText("range start month");
-    userEvent.type(startMonthInput, "10");
+    await userEvent.type(startMonthInput, "10");
 
     const startYearInput = screen.getByLabelText("range start year");
-    userEvent.type(startYearInput, "2022");
+    await userEvent.type(startYearInput, "2022");
 
     const endMonthInput = screen.getByLabelText("range end month");
-    userEvent.type(endMonthInput, "09");
+    await userEvent.type(endMonthInput, "09");
 
     const endYearInput = screen.getByLabelText("range end year");
-    userEvent.type(endYearInput, "2023");
+    await userEvent.type(endYearInput, "2023");
 
     endYearInput.dispatchEvent(new Event("blur"));
 
