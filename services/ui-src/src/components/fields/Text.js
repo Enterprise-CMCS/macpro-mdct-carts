@@ -91,14 +91,13 @@ Text.propTypes = {
   state: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   year: PropTypes.number.isRequired,
-  lastYearFormData: PropTypes.object.isRequired,
+  lastYearFormData: PropTypes.array.isRequired,
 };
 
 const mapState = (state) => ({
   state: state.formData[0].contents?.section?.state,
   year: state.formData[0].contents.section.year,
   lastYearFormData: state.lastYearFormData,
-  lastYearTotals: state.lastYearTotals,
 });
 
 export default connect(mapState)(Text);
