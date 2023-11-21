@@ -6,8 +6,7 @@ import {
   mapIdmRoleToAppRole,
   UserCredentials,
 } from "../authorization";
-import { AppRoles, IdmRoles } from "../../types";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { AppRoles, IdmRoles, APIGatewayProxyEvent } from "../../types";
 
 const mockedDecode = jest.fn();
 

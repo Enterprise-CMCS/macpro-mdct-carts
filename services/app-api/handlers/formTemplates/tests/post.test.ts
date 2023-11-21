@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { AppRoles } from "../../../types";
+import { AppRoles, APIGatewayProxyEvent } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 import { post } from "../post";
 

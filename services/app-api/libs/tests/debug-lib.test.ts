@@ -1,4 +1,3 @@
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../test-util/testEvents";
 import debug, { clearLogs, flush, init } from "../debug-lib";
 

@@ -1,7 +1,6 @@
 import { SSM } from "aws-sdk";
-import { APIGatewayProxyEvent } from "aws-lambda";
 import jwt_decode from "jwt-decode";
-import { IdmRoles, AppRoles } from "../types";
+import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 
 // prettier-ignore

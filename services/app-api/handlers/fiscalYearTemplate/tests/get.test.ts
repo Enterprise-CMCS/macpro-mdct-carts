@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 jest.useFakeTimers();
 import { getFiscalYearTemplateLink } from "../get";
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
+import { APIGatewayProxyEvent } from "../../../types";
 import { testEvent } from "../../../test-util/testEvents";
 
 jest.mock("../../../libs/authorization", () => ({

@@ -1,5 +1,5 @@
 import * as debug from "./debug-lib";
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
+import { APIGatewayProxyEvent } from "../types";
 import { isAuthorized } from "./authorization";
 import { failure, success, buildResponse } from "./response-lib";
 import { NotFoundError, UnauthorizedError } from "./httpErrors";
