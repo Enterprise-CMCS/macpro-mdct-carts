@@ -1,5 +1,9 @@
 /* eslint-disable no-console */
-var aws = require("aws-sdk");
+var {
+  ECSClient,
+  ListTasksCommand,
+  DescribeTasksCommand,
+} = require("@aws-sdk/client-ecs");
 var lodash = require("lodash");
 var http = require("http");
 
@@ -31,37 +35,37 @@ function myHandler(event, context, callback) {
     return null;
   }
   console.log("Received event:", JSON.stringify(event, null, 2));
-  var ecs = new aws.ECS();
-  var params = {
+  var ecsClient = new ECSClient();
+  var listParams = {
     cluster: process.env.cluster,
   };
-  ecs.listTasks(params, function (err, data) {
-    if (err) console.log(err, err.stack);
-    else {
-      var params = {
+  ecsClient
+    .send(new ListTasksCommand(listParams))
+    .then(function (taskArnsResult) {
+      var describeParams = {
         cluster: process.env.cluster,
-        tasks: data.taskArns,
+        tasks: taskArnsResult.taskArns,
       };
-      ecs.describeTasks(params, function (err, data) {
-        if (err) console.log(err, err.stack);
-        else {
-          data.tasks.forEach((task) => {
-            var ip = lodash.filter(
-              task.attachments[0].details,
-              (x) => x.name === "privateIPv4Address"
-            )[0].value;
-            console.log(`Configuring connector on worker:  ${ip}`);
-            connectors.forEach(function (config) {
-              //console.log(`Configuring connector with config: ${JSON.stringify(config, null, 2)}`);
-              putConnectorConfig(ip, config, function (res) {
-                console.log(res);
-              });
-            });
+      return ecsClient.send(new DescribeTasksCommand(describeParams));
+    })
+    .then(function (describeResult) {
+      describeResult.tasks.forEach((task) => {
+        var ip = lodash.filter(
+          task.attachments[0].details,
+          (x) => x.name === "privateIPv4Address"
+        )[0].value;
+        console.log(`Configuring connector on worker:  ${ip}`);
+        connectors.forEach(function (config) {
+          //console.log(`Configuring connector with config: ${JSON.stringify(config, null, 2)}`);
+          putConnectorConfig(ip, config, function (res) {
+            console.log(res);
           });
-        }
+        });
       });
-    }
-  });
+    })
+    .catch(function (err) {
+      console.log(err, err.stack);
+    });
 }
 
 function putConnectorConfig(workerIp, config, callback) {

@@ -1,3 +1,4 @@
+const { UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 const {
   buildClient,
   convertToDynamoExpression,
@@ -67,7 +68,7 @@ const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
     },
     ...convertToDynamoExpression(enrollmentData),
   };
-  await dynamoClient.update(params).promise();
+  await dynamoClient.send(new UpdateCommand(params));
 };
 
 /**

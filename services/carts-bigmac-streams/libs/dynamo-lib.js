@@ -1,8 +1,10 @@
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
+
 let dynamoClient;
 
 export const buildClient = () => {
   if (dynamoClient) return dynamoClient;
-  const aws = require("aws-sdk");
   const dynamoConfig = {};
   const endpoint = process.env.DYNAMODB_URL;
   if (endpoint) {
@@ -12,7 +14,8 @@ export const buildClient = () => {
   } else {
     dynamoConfig["region"] = "us-east-1";
   }
-  dynamoClient = new aws.DynamoDB.DocumentClient(dynamoConfig);
+  const bareBonesClient = new DynamoDBClient(dynamoConfig);
+  dynamoClient = DynamoDBDocumentClient.from(bareBonesClient);
   return dynamoClient;
 };
 
