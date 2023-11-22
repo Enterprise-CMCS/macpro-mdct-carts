@@ -18,7 +18,6 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 jest.mock("../../../libs/s3-lib", () => ({
   __esModule: true,
   default: {
-    getSignedUrl: jest.fn(),
     deleteObject: jest.fn(),
     createPresignedPost: jest.fn(),
   },

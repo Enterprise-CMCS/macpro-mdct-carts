@@ -18,10 +18,7 @@ jest.mock("../../../libs/s3-lib", () => ({
   default: {
     getSignedUrl: jest.fn(),
     deleteObject: jest.fn(),
-    createPresignedPost: jest.fn().mockReturnValue({
-      url: "http://google.com",
-      fields: "{Headers:{'key':'value'}}",
-    }),
+    createPresignedPost: jest.fn().mockResolvedValue("mock url"),
   },
 }));
 
@@ -51,6 +48,7 @@ describe("Test Create Upload Handler", () => {
     const res = await psUpload(event, null);
 
     expect(res.statusCode).toBe(200);
+    expect(JSON.parse(res.body)).toEqual({ psurl: "mock url" });
     expect(dbLib.update).toHaveBeenCalled();
     expect(s3Lib.createPresignedPost).toHaveBeenCalled();
   });

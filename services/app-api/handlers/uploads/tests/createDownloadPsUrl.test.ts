@@ -23,9 +23,7 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 jest.mock("../../../libs/s3-lib", () => ({
   __esModule: true,
   default: {
-    getSignedUrl: jest.fn().mockReturnValue({
-      url: "http://google.com",
-    }),
+    getSignedDownloadUrl: jest.fn().mockResolvedValue("mock url"),
   },
 }));
 
@@ -55,6 +53,7 @@ describe("Test Create Download Handler", () => {
     const res = await getSignedFileUrl(event, null);
 
     expect(res.statusCode).toBe(200);
+    expect(JSON.parse(res.body)).toEqual({ psurl: "mock url" });
     expect(dbLib.query).toHaveBeenCalledWith(
       expect.objectContaining({
         KeyConditionExpression:
@@ -65,12 +64,10 @@ describe("Test Create Download Handler", () => {
         },
       })
     );
-    expect(s3Lib.getSignedUrl).toHaveBeenCalledWith(
-      "getObject",
+    expect(s3Lib.getSignedDownloadUrl).toHaveBeenCalledWith(
       expect.objectContaining({
         Key: "aws_abc123.png",
         ResponseContentDisposition: `attachment; filename = abc123.png`,
-        Expires: 3600,
       })
     );
   });
