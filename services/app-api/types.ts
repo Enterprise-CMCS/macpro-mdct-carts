@@ -53,7 +53,10 @@ export interface Section {
   year: number;
   stateId: string;
   sectionId: number;
-  contents: object;
+  /** contents contains sections, which have further sub-objects */
+  contents: Record<string, any>;
+  /** This is a date, formatted with `new Date().toString()` */
+  lastChanged: string;
 }
 
 export interface DynamoStateStatusList {
