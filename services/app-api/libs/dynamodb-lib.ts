@@ -21,6 +21,7 @@ import {
   AcsData,
   FmapData,
 } from "../types";
+import { logger } from "./debug-lib";
 
 const localConfig = {
   endpoint: process.env.DYNAMODB_URL,
@@ -29,10 +30,12 @@ const localConfig = {
     accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
     secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
   },
+  logger,
 };
 
 const awsConfig = {
   region: "us-east-1",
+  logger,
 };
 
 export const getConfig = () => {

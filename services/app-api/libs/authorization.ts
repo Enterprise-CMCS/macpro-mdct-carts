@@ -2,6 +2,7 @@ import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import jwt_decode from "jwt-decode";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
 import { CognitoJwtVerifier } from "aws-jwt-verify";
+import { logger } from "../libs/debug-lib";
 
 // prettier-ignore
 interface DecodedToken {
@@ -47,7 +48,7 @@ const loadCognitoValues = async () => {
       userPoolClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
     };
   } else {
-    const ssmClient = new SSMClient();
+    const ssmClient = new SSMClient({ logger });
     const stage = process.env.stage;
     const getParam = async (identifier: string) => {
       const command = new GetParameterCommand({

@@ -63,7 +63,14 @@ const convertToDynamoExpression = (listOfVars) => {
 };
 
 const buildSeedRunner = () => {
-  const dynamoConfig = {};
+  const dynamoConfig = {
+    logger: {
+      debug: console.debug, // eslint-disable-line no-console
+      info: console.info, // eslint-disable-line no-console
+      warn: console.warn, // eslint-disable-line no-console
+      error: console.error, // eslint-disable-line no-console
+    },
+  };
   const endpoint = process.env.DYNAMODB_URL;
   if (endpoint) {
     dynamoConfig.endpoint = endpoint;
