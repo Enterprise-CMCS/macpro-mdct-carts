@@ -1,4 +1,4 @@
-import { SSM } from "aws-sdk";
+import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import jwt_decode from "jwt-decode";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
 import { CognitoJwtVerifier } from "aws-jwt-verify";
@@ -47,29 +47,22 @@ const loadCognitoValues = async () => {
       userPoolClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
     };
   } else {
-    const ssm = new SSM();
-    const stage = process.env.stage!;
-    const userPoolIdParamName = "/" + stage + "/ui-auth/cognito_user_pool_id";
-    const userPoolClientIdParamName =
-      "/" + stage + "/ui-auth/cognito_user_pool_client_id";
-    const userPoolIdParams = {
-      Name: userPoolIdParamName,
+    const ssmClient = new SSMClient();
+    const stage = process.env.stage;
+    const getParam = async (identifier: string) => {
+      const command = new GetParameterCommand({
+        Name: `/${stage}/ui-auth/${identifier}`,
+      });
+      const result = await ssmClient.send(command);
+      return result.Parameter?.Value;
     };
-    const userPoolClientIdParams = {
-      Name: userPoolClientIdParamName,
-    };
-    const userPoolId = await ssm.getParameter(userPoolIdParams).promise();
-    const userPoolClientId = await ssm
-      .getParameter(userPoolClientIdParams)
-      .promise();
-    if (userPoolId.Parameter?.Value && userPoolClientId.Parameter?.Value) {
-      process.env["COGNITO_USER_POOL_ID"] = userPoolId.Parameter?.Value;
-      process.env["COGNITO_USER_POOL_CLIENT_ID"] =
-        userPoolClientId.Parameter?.Value;
-      return {
-        userPoolId: userPoolId.Parameter.Value,
-        userPoolClientId: userPoolClientId.Parameter.Value,
-      };
+
+    const userPoolId = await getParam("cognito_user_pool_id");
+    const userPoolClientId = await getParam("cognito_user_pool_client_id");
+    if (userPoolId && userPoolClientId) {
+      process.env["COGNITO_USER_POOL_ID"] = userPoolId;
+      process.env["COGNITO_USER_POOL_CLIENT_ID"] = userPoolClientId;
+      return { userPoolId, userPoolClientId };
     } else {
       throw new Error("cannot load cognito values");
     }
@@ -77,7 +70,7 @@ const loadCognitoValues = async () => {
 };
 
 export const isAuthorized = async (event: APIGatewayProxyEvent) => {
-  if (!event.headers["x-api-key"]) return false;
+  if (!event.headers?.["x-api-key"]) return false;
 
   // Verifier that expects valid access tokens:
   const cognitoValues = await loadCognitoValues();

@@ -7,6 +7,8 @@ import {
   UserCredentials,
 } from "../authorization";
 import { AppRoles, IdmRoles, APIGatewayProxyEvent } from "../../types";
+import { mockClient } from "aws-sdk-client-mock";
+import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 
 const mockedDecode = jest.fn();
 
@@ -30,10 +32,8 @@ jest.mock("aws-jwt-verify", () => ({
   },
 }));
 
-const { SSM } = require("aws-sdk");
-
-jest.mock("aws-sdk");
-const ssmParamPromise = jest.fn().mockResolvedValue({
+const ssmClientMock = mockClient(SSMClient);
+const mockSsmResponse = {
   Parameter: {
     Name: "NAME",
     Type: "SecureString",
@@ -42,14 +42,7 @@ const ssmParamPromise = jest.fn().mockResolvedValue({
     LastModifiedDate: 1546551668.495,
     ARN: "arn:aws:ssm:ap-southeast-2:123:NAME",
   },
-});
-const ssmGetParameterPromise = jest.fn().mockReturnValue({
-  promise: ssmParamPromise,
-});
-
-SSM.mockImplementation(() => ({
-  getParameter: ssmGetParameterPromise,
-}));
+};
 
 describe("Authorization Lib", () => {
   describe("isAuthorized State User Tests", () => {
@@ -121,16 +114,19 @@ describe("Authorization Lib", () => {
 
     test("authorization should reach out to SSM when missing cognito info", async () => {
       delete process.env["COGNITO_USER_POOL_ID"];
-      delete process.env["COGNITO_USER_POOL_ID"];
+      delete process.env["COGNITO_USER_POOL_CLIENT_ID"];
+      const mockGetSsmParameter = jest.fn().mockResolvedValue(mockSsmResponse);
+      ssmClientMock.on(GetParameterCommand).callsFake(mockGetSsmParameter);
 
       await isAuthorized(event);
-      expect(ssmGetParameterPromise).toHaveBeenCalled();
+      expect(mockGetSsmParameter).toHaveBeenCalled();
     });
 
     test("authorization should throw error if no values exist in SSM or env", async () => {
       delete process.env["COGNITO_USER_POOL_ID"];
-      delete process.env["COGNITO_USER_POOL_ID"];
-      ssmParamPromise.mockReturnValueOnce({});
+      delete process.env["COGNITO_USER_POOL_CLIENT_ID"];
+      ssmClientMock.on(GetParameterCommand).resolves({});
+
       await expect(isAuthorized(event)).rejects.toThrow(Error);
     });
   });
