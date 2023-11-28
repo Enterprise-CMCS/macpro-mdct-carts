@@ -28,6 +28,20 @@ export const print = handler(async (event, _context) => {
   // Sign auth, and massage the format for axios
   const aws4 = require("aws4");
   const credentials = AWS.config.credentials;
+
+  debug(
+    "accessKeyId: %O",
+    credentials?.accessKeyId === process.env.AWS_ACCESS_KEY_ID
+  );
+  debug(
+    "secretAccessKey: %O",
+    credentials?.accessKeyId === process.env.AWS_SECRET_ACCESS_KEY
+  );
+  debug(
+    "sessionToken: %O",
+    credentials?.sessionToken === process.env.AWS_SESSION_TOKEN
+  );
+
   if (!credentials) {
     throw new Error("No config found to make request to PDF API");
   }
