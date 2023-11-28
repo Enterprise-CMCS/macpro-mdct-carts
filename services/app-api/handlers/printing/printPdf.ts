@@ -1,6 +1,7 @@
 import handler from "../../libs/handler-lib";
 import axios from "axios";
 import AWS from "aws-sdk";
+import debug from "../../libs/debug-lib";
 
 /**
  * Generates 508 compliant PDF using the external Prince service for a given HTML block.
@@ -38,7 +39,12 @@ export const print = handler(async (event, _context) => {
 
   delete signedRequest.body; // Remove body after signing, contained in data, don't need to duplicate it
 
+  debug("%O", signedRequest);
+
   // Execute
   let response = await axios(signedRequest);
+
+  debug("%O", response);
+
   return { data: response.data };
 });
