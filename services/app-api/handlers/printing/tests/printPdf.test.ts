@@ -1,56 +1,68 @@
 /* eslint-disable no-console */
 import { testEvent } from "../../../test-util/testEvents";
-import { AppRoles, APIGatewayProxyEvent } from "../../../types";
+import { APIGatewayProxyEvent } from "../../../types";
 import { print } from "../printPdf";
-import axios from "axios";
-import AWS from "aws-sdk";
+import { fetch } from "cross-fetch";
 
-const originalError = console.error; // cache to restore, we're testing an error
-jest.mock("axios", () => jest.fn());
+jest.spyOn(console, "error").mockImplementation();
+
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
-  getUserCredentialsFromJwt: jest.fn().mockReturnValue({
-    role: AppRoles.STATE_USER,
-    state: "AL",
-  }),
 }));
-jest.mock("aws-sdk", () => ({
-  __esModule: true,
-  default: {
-    config: {
-      credentials: {
-        secretAccessKey: "super", // pragma: allowlist secret
-        accessKeyId: "secret", // pragma: allowlist secret
-      },
-    },
+
+jest.mock("@smithy/signature-v4", () => ({
+  SignatureV4: function () {
+    return {
+      sign: jest.fn().mockImplementation((request) => ({
+        ...request,
+        headers: {
+          ...request.headers,
+          "x-amz-date": "mock date",
+          "x-amz-security-token": "mock token",
+          "x-amz-content-sha256": "mock sha",
+          authorization: `SignedHeaders=${Object.keys(request.headers).join(
+            ","
+          )},x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=mock signature`,
+        },
+      })),
+    };
   },
+}));
+
+jest.mock("cross-fetch", () => ({
+  fetch: jest.fn().mockResolvedValue({
+    // Base64 PDFs always start with JBVERi0, which is "%PDF-"
+    json: jest.fn().mockResolvedValue("JVBERi0xLjc="),
+  }),
 }));
 
 describe("Test Print PDF handler", () => {
   beforeEach(() => {
-    console.error = jest.fn();
-  });
-  afterEach(() => {
-    console.error = originalError;
+    jest.clearAllMocks();
+    process.env.AWS_ACCESS_KEY_ID = "mock key id"; // pragma: allowlist secret
   });
 
   test("should make a request to prince and return data", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      pathParameters: {},
       body: `{"encodedHtml": "HtMl"}`,
     };
 
-    (axios as any).mockResolvedValue({
-      data: "transformed!",
-    });
     const res = await print(event, null);
 
-    expect(axios).toHaveBeenCalledWith(
-      expect.objectContaining({ data: "HtMl", method: "POST" })
+    expect(fetch).toHaveBeenCalledWith(
+      "https://mockhost/mockpath/",
+      expect.objectContaining({
+        body: "HtMl",
+        headers: expect.objectContaining({
+          authorization: expect.stringContaining("SignedHeaders=host,"),
+        }),
+      })
     );
     expect(res.statusCode).toBe(200);
-    expect(res.body).toContain("transformed!");
+    expect(JSON.parse(res.body)).toEqual({
+      data: "JVBERi0xLjc=",
+    });
   });
 
   test("missing encoded Html should throw an error", async () => {
@@ -65,12 +77,12 @@ describe("Test Print PDF handler", () => {
   });
 
   test("missing AWS credentials should throw an error", async () => {
+    delete process.env.AWS_ACCESS_KEY_ID;
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: {},
       body: `{"encodedHtml": "HtMl"}`,
     };
-    AWS.config.credentials = null;
 
     const res = await print(event, null);
     expect(res.statusCode).toBe(500);
