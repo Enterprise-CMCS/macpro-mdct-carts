@@ -13,18 +13,16 @@ jest.mock("../../../libs/authorization", () => ({
 jest.mock("@smithy/signature-v4", () => ({
   SignatureV4: function () {
     return {
-      sign: jest.fn().mockImplementation((request) => ({
-        ...request,
-        headers: {
-          ...request.headers,
-          "x-amz-date": "mock date",
-          "x-amz-security-token": "mock token",
-          "x-amz-content-sha256": "mock sha",
-          authorization: `SignedHeaders=${Object.keys(request.headers).join(
-            ","
-          )},x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=mock signature`,
-        },
-      })),
+      sign: jest.fn().mockImplementation((request) => {
+        expect(request.headers).toHaveProperty("host", "mockhost");
+        return {
+          ...request,
+          headers: {
+            ...request.headers,
+            authorization: "mock authorization",
+          },
+        };
+      }),
     };
   },
 }));
@@ -39,7 +37,11 @@ jest.mock("cross-fetch", () => ({
 describe("Test Print PDF handler", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    process.env.princeApiHost = "mockhost";
+    process.env.princeApiPath = "/mockpath/";
     process.env.AWS_ACCESS_KEY_ID = "mock key id"; // pragma: allowlist secret
+    process.env.AWS_SECRET_ACCESS_KEY = "mock secret key"; // pragma: allowlist secret
+    process.env.AWS_SESSION_TOKEN = "mock token"; // pragma: allowlist secret
   });
 
   test("should make a request to prince and return data", async () => {
@@ -55,7 +57,7 @@ describe("Test Print PDF handler", () => {
       expect.objectContaining({
         body: "HtMl",
         headers: expect.objectContaining({
-          authorization: expect.stringContaining("SignedHeaders=host,"),
+          authorization: "mock authorization",
         }),
       })
     );

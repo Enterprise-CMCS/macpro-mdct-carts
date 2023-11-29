@@ -12,7 +12,7 @@ type LambdaFunction = (
 export default function handler(lambda: LambdaFunction) {
   return async function (event: APIGatewayProxyEvent, context: any) {
     logger.init();
-    logger.debug("API event", {
+    logger.debug("API event: %O", {
       body: event.body,
       pathParameters: event.pathParameters,
       queryStringParameters: event.queryStringParameters,
@@ -25,7 +25,7 @@ export default function handler(lambda: LambdaFunction) {
         return success(body);
       } catch (e: any) {
         // Print debug messages
-        logger.error(e);
+        logger.error("Error: %O", e);
 
         const body = { error: e.message };
         switch (e.constructor) {
