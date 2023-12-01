@@ -23,15 +23,21 @@ jest.mock("../hooks/authHooks/requestOptions", () => async (body) => ({
 const mockFile = new File(["0xMockDataLOL"], "test.jpg", { type: "image/jpg" });
 
 describe("File API", () => {
+  let originalFetch;
+  beforeAll(() => {
+    originalFetch = window.fetch;
+    window.fetch = jest.fn().mockResolvedValue("200 or whatever");
+  });
+  afterAll(() => {
+    window.fetch = originalFetch;
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test("recordFileInDatabaseAndGetUploadUrl should post to CARTS API and return a signed URL", async () => {
-    apiLib.post.mockReturnValue({
-      psurl: "https://mock.url",
-      psdata: { "X-Amz-Signature": "secret" },
-    });
+    apiLib.post.mockReturnValue({ psurl: "https://mock.url" });
 
     const result = await recordFileInDatabaseAndGetUploadUrl(
       "2023",
@@ -40,10 +46,7 @@ describe("File API", () => {
       mockFile
     );
 
-    expect(result).toEqual({
-      url: "https://mock.url",
-      fields: { "X-Amz-Signature": "secret" },
-    });
+    expect(result).toEqual({ presignedUploadUrl: "https://mock.url" });
 
     expect(apiLib.post).toBeCalledWith("carts-api", "/psUrlUpload/2023/AL", {
       body: {
@@ -54,32 +57,17 @@ describe("File API", () => {
     });
   });
 
-  test("uploadFileToS3 should submit a POST request to the given URL", async () => {
-    const mockPostData = {
-      url: "mock.s3/url",
-      fields: {
-        signature: "secret",
-      },
-    };
-    const mockXhr = {
-      open: jest.fn(),
-      send: jest.fn(() => {
-        mockXhr.status = 204;
-        mockXhr.response = "yay";
-        mockXhr.onload();
-      }),
-    };
-    jest.spyOn(window, "XMLHttpRequest").mockImplementation(() => mockXhr);
+  test("uploadFileToS3 should submit a PUT request to the given URL", async () => {
+    const mockPostData = { presignedUploadUrl: "mock.s3/url" };
 
     const result = await uploadFileToS3(mockPostData, mockFile);
 
-    expect(result).toBe("Resolved: yay");
-    expect(mockXhr.open).toBeCalledWith("POST", "mock.s3/url", true);
-    expect(mockXhr.send).toBeCalled();
-
-    const formData = mockXhr.send.mock.calls[0][0];
-    expect(formData.get("signature")).toBe("secret");
-    expect(formData.get("file").name).toBe(mockFile.name);
+    expect(result).toBe("200 or whatever");
+    const [url, options] = window.fetch.mock.calls[0];
+    expect(url).toBe("mock.s3/url");
+    expect(options).toHaveProperty("method", "PUT");
+    expect(options).toHaveProperty("body");
+    expect(options.body).toHaveProperty("name", mockFile.name);
   });
 
   test("getFileDownloadUrl should post to the CARTS api and return a URL", async () => {

@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 import { getSections } from "../get";
 import dbLib from "../../../libs/dynamodb-lib";
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { AppRoles } from "../../../types";
+import { AppRoles, APIGatewayProxyEvent } from "../../../types";
 
 const originalError = console.error; // cache to restore, we're testing an error
 jest.mock("../../../libs/dynamodb-lib", () => ({
