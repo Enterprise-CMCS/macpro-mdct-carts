@@ -13,7 +13,7 @@ async function handler() {
     const db = buildDynamoClient();
 
     console.debug("Updating Section 0");
-    const section0 = await getSection(db, "AL-2022", 0);
+    const section0 = await getSection(db, "WY-2022", 0);
     // Set program type to writeable
     section0.contents.section.subsections[0].parts[0].questions[1].answer.readonly = false;
     await putSectionContents(db, section0);
