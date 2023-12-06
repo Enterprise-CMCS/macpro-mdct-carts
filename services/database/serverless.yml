@@ -111,11 +111,6 @@ functions:
     environment:
       dynamoPrefix: ${self:custom.stage}
     timeout: 120
-  wyoming2022Fix:
-    handler: handlers/dataCorrections/wyomin-2022-fix.handler
-    environment:
-      dynamoPrefix: ${self:custom.stage}
-    timeout: 120
 
 resources:
   Resources:

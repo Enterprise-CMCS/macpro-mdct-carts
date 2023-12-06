@@ -75,5 +75,3 @@ async function putSectionContents(db, section) {
 }
 
 handler();
-
-exports.handler = handler;
