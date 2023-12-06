@@ -14,5 +14,8 @@
   },
   "dependencies": {
     "pg": "^8.7.3"
-  }
+  },
+  "coveragePathIgnorePatterns": [
+    "scripts"
+  ]
 }
