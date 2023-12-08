@@ -7,18 +7,13 @@ import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
 
-const cartsProdDomain = "https://mdctcarts.cms.gov";
-const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
-
 const authenticateWithIDM = () => {
   Auth.federatedSignIn({ customProvider: "Okta" });
 };
 
 export const UserProvider = ({ children }) => {
   const location = useLocation();
-  const isProduction =
-    window.location.origin === cartsProdDomain ||
-    window.location.origin === tempEndpoint;
+  const idmLoginOnly = window.location.origin.includes(".cms.gov");
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
@@ -62,13 +57,13 @@ export const UserProvider = ({ children }) => {
       setUser(currentUser);
       dispatch(loadUser(currentUser));
     } catch (e) {
-      if (isProduction) {
+      if (idmLoginOnly) {
         authenticateWithIDM();
       } else {
         setShowLocalLogins(true);
       }
     }
-  }, [isProduction, location]);
+  }, [idmLoginOnly, location]);
 
   // single run configuration
   useEffect(() => {
