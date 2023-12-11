@@ -2,7 +2,9 @@
 const aws = require("aws-sdk");
 const isLocal = !!process.env.DYNAMODB_URL;
 const localEndpoint = process.env.DYNAMODB_URL;
-const sectionTableName = isLocal ? "local-section" : "main-section";
+const sectionTableName = isLocal
+  ? "local-section"
+  : process.env.dynamoPrefix + "-section";
 
 async function handler() {
   try {
