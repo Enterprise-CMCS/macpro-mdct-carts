@@ -45,7 +45,7 @@
     "serverless-dotenv-plugin": "^3.0.0",
     "serverless-iam-helper": "github:Enterprise-CMCS/serverless-iam-helper",
     "serverless-idempotency-helper": "github:Enterprise-CMCS/serverless-idempotency-helper",
-    "serverless-offline": "^12.0.4",
+    "serverless-offline": "^8.8.0",
     "serverless-offline-ssm": "^6.2.0",
     "serverless-online": "Enterprise-CMCS/macpro-serverless-online",
     "serverless-plugin-scripts": "^1.0.2",
