@@ -1,14 +1,13 @@
 import { getStateStatus } from "../get";
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { AppRoles } from "../../../types";
+import { AppRoles, APIGatewayProxyEvent } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
     get: jest.fn(),
-    scan: jest.fn(),
+    scanSome: jest.fn(),
   },
 }));
 
@@ -34,7 +33,7 @@ describe("Test Get State Status Handlers", () => {
     const res = await getStateStatus(event, null);
 
     expect(res.statusCode).toBe(200);
-    expect(dynamodbLib.scan).toBeCalledWith({
+    expect(dynamodbLib.scanSome).toBeCalledWith({
       ExpressionAttributeNames: {
         "#stateId": "stateId",
       },
@@ -54,7 +53,7 @@ describe("Test Get State Status Handlers", () => {
     const res = await getStateStatus(event, null);
 
     expect(res.statusCode).toBe(200);
-    expect(dynamodbLib.scan).toBeCalledWith({
+    expect(dynamodbLib.scanSome).toBeCalledWith({
       TableName: undefined,
     });
   });

@@ -1,3 +1,9 @@
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const {
+  DynamoDBDocumentClient,
+  UpdateCommand,
+} = require("@aws-sdk/lib-dynamodb");
+
 let dynamoClient;
 let dynamoPrefix;
 
@@ -28,7 +34,7 @@ const updateItems = async (tableName, items, keys) => {
         Key: key,
         ...convertToDynamoExpression(item),
       };
-      await dynamoClient.update(params).promise();
+      await dynamoClient.send(new UpdateCommand(params));
     }
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -57,9 +63,14 @@ const convertToDynamoExpression = (listOfVars) => {
 };
 
 const buildSeedRunner = () => {
-  const aws = require("aws-sdk");
-
-  const dynamoConfig = {};
+  const dynamoConfig = {
+    logger: {
+      debug: console.debug, // eslint-disable-line no-console
+      info: console.info, // eslint-disable-line no-console
+      warn: console.warn, // eslint-disable-line no-console
+      error: console.error, // eslint-disable-line no-console
+    },
+  };
   const endpoint = process.env.DYNAMODB_URL;
   if (endpoint) {
     dynamoConfig.endpoint = endpoint;
@@ -71,7 +82,8 @@ const buildSeedRunner = () => {
     dynamoPrefix = process.env.dynamoPrefix;
   }
 
-  dynamoClient = new aws.DynamoDB.DocumentClient(dynamoConfig);
+  const bareBonesClient = new DynamoDBClient(dynamoConfig);
+  dynamoClient = DynamoDBDocumentClient.from(bareBonesClient);
   return {
     executeSeed: runSeed,
   };

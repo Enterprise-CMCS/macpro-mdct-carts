@@ -11665,7 +11665,7 @@
                             "comment": "This is the first real question so far in this part…",
                             "id": "2022-05-a-03-01-a",
                             "label": "2022",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11673,7 +11673,7 @@
                           {
                             "id": "2022-05-a-03-01-b",
                             "label": "2023",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11681,7 +11681,7 @@
                           {
                             "id": "2022-05-a-03-01-c",
                             "label": "2024",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11825,7 +11825,7 @@
                             "comment": "This is the first real question so far in this part…",
                             "id": "2022-05-a-04-01-a",
                             "label": "2022",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11833,7 +11833,7 @@
                           {
                             "id": "2022-05-a-04-01-b",
                             "label": "2023",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11841,7 +11841,7 @@
                           {
                             "id": "2022-05-a-04-01-c",
                             "label": "2024",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
