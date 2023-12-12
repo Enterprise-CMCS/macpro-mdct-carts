@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
 import { testEvent } from "../../../test-util/testEvents";
-import { AppRoles } from "../../../types";
+import { AppRoles, APIGatewayProxyEvent } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
 import { post } from "../post";
 
@@ -11,57 +10,51 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
   default: {
     batchWriteItem: jest.fn(),
-    scan: jest
+    scanAll: jest
       .fn()
-      .mockReturnValue({ Items: [] })
-      .mockReturnValueOnce({
-        Items: [
-          {
-            programType: "combo",
-            code: "AL",
-            name: "Alabama",
-            programNames: {},
-          },
-          {
-            programType: "combo",
-            code: "AK",
-            name: "Alaska",
-            programNames: {},
-          },
-        ],
-      })
-      .mockReturnValueOnce({
-        Items: [
-          {
-            stateId: "AK",
-            status: "in_progress",
-            year: 2022,
-            programType: "combo",
-            username: "al@test.com",
-            lastChanged: "2022-01-04 18:28:18.524133+00",
-          },
-        ],
-      })
-      .mockReturnValueOnce({
-        Items: [
-          {
-            year: 2022,
-            sectionId: 1,
-            contents: {
-              section: {
-                id: "2022-01",
-                type: "section",
-                year: 2022,
-                state: null,
-                title: "Program Fees and Policy Changes",
-                valid: null,
-                ordinal: 1,
-                subsections: [],
-              },
+      .mockResolvedValue([])
+      .mockResolvedValueOnce([
+        {
+          programType: "combo",
+          code: "AL",
+          name: "Alabama",
+          programNames: {},
+        },
+        {
+          programType: "combo",
+          code: "AK",
+          name: "Alaska",
+          programNames: {},
+        },
+      ])
+      .mockResolvedValueOnce([
+        {
+          stateId: "AK",
+          status: "in_progress",
+          year: 2022,
+          programType: "combo",
+          username: "al@test.com",
+          lastChanged: "2022-01-04 18:28:18.524133+00",
+        },
+      ])
+      .mockResolvedValueOnce([
+        {
+          year: 2022,
+          sectionId: 1,
+          contents: {
+            section: {
+              id: "2022-01",
+              type: "section",
+              year: 2022,
+              state: null,
+              title: "Program Fees and Policy Changes",
+              valid: null,
+              ordinal: 1,
+              subsections: [],
             },
           },
-        ],
-      }),
+        },
+      ]),
   },
 }));
 

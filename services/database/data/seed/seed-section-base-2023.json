@@ -11454,7 +11454,7 @@
                         "questions": [
                           {
                             "id": "2023-05-a-03-01-a",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2023",
                             "answer": {
                               "entry": null
@@ -11463,7 +11463,7 @@
                           },
                           {
                             "id": "2023-05-a-03-01-b",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2024",
                             "answer": {
                               "entry": null
@@ -11471,7 +11471,7 @@
                           },
                           {
                             "id": "2023-05-a-03-01-c",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2025",
                             "answer": {
                               "entry": null
@@ -11614,7 +11614,7 @@
                         "questions": [
                           {
                             "id": "2023-05-a-04-01-a",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2023",
                             "answer": {
                               "entry": null
@@ -11623,7 +11623,7 @@
                           },
                           {
                             "id": "2023-05-a-04-01-b",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2024",
                             "answer": {
                               "entry": null
@@ -11631,7 +11631,7 @@
                           },
                           {
                             "id": "2023-05-a-04-01-c",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2025",
                             "answer": {
                               "entry": null

@@ -3,7 +3,6 @@ import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles } from "../../types";
 import s3 from "../../libs/s3-lib";
-import { DeleteObjectRequest } from "aws-sdk/clients/s3";
 import { UnauthorizedError } from "../../libs/httpErrors";
 
 /**
@@ -34,7 +33,7 @@ export const deleteUpload = handler(async (event, _context) => {
   const document = results.Items[0];
 
   // DELETE AWS
-  var params: DeleteObjectRequest = {
+  var params = {
     Bucket: process.env.uploadS3BucketName ?? "local-uploads",
     Key: document.awsFilename,
   };

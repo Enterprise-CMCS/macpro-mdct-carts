@@ -13,36 +13,19 @@ export const recordFileInDatabaseAndGetUploadUrl = async (
     questionId,
   };
   const opts = await requestOptions(body);
-  const response = await apiLib.post(
+  const { psurl } = await apiLib.post(
     "carts-api",
     `/psUrlUpload/${year}/${stateCode}`,
     opts
   );
 
-  return {
-    url: response.psurl,
-    fields: response.psdata,
-  };
+  return { presignedUploadUrl: psurl };
 };
 
-export const uploadFileToS3 = async (presignedPostData, file) => {
-  return new Promise((resolve, reject) => {
-    const formData = new FormData();
-
-    Object.keys(presignedPostData.fields).forEach((key) => {
-      formData.append(key, presignedPostData.fields[key]);
-    });
-
-    formData.append("file", file);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", presignedPostData.url, true);
-    xhr.onload = function () {
-      this.status === 204
-        ? resolve(`Resolved: ${this.response}`)
-        : reject(`Rejected: ${this.responseText}`);
-    };
-    xhr.send(formData);
+export const uploadFileToS3 = async ({ presignedUploadUrl }, file) => {
+  return await fetch(presignedUploadUrl, {
+    method: "PUT",
+    body: file,
   });
 };
 
