@@ -13,7 +13,12 @@ const authenticateWithIDM = () => {
 
 export const UserProvider = ({ children }) => {
   const location = useLocation();
-  const idmLoginOnly = window.location.hostname.includes(".cms.gov");
+  const idmExclusiveDomains = [
+    "mdctcarts.cms.gov",
+    "mdctcartsval.cms.gov",
+    "mdctcartsdev.cms.gov",
+  ];
+  const idmLoginOnly = idmExclusiveDomains.includes(window.location.hostname);
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
