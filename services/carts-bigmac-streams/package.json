@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "kafkajs": "^1.15.0",
+    "kafkajs": "^2.2.4",
     "lodash": "^4.17.21",
     "uuid": "^8.3.2"
   },
