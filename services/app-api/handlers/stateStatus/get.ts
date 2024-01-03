@@ -1,7 +1,7 @@
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
-import { AppRoles } from "../../types";
+import { AppRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 
 export const getStateStatus = handler(async (event, _context) => {
@@ -12,7 +12,7 @@ export const getStateStatus = handler(async (event, _context) => {
       TableName: process.env.stateStatusTableName!,
       ...convertToDynamoExpression({ stateId: user.state }, "list"),
     };
-    const queryValue = await dynamoDb.scan(params);
+    const queryValue = await dynamoDb.scanSome<StateStatus>(params);
     return queryValue;
   } else if (
     user.role === AppRoles.CMS_ADMIN ||
@@ -25,7 +25,7 @@ export const getStateStatus = handler(async (event, _context) => {
     const params = {
       TableName: process.env.stateStatusTableName!,
     };
-    const queryValue = await dynamoDb.scan(params);
+    const queryValue = await dynamoDb.scanSome<StateStatus>(params);
     return queryValue;
   } else {
     return [];

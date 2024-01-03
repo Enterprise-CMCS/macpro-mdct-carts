@@ -11665,7 +11665,7 @@
                             "comment": "This is the first real question so far in this part…",
                             "id": "2022-05-a-03-01-a",
                             "label": "2022",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11673,7 +11673,7 @@
                           {
                             "id": "2022-05-a-03-01-b",
                             "label": "2023",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11681,7 +11681,7 @@
                           {
                             "id": "2022-05-a-03-01-c",
                             "label": "2024",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11825,7 +11825,7 @@
                             "comment": "This is the first real question so far in this part…",
                             "id": "2022-05-a-04-01-a",
                             "label": "2022",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11833,7 +11833,7 @@
                           {
                             "id": "2022-05-a-04-01-b",
                             "label": "2023",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -11841,7 +11841,7 @@
                           {
                             "id": "2022-05-a-04-01-c",
                             "label": "2024",
-                            "type": "money",
+                            "type": "integer",
                             "answer": {
                               "entry": "5"
                             }
@@ -12036,7 +12036,7 @@
                   },
                   {
                     "id": "2022-06-a-01-02",
-                    "label": "What’s the greatest challenge your CHIP program has faced in FFY 2023?",
+                    "label": "What’s the greatest challenge your CHIP program has faced in FFY 2022?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": "test"
@@ -12044,7 +12044,7 @@
                   },
                   {
                     "id": "2022-06-a-01-03",
-                    "label": "What are some of the greatest accomplishments your CHIP program has experienced in FFY 2023?",
+                    "label": "What are some of the greatest accomplishments your CHIP program has experienced in FFY 2022?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": "test"
@@ -12052,7 +12052,7 @@
                   },
                   {
                     "id": "2022-06-a-01-04",
-                    "label": "What changes have you made to your CHIP program in FFY 2023 or plan to make in FFY 2024? Why have you decided to make these changes?",
+                    "label": "What changes have you made to your CHIP program in FFY 2022 or plan to make in FFY 2023? Why have you decided to make these changes?",
                     "type": "text_multiline",
                     "answer": {
                       "entry": "test"
