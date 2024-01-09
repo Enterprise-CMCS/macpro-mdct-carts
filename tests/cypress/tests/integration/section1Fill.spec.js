@@ -3,6 +3,10 @@ const actionButton = "[data-testid='report-action-button']";
 const navigationLink = "[aria-label='Vertical Navigation Element'] a";
 
 describe("CARTS Report Fill Tests", () => {
+  before(() => {
+    Cypress.session.clearAllSessionData;
+  });
+
   it("Should fill out some answers in Section 1", () => {
     cy.ensureAvailableReport(); // Needs to happen each iteration of the test
 
