@@ -1,4 +1,8 @@
 describe("Check Report Filtering as a CMS Admin", () => {
+  before(() => {
+    Cypress.session.clearAllSessionData;
+  });
+
   beforeEach(() => {
     cy.visit("/");
     cy.authenticate("adminUser");

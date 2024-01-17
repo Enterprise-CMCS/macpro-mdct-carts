@@ -3,6 +3,10 @@ const actionButton = "[data-testid='report-action-button']";
 const certifySubmitButton = "[data-testid='certifySubmit']";
 const uncertifyButton = "[data-testid='uncertifyButton']";
 describe("CARTS Submit and Uncertify Integration Tests", () => {
+  before(() => {
+    Cypress.session.clearAllSessionData;
+  });
+
   it("Should submit form as a State User and uncertify as an Admin", () => {
     cy.ensureAvailableReport(); // Needs to happen each iteration of the test
 
@@ -19,8 +23,6 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
     cy.get("button").contains("Confirm Certify and Submit").click();
     cy.get("button").contains("Return Home").click();
 
-    cy.logout();
-
     // log in as CMS Admin (user who can uncertify)
     cy.authenticate("adminUser");
 
@@ -34,8 +36,6 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
 
     cy.get(uncertifyButton).first().contains("Uncertify").click();
     cy.get("button").contains("Yes, Uncertify").click();
-
-    cy.logout();
 
     // log back in as State User - the report should be "In Progress" again
     cy.authenticate("stateUser");
