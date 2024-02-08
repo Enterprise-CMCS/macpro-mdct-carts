@@ -9,7 +9,7 @@ on:
 
 concurrency:
   # Ensuring group key matches the destroy workflow currently in master
-  group: dev-${{ github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: false
 
 permissions:
@@ -23,16 +23,11 @@ jobs:
     env:
       SLS_DEPRECATION_DISABLE: "*" # Turn off deprecation warnings in the pipeline
     steps:
+      - uses: actions/checkout@v3
       - name: set branch_name # Some integrations (Dependabot & Snyk) build very long branch names. This is a switch to make long branch names shorter.
         run: |
-          echo "GITHUB_REF=${GITHUB_REF}"        
-          if [[ "$GITHUB_REF" =~ ^refs/heads/dependabot/.* ]]; then
-            echo "branch_name=`echo ${GITHUB_REF##*/*-} | md5sum | head -c 10 | sed 's/^/x/'`" >> $GITHUB_ENV
-          elif [[ "$GITHUB_REF" =~ ^refs/.*/snyk-* ]]; then
-            echo "branch_name=`echo ${GITHUB_REF##*/*-} | head -c 10 | sed 's/^/s/'`" >> $GITHUB_ENV
-          else
-            echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-          fi
+          BRANCH_NAME=$(./.github/setBranchName.sh ${{ github.ref_name }})
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
       - uses: actions/checkout@v3
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
@@ -105,7 +100,7 @@ jobs:
   e2e-test:
     name: E2E Integration Tests (Cypress)
     needs: deploy
-    if: ${{ github.ref != 'refs/heads/production' }}
+    if: ${{ github.ref_name != 'production' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -135,7 +130,7 @@ jobs:
   a11y-tests:
     name: A11y Tests
     needs: deploy
-    if: ${{ github.ref != 'refs/heads/production' }}
+    if: ${{ github.ref_name != 'production' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
