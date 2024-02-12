@@ -25,7 +25,6 @@ jobs:
     # This conditional is a backup mechanism to help prevent mistakes from becoming disasters.
     # This is a list of branch names that are commonly used for protected branches/environments.
     # Add/remove names from this list as appropriate.
-    # Names include current v3 branches (main/val/production) and v2 branches in an effort to protect any preserved resources like saved databases
     if: |
       (
         github.event.ref_type == 'branch' &&
