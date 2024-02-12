@@ -18,7 +18,6 @@ export const print = handler(async (event, _context) => {
   if (!docraptorApiKey) {
     throw new Error("No config found to make request to PDF API");
   }
-  logger.debug("API key", docraptorApiKey);
 
   const requestBody = {
     user_credentials: docraptorApiKey,
