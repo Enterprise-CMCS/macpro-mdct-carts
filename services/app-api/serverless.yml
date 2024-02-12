@@ -51,7 +51,7 @@ custom:
   webAclName: ${self:service}-${self:custom.stage}-webacl
   uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
   uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
-  docRaptorApiKey: ${env:docraptorApiKey, ssm:/${self:custom.stage}/pdf/docraptorApiKey, ssm:/default/pdf/docraptorApiKey}
+  docraptorApiKey: ${env:docraptorApiKey, ssm:/${self:custom.stage}/pdf/docraptorApiKey, ssm:/default/pdf/docraptorApiKey}
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
