@@ -4,6 +4,10 @@ const logoutButton = "[data-testid='header-menu-option-log-out']";
 const headerDropdownMenu = "[data-testid='headerDropDownMenu']";
 
 describe("CARTS Login Integration Tests", () => {
+  before(() => {
+    Cypress.session.clearAllSessionData;
+  });
+
   beforeEach(() => {
     cy.visit("/");
   });
@@ -21,6 +25,7 @@ describe("CARTS Login Integration Tests", () => {
   });
 
   it("Should display Login screen after logging out", () => {
+    cy.clearSession();
     cy.location("pathname").should("match", /\//);
     cy.get(cognitoLoginButton).should("be.visible");
   });

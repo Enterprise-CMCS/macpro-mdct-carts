@@ -19,6 +19,7 @@ module.exports = defineConfig({
   },
   e2e: {
     baseUrl: "http://localhost:3000/",
+    testIsolation: false,
     specPattern: "**/*.spec.js",
     supportFile: "support/index.js",
     excludeSpecPattern: "**/filterReports.spec.js",
