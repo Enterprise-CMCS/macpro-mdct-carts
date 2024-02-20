@@ -3,11 +3,10 @@ const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const {
   DynamoDBDocumentClient,
   PutCommand,
-  ScanCommand
+  ScanCommand,
 } = require("@aws-sdk/lib-dynamodb");
 
 let dynamoClient;
-let dynamoPrefix;
 
 const buildDynamoClient = () => {
   const dynamoConfig = {
@@ -23,10 +22,8 @@ const buildDynamoClient = () => {
     dynamoConfig.endpoint = endpoint;
     dynamoConfig.accessKeyId = "LOCALFAKEKEY"; // pragma: allowlist secret
     dynamoConfig.secretAccessKey = "LOCALFAKESECRET"; // pragma: allowlist secret
-    dynamoPrefix = "local";
   } else {
     dynamoConfig["region"] = "us-east-1";
-    dynamoPrefix = process.env.dynamoPrefix;
   }
 
   const bareBonesClient = new DynamoDBClient(dynamoConfig);
@@ -45,16 +42,15 @@ const scan = async (scanParams) => {
   } while (ExclusiveStartKey);
 
   return items;
-}
+};
 
 const update = async (tableName, items) => {
   try {
     for (const item of items) {
-
       const params = {
         TableName: tableName,
         Item: {
-          ...item
+          ...item,
         },
       };
 
@@ -66,4 +62,4 @@ const update = async (tableName, items) => {
   }
 };
 
-module.exports = { buildDynamoClient, scan, update }
+module.exports = { buildDynamoClient, scan, update };
