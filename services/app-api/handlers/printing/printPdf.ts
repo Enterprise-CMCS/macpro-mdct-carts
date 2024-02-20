@@ -13,7 +13,7 @@ export const print = handler(async (event, _context) => {
   }
   const htmlString = Buffer.from(encodedHtml, "base64").toString("utf-8");
 
-  // TODO add my key to SSM in my branch
+  // TODO: get keys from CMS, and set as SSM parameters in dev, val, prod
   const { docraptorApiKey } = process.env;
   if (!docraptorApiKey) {
     throw new Error("No config found to make request to PDF API");
@@ -25,7 +25,10 @@ export const print = handler(async (event, _context) => {
       document_content: htmlString,
       type: "pdf" as const,
       test: true,
-      // test: !!process.env.URL?.includes("localhost"), // <-- TODO maybe something like this?
+      // test: (process.env.stage !== "production"), // <-- TODO maybe something like this?
+      prince_options: {
+        profile: "PDF/UA-1" as const,
+      },
     },
   };
 
@@ -109,7 +112,12 @@ type DocRaptorParameters = {
   tag?: string;
   /** Should DocRaptor run JS embedded in your HTML? Default is `false`. */
   javascript?: boolean;
-  prince_options?: {
+  prince_options: {
+    /**
+     * In theory we can choose a different PDF version, but UA-1 is the only accessible one.
+     * https://docraptor.com/documentation/article/6637003-accessible-tagged-pdfs
+     */
+    profile: "PDF/UA-1";
     /** The default is `print`. */
     media?: "print" | "screen";
     /** May be needed to load relative urls. Alternatively, use the `<base>` tag. */
