@@ -23,17 +23,21 @@ jest.mock("cross-fetch", () => ({
   }),
 }));
 
+const dangerousHtml = "<p>abc<iframe//src=jAva&Tab;script:alert(3)>def</p>";
+const sanitizedHtml = "<p>abc</p>";
+const base64EncodedDangerousHtml =
+  Buffer.from(dangerousHtml).toString("base64");
+
 describe("Test Print PDF handler", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     process.env.docraptorApiKey = "mock api key"; // pragma: allowlist secret
   });
 
-  test("should make a request to prince and return data", async () => {
+  it("should make a request to prince and return data", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      // The string `<html>`, base64-encoded
-      body: `{"encodedHtml": "PGh0bWw+"}`,
+      body: `{"encodedHtml": "${base64EncodedDangerousHtml}"}`,
     };
 
     const res = await print(event, null);
@@ -50,8 +54,12 @@ describe("Test Print PDF handler", () => {
     expect(body).toEqual({
       user_credentials: "mock api key", // pragma: allowlist secret
       doc: expect.objectContaining({
-        document_content: "<html>",
+        document_content: sanitizedHtml,
         type: "pdf",
+        tag: "CARTS",
+        prince_options: expect.objectContaining({
+          profile: "PDF/UA-1",
+        }),
       }),
     });
 
@@ -62,7 +70,7 @@ describe("Test Print PDF handler", () => {
     });
   });
 
-  test("missing encoded Html should throw an error", async () => {
+  it("should throw an error if event body is empty", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{}`,
@@ -72,23 +80,21 @@ describe("Test Print PDF handler", () => {
     expect(res.statusCode).toBe(500);
   });
 
-  test("missing API Key should throw an error", async () => {
+  it("should throw an error if API key is missing", async () => {
     delete process.env.docraptorApiKey;
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      // The string `<html>`, base64-encoded
-      body: `{"encodedHtml": "PGh0bWw+"}`,
+      body: `{"encodedHtml": "${base64EncodedDangerousHtml}"}`,
     };
 
     const res = await print(event, null);
     expect(res.statusCode).toBe(500);
   });
 
-  test("error response from PDF API should be handled", async () => {
+  it("should handle errors from PDF API", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      // The string `<html>`, base64-encoded
-      body: `{"encodedHtml": "PGh0bWw+"}`,
+      body: `{"encodedHtml": "${base64EncodedDangerousHtml}"}`,
     };
 
     (fetch as jest.Mock).mockResolvedValueOnce({
