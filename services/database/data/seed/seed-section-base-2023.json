@@ -7838,7 +7838,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100–D9999 (or equivalent CDT codes D0100–D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim.\n\nAll data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D1000–D1999 (or equivalent CDT codes D1000–D1999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim.\n\nAll data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                     "type": "fieldset",
                     "label": "Dental care service codes and definitions",
                     "questions": []
@@ -7957,7 +7957,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D1000–D1999 (or equivalent CDT codes D1000–D1999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                     "type": "fieldset",
                     "label": "Preventive dental care service codes and definitions",
                     "questions": []
