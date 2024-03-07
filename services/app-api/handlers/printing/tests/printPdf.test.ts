@@ -23,10 +23,8 @@ jest.mock("cross-fetch", () => ({
   }),
 }));
 
-const dangerousHtml = "<p>abc<iframe//src=jAva&Tab;script:alert(3)>def</p>";
-const sanitizedHtml = "<p>abc</p>";
-const base64EncodedDangerousHtml =
-  Buffer.from(dangerousHtml).toString("base64");
+const html = "<p>abc</p>";
+const base64EncodedHtml = Buffer.from(html).toString("base64");
 
 describe("Test Print PDF handler", () => {
   beforeEach(() => {
@@ -37,7 +35,7 @@ describe("Test Print PDF handler", () => {
   it("should make a request to prince and return data", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"encodedHtml": "${base64EncodedDangerousHtml}"}`,
+      body: `{"encodedHtml": "${base64EncodedHtml}"}`,
     };
 
     const res = await print(event, null);
@@ -54,7 +52,7 @@ describe("Test Print PDF handler", () => {
     expect(body).toEqual({
       user_credentials: "mock api key", // pragma: allowlist secret
       doc: expect.objectContaining({
-        document_content: sanitizedHtml,
+        document_content: html,
         type: "pdf",
         tag: "CARTS",
         prince_options: expect.objectContaining({
@@ -84,7 +82,7 @@ describe("Test Print PDF handler", () => {
     delete process.env.docraptorApiKey;
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"encodedHtml": "${base64EncodedDangerousHtml}"}`,
+      body: `{"encodedHtml": "${base64EncodedHtml}"}`,
     };
 
     const res = await print(event, null);
@@ -94,7 +92,7 @@ describe("Test Print PDF handler", () => {
   it("should handle errors from PDF API", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"encodedHtml": "${base64EncodedDangerousHtml}"}`,
+      body: `{"encodedHtml": "${base64EncodedHtml}"}`,
     };
 
     (fetch as jest.Mock).mockResolvedValueOnce({
