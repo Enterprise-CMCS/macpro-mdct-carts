@@ -91,14 +91,14 @@ custom:
           --region ${self:provider.region}
 
 params:
-production:
-  restrictToVpn: false
-val:
-  restrictToVpn: false
-main:
-  restrictToVpn: false
-default:
-  restrictToVpn: true
+  production:
+    restrictToVpn: false
+  val:
+    restrictToVpn: false
+  main:
+    restrictToVpn: false
+  default:
+    restrictToVpn: true
 
 resources:
   Conditions:
