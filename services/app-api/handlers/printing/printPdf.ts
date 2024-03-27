@@ -1,6 +1,11 @@
 import handler from "../../libs/handler-lib";
 import * as logger from "../../libs/debug-lib";
+import createDOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
 import { fetch } from "cross-fetch"; // TODO delete this line and uninstall this package, once CARTS is running on Nodejs 18+
+
+const windowEmulator: any = new JSDOM("").window;
+const DOMPurify = createDOMPurify(windowEmulator);
 
 /**
  * Generates 508 compliant PDF using an external Prince-based service for a given HTML block.
@@ -12,6 +17,17 @@ export const print = handler(async (event, _context) => {
     throw new Error("Missing required html string");
   }
   const rawHtml = Buffer.from(encodedHtml, "base64").toString("utf-8");
+
+  let sanitizedHtml;
+  if (DOMPurify.isSupported) {
+    sanitizedHtml = DOMPurify.sanitize(rawHtml, {
+      WHOLE_DOCUMENT: true,
+      ADD_TAGS: ["head"],
+    });
+  }
+  if (!sanitizedHtml) {
+    throw new Error("Could not process request");
+  }
 
   const { docraptorApiKey, stage } = process.env;
   if (!docraptorApiKey) {

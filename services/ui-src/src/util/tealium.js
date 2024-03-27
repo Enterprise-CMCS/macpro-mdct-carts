@@ -3,7 +3,7 @@ export const fireTealiumPageView = (user, url, pathname) => {
   const contentType = isReportPage ? "form" : "app";
   const sectionName = isReportPage ? pathname.split("/")[1] : "main app";
   const tealiumEnvMap = {
-    "mdctcarts.cms.gov": "production",
+    "mdctcarts.cms.gov": "production", // Different than the url value (index.html)
     "mdctcartsval.cms.gov": "qa",
   };
   const tealiumEnv = tealiumEnvMap[window.location.hostname] || "dev";

@@ -109,4 +109,20 @@ describe("Test Print PDF handler", () => {
       expect.stringContaining("It broke.")
     );
   });
+
+  it("should preserve html, head, and body tags", async () => {
+    const inputHtml = `<html lang="en"><head><title>My Page</title></head><body>Hello, world</body></html>`;
+    const b64html = Buffer.from(inputHtml).toString("base64");
+    const event = {
+      ...testEvent,
+      body: JSON.stringify({ encodedHtml: b64html }),
+    };
+
+    await print(event, null);
+
+    const request = (fetch as jest.Mock).mock.calls[0][1];
+    const body = JSON.parse(request.body);
+    const sentHtml = body.doc.document_content;
+    expect(sentHtml).toBe(inputHtml);
+  });
 });
