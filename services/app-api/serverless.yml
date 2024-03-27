@@ -17,6 +17,7 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
   - serverless-api-client-certificate
+  - "@enterprise-cmcs/serverless-waf-plugin"
 
 s3BucketHelper:
   loggingConfiguration:
@@ -28,6 +29,11 @@ custom:
     tsConfigFileLocation: "./tsconfig.json"
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
+  wafPlugin:
+    name: ${self:service}-${self:custom.stage}-webacl-waf
+  wafExcludeRules:
+    awsCommon:
+      - "SizeRestrictions_BODY"
   serverlessTerminationProtection:
     stages:
       - main
@@ -48,7 +54,7 @@ custom:
   sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
-  webAclName: ${self:service}-${self:custom.stage}-webacl
+  webAclName: ${self:service}-${self:custom.stage}-webacl-waf
   uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
   uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
   docraptorApiKey: ${env:docraptorApiKey, ssm:/${self:custom.stage}/pdf/docraptorApiKey, ssm:/default/pdf/docraptorApiKey}
@@ -257,35 +263,6 @@ resources:
           gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
         ResponseType: DEFAULT_5XX
         RestApiId: !Ref ApiGatewayRestApi
-    ApiGwWebAcl:
-      Type: AWS::WAFv2::WebACL
-      Properties:
-        Name: ${self:custom.webAclName}
-        DefaultAction:
-          Block: {}
-        Rules:
-          - Action:
-              Allow: {}
-            Name: ${self:custom.webAclName}-allow-usa-plus-territories
-            Priority: 0
-            Statement:
-              GeoMatchStatement:
-                CountryCodes:
-                  - GU # Guam
-                  - PR # Puerto Rico
-                  - US # USA
-                  - UM # US Minor Outlying Islands
-                  - VI # US Virgin Islands
-                  - MP # Northern Mariana Islands
-            VisibilityConfig:
-              SampledRequestsEnabled: true
-              CloudWatchMetricsEnabled: true
-              MetricName: WafWebAcl
-        Scope: REGIONAL
-        VisibilityConfig:
-          CloudWatchMetricsEnabled: true
-          SampledRequestsEnabled: true
-          MetricName: ${self:custom.stage}-webacl
   Outputs:
     ApiGatewayRestApiName:
       Value: !Ref ApiGatewayRestApi
