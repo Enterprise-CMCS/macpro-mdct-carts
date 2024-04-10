@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.518.0",
-    "@aws-sdk/lib-dynamodb": "^3.485.0",
+    "@aws-sdk/lib-dynamodb": "^3.535.0",
     "pg": "^8.7.3"
   }
 }
