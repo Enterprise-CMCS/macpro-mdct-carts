@@ -8032,7 +8032,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100–D9999 (or equivalent CDT codes D0100–D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim.\n\nAll data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D1000–D1999 (or equivalent CDT codes D1000–D1999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim.\n\nAll data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                     "type": "fieldset",
                     "label": "Dental care service codes and definitions",
                     "questions": []
@@ -8151,7 +8151,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D0100 - D9999 (or equivalent CDT codes D0100 - D9999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
+                    "hint": "The dental service must be provided by or under the supervision of a dentist as defined by HCPCS codes D1000–D1999 (or equivalent CDT codes D1000–D1999, or equivalent CPT codes) based on an unduplicated paid, unpaid, or denied claim. \n All data should be based on the definitions in the Early and Periodic Screening, Diagnostic, and Treatment (EPSDT) Report (Form CMS-416).",
                     "type": "fieldset",
                     "label": "Dental care service codes and definitions",
                     "questions": []
@@ -11513,7 +11513,7 @@
                         "questions": [
                           {
                             "id": "2022-05-a-03-01-a",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2022",
                             "answer": {
                               "entry": null
@@ -11522,7 +11522,7 @@
                           },
                           {
                             "id": "2022-05-a-03-01-b",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2023",
                             "answer": {
                               "entry": null
@@ -11530,7 +11530,7 @@
                           },
                           {
                             "id": "2022-05-a-03-01-c",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2024",
                             "answer": {
                               "entry": null
@@ -11673,7 +11673,7 @@
                         "questions": [
                           {
                             "id": "2022-05-a-04-01-a",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2022",
                             "answer": {
                               "entry": null
@@ -11682,7 +11682,7 @@
                           },
                           {
                             "id": "2022-05-a-04-01-b",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2023",
                             "answer": {
                               "entry": null
@@ -11690,7 +11690,7 @@
                           },
                           {
                             "id": "2022-05-a-04-01-c",
-                            "type": "money",
+                            "type": "integer",
                             "label": "2024",
                             "answer": {
                               "entry": null
@@ -11878,7 +11878,7 @@
                   {
                     "id": "2022-06-a-01-02",
                     "type": "text_multiline",
-                    "label": "What’s the greatest challenge your CHIP program has faced in FFY 2023?",
+                    "label": "What’s the greatest challenge your CHIP program has faced in FFY 2022?",
                     "answer": {
                       "entry": null
                     }
@@ -11886,7 +11886,7 @@
                   {
                     "id": "2022-06-a-01-03",
                     "type": "text_multiline",
-                    "label": "What are some of the greatest accomplishments your CHIP program has experienced in FFY 2023?",
+                    "label": "What are some of the greatest accomplishments your CHIP program has experienced in FFY 2022?",
                     "answer": {
                       "entry": null
                     }
@@ -11894,7 +11894,7 @@
                   {
                     "id": "2022-06-a-01-04",
                     "type": "text_multiline",
-                    "label": "What changes have you made to your CHIP program in FFY 2023 or plan to make in FFY 2024? Why have you decided to make these changes?",
+                    "label": "What changes have you made to your CHIP program in FFY 2022 or plan to make in FFY 2023? Why have you decided to make these changes?",
                     "answer": {
                       "entry": null
                     }

@@ -13,20 +13,18 @@ export const getStates = handler(async (_event, _context) => {
     TableName: process.env.fmapTableName!,
   };
 
-  const stateQueryValue = await dynamoDb.scan(stateParams);
-  const acsQueryValue = await dynamoDb.scan(acsParams);
-  const fmapQueryValue = await dynamoDb.scan(fmapParams);
+  const stateQueryValue = await dynamoDb.scanAll<State>(stateParams);
+  const acsQueryValue = await dynamoDb.scanAll<AcsData>(acsParams);
+  const fmapQueryValue = await dynamoDb.scanAll<FmapData>(fmapParams);
 
-  const states = stateQueryValue.Items?.map((state) => ({
-    ...(state as State),
-    ...{
-      fmapSet: fmapQueryValue.Items?.filter(
-        (fmapData) => (fmapData as FmapData).stateId === (state as State).code
-      ),
-      acsSet: acsQueryValue.Items?.filter(
-        (acsData) => (acsData as AcsData).stateId === (state as State).code
-      ),
-    },
-  })).sort((a, b) => a.name.localeCompare(b.name));
+  const states = stateQueryValue
+    .map((state) => ({
+      ...state,
+      ...{
+        fmapSet: fmapQueryValue.filter(({ stateId }) => stateId === state.code),
+        acsSet: acsQueryValue.filter(({ stateId }) => stateId === state.code),
+      },
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
   return states;
 });

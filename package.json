@@ -22,14 +22,12 @@
   },
   "homepage": "https://github.com/Enterprise-CMCS/macpro-mdct-carts#readme",
   "devDependencies": {
-    "@types/dotenv": "^8.2.0",
     "@types/flat": "^5.0.2",
-    "@types/node": "^14.14.6",
+    "@types/node": "^18.17.0",
     "@types/yargs": "^15.0.10",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",
-    "aws-sdk": "^2.923.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.4.5",
     "eslint": "8.12.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-cypress": "^2.12.1",
@@ -46,11 +44,10 @@
     "serverless-dotenv-plugin": "^3.0.0",
     "serverless-iam-helper": "github:Enterprise-CMCS/serverless-iam-helper",
     "serverless-idempotency-helper": "github:Enterprise-CMCS/serverless-idempotency-helper",
-    "serverless-offline": "^8.8.0",
+    "serverless-offline": "^12.0.4",
     "serverless-offline-ssm": "^6.2.0",
     "serverless-online": "Enterprise-CMCS/macpro-serverless-online",
     "serverless-plugin-scripts": "^1.0.2",
-    "serverless-plugin-warmup": "^7.1.0",
     "serverless-s3-bucket-helper": "github:Enterprise-CMCS/serverless-s3-bucket-helper#master",
     "serverless-s3-sync": "2.0.0",
     "serverless-stack-termination-protection": "^2.0.0",
@@ -59,5 +56,8 @@
   },
   "resolutions": {
     "loader-utils": "^2.0.4"
+  },
+  "dependencies": {
+    "@enterprise-cmcs/serverless-waf-plugin": "^1.3.2"
   }
 }

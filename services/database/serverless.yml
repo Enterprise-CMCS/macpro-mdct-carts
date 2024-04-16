@@ -81,7 +81,7 @@ custom:
     seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   region: us-east-1
   iam:
     role:
@@ -105,6 +105,11 @@ functions:
     environment:
       dynamoPrefix: ${self:custom.stage}
       seedTestData: ${self:custom.seedTestData}
+    timeout: 120
+  convertMoneyTypeToInteger:
+    handler: handlers/dataCorrections/convertMoneyTypeToInteger.handler
+    environment:
+      dynamoPrefix: ${self:custom.stage}
     timeout: 120
 
 resources:

@@ -53,13 +53,9 @@ export const psUpload = handler(async (event, _context) => {
   await dynamoDb.update(params);
 
   // Pre-sign url
-  const { url, fields } = s3.createPresignedPost({
+  const psurl = await s3.createPresignedPost({
     Bucket: process.env.uploadS3BucketName ?? "local-uploads",
-    Fields: { key: awsFilename },
-    Expires: 600,
+    Key: awsFilename,
   });
-  return {
-    psurl: url,
-    psdata: fields,
-  };
+  return { psurl };
 });

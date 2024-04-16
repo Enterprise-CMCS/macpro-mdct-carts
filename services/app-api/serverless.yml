@@ -6,9 +6,9 @@ frameworkVersion: "3"
 package:
   individually: true
 
-useDotenv: true
 plugins:
   - serverless-plugin-typescript
+  - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-associate-waf
   - serverless-offline
@@ -17,6 +17,7 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
   - serverless-api-client-certificate
+  - "@enterprise-cmcs/serverless-waf-plugin"
 
 s3BucketHelper:
   loggingConfiguration:
@@ -28,18 +29,23 @@ custom:
     tsConfigFileLocation: "./tsconfig.json"
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
+  wafPlugin:
+    name: ${self:service}-${self:custom.stage}-webacl-waf
+  wafExcludeRules:
+    awsCommon:
+      - "SizeRestrictions_BODY"
   serverlessTerminationProtection:
     stages:
       - main
       - val
       - production
+  dotenv:
+    path: ../../.env
   accountId: ${AWS::AccountId}
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
   fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
   fmapTableArn: ${env:fmapTableArn, cf:database-${self:custom.stage}.FmapTableArn}
-  princeApiHost: ${env:princeApiHost, ssm:/${self:custom.stage}/prince_api_host, ssm:/default/prince_api_host}
-  princeApiPath: ${env:princeApiPath, ssm:/${self:custom.stage}/prince_api_path, ssm:/default/prince_api_path}
   stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
   stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
   stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
@@ -50,9 +56,10 @@ custom:
   sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
-  webAclName: ${self:service}-${self:custom.stage}-webacl
+  webAclName: ${self:service}-${self:custom.stage}-webacl-waf
   uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
   uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
+  docraptorApiKey: ${env:docraptorApiKey, ssm:/${self:custom.stage}/pdf/docraptorApiKey, ssm:/default/pdf/docraptorApiKey}
   associateWaf:
     name: ${self:custom.webAclName}
     version: V2
@@ -79,7 +86,7 @@ custom:
     prod: aws_iam
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   region: us-east-1
   tracing:
     apiGateway: true
@@ -123,8 +130,7 @@ provider:
     acsTableName: ${self:custom.acsTableName}
     fiscalYearTemplateS3BucketName: ${env:fiscalYearTemplateBucketName, ssm:/configuration/${self:custom.stage}/s3/fiscalYearTemplateBucket, ssm:/configuration/default/s3/fiscalYearTemplateBucket, ""}
     fmapTableName: ${self:custom.fmapTableName}
-    princeApiHost: ${self:custom.princeApiHost}
-    princeApiPath: ${self:custom.princeApiPath}
+    docraptorApiKey: ${self:custom.docraptorApiKey}
     stateTableName: ${self:custom.stateTableName}
     stateStatusTableName: ${self:custom.stateStatusTableName}
     sectionTableName: ${self:custom.sectionTableName}
@@ -259,35 +265,6 @@ resources:
           gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
         ResponseType: DEFAULT_5XX
         RestApiId: !Ref ApiGatewayRestApi
-    ApiGwWebAcl:
-      Type: AWS::WAFv2::WebACL
-      Properties:
-        Name: ${self:custom.webAclName}
-        DefaultAction:
-          Block: {}
-        Rules:
-          - Action:
-              Allow: {}
-            Name: ${self:custom.webAclName}-allow-usa-plus-territories
-            Priority: 0
-            Statement:
-              GeoMatchStatement:
-                CountryCodes:
-                  - GU # Guam
-                  - PR # Puerto Rico
-                  - US # USA
-                  - UM # US Minor Outlying Islands
-                  - VI # US Virgin Islands
-                  - MP # Northern Mariana Islands
-            VisibilityConfig:
-              SampledRequestsEnabled: true
-              CloudWatchMetricsEnabled: true
-              MetricName: WafWebAcl
-        Scope: REGIONAL
-        VisibilityConfig:
-          CloudWatchMetricsEnabled: true
-          SampledRequestsEnabled: true
-          MetricName: ${self:custom.stage}-webacl
   Outputs:
     ApiGatewayRestApiName:
       Value: !Ref ApiGatewayRestApi

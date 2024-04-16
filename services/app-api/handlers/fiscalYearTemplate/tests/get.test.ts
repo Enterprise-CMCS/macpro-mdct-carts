@@ -1,11 +1,15 @@
 /* eslint-disable no-console */
 jest.useFakeTimers();
 import { getFiscalYearTemplateLink } from "../get";
-import { APIGatewayProxyEvent } from "aws-lambda"; // eslint-disable-line no-unused-vars
+import { APIGatewayProxyEvent } from "../../../types";
 import { testEvent } from "../../../test-util/testEvents";
 
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
+}));
+
+jest.mock("../../../libs/s3-lib", () => ({
+  getSignedDownloadUrl: jest.fn().mockReturnValue("mock url"),
 }));
 
 describe("Test Get Fiscal Year Template Handlers", () => {
@@ -16,6 +20,8 @@ describe("Test Get Fiscal Year Template Handlers", () => {
 
     const res = await getFiscalYearTemplateLink(event, null);
     expect(res.statusCode).toBe(200);
-    expect(res.body).toContain("s3.amazonaws.com");
+    expect(JSON.parse(res.body)).toEqual({
+      psurl: "mock url",
+    });
   });
 });

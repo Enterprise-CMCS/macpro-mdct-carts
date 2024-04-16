@@ -1,7 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
-import { State, StateStatus, AppRoles } from "../../types";
+import { State, StateStatus, AppRoles, Section } from "../../types";
 import { NotFoundError, UnauthorizedError } from "../../libs/httpErrors";
 
 /**
@@ -43,7 +43,7 @@ export const post = handler(async (event, _context) => {
     for (const section of baseSections) {
       state;
       let modifiedSection = section.replace("~XX~", state.code);
-      let sectionObj = JSON.parse(modifiedSection);
+      let sectionObj = JSON.parse(modifiedSection) as Section;
       sectionObj.pk = `${state.code}-${year}`;
       sectionObj.year = yearNumber;
       sectionObj.stateId = state.code;
@@ -81,8 +81,7 @@ const getAllStates = async () => {
   const params = {
     TableName: process.env.stateTableName!,
   };
-  const queryValue = await dynamoDb.scan(params);
-  return queryValue.Items as Array<State>;
+  return await dynamoDb.scanAll<State>(params);
 };
 
 const getExistingStates = async (year: number) => {
@@ -98,8 +97,7 @@ const getExistingStates = async (year: number) => {
     FilterExpression: "#year = :year",
   };
 
-  const queryValue = await dynamoDb.scan(params);
-  const results = queryValue.Items as Array<StateStatus>;
+  const results = await dynamoDb.scanAll<StateStatus>(params);
   return results.map((state) => state.stateId);
 };
 
@@ -114,11 +112,11 @@ const getBaseSections = async (year: number) => {
     },
     FilterExpression: "#year = :year",
   };
-  const queryValue = await dynamoDb.scan(params);
-  return queryValue.Items?.map((s) => JSON.stringify(s));
+  const sections = await dynamoDb.scanAll<Section>(params);
+  return sections.map((s) => JSON.stringify(s));
 };
 
-const saveBatch = async (tableName: string, items: any) => {
+const saveBatch = async (tableName: string, items: Record<string, any>) => {
   // Save new forms
   var batch = []; // DynamoDB batchWriteItem takes 25 items max
   for (let i = 0; i < items.length; i++) {
