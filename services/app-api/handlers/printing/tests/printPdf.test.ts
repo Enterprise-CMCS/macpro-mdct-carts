@@ -6,17 +6,17 @@ jest.spyOn(console, "error").mockImplementation();
 jest.spyOn(console, "warn").mockImplementation();
 global.fetch = jest.fn().mockImplementationOnce(() => {
   return new Promise((resolve) => {
-   resolve({
-    status: 200,
-    headers: {
-      get: jest.fn().mockResolvedValue("3"),
-    },
-    arrayBuffer: jest.fn().mockResolvedValue(
-      // An ArrayBuffer containing `%PDF-1.7`
-      new Uint8Array([37, 80, 68, 70, 45, 49, 46, 55]).buffer
-    ),
+    resolve({
+      status: 200,
+      headers: {
+        get: jest.fn().mockResolvedValue("3"),
+      },
+      arrayBuffer: jest.fn().mockResolvedValue(
+        // An ArrayBuffer containing `%PDF-1.7`
+        new Uint8Array([37, 80, 68, 70, 45, 49, 46, 55]).buffer
+      ),
+    });
   });
- });
 });
 
 jest.mock("../../../libs/authorization", () => ({
