@@ -2,7 +2,6 @@ import handler from "../../libs/handler-lib";
 import * as logger from "../../libs/debug-lib";
 import createDOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
-import { fetch } from "cross-fetch"; // TODO delete this line and uninstall this package, once CARTS is running on Nodejs 18+
 
 const windowEmulator: any = new JSDOM("").window;
 const DOMPurify = createDOMPurify(windowEmulator);
