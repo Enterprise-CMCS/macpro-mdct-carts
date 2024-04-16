@@ -24,7 +24,7 @@ const buildDynamoClient = () => {
     dynamoConfig.credentials = {
       accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
       secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
-    }
+    };
   } else {
     dynamoConfig["region"] = "us-east-1";
   }

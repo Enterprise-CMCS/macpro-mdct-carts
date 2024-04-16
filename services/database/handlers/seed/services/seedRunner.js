@@ -78,7 +78,7 @@ const buildSeedRunner = () => {
     dynamoConfig.credentials = {
       accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
       secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
-    }
+    };
     dynamoPrefix = "local";
   } else {
     dynamoConfig["region"] = "us-east-1";
