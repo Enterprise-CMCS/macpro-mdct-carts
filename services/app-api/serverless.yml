@@ -79,6 +79,8 @@ custom:
       events:
         - schedule: rate(${env:warmupSchedule, ssm:/configuration/${self:custom.stage}/warmup/schedule, ssm:/configuration/default/warmup/schedule, "60 minutes"})
       concurrency: ${env:warmupConcurrency, ssm:/configuration/${self:custom.stage}/warmup/concurrency, ssm:/configuration/default/warmup/concurrency, 5}
+      package:
+        individually: true
   authValue:
     main: aws_iam
     master: aws_iam
