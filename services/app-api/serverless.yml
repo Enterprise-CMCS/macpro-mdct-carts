@@ -6,9 +6,9 @@ frameworkVersion: "3"
 package:
   individually: true
 
-useDotenv: true
 plugins:
   - serverless-plugin-typescript
+  - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-associate-waf
   - serverless-offline
@@ -39,6 +39,8 @@ custom:
       - main
       - val
       - production
+  dotenv:
+    path: ../../.env
   accountId: ${AWS::AccountId}
   acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
   acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
@@ -84,7 +86,7 @@ custom:
     prod: aws_iam
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   region: us-east-1
   tracing:
     apiGateway: true
