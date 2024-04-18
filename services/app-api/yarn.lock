@@ -3973,10 +3973,10 @@ serverless-associate-waf@^1.2.1:
   dependencies:
     chalk "^2.4.2"
 
-serverless-plugin-typescript@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/serverless-plugin-typescript/-/serverless-plugin-typescript-2.1.0.tgz#467148e097140a4f134be5922f46a2148bd3f87d"
-  integrity sha512-tHXP3Nd4AajHDWe5p77yQOcos/XS3t7/iqPd9NtN15d5w1hAdeoMK+3g+7v0zHrHpfxrtaIawSK/Ec8eMYL5Cw==
+serverless-plugin-typescript@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/serverless-plugin-typescript/-/serverless-plugin-typescript-2.1.5.tgz#d4c4636ee6e4803d2fe773ce2bb8bf52362c836d"
+  integrity sha512-7OO6eJzv57dvfz0v9huU1JVBgdzgvvz+6GCwwkR2bfdVHKs1tifx+fSgjbQcBpXNNHf8Dx2Mo7evtYTkA/TDDA==
   dependencies:
     fs-extra "^7.0.1"
     globby "^10.0.2"
