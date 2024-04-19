@@ -78,6 +78,7 @@ async function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
     utils.generateSystemMessage(
       `Finished downloading new object ${s3ObjectKey}`
     );
+    return localPath;
   } catch (err) {
     utils.generateSystemMessage(`Error downloading new object ${s3ObjectKey}`);
     throw err;
