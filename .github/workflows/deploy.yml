@@ -66,8 +66,7 @@ jobs:
             ${{github.workspace}}/services/ui-src/coverage/lcov.info:lcov
       - name: Store unit test results
         uses: actions/upload-artifact@v4
-        #if: failure()
-        if: always()
+        if: failure()
         with:
           name: unit-test-results
           path: |
@@ -204,8 +203,7 @@ jobs:
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
-        #if: failure()
-        if: always()
+        if: failure()
         with:
           name: cypress-test-results
           path: |
@@ -238,8 +236,7 @@ jobs:
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
-        #if: failure()
-        if: always()
+        if: failure()
         with:
           name: a11y-test-results
           path: |
