@@ -5,14 +5,20 @@
 // TODO logging solution for backend services
 /* eslint-disable no-console */
 
-const AWS = require("aws-sdk");
+const {
+  S3Client,
+  GetObjectCommand,
+  HeadObjectCommand,
+  PutObjectTaggingCommand,
+} = require("@aws-sdk/client-s3");
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 const clamav = require("./clamav");
-const s3 = new AWS.S3();
+const s3 = new S3Client();
 const utils = require("./utils");
 const constants = require("./constants");
+const { pipeline } = require("stream/promises");
 
 /**
  * Retrieve the file size of S3 object without downloading.
@@ -24,7 +30,8 @@ async function sizeOf(key, bucket) {
   console.log("key: " + key);
   console.log("bucket: " + bucket);
 
-  let res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
+  const getObjectHead = new HeadObjectCommand({ Key: key, Bucket: bucket });
+  const res = await s3.send(getObjectHead);
   return res.ContentLength;
 }
 
@@ -45,7 +52,7 @@ async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
  * @param {string} s3ObjectBucket    Bucket of S3 object
  * @return {Promise<string>}         Path to downloaded file
  */
-function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
+async function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   if (!fs.existsSync(constants.TMP_DOWNLOAD_PATH)) {
     fs.mkdirSync(constants.TMP_DOWNLOAD_PATH);
   }
@@ -62,22 +69,20 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
   };
+  const getObject = new GetObjectCommand(options);
 
-  return new Promise((resolve, reject) => {
-    s3.getObject(options)
-      .createReadStream()
-      .on("end", function () {
-        utils.generateSystemMessage(
-          `Finished downloading new object ${s3ObjectKey}`
-        );
-        resolve(localPath);
-      })
-      .on("error", function (err) {
-        console.log(err);
-        reject();
-      })
-      .pipe(writeStream);
-  });
+  try {
+    const response = await s3.send(getObject);
+    const readStream = response.Body.transformToWebStream();
+    await pipeline(readStream, writeStream);
+    utils.generateSystemMessage(
+      `Finished downloading new object ${s3ObjectKey}`
+    );
+    return localPath;
+  } catch (err) {
+    utils.generateSystemMessage(`Error downloading new object ${s3ObjectKey}`);
+    throw err;
+  }
 }
 
 async function lambdaHandleEvent(event, _context) {
@@ -120,9 +125,10 @@ async function lambdaHandleEvent(event, _context) {
     Key: s3ObjectKey,
     Tagging: utils.generateTagSet(virusScanStatus),
   };
+  const tagObject = new PutObjectTaggingCommand(taggingParams);
 
   try {
-    await s3.putObjectTagging(taggingParams).promise();
+    await s3.send(tagObject);
     utils.generateSystemMessage("Tagging successful");
   } catch (err) {
     console.log(err);
@@ -146,9 +152,10 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     Key: s3ObjectKey,
     Tagging: utils.generateTagSet(virusScanStatus),
   };
+  const tagObject = new PutObjectTaggingCommand(taggingParams);
 
   try {
-    await s3.putObjectTagging(taggingParams).promise();
+    await s3.send(tagObject);
     utils.generateSystemMessage("Tagging successful");
   } catch (err) {
     console.log(err);
