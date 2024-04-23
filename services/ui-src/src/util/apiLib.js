@@ -10,13 +10,16 @@ import { updateTimeout } from "../hooks/authHooks";
  */
 const apiRequest = async (request, apiName, path, options) => {
   try {
+    // swallow request error codes for aws lib, they'll kill the lib
     updateTimeout();
     const response = await request({ apiName, path, options }).response;
     const body = await response?.body?.text(); // body.json() dies on an empty response, spectacularly
     return body && body.length > 0 ? JSON.parse(body) : null;
   } catch (e) {
-    console.error("Request Failed", path, JSON.parse(e.response?.body));
-    return;
+    // Return our own error for handling in the app
+    const info = `Request Failed - ${path} - ${e.response?.body}`;
+    console.error(info);
+    throw new Error(info);
   }
 };
 
