@@ -24,7 +24,7 @@ Amplify.configure({
   },
   API: {
     REST: {
-      CartsApi: {
+      "carts-api": {
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
