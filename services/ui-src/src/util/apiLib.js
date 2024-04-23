@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import { get, put, post, del } from "aws-amplify/api";
 import { updateTimeout } from "../hooks/authHooks";
 
 /**
@@ -6,26 +6,26 @@ import { updateTimeout } from "../hooks/authHooks";
  * Below we just key off of these API calls as our source of user activity to make sure
  * credentials don't expire.
  */
-const post = (api, uri, opts) => {
+const apiPost = (api, uri, opts) => {
   updateTimeout();
-  return API.post(api, uri, opts);
+  return post(api, uri, opts);
 };
-const put = (api, uri, opts) => {
+const apiPut = (api, uri, opts) => {
   updateTimeout();
-  return API.put(api, uri, opts);
+  return put(api, uri, opts);
 };
-const get = (api, uri, opts) => {
+const apiGet = (api, uri, opts) => {
   updateTimeout();
-  return API.get(api, uri, opts);
+  return get(api, uri, opts);
 };
-const del = (api, uri, opts) => {
+const apiDel = (api, uri, opts) => {
   updateTimeout();
-  return API.del(api, uri, opts);
+  return del(api, uri, opts);
 };
 
 export const apiLib = {
-  post,
-  put,
-  get,
-  del,
+  post: apiPost,
+  put: apiPut,
+  get: apiGet,
+  del: apiDel,
 };

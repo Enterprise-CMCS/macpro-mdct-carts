@@ -5,10 +5,8 @@ import { LocalLogins } from "./LocalLogins";
 
 const mockPost = jest.fn();
 const localLogins = <LocalLogins />;
-jest.mock("aws-amplify", () => ({
-  Auth: {
-    signIn: (email, password) => mockPost(email, password),
-  },
+jest.mock("aws-amplify/auth", () => ({
+  signIn: (email, password) => mockPost(email, password),
 }));
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({

@@ -4,10 +4,8 @@ import FormTemplates from "./FormTemplates";
 import { act, render, fireEvent } from "@testing-library/react";
 
 const mockPost = jest.fn();
-jest.mock("aws-amplify", () => ({
-  API: {
-    post: () => mockPost(),
-  },
+jest.mock("aws-amplify/api", () => ({
+  post: () => mockPost(),
 }));
 jest.mock("../../hooks/authHooks");
 window.alert = jest.fn();
