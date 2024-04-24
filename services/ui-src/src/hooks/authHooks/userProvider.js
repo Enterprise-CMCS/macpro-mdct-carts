@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import {
+  signInWithRedirect,
+  signOut,
+  fetchAuthSession,
+} from "aws-amplify/auth";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
@@ -11,7 +15,7 @@ const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
 
 const authenticateWithIDM = () => {
-  Auth.federatedSignIn({ customProvider: "Okta" });
+  signInWithRedirect({ provider: { custom: "Okta" } });
 };
 
 export const UserProvider = ({ children }) => {
@@ -28,7 +32,7 @@ export const UserProvider = ({ children }) => {
     try {
       setUser(null);
       localStorage.removeItem("mdctcarts_session_exp");
-      await Auth.signOut();
+      await signOut();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
@@ -44,8 +48,11 @@ export const UserProvider = ({ children }) => {
 
     // Authenticate
     try {
-      const session = await Auth.currentSession();
-      const payload = session.getIdToken().payload;
+      const tokens = (await fetchAuthSession()).tokens;
+      if (!tokens || !tokens.idToken) {
+        throw new Error("Missing tokens auth session.");
+      }
+      const payload = tokens.idToken.payload;
       const { email, given_name, family_name } = payload;
       // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to CARTS
       const cms_role = payload["custom:cms_roles"] ?? "";
@@ -69,24 +76,6 @@ export const UserProvider = ({ children }) => {
       }
     }
   }, [isProduction, location]);
-
-  // single run configuration
-  useEffect(() => {
-    Auth.configure({
-      mandatorySignIn: true,
-      region: config.cognito.REGION,
-      userPoolId: config.cognito.USER_POOL_ID,
-      identityPoolId: config.cognito.IDENTITY_POOL_ID,
-      userPoolWebClientId: config.cognito.APP_CLIENT_ID,
-      oauth: {
-        domain: config.cognito.APP_CLIENT_DOMAIN,
-        redirectSignIn: config.cognito.REDIRECT_SIGNIN,
-        redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
-        scope: ["email", "openid", "profile"],
-        responseType: "code",
-      },
-    });
-  });
 
   // rerender on auth state change, checking router location
   useEffect(() => {

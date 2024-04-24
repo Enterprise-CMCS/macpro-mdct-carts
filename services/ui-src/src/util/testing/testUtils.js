@@ -13,6 +13,18 @@ export const storeFactory = (initialState) => {
   return createStore(reducer, initialState, applyMiddleware(thunk));
 };
 
+/**
+ * Returns a jest function with a response provided through the text field in the body.
+ * Convenience function to not worry about the nested resolves.
+ * apiLib awaits the call, then the parsing via text()
+ * @param {*} expectedResponse The expected item to come back from the api
+ * @returns
+ */
+export const mockAmplifyRequest = (expectedResponse = undefined) =>
+  jest.fn(() =>
+    Promise.resolve({ body: { text: () => Promise.resolve(expectedResponse) } })
+  );
+
 /*
  *export const checkProps = (component, conformingProps) => {
  *   const propError = checkPropTypes(
