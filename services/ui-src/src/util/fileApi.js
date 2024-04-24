@@ -54,9 +54,10 @@ export const getUploadedFiles = async (year, stateCode, questionId) => {
 };
 
 export const deleteUploadedFile = async (year, stateCode, fileId) => {
-  const opts = await requestOptions({ fileId });
+  const opts = await requestOptions();
+  const encodedFileId = encodeURIComponent(fileId);
   await apiLib
-    .del("carts-api", `/uploads/${year}/${stateCode}`, opts)
+    .del("carts-api", `/uploads/${year}/${stateCode}/${encodedFileId}`, opts)
     .catch((error) => {
       console.log("!!!Error retrieving files: ", error); // eslint-disable-line no-console
     });

@@ -117,8 +117,10 @@ describe("File API", () => {
 
     await deleteUploadedFile("2023", "AL", "mock-file-id");
 
-    expect(await apiLib.del).toBeCalledWith("carts-api", "/uploads/2023/AL", {
-      body: { fileId: "mock-file-id" },
-    });
+    expect(await apiLib.del).toBeCalledWith(
+      "carts-api",
+      "/uploads/2023/AL/mock-file-id",
+      {}
+    );
   });
 });

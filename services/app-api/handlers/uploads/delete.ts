@@ -10,10 +10,10 @@ import { UnauthorizedError } from "../../libs/httpErrors";
  */
 export const deleteUpload = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
-  const body = event.body ? JSON.parse(event.body) : null;
   const state = event.pathParameters ? event.pathParameters["state"] : "";
+  const fileId = event.pathParameters ? event.pathParameters["fileId"] : "";
 
-  if (user.role !== AppRoles.STATE_USER || !body || !body.fileId || !state) {
+  if (user.role !== AppRoles.STATE_USER || !fileId || !state) {
     throw new UnauthorizedError("Unauthorized");
   }
   // Get file, check aws filename before deleting
@@ -23,7 +23,7 @@ export const deleteUpload = handler(async (event, _context) => {
       "uploadedState = :uploadedState AND fileId = :fileId",
     ExpressionAttributeValues: {
       ":uploadedState": state,
-      ":fileId": body.fileId,
+      ":fileId": decodeURIComponent(fileId),
     },
   };
   const results = await dynamoDb.query(documentParams);
@@ -44,7 +44,7 @@ export const deleteUpload = handler(async (event, _context) => {
     TableName: process.env.uploadsTableName!,
     Key: {
       uploadedState: state,
-      fileId: body.fileId,
+      fileId: fileId,
     },
   };
 
