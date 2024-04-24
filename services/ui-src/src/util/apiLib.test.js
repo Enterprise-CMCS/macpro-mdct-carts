@@ -64,4 +64,12 @@ describe("API lib", () => {
     expect(mockRequest).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
+
+  test("API errors should be surfaced for handling", async () => {
+    mockRequest.mockImplementationOnce(() => {
+      throw new Error("500");
+    });
+
+    await expect(apiLib.del(apiName, path, mockOptions)).rejects.toThrow(Error);
+  });
 });
