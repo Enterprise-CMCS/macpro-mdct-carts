@@ -16,6 +16,8 @@ export const deleteUpload = handler(async (event, _context) => {
   if (user.role !== AppRoles.STATE_USER || !fileId || !state) {
     throw new UnauthorizedError("Unauthorized");
   }
+
+  const decodedFileId = decodeURIComponent(fileId);
   // Get file, check aws filename before deleting
   const documentParams = {
     TableName: process.env.uploadsTableName!,
@@ -23,7 +25,7 @@ export const deleteUpload = handler(async (event, _context) => {
       "uploadedState = :uploadedState AND fileId = :fileId",
     ExpressionAttributeValues: {
       ":uploadedState": state,
-      ":fileId": decodeURIComponent(fileId),
+      ":fileId": decodedFileId,
     },
   };
   const results = await dynamoDb.query(documentParams);
@@ -44,7 +46,7 @@ export const deleteUpload = handler(async (event, _context) => {
     TableName: process.env.uploadsTableName!,
     Key: {
       uploadedState: state,
-      fileId: fileId,
+      fileId: decodedFileId,
     },
   };
 
