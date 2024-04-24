@@ -48,8 +48,11 @@ export const UserProvider = ({ children }) => {
 
     // Authenticate
     try {
-      const { idToken } = (await fetchAuthSession()).tokens ?? {};
-      const { payload } = idToken;
+      const tokens = (await fetchAuthSession()).tokens;
+      if (!tokens || !tokens.idToken) {
+        throw new Error("Missing tokens auth session.");
+      }
+      const payload = tokens.idToken.payload;
       const { email, given_name, family_name } = payload;
       // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to CARTS
       const cms_role = payload["custom:cms_roles"] ?? "";

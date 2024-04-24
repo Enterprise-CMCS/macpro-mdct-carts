@@ -48,17 +48,13 @@ describe("File API", () => {
 
     expect(result).toEqual({ presignedUploadUrl: "https://mock.url" });
 
-    expect(await apiLib.post).toBeCalledWith(
-      "carts-api",
-      "/psUrlUpload/2023/AL",
-      {
-        body: {
-          uploadedFileName: "test.jpg",
-          uploadedFileType: "image/jpg",
-          questionId: "mock-question-id",
-        },
-      }
-    );
+    expect(await apiLib.post).toBeCalledWith("/psUrlUpload/2023/AL", {
+      body: {
+        uploadedFileName: "test.jpg",
+        uploadedFileType: "image/jpg",
+        questionId: "mock-question-id",
+      },
+    });
   });
 
   test("uploadFileToS3 should submit a PUT request to the given URL", async () => {
@@ -80,13 +76,9 @@ describe("File API", () => {
     const result = await getFileDownloadUrl("2023", "AL", "mock-file-id");
 
     expect(result).toBe("mock.s3/url");
-    expect(await apiLib.post).toBeCalledWith(
-      "carts-api",
-      "/psUrlDownload/2023/AL",
-      {
-        body: { fileId: "mock-file-id" },
-      }
-    );
+    expect(await apiLib.post).toBeCalledWith("/psUrlDownload/2023/AL", {
+      body: { fileId: "mock-file-id" },
+    });
   });
 
   test("getUploadedFiles should post to the CARTS API and return the list of files", async () => {
@@ -94,7 +86,7 @@ describe("File API", () => {
 
     const result = await getUploadedFiles("2023", "AL", "mock-question-id");
 
-    expect(await apiLib.post).toBeCalledWith("carts-api", "/uploads/2023/AL", {
+    expect(await apiLib.post).toBeCalledWith("/uploads/2023/AL", {
       body: { stateCode: "AL", questionId: "mock-question-id" },
     });
     expect(result.length).toBe(1);
@@ -106,7 +98,7 @@ describe("File API", () => {
 
     const result = await getUploadedFiles("2023", "AL", "mock-question-id");
 
-    expect(await apiLib.post).toBeCalledWith("carts-api", "/uploads/2023/AL", {
+    expect(await apiLib.post).toBeCalledWith("/uploads/2023/AL", {
       body: { stateCode: "AL", questionId: "mock-question-id" },
     });
     expect(result.length).toBe(0);
@@ -118,7 +110,6 @@ describe("File API", () => {
     await deleteUploadedFile("2023", "AL", "mock-file-id");
 
     expect(await apiLib.del).toBeCalledWith(
-      "carts-api",
       "/uploads/2023/AL/mock-file-id",
       {}
     );

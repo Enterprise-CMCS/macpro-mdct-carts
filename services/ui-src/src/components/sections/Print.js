@@ -77,7 +77,7 @@ const Print = ({ currentUser, state, name }) => {
       encodedHtml: base64String,
     };
 
-    const res = await apiLib.post("carts-api", "/print_pdf", opts);
+    const res = await apiLib.post("/print_pdf", opts);
     openPdf(res.data);
   };
   // Load formData via side effect

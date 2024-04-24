@@ -17,7 +17,6 @@ jest.mock("../hooks/authHooks", () => ({
 }));
 
 const path = "my/url";
-const apiName = "my-api";
 const mockOptions = {
   headers: {
     "x-api-key": "mock key",
@@ -27,7 +26,7 @@ const mockOptions = {
   },
 };
 const requestObj = {
-  apiName,
+  apiName: "carts-api",
   path,
   options: mockOptions,
 };
@@ -38,28 +37,28 @@ describe("API lib", () => {
   });
 
   test("Calling post should update the session timeout", async () => {
-    await apiLib.post(apiName, path, mockOptions);
+    await apiLib.post(path, mockOptions);
 
     expect(mockRequest).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling put should update the session timeout", async () => {
-    await apiLib.put(apiName, path, mockOptions);
+    await apiLib.put(path, mockOptions);
 
     expect(mockRequest).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling get should update the session timeout", async () => {
-    await apiLib.get(apiName, path, mockOptions);
+    await apiLib.get(path, mockOptions);
 
     expect(mockRequest).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling del should update the session timeout", async () => {
-    await apiLib.del(apiName, path, mockOptions);
+    await apiLib.del(path, mockOptions);
 
     expect(mockRequest).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
@@ -70,6 +69,6 @@ describe("API lib", () => {
       throw new Error("500");
     });
 
-    await expect(apiLib.del(apiName, path, mockOptions)).rejects.toThrow(Error);
+    await expect(apiLib.del(path, mockOptions)).rejects.toThrow(Error);
   });
 });
