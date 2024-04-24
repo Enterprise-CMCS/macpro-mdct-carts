@@ -6,7 +6,7 @@ import { LocalLogins } from "./LocalLogins";
 const mockPost = jest.fn();
 const localLogins = <LocalLogins />;
 jest.mock("aws-amplify/auth", () => ({
-  signIn: (email, password) => mockPost(email, password),
+  signIn: (credentials) => mockPost(credentials),
 }));
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -36,7 +36,10 @@ describe("LocalLogin component", () => {
     await act(async () => {
       fireEvent.click(generateButton);
     });
-    expect(mockPost).toHaveBeenCalledWith("myEmail@email.com", "superS3cure");
+    expect(mockPost).toHaveBeenCalledWith({
+      username: "myEmail@email.com",
+      password: "superS3cure", // pragma: allowlist secret
+    });
     expect(mockHistoryPush).toHaveBeenCalledWith("/");
   });
 });
