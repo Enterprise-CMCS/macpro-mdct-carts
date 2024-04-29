@@ -43,10 +43,10 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
@@ -57,7 +57,7 @@ jobs:
         run: ./test-unit.sh
       - name: publish test coverage to code climate
         if: env.CODE_CLIMATE_ID != ''
-        uses: paambaati/codeclimate-action@v5
+        uses: paambaati/codeclimate-action@v6
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
         with:
@@ -188,7 +188,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           working-directory: tests/cypress
           spec: tests/integration/*.spec.js
@@ -221,7 +221,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check Project A11y
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           working-directory: tests/cypress
           spec: tests/a11y/*.spec.js
