@@ -16,7 +16,7 @@ export const getAllStatesData = () => {
   return async (dispatch) => {
     try {
       const opts = await requestOptions();
-      const data = await apiLib.get(`/state`, opts);
+      const data = await apiLib.get("carts-api", `/state`, opts);
 
       dispatch({ type: GET_ALL_STATES_DATA, data });
     } catch (err) {
@@ -28,7 +28,7 @@ export const getAllStatesData = () => {
 
 export const getAllStateStatuses = () => async (dispatch) => {
   const opts = await requestOptions();
-  const results = await apiLib.get(`/state_status`, opts);
+  const results = await apiLib.get("carts-api", `/state_status`, opts);
   const data = results.Items;
 
   const payload = data
@@ -73,7 +73,7 @@ export const getStateAllStatuses =
   (selectedYears = [], selectedStates = [], selectedStatus = []) =>
   async (dispatch) => {
     const opts = await requestOptions();
-    const results = await apiLib.get(`/state_status`, opts);
+    const results = await apiLib.get("carts-api", `/state_status`, opts);
     const data = results.Items;
     let yearFilter = () => {};
     let stateFilter = () => {};
@@ -153,6 +153,7 @@ export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
     const data = await apiLib.get(
+      "carts-api",
       `/section/${selectedYear}/${stateCode}`,
       opts
     );
@@ -160,7 +161,7 @@ export const loadSections = ({ stateCode, selectedYear }) => {
     const lastYear = parseInt(selectedYear) - 1;
     let lastYearData = undefined;
     const priorData = await apiLib
-      .get(`/section/${lastYear}/${stateCode}`, opts)
+      .get("carts-api", `/section/${lastYear}/${stateCode}`, opts)
       .catch((err) => {
         console.log("--- ERROR PRIOR YEAR SECTIONS ---");
         console.log(err);
@@ -183,6 +184,7 @@ export const loadEnrollmentCounts = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
     const data = await apiLib.get(
+      "carts-api",
       `/enrollment_counts/${selectedYear}/${stateCode}`,
       opts
     );

@@ -2,11 +2,12 @@ import React from "react";
 import { shallow } from "enzyme";
 import FormTemplates from "./FormTemplates";
 import { act, render, fireEvent } from "@testing-library/react";
-import { mockAmplifyRequest } from "../../util/testing/testUtils";
 
-const mockPost = mockAmplifyRequest();
-jest.mock("aws-amplify/api", () => ({
-  post: () => mockPost(),
+const mockPost = jest.fn();
+jest.mock("aws-amplify", () => ({
+  API: {
+    post: () => mockPost(),
+  },
 }));
 jest.mock("../../hooks/authHooks");
 window.alert = jest.fn();
