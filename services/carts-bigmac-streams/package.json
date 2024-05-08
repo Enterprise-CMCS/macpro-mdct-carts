@@ -12,10 +12,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "serverless-bundle": "^6.0.0",
-    "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-online": "Enterprise-CMCS/macpro-serverless-online",
-    "serverless-plugin-scripts": "^1.0.2",
     "serverless-plugin-warmup": "8.2.1"
   }
 }

@@ -81,7 +81,7 @@ custom:
     seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   region: us-east-1
   iam:
     role:
