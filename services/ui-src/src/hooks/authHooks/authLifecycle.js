@@ -1,5 +1,4 @@
-import { Hub } from "aws-amplify/utils";
-import { signOut, getCurrentUser } from "aws-amplify/auth";
+import { Auth, Hub } from "aws-amplify";
 import moment from "moment";
 import { setAuthTimeout } from "../../store/stateUser";
 
@@ -27,7 +26,7 @@ class AuthManager {
     const exp = localStorage.getItem("mdctcarts_session_exp");
     if (exp && moment(exp).isBefore()) {
       localStorage.removeItem("mdctcarts_session_exp");
-      signOut().then(() => {
+      Auth.signOut().then(() => {
         window.location.href = "/";
       });
     }
@@ -56,7 +55,7 @@ class AuthManager {
    * Manual refresh of credentials paired with an instant timer clear
    */
   async refreshCredentials() {
-    await getCurrentUser({ bypassCache: true }); // Force a token refresh
+    await Auth.currentAuthenticatedUser({ bypassCache: true }); // Force a token refresh
     this.setTimer();
   }
 
@@ -75,7 +74,7 @@ class AuthManager {
         this.promptTimeout(exp);
         this.timeoutForceId = setTimeout(() => {
           localStorage.removeItem("mdctcarts_session_exp");
-          signOut();
+          Auth.signOut();
         }, IDLE_WINDOW - PROMPT_AT);
       },
       PROMPT_AT,

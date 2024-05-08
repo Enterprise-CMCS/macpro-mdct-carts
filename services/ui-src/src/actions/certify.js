@@ -25,7 +25,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
       username: username,
     };
 
-    await apiLib.post(`/state_status/${year}/${state}`, opts);
+    apiLib.post("carts-api", `/state_status/${year}/${state}`, opts);
     dispatch({
       type: CERTIFY_AND_SUBMIT_SUCCESS,
       user: username,
