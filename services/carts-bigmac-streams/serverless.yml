@@ -33,9 +33,9 @@ custom:
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
     - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
-  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, param:StageEnrollmentCountsTableName}
-  stateStatusTableStreamArn: ${env:stateStatusTableStreamArn, param:StateStatusTableStreamArn}
-  sectionTableStreamArn: ${env:sectionTableStreamArn, param:SectionTableStreamArn}
+  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
+  stateStatusTableStreamArn: ${env:stateStatusTableStreamArn, cf:database-${self:custom.stage}.StateStatusTableStreamArn}
+  sectionTableStreamArn: ${env:sectionTableStreamArn, cf:database-${self:custom.stage}.SectionTableStreamArn}
   scripts:
     hooks:
       deploy:finalize: |

@@ -20,13 +20,6 @@ services:
       StageEnrollmentCountsTableName: ${database.StageEnrollmentCountsTableName}
       UploadsTableName: ${database.UploadsTableName}
 
-  carts-bigmac-streams:
-    path: services/carts-bigmac-streams
-    params:
-      StageEnrollmentCountsTableName: ${database.StageEnrollmentCountsTableName}
-      StateStatusTableStreamArn: ${database.StateStatusTableStreamArn}
-      SectionTableStreamArn: ${database.SectionTableStreamArn}
-
   # wave 3: depends on many
   ui-auth:
     path: services/ui-auth
