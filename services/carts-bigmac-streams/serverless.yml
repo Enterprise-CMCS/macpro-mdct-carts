@@ -39,7 +39,7 @@ custom:
   scripts:
     hooks:
       deploy:finalize: |
-        aws lambda invoke --region ${self:provider.region} --function-name ${self:service}-${self:custom.stage}-configureConnectors --invocation-type RequestResponse /dev/null
+        serverless invoke --stage ${self:custom.stage} --function configureConnectors
 
 provider:
   name: aws
