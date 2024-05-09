@@ -949,11 +949,6 @@ obliterator@^1.6.1:
   resolved "https://registry.yarnpkg.com/obliterator/-/obliterator-1.6.1.tgz#dea03e8ab821f6c4d96a299e17aef6a3af994ef3"
   integrity sha512-9WXswnqINnnhOG/5SLimUlzuU1hFJUc8zkwyD59Sd+dPOMf05PmnYG/d6Q7HZ+KmgkZJa1PxRso6QdM3sTNHig==
 
-serverless-plugin-warmup@8.2.1:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/serverless-plugin-warmup/-/serverless-plugin-warmup-8.2.1.tgz#b776a886d4390a9e7c907f0db1c4639fed913350"
-  integrity sha512-bVPqK2tt3m6AVjVnjuiU/nsGtm+hukaQmVn7zx2KbKSTCwOZEkMcsqKhkKw3Y4cm/vA2Wxd+3d1lftaGKFkG/Q==
-
 strnum@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/strnum/-/strnum-1.0.5.tgz#5c4e829fe15ad4ff0d20c3db5ac97b73c9b072db"
