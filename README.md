@@ -179,6 +179,22 @@ We use Prettier to format all code. This runs as part of a Git Hook and changes 
 
 Most IDEs have a Prettier plugin that can be configured to run on file save. You can also run the format check manually from the IDE or invoking Prettier on the command line.
 
+## Slack Webhooks
+
+This repository uses 3 webhooks to publish to  3 different channels all in CMS Slack.
+
+- SLACK_WEBHOOK: This pubishes to the `macpro-mdct-carts-alerts` channel. Alerts published there are for deploy or test failures to the `main`, `val`, or `production` branches.
+
+- INTEGRATIONS_SLACK_WEBHOOK: This is used to publish new pull requests to the `mdct-integrations-channel`
+
+- PROD_RELEASE_SLACK_WEBHOOK: This is used to publish to the `mdct-prod-releases` channel upon successful release of CARTS to production.
+
+    - Webhooks are created by CMS tickets, populated into GitHub Secrets
+
+## GitHub Actions Secret Management
+- Secrets are added to GitHub secrets by GitHub Admins 
+- Upon editing and adding new secrets Admins should also update the encypted `/github/secret-list` SSM parameter in the CARTS AWS Production Account.
+
 ## Architecture
 
 TODO: Get an updated diagram

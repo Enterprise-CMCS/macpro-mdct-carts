@@ -1,0 +1,45 @@
+services:
+  # wave 1: no dependencies
+  database:
+    path: services/database
+  ui:
+    path: services/ui
+  uploads:
+    path: services/uploads
+
+  # wave 2: depends on database
+  app-api:
+    path: services/app-api
+    params:
+      AcsTableName: ${database.AcsTableName}
+      FmapTableName: ${database.FmapTableName}
+      StateTableName: ${database.StateTableName}
+      StateStatusTableName: ${database.StateStatusTableName}
+      SectionTableName: ${database.SectionTableName}
+      SectionBaseTableName: ${database.SectionBaseTableName}
+      StageEnrollmentCountsTableName: ${database.StageEnrollmentCountsTableName}
+      UploadsTableName: ${database.UploadsTableName}
+
+  # wave 3: depends on many
+  ui-auth:
+    path: services/ui-auth
+    params:
+      ApiGatewayRestApiName: ${app-api.ApiGatewayRestApiName}
+      ApplicationEndpointUrl: ${ui.ApplicationEndpointUrl}
+
+  # wave 4: depends on most
+  ui-src:
+    path: services/ui-src
+    params:
+      ApiRegion: ${app-api.Region}
+      ApiGatewayRestApiUrl: ${app-api.ApiGatewayRestApiUrl}
+      CognitoRegion: ${ui-auth.Region}
+      IdentityPoolId: ${ui-auth.IdentityPoolId}
+      UserPoolId: ${ui-auth.UserPoolId}
+      UserPoolClientId: ${ui-auth.UserPoolClientId}
+      UserPoolClientDomain: ${ui-auth.UserPoolClientDomain}
+      AttachmentsBucketRegion: ${uploads.Region}
+      AttachmentsBucketName: ${uploads.AttachmentsBucketName}
+      S3BucketName: ${ui.S3BucketName}
+      CloudFrontDistributionId: ${ui.CloudFrontDistributionId}
+      ApplicationEndpointUrl: ${ui.ApplicationEndpointUrl}

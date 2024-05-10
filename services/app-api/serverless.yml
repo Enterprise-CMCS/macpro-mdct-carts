@@ -6,14 +6,12 @@ frameworkVersion: "3"
 package:
   individually: true
 
-useDotenv: true
 plugins:
   - serverless-plugin-typescript
-  - serverless-plugin-warmup
+  - serverless-dotenv-plugin
   - serverless-associate-waf
   - serverless-offline
   - serverless-stack-termination-protection
-  - serverless-idempotency-helper
   - serverless-iam-helper
   - serverless-s3-bucket-helper
   - serverless-api-client-certificate
@@ -39,24 +37,18 @@ custom:
       - main
       - val
       - production
+  dotenv:
+    path: ../../.env
   accountId: ${AWS::AccountId}
-  acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
-  acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
-  fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
-  fmapTableArn: ${env:fmapTableArn, cf:database-${self:custom.stage}.FmapTableArn}
-  stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
-  stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
-  stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
-  stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
-  sectionTableName: ${env:sectionTableName, cf:database-${self:custom.stage}.SectionTableName}
-  sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
-  sectionBaseTableName: ${env:sectionBaseTableName, cf:database-${self:custom.stage}.SectionBaseTableName}
-  sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
-  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
-  stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
+  acsTableName: ${env:acsTableName, param:AcsTableName}
+  fmapTableName: ${env:fmapTableName, param:FmapTableName}
+  stateTableName: ${env:stateTableName, param:StateTableName}
+  stateStatusTableName: ${env:stateStatusTableName, param:StateStatusTableName}
+  sectionTableName: ${env:sectionTableName, param:SectionTableName}
+  sectionBaseTableName: ${env:sectionBaseTableName, param:SectionBaseTableName}
+  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, param:StageEnrollmentCountsTableName}
   webAclName: ${self:service}-${self:custom.stage}-webacl-waf
-  uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
-  uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
+  uploadsTableName: ${env:uploadsTableName, param:UploadsTableName}
   docraptorApiKey: ${env:docraptorApiKey, ssm:/${self:custom.stage}/pdf/docraptorApiKey, ssm:/default/pdf/docraptorApiKey}
   associateWaf:
     name: ${self:custom.webAclName}
@@ -70,13 +62,6 @@ custom:
   serverlessApiClientCertificate:
     rotateCerts: true
     daysLeft: 30
-  warmup:
-    default:
-      enabled: true
-      prewarm: true
-      events:
-        - schedule: rate(${env:warmupSchedule, ssm:/configuration/${self:custom.stage}/warmup/schedule, ssm:/configuration/default/warmup/schedule, "60 minutes"})
-      concurrency: ${env:warmupConcurrency, ssm:/configuration/${self:custom.stage}/warmup/concurrency, ssm:/configuration/default/warmup/concurrency, 5}
   authValue:
     main: aws_iam
     master: aws_iam
@@ -84,7 +69,7 @@ custom:
     prod: aws_iam
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   region: us-east-1
   tracing:
     apiGateway: true

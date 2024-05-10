@@ -8,11 +8,6 @@ on:
         description: "Name of the environment to destroy:"
         required: true
 
-concurrency:
-  # Ensuring group key matches the destroy workflow currently in master
-  group: ${{ github.workflow }}-${{ github.event.ref }}
-  cancel-in-progress: false
-
 permissions:
   id-token: write
   contents: read
