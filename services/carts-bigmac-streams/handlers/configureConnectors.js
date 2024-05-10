@@ -28,12 +28,6 @@ const connectors = [
 
 // eslint-disable-next-line no-unused-vars
 function myHandler(event, context, callback) {
-  if (event.source == "serverless-plugin-warmup") {
-    console.log(
-      "Warmed up... although this function shouldn't be prewarmed.  So, turn it off."
-    );
-    return null;
-  }
   console.log("Received event:", JSON.stringify(event, null, 2));
   var ecsClient = new ECSClient();
   var listParams = {
