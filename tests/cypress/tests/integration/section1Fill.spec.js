@@ -61,7 +61,7 @@ describe("CARTS Report Fill Tests", () => {
 
     // Question 2b
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "FPL starts at")
@@ -71,7 +71,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("0");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "FPL ends at")
@@ -81,7 +81,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("10");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "Premium starts at")
@@ -91,7 +91,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("22");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "Premium ends at")
@@ -101,7 +101,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("44");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("button")
       .contains("Add another")
@@ -110,7 +110,7 @@ describe("CARTS Report Fill Tests", () => {
     cy.wait(50);
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("button")
       .contains("Remove Last")
