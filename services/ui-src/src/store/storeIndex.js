@@ -31,7 +31,7 @@ export const reducer = combineReducers({
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware, saveMiddleware];
 // log redux only in dev environment
-if (process.env.NODE_ENV === "development") {
+if (import.meta.env.NODE_ENV === "development") {
   // eslint-disable-next-line global-require
   const { logger } = require("redux-logger");
 

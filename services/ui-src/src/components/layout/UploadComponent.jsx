@@ -277,7 +277,9 @@ class UploadComponent extends Component {
                   <td>
                     <img
                       // eslint-disable-next-line
-                      src={`${process.env.PUBLIC_URL}/img/bouncing_ball.gif`}
+                      src={`${
+                        import.meta.env.PUBLIC_URL
+                      }/img/bouncing_ball.gif`}
                       alt="Retrieving uploaded files... Please wait..."
                     />{" "}
                     <br />
