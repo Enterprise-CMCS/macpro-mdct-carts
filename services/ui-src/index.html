@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="MDCT CARTS" />
+  <link rel="apple-touch-icon" href="/logo192.png" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="/manifest.json" />
+  <script src="/env-config.js"></script>
+  <title>CARTS</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM1B0SVESL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-XM1B0SVESL");
+  </script>
+  <!-- Tealium Analytics Tag Manager -->
+  <script>
+    var tealiumEnvMap = {
+      "mdctcarts.cms.gov": "prod",
+      "mdctcartsval.cms.gov": "qa",
+    };
+    var tealiumEnv = tealiumEnvMap[window.location.hostname] || "dev";
+    var tealiumUrl = `https://tags.tiqcdn.com/utag/cmsgov/cms-general/${tealiumEnv}/utag.sync.js`;
+    document.write(`<script src="${tealiumUrl}" async><\/script>`);
+  </script>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- Tealium Analytics Tag Manager -->
+  <script>
+    window.utag_cfg_ovrd = { noview: true };
+  </script>
+  <script>
+    (function (t, e, a, l, i, u, m) {
+      t = "cmsgov/cms-general";
+      e = tealiumEnv;
+      a = "/" + t + "/" + e + "/utag.js";
+      l = "//tags.tiqcdn.com/utag" + a;
+      i = document;
+      u = "script";
+      m = i.createElement(u);
+      m.src = l;
+      m.type = "text/java" + u;
+      m.async = true;
+      l = i.getElementsByTagName(u)[0];
+      l.parentNode.insertBefore(m, l);
+    })();
+  </script>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  <script type="module" src="/src/index.js"></script>
+</body>
+
+</html>
