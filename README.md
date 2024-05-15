@@ -36,7 +36,7 @@ TODO: Fix the phone a friend instructions below
 3. In the services/ui-src directory copy the .env_example file and name it .env
 4. Overwrite the values here with an example from another developer
 5. In the root directory run `pre-commit install`
-6. Also in the root of the project run `./dev local`
+6. Also in the root of the project run `./run local`
 
 ### Logging in
 
@@ -63,7 +63,7 @@ There are two mechanisms for seeding data.
 
 ### Local Development Random Info
 
-Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
+Local dev is configured in typescript project in `./src`. The entrypoint is `./src/run.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
 
 Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
 
