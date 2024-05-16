@@ -16,4 +16,7 @@ export default defineConfig({
     // here is the main update
     global: "globalThis",
   },
+  build: {
+    outDir: "./build",
+  },
 });
