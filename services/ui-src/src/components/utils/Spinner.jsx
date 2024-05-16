@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { BASE_URL } from "../../util/constants";
 
 const Spinner = (props) => {
   const { isFetching } = props;
@@ -10,7 +11,7 @@ const Spinner = (props) => {
       <div className="preloader-image">
         <img
           data-testid="spinner-img"
-          src={`${process.env.PUBLIC_URL}/img/spinner.gif`}
+          src={`${BASE_URL}/img/spinner.gif`}
           alt="Loading. Please wait."
         />
       </div>

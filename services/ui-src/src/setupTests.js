@@ -31,3 +31,8 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: jest.fn(),
   })),
 });
+
+jest.mock("./util/constants", () => ({
+  MODE: "production",
+  BASE_URL: "mdctcartsdev.cms.gov",
+}));

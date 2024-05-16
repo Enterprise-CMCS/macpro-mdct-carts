@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { BASE_URL } from "../constants";
 
 //import checkPropTypes from "check-prop-types";
 
@@ -33,7 +34,7 @@ export const mockInitialState = {
     programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
     programName: "NY Combo Program",
     // eslint-disable-next-line no-undef
-    imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
+    imageURI: `${BASE_URL + "/img/states/ny.svg"}`,
     formName: "CARTS FY",
     currentUser: {
       role: "admin",
