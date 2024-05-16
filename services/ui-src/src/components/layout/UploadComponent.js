@@ -227,24 +227,22 @@ class UploadComponent extends Component {
           />
         </div>
 
-        {this.state.loadedFiles
-          ? this.state.loadedFiles.map((element, i) => (
-              <div key={element.name}>
-                <a href={element.name} download>
-                  {" "}
-                  {element.name}{" "}
-                </a>
-                <Button
-                  data-testid={`unstage-${i}`}
-                  name={element.name}
-                  onClick={this.removeFile}
-                  size="small"
-                >
-                  x
-                </Button>
-              </div>
-            ))
-          : null}
+        {this.state.loadedFiles?.map((file, i) => (
+          <div key={file.name}>
+            <a href={encodeURIComponent(file.name)} download>
+              {" "}
+              {file.name}{" "}
+            </a>
+            <Button
+              data-testid={`unstage-${i}`}
+              name={file.name}
+              onClick={this.removeFile}
+              size="small"
+            >
+              x
+            </Button>
+          </div>
+        ))}
 
         <Button
           onClick={this.submitUpload}
