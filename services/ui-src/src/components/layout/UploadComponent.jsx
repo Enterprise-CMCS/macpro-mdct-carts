@@ -11,6 +11,7 @@ import {
   getUploadedFiles,
   deleteUploadedFile,
 } from "../../util/fileApi";
+import { BASE_URL } from "../../util/constants";
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -277,9 +278,7 @@ class UploadComponent extends Component {
                   <td>
                     <img
                       // eslint-disable-next-line
-                      src={`${
-                        import.meta.env.PUBLIC_URL
-                      }/img/bouncing_ball.gif`}
+                      src={`${BASE_URL}/img/bouncing_ball.gif`}
                       alt="Retrieving uploaded files... Please wait..."
                     />{" "}
                     <br />
