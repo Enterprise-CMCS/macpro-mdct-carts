@@ -33,7 +33,7 @@ export const mockInitialState = {
     programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
     programName: "NY Combo Program",
     // eslint-disable-next-line no-undef
-    imageURI: `${process.env.PUBLIC_URL + "/img/states/ny.svg"}`,
+    imageURI: "/img/states/ny.svg",
     formName: "CARTS FY",
     currentUser: {
       role: "admin",

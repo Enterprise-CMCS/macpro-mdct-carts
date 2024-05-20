@@ -51,7 +51,7 @@ const initialState = {
   abbr: "NY",
   programType: "combo", // values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
-  imageURI: `${process.env.PUBLIC_URL}/img/states/ny.svg`,
+  imageURI: `/img/states/ny.svg`,
   formName: "CARTS FY",
   currentUser: {
     role: false,

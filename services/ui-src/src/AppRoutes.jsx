@@ -4,7 +4,6 @@ import Header from "./components/layout/Header";
 import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
 import Print from "./components/sections/Print";
-import Profile from "./Profile";
 import Spinner from "./components/utils/Spinner";
 import Userinfo from "./components/sections/Userinfo";
 import UserProfile from "./components/sections/UserProfile";
@@ -47,7 +46,6 @@ const AppRoutes = () => {
           <Timeout />
           {/* These routes are available to everyone, so define them here */}
           <Route exact path="/userinfo" component={Userinfo} />
-          <Route path="/profile" component={Profile} />
           <Route path="/user/profile" component={UserProfile} />
           <Route path="/print" component={Print} />
           <Route path="/get-help" component={GetHelp} />
