@@ -1,4 +1,3 @@
-import { BASE_URL } from "../util/constants";
 import statesArray from "../components/utils/statesArray";
 
 // ACTION TYPES
@@ -52,7 +51,7 @@ const initialState = {
   abbr: "NY",
   programType: "combo", // values can be combo, medicaid_exp_chip, or separate_chip
   programName: "NY Combo Program",
-  imageURI: `${BASE_URL}/img/states/ny.svg`,
+  imageURI: `/img/states/ny.svg`,
   formName: "CARTS FY",
   currentUser: {
     role: false,

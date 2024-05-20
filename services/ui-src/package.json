@@ -103,16 +103,16 @@
     ],
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
-      "src/components/**/*.js",
-      "src/util/**/*.js",
-      "!src/index.js",
+      "src/components/**/*.{js,jsx}",
+      "src/util/**/*.{js,jsx}",
+      "!src/index.jsx",
       "!src/types.js",
       "!src/config.js",
-      "!src/**/index.js",
+      "!src/**/index.{js,jsx}",
       "!src/components/utils/statesArray.js",
-      "!src/util/testing/**/*.js",
-      "!src/actions/**/*.js",
-      "!src/store/**/*.js",
+      "!src/util/testing/**/*.{js,jsx}",
+      "!src/actions/**/*.{js,jsx}",
+      "!src/store/**/*.{js,jsx}",
       "!src/util/idLetterMarkers.js"
     ],
     "coverageReporters": [
