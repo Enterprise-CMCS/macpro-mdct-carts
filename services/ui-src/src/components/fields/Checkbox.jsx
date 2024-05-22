@@ -34,7 +34,10 @@ const Checkbox = ({ onChange, question, ...props }) => {
             checked={value.indexOf(checkBoxValue) >= 0}
             name={props.name}
           />
-          <label className="label-radio" htmlFor={`${props.name}-${checkBoxValue}`}>
+          <label
+            className="label-radio"
+            htmlFor={`${props.name}-${checkBoxValue}`}
+          >
             {label}
           </label>
         </div>
