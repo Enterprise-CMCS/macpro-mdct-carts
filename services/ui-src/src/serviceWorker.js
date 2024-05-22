@@ -3,6 +3,8 @@
  * register() is not called by default.
  */
 
+import { MODE, BASE_URL } from "./util/constants";
+
 /*
  * This lets the app load faster on subsequent visits in production, and gives
  * it offline capabilities. However, it also means that developers (and users)
@@ -28,13 +30,13 @@ const isLocalhost = Boolean(
 
 export function register(config) {
   // eslint-disable-next-line no-undef
-  if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
+  if (MODE === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
     // eslint-disable-next-line no-undef
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+    const publicUrl = new URL(BASE_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
       /*
-       * Our service worker won't work if PUBLIC_URL is on a different origin
+       * Our service worker won't work if BASE_URL is on a different origin
        * from what our page is served on. This might happen if a CDN is used to
        * serve assets; see https://github.com/facebook/create-react-app/issues/2374
        */
@@ -43,7 +45,7 @@ export function register(config) {
 
     window.addEventListener("load", () => {
       // eslint-disable-next-line no-undef
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const swUrl = `${BASE_URL}/service-worker.js`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
