@@ -32,11 +32,9 @@ Before starting the project install some tools
 TODO: Fix the phone a friend instructions below
 
 1. Clone the repo
-2. In the root directory copy the .env_example file and name it .env
-3. In the services/ui-src directory copy the .env_example file and name it .env
-4. Overwrite the values here with an example from another developer
-5. In the root directory run `pre-commit install`
-6. Also in the root of the project run `./run local`
+2. Ensure you either have a 1Password account and have 1Password CLI installed. Alternatively, reach out to the team for an example of .env files
+3. In the root directory run `pre-commit install`
+4. Also in the root of the project run `./run local --update-env` or if you do not have a 1Password account you can simply run `./run local` to use a static .env file
 
 ### Logging in
 
@@ -193,7 +191,7 @@ This repository uses 3 webhooks to publish to  3 different channels all in CMS S
 
 ## GitHub Actions Secret Management
 - Secrets are added to GitHub secrets by GitHub Admins 
-- Upon editing and adding new secrets Admins should also update the encypted `/github/secret-list` SSM parameter in the CARTS AWS Production Account.
+- Development secrets are maintained in a 1Password vault
 
 ## Architecture
 
