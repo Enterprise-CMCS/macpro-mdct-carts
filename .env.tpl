@@ -22,22 +22,7 @@ URL=http://localhost/3000
 docraptorApiKey=op://mdct_devs/carts_secrets/docraptorApiKey #pragma: allowlist secret
 iamPath=/
 iamPermissionsBoundary="bound"
-DYNAMO_TABLE_ARN=local_nonsense_if_unset_we_search_CF_for
-SKIP_PREFLIGHT_CHECK=true
 SLS_INTERACTIVE_SETUP_ENABLE=1
-acsTableArn=local_nonsense_if_unset_we_search_CF_for
-fmapTableArn=local_nonsense_if_unset_we_search_CF_for
-sectionBaseTableArn=local_nonsense_if_unset_we_search_CF_for
-stateStatusTableArn=local_nonsense_if_unset_we_search_CF_for
-stateTableArn=local_nonsense_if_unset_we_search_CF_for
-stageEnrollmentCountsTableArn=local_nonsense_if_unset_we_search_CF_for
-sectionTableArn=local_nonsense_if_unset_we_search_CF_for
-uploadsTableArn=local_nonsense_if_unset_we_search_CF_for
-princeApiHost=op://mdct_devs/carts_secrets/princeApiHost
-princeApiPath=/doc-conv/508html-to-508pdf
-warmupSchedule="60 minutes"
-warmupConcurrency=5
-runV2DataMigration=false
 
 #needed for e2e tests
 CYPRESS_ADMIN_USER_EMAIL=op://mdct_devs/carts_secrets/msssqm4kzbmrwhihjtgwozcv5u
