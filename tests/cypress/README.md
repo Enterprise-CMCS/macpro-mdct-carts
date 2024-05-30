@@ -4,6 +4,8 @@
 
 ## Getting Started
 
+You will need an updated .env from either using 1Password or by contacting the team directly for a filled in .env file.
+
 1. The `scripts` section defines 2 jobs:
    - `yarn test`
      - runs two parallel processes:
