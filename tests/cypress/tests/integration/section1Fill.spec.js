@@ -171,7 +171,7 @@ describe("CARTS Report Fill Tests", () => {
       .contains("Which delivery system")
       .siblings()
       .find("label")
-      .contains("Fee for Service")
+      .contains("Primary Care Case")
       .then((label) => {
         cy.get(`#${label.attr("for")}`).check();
       });
