@@ -17,6 +17,7 @@ describe("CARTS Report Fill Tests", () => {
     cy.get(actionButton, { timeout: 30000 }).contains("Edit").click();
     cy.wait(3000);
 
+    //Set Report Type to Combo to ensure theres a section 1 to fill
     cy.get("legend")
       .contains("Program type")
       .siblings()
