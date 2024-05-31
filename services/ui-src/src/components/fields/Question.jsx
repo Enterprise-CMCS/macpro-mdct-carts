@@ -120,6 +120,7 @@ const Question = ({
 
         <Component
           {...props}
+          id={props?.id || question?.id}
           label={undefined}
           hint={undefined}
           question={question}
