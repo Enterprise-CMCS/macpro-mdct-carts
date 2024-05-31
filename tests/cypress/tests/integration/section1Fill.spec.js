@@ -1,6 +1,38 @@
 // element selectors
 const actionButton = "[data-testid='report-action-button']";
 const navigationLink = "[aria-label='Vertical Navigation Element'] a";
+const i = 0;
+
+const reenterUntilSection1Available = (i, totalReports) => {
+  if (i === totalReports) {
+    cy.log("Unable to find a report capable of showing Section 1");
+  }
+  // enter report
+  cy.get(actionButton, { timeout: 30000 }).eq(i).contains("Edit").click();
+  cy.wait(3000);
+
+  cy.get("legend")
+    .contains("Program type")
+    .siblings()
+    .find("label")
+    .contains("Both Medicaid")
+    .then((label) => {
+      cy.get(`#${label.attr("for")}`).then(($radio) => {
+        if (!$radio.attr("disabled")) {
+          cy.log("Report will now be set to show Section 1 Questions");
+          cy.get(`#${label.attr("for")}`).check();
+        } else if (!$radio.is(":checked")) {
+          cy.log(
+            "Report is unable to be set to show Section 1 Questions. Now entering the next available report"
+          );
+          i++;
+          cy.get("#carts-logo").click();
+          reenterUntilSection1Available(i, totalReports);
+        }
+        cy.log("Report is set by default to show Section 1 questions");
+      });
+    });
+};
 
 describe("CARTS Report Fill Tests", () => {
   before(() => {
@@ -13,11 +45,18 @@ describe("CARTS Report Fill Tests", () => {
     // log in as State User
     cy.authenticate("stateUser");
 
-    // enter report
-    cy.get(actionButton, { timeout: 30000 }).contains("Edit").click();
-    cy.wait(3000);
+    /*
+     * Find how many reports there are to iterate over so we can find one capable
+     * of supporting Section 1
+     */
+    let totalReports;
+    cy.get("body")
+      .find(actionButton)
+      .then(($value) => {
+        totalReports = $value.length;
+      });
+    reenterUntilSection1Available(i, totalReports);
 
-    //Set Report Type to Combo to ensure theres a section 1 to fill
     cy.get("legend")
       .contains("Program type")
       .siblings()
