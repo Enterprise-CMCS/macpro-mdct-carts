@@ -22,7 +22,7 @@ describe("CARTS Report Fill Tests", () => {
       .contains("Program type")
       .siblings()
       .find("label")
-      .contains("Both Medicaid Expansion")
+      .contains("Both Medicaid")
       .then((label) => {
         cy.get(`#${label.attr("for")}`).check();
       });
