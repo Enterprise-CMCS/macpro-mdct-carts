@@ -6,7 +6,7 @@ import { screen, render } from "@testing-library/react";
 import Part from "./Part";
 import { AppRoles } from "../../types";
 
-jest.mock("../fields/Question.js", () => () => {
+jest.mock("../fields/Question", () => () => {
   const MockName = "default-question";
   return <MockName data-testid="part-question" />;
 });

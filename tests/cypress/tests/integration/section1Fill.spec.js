@@ -17,6 +17,16 @@ describe("CARTS Report Fill Tests", () => {
     cy.get(actionButton, { timeout: 30000 }).contains("Edit").click();
     cy.wait(3000);
 
+    //Set Report Type to Combo to ensure theres a section 1 to fill
+    cy.get("legend")
+      .contains("Program type")
+      .siblings()
+      .find("label")
+      .contains("Both Medicaid")
+      .then((label) => {
+        cy.get(`#${label.attr("for")}`).check();
+      });
+
     // Navigate to Section 1
     cy.get(navigationLink, { timeout: 3000 }).contains("Section 1").click();
     cy.wait(3000);
@@ -31,13 +41,15 @@ describe("CARTS Report Fill Tests", () => {
         cy.get(`#${label.attr("for")}`).check();
       });
 
-    // Question 1a
+    // Question 1 - Swap from Yes to No
     cy.get("legend")
-      .contains("How much is your enrollment fee")
+      .contains("Does your program charge an enrollment fee")
       .siblings()
-      .find("input")
-      .clear()
-      .type("123");
+      .find("label")
+      .contains("No")
+      .then((label) => {
+        cy.get(`#${label.attr("for")}`).check();
+      });
 
     // Question 2
     cy.get("legend")
@@ -61,7 +73,7 @@ describe("CARTS Report Fill Tests", () => {
 
     // Question 2b
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "FPL starts at")
@@ -71,7 +83,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("0");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "FPL ends at")
@@ -81,7 +93,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("10");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "Premium starts at")
@@ -91,7 +103,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("22");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("label")
       .contains("label", "Premium ends at")
@@ -101,7 +113,7 @@ describe("CARTS Report Fill Tests", () => {
       .type("44");
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("button")
       .contains("Add another")
@@ -110,11 +122,41 @@ describe("CARTS Report Fill Tests", () => {
     cy.wait(50);
 
     cy.get("legend")
-      .contains("Indicate the range for premiums")
+      .contains("Indicate the range")
       .siblings()
       .find("button")
       .contains("Remove Last")
       .click();
+
+    // Question 3
+    cy.get("legend")
+      .contains("Is the maximum premium a family")
+      .siblings()
+      .find("label")
+      .contains("Yes")
+      .then((label) => {
+        cy.get(`#${label.attr("for")}`).check();
+      });
+
+    // Question 3 - Swap to No to fill in 3b
+    cy.get("legend")
+      .contains("Is the maximum premium a family")
+      .siblings()
+      .find("label")
+      .contains("No")
+      .then((label) => {
+        cy.get(`#${label.attr("for")}`).check();
+      });
+
+    // Question 3b
+    cy.get("legend")
+      .contains(
+        "What's the maximum premium a family would be charged each year"
+      )
+      .siblings()
+      .find("input")
+      .clear()
+      .type("123");
 
     // Question 4
     cy.get("label")
@@ -126,22 +168,22 @@ describe("CARTS Report Fill Tests", () => {
       .type("The premium differences are simply inexplicable.");
 
     // Question 5
-    /*
-     * TODO: Why do the IDs of these inputs change,
-     * depending on which of them are checked?? Seems very wrong.
-     * We also have multiple inputs sharing the same ID!? Even wronger.
-     * That means that clicking the <label> for Fee-for-Service
-     * checks/unchecks the box for Managed Care. bug bug bug.
-     * It also means that this test gets screwy if it tries to check
-     * more than one box, because the DOM changes under its feet.
-     */
     cy.get("legend")
       .contains("Which delivery system")
       .siblings()
-      .find("input")
-      .first()
-      .then(($input) => {
-        cy.wrap($input).check();
+      .find("label")
+      .contains("Managed Care")
+      .then((label) => {
+        cy.get(`#${label.attr("for")}`).check();
+      });
+
+    cy.get("legend")
+      .contains("Which delivery system")
+      .siblings()
+      .find("label")
+      .contains("Primary Care Case")
+      .then((label) => {
+        cy.get(`#${label.attr("for")}`).check();
       });
 
     // Wait for the autosave to go through

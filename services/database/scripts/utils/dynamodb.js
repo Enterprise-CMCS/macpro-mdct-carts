@@ -20,8 +20,11 @@ const buildDynamoClient = () => {
   const endpoint = process.env.DYNAMODB_URL;
   if (endpoint) {
     dynamoConfig.endpoint = endpoint;
-    dynamoConfig.accessKeyId = "LOCALFAKEKEY"; // pragma: allowlist secret
-    dynamoConfig.secretAccessKey = "LOCALFAKESECRET"; // pragma: allowlist secret
+    dynamoConfig.region = "localhost";
+    dynamoConfig.credentials = {
+      accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
+      secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
+    };
   } else {
     dynamoConfig["region"] = "us-east-1";
   }

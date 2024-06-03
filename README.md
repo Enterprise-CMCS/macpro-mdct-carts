@@ -32,11 +32,9 @@ Before starting the project install some tools
 TODO: Fix the phone a friend instructions below
 
 1. Clone the repo
-2. In the root directory copy the .env_example file and name it .env
-3. In the services/ui-src directory copy the .env_example file and name it .env
-4. Overwrite the values here with an example from another developer
-5. In the root directory run `pre-commit install`
-6. Also in the root of the project run `./dev local`
+2. Ensure you either have a 1Password account and have 1Password CLI installed. Alternatively, reach out to the team for an example of .env files
+3. In the root directory run `pre-commit install`
+4. Also in the root of the project run `./run local --update-env` or if you do not have a 1Password account you can simply run `./run local` to use a static .env file
 
 ### Logging in
 
@@ -63,7 +61,7 @@ There are two mechanisms for seeding data.
 
 ### Local Development Random Info
 
-Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
+Local dev is configured in typescript project in `./src`. The entrypoint is `./src/run.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
 
 Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
 
@@ -178,6 +176,22 @@ Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypre
 We use Prettier to format all code. This runs as part of a Git Hook and changes to files will cause the deploy to fail. If you followed the instructions above this is already installed and configured.
 
 Most IDEs have a Prettier plugin that can be configured to run on file save. You can also run the format check manually from the IDE or invoking Prettier on the command line.
+
+## Slack Webhooks
+
+This repository uses 3 webhooks to publish to  3 different channels all in CMS Slack.
+
+- SLACK_WEBHOOK: This pubishes to the `macpro-mdct-carts-alerts` channel. Alerts published there are for deploy or test failures to the `main`, `val`, or `production` branches.
+
+- INTEGRATIONS_SLACK_WEBHOOK: This is used to publish new pull requests to the `mdct-integrations-channel`
+
+- PROD_RELEASE_SLACK_WEBHOOK: This is used to publish to the `mdct-prod-releases` channel upon successful release of CARTS to production.
+
+    - Webhooks are created by CMS tickets, populated into GitHub Secrets
+
+## GitHub Actions Secret Management
+- Secrets are added to GitHub secrets by GitHub Admins 
+- Development secrets are maintained in a 1Password vault
 
 ## Architecture
 

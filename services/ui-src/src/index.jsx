@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store/storeIndex";
 import BrowserIssue from "./components/layout/BrowserIssue";
 import App from "./App";
-import Amplify from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import config from "./config";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 

@@ -3,7 +3,7 @@ import { screen, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
-import DataGrid from "./DataGrid.js";
+import DataGrid from "./DataGrid";
 
 jest.mock("./Question", () => (props) => (
   <div className="mock-question-component">{JSON.stringify(props)}</div>
