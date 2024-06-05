@@ -6,7 +6,7 @@
     "@aws-sdk/client-dynamodb": "^3.556.0",
     "@aws-sdk/client-ecs": "^3.576.0",
     "@aws-sdk/lib-dynamodb": "^3.556.0",
-    "@aws-sdk/util-dynamodb": "^3.556.0",
+    "@aws-sdk/util-dynamodb": "^3.576.0",
     "kafkajs": "^1.15.0",
     "lodash": "^4.17.21",
     "uuid": "^8.3.2"
