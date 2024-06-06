@@ -1,7 +1,7 @@
 [
   {
     "stateId": "AL",
-    "status": "certified",
+    "status": "in_progress",
     "year": 2023,
     "programType": "user",
     "username": "al@test.com",
@@ -25,7 +25,7 @@
   },
   {
     "stateId": "AL",
-    "status": "in_progress",
+    "status": "certified",
     "year": 2020,
     "programType": "combo",
     "username": "al@test.com",
