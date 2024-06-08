@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.556.0",
+    "@aws-sdk/client-dynamodb": "^3.577.0",
     "@aws-sdk/client-ecs": "^3.576.0",
     "@aws-sdk/lib-dynamodb": "^3.556.0",
     "@aws-sdk/util-dynamodb": "^3.576.0",
