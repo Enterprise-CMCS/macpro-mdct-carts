@@ -20,21 +20,22 @@ _Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/ma
 
 ## Quick Start
 
-### One time only
+### Running MDCT Workspace Setup
+Team members are encouraged to setup all MDCT Products using the script located in the [MDCT Tools Repository](https://github.com/Enterprise-CMCS/macpro-mdct-tools). Please refer to the README for instructions running the MDCT Workspace Setup. After Running workspace setup team members can refer to the Running the project locally section below to proceed with running the application. 
+
+### One time only ( this is not needed if you've run the MDCT Workspace setup)
 
 Before starting the project install some tools
 
 - `brew install nvm`
 - `brew install pre-commit`
+- `pre-commit install`
 
-### Setting up the project locally
+### Running the project locally
 
-TODO: Fix the phone a friend instructions below
-
-1. Clone the repo
-2. Ensure you either have a 1Password account and have 1Password CLI installed. Alternatively, reach out to the team for an example of .env files
-3. In the root directory run `pre-commit install`
-4. Also in the root of the project run `./run local --update-env` or if you do not have a 1Password account you can simply run `./run local` to use a static .env file
+1. Ensure you either have a 1Password account and have 1Password CLI installed. Alternatively, reach out to the team for an example of .env files
+2. In the root of the project run `./run local --update-env` or if you do not have a 1Password account you can simply run `./run local` to use a static .env file
+   note: the `./run local --update-env` pulls secret values using the 1Password CLI and populates a local .env file that is gitignored.
 
 ### Logging in
 
