@@ -9015,30 +9015,30 @@ language-tags@^1.0.5:
   dependencies:
     language-subtag-registry "~0.3.2"
 
-launchdarkly-js-client-sdk@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/launchdarkly-js-client-sdk/-/launchdarkly-js-client-sdk-3.1.3.tgz#e046439f0e4f0bfd6d38b9eaa4420a6e40ffc0c7"
-  integrity sha512-/JR/ri8z3bEj9RFTTKDjd+con4F1MsWUea1MmBDtFj4gDA0l9NDm1KzhMKiIeoBdmB2rSaeFYe4CaYOEp8IryA==
+launchdarkly-js-client-sdk@^3.3.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/launchdarkly-js-client-sdk/-/launchdarkly-js-client-sdk-3.4.0.tgz#5b5959b548edac8a0f368eb40b079d942573d37b"
+  integrity sha512-3v1jKy1RECT0SG/3SGlyRO32vweoNxvWiJuIChRh/Zhk98cHpANuwameXVhwJ4WEDNZJTur73baaKAyatSP46A==
   dependencies:
     escape-string-regexp "^4.0.0"
-    launchdarkly-js-sdk-common "5.0.3"
+    launchdarkly-js-sdk-common "5.3.0"
 
-launchdarkly-js-sdk-common@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/launchdarkly-js-sdk-common/-/launchdarkly-js-sdk-common-5.0.3.tgz#345f899f5779be8b03d6599978c855eb838d8b7f"
-  integrity sha512-wKG8UsVbPVq8+7eavgAm5CVmulQWN6Ddod2ZoA3euZ1zPvJPwIQ2GrOYaCJr3cFrrMIX+nQyBJHBHYxUAPcM+Q==
+launchdarkly-js-sdk-common@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/launchdarkly-js-sdk-common/-/launchdarkly-js-sdk-common-5.3.0.tgz#336a54843f5ba3541632e10014e49dff45d41674"
+  integrity sha512-NI5wFF8qhjtpRb4KelGdnwNIOf/boLlbLiseV7uf1jxSeoM/L30DAz87RT8VhYCSGCo4LedGILQFednI/MKFkA==
   dependencies:
     base64-js "^1.3.0"
     fast-deep-equal "^2.0.1"
     uuid "^8.0.0"
 
-launchdarkly-react-client-sdk@^3.0.1:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/launchdarkly-react-client-sdk/-/launchdarkly-react-client-sdk-3.0.9.tgz#a914175e5bdde9cb49a9d4d25d1197b69ac61d4a"
-  integrity sha512-U7STCSINfL698jI7tpUnvWc7iqsnkAdCV8rAGz3oeQB+BMn4SJ0yjpf5OA9I2pKdh7u+SlWJST/gz657tSUdVA==
+launchdarkly-react-client-sdk@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/launchdarkly-react-client-sdk/-/launchdarkly-react-client-sdk-3.3.2.tgz#b934f556d85ab9c6457744ddeb2ba581b440342c"
+  integrity sha512-Cusw0aB+L65FceGQQ77IFhKZT+J+NezDtmahhI/LtK/Da2YhlbSmxhInSLdf325e3Umj0+foDIOkFt/OOFmQsQ==
   dependencies:
     hoist-non-react-statics "^3.3.2"
-    launchdarkly-js-client-sdk "^3.1.3"
+    launchdarkly-js-client-sdk "^3.3.0"
     lodash.camelcase "^4.3.0"
 
 left-pad@^1.3.0:
