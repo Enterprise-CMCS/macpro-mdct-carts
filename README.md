@@ -21,7 +21,7 @@ _Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/ma
 ## Quick Start
 
 ### Running MDCT Workspace Setup
-Team members are encouraged to setup all MDCT Products using the script located in the [MDCT Tools Repository ](https://github.com/Enterprise-CMCS/macpro-mdct-tools). Please refer to the README for instructions running the MDCT Workspace Setup. After Running workspace setup team members can refer to the Running the project locally section below to proceed with running the application. 
+Team members are encouraged to setup all MDCT Products using the script located in the [MDCT Tools Repository](https://github.com/Enterprise-CMCS/macpro-mdct-tools). Please refer to the README for instructions running the MDCT Workspace Setup. After Running workspace setup team members can refer to the Running the project locally section below to proceed with running the application. 
 
 ### One time only ( this is not needed if you've run the MDCT Workspace setup)
 
