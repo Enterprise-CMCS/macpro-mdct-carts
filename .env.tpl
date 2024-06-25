@@ -18,14 +18,13 @@ POST_SIGNOUT_REDIRECT=op://mdct_devs/carts_secrets/POST_SIGNOUT_REDIRECT
 API_URL=http://localhost:3030/local
 S3_LOCAL_ENDPOINT=http://localhost:4569
 S3_ATTACHMENTS_BUCKET_NAME=op://mdct_devs/carts_secrets/S3_ATTACHMENTS_BUCKET_NAME
-URL=http://localhost/3000
-docraptorApiKey=op://mdct_devs/carts_secrets/docraptorApiKey #pragma: allowlist secret
+docraptorApiKey=op://mdct_devs/carts_secrets/docraptorApiKey # pragma: allowlist secret
 iamPath=/
 iamPermissionsBoundary="bound"
 SLS_INTERACTIVE_SETUP_ENABLE=1
 
-#needed for e2e tests
+# needed for e2e tests
 CYPRESS_ADMIN_USER_EMAIL=op://mdct_devs/carts_secrets/msssqm4kzbmrwhihjtgwozcv5u
-CYPRESS_ADMIN_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_ADMIN_USER_PASSWORD #pragma: allowlist secret
+CYPRESS_ADMIN_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_ADMIN_USER_PASSWORD # pragma: allowlist secret
 CYPRESS_STATE_USER_EMAIL=op://mdct_devs/carts_secrets/sn6trfrct3cl5sac3pkh2zcjp4
-CYPRESS_STATE_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_STATE_USER_PASSWORD #pragma: allowlist secret
+CYPRESS_STATE_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_STATE_USER_PASSWORD # pragma: allowlist secret

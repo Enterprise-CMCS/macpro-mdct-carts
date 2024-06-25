@@ -14,7 +14,6 @@ plugins:
   - serverless-stack-termination-protection
   - serverless-iam-helper
   - serverless-s3-bucket-helper
-  - serverless-api-client-certificate
   - "@enterprise-cmcs/serverless-waf-plugin"
 
 s3BucketHelper:
@@ -59,14 +58,6 @@ custom:
     main: main
     default: main
   fiscalBucketEnv: ${self:custom.fiscalBucketEnvMap.${self:custom.stage}, self:custom.fiscalBucketEnvMap.default}
-  serverlessApiClientCertificate:
-    rotateCerts: true
-    daysLeft: 30
-  authValue:
-    main: aws_iam
-    master: aws_iam
-    val: aws_iam
-    prod: aws_iam
 provider:
   name: aws
   runtime: nodejs20.x
@@ -131,7 +122,7 @@ functions:
           path: state
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getEnrollmentCounts:
     handler: handlers/enrollmentCounts/get.getEnrollmentCounts
     events:
@@ -139,7 +130,7 @@ functions:
           path: enrollment_counts/{year}/{state}
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getFiscalYearTemplateLink:
     handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
     events:
@@ -147,7 +138,7 @@ functions:
           path: fiscalYearTemplate
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getStateStatus:
     handler: handlers/stateStatus/get.getStateStatus
     events:
@@ -155,7 +146,7 @@ functions:
           path: state_status
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   updateStateStatus:
     handler: handlers/stateStatus/update.updateStateStatus
     events:
@@ -163,7 +154,7 @@ functions:
           path: state_status/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getSections:
     handler: handlers/section/get.getSections
     events:
@@ -171,7 +162,7 @@ functions:
           path: section/{year}/{state}
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   updateSections:
     handler: handlers/section/update.updateSections
     events:
@@ -179,7 +170,7 @@ functions:
           path: save_report/{year}/{state}
           method: put
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   generateFormTemplates:
     handler: handlers/formTemplates/post.post
     timeout: 30
@@ -188,7 +179,7 @@ functions:
           path: formTemplates
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   postUpload:
     handler: handlers/uploads/createUploadPsUrl.psUpload
     events:
@@ -196,7 +187,7 @@ functions:
           path: psUrlUpload/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   postDownload:
     handler: handlers/uploads/createDownloadPsUrl.getSignedFileUrl
     events:
@@ -204,7 +195,7 @@ functions:
           path: psUrlDownload/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   deleteUpload:
     handler: handlers/uploads/delete.deleteUpload
     events:
@@ -212,7 +203,7 @@ functions:
           path: uploads/{year}/{state}
           method: delete
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   viewUploads:
     handler: handlers/uploads/viewUploaded.viewUploaded
     events:
@@ -220,7 +211,7 @@ functions:
           path: uploads/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   printPdf:
     handler: handlers/printing/printPdf.print
     timeout: 30
@@ -229,7 +220,7 @@ functions:
           path: print_pdf
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
 resources:
   Resources:
     GatewayResponseDefault4XX:
