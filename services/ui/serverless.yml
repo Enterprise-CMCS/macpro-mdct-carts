@@ -7,6 +7,8 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
+    PROJECT: ${self:custom.project}
+    SERVICE: ${self:service}  
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
@@ -25,6 +27,7 @@ s3BucketHelper:
     logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
+  project: "carts"
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
