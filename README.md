@@ -4,6 +4,14 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/maintainability)](https://codeclimate.com/repos/6449718c21275100df510ea9/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/test_coverage)](https://codeclimate.com/repos/6449718c21275100df510ea9/test_coverage)
 
+### Integration Environment Deploy Status:
+| Branch  | Build Status |
+| ------------- | ------------- |
+| main  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg)  |
+| val  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=val)  |
+| production  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=production)  |
+
+
 CARTS is the CMCS MDCT application for collecting state data related to coverage of CHIP state plans on an annual basis. The collected data assists CMCS in monitoring, managing, and better understanding Medicaid and CHIP programs.
 
 Under section 2108(a) of the Act, states must assess the operation of their separate CHIP and Medicaid expansion programs and the progress made in reducing the number of uncovered, low-income children. The results of the assessment are reported to the Secretary by January 1 following the end of the FY in the CHIP Annual Reporting Template System (CARTS). CARTS collects information about programmatic changes, performance goals, program operation, program financing, program challenges and accomplishments.
