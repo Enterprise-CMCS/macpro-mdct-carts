@@ -132,9 +132,9 @@ async function deploy_kafka_service(
 ) {
   const kafkaservice = "carts-bigmac-streams";
   install_deps(runner, kafkaservice);
-  var kafkaDeployCmd = ["sls", "deploy", "--stage", stage];
+  const kafkaDeployCmd = ["sls", "deploy", "--stage", stage];
   await runner.run_command_and_output(
-    `Kafka service deploy`,
+    "Kafka service deploy",
     kafkaDeployCmd,
     `services/${kafkaservice}`
   );
@@ -142,7 +142,7 @@ async function deploy_kafka_service(
 
 async function install_deps(runner: LabeledProcessRunner, service: string) {
   await runner.run_command_and_output(
-    `Installing Dependencies`,
+    "Installing Dependencies",
     ["yarn", "install", "--frozen-lockfile"],
     `services/${service}`
   );
@@ -158,8 +158,8 @@ async function deploy(options: { stage: string }) {
   const stage = options.stage;
   const runner = new LabeledProcessRunner();
   await prepare_services(runner);
-  var deployCmd = ["sls", "deploy", "--stage", stage];
-  await runner.run_command_and_output(`SLS Deploy`, deployCmd, ".");
+  const deployCmd = ["sls", "deploy", "--stage", stage];
+  await runner.run_command_and_output("SLS Deploy", deployCmd, ".");
   // Only deploy resources for kafka ingestion in real envs
   if (stage === "main" || stage === "val" || stage === "production") {
     deploy_kafka_service(runner, stage);
