@@ -32,6 +32,8 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
+Object.defineProperty(window, "crypto", { value: require("node:crypto") });
+
 jest.mock("./util/constants", () => ({
   MODE: "production",
   BASE_URL: "mdctcartsdev.cms.gov",
