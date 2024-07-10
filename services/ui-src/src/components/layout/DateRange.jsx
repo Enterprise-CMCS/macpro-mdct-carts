@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system";
 import PropTypes from "prop-types";
-import uuid from "react-uuid";
 
 /*
  * This method checks that month input is appropriate:
@@ -235,7 +234,7 @@ class DateRange extends Component {
           <div className="errors">
             {startErrorMessage.map((e) => {
               if (e !== undefined) {
-                return <div key={uuid()}> {e} </div>;
+                return <div key={crypto.randomUUID()}> {e} </div>;
               }
               return false;
             })}
@@ -278,7 +277,7 @@ class DateRange extends Component {
           <div className="errors">
             {endErrorMessage.map((e) => {
               if (e !== undefined) {
-                return <div key={uuid()}> {e} </div>;
+                return <div key={crypto.randomUUID()}> {e} </div>;
               }
               return false;
             })}
