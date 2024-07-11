@@ -26,7 +26,7 @@ export const Header = () => {
     ],
     shallowEqual
   );
-  const currentUser = stateUser.currentUser;
+  const { currentUser } = stateUser;
   const currentReportStatus = getCurrentReportStatus(
     reportStatus,
     formData,
@@ -61,7 +61,7 @@ export const Header = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [location?.pathname]);
+  }, [location.pathname]);
 
   return (
     <div className="component-header" data-test="component-header">
