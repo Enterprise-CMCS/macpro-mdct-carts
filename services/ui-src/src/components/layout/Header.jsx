@@ -59,9 +59,20 @@ export const Header = () => {
     currentReportStatus
   );
 
-  useEffect(() => {
+  const closeDropDownMenu = () => {
     setIsMenuOpen(false);
-  }, [location.pathname]);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isMenuOpen) {
+        setIsMenuOpen(true);
+        window.addEventListener("click", closeDropDownMenu);
+      } else {
+        window.removeEventListener("click", closeDropDownMenu);
+      }
+    }, 0);
+  }, [isMenuOpen]);
 
   return (
     <div className="component-header" data-test="component-header">
