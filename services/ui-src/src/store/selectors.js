@@ -146,18 +146,18 @@ export const selectSectionsForNav = (state) => {
  * @param {object} reportStatus - the current report status object stored in state
  * @param {object} formData - The current form object stored in state
  * @param {object} stateUser - The current user object stored in state
- * @param {object} global - Global variables that will be the same regardless of users
+ * @param {object} formYear - The form year currently stored in global state.
  * @returns {object} The reportStatus object associated with the current report
  */
 export const getCurrentReportStatus = (
   reportStatus,
   formData,
   stateUser,
-  global
+  formYear
 ) => {
   let currentReport = "";
   if (stateUser.currentUser.role === AppRoles.STATE_USER) {
-    currentReport = `${stateUser.abbr}${global.formYear}`;
+    currentReport = `${stateUser.abbr}${formYear}`;
   } else {
     if (formData?.[0] === undefined) return {};
     currentReport = `${formData[0].stateId}${formData[0].year}`;
@@ -168,18 +168,25 @@ export const getCurrentReportStatus = (
 };
 
 /**
- * Determines if the report form should be editable.
- * @param {object} state - The current state object
- * @returns {boolean}
+ * Get the Status for the current report.
+ * @param {object} reportStatus - the current report status object stored in state
+ * @param {object} formData - The current form object stored in state
+ * @param {object} stateUser - The current user object stored in state
+ * @param {object} formYear - Global variables that will be the same regardless of users
+ * @returns {object} The reportStatus object associated with the current report
  */
-export const selectIsFormEditable = (state) => {
-  const { reportStatus, formData, stateUser, global } = state;
+export const selectIsFormEditable = (
+  reportStatus,
+  formData,
+  stateUser,
+  formYear
+) => {
   const { role } = stateUser.currentUser;
   const { status } = getCurrentReportStatus(
     reportStatus,
     formData,
     stateUser,
-    global
+    formYear
   );
 
   switch (status) {

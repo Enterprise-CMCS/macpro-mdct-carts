@@ -17,11 +17,11 @@ import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [stateUser, formData, global, reportStatus] = useSelector(
+  const [stateUser, formData, formYear, reportStatus] = useSelector(
     (state) => [
       state.stateUser,
       state.formData,
-      state.global,
+      state.global.formYear,
       state.reportStatus,
     ],
     shallowEqual
@@ -31,7 +31,7 @@ export const Header = () => {
     reportStatus,
     formData,
     stateUser,
-    global
+    formYear
   );
   const location = useLocation();
 
