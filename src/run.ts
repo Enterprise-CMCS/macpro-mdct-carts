@@ -131,7 +131,7 @@ async function deploy_kafka_service(
   stage: string
 ) {
   const kafkaservice = "carts-bigmac-streams";
-  install_deps(runner, kafkaservice);
+  await install_deps(runner, kafkaservice);
   const kafkaDeployCmd = ["sls", "deploy", "--stage", stage];
   await runner.run_command_and_output(
     "Kafka service deploy",
@@ -150,7 +150,7 @@ async function install_deps(runner: LabeledProcessRunner, service: string) {
 
 async function prepare_services(runner: LabeledProcessRunner) {
   for (const service of deployedServices) {
-    install_deps(runner, service);
+    await install_deps(runner, service);
   }
 }
 
@@ -163,7 +163,7 @@ async function deploy(options: { stage: string }) {
   // Only deploy resources for kafka ingestion in real envs
   if (stage === "cmdct-3820-run-deploy") {
     // if (stage === "main" || stage === "val" || stage === "production") {
-    deploy_kafka_service(runner, stage);
+    await deploy_kafka_service(runner, stage);
   }
 }
 
