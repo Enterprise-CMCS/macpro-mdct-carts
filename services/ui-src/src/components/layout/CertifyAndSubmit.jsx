@@ -149,8 +149,20 @@ CertifyAndSubmit.defaultProps = {
 
 const mapState = (state) => ({
   isCertified: !selectIsFormEditable(state),
-  lastSave: moment(getCurrentReportStatus(state).lastChanged),
-  user: getCurrentReportStatus(state).username,
+  lastSave: moment(
+    getCurrentReportStatus(
+      state.reportStatus,
+      state.formData,
+      state.stateUser,
+      state.global
+    ).lastChanged
+  ),
+  user: getCurrentReportStatus(
+    state.reportStatus,
+    state.formData,
+    state.stateUser,
+    state.global
+  ).username,
   currentUserRole: state.stateUser.currentUser.role,
   state: state.stateUser.abbr,
 });
