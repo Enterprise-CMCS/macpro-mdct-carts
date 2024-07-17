@@ -269,7 +269,7 @@ const DateRange = ({ onChange, question, year, ...props }) => {
         </div>
         <div className="errors">
           {endRangeErr === true ? (
-            <div> End date must come after start date</div>
+            <div>End date must come after start date</div>
           ) : null}
         </div>
       </div>
