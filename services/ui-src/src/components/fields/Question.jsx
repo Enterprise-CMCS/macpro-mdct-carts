@@ -9,7 +9,6 @@ import { DateRange } from "./DateRange";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
 //import { FileUpload } from "./FileUpload";
-import NewUploadComponent from "../layout/NewUploadComponent";
 import UploadComponent from "../layout/UploadComponent";
 import { Integer } from "./Integer";
 import { MailingAddress } from "./MailingAddress";
@@ -117,31 +116,6 @@ const Question = ({
             label={question.label}
             questionType={question.type}
           />
-        )}
-        {question.type === "file_upload" && (
-          <>
-            <h1> This is the new upload component</h1>
-            <NewUploadComponent
-              {...props}
-              id={props?.id || question?.id}
-              label={undefined}
-              hint={undefined}
-              question={question}
-              name={question.id}
-              onChange={onChange}
-              onClick={onClick}
-              tableTitle={tableTitle}
-              disabled={
-                prevYearDisabled ||
-                pageDisable ||
-                readonly ||
-                (question.answer && question.answer.readonly) ||
-                false
-              }
-              prevYear={prevYear}
-            />
-            <h1> End of new upload component</h1>
-          </>
         )}
         <Component
           {...props}
