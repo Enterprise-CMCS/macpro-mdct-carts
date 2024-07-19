@@ -1,10 +1,11 @@
 import { Alert } from "@cmsgov/design-system";
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { shallowEqual, useSelector } from "react-redux";
+// utils
 import { selectHasError } from "../../store/save.selectors";
 
-const SaveError = ({ saveError }) => {
+const SaveError = () => {
+  const saveError = useSelector((state) => selectHasError(state), shallowEqual);
   const [showSaveErrorAlert, setShowErrorAlert] = useState(saveError);
 
   useEffect(() => {
@@ -46,12 +47,4 @@ const SaveError = ({ saveError }) => {
   );
 };
 
-SaveError.propTypes = {
-  hasError: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  saveError: selectHasError(state),
-});
-
-export default connect(mapStateToProps)(SaveError);
+export default SaveError;
