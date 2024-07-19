@@ -21,11 +21,13 @@ const Userinfo = () => {
     );
   });
   return (
-    <ul>
-      {info.map((item) => (
-        <li>{item}</li>
-      ))}
-    </ul>
+    <main className="main">
+      <ul>
+        {info.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </main>
   );
 };
 
