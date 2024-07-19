@@ -1,11 +1,8 @@
 import React from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-const Userinfo = () => {
-  const currentUser = useSelector(
-    (state) => state.stateUser.currentUser,
-    shallowEqual
-  );
+const UserInfo = () => {
+  const currentUser = useSelector((state) => state.stateUser.currentUser);
   const info = Object.entries(currentUser).map(([key, value]) => {
     if (key === "state") {
       return (
@@ -21,14 +18,12 @@ const Userinfo = () => {
     );
   });
   return (
-    <main className="main">
-      <ul>
-        {info.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    </main>
+    <ul>
+      {info.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
   );
 };
 
-export default Userinfo;
+export default UserInfo;
