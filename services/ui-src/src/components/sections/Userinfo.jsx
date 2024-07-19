@@ -1,8 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 
-const Userinfo = ({ currentUser }) => {
+const Userinfo = () => {
+  const currentUser = useSelector(
+    (state) => state.stateUser.currentUser,
+    shallowEqual
+  );
   const info = Object.entries(currentUser).map(([key, value]) => {
     if (key === "state") {
       return (
@@ -26,12 +29,4 @@ const Userinfo = ({ currentUser }) => {
   );
 };
 
-Userinfo.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentUser: state.stateUser.currentUser,
-});
-
-export default connect(mapStateToProps)(Userinfo);
+export default Userinfo;
