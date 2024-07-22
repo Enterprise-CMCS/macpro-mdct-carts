@@ -31,7 +31,6 @@ const SynthesizedValue = ({ question, ...props }) => {
 
   return (
     <div>
-      <h1> THIS IS A SYNTHESIZED VALUE </h1>
       <strong>Computed:</strong> {value}
       {question.questions &&
         question.questions.map((q) => (
