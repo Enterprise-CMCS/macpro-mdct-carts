@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
@@ -18,7 +18,10 @@ const UserInfoComponent = (
 );
 
 describe("UserInfo", () => {
+  const { email, state } = stateUserWithReportInProgress.stateUser.currentUser;
   it("should render the UserInfo Component correctly", () => {
-    expect(shallow(UserInfoComponent).exists()).toBe(true);
+    const wrapper = mount(UserInfoComponent);
+    expect(wrapper.find("li").first().text()).toBe(`username: ${email}`);
+    expect(wrapper.find("li").at(1).text().trim()).toBe(`state: ${state.id}`);
   });
 });
