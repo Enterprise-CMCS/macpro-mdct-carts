@@ -1,13 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Link, Route } from "react-router-dom";
+import { Switch } from "react-router";
+// components
 import FormTemplates from "./FormTemplates";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
-import InvokeSection from "../utils/InvokeSection";
 import Sidebar from "./Sidebar";
-import { Switch } from "react-router";
+// utils
+import InvokeSection from "../utils/InvokeSection";
 import ScrollToTop from "../utils/ScrollToTop";
-import { connect } from "react-redux";
 
 const AdminHome = () => {
   return (
@@ -52,13 +52,5 @@ const AdminHome = () => {
     </>
   );
 };
-AdminHome.propTypes = {
-  formYear: PropTypes.object.isRequired,
-};
 
-export const mapStateToProps = (state) => ({
-  currentUser: state.stateUser.currentUser,
-  formYear: state.global.formYear,
-});
-
-export default connect(mapStateToProps)(AdminHome);
+export default AdminHome;
