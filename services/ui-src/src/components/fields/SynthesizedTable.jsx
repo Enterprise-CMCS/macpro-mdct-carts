@@ -107,7 +107,7 @@ const SynthesizedTable = ({ question, tableTitle }) => {
 };
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
-  title: PropTypes.string.isOptional,
+  tableTitle: PropTypes.string.isOptional,
 };
 
 export default SynthesizedTable;
