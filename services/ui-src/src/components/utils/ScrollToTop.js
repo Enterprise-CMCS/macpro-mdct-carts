@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-function ScrollToTop({ history }) {
+function ScrollToTop() {
+  let history = useHistory();
   useEffect(() => {
     const unlisten = history.listen(() => {
       window.scrollTo(0, 0);
-
       // Remove focus from clicked button
       document.activeElement.blur();
     });
@@ -17,4 +17,4 @@ function ScrollToTop({ history }) {
   return null;
 }
 
-export default withRouter(ScrollToTop);
+export default ScrollToTop;
