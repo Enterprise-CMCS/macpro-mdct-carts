@@ -126,7 +126,6 @@ const Question = ({ hideNumber, question, prevYear, tableTitle, ...props }) => {
             questionType={question.type}
           />
         )}
-
         <Component
           {...props}
           id={props?.id || question?.id}
