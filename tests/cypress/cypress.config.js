@@ -1,8 +1,6 @@
 const { defineConfig } = require("cypress");
-const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
-const browserify = require("@badeball/cypress-cucumber-preprocessor/browserify");
 const { lighthouse } = require("@cypress-audit/lighthouse");
-const { pa11y, prepareAudit } = require("@cypress-audit/pa11y");
+const { pa11y } = require("@cypress-audit/pa11y");
 require("dotenv").config({ path: "../../.env" });
 
 module.exports = defineConfig({
@@ -29,11 +27,6 @@ module.exports = defineConfig({
     supportFile: "support/index.js",
     excludeSpecPattern: "**/filterReports.spec.js",
     async setupNodeEvents(on, config) {
-      await preprocessor.addCucumberPreprocessorPlugin(on, config);
-      on("file:preprocessor", browserify.default(config));
-      on("before:browser:launch", (_browser = {}, launchOptions) => {
-        prepareAudit(launchOptions);
-      });
       on("task", {
         log(message) {
           // eslint-disable-next-line no-console
