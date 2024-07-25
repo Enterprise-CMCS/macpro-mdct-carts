@@ -247,7 +247,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
 })();
 
 export const selectYears = (currentYear) => {
-  let yearArray = [];
+  const yearArray = [];
   for (
     let x = 2020;
     x <= currentYear;
