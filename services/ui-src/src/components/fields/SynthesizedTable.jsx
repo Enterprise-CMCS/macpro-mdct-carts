@@ -18,37 +18,21 @@ const SynthesizedTable = ({ question, tableTitle }) => {
       shallowEqual
     );
 
-  const calculateRows = (
-    allStatesData,
-    stateName,
-    stateUserAbbr,
-    chipEnrollments,
-    formData
-  ) =>
-    question.fieldset_info.rows.map((row) =>
-      row.map((cell) => {
-        const value = synthesizeValue(
-          cell,
-          allStatesData,
-          stateName,
-          stateUserAbbr,
-          chipEnrollments,
-          formData
-        );
+  const rows = question.fieldset_info.rows.map((row) =>
+    row.map((cell) => {
+      const value = synthesizeValue(
+        cell,
+        allStatesData,
+        stateName,
+        stateUserAbbr,
+        chipEnrollments,
+        formData
+      );
 
-        return typeof value.contents === "number" &&
-          Number.isNaN(value.contents)
-          ? { contents: "Not Available" }
-          : value;
-      })
-    );
-
-  const rows = calculateRows(
-    allStatesData,
-    stateName,
-    stateUserAbbr,
-    chipEnrollments,
-    formData
+      return typeof value.contents === "number" && Number.isNaN(value.contents)
+        ? { contents: "Not Available" }
+        : value;
+    })
   );
 
   return (
