@@ -14,16 +14,6 @@ export const selectById = (state, id) => {
   return null;
 };
 
-export const selectSectionTitle = (state, sectionId) => {
-  const jspath = `$..formData[*].contents.section[?(@ && @.id=='${sectionId}')].title`;
-  const sectionTitles = jsonpath.query(state, jspath);
-
-  if (sectionTitles.length) {
-    return sectionTitles[0];
-  }
-  return null;
-};
-
 export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
   const subsection = selectFragment(state, subsectionId);
 
