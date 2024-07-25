@@ -40,7 +40,7 @@ const Print = () => {
   const subsectionId = searchParams.get("subsectionId");
 
   const openPdf = (basePdf) => {
-    const byteCharacters = atob(basePdf);
+    const byteCharacters = window.atob(basePdf);
     let byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -78,7 +78,7 @@ const Print = () => {
       .replaceAll(`“`, `"`)
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
-    const base64String = btoa(unescape(encodeURIComponent(htmlString)));
+    const base64String = window.btoa(htmlString);
     const opts = await requestOptions();
     opts.body = {
       encodedHtml: base64String,
