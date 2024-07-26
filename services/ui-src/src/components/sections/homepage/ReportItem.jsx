@@ -48,8 +48,8 @@ const ReportItem = ({
     lastEditedNote += username ? ` by ${username}` : "";
   }
 
-  const uncertify = () => {
-    dispatch(uncertifyReport(stateCode, stateYear));
+  const uncertify = async () => {
+    await dispatch(uncertifyReport(stateCode, stateYear));
     toggleModal();
     window.location.reload(false);
   };
