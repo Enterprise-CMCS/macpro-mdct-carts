@@ -68,7 +68,7 @@ const Print = () => {
     });
 
     const base = document.createElement("base");
-    base.href = window.location.host;
+    base.href = `https://${window.location.host}`;
     document.querySelector("head").prepend(base);
 
     const htmlString = document
