@@ -75,11 +75,7 @@ const Print = () => {
 
     const htmlString = document
       .querySelector("html")
-      .outerHTML.replaceAll(
-        '<link href="',
-        `<link href="https://${window.location.host}`
-      )
-      .replaceAll(`’`, `'`)
+      .outerHTML.replaceAll(`’`, `'`)
       .replaceAll(`‘`, `'`)
       .replaceAll(`”`, `"`)
       .replaceAll(`“`, `"`)
