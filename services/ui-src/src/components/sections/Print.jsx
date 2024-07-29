@@ -40,7 +40,7 @@ const Print = () => {
   const subsectionId = searchParams.get("subsectionId");
 
   const openPdf = (basePdf) => {
-    const byteCharacters = window.atob(basePdf);
+    const byteCharacters = atob(basePdf);
     let byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -52,10 +52,10 @@ const Print = () => {
   };
 
   const getPdfFriendlyDocument = async () => {
-    const noscriptTag = document.querySelector("noscript");
-    if (noscriptTag) {
-      noscriptTag.remove();
-    }
+    // get html element and remove noscript tag
+    const html = document.querySelector("html");
+    html.querySelector("noscript")?.remove();
+
     document.querySelectorAll("input").forEach((element) => {
       if (element.type === "text") {
         element.style.height = "50px";
@@ -66,6 +66,11 @@ const Print = () => {
         element.remove();
       }
     });
+
+    const base = document.createElement("base");
+    base.href = window.location.host;
+    document.querySelector("head").prepend(base);
+
     const htmlString = document
       .querySelector("html")
       .outerHTML.replaceAll(
@@ -78,7 +83,8 @@ const Print = () => {
       .replaceAll(`“`, `"`)
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
-    const base64String = window.btoa(htmlString);
+
+    const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     const opts = await requestOptions();
     opts.body = {
       encodedHtml: base64String,
