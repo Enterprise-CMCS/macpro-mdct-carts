@@ -67,9 +67,11 @@ const Print = () => {
       }
     });
 
-    const base = document.createElement("base");
-    base.href = `https://${window.location.host}`;
-    document.querySelector("head").prepend(base);
+    if (!document.querySelector("base")) {
+      const base = document.createElement("base");
+      base.href = `https://${window.location.host}`;
+      document.querySelector("head").prepend(base);
+    }
 
     const htmlString = document
       .querySelector("html")
