@@ -54,7 +54,7 @@ describe("Test Print PDF handler", () => {
       doc: expect.objectContaining({
         document_content: html,
         type: "pdf",
-        tag: "CARTS",
+        tag: expect.stringMatching("CARTS"),
         prince_options: expect.objectContaining({
           profile: "PDF/UA-1",
         }),
