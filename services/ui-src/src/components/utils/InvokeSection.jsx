@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+// components
+import Section from "../layout/Section";
+// utils
 import { loadForm } from "../../actions/initial";
 import { constructIdFromYearSectionAndSubsection } from "../../store/formData";
-import Section from "../layout/Section";
 import { updateFormYear, updateStateName } from "../../store/globalVariables";
 
-const InvokeSection = (username) => {
+const InvokeSection = () => {
   const { state, year, sectionOrdinal, subsectionMarker } = useParams();
   const dispatch = useDispatch();
   const currentPath = window.location.href;
+  const username = useSelector((state) => state.stateUser.currentUser.username);
 
   useEffect(() => {
     if (username) {
@@ -38,8 +41,4 @@ const InvokeSection = (username) => {
   return <Section sectionId={sectionId} subsectionId={subsectionId} />;
 };
 
-const mapState = (state) => ({
-  username: state.stateUser.currentUser.username,
-});
-
-export default connect(mapState)(InvokeSection);
+export default InvokeSection;
