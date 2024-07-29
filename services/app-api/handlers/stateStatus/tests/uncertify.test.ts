@@ -37,6 +37,7 @@ describe("Test Uncertify CARTS Report Handler", () => {
       .toString()
       .replace("(", "\\(")
       .replace(")", "\\)")
+      .replace("+", "\\+")
       .replace(/(?<=\d{2}:\d{2}:)\d{2}/, "..");
 
     expect(res.statusCode).toBe(200);
