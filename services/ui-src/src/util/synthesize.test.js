@@ -3,6 +3,9 @@
 import synthesize from "../util/synthesize";
 
 const state = {
+  global: {
+    stateName: "Alabama",
+  },
   allStatesData: [
     {
       name: "Alabama",
@@ -33,38 +36,43 @@ const state = {
   stateUser: {
     abbr: "AL",
   },
-  items: [
+  formData: [
     {
-      id: "item0",
-      answer: { entry: "0" },
-    },
-    {
-      id: "item1",
-      answer: { entry: "1" },
-    },
-    {
-      id: "item2",
-      answer: { entry: "2" },
-    },
-    {
-      id: "item3",
-      answer: { entry: "3" },
-    },
-    {
-      id: "item4",
-      answer: { entry: "4" },
-    },
-    {
-      id: "item5",
-      answer: { entry: "5" },
-    },
-    {
-      id: "item6",
-      answer: { entry: null },
-    },
-    {
-      id: "item7",
-      answer: { entry: "abc" },
+      id: "section1",
+      items: [
+        {
+          id: "item0",
+          answer: { entry: "0" },
+        },
+        {
+          id: "item1",
+          answer: { entry: "1" },
+        },
+        {
+          id: "item2",
+          answer: { entry: "2" },
+        },
+        {
+          id: "item3",
+          answer: { entry: "3" },
+        },
+        {
+          id: "item4",
+          answer: { entry: "4" },
+        },
+        {
+          id: "item5",
+          answer: { entry: "5" },
+        },
+        {
+          id: "item6",
+          answer: { entry: null },
+        },
+        {
+          id: "item7",
+          answer: { entry: "abc" },
+        },
+      ],
     },
   ],
   enrollmentCounts: {
@@ -129,7 +137,11 @@ describe("value synthesization utility", () => {
           targets: [],
           actions: ["identity"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: undefined });
     });
@@ -144,7 +156,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["identity"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "3" });
     });
@@ -162,7 +178,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["sum"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: NaN });
     });
@@ -178,7 +198,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["sum"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: NaN });
     });
@@ -194,7 +218,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["sum"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: 4 });
     });
@@ -210,7 +238,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["sum"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: 9 });
     });
@@ -224,7 +256,11 @@ describe("value synthesization utility", () => {
           targets: ["$..*[?(@ && @.id==='item4')].answer.entry"],
           actions: ["percentage"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "" });
     });
@@ -239,7 +275,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["percentage"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "" });
     });
@@ -254,7 +294,11 @@ describe("value synthesization utility", () => {
           ],
           actions: ["percentage"],
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "33.33%" });
     });
@@ -270,7 +314,11 @@ describe("value synthesization utility", () => {
           actions: ["percentage"],
           precision: 4,
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "33.3333%" });
     });
@@ -286,7 +334,11 @@ describe("value synthesization utility", () => {
           actions: ["percentage"],
           precision: 0,
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "33%" });
     });
@@ -302,7 +354,11 @@ describe("value synthesization utility", () => {
           actions: ["percentage"],
           precision: -3,
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: "33.33%" });
     });
@@ -323,7 +379,11 @@ describe("value synthesization utility", () => {
           actions: ["rpn"],
           rpn: "@ @ + + -",
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
 
       expect(out).toEqual({ contents: "" });
@@ -342,7 +402,11 @@ describe("value synthesization utility", () => {
           actions: ["rpn"],
           rpn: "@ @ +",
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
 
       expect(out).toEqual({ contents: 4 });
@@ -364,7 +428,11 @@ describe("value synthesization utility", () => {
           actions: ["rpn"],
           rpn: "@ @ @ @ @ - + * /",
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
 
       expect(out).toEqual({ contents: NaN });
@@ -384,7 +452,11 @@ describe("value synthesization utility", () => {
           actions: ["rpn"],
           rpn: "@ @ @ @ @ - + * /",
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
 
       expect(out).toEqual({ contents: 1.6 });
@@ -402,7 +474,11 @@ describe("value synthesization utility", () => {
           actions: ["rpn"],
           rpn: "@ @ @ 2 + + *",
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
 
       expect(out).toEqual({ contents: 12 });
@@ -427,7 +503,11 @@ describe("value synthesization utility", () => {
           actions: ["rpn"],
           rpn: "- + @ @ * / @ @ @",
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
 
       expect(out).toEqual({ contents: 1.6 });
@@ -443,7 +523,11 @@ describe("value synthesization utility", () => {
             acsProperty: "numberUninsured",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["27,000"] });
     });
@@ -456,7 +540,11 @@ describe("value synthesization utility", () => {
             acsProperty: "number_uninsured",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["27,000"] });
     });
@@ -469,7 +557,11 @@ describe("value synthesization utility", () => {
             acsProperty: "cyborgsCreated",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["Not Available"] });
       const outCompare = synthesize(
@@ -480,7 +572,11 @@ describe("value synthesization utility", () => {
             acsProperty: "cyborgsCreated",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(outCompare).toEqual({ contents: ["Not Available"] });
     });
@@ -493,7 +589,11 @@ describe("value synthesization utility", () => {
             acsProperty: "percentUninsured",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["2.1%"] });
     });
@@ -507,7 +607,11 @@ describe("value synthesization utility", () => {
             acsProperty: "numberUninsured",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["3.70%"] });
     });
@@ -523,7 +627,11 @@ describe("value synthesization utility", () => {
             index: 2,
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["333"] });
     });
@@ -536,7 +644,11 @@ describe("value synthesization utility", () => {
             index: 1,
           },
         },
-        fallbackChipState
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        fallbackChipState.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["301"] });
     });
@@ -548,7 +660,11 @@ describe("value synthesization utility", () => {
             enrollmentType: "Medicaid Expansion CHIP",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["10.631%"] });
     });
@@ -561,7 +677,11 @@ describe("value synthesization utility", () => {
             enrollmentType: "Medicaid Expansion CHIP",
           },
         },
-        fallbackChipState
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        fallbackChipState.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["10.631%"] });
     });
@@ -573,7 +693,11 @@ describe("value synthesization utility", () => {
             enrollmentType: "Medicaid Expansion CHIP",
           },
         },
-        state
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
       );
       expect(out).toEqual({ contents: ["Not Available"] });
     });

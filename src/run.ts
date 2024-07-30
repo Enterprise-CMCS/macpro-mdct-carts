@@ -7,6 +7,15 @@ import { execSync } from "child_process";
 // load .env
 dotenv.config();
 
+const deployedServices = [
+  "database",
+  "uploads",
+  "app-api",
+  "ui",
+  "ui-auth",
+  "ui-src",
+];
+
 // Function to update .env files using 1Password CLI
 function updateEnvFiles() {
   try {
@@ -117,6 +126,46 @@ async function run_all_locally() {
   run_fe_locally(runner);
 }
 
+async function deploy_kafka_service(
+  runner: LabeledProcessRunner,
+  stage: string
+) {
+  const kafkaservice = "carts-bigmac-streams";
+  await install_deps(runner, kafkaservice);
+  const kafkaDeployCmd = ["sls", "deploy", "--stage", stage];
+  await runner.run_command_and_output(
+    "Kafka service deploy",
+    kafkaDeployCmd,
+    `services/${kafkaservice}`
+  );
+}
+
+async function install_deps(runner: LabeledProcessRunner, service: string) {
+  await runner.run_command_and_output(
+    "Installing Dependencies",
+    ["yarn", "install", "--frozen-lockfile"],
+    `services/${service}`
+  );
+}
+
+async function prepare_services(runner: LabeledProcessRunner) {
+  for (const service of deployedServices) {
+    await install_deps(runner, service);
+  }
+}
+
+async function deploy(options: { stage: string }) {
+  const stage = options.stage;
+  const runner = new LabeledProcessRunner();
+  await prepare_services(runner);
+  const deployCmd = ["sls", "deploy", "--stage", stage];
+  await runner.run_command_and_output("SLS Deploy", deployCmd, ".");
+  // Only deploy resources for kafka ingestion in real envs
+  if (stage === "main" || stage === "val" || stage === "production") {
+    await deploy_kafka_service(runner, stage);
+  }
+}
+
 async function destroy_stage(options: {
   stage: string;
   service: string | undefined;
@@ -124,14 +173,22 @@ async function destroy_stage(options: {
   verify: boolean;
 }) {
   let destroyer = new ServerlessStageDestroyer();
-  /*
-   * Filters enable filtering by resource tags but we aren't leveraging any tags other than
-   * the STAGE tag automatically applied by the serverless framework.  Adding PROJECT and SERVICE
-   * tags would be a good idea.
-   */
+  let filters = [
+    {
+      Key: "PROJECT",
+      Value: `${process.env.PROJECT}`,
+    },
+  ];
+  if (options.service) {
+    filters.push({
+      Key: "SERVICE",
+      Value: `${options.service}`,
+    });
+  }
+
   await destroyer.destroy(`${process.env.REGION_A}`, options.stage, {
     wait: options.wait,
-    filters: [],
+    filters: filters,
     verify: options.verify,
   });
 }
@@ -145,6 +202,14 @@ yargs(process.argv.slice(2))
     run_all_locally();
   })
   .command("test", "run all tests", () => {})
+  .command(
+    "deploy",
+    "deploy the app with serverless compose to the cloud",
+    {
+      stage: { type: "string", demandOption: true },
+    },
+    deploy
+  )
   .command(
     "destroy",
     "destroy serverless stage",

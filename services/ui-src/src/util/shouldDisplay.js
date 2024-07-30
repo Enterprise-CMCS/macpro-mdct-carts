@@ -66,14 +66,26 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
       for (const item of targetRow) {
         // get computed value via lookup function and push into a multidimensional array
         if (item.compareACS) {
-          computedRow.push(compareACS(state, item.compareACS));
+          computedRow.push(
+            compareACS(
+              state.allStatesData,
+              state.stateUser.abbr,
+              item.compareACS
+            )
+          );
         } else if (item.lookupChipEnrollments) {
           computedRow.push(
-            lookupChipEnrollments(state, item.lookupChipEnrollments)
+            lookupChipEnrollments(
+              state.enrollmentCounts.chipEnrollments,
+              item.lookupChipEnrollments
+            )
           );
         } else if (item.compareChipEnrollements) {
           computedRow.push(
-            compareChipEnrollements(state, item.compareChipEnrollements)
+            compareChipEnrollements(
+              state.enrollmentCounts.chipEnrollments,
+              item.compareChipEnrollements
+            )
           );
         } else {
           // Let non-computed entries pass through with the other data transparently

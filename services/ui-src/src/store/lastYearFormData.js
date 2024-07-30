@@ -1,4 +1,3 @@
-import _ from "underscore";
 import { LOAD_LASTYEAR_SECTIONS } from "../actions/initial";
 import jsonpath from "../util/jsonpath";
 import idLetterMarkers from "../util/idLetterMarkers";
@@ -148,41 +147,4 @@ export const selectFragment = (state, id = null, jp = null) => {
 
   const path = jp || `$..*[?(@ && @.id=='${idValue}')]`;
   return selectFragmentFromTarget(targetObject, path);
-};
-
-/* /Helper functions for getting values from the JSON returned by the API */
-
-/**
- * @param {Object} fragment: the fragment we want to turn into a shallower tree.
- * @returns {Object} The shallower-tree version of the fragment.
- */
-export const winnowProperties = (fragment) => {
-  if (!fragment) {
-    return null;
-  }
-
-  // Remove the property named key, then replace it with a list of objects containing only the ids of the original objects in the list.
-  const winnow = (orig, key) => {
-    const copy = _.omit(orig, [key]);
-    copy[key] = orig[key].map((item) => (item.id ? { id: item.id } : {}));
-    return copy;
-  };
-
-  // Check for subsections, parts, and questions, in that order.
-  const props = ["subsections", "parts", "questions"];
-  for (let i = 0; i < props.length; i += 1) {
-    const prop = props[i];
-    if (prop in fragment) {
-      return winnow(fragment, prop);
-    }
-  }
-
-  return fragment;
-};
-
-// Generate subsection label including letter, ie: 'Section 3F'
-export const generateSubsectionLabel = (str) => {
-  const idArray = str.split("-");
-  const sectionNumber = Number(idArray[1]);
-  return `Section ${sectionNumber}${idArray[2]}`;
 };

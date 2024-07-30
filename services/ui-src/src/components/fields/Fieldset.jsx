@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import Question from "./Question";
 import DataGrid from "./DataGrid";
-import { SynthesizedTable } from "./SynthesizedTable";
+import SynthesizedTable from "./SynthesizedTable";
 import { NoninteractiveTable } from "./NoninteractiveTable";
-import { SynthesizedValue } from "./SynthesizedValue";
+import SynthesizedValue from "./SynthesizedValue";
 
 /*
  * Not done:
