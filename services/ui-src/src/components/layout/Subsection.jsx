@@ -8,7 +8,6 @@ import Text from "./Text";
 const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
     <div id={subsectionId}>
-      <h1>This is a subsection</h1>
       {title && <h3 className="h3-pdf-bookmark">{title}</h3>}
       {text ? (
         <div className="helper-text">
