@@ -153,11 +153,7 @@ const Question = ({ hideNumber, question, prevYear, tableTitle, ...props }) => {
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
-              <Question
-                key={q?.id || crypto.randomUUID()}
-                question={q}
-                setAnswer={setAnswerEntry}
-              />
+              <Question key={q.id} question={q} setAnswer={setAnswerEntry} />
             ))}
           </div>
         )}
