@@ -152,13 +152,9 @@ const Question = ({ hideNumber, question, prevYear, tableTitle, ...props }) => {
              not, then its children shouldn't be indented either. */}
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
-            {question.questions.map((q) => {
-              <Question
-                key={crypto.randomUUID()}
-                question={q}
-                setAnswer={setAnswerEntry}
-              />;
-            })}
+            {question.questions.map((q) => (
+              <Question key={q.id} question={q} setAnswer={setAnswerEntry} />
+            ))}
           </div>
         )}
       </Container>
