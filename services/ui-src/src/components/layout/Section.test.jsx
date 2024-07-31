@@ -1,11 +1,22 @@
 import React from "react";
 import { shallow } from "enzyme";
+import configureMockStore from "redux-mock-store";
+import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import Section from "./Section";
 
+const mockStore = configureMockStore();
 const testSectionId = "2020-123";
 const testSubSectionId = "1";
-
+const store = mockStore({
+  stateUser: {
+    name: "Kentucky",
+    imageURI: "kentucky.png",
+  },
+});
+jest.mock("../../store/selectors", () => ({
+  selectSectionTitle: () => "Section Title",
+}));
 jest.mock("./Autosave", () => () => {
   const MockName = "default-autosave";
   return <MockName />;
@@ -28,7 +39,9 @@ jest.mock("./Subsection", () => (props) => {
   return <mock-childComponent />;
 });
 const section = (
-  <Section sectionId={testSectionId} subsectionId={testSubSectionId} />
+  <Provider store={store}>
+    <Section sectionId={testSectionId} subsectionId={testSubSectionId} />
+  </Provider>
 );
 
 describe("Section Component", () => {
@@ -43,5 +56,11 @@ describe("Section Component", () => {
         subsectionId: testSubSectionId,
       })
     );
+  });
+  it("displays the title in screen and print view", () => {
+    const { getByTestId } = render(section);
+    const headerComponent = getByTestId("section-title");
+    expect(headerComponent).toHaveTextContent("Section Title");
+    expect(headerComponent).not.toHaveTextContent("2020-123");
   });
 });
