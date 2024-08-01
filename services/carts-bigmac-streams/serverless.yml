@@ -15,6 +15,7 @@ plugins:
   - serverless-stack-termination-protection
 
 custom:
+  project: "carts"
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
@@ -39,12 +40,15 @@ custom:
   scripts:
     hooks:
       deploy:finalize: |
-        serverless invoke --stage ${self:custom.stage} --function configureConnectors
+        aws lambda invoke --region ${self:provider.region} --function-name ${self:service}-${self:custom.stage}-configureConnectors --invocation-type RequestResponse /dev/null
 
 provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
+  stackTags:  
+    PROJECT: ${self:custom.project}
+    SERVICE: ${self:service}  
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}

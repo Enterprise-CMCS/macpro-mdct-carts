@@ -142,16 +142,22 @@ export const selectSectionsForNav = (state) => {
 };
 
 /**
- * Get the State Status for the current report.
- * @param {object} state - The current state object
+ * Get the Status for the current report.
+ * @param {object} reportStatus - the current report status object stored in state
+ * @param {object} formData - The current form object stored in state
+ * @param {object} stateUser - The current user object stored in state
+ * @param {object} formYear - The form year currently stored in global state.
  * @returns {object} The reportStatus object associated with the current report
  */
-export const getCurrentReportStatus = (state) => {
-  const { reportStatus, formData, stateUser, global } = state;
-
+export const getCurrentReportStatus = (
+  reportStatus,
+  formData,
+  stateUser,
+  formYear
+) => {
   let currentReport = "";
   if (stateUser.currentUser.role === AppRoles.STATE_USER) {
-    currentReport = `${stateUser.abbr}${global.formYear}`;
+    currentReport = `${stateUser.abbr}${formYear}`;
   } else {
     if (formData?.[0] === undefined) return {};
     currentReport = `${formData[0].stateId}${formData[0].year}`;
@@ -162,14 +168,26 @@ export const getCurrentReportStatus = (state) => {
 };
 
 /**
- * Determines if the report form should be editable.
- * @param {object} state - The current state object
- * @returns {boolean}
+ * Get the Status for the current report.
+ * @param {object} reportStatus - the current report status object stored in state
+ * @param {object} formData - The current form object stored in state
+ * @param {object} stateUser - The current user object stored in state
+ * @param {object} formYear - Global variables that will be the same regardless of users
+ * @returns {object} The reportStatus object associated with the current report
  */
-export const selectIsFormEditable = (state) => {
-  const { stateUser } = state;
+export const selectIsFormEditable = (
+  reportStatus,
+  formData,
+  stateUser,
+  formYear
+) => {
   const { role } = stateUser.currentUser;
-  const status = getCurrentReportStatus(state).status;
+  const { status } = getCurrentReportStatus(
+    reportStatus,
+    formData,
+    stateUser,
+    formYear
+  );
 
   switch (status) {
     case REPORT_STATUS.not_started:
@@ -228,13 +246,11 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
   };
 })();
 
-export const selectYears = (state) => {
-  const { global } = state;
-
-  let yearArray = [];
+export const selectYears = (currentYear) => {
+  const yearArray = [];
   for (
     let x = 2020;
-    x <= global.currentYear;
+    x <= currentYear;
     x++ // 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
   ) {
     yearArray.push({ label: x, value: x });

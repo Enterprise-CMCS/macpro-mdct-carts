@@ -210,8 +210,14 @@ describe("DateRange Component", () => {
 
     endYearInput.dispatchEvent(new Event("blur"));
 
+    /*
+     * Have to wait because jest trips over itself. Would use waitFor, but thats in the next
+     * version of the testing-lib. When upgrading testing-lib, swap this to waitFor
+     */
+    await new Promise((r) => setTimeout(r, 400));
+
     expect(
-      screen.queryByText("End date must come after start date")
+      await screen.queryByText("End date must come after start date")
     ).toBeInTheDocument();
   });
 
@@ -231,6 +237,12 @@ describe("DateRange Component", () => {
     await userEvent.type(endYearInput, "2023");
 
     endYearInput.dispatchEvent(new Event("blur"));
+
+    /*
+     * Have to wait because jest trips over itself. Would use waitFor, but thats in the next
+     * version of the testing-lib. When upgrading testing-lib, swap this to waitFor
+     */
+    await new Promise((r) => setTimeout(r, 400));
 
     expect(mockPropsExistingAnswer.onChange).toBeCalledWith([
       "mock-question-1",
