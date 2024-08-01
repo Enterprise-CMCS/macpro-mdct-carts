@@ -19,14 +19,10 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
-    stages: # This is a list of common names for important envs that should not be destroyed. You can remove the stage names your project doesn't use; this list is meant to be inclusive.
-      - master
+    stages:
+      - main
       - val
       - production
-      - develop
-      - main
-      - impl
-      - prod
   kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}

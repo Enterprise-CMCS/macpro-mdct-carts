@@ -42,7 +42,6 @@ custom:
   serverlessTerminationProtection:
     stages:
       - main
-      - master
       - val
       - production
   sesSourceEmailAddress: ${ssm:/configuration/${self:custom.stage}/sesSourceEmailAddress, ssm:/configuration/default/sesSourceEmailAddress, ""}
