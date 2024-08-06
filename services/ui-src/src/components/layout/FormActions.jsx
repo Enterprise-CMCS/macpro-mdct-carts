@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector, shallowEqual } from "react-redux";
+// components
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+//types
 import { AppRoles } from "../../types";
 
 /**
@@ -12,10 +13,14 @@ import { AppRoles } from "../../types";
  * @returns {JSX.Element}
  * @constructor
  */
-const FormActions = (props) => {
+const FormActions = () => {
+  const [currentUser, formYear] = useSelector(
+    (state) => [state.stateUser.currentUser, state.global.formYear],
+    shallowEqual
+  );
+
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
-  const { currentUser, formYear } = props;
 
   // Get section IDs and subsection IDs for printing single section
   let searchParams = document.location.pathname
@@ -103,6 +108,7 @@ const FormActions = (props) => {
 
   return (
     <section className="action-buttons">
+      <h1> This is the form action button!</h1>
       <div className="print-button">
         <Button
           className="ds-c-button--primary ds-c-button--small"
@@ -163,15 +169,4 @@ const FormActions = (props) => {
   );
 };
 
-FormActions.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-  formYear: PropTypes.number.isRequired,
-};
-
-export const mapStateToProps = (state) => ({
-  currentUser: state.stateUser.currentUser,
-  formYear: state.global.formYear,
-  printType: state.global.printType,
-});
-
-export default connect(mapStateToProps)(FormActions);
+export default FormActions;
