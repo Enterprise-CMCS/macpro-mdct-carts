@@ -122,10 +122,9 @@ export const selectQuestionsForPart = (state, partId) => {
   return filteredQuestions;
 };
 
-export const selectSectionsForNav = (state) => {
-  if (state.formData) {
-    const sections = state.formData;
-    return sections.map(
+export const selectSectionsForNav = (formData) => {
+  if (formData) {
+    return formData.map(
       ({
         contents: {
           section: { id, ordinal, subsections, title },
