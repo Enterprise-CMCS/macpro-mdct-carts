@@ -108,7 +108,6 @@ const FormActions = () => {
 
   return (
     <section className="action-buttons">
-      <h1> This is the form action button!</h1>
       <div className="print-button">
         <Button
           className="ds-c-button--primary ds-c-button--small"
