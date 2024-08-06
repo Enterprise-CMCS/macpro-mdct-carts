@@ -6,7 +6,8 @@ import PropTypes from "prop-types";
 const Title = ({ urlStateName }) => {
   const [name, stateName, formYear] = useSelector(
     (state) => [
-      state.stateUser.name.state.global.stateName,
+      state.stateUser.name,
+      state.global.stateName,
       state.global.formYear,
     ],
     shallowEqual
