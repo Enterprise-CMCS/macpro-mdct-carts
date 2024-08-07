@@ -14,8 +14,8 @@ import {
  * @param {object} hideIfInfo - the hide_if object from a question's context_data
  * @returns {boolean} - determines if an element should be filtered out, returning true hides a question
  */
-const hideIf = (state, hideIfInfo) => {
-  const targetAnswer = jsonpath.query(state, hideIfInfo.target)[0]; // User's selection from associated question
+const hideIf = (formData, hideIfInfo) => {
+  const targetAnswer = jsonpath.query(formData, hideIfInfo.target)[0]; // User's selection from associated question
   const interactiveValues = hideIfInfo.values.interactive; // Array of values which if selected, should hide a question
 
   if (interactiveValues.includes(targetAnswer)) {
@@ -27,10 +27,10 @@ const hideIf = (state, hideIfInfo) => {
   return false;
 };
 
-const hideIfAll = (state, hideIfAllInfo) => {
+const hideIfAll = (formData, hideIfAllInfo) => {
   const answers = hideIfAllInfo.values.interactive;
   return hideIfAllInfo.targets
-    .map((target) => jsonpath.query(state, target)[0])
+    .map((target) => jsonpath.query(formData, target)[0])
     .every((answer) => answers.includes(answer));
 };
 
@@ -41,8 +41,8 @@ const hideIfAll = (state, hideIfAllInfo) => {
  * @param {object} hideIfNotInfo - the hide_if_not object from a question's context_data
  * @returns {boolean} - determines if an element should be filtered out, returning true hides a question
  */
-const hideIfNot = (state, hideIfNotInfo) => {
-  const targetAnswer = jsonpath.query(state, hideIfNotInfo.target)[0]; // Array of user selections from associated question
+const hideIfNot = (formData, hideIfNotInfo) => {
+  const targetAnswer = jsonpath.query(formData, hideIfNotInfo.target)[0]; // Array of user selections from associated question
   const interactiveValues = hideIfNotInfo.values.interactive; // Array of values which if present in a user's selections, should hide a question
 
   const includedBoolean =
@@ -53,9 +53,15 @@ const hideIfNot = (state, hideIfNotInfo) => {
   return includedBoolean;
 };
 
-const hideIfTableValue = (state, hideIfTableValueInfo) => {
+const hideIfTableValue = (
+  formData,
+  allStatesData,
+  stateUserAbbr,
+  chipEnrollments,
+  hideIfTableValueInfo
+) => {
   // Get table values
-  const targetValues = jsonpath.query(state, hideIfTableValueInfo.target)[0];
+  const targetValues = jsonpath.query(formData, hideIfTableValueInfo.target)[0];
   let computedValues = [];
 
   // If target needs to be calculated
@@ -67,23 +73,16 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
         // get computed value via lookup function and push into a multidimensional array
         if (item.compareACS) {
           computedRow.push(
-            compareACS(
-              state.allStatesData,
-              state.stateUser.abbr,
-              item.compareACS
-            )
+            compareACS(allStatesData, stateUserAbbr, item.compareACS)
           );
         } else if (item.lookupChipEnrollments) {
           computedRow.push(
-            lookupChipEnrollments(
-              state.enrollmentCounts.chipEnrollments,
-              item.lookupChipEnrollments
-            )
+            lookupChipEnrollments(chipEnrollments, item.lookupChipEnrollments)
           );
         } else if (item.compareChipEnrollements) {
           computedRow.push(
             compareChipEnrollements(
-              state.enrollmentCounts.chipEnrollments,
+              chipEnrollments,
               item.compareChipEnrollements
             )
           );
@@ -181,11 +180,11 @@ const hideIfTableValue = (state, hideIfTableValueInfo) => {
 
 const PROGRAM_TYPE_QUESTION_ID = "-00-a-01-02";
 
-const getProgramTypeFromForm = (state) => {
+const getProgramTypeFromForm = (formData, reportStatus) => {
   // attempt to find programType from same year as form
-  const formYear = state.formData[0].year;
+  const formYear = formData[0].year;
   const currentYearProgramType = selectFragmentById(
-    state,
+    formData,
     `${formYear}${PROGRAM_TYPE_QUESTION_ID}`
   )?.answer?.entry;
   if (currentYearProgramType) {
@@ -195,11 +194,11 @@ const getProgramTypeFromForm = (state) => {
   // attempt to find programType from the previous year's form, otherwise retrieve from status
   const previousYear = parseInt(formYear) - 1;
   const previousYearProgramType = selectFragmentById(
-    state,
+    formData,
     `${previousYear}${PROGRAM_TYPE_QUESTION_ID}`
   )?.answer?.entry;
-  const reportStatusCode = state.formData[0].stateId + state.formData[0].year;
-  const programFromStatus = state.reportStatus[reportStatusCode].programType;
+  const reportStatusCode = formData[0].stateId + formData[0].year;
+  const programFromStatus = reportStatus[reportStatusCode].programType;
   return previousYearProgramType || programFromStatus;
 };
 
@@ -210,8 +209,16 @@ const getProgramTypeFromForm = (state) => {
  * @param {object} context - the context_data from a question
  * @returns {boolean} - determines if an element should be filtered out, returning true means a question will display
  */
-const shouldDisplay = (state, context) => {
-  if (state.stateUser.currentUser.role === AppRoles.CMS_ADMIN) return true;
+const shouldDisplay = (
+  currentUserRole,
+  formData,
+  reportStatus,
+  allStatesData,
+  stateUserAbbr,
+  chipEnrollments,
+  context
+) => {
+  if (currentUserRole === AppRoles.CMS_ADMIN) return true;
 
   if (
     !context ||
@@ -225,7 +232,7 @@ const shouldDisplay = (state, context) => {
    * displaying relies on that answer being included in the show_if_state_program_type_in array
    */
   if (context.show_if_state_program_type_in) {
-    const program = getProgramTypeFromForm(state);
+    const program = getProgramTypeFromForm(formData, reportStatus);
     return context.show_if_state_program_type_in.includes(program);
   }
 
@@ -234,12 +241,12 @@ const shouldDisplay = (state, context) => {
    * displaying relies on that answer being incldued in the hide_if.values.interactive array
    */
   if (context.conditional_display.hide_if) {
-    return !hideIf(state, context.conditional_display.hide_if);
+    return !hideIf(formData, context.conditional_display.hide_if);
   }
 
   // hide_if_all, there is an array of targets (questions) that another question's display relies on
   if (context.conditional_display.hide_if_all) {
-    return !hideIfAll(state, context.conditional_display.hide_if_all);
+    return !hideIfAll(formData, context.conditional_display.hide_if_all);
   }
 
   /*
@@ -247,7 +254,7 @@ const shouldDisplay = (state, context) => {
    * displaying relies on that array of answers including any of the values from the hide_if_not.values.interactive array
    */
   if (context.conditional_display.hide_if_not) {
-    return !hideIfNot(state, context.conditional_display.hide_if_not);
+    return !hideIfNot(formData, context.conditional_display.hide_if_not);
   }
 
   /*
@@ -256,7 +263,10 @@ const shouldDisplay = (state, context) => {
    */
   if (context.conditional_display.hide_if_table_value) {
     return hideIfTableValue(
-      state,
+      formData,
+      allStatesData,
+      stateUserAbbr,
+      chipEnrollments,
       context.conditional_display.hide_if_table_value
     );
   }
