@@ -16,7 +16,7 @@ CARTS is the CMCS MDCT application for collecting state data related to coverage
 
 Under section 2108(a) of the Act, states must assess the operation of their separate CHIP and Medicaid expansion programs and the progress made in reducing the number of uncovered, low-income children. The results of the assessment are reported to the Secretary by January 1 following the end of the FY in the CHIP Annual Reporting Template System (CARTS). CARTS collects information about programmatic changes, performance goals, program operation, program financing, program challenges and accomplishments.
 
-_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`skipci-archive-master`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/skipci-archive-master) branch._
+_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`skipci-archive-carts-v2`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/skipci-archive-carts-v2) branch._
 
 ## Table of contents
 
