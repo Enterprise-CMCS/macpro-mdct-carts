@@ -107,8 +107,8 @@ export default (state = initialState, action) => {
 };
 
 /* Helper functions for getting values from the JSON returned by the API */
-export const selectSectionByOrdinal = (state, ordinal) => {
-  const section = state.formData.filter(
+export const selectSectionByOrdinal = (formData, ordinal) => {
+  const section = formData.filter(
     (c) => c.contents.section.ordinal === ordinal
   );
   if (section.length > 0) {
@@ -158,22 +158,22 @@ export const extractJsonPathExpressionFromQuestionLike = (
 };
 
 export const selectFragmentByJsonPath = (
-  state,
+  formData,
   expr,
   sectionOrdinal = false
 ) => {
   const sectionNumber = sectionOrdinal || extractSectionOrdinalFromJPExpr(expr);
 
-  const section = selectSectionByOrdinal(state, sectionNumber);
+  const section = selectSectionByOrdinal(formData, sectionNumber);
   // Note that the following assumes that there's only one matching result.
   const fragment = jsonpath.query(section, expr)[0];
   return fragment;
 };
 
-export const selectFragmentById = (state, id) => {
+export const selectFragmentById = (formData, id) => {
   const sectionOrdinal = extractSectionOrdinalFromId(id);
   const jpexpr = `$..*[?(@ && @.id=='${id}')]`;
-  return selectFragmentByJsonPath(state, jpexpr, sectionOrdinal);
+  return selectFragmentByJsonPath(formData, jpexpr, sectionOrdinal);
 };
 
 /**
@@ -199,8 +199,8 @@ export const selectFragmentFromTarget = (target, expr) => {
  * @param {string} id - The id of what we're looking for, e.g. 2020-01-a-01-01-a-01.
  * @param {string} jp - JSONPath expression, although if id is not supplied it must be a JSONPath expression with an id lookup in it.
  */
-export const selectFragment = (state, id = null, jp = null) => {
-  if (!state.formData || state.formData.length === 0) {
+export const selectFragment = (formData, id = null, jp = null) => {
+  if (!formData || formData.length === 0) {
     return null;
   }
   if (!id && !jp) {
@@ -208,7 +208,7 @@ export const selectFragment = (state, id = null, jp = null) => {
   }
   const idValue = id ?? jp.split("id=='")[1].split("'")[0];
   const sectionOrdinal = extractSectionOrdinalFromId(idValue);
-  const section = selectSectionByOrdinal(state, sectionOrdinal);
+  const section = selectSectionByOrdinal(formData, sectionOrdinal);
   let targetObject = section;
   const chunks = idValue.split("-").slice(2); // Year is irrelevant so we skip it; same for section since we just got it above.
   if (chunks.length >= 2) {

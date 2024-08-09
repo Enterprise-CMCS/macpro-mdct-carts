@@ -24,26 +24,14 @@ export const selectSectionTitle = (state, sectionId) => {
   return null;
 };
 
-export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
-  const subsection = selectFragment(state, subsectionId);
+export const selectSubsectionTitleAndPartIDs = (formData, subsectionId) => {
+  const subsection = selectFragment(formData, subsectionId);
 
   if (subsection) {
     return {
       parts: subsection.parts.map((part) => part.id),
       title: subsection.title,
       text: subsection.text,
-    };
-  }
-  return null;
-};
-
-export const selectPartTitle = (state, partId) => {
-  const part = selectFragment(state, partId);
-
-  if (part) {
-    return {
-      text: part.text,
-      title: part.title,
     };
   }
   return null;
@@ -63,11 +51,29 @@ export const selectQuestion = (state, id) => {
  * This function is a callback for the filter method in selectQuestionsForPart
  * @function filterDisplay
  * @param {object} question - single question from the unfilteredData array in selectQuestionsForPart.
- * @param {object} state - the application state
+ * @param {object} currentUserRole - The role of the current user. Accessed at state.currentUser.role
  * @returns {boolean} - to be evaluated by the filter method
  */
-const filterDisplay = (question, state) => {
-  if (!shouldDisplay(state, question.context_data)) {
+const filterDisplay = (
+  question,
+  currentUserRole,
+  formData,
+  reportStatus,
+  allStatesData,
+  stateUserAbbr,
+  chipEnrollments
+) => {
+  if (
+    !shouldDisplay(
+      currentUserRole,
+      formData,
+      reportStatus,
+      allStatesData,
+      stateUserAbbr,
+      chipEnrollments,
+      question.context_data
+    )
+  ) {
     // If context data and a variation of skip text exists
     if (
       question.context_data &&
@@ -100,7 +106,15 @@ const filterDisplay = (question, state) => {
     question.questions = question.questions
       .map((singleQuestion) => {
         // reassign question.questions to be a filtered version of itself
-        return filterDisplay(singleQuestion, state);
+        return filterDisplay(
+          singleQuestion,
+          currentUserRole,
+          formData,
+          reportStatus,
+          allStatesData,
+          stateUserAbbr,
+          chipEnrollments
+        );
       })
       .filter((q) => q !== false);
   }
@@ -108,14 +122,32 @@ const filterDisplay = (question, state) => {
 };
 
 // Returns an array of questions for the QuestionComponent to map through
-export const selectQuestionsForPart = (state, partId) => {
+export const selectQuestionsForPart = (
+  formData,
+  currentUserRole,
+  reportStatus,
+  allStatesData,
+  stateUserAbbr,
+  chipEnrollments,
+  partId
+) => {
   const jp = `$..[*].contents.section.subsections[*].parts[?(@ && @.id=='${partId}')].questions[*]`;
-  const unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
+  const unfilteredData = JSON.parse(
+    JSON.stringify(jsonpath.query(formData, jp))
+  );
 
   // Filter the array of questions based on conditional logic
   const filteredQuestions = unfilteredData
     .map((question) => {
-      return filterDisplay(question, state);
+      return filterDisplay(
+        question,
+        currentUserRole,
+        formData,
+        reportStatus,
+        allStatesData,
+        stateUserAbbr,
+        chipEnrollments
+      );
     })
     .filter((q) => q !== false);
 
