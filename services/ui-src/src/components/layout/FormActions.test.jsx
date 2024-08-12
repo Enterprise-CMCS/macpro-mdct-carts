@@ -8,7 +8,7 @@ import {
   adminUserWithReportInProgress,
   stateUserWithReportInProgress,
 } from "../../store/fakeStoreExamples";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
 const mockStore = configureMockStore();
 const store = mockStore(stateUserWithReportInProgress);

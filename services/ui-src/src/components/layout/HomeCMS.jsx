@@ -1,6 +1,5 @@
 import React from "react";
-import { Switch } from "react-router";
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
 import InvokeSection from "../utils/InvokeSection";
 import SaveError from "./SaveError";
