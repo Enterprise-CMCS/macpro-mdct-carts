@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { UserProvider, useUser } from "./hooks/authHooks";
 import { PostLogoutRedirect } from "./components/layout/PostLogoutRedirect";
 import AppRoutes from "./AppRoutes";
@@ -19,8 +19,10 @@ function App() {
   return (
     <div id="app-wrapper">
       <UserProvider>
-        <Route path="/" component={AppRoutes} />
-        <Route path="/postLogout" component={PostLogoutRedirect} />
+        <Routes>
+          <Route path="/" element={<AppRoutes />} />
+          <Route path="/postLogout" element={<PostLogoutRedirect />} />
+        </Routes>
       </UserProvider>
     </div>
   );

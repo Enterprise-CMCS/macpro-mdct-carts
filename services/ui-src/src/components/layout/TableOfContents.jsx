@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, shallowEqual } from "react-redux";
 //components
 import { VerticalNav } from "@cmsgov/design-system";
@@ -17,7 +17,7 @@ const TableOfContents = () => {
   );
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sections = () => {
     if (formData) {
@@ -63,7 +63,7 @@ const TableOfContents = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    history.push(url);
+    navigate(url);
   };
 
   const items = sections()

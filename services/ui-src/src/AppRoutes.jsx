@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
@@ -21,15 +21,19 @@ const AppRoutes = () => {
     return <LocalLogins loginWithIDM={loginWithIDM} />;
   }
 
-  const VisibleHeader =
+  const VisibleHeader = () =>
     window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
+    window.location.pathname.split("/")[1] === "coming-soon" ? (
+      <></>
+    ) : (
       <Header currentUser={user} />
     );
 
-  const VisibleFooter =
+  const VisibleFooter = () =>
     window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
+    window.location.pathname.split("/")[1] === "coming-soon" ? (
+      <></>
+    ) : (
       <Footer />
     );
 
@@ -40,18 +44,18 @@ const AppRoutes = () => {
     >
       <div className="app-content">
         <Spinner />
-        <Router>
-          {VisibleHeader}
-          <Home role={user?.userRole || ""} />
-          <Timeout />
+        <VisibleHeader />
+        <Home role={user?.userRole || ""} />
+        <Timeout />
+        <Routes>
           {/* These routes are available to everyone, so define them here */}
-          <Route exact path="/userinfo" component={UserInfo} />
-          <Route path="/user/profile" component={UserProfile} />
-          <Route path="/print" component={Print} />
-          <Route path="/get-help" component={GetHelp} />
-        </Router>
+          <Route path="/userinfo" element={<UserInfo />} />
+          <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/print" element={<Print />} />
+          <Route path="/get-help" element={<GetHelp />} />
+        </Routes>
       </div>
-      {VisibleFooter}
+      {<VisibleFooter />}
     </div>
   );
 };

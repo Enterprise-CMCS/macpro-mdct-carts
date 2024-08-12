@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Dialog } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   refreshCredentials,
   updateTimeout,
@@ -18,11 +18,10 @@ const calculateTimeLeft = (expiresAt) => {
 const Timeout = ({ showTimeout, expiresAt }) => {
   const { logout } = useUser();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
-  const history = useHistory();
+  const location = useLocation();
+
   useEffect(() => {
-    const unlisten = history.listen(() => {
-      updateTimeout();
-    });
+    const unlisten = updateTimeout();
 
     if (!showTimeout) return;
     // eslint-disable-next-line no-unused-vars
@@ -33,7 +32,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
       unlisten();
       clearInterval(timer);
     };
-  });
+  }, [location]);
 
   const logoutClick = () => {
     logout();

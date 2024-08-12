@@ -13,7 +13,7 @@ jest.mock("aws-amplify", () => ({
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useHistory: () => ({
+  useNavigate: () => ({
     push: mockHistoryPush,
   }),
 }));

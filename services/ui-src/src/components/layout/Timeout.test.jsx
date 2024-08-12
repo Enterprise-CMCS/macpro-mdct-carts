@@ -8,7 +8,7 @@ import moment from "moment";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useHistory: () => ({
+  useNavigate: () => ({
     listen: jest.fn().mockReturnValue(() => {}),
   }),
 }));

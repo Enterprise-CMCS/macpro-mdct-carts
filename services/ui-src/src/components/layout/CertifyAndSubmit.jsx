@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { Button, Dialog } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // components
 import PageInfo from "./PageInfo";
 import FormActions from "./FormActions";
@@ -70,7 +70,7 @@ Thanks.propTypes = {
 
 const CertifyAndSubmit = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isShowing, toggleModal } = useModal();
   const [isCertified, lastSave, submitterUsername, currentUserRole, state] =
     useSelector(
@@ -111,7 +111,7 @@ const CertifyAndSubmit = () => {
   };
 
   const doneClick = () => {
-    history.push("/");
+    navigate("/");
     window.location.reload();
   };
 

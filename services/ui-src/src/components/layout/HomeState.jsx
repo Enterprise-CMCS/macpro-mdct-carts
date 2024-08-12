@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import CertifyAndSubmit from "./CertifyAndSubmit";
 import Homepage from "../sections/homepage/Homepage";
 import InvokeSection from "../utils/InvokeSection";
@@ -8,26 +8,37 @@ import ScrollToTop from "../utils/ScrollToTop";
 import Sidebar from "./Sidebar";
 import Unauthorized from "./Unauthorized";
 
+const CertifyPage = () => (
+  <>
+    <Sidebar />
+    <CertifyAndSubmit />
+  </>
+);
+
+const Section = () => (
+  <>
+    <Sidebar />
+    <InvokeSection />
+  </>
+);
+
 const StateHome = () => {
   return (
     <>
       <Route path="/" />
       <SaveError />
       <ScrollToTop />
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/sections/:year/certify-and-submit" exact>
-          <Sidebar />
-          <CertifyAndSubmit />
-        </Route>
-        <Route path="/sections/:year/:sectionOrdinal/:subsectionMarker">
-          <Sidebar />
-          <InvokeSection />
-        </Route>
-        <Route path="/sections/:year/:sectionOrdinal">
-          <Sidebar />
-          <InvokeSection />
-        </Route>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route
+          path="/sections/:year/certify-and-submit"
+          element={<CertifyPage />}
+        />
+        <Route
+          path="/sections/:year/:sectionOrdinal/:subsectionMarker"
+          element={<Section />}
+        />
+        <Route path="/sections/:year/:sectionOrdinal" element={<Section />} />
         {/* Add routes from admin that should be unauthorized for state users */}
         <Route
           path={[
@@ -36,9 +47,9 @@ const StateHome = () => {
             "/role_jobcode_assoc",
             "/users",
           ]}
-          component={Unauthorized}
+          element={Unauthorized}
         />
-      </Switch>
+      </Routes>
     </>
   );
 };

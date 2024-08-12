@@ -2,11 +2,11 @@ import requestOptions from "../../hooks/authHooks/requestOptions";
 import React, { useState } from "react";
 import "react-data-table-component-extensions/dist/index.css";
 import { Button } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiLib } from "../../util/apiLib";
 
 const FormTemplates = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [inProgress, setInprogress] = useState(false);
 
   const handleUpdateTemplates = async () => {
@@ -17,7 +17,7 @@ const FormTemplates = () => {
       const opts = await requestOptions({ year: selectedYear });
       await apiLib.post("carts-api", "/formTemplates", opts);
       window.alert("Request Completed");
-      history.push("/");
+      navigate("/");
     } catch (e) {
       window.alert("Error - Contact Support");
     }
