@@ -87,6 +87,9 @@ const store = mockStore({
       stateId: "AL",
     },
   ],
+  enrollmentCounts: {
+    chipEnrollments: {},
+  },
   global: {
     isFetching: false,
   },
