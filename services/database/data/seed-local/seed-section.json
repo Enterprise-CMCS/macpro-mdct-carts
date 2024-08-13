@@ -15571,7 +15571,7 @@
                         "label": "Total for all ages (0-16)",
                         "type": "integer",
                         "answer": {
-                          "entry": "5"
+                          "entry": null
                         }
                       },
                       {
@@ -15671,7 +15671,7 @@
                         "label": "Total for all ages (0-16)",
                         "type": "integer",
                         "answer": {
-                          "entry": "5"
+                          "entry": null
                         }
                       },
                       {
@@ -15767,7 +15767,7 @@
                         "label": "Total for all ages (0-16)",
                         "type": "integer",
                         "answer": {
-                          "entry": "5"
+                          "entry": null
                         }
                       },
                       {
@@ -15862,7 +15862,7 @@
                         "label": "Total for all ages (0-16)",
                         "type": "integer",
                         "answer": {
-                          "entry": "5"
+                          "entry": null
                         }
                       },
                       {
@@ -15957,7 +15957,7 @@
                         "label": "Total for all ages (0-16)",
                         "type": "integer",
                         "answer": {
-                          "entry": "5"
+                          "entry": null
                         }
                       },
                       {
@@ -16053,7 +16053,7 @@
                         "label": "Total for all ages (0-16)",
                         "type": "integer",
                         "answer": {
-                          "entry": "5"
+                          "entry": null
                         }
                       },
                       {
@@ -16134,7 +16134,7 @@
                     "label": "Is there anything else you’d like to add about your data?",
                     "type": "text_multiline",
                     "answer": {
-                      "entry": "5"
+                      "entry": null
                     }
                   },
                   {
