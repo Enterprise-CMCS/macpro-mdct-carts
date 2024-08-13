@@ -20,7 +20,7 @@ function App() {
     <div id="app-wrapper">
       <UserProvider>
         <Routes>
-          <Route path="/" element={<AppRoutes />} />
+          <Route path="*" element={<AppRoutes />} />
           <Route path="/postLogout" element={<PostLogoutRedirect />} />
         </Routes>
       </UserProvider>

@@ -29,15 +29,10 @@ const CMSHome = () => (
         element={<Section />}
       />
       {/* Add routes from admin that should be unauthorized for cms users */}
-      <Route
-        path={[
-          "/role_user_assoc",
-          "/state_assoc",
-          "/role_jobcode_assoc",
-          "/users",
-        ]}
-        element={<Unauthorized />}
-      />
+      <Route path={"/role_user_assoc"} element={Unauthorized} />
+      <Route path={"/state_assoc"} element={Unauthorized} />
+      <Route path={"/role_jobcode_assoc"} element={Unauthorized} />
+      <Route path={"/users"} element={Unauthorized} />
     </Routes>
   </>
 );
