@@ -161,9 +161,10 @@ async function deploy(options: { stage: string }) {
   const deployCmd = ["sls", "deploy", "--stage", stage];
   await runner.run_command_and_output("SLS Deploy", deployCmd, ".");
   // Only deploy resources for kafka ingestion in real envs
-  if (stage === "main" || stage === "val" || stage === "production") {
-    await deploy_kafka_service(runner, stage);
-  }
+  await deploy_kafka_service(runner, stage);
+  // if (stage === "main" || stage === "val" || stage === "production") {
+
+  // }
 }
 
 async function destroy_stage(options: {

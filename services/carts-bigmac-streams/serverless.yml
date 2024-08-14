@@ -98,6 +98,13 @@ functions:
       stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
     maximumRetryAttempts: 2
     timeout: 120
+    events:
+      - kafka:
+        accessConfigurations:
+          vpcSubnet: ${self:custom.privateSubnets}
+          vpcSecurityGroup: !Ref LambdaConfigureConnectorsSecurityGroup
+        topic: aws.mdct.seds.cdc.state-forms.v0
+        bootstrapServers: ${self:custom.bootstrapBrokerStringTls}
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
