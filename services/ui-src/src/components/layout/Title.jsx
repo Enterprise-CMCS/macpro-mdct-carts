@@ -23,7 +23,7 @@ const Title = ({ urlStateName }) => {
   );
 };
 Title.propTypes = {
-  formYear: PropTypes.number.isRequired,
+  urlStateName: PropTypes.string,
 };
 
 export default Title;
