@@ -26,10 +26,13 @@ custom:
   kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  privateSubnetA: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
+  privateSubnetB: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
+  privateSubnetC: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
   privateSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
+    - ${self:custom.privateSubnetA}
+    - ${self:custom.privateSubnetB}
+    - ${self:custom.privateSubnetC}
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stateStatusTableStreamArn: ${env:stateStatusTableStreamArn, cf:database-${self:custom.stage}.StateStatusTableStreamArn}
   sectionTableStreamArn: ${env:sectionTableStreamArn, cf:database-${self:custom.stage}.SectionTableStreamArn}
@@ -101,8 +104,12 @@ functions:
     events:
       - kafka:
           accessConfigurations:
-            vpcSubnet: ${self:custom.privateSubnets}
-            vpcSecurityGroup: !Ref LambdaConfigureConnectorsSecurityGroup
+            vpcSubnet:
+              - ${self:custom.privateSubnetA}
+              - ${self:custom.privateSubnetB}
+              - ${self:custom.privateSubnetC}
+            vpcSecurityGroup:
+              - !Ref LambdaConfigureConnectorsSecurityGroup
           topic: aws.mdct.seds.cdc.state-forms.v0
           bootstrapServers: ${self:custom.bootstrapBrokerStringTls}
     vpc:
