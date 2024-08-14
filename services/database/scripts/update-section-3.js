@@ -6,7 +6,7 @@
  *    dynamoPrefix="YOUR BRANCH NAME" node services/database/scripts/update-section-3.js
  */
 
-const { buildDynamoClient, scan } = require("./utils/dynamodb.js");
+const { buildDynamoClient, scan, update } = require("./utils/dynamodb.js");
 
 const isLocal = !!process.env.DYNAMODB_URL;
 
@@ -26,7 +26,7 @@ async function handler() {
     });
     const filteredItems = filter(existingItems);
     const transformedItems = await transform(filteredItems);
-    // await update(sectionTable, transformedItems);
+    await update(sectionTable, transformedItems);
     console.log(`Touched ${transformedItems.length} in table ${sectionTable}`);
     console.debug("Data fix complete");
 
@@ -49,23 +49,22 @@ function filter(items) {
 
 async function transform(items) {
   // Touch sync field only
-  const transformed = items.map((item) => {
-    // item.contents = updateSection3.section;
-    console.log("Transforming item!", item);
+  const transformed = items.map((section) => {
+    console.log("Transforming section!", section);
+    return updateSection3(section);
   });
 
   return transformed;
 }
 
-// eslint-disable-next-line no-unused-vars
 const updateSection3 = (section) => {
   section.contents.section.subsections[2].parts.map((part) => {
-    recurseAndUpdateQuestions(part.questions);
+    return recurseAndUpdateQuestions(part.questions, section.pk);
   });
   return section;
 };
 
-const recurseAndUpdateQuestions = (questions) => {
+const recurseAndUpdateQuestions = (questions, reportBeingTransformed) => {
   const fieldstoRemoveReadonly = [
     "2023-03-c-05-19-a",
     "2023-03-c-06-10-a",
@@ -85,13 +84,14 @@ const recurseAndUpdateQuestions = (questions) => {
       question?.answer?.readonly
     ) {
       console.log(
+        reportBeingTransformed,
         "Found and deleting readonly field from question",
         question.id
       );
       delete question.answer.readonly;
     }
     if (question?.questions) {
-      recurseAndUpdateQuestions(question.questions);
+      recurseAndUpdateQuestions(question.questions, reportBeingTransformed);
     }
   }
 };
