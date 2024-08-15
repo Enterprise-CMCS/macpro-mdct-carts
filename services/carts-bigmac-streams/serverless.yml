@@ -341,6 +341,7 @@ resources:
                     - "ec2:DetachNetworkInterface"
                     - "ec2:DeleteNetworkInterface"
                     - "ec2:DescribeSecurityGroups"
+                    - "ec2:DescribeVpcs"
                   Resource: "*"
                 - Effect: "Allow"
                   Action:
