@@ -109,7 +109,7 @@ functions:
               - ${self:custom.privateSubnetB}
               - ${self:custom.privateSubnetC}
             vpcSecurityGroup:
-              - Ref: LambdaConfigureConnectorsSecurityGroup
+              - sg-06e82712b09b545ab
           topic: aws.mdct.seds.cdc.state-forms.v0
           bootstrapServers: ${self:custom.bootstrapBrokerStringTls}
     vpc:
