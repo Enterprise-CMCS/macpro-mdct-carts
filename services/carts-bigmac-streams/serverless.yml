@@ -111,7 +111,10 @@ functions:
             vpcSecurityGroup:
               - sg-06e82712b09b545ab
           topic: aws.mdct.seds.cdc.state-forms.v0
-          bootstrapServers: ${self:custom.bootstrapBrokerStringTls}
+          bootstrapServers:
+            - b-1.master-msk.zf7e0q.c7.kafka.us-east-1.amazonaws.com:9094
+            - b-2.master-msk.zf7e0q.c7.kafka.us-east-1.amazonaws.com:9094
+            - b-3.master-msk.zf7e0q.c7.kafka.us-east-1.amazonaws.com:9094
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
