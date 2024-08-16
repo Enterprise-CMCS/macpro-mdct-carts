@@ -188,9 +188,3 @@ resources:
                     - dynamodb:UpdateItem
                     - dynamodb:DeleteItem
                   Resource: "*"
-  Outputs:
-    KafkaConnectWorkerSecurityGroupId:
-      Description: |
-        The ID of the security group attached to the Kafka Connect cluster tasks.
-        This can be used by other resources to attach additional ingress rules.
-      Value: !Ref KafkaConnectWorkerSecurityGroup
