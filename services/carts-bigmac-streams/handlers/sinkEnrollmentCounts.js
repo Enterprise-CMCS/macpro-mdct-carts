@@ -14,6 +14,9 @@ const {
  * @param {*} _callback
  */
 async function myHandler(event, _context, _callback) {
+  if (!event.value) {
+    return;
+  }
   const json = JSON.parse(event.value);
   const currentYear = getReportingYear();
   const dynamoClient = buildClient();

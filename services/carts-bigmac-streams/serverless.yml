@@ -22,7 +22,9 @@ custom:
       - main
       - val
       - production
-  kafkaConnectImage: ${ssm:/configuration/${self:custom.stage}/kafka_connect_image, ssm:/configuration/default/kafka_connect_image,"confluentinc/cp-kafka-connect:6.2.0"}
+  boostrapBroker1: ${ssm:/configuration/default/bigmac/bootstrapBroker1}
+  boostrapBroker2: ${ssm:/configuration/default/bigmac/bootstrapBroker2}
+  boostrapBroker3: ${ssm:/configuration/default/bigmac/bootstrapBroker3}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
   privateSubnetA: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
@@ -50,13 +52,20 @@ provider:
       statements:
         - Effect: "Allow"
           Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "arn:aws:logs:*:*:*"
+        - Effect: "Allow"
+          Action:
+            - "ec2:DescribeNetworkInterfaces"
+            - "ec2:DescribeSecurityGroups"
+            - "ec2:DescribeVpcs"
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
             - dynamodb:DescribeTable
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
             - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
           Resource: "*"
         - Effect: "Allow"
           Action:
@@ -72,10 +81,7 @@ provider:
 functions:
   sinkEnrollmentCounts:
     handler: handlers/sinkEnrollmentCounts.handler
-    role: SinkEnrollmentCountsRole
     environment:
-      BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
-      STAGE: ${self:custom.stage}
       stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
     maximumRetryAttempts: 2
     timeout: 120
@@ -90,13 +96,13 @@ functions:
               - sg-06e82712b09b545ab
           topic: aws.mdct.seds.cdc.state-forms.v0
           bootstrapServers:
-            - b-1.master-msk.zf7e0q.c7.kafka.us-east-1.amazonaws.com:9094
-            - b-2.master-msk.zf7e0q.c7.kafka.us-east-1.amazonaws.com:9094
-            - b-3.master-msk.zf7e0q.c7.kafka.us-east-1.amazonaws.com:9094
+            - ${self:custom.boostrapBroker1}
+            - ${self:custom.boostrapBroker2}
+            - ${self:custom.boostrapBroker3}
           maximumBatchingWindow: 30
     vpc:
       securityGroupIds:
-        - Ref: LambdaConfigureConnectorsSecurityGroup
+        - Ref: LambdaSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
   postKafkaData:
     handler: handlers/kafka/post/postKafkaData.handler
@@ -121,7 +127,7 @@ functions:
     memorySize: 2048
     vpc:
       securityGroupIds:
-        - Ref: LambdaConfigureConnectorsSecurityGroup
+        - Ref: LambdaSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
 resources:
   Conditions:
@@ -131,56 +137,8 @@ resources:
             - ""
             - ${self:provider.iam.role.permissionsBoundary}
   Resources:
-    LambdaConfigureConnectorsSecurityGroup:
+    LambdaSecurityGroup:
       Type: AWS::EC2::SecurityGroup
       Properties:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
-    SinkEnrollmentCountsRole:
-      Type: "AWS::IAM::Role"
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: "Allow"
-              Principal:
-                Service: "lambda.amazonaws.com"
-              Action: "sts:AssumeRole"
-        Path: ${self:provider.iam.role.path}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - ${self:provider.iam.role.permissionsBoundary}
-            - !Ref AWS::NoValue
-        ManagedPolicyArns:
-          - !Sub arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
-        Policies:
-          - PolicyName: "LambdaRolePolicy"
-            PolicyDocument:
-              Version: "2012-10-17"
-              Statement:
-                - Effect: "Allow"
-                  Action:
-                    - logs:CreateLogGroup
-                    - logs:CreateLogStream
-                    - logs:PutLogEvents
-                  Resource: "arn:aws:logs:*:*:*"
-                - Effect: "Allow"
-                  Action:
-                    - "ec2:CreateNetworkInterface"
-                    - "ec2:DescribeNetworkInterfaces"
-                    - "ec2:DetachNetworkInterface"
-                    - "ec2:DeleteNetworkInterface"
-                    - "ec2:DescribeSecurityGroups"
-                    - "ec2:DescribeVpcs"
-                  Resource: "*"
-                - Effect: "Allow"
-                  Action:
-                    - dynamodb:DescribeTable
-                    - dynamodb:Query
-                    - dynamodb:Scan
-                    - dynamodb:GetItem
-                    - dynamodb:PutItem
-                    - dynamodb:UpdateItem
-                    - dynamodb:DeleteItem
-                  Resource: "*"
