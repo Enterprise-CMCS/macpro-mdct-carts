@@ -27,6 +27,7 @@ custom:
   boostrapBroker3: ${ssm:/configuration/default/bigmac/bootstrapBroker3}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  vpcSecurityGroup: ${ssm:/configuration/default/vpc/securitygroup}
   privateSubnetA: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
   privateSubnetB: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
   privateSubnetC: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
@@ -93,7 +94,7 @@ functions:
               - ${self:custom.privateSubnetB}
               - ${self:custom.privateSubnetC}
             vpcSecurityGroup:
-              - sg-06e82712b09b545ab
+              - ${self:custom.vpcSecurityGroup}
           topic: aws.mdct.seds.cdc.state-forms.v0
           bootstrapServers:
             - ${self:custom.boostrapBroker1}
