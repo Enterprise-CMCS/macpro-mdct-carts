@@ -14,56 +14,60 @@ const {
  * @param {*} _callback
  */
 async function myHandler(event, _context, _callback) {
+  const sedsTopic = process.env.sedsTopic;
   // eslint-disable-next-line no-console
   console.log("event", event);
   // eslint-disable-next-line no-console
   console.log("records", event.records);
   // eslint-disable-next-line no-console
-  console.log("records", event.records["aws.mdct.seds.cdc.state-forms.v0-0"]);
-  if (!event.value) {
+  console.log("records", event.records[sedsTopic]);
+  if (!event?.records?.[sedsTopic]) {
     return;
   }
-  const json = JSON.parse(event.value);
+  const records = JSON.parse(event.records[sedsTopic]);
   const currentYear = getReportingYear();
   const dynamoClient = buildClient();
 
-  if (
-    json.NewImage.enrollmentCounts &&
-    json.NewImage.enrollmentCounts.year >= currentYear - 1 &&
-    json.NewImage.quarter === 4
-  ) {
-    try {
-      // eslint-disable-next-line no-console
-      console.log("Sink message received", json);
-      const indexToUpdate =
-        json.NewImage.enrollmentCounts.year === currentYear ? 2 : 1;
-      let typeOfEnrollment = "Medicaid Expansion CHIP";
-      let typeKey = "medicaid_exp_chip";
-      if (json.NewImage.enrollmentCounts.type === "separate") {
-        typeOfEnrollment = "Separate CHIP";
-        typeKey = "separate_chip";
+  for (const record of records) {
+    const value = atob(record.value);
+    if (
+      value.NewImage.enrollmentCounts &&
+      value.NewImage.enrollmentCounts.year >= currentYear - 1 &&
+      value.NewImage.quarter === 4
+    ) {
+      try {
+        // eslint-disable-next-line no-console
+        console.log("Sink message received", value);
+        const indexToUpdate =
+          value.NewImage.enrollmentCounts.year === currentYear ? 2 : 1;
+        let typeOfEnrollment = "Medicaid Expansion CHIP";
+        let typeKey = "medicaid_exp_chip";
+        if (value.NewImage.enrollmentCounts.type === "separate") {
+          typeOfEnrollment = "Separate CHIP";
+          typeKey = "separate_chip";
+        }
+        const stateId = value.NewImage.state_id;
+        const createdTime = new Date().toLocaleString();
+
+        const pk = `${stateId}-${currentYear}`;
+        const entryKey = `${typeKey}-${indexToUpdate}`;
+
+        const enrollmentEntry = {
+          filterId: `${currentYear}-02`,
+          typeOfEnrollment,
+          indexToUpdate,
+          stateId,
+          yearToModify: currentYear,
+          enrollmentCount: value.NewImage.enrollmentCounts.count,
+          createdTime,
+          lastSynced: value.NewImage.lastSynced ?? "",
+        };
+
+        await updateEnrollment(pk, entryKey, enrollmentEntry, dynamoClient);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
       }
-      const stateId = json.NewImage.state_id;
-      const createdTime = new Date().toLocaleString();
-
-      const pk = `${stateId}-${currentYear}`;
-      const entryKey = `${typeKey}-${indexToUpdate}`;
-
-      const enrollmentEntry = {
-        filterId: `${currentYear}-02`,
-        typeOfEnrollment,
-        indexToUpdate,
-        stateId,
-        yearToModify: currentYear,
-        enrollmentCount: json.NewImage.enrollmentCounts.count,
-        createdTime,
-        lastSynced: json.NewImage.lastSynced,
-      };
-
-      await updateEnrollment(pk, entryKey, enrollmentEntry, dynamoClient);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
     }
   }
 }

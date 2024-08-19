@@ -38,6 +38,7 @@ custom:
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stateStatusTableStreamArn: ${env:stateStatusTableStreamArn, cf:database-${self:custom.stage}.StateStatusTableStreamArn}
   sectionTableStreamArn: ${env:sectionTableStreamArn, cf:database-${self:custom.stage}.SectionTableStreamArn}
+  sedsTopic: "aws.mdct.seds.cdc.state-forms.v0-0"
 
 provider:
   name: aws
@@ -84,6 +85,7 @@ functions:
     handler: handlers/sinkEnrollmentCounts.handler
     environment:
       stageEnrollmentCountsTableName: ${self:custom.stageEnrollmentCountsTableName}
+      sedsTopic: ${self:custom.sedsTopic}
     maximumRetryAttempts: 2
     timeout: 120
     events:
@@ -95,7 +97,7 @@ functions:
               - ${self:custom.privateSubnetC}
             vpcSecurityGroup:
               - sg-0ff076c245c9ef2eb
-          topic: aws.mdct.seds.cdc.state-forms.v0
+          topic: ${self:custom.sedsTopic}
           bootstrapServers:
             - ${self:custom.boostrapBroker1}
             - ${self:custom.boostrapBroker2}
