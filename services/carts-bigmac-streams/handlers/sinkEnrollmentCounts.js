@@ -14,6 +14,8 @@ const {
  * @param {*} _callback
  */
 async function myHandler(event, _context, _callback) {
+  // eslint-disable-next-line no-console
+  console.log("event", event);
   if (!event.value) {
     return;
   }
