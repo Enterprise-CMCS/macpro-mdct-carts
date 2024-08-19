@@ -94,7 +94,7 @@ functions:
               - ${self:custom.privateSubnetB}
               - ${self:custom.privateSubnetC}
             vpcSecurityGroup:
-              - ${self:custom.vpcSecurityGroup}
+              - sg-0ff076c245c9ef2eb
           topic: aws.mdct.seds.cdc.state-forms.v0
           bootstrapServers:
             - ${self:custom.boostrapBroker1}
@@ -143,3 +143,11 @@ resources:
       Properties:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
+    LambdaSecurityGroupIngressCluster:
+      Type: AWS::EC2::SecurityGroupIngress
+      Properties:
+        GroupId: !Sub "${LambdaSecurityGroup}"
+        IpProtocol: tcp
+        FromPort: 8083
+        ToPort: 8083
+        SourceSecurityGroupId: !Sub "${LambdaSecurityGroup}"
