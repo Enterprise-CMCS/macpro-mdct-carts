@@ -16,6 +16,10 @@ const {
 async function myHandler(event, _context, _callback) {
   // eslint-disable-next-line no-console
   console.log("event", event);
+  // eslint-disable-next-line no-console
+  console.log("records", event.records);
+  // eslint-disable-next-line no-console
+  console.log("records", event.records["aws.mdct.seds.cdc.state-forms.v0-0"]);
   if (!event.value) {
     return;
   }
