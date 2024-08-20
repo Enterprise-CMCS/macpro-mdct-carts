@@ -89,7 +89,7 @@ functions:
     timeout: 120
     vpc:
       securityGroupIds:
-        - Ref: LambdaSecurityGroup
+        - Ref: LambdaConfigureConnectorsSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
   postKafkaData:
     handler: handlers/kafka/post/postKafkaData.handler
@@ -114,7 +114,7 @@ functions:
     memorySize: 2048
     vpc:
       securityGroupIds:
-        - Ref: LambdaSecurityGroup
+        - Ref: LambdaConfigureConnectorsSecurityGroup
       subnetIds: ${self:custom.privateSubnets}
 resources:
   Conditions:
@@ -124,7 +124,7 @@ resources:
             - ""
             - ${self:provider.iam.role.permissionsBoundary}
   Resources:
-    LambdaSecurityGroup:
+    LambdaConfigureConnectorsSecurityGroup:
       Type: AWS::EC2::SecurityGroup
       Properties:
         GroupDescription: Security Group for configuring the connector.
@@ -132,11 +132,11 @@ resources:
     LambdaSecurityGroupIngressCluster:
       Type: AWS::EC2::SecurityGroupIngress
       Properties:
-        GroupId: !Sub "${LambdaSecurityGroup}"
+        GroupId: !Sub "${LambdaConfigureConnectorsSecurityGroup}"
         IpProtocol: tcp
         FromPort: 8083
         ToPort: 8083
-        SourceSecurityGroupId: !Sub "${LambdaSecurityGroup}"
+        SourceSecurityGroupId: !Sub "${LambdaConfigureConnectorsSecurityGroup}"
     SinkEnrollmentCountsEventSourceMappingKafka:
       Type: AWS::Lambda::EventSourceMapping
       Properties:
@@ -157,5 +157,5 @@ resources:
           - Type: "VPC_SUBNET"
             URI: subnet:${self:custom.privateSubnetC}
           - Type: "VPC_SECURITY_GROUP"
-            URI: !Sub security_group:${LambdaSecurityGroup}
+            URI: !Sub security_group:${LambdaConfigureConnectorsSecurityGroup}
         MaximumBatchingWindowInSeconds: 30
