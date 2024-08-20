@@ -29,19 +29,29 @@ async function myHandler(event, _context, _callback) {
     // eslint-disable-next-line no-console
     console.log("value", value);
     // eslint-disable-next-line no-console
-    console.log("new image", value.NewImage);
-    // eslint-disable-next-line no-console
-    console.log(
-      "value.NewImage.enrollmentCounts",
-      value.NewImage.enrollmentCounts
-    );
-    // eslint-disable-next-line no-console
-    console.log(
-      "value.NewImage.enrollmentCounts.year",
-      value.NewImage.enrollmentCounts.year
-    );
-    // eslint-disable-next-line no-console
-    console.log("value.NewImage.quarter", value.NewImage.quarter);
+    console.log("type value", typeof value);
+    if (typeof value === "string") {
+      const valueParsed = JSON.parse(value);
+      // eslint-disable-next-line no-console
+      console.log("keys", Object.keys(valueParsed));
+      // eslint-disable-next-line no-console
+      console.log("new image", valueParsed?.NewImage);
+      // eslint-disable-next-line no-console
+      console.log(
+        "valueParsed.NewImage.enrollmentCounts",
+        valueParsed?.NewImage?.enrollmentCounts
+      );
+      // eslint-disable-next-line no-console
+      console.log(
+        "valueParsed.NewImage.enrollmentCounts.year",
+        valueParsed?.NewImage?.enrollmentCounts?.year
+      );
+      // eslint-disable-next-line no-console
+      console.log(
+        "valueParsed.NewImage.quarter",
+        valueParsed?.NewImage?.quarter
+      );
+    }
     if (
       value.NewImage.enrollmentCounts &&
       value.NewImage.enrollmentCounts.year >= currentYear - 1 &&
