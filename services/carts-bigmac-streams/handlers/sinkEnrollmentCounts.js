@@ -21,6 +21,8 @@ async function myHandler(event, _context, _callback) {
   console.log("records", event.records);
   // eslint-disable-next-line no-console
   console.log("records", event.records[sedsTopicKey]);
+  // eslint-disable-next-line no-console
+  console.log("type records", typeof event.records[sedsTopicKey]);
   if (!event?.records?.[sedsTopicKey]) {
     return;
   }
