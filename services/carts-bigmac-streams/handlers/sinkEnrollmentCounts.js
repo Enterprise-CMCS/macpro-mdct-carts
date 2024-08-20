@@ -14,17 +14,17 @@ const {
  * @param {*} _callback
  */
 async function myHandler(event, _context, _callback) {
-  const sedsTopic = process.env.sedsTopic;
+  const sedsTopicKey = `${process.env.sedsTopic}-0`;
   // eslint-disable-next-line no-console
   console.log("event", event);
   // eslint-disable-next-line no-console
   console.log("records", event.records);
   // eslint-disable-next-line no-console
-  console.log("records", event.records[sedsTopic]);
-  if (!event?.records?.[sedsTopic]) {
+  console.log("records", event.records[sedsTopicKey]);
+  if (!event?.records?.[sedsTopicKey]) {
     return;
   }
-  const records = JSON.parse(event.records[sedsTopic]);
+  const records = JSON.parse(event.records[sedsTopicKey]);
   const currentYear = getReportingYear();
   const dynamoClient = buildClient();
 
