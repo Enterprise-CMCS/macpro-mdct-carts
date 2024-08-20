@@ -138,25 +138,25 @@ resources:
         FromPort: 8083
         ToPort: 8083
         SourceSecurityGroupId: !Sub "${LambdaSecurityGroup}"
-    SinkEnrollmentCountsEventSourceMappingKafkaAwsmdctsedscdcstateformsv0:
-      Type: AWS::Lambda::EventSourceMapping
-      Properties:
-        FunctionName: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
-        SelfManagedEventSource:
-          Endpoints:
-            KafkaBootstrapServers:
-              - ${self:custom.boostrapBroker1}
-              - ${self:custom.boostrapBroker2}
-              - ${self:custom.boostrapBroker3}
-        Topics:
-          - ${self:custom.sedsTopic}
-        SourceAccessConfigurations:
-          - Type: "VPC_SUBNET"
-            URI: subnet:${self:custom.privateSubnetA}
-          - Type: "VPC_SUBNET"
-            URI: subnet:${self:custom.privateSubnetB}
-          - Type: "VPC_SUBNET"
-            URI: subnet:${self:custom.privateSubnetC}
-          - Type: "VPC_SECURITY_GROUP"
-            URI: !Sub security_group:${LambdaSecurityGroup}
-        MaximumBatchingWindowInSeconds: 30
+    # SinkEnrollmentCountsEventSourceMappingKafka:
+    #   Type: AWS::Lambda::EventSourceMapping
+    #   Properties:
+    #     FunctionName: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
+    #     SelfManagedEventSource:
+    #       Endpoints:
+    #         KafkaBootstrapServers:
+    #           - ${self:custom.boostrapBroker1}
+    #           - ${self:custom.boostrapBroker2}
+    #           - ${self:custom.boostrapBroker3}
+    #     Topics:
+    #       - ${self:custom.sedsTopic}
+    #     SourceAccessConfigurations:
+    #       - Type: "VPC_SUBNET"
+    #         URI: subnet:${self:custom.privateSubnetA}
+    #       - Type: "VPC_SUBNET"
+    #         URI: subnet:${self:custom.privateSubnetB}
+    #       - Type: "VPC_SUBNET"
+    #         URI: subnet:${self:custom.privateSubnetC}
+    #       - Type: "VPC_SECURITY_GROUP"
+    #         URI: !Sub security_group:${LambdaSecurityGroup}
+    #     MaximumBatchingWindowInSeconds: 30
