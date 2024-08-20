@@ -24,7 +24,7 @@ async function myHandler(event, _context, _callback) {
   if (!event?.records?.[sedsTopicKey]) {
     return;
   }
-  const records = JSON.parse(event.records[sedsTopicKey]);
+  const records = event.records[sedsTopicKey];
   const currentYear = getReportingYear();
   const dynamoClient = buildClient();
 
