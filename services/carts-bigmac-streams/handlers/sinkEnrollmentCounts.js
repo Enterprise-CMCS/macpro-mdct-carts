@@ -16,13 +16,7 @@ const {
 async function myHandler(event, _context, _callback) {
   const sedsTopicKey = `${process.env.sedsTopic}-0`;
   // eslint-disable-next-line no-console
-  console.log("event", event);
-  // eslint-disable-next-line no-console
-  console.log("records", event.records);
-  // eslint-disable-next-line no-console
   console.log("records", event.records[sedsTopicKey]);
-  // eslint-disable-next-line no-console
-  console.log("type records", typeof event.records[sedsTopicKey]);
   if (!event?.records?.[sedsTopicKey]) {
     return;
   }
@@ -32,6 +26,22 @@ async function myHandler(event, _context, _callback) {
 
   for (const record of records) {
     const value = atob(record.value);
+    // eslint-disable-next-line no-console
+    console.log("value", value);
+    // eslint-disable-next-line no-console
+    console.log("new image", value.NewImage);
+    // eslint-disable-next-line no-console
+    console.log(
+      "value.NewImage.enrollmentCounts",
+      value.NewImage.enrollmentCounts
+    );
+    // eslint-disable-next-line no-console
+    console.log(
+      "value.NewImage.enrollmentCounts.year",
+      value.NewImage.enrollmentCounts.year
+    );
+    // eslint-disable-next-line no-console
+    console.log("value.NewImage.quarter", value.NewImage.quarter);
     if (
       value.NewImage.enrollmentCounts &&
       value.NewImage.enrollmentCounts.year >= currentYear - 1 &&
