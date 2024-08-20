@@ -38,7 +38,7 @@ custom:
   stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
   stateStatusTableStreamArn: ${env:stateStatusTableStreamArn, cf:database-${self:custom.stage}.StateStatusTableStreamArn}
   sectionTableStreamArn: ${env:sectionTableStreamArn, cf:database-${self:custom.stage}.SectionTableStreamArn}
-  sedsTopic: "aws.mdct.seds.cdc.state-forms.v0-0"
+  sedsTopic: "aws.mdct.seds.cdc.state-forms.v0"
 
 provider:
   name: aws
