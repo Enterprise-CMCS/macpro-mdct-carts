@@ -15,8 +15,6 @@ const {
  */
 async function myHandler(event, _context, _callback) {
   const sedsTopicKey = `${process.env.sedsTopic}-0`;
-  // eslint-disable-next-line no-console
-  console.log("records", event.records[sedsTopicKey]);
   if (!event?.records?.[sedsTopicKey]) {
     return;
   }
@@ -25,33 +23,8 @@ async function myHandler(event, _context, _callback) {
   const dynamoClient = buildClient();
 
   for (const record of records) {
-    const value = atob(record.value);
-    // eslint-disable-next-line no-console
-    console.log("value", value);
-    // eslint-disable-next-line no-console
-    console.log("type value", typeof value);
-    if (typeof value === "string") {
-      const valueParsed = JSON.parse(value);
-      // eslint-disable-next-line no-console
-      console.log("keys", Object.keys(valueParsed));
-      // eslint-disable-next-line no-console
-      console.log("new image", valueParsed?.NewImage);
-      // eslint-disable-next-line no-console
-      console.log(
-        "valueParsed.NewImage.enrollmentCounts",
-        valueParsed?.NewImage?.enrollmentCounts
-      );
-      // eslint-disable-next-line no-console
-      console.log(
-        "valueParsed.NewImage.enrollmentCounts.year",
-        valueParsed?.NewImage?.enrollmentCounts?.year
-      );
-      // eslint-disable-next-line no-console
-      console.log(
-        "valueParsed.NewImage.quarter",
-        valueParsed?.NewImage?.quarter
-      );
-    }
+    const decodedValue = atob(record.value);
+    const value = JSON.parse(decodedValue);
     if (
       value.NewImage.enrollmentCounts &&
       value.NewImage.enrollmentCounts.year >= currentYear - 1 &&
