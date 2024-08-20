@@ -88,21 +88,6 @@ functions:
       sedsTopic: ${self:custom.sedsTopic}
     maximumRetryAttempts: 2
     timeout: 120
-    events:
-      - kafka:
-          accessConfigurations:
-            vpcSubnet:
-              - ${self:custom.privateSubnetA}
-              - ${self:custom.privateSubnetB}
-              - ${self:custom.privateSubnetC}
-            vpcSecurityGroup:
-              - sg-0ff076c245c9ef2eb
-          topic: ${self:custom.sedsTopic}
-          bootstrapServers:
-            - ${self:custom.boostrapBroker1}
-            - ${self:custom.boostrapBroker2}
-            - ${self:custom.boostrapBroker3}
-          maximumBatchingWindow: 30
     vpc:
       securityGroupIds:
         - Ref: LambdaSecurityGroup
@@ -153,3 +138,25 @@ resources:
         FromPort: 8083
         ToPort: 8083
         SourceSecurityGroupId: !Sub "${LambdaSecurityGroup}"
+    SinkEnrollmentCountsEventSourceMappingKafkaAwsmdctsedscdcstateformsv0:
+      Type: AWS::Lambda::EventSourceMapping
+      Properties:
+        FunctionName: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
+        SelfManagedEventSource:
+          Endpoints:
+            KafkaBootstrapServers:
+              - ${self:custom.boostrapBroker1}
+              - ${self:custom.boostrapBroker2}
+              - ${self:custom.boostrapBroker3}
+        Topics:
+          - ${self:custom.sedsTopic}
+        SourceAccessConfigurations:
+          - Type: "VPC_SUBNET"
+            URI: subnet:${self:custom.privateSubnetA}
+          - Type: "VPC_SUBNET"
+            URI: subnet:${self:custom.privateSubnetB}
+          - Type: "VPC_SUBNET"
+            URI: subnet:${self:custom.privateSubnetC}
+          - Type: "VPC_SECURITY_GROUP"
+            URI: !Sub security_group:${LambdaSecurityGroup}
+        MaximumBatchingWindowInSeconds: 30
