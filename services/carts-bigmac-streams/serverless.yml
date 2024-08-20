@@ -22,9 +22,9 @@ custom:
       - main
       - val
       - production
-  boostrapBroker1: ${ssm:/configuration/default/bigmac/bootstrapBroker1}
-  boostrapBroker2: ${ssm:/configuration/default/bigmac/bootstrapBroker2}
-  boostrapBroker3: ${ssm:/configuration/default/bigmac/bootstrapBroker3}
+  bootstrapBroker1: ${ssm:/configuration/default/bigmac/bootstrapBroker1}
+  bootstrapBroker2: ${ssm:/configuration/default/bigmac/bootstrapBroker2}
+  bootstrapBroker3: ${ssm:/configuration/default/bigmac/bootstrapBroker3}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
   privateSubnetA: ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
@@ -144,9 +144,9 @@ resources:
         SelfManagedEventSource:
           Endpoints:
             KafkaBootstrapServers:
-              - ${self:custom.boostrapBroker1}
-              - ${self:custom.boostrapBroker2}
-              - ${self:custom.boostrapBroker3}
+              - ${self:custom.bootstrapBroker1}
+              - ${self:custom.bootstrapBroker2}
+              - ${self:custom.bootstrapBroker3}
         Topics:
           - ${self:custom.sedsTopic}
         SourceAccessConfigurations:
