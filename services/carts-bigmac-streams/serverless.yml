@@ -147,6 +147,8 @@ resources:
               - ${self:custom.bootstrapBroker1}
               - ${self:custom.bootstrapBroker2}
               - ${self:custom.bootstrapBroker3}
+        SelfManagedKafkaEventSourceConfig:
+          ConsumerGroupId: ${self:custom.project}-${self:custom.stage}
         Topics:
           - ${self:custom.sedsTopic}
         SourceAccessConfigurations:
