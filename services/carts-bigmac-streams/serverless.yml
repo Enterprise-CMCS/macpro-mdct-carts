@@ -137,27 +137,27 @@ resources:
         FromPort: 8083
         ToPort: 8083
         SourceSecurityGroupId: !Sub "${LambdaConfigureConnectorsSecurityGroup}"
-    SinkEnrollmentCountsEventSourceMappingKafka:
-      Type: AWS::Lambda::EventSourceMapping
-      Properties:
-        FunctionName: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
-        SelfManagedEventSource:
-          Endpoints:
-            KafkaBootstrapServers:
-              - ${self:custom.bootstrapBroker1}
-              - ${self:custom.bootstrapBroker2}
-              - ${self:custom.bootstrapBroker3}
-        SelfManagedKafkaEventSourceConfig:
-          ConsumerGroupId: ${self:custom.project}-${self:custom.stage}
-        Topics:
-          - ${self:custom.sedsTopic}
-        SourceAccessConfigurations:
-          - Type: "VPC_SUBNET"
-            URI: subnet:${self:custom.privateSubnetA}
-          - Type: "VPC_SUBNET"
-            URI: subnet:${self:custom.privateSubnetB}
-          - Type: "VPC_SUBNET"
-            URI: subnet:${self:custom.privateSubnetC}
-          - Type: "VPC_SECURITY_GROUP"
-            URI: !Sub security_group:${LambdaConfigureConnectorsSecurityGroup}
-        MaximumBatchingWindowInSeconds: 30
+    # SinkEnrollmentCountsEventSourceMappingKafka:
+    #   Type: AWS::Lambda::EventSourceMapping
+    #   Properties:
+    #     FunctionName: !GetAtt SinkEnrollmentCountsLambdaFunction.Arn
+    #     SelfManagedEventSource:
+    #       Endpoints:
+    #         KafkaBootstrapServers:
+    #           - ${self:custom.bootstrapBroker1}
+    #           - ${self:custom.bootstrapBroker2}
+    #           - ${self:custom.bootstrapBroker3}
+    #     SelfManagedKafkaEventSourceConfig:
+    #       ConsumerGroupId: ${self:custom.project}-${self:custom.stage}
+    #     Topics:
+    #       - ${self:custom.sedsTopic}
+    #     SourceAccessConfigurations:
+    #       - Type: "VPC_SUBNET"
+    #         URI: subnet:${self:custom.privateSubnetA}
+    #       - Type: "VPC_SUBNET"
+    #         URI: subnet:${self:custom.privateSubnetB}
+    #       - Type: "VPC_SUBNET"
+    #         URI: subnet:${self:custom.privateSubnetC}
+    #       - Type: "VPC_SECURITY_GROUP"
+    #         URI: !Sub security_group:${LambdaConfigureConnectorsSecurityGroup}
+    #     MaximumBatchingWindowInSeconds: 30
