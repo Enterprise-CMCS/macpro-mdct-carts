@@ -4,7 +4,7 @@ import { TextField } from "@cmsgov/design-system";
 import { useSelector } from "react-redux";
 import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const Integer = ({ onChange, question, prevYear, ...props }) => {
+const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(question.answer.entry);
   const lastYearTotals = useSelector((state) => state.lastYearTotals);
@@ -40,7 +40,17 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
       />
     );
   }
-  const renderAnswer = (val) => (val || Number.isInteger(val) ? val : ""); // may attempt to rerender string on page load, so both val || isInteger
+  const renderAnswer = (val) => {
+    if (val || Number.isInteger(val)) {
+      if (printView && val <= 10 && val > 0) {
+        return "<11";
+      }
+      return val;
+    }
+    return "";
+  };
+
+  (val) => (val || Number.isInteger(val) ? val : ""); // may attempt to rerender string on page load, so both val || isInteger
   return (
     <TextField
       className="ds-c-input"
@@ -59,6 +69,7 @@ Integer.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
+  printView: PropTypes.bool,
 };
 
 export { Integer };
