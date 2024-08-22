@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Dialog } from "@cmsgov/design-system";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+//components
+import { Dialog } from "@cmsgov/design-system";
+import moment from "moment";
+//auth
 import {
   refreshCredentials,
   updateTimeout,
   useUser,
 } from "../../hooks/authHooks";
-import moment from "moment";
+//types
+import PropTypes from "prop-types";
 
 const calculateTimeLeft = (expiresAt) => {
   if (!expiresAt) return 0;
   return expiresAt.diff(moment()) / 1000;
 };
 
-const Timeout = ({ showTimeout, expiresAt }) => {
+const Timeout = () => {
+  const { showTimeout, expiresAt } = useSelector((state) => state.stateUser);
   const { logout } = useUser();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
   const location = useLocation();
@@ -92,9 +96,4 @@ Timeout.propTypes = {
   expiresAt: PropTypes.any.isRequired,
 };
 
-const mapState = (state) => ({
-  showTimeout: state.stateUser.showTimeout,
-  expiresAt: state.stateUser.expiresAt,
-});
-
-export default connect(mapState)(Timeout);
+export default Timeout;
