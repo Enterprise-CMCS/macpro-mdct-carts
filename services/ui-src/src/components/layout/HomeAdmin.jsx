@@ -37,26 +37,24 @@ const Section = () => (
   </>
 );
 
-const AdminHome = () => {
-  return (
-    <>
-      <ScrollToTop />
+const AdminHome = () => (
+  <>
+    <ScrollToTop />
+    <Routes>
       <Route path="/" element={<AdminLanding />} />
-      <Routes>
-        <Route
-          path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
-          element={<Section />}
-        />
-        <Route
-          path="/views/sections/:state/:year/:sectionOrdinal"
-          element={<Section />}
-        />
+      <Route
+        path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
+        element={<Section />}
+      />
+      <Route
+        path="/views/sections/:state/:year/:sectionOrdinal"
+        element={<Section />}
+      />
 
-        <Route path="/state-reports" element={<CMSHomepage />} />
-        <Route path="/templates" element={<FormTemplates />} />
-      </Routes>
-    </>
-  );
-};
+      <Route path="/state-reports" element={<CMSHomepage />} />
+      <Route path="/templates" element={<FormTemplates />} />
+    </Routes>
+  </>
+);
 
 export default AdminHome;
