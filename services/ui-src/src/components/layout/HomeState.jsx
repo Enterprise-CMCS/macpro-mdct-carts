@@ -27,7 +27,6 @@ const StateHome = () => {
     <>
       <SaveError />
       <ScrollToTop />
-      <h1> This is the state home where we determine routes</h1>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route
@@ -38,10 +37,7 @@ const StateHome = () => {
           path="/sections/:year/:sectionOrdinal/:subsectionMarker"
           element={<Section />}
         />
-        <Route
-          path="sections/:year/:sectionOrdinal"
-          element={<h1>Hello there</h1>}
-        />
+        <Route path="sections/:year/:sectionOrdinal" element={<Section />} />
         {/* Add routes from admin that should be unauthorized for state users */}
         <Route path={"/role_user_assoc"} element={Unauthorized} />
         <Route path={"/state_assoc"} element={Unauthorized} />
