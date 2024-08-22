@@ -50,7 +50,6 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
     return "";
   };
 
-  (val) => (val || Number.isInteger(val) ? val : ""); // may attempt to rerender string on page load, so both val || isInteger
   return (
     <TextField
       className="ds-c-input"
