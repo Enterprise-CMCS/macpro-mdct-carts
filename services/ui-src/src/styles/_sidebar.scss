@@ -24,5 +24,7 @@
   .state-name {
     font-size: 1.6rem;
     font-weight: $font-weight-semi-bold;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
   }
 }

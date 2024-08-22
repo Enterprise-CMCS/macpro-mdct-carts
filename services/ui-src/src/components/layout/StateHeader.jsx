@@ -1,5 +1,6 @@
+import React from "react";
 import { useSelector } from "react-redux";
-import { AppRoles } from "types";
+import { AppRoles } from "../../types";
 
 const StateHeader = () => {
   const { currentUser, name, imageURI } = useSelector(
@@ -7,7 +8,7 @@ const StateHeader = () => {
   );
   return (
     <>
-      {currentUser.role === AppRoles.STATE_USER && (
+      {currentUser?.role === AppRoles.STATE_USER && (
         <div
           className="state-header"
           data-testid="state-header"
@@ -16,7 +17,9 @@ const StateHeader = () => {
           <div className="state-image">
             <img src={imageURI} alt={name} />
           </div>
-          <div className="state-name">{name}</div>
+          <div className="state-name" aria-label={name}>
+            {name}
+          </div>
         </div>
       )}
     </>
