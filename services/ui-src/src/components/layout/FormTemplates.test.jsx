@@ -12,12 +12,11 @@ jest.mock("aws-amplify", () => ({
 jest.mock("../../hooks/authHooks");
 window.alert = jest.fn();
 
-const mockHistoryPush = jest.fn();
+const mockedUsedNavigate = jest.fn();
+
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useNavigate: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockedUsedNavigate,
 }));
 
 const formTemplate = <FormTemplates />;
@@ -37,6 +36,6 @@ describe("FormTemplates Component", () => {
       fireEvent.click(generateButton);
     });
     expect(mockPost).toHaveBeenCalled();
-    expect(mockHistoryPush).toHaveBeenCalledWith("/");
+    expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
   });
 });

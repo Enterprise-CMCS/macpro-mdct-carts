@@ -10,8 +10,6 @@ import {
   updateTimeout,
   useUser,
 } from "../../hooks/authHooks";
-//types
-import PropTypes from "prop-types";
 
 const calculateTimeLeft = (expiresAt) => {
   if (!expiresAt) return 0;
@@ -89,11 +87,6 @@ const Timeout = () => {
       )}
     </>
   );
-};
-
-Timeout.propTypes = {
-  showTimeout: PropTypes.bool.isRequired,
-  expiresAt: PropTypes.any.isRequired,
 };
 
 export default Timeout;

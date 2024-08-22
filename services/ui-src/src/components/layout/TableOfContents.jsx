@@ -62,7 +62,6 @@ const TableOfContents = () => {
   const click = (e, _, url) => {
     e.preventDefault();
     e.stopPropagation();
-
     navigate(url);
   };
 

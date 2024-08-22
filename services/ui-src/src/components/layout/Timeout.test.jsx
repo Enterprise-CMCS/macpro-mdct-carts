@@ -5,12 +5,16 @@ import { Provider } from "react-redux";
 import { screen, render, fireEvent } from "@testing-library/react";
 import Timeout from "./Timeout";
 import moment from "moment";
+import { MemoryRouter } from "react-router-dom";
+
+const mockedUsedLocation = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => ({
     listen: jest.fn().mockReturnValue(() => {}),
   }),
+  useLocation: () => mockedUsedLocation,
 }));
 
 const mockStore = configureMockStore();
@@ -34,7 +38,9 @@ const hiddenStore = mockStore({
 });
 const timeout = (
   <Provider store={store}>
-    <Timeout />
+    <MemoryRouter>
+      <Timeout />
+    </MemoryRouter>
   </Provider>
 );
 const expiredTimeout = (
@@ -55,6 +61,20 @@ jest.mock("../../hooks/authHooks", () => ({
     logout: mockLogout,
   })),
   refreshCredentials: () => mockRefreshCredentials(),
+}));
+
+const user = { id: "123" }; // just needs an obj
+jest.mock("../../hooks/authHooks", () => ({
+  useUser: jest.fn(() => ({
+    user: user,
+    userRole: "STATE_USER",
+    showLocalLogins: false,
+    showTimeout: false,
+    expiresAt: null,
+    logout: jest.fn(),
+  })),
+  updateTimeout: jest.fn(),
+  initAuthManager: jest.fn(),
 }));
 
 describe("Timeout Component", () => {

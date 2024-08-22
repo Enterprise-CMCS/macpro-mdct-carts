@@ -10,12 +10,12 @@ jest.mock("aws-amplify", () => ({
     signIn: (email, password) => mockPost(email, password),
   },
 }));
-const mockHistoryPush = jest.fn();
+
+const mockedUsedNavigate = jest.fn();
+
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useNavigate: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockedUsedNavigate,
 }));
 
 describe("LocalLogin component", () => {
@@ -39,6 +39,6 @@ describe("LocalLogin component", () => {
       fireEvent.click(generateButton);
     });
     expect(mockPost).toHaveBeenCalledWith("myEmail@email.com", "superS3cure");
-    expect(mockHistoryPush).toHaveBeenCalledWith("/");
+    expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
   });
 });

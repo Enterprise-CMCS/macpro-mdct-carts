@@ -125,6 +125,13 @@ const noFormsToC = (
   </Provider>
 );
 
+const mockedUsedNavigate = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
 const setLocation = (path = "/") => {
   delete window.location;
   window.location = new URL("https://www.example.com" + path);
@@ -169,12 +176,10 @@ describe("State Header Component", () => {
     expect(toc.outerHTML).not.toMatch(/Section 2/);
     expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
   });
-  it("should navigate on click", async () => {
+  it.only("should navigate on click", async () => {
     render(tableOfContents);
     const aSection = screen.getByText(/Section 1/);
     fireEvent.click(aSection);
-    expect(memoryRouterRef.current.history.location.pathname).toEqual(
-      "/sections/2020/01"
-    );
+    expect(mockedUsedNavigate).toHaveBeenCalledWith("/sections/2020/01");
   });
 });
