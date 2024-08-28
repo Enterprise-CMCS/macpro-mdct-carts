@@ -6,8 +6,8 @@ import { setAuthTimeout } from "../../store/stateUser";
  * After the token expires, refresh tokens will be used in the allotted idle window.
  * If not retrieved, they will be prompted at the specified time to refresh or logout.
  */
-const IDLE_WINDOW = 1 * 60 * 1000; // ms
-const PROMPT_AT = 0.5 * 60 * 1000; //ms
+const IDLE_WINDOW = 30 * 60 * 1000; // ms
+const PROMPT_AT = 29 * 60 * 1000; //ms
 
 let authManager;
 
