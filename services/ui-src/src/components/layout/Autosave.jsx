@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import SaveMessage from "./SaveMessage";
 import { selectLastSave, selectIsSaving } from "../../store/save.selectors";
 
 const Check = () => <FontAwesomeIcon icon={faCheck} />;
@@ -65,7 +64,7 @@ const Autosave = ({ isSaving, lastSaved }) => {
         </>
       ) : (
         <>
-          <Check /> <SaveMessage lastSaved={lastSaved} />
+          <Check /> {!lastSaved ? "Not yet saved" : "Saved"}
         </>
       )}
     </div>
