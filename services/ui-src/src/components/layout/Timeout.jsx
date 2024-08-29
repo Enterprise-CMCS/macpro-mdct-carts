@@ -3,19 +3,16 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 //components
 import { Dialog } from "@cmsgov/design-system";
-import moment from "moment";
 //auth
 import {
   refreshCredentials,
   updateTimeout,
   useUser,
 } from "../../hooks/authHooks";
-//types
-import PropTypes from "prop-types";
 
 const calculateTimeLeft = (expiresAt) => {
   if (!expiresAt) return 0;
-  return expiresAt.diff(moment()) / 1000;
+  return (new Date(expiresAt).valueOf() - Date.now()) / 1000;
 };
 
 const Timeout = () => {
@@ -50,7 +47,7 @@ const Timeout = () => {
 
   if (!showTimeout) return <></>;
 
-  const expired = expiresAt.isBefore();
+  const expired = new Date(expiresAt).valueOf() < Date.now();
   const body = expired
     ? "You have been logged out due to inactivity. Please log in again."
     : `Due to inactivity, you will be logged out in ${Math.floor(
@@ -92,11 +89,6 @@ const Timeout = () => {
       )}
     </>
   );
-};
-
-Timeout.propTypes = {
-  showTimeout: PropTypes.bool.isRequired,
-  expiresAt: PropTypes.any.isRequired,
 };
 
 export default Timeout;

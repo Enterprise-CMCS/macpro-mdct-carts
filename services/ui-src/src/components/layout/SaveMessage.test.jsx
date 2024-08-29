@@ -1,5 +1,4 @@
 import { mount, shallow } from "enzyme";
-import moment from "moment";
 import React from "react";
 import SaveMessage from "./SaveMessage";
 
@@ -10,9 +9,6 @@ describe("SaveMessage Component", () => {
   const dateProp = { lastSaved: new Date() };
   const saveMessageDateProp = <SaveMessage {...dateProp} />;
 
-  const momentProp = { lastSaved: moment() };
-  const saveMessageMomentProp = <SaveMessage {...momentProp} />;
-
   const nullProp = { lastSaved: null };
   const saveMessageNullProp = <SaveMessage {...nullProp} />;
 
@@ -22,10 +18,6 @@ describe("SaveMessage Component", () => {
 
   it("should accept date as prop", () => {
     expect(shallow(saveMessageDateProp).exists()).toBe(true);
-  });
-
-  it("should accept moment as prop", () => {
-    expect(shallow(saveMessageMomentProp).exists()).toBe(true);
   });
 
   it("should accept null as prop and return not saved", () => {
