@@ -7,8 +7,8 @@ on:
       - "!skipci*"
 
 concurrency:
-  # Ensuring group key matches the destroy workflow currently in master
-  group: ${{ github.workflow }}-${{ github.ref_name }}
+  # Ensuring group key matches the destroy workflow currently in main
+  group: ${{ github.ref_name }}
   cancel-in-progress: false
 
 permissions:

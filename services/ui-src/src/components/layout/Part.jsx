@@ -11,10 +11,50 @@ import { shouldDisplay } from "../../util/shouldDisplay";
 
 const Part = ({ partId, partNumber, nestedSubsectionTitle }) => {
   const [, section] = partId.split("-");
-  const { contextData, questions, show, text, title } = useSelector(
-    (state) => mapStateToProps(state, partId),
+
+  const [
+    formData,
+    currentUserRole,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+  ] = useSelector(
+    (state) => [
+      state.formData,
+      state.stateUser.currentUser.role,
+      state.reportStatus,
+      state.allStatesData,
+      state.stateUser.abbr,
+      state.enrollmentCounts.chipEnrollments,
+    ],
     shallowEqual
   );
+
+  const part = selectFragment(formData, partId);
+  const partContextData = part.context_data;
+
+  const contextData = partContextData;
+  const questions = selectQuestionsForPart(
+    formData,
+    currentUserRole,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+    partId
+  );
+  const show = shouldDisplay(
+    currentUserRole,
+    formData,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+    partContextData
+  );
+  const text = part ? part.text : null;
+  const title = part ? part.title : null;
 
   const getPartContent = () => {
     if (show) {
@@ -62,18 +102,4 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle }) => {
     </div>
   );
 };
-
-const mapStateToProps = (state, partId) => {
-  const part = selectFragment(state, partId);
-  const partContextData = part.context_data;
-
-  return {
-    contextData: partContextData,
-    questions: selectQuestionsForPart(state, partId),
-    show: shouldDisplay(state, partContextData),
-    text: part ? part.text : null,
-    title: part ? part.title : null,
-  };
-};
-
 export default Part;
