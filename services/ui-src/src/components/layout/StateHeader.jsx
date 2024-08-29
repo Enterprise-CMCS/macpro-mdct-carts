@@ -1,27 +1,29 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppRoles } from "../../types";
 
-const StateHeader = ({ imageURI, name }) => (
-  <div
-    className="state-header"
-    data-testid="state-header"
-    aria-label="State Header"
-  >
-    <div className="state-image">
-      <img src={imageURI} alt={name} />
-    </div>
-    <div className="state-name">{name}</div>
-  </div>
-);
-StateHeader.propTypes = {
-  imageURI: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+const StateHeader = () => {
+  const { currentUser, name, imageURI } = useSelector(
+    (state) => state.stateUser
+  );
+  return (
+    <>
+      {currentUser?.role === AppRoles.STATE_USER && (
+        <div
+          className="state-header"
+          data-testid="state-header"
+          aria-label="State Header"
+        >
+          <div className="state-image">
+            <img src={imageURI} alt={name} />
+          </div>
+          <div className="state-name" aria-label={name}>
+            {name}
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
-const mapStateToProps = (state) => ({
-  name: state.stateUser.name,
-  imageURI: state.stateUser.imageURI,
-});
-
-export default connect(mapStateToProps)(StateHeader);
+export default StateHeader;

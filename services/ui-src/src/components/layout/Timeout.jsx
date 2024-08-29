@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Dialog } from "@cmsgov/design-system";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+//components
+import { Dialog } from "@cmsgov/design-system";
+//auth
 import {
   refreshCredentials,
   updateTimeout,
   useUser,
 } from "../../hooks/authHooks";
-import moment from "moment";
 
 const calculateTimeLeft = (expiresAt) => {
   if (!expiresAt) return 0;
-  return expiresAt.diff(moment()) / 1000;
+  return (new Date(expiresAt).valueOf() - Date.now()) / 1000;
 };
 
-const Timeout = ({ showTimeout, expiresAt }) => {
+const Timeout = () => {
+  const { showTimeout, expiresAt } = useSelector((state) => state.stateUser);
   const { logout } = useUser();
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
   const history = useHistory();
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
+
   useEffect(() => {
     const unlisten = history.listen(() => {
       updateTimeout();
@@ -44,7 +47,7 @@ const Timeout = ({ showTimeout, expiresAt }) => {
 
   if (!showTimeout) return <></>;
 
-  const expired = expiresAt.isBefore();
+  const expired = new Date(expiresAt).valueOf() < Date.now();
   const body = expired
     ? "You have been logged out due to inactivity. Please log in again."
     : `Due to inactivity, you will be logged out in ${Math.floor(
@@ -88,14 +91,4 @@ const Timeout = ({ showTimeout, expiresAt }) => {
   );
 };
 
-Timeout.propTypes = {
-  showTimeout: PropTypes.bool.isRequired,
-  expiresAt: PropTypes.any.isRequired,
-};
-
-const mapState = (state) => ({
-  showTimeout: state.stateUser.showTimeout,
-  expiresAt: state.stateUser.expiresAt,
-});
-
-export default connect(mapState)(Timeout);
+export default Timeout;

@@ -4,30 +4,45 @@ import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import StateHeader from "./StateHeader";
+import {
+  adminUserWithReportInProgress,
+  stateUserWithReportInProgress,
+} from "../../store/fakeStoreExamples";
 
 const mockStore = configureMockStore();
-const store = mockStore({
-  stateUser: {
-    name: "Kentucky",
-    imageURI: "kentucky.png",
-  },
-});
-const header = (
-  <Provider store={store}>
-    <StateHeader />
-  </Provider>
-);
+const stateUserStore = mockStore(stateUserWithReportInProgress);
+const adminUserStore = mockStore(adminUserWithReportInProgress);
 
 describe("State Header Component", () => {
-  it("should render correctly", () => {
+  test("should render correctly", () => {
+    const header = (
+      <Provider store={stateUserStore}>
+        <StateHeader />
+      </Provider>
+    );
     expect(shallow(header).exists()).toBe(true);
   });
 
-  it("Displays name, image, and alt-text for a state", () => {
+  test("Displays state header content for state user", () => {
+    const header = (
+      <Provider store={stateUserStore}>
+        <StateHeader />
+      </Provider>
+    );
     const { getByTestId, getByAltText } = render(header);
     const headerComponent = getByTestId("state-header");
-    expect(headerComponent).toHaveTextContent("Kentucky");
-    const img = getByAltText("Kentucky");
-    expect(img.src).toContain("kentucky.png");
+    expect(headerComponent).toHaveTextContent("Alabama");
+    const img = getByAltText("Alabama");
+    expect(img.src).toContain("al.svg");
+  });
+
+  test("Does not display state header content for admin user", () => {
+    const header = (
+      <Provider store={adminUserStore}>
+        <StateHeader />
+      </Provider>
+    );
+    const { queryByTestId } = render(header);
+    expect(queryByTestId("state-header")).not.toBeInTheDocument();
   });
 });
