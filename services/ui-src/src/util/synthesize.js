@@ -215,6 +215,19 @@ const snakeToCamel = (str) =>
       group.toUpperCase().replace("-", "").replace("_", "")
     );
 
+const getStateAbbr = (stateUserAbbr) => {
+  if (stateUserAbbr) return stateUserAbbr;
+  const windowPathName = window.location.pathname;
+  // if admin, grab the state from the URL
+  const stateFromURL = windowPathName.split("/")[3];
+
+  // if admin and in a print view get state param
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const stateFromParams = urlSearchParams.get("state");
+
+  return windowPathName.includes("print") ? stateFromParams : stateFromURL;
+};
+
 /**
  * Retrieve acsSet from state and return for individual state.
  *
@@ -231,19 +244,8 @@ const lookupAcs = (allStatesData, stateUserAbbr, { ffy, acsProperty }) => {
     : acsProperty;
 
   // if allStatesData and stateUser are available
-  if (allStatesData && stateUserAbbr) {
-    const windowPathName = window.location.pathname;
-    // if admin, grab the state from the URL
-    const stateFromURL = windowPathName.split("/")[3];
-
-    // if admin and in a print view get state param
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const stateFromParams = urlSearchParams.get("state");
-
-    // Get stateUser state or fallback to the URL, if an admin
-    const stateAbbr =
-      stateUserAbbr ||
-      (windowPathName.includes("print") ? stateFromParams : stateFromURL);
+  if (allStatesData) {
+    const stateAbbr = getStateAbbr(stateUserAbbr);
 
     // Filter for only matching state
     const stateData = allStatesData.filter((st) => st.code === stateAbbr)[0];
@@ -280,11 +282,9 @@ export const compareACS = (
   const percentagePrecision = 2;
   let returnValue = "Not Available";
   // if allStatesData and stateUser are available
-  if (allStatesData && stateUserAbbr) {
-    // Filter for only matching state
-    const stateData = allStatesData.filter(
-      (st) => st.code === stateUserAbbr
-    )[0];
+  if (allStatesData) {
+    const stateAbbr = getStateAbbr(stateUserAbbr);
+    const stateData = allStatesData.filter((st) => st.code === stateAbbr)[0];
 
     // Filter for the correct year of state data
     const startACS = stateData?.acsSet.filter(
