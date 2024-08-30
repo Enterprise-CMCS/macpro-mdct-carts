@@ -1,17 +1,22 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useFlags } from "launchdarkly-react-client-sdk";
+//icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDown,
   faMinus,
   faFileAlt,
 } from "@fortawesome/free-solid-svg-icons";
+//types
+import PropTypes from "prop-types";
 
 const TemplateDownload = ({ getTemplate }) => (
   <div className="ds-l-row">
     <div className="updates ds-l-col--12">
       <h4>Updates from Central Office</h4>
-      <div className="update-date">Oct 2024</div>
+      <div className="update-date">
+        {useFlags().release2024 ? "Oct 2024" : "Sept 2023"}
+      </div>
       <div className="update ds-l-row">
         <div className="icon ds-l-col--2">
           <div className="icon-inner">
@@ -20,7 +25,10 @@ const TemplateDownload = ({ getTemplate }) => (
         </div>
         <div className="update-contents ds-l-col--10">
           <div className="title">
-            <h3>Your fiscal year 2024 template is ready for download</h3>
+            <h3>
+              Your fiscal year {useFlags().release2024 ? "2024" : "2023"}{" "}
+              template is ready for download
+            </h3>
           </div>
           <p>
             Download your template for the current reporting period below.
