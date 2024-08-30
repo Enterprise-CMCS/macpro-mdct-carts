@@ -215,6 +215,7 @@ const snakeToCamel = (str) =>
       group.toUpperCase().replace("-", "").replace("_", "")
     );
 
+// returns the state abbreviation for the associated report
 const getStateAbbr = (stateUserAbbr) => {
   if (stateUserAbbr) return stateUserAbbr;
   const windowPathName = window.location.pathname;
@@ -243,15 +244,13 @@ const lookupAcs = (allStatesData, stateUserAbbr, { ffy, acsProperty }) => {
     ? snakeToCamel(acsProperty)
     : acsProperty;
 
-  // if allStatesData and stateUser are available
-  if (allStatesData) {
+  // if allStatesData is a populated array
+  if (allStatesData?.length > 0) {
     const stateAbbr = getStateAbbr(stateUserAbbr);
 
-    // Filter for only matching state
-    const stateData = allStatesData.filter((st) => st.code === stateAbbr)[0];
-
-    // Filter for matching state from JSON
-    const acs = stateData?.acsSet.filter((year) => year.year === +ffy)[0];
+    // Find data for matching state
+    const stateData = allStatesData.find((st) => st.code === stateAbbr);
+    const acs = stateData?.acsSet.find((year) => year.year === +ffy);
 
     // If acs exists, return the value from the object
     if (acs) {
@@ -281,18 +280,18 @@ export const compareACS = (
 ) => {
   const percentagePrecision = 2;
   let returnValue = "Not Available";
-  // if allStatesData and stateUser are available
-  if (allStatesData) {
+  // if allStatesData is a populated array
+  if (allStatesData?.length > 0) {
     const stateAbbr = getStateAbbr(stateUserAbbr);
-    const stateData = allStatesData.filter((st) => st.code === stateAbbr)[0];
+    const stateData = allStatesData.find((st) => st.code === stateAbbr);
 
-    // Filter for the correct year of state data
-    const startACS = stateData?.acsSet.filter(
+    // Find the correct year of state data
+    const startACS = stateData?.acsSet.find(
       (year) => year.year === parseInt(ffy1, 10)
-    )[0];
-    const endACS = stateData?.acsSet.filter(
+    );
+    const endACS = stateData?.acsSet.find(
       (year) => year.year === parseInt(ffy2, 10)
-    )[0];
+    );
 
     // If start year and end year of ACS exist, return the calculated value (percent change) from the objects
     if (startACS && endACS) {
