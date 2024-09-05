@@ -42,7 +42,12 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
   }
   const renderAnswer = (val) => {
     if (val || Number.isInteger(val)) {
-      if (printView && val <= 10 && val > 0) {
+      if (
+        printView &&
+        question.mask === "lessThanEleven" &&
+        val <= 10 &&
+        val > 0
+      ) {
         return "<11";
       }
       return val;
