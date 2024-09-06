@@ -74,6 +74,6 @@ jobs:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_TITLE: ":boom: A Synk auto merge has failed pull request checks in ${{ github.repository }}."
+          SLACK_TITLE: ":boom: A destroy action has failed on ${{ github.repository }}."
           MSG_MINIMAL: true
           SLACK_WEBHOOK: ${{ secrets.INTEGRATIONS_SLACK_WEBHOOK }}
