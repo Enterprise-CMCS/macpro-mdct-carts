@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import Question from "./Question";
-import { connect, useDispatch } from "react-redux";
 import { ADD_TO_TOTAL, FINISH_CALCULATION } from "../../store/lastYearTotals";
 
-const DataGrid = ({ question, lastYearFormData }) => {
+const DataGrid = ({ question }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
+  const lastYearFormData = useSelector((state) => state.lastYearFormData);
   const dispatch = useDispatch();
 
   const rowStyle =
@@ -129,7 +130,7 @@ const DataGrid = ({ question, lastYearFormData }) => {
     generateRenderQuestions();
   }, [dispatch]);
 
-  return renderQuestions.length ? (
+  return (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {renderQuestions.map((question, index) => {
         return (
@@ -143,21 +144,11 @@ const DataGrid = ({ question, lastYearFormData }) => {
         );
       })}
     </div>
-  ) : null;
+  );
 };
 
 DataGrid.propTypes = {
   question: PropTypes.object.isRequired,
-  year: PropTypes.number.isRequired,
-  state: PropTypes.string.isRequired,
-  lastYearFormData: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  year: state.formData[0].contents.section.year,
-  state: state.formData[0].contents.section.state,
-  lastYearFormData: state.lastYearFormData,
-  lastYearTotals: state.lastYearTotals,
-});
-
-export default connect(mapStateToProps)(DataGrid);
+export default DataGrid;
