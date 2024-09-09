@@ -130,7 +130,7 @@ const DataGrid = ({ question }) => {
     generateRenderQuestions();
   }, [dispatch]);
 
-  return (
+  return renderQuestions.length ? (
     <div className={`ds-l-row input-grid__group ${rowStyle}`}>
       {renderQuestions.map((question, index) => {
         return (
@@ -144,7 +144,7 @@ const DataGrid = ({ question }) => {
         );
       })}
     </div>
-  );
+  ) : null;
 };
 
 DataGrid.propTypes = {
