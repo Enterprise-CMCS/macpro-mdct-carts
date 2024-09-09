@@ -4,7 +4,7 @@ import { TextField } from "@cmsgov/design-system";
 import { useSelector } from "react-redux";
 import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const getPrevYearValue = (question) => {
+const getPrevYearValue = (question, lastYearFormData) => {
   let prevYearValue;
 
   // Split and create array from id
@@ -22,7 +22,6 @@ const getPrevYearValue = (question) => {
     parseInt(splitID[4]) > 2 &&
     parseInt(splitID[4]) < 10
   ) {
-    const lastYearFormData = useSelector((state) => state.lastYearFormData);
     // Set year to last year
     splitID[0] = parseInt(splitID[0]) - 1;
     splitID.pop();
@@ -51,6 +50,7 @@ const getPrevYearValue = (question) => {
 const Integer = ({ onChange, question, prevYear, ...props }) => {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(question.answer.entry);
+  const lastYearFormData = useSelector((state) => state.lastYearFormData);
 
   const change = ({ target: { name, value } }) => {
     const stripped = value.replace(/[^0-9]+/g, "");
@@ -69,7 +69,7 @@ const Integer = ({ onChange, question, prevYear, ...props }) => {
 
   const renderAnswer = () => {
     if (answer === null) {
-      return getPrevYearValue(question) ?? prevYear?.value;
+      return getPrevYearValue(question, lastYearFormData) ?? prevYear?.value;
     } else {
       // may attempt to rerender string on page load, so both answer || isInteger
       return answer || Number.isInteger(answer) ? answer : "";

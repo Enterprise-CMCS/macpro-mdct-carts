@@ -119,5 +119,8 @@ describe("<Integer />", () => {
     render(buildInteger(props));
 
     expect(screen.getByDisplayValue("3000")).toBeInTheDocument();
+    const input = screen.getByRole("textbox");
+    fireEvent.change(input, { target: { value: 234 } });
+    expect(screen.getByDisplayValue("234")).toBeInTheDocument();
   });
 });
