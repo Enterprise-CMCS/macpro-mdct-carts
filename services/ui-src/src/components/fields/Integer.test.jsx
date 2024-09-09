@@ -75,7 +75,7 @@ describe("<Integer />", () => {
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });
 
-  it("should show <11 if in printView and passed the mask", () => {
+  it("should show <11 if passed >0 and <=10 with printView and lessThanEleven", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -89,5 +89,35 @@ describe("<Integer />", () => {
     render(buildInteger(props));
     expect(screen.getByDisplayValue("<11")).toBeInTheDocument();
     expect(screen.queryByDisplayValue("5")).not.toBeInTheDocument();
+  });
+
+  it("should show original answer if passed >=11 with printView and lessThanEleven mask", () => {
+    const props = {
+      question: {
+        id: "2023-00-a-01-01",
+        label: "Example Question",
+        answer: { entry: "12" },
+        mask: "lessThanEleven",
+      },
+      printView: true,
+    };
+
+    render(buildInteger(props));
+    expect(screen.getByDisplayValue("12")).toBeInTheDocument();
+  });
+
+  it("should show original answer if passed 0 with printView and lessThanEleven mask", () => {
+    const props = {
+      question: {
+        id: "2023-00-a-01-01",
+        label: "Example Question",
+        answer: { entry: "0" },
+        mask: "lessThanEleven",
+      },
+      printView: true,
+    };
+
+    render(buildInteger(props));
+    expect(screen.getByDisplayValue("0")).toBeInTheDocument();
   });
 });
