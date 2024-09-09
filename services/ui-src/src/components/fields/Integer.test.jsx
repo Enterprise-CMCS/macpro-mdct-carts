@@ -14,6 +14,7 @@ const buildInteger = (intProps) => {
     </Provider>
   );
 };
+
 describe("<Integer />", () => {
   it("should render correctly", () => {
     const props = { question: { id: "2023-00-a-01-01", answer: 1 } };
@@ -29,7 +30,7 @@ describe("<Integer />", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
-        label: "How many lightbulbs does it take to change a man?",
+        label: "Example Question",
         answer: { entry: 123 },
       },
     };
@@ -45,7 +46,7 @@ describe("<Integer />", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
-        label: "How many lightbulbs does it take to change a man?",
+        label: "Example Question",
         answer: { entry: 123 },
       },
     };
@@ -61,7 +62,7 @@ describe("<Integer />", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
-        label: "How many lightbulbs does it take to change a man?",
+        label: "Example Question",
         answer: { entry: "hope" },
       },
     };
@@ -72,5 +73,21 @@ describe("<Integer />", () => {
     fireEvent.change(input, { target: { value: "raw text" } });
     expect(screen.queryByDisplayValue("raw text")).not.toBeInTheDocument();
     expect(screen.getByRole("alert")).toBeInTheDocument();
+  });
+
+  it("should show <11 if in printView and passed the mask", () => {
+    const props = {
+      question: {
+        id: "2023-00-a-01-01",
+        label: "Example Question",
+        answer: { entry: "5" },
+        mask: "lessThanEleven",
+      },
+      printView: true,
+    };
+
+    render(buildInteger(props));
+    expect(screen.getByDisplayValue("<11")).toBeInTheDocument();
+    expect(screen.queryByDisplayValue("5")).not.toBeInTheDocument();
   });
 });
