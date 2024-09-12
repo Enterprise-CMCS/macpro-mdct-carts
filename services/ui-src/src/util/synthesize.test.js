@@ -128,7 +128,7 @@ const fallbackChipState = {
   },
 };
 
-describe("value synthesization utility", () => {
+describe("value synthesis utility", () => {
   describe("handles identity", () => {
     test("with no values", () => {
       // Returns undefined, because there's not a value
@@ -610,6 +610,29 @@ describe("value synthesization utility", () => {
         state.allStatesData,
         state.global.stateName,
         state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: ["3.70%"] });
+    });
+
+    it("compares two ffys as admin user", () => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/views/sections/AL/2023/02",
+        },
+      });
+      const out = synthesize(
+        {
+          compareACS: {
+            ffy1: 2021,
+            ffy2: 2020,
+            acsProperty: "numberUninsured",
+          },
+        },
+        state.allStatesData,
+        state.global.stateName,
+        undefined, // state user abbreviation
         state.enrollmentCounts.chipEnrollments,
         state.formData
       );

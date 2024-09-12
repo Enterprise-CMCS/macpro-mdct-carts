@@ -4,14 +4,13 @@ import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
 import Question from "./Question";
 
-const Objective = ({ headerRef, objective, objectiveNumber }) => {
+const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
   const first = objective.questions[0].answer.readonly === true;
   const name = first
     ? objective.questions[0].answer.default_entry
     : objective.questions[0].answer.entry;
 
   const children = first ? objective.questions.slice(1) : objective.questions;
-
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
@@ -27,7 +26,7 @@ const Objective = ({ headerRef, objective, objectiveNumber }) => {
       <AccordionPanel>
         {children.map((q) => (
           <div className="ds-c-choice__checkedChild">
-            <Question key={q.id} question={q} />
+            <Question key={q.id} question={q} printView={printView} />
           </div>
         ))}
       </AccordionPanel>
@@ -38,6 +37,7 @@ Objective.propTypes = {
   headerRef: PropTypes.func.isRequired,
   objective: PropTypes.object.isRequired,
   objectiveNumber: PropTypes.number.isRequired,
+  printView: PropTypes.bool,
 };
 
 export { Objective };

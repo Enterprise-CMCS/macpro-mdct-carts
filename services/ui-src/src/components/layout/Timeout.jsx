@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 //components
 import { Dialog } from "@cmsgov/design-system";
-import moment from "moment";
 //auth
 import {
   refreshCredentials,
@@ -13,7 +12,7 @@ import {
 
 const calculateTimeLeft = (expiresAt) => {
   if (!expiresAt) return 0;
-  return expiresAt.diff(moment()) / 1000;
+  return (new Date(expiresAt).valueOf() - Date.now()) / 1000;
 };
 
 const Timeout = () => {
@@ -45,7 +44,7 @@ const Timeout = () => {
 
   if (!showTimeout) return <></>;
 
-  const expired = expiresAt.isBefore();
+  const expired = new Date(expiresAt).valueOf() < Date.now();
   const body = expired
     ? "You have been logged out due to inactivity. Please log in again."
     : `Due to inactivity, you will be logged out in ${Math.floor(
