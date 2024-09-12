@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Question from "./Question";
 import { ADD_TO_TOTAL, FINISH_CALCULATION } from "../../store/lastYearTotals";
 
-const DataGrid = ({ question }) => {
+const DataGrid = ({ question, printView }) => {
   const [renderQuestions, setRenderQuestions] = useState([]);
   const [questionsToSet, setQuestionsToSet] = useState([]);
   const lastYearFormData = useSelector((state) => state.lastYearFormData);
@@ -139,6 +139,7 @@ const DataGrid = ({ question }) => {
               hideNumber={question.type !== "fieldset"}
               question={question.question}
               prevYear={question.prevYear}
+              printView={printView}
             />
           </div>
         );
@@ -149,6 +150,7 @@ const DataGrid = ({ question }) => {
 
 DataGrid.propTypes = {
   question: PropTypes.object.isRequired,
+  printView: PropTypes.bool,
 };
 
 export default DataGrid;
