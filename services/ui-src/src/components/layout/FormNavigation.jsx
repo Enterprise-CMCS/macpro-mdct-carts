@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 //components
 import { Button } from "@cmsgov/design-system";
@@ -14,7 +14,7 @@ import { AppRoles } from "../../types";
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
 const FormNavigation = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [formData, role] = useSelector(
@@ -101,7 +101,7 @@ const FormNavigation = () => {
                 type="submit"
                 className="ds-c-button"
                 onClick={() => {
-                  history.push(previousUrl);
+                  navigate(previousUrl);
                 }}
                 data-testid="previous"
               >
@@ -116,7 +116,7 @@ const FormNavigation = () => {
                 type="submit"
                 className="ds-c-button ds-c-button--primary"
                 onClick={() => {
-                  history.push(nextUrl);
+                  navigate(nextUrl);
                 }}
                 data-testid="next"
                 href="#main-content"

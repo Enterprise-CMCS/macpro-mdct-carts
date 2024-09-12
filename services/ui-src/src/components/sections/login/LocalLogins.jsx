@@ -1,10 +1,10 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { useFormFields } from "../../../hooks/useFormFields";
 
 const LocalLogin = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -13,7 +13,7 @@ const LocalLogin = () => {
     event.preventDefault();
     try {
       await Auth.signIn(fields.email, fields.password);
-      history.push(`/`);
+      navigate(`/`);
     } catch (error) {
       console.log("Error while logging in.", error); // eslint-disable-line no-console
     }
