@@ -176,7 +176,7 @@ describe("State Header Component", () => {
     expect(toc.outerHTML).not.toMatch(/Section 2/);
     expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
   });
-  it.only("should navigate on click", async () => {
+  it("should navigate on click", async () => {
     render(tableOfContents);
     const aSection = screen.getByText(/Section 1/);
     fireEvent.click(aSection);

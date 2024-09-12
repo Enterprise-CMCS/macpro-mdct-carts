@@ -107,11 +107,10 @@ const adminNavComponent = (
   </Provider>
 );
 
-const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => ({
-    push: mockHistoryPush,
+    push: jest.fn(),
   }),
 }));
 
