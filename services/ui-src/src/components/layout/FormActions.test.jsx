@@ -28,10 +28,10 @@ const adminFormActions = (
   </Provider>
 );
 describe("Fill Form Component", () => {
-  it("should render correctly", () => {
+  test("should render correctly", () => {
     expect(shallow(formActions).exists()).toBe(true);
   });
-  it("should add hrefs given a section and subsection", () => {
+  test("should add hrefs given a section and subsection", () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
@@ -40,8 +40,7 @@ describe("Fill Form Component", () => {
     expect(printPageButton).toHaveAttribute("href");
     expect(printFormButton).toHaveAttribute("href");
   });
-  it("should build the component when looking at section 3 subsections", () => {
-    window.history.pushState({}, "Title", "/sections/03");
+  test("should build the component when looking at section 3 subsections", () => {
     render(adminFormActions);
     window.history.pushState({}, "Title", "/sections/03");
     const printShowButton = screen.getByTestId("print-show");
@@ -51,16 +50,17 @@ describe("Fill Form Component", () => {
     expect(printPageButton).toHaveAttribute("href");
     expect(printFormButton).toHaveAttribute("href");
   });
-  it("should display print section or page on click", () => {
+  test("should display print section or page on click", () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
+
     expect(printPageButton).toHaveTextContent("This Section");
     expect(printFormButton).toHaveTextContent("Entire Form");
   });
-  it("should clear on click", () => {
+  test("should clear on click", () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
@@ -72,7 +72,7 @@ describe("Fill Form Component", () => {
     expect(printPageButton).toBeNull();
     expect(printFormButton).toBeNull();
   });
-  it("should not clear on internal click, then clear on outside click", () => {
+  test("should not clear on internal click, then clear on outside click", () => {
     const map = {};
 
     document.addEventListener = jest.fn((event, cb) => {
