@@ -25,9 +25,9 @@ const FormActions = () => {
   // Get section IDs and subsection IDs for printing single section
   let searchParams = "";
   let sectionId = "";
+
   if (currentUser.role === AppRoles.CMS_ADMIN) {
     const stateId = window.location.href.split("/")[5];
-
     searchParams = document.location.pathname
       .toString()
       .replace(`views/sections/${stateId}/`, "")
