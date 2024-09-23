@@ -260,10 +260,15 @@ img {
     margin-left: ($margin * 2);
   }
 
+  .preamble {
+    max-width: 730px; 
+    margin-bottom: 2rem;
+  }
+
   .update-date {
-    color: $color-hint-light;
-    text-align: right;
-    text-transform: uppercase;
+    color: $color-hint-dark;
+    font-size:1.1rem;
+    font-weight: bold;
   }
 
   .updates {
@@ -274,15 +279,16 @@ img {
       margin-top: 0;
     }
     h4 {
-      font-size: 0.85rem;
-      text-transform: uppercase;
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .update {
       border: 2px solid $color-gray-lightest;
       border-left: none;
       border-right: none;
-      padding: ($padding * 6) 0;
+      padding: 2rem 0;
       text-align: center;
 
       @media only screen and (min-width: 768px) {
@@ -338,6 +344,10 @@ img {
         justify-content: space-between;
       }
     }
+  }
+
+  .carts-report {
+    margin-top: 1rem;
   }
 }
 

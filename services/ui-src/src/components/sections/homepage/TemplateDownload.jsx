@@ -15,7 +15,7 @@ const TemplateDownload = ({ getTemplate }) => (
     <div className="updates ds-l-col--12">
       <h4>Updates from Central Office</h4>
       {useFlags().release2024 && (
-        <>
+        <div className="preamble">
           <p>
             Completing the Children’s Health Insurance Program (CHIP) Annual
             Report is required under sections 2108(a) and 2108(e) of the Social
@@ -35,7 +35,7 @@ const TemplateDownload = ({ getTemplate }) => (
               https://www.medicaid.gov/chip/reports-evaluations/index.html
             </a>
           </p>
-        </>
+        </div>
       )}
       <div className="update-date">
         {useFlags().release2024 ? "Oct 2024" : "Sept 2023"}
