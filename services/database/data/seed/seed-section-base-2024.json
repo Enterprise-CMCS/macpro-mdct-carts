@@ -4697,7 +4697,7 @@
               },
               {
                 "id": "2024-03-c-06",
-                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2024 (the second quarter of FFY 2024). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. This year you’ll start a new cohort and report on the number of children at the start of the cohort (Jan–Mar 2024) and six months later (July–Sept 2024). In the FFY 2025 report next year, you’ll report on the same cohort at 12 months (Jan–Mar 2025) and 18 months later (July–Sept 2025). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero",
+                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2024 (the second quarter of FFY 2024). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. This year you’ll start a new cohort and report on the number of children at the start of the cohort (Jan–Mar 2024) and six months later (July–Sept 2024). In the FFY 2025 report next year, you’ll report on the same cohort at 12 months (Jan–Mar 2025) and 18 months later (July–Sept 2025). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a Medicaid Cohort over 18 months",
                 "questions": [
@@ -7700,7 +7700,7 @@
           },
           {
             "id": "2024-03-i",
-            "text": "All states with approved HSI program(s) should complete this section.\n\nStates can use up to 10% of the total computable amount of their fiscal year allotment to develop Health Services Initiatives (HSI) that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act, 42 CFR 457.10 and 457.618.] States may only claim HSI expenditures after funding other costs to administer their CHIP State Plan.",
+            "text": "All states with approved HSI program(s) should complete this section.\n\nStates can use up to 10% of the total computable amount of their fiscal year allotment to develop HSIs that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act, 42 CFR 457.10 and 457.618.] States may only claim HSI expenditures after funding other costs to administer their CHIP State Plan.",
             "type": "subsection",
             "parts": [
               {
@@ -9998,7 +9998,7 @@
                     "fieldset_type": "synthesized_table"
                   },
                   {
-                    "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n This table is auto-calculated using the data you entered above. The federal and state shares for FFY 2023 will be calculated once the eFMAP rate for 2023 becomes available. In the meantime, these values will be blank.",
+                    "hint": "CHIP is funded by federal and state budgets. The federal share of funding is calculated by multiplying your state’s Federal Medical Assistance Percentage (eFMAP) by your total program costs (the sum of your benefit and administrative costs). The remaining amount of your total program costs is covered by your state share of funding. \n CMS will enter the eFMAP rates for each year and auto-calculate the total program costs, as well as the federal and state shares.",
                     "type": "fieldset",
                     "label": "Table 3: Federal and State Shares",
                     "questions": [],
