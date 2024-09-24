@@ -8,7 +8,7 @@ import FormNavigation from "./FormNavigation";
 import FormActions from "./FormActions";
 import Autosave from "../fields/Autosave";
 
-const Section = ({ subsectionId, sectionId }) => {
+const Section = ({ subsectionId, sectionId, printView }) => {
   const formData = useSelector((state) => state.formData);
   const title = selectSectionTitle(formData, sectionId);
 
@@ -17,7 +17,11 @@ const Section = ({ subsectionId, sectionId }) => {
       <main id="main-content" className="main">
         <PageInfo />
         <h2 data-testid="section-title">{title}</h2>
-        <Subsection key={subsectionId} subsectionId={subsectionId} />
+        <Subsection
+          key={subsectionId}
+          subsectionId={subsectionId}
+          printView={printView}
+        />
       </main>
       <div className="form-footer">
         <Autosave />
@@ -30,6 +34,7 @@ const Section = ({ subsectionId, sectionId }) => {
 Section.propTypes = {
   subsectionId: PropTypes.string.isRequired,
   sectionId: PropTypes.number.isRequired,
+  printView: PropTypes.bool,
 };
 
 export default Section;

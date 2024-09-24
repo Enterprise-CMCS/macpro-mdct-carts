@@ -9,7 +9,7 @@ import { DateRange } from "./DateRange";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
 import UploadComponent from "../layout/UploadComponent";
-import { Integer } from "./Integer";
+import Integer from "./Integer";
 import { MailingAddress } from "./MailingAddress";
 import { Money } from "./Money";
 import { Objectives } from "./Objectives";
@@ -57,7 +57,14 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ hideNumber, question, prevYear, tableTitle, ...props }) => {
+const Question = ({
+  hideNumber,
+  question,
+  prevYear,
+  tableTitle,
+  printView,
+  ...props
+}) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -144,6 +151,7 @@ const Question = ({ hideNumber, question, prevYear, tableTitle, ...props }) => {
             false
           }
           prevYear={prevYear}
+          printView={printView}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -153,7 +161,12 @@ const Question = ({ hideNumber, question, prevYear, tableTitle, ...props }) => {
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
-              <Question key={q.id} question={q} setAnswer={setAnswerEntry} />
+              <Question
+                key={q.id}
+                question={q}
+                setAnswer={setAnswerEntry}
+                printView={printView}
+              />
             ))}
           </div>
         )}
@@ -167,6 +180,7 @@ Question.propTypes = {
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
   tableTitle: PropTypes.string,
+  printView: PropTypes.bool,
 };
 Question.defaultProps = {
   hideNumber: false,

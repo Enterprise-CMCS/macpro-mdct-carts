@@ -359,6 +359,9 @@ export const sectionSchema = {
           hint: {
             type: "string",
           },
+          mask: {
+            type: "string",
+          },
           questions: {
             type: "array",
             items: {
