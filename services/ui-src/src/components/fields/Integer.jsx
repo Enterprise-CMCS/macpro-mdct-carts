@@ -47,7 +47,7 @@ const getPrevYearValue = (question, lastYearFormData) => {
   return prevYearValue;
 };
 
-const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
+const Integer = ({ onChange, question, prevYear, ...props }) => {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(question.answer.entry);
   const lastYearFormData = useSelector((state) => state.lastYearFormData);
@@ -67,23 +67,11 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
     }
   };
 
-  const isLessThanElevenMask = (value) => {
-    return (
-      printView &&
-      question.mask === "lessThanEleven" &&
-      value <= 10 &&
-      value > 0
-    );
-  };
-
   const renderAnswer = () => {
     if (answer === null) {
-      const value =
-        getPrevYearValue(question, lastYearFormData) ?? prevYear?.value;
-      if (isLessThanElevenMask(value)) return "<11";
-      return value;
+      return getPrevYearValue(question, lastYearFormData) ?? prevYear?.value;
     } else {
-      if (isLessThanElevenMask(answer)) return "<11";
+      // may attempt to rerender string on page load, so both answer || isInteger
       return answer || Number.isInteger(answer) ? answer : "";
     }
   };
@@ -105,7 +93,6 @@ Integer.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
-  printView: PropTypes.bool,
 };
 
 export default Integer;
