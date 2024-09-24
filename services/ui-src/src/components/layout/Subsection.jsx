@@ -8,7 +8,7 @@ import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 //types
 import PropTypes from "prop-types";
 
-const Subsection = ({ subsectionId, printView }) => {
+const Subsection = ({ subsectionId }) => {
   const formData = useSelector((state) => state.formData);
 
   const subsection = selectSubsectionTitleAndPartIDs(formData, subsectionId);
@@ -31,7 +31,6 @@ const Subsection = ({ subsectionId, printView }) => {
           partId={partId}
           partNumber={partIds.length > 1 ? index + 1 : null}
           nestedSubsectionTitle={!!title}
-          printView={printView}
         />
       ))}
     </div>
@@ -39,7 +38,6 @@ const Subsection = ({ subsectionId, printView }) => {
 };
 Subsection.propTypes = {
   subsectionId: PropTypes.string.isRequired,
-  printView: PropTypes.bool,
 };
 Subsection.defaultProps = {
   text: null,

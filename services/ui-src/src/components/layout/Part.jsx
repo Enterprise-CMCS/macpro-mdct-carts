@@ -9,7 +9,7 @@ import { selectFragment } from "../../store/formData";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 
-const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
+const Part = ({ partId, partNumber, nestedSubsectionTitle }) => {
   const [, section] = partId.split("-");
 
   const [
@@ -67,7 +67,6 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
               question={question}
               tableTitle={title}
               data-testid="part-question"
-              printView={printView}
             />
           ))}
         </>

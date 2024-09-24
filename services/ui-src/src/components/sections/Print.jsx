@@ -140,7 +140,6 @@ const Print = () => {
           sectionId={sectionId}
           subsectionId={subsectionId}
           readonly="false"
-          printView="true"
         />
       );
     } else {
@@ -165,7 +164,6 @@ const Print = () => {
               sectionId={sectionId}
               subsectionId={subsectionId}
               readonly="false"
-              printView="true"
             />
           );
         }
