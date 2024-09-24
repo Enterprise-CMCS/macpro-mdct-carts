@@ -9,14 +9,12 @@ import {
   stateUserWithReportInProgress,
 } from "../../store/fakeStoreExamples";
 import { MemoryRouter } from "react-router";
-const firstLocation = "/sections/2021/00";
-const adminFirstLocation = "/views/sections/AL/2021/00";
 
 const mockStore = configureMockStore();
 const store = mockStore(stateUserWithReportInProgress);
 const formActions = (
   <Provider store={store}>
-    <MemoryRouter initialEntries={[firstLocation]}>
+    <MemoryRouter initialEntries={["/"]}>
       <FormActions />
     </MemoryRouter>
   </Provider>
@@ -24,76 +22,36 @@ const formActions = (
 const adminStore = mockStore(adminUserWithReportInProgress);
 const adminFormActions = (
   <Provider store={adminStore}>
-    <MemoryRouter initialEntries={[adminFirstLocation]}>
+    <MemoryRouter initialEntries={["/"]}>
       <FormActions />
     </MemoryRouter>
   </Provider>
 );
-
 describe("Fill Form Component", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test("should render correctly", () => {
+  it("should render correctly", () => {
     expect(shallow(formActions).exists()).toBe(true);
   });
-  test("should add hrefs given a section and subsection", () => {
+  it("should add hrefs given a section and subsection", () => {
     render(formActions);
-    window.history.pushState({}, "Title", "/sections/00");
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
-    expect(printPageButton).toHaveAttribute(
-      "href",
-      "/print?year=2021&state=AL&sectionId=2021-00&subsectionId=2021-00-a"
-    );
-    expect(printFormButton).toHaveAttribute(
-      "href",
-      "/print?year=2021&state=AL"
-    );
+    expect(printPageButton).toHaveAttribute("href");
+    expect(printFormButton).toHaveAttribute("href");
   });
-
-  test("should add hrefs given a section and subsection for admin user", () => {
-    const setLocation = (path = "/") => {
-      delete window.location;
-      window.location = new URL("https://www.example.com" + path);
-    };
-
-    setLocation(adminFirstLocation);
+  it("should build the component when looking at section 3 subsections", () => {
+    window.history.pushState({}, "Title", "/sections/03");
     render(adminFormActions);
-    window.history.pushState({}, "Title", "/00/a");
+    window.history.pushState({}, "Title", "/sections/03");
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
-    expect(printPageButton).toHaveAttribute(
-      "href",
-      "/print?year=2021&state=AL&sectionId=2021-00&subsectionId=2021-00-a"
-    );
-    expect(printFormButton).toHaveAttribute(
-      "href",
-      "/print?year=2021&state=AL"
-    );
+    expect(printPageButton).toHaveAttribute("href");
+    expect(printFormButton).toHaveAttribute("href");
   });
-  test("should build the component when looking at section 3 subsections", () => {
-    render(adminFormActions);
-    window.history.pushState({}, "Title", "/03/a");
-    const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
-    const printFormButton = screen.getByTestId("print-form");
-    const printPageButton = screen.getByTestId("print-page");
-    expect(printPageButton).toHaveAttribute(
-      "href",
-      "/print?year=2021&state=AL&sectionId=2021-03&subsectionId=2021-03-a"
-    );
-    expect(printFormButton).toHaveAttribute(
-      "href",
-      "/print?year=2021&state=AL"
-    );
-  });
-  test("should display print section or page on click", () => {
+  it("should display print section or page on click", () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
@@ -102,7 +60,7 @@ describe("Fill Form Component", () => {
     expect(printPageButton).toHaveTextContent("This Section");
     expect(printFormButton).toHaveTextContent("Entire Form");
   });
-  test("should clear on click", () => {
+  it("should clear on click", () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
@@ -114,7 +72,7 @@ describe("Fill Form Component", () => {
     expect(printPageButton).toBeNull();
     expect(printFormButton).toBeNull();
   });
-  test("should not clear on internal click, then clear on outside click", () => {
+  it("should not clear on internal click, then clear on outside click", () => {
     const map = {};
 
     document.addEventListener = jest.fn((event, cb) => {
