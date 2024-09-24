@@ -41,7 +41,7 @@ const getPrevYearValue = (question, lastYearFormData) => {
 
     // The first will always be correct
     if (matchingQuestion[0]) {
-      prevYearValue = matchingQuestion[0].questions[0].answer?.entry;
+      prevYearValue = parseInt(matchingQuestion[0].questions[0].answer?.entry);
     }
   }
   return prevYearValue;
