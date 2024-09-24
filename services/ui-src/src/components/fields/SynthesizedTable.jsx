@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 //utils
 import synthesizeValue from "../../util/synthesize";
@@ -6,6 +6,7 @@ import synthesizeValue from "../../util/synthesize";
 import PropTypes from "prop-types";
 
 const SynthesizedTable = ({ question, tableTitle }) => {
+  const [rows, setRows] = useState([]);
   const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
     useSelector(
       (state) => [
@@ -18,22 +19,26 @@ const SynthesizedTable = ({ question, tableTitle }) => {
       shallowEqual
     );
 
-  const rows = question.fieldset_info.rows.map((row) =>
-    row.map((cell) => {
-      const value = synthesizeValue(
-        cell,
-        allStatesData,
-        stateName,
-        stateUserAbbr,
-        chipEnrollments,
-        formData
-      );
+  useEffect(() => {
+    const rows = question.fieldset_info.rows.map((row) =>
+      row.map((cell) => {
+        const value = synthesizeValue(
+          cell,
+          allStatesData,
+          stateName,
+          stateUserAbbr,
+          chipEnrollments,
+          formData
+        );
 
-      return typeof value.contents === "number" && Number.isNaN(value.contents)
-        ? { contents: "Not Available" }
-        : value;
-    })
-  );
+        return typeof value.contents === "number" &&
+          Number.isNaN(value.contents)
+          ? { contents: "Not Available" }
+          : value;
+      })
+    );
+    setRows(rows);
+  }, [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData]);
 
   return (
     <div className="synthesized-table ds-u-margin-top--2">
