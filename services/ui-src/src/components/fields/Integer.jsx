@@ -31,16 +31,16 @@ const getPrevYearValue = (question, lastYearFormData) => {
 
     // Get questions from last years JSON
     const questions =
-      lastYearFormData?.[3]?.contents.section.subsections[2].parts[partIndex]
+      lastYearFormData[3].contents.section.subsections[2].parts[partIndex]
         .questions;
 
     // Filter down to this question
-    const matchingQuestion = questions?.filter(
+    const matchingQuestion = questions.filter(
       (question) => fieldsetId === question?.fieldset_info?.id
     );
 
     // The first will always be correct
-    if (matchingQuestion?.[0]) {
+    if (matchingQuestion[0]) {
       prevYearValue = matchingQuestion[0].questions[0].answer?.entry;
     }
   }
