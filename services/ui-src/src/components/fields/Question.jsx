@@ -9,7 +9,7 @@ import { DateRange } from "./DateRange";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
 import UploadComponent from "../layout/UploadComponent";
-import Integer from "./Integer";
+import { Integer } from "./Integer";
 import { MailingAddress } from "./MailingAddress";
 import { Money } from "./Money";
 import { Objectives } from "./Objectives";

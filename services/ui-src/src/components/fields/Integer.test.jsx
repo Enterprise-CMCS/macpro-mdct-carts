@@ -6,40 +6,7 @@ import Integer from "./Integer";
 import { screen, render, fireEvent } from "@testing-library/react";
 
 const mockStore = configureMockStore();
-const lastYearFormData = [
-  {},
-  {},
-  {},
-  {
-    contents: {
-      section: {
-        subsections: [
-          {},
-          {},
-          {
-            parts: [
-              {},
-              {},
-              {},
-              {},
-              {
-                questions: [
-                  {
-                    fieldset_info: {
-                      id: "2022-03-c-05-03",
-                    },
-                    questions: [{ answer: { entry: 3000 } }],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    },
-  },
-];
-const store = mockStore({ lastYearTotals: { 2022: [] }, lastYearFormData });
+const store = mockStore({ lastYearTotals: { 2022: [] } });
 const buildInteger = (intProps) => {
   return (
     <Provider store={store}>
@@ -105,22 +72,5 @@ describe("<Integer />", () => {
     fireEvent.change(input, { target: { value: "raw text" } });
     expect(screen.queryByDisplayValue("raw text")).not.toBeInTheDocument();
     expect(screen.getByRole("alert")).toBeInTheDocument();
-  });
-
-  it("should render previous year value for appropriate 3c part 5 or 6 questions", () => {
-    const props = {
-      question: {
-        id: "2023-03-c-05-03-a",
-        label: "How much?",
-        answer: { entry: null },
-      },
-    };
-
-    render(buildInteger(props));
-
-    expect(screen.getByDisplayValue("3000")).toBeInTheDocument();
-    const input = screen.getByRole("textbox");
-    fireEvent.change(input, { target: { value: 234 } });
-    expect(screen.getByDisplayValue("234")).toBeInTheDocument();
   });
 });
