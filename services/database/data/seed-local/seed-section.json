@@ -2796,6 +2796,7 @@
                             "contents": "Denied for procedural reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-02')].answer.entry"
                             ]
@@ -2813,6 +2814,7 @@
                             "contents": "Denied for eligibility reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-03')].answer.entry"
                             ]
@@ -2830,6 +2832,7 @@
                             "contents": "Denials for other reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-04')].answer.entry"
                             ]
@@ -2848,7 +2851,8 @@
                           "contents": ""
                         },
                         {
-                          "contents": "Number"
+                          "contents": "Number",
+                          "mask": "lessThanEleven"
                         },
                         {
                           "contents": "Percent"

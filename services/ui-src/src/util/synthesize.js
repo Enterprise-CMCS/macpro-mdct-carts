@@ -436,9 +436,6 @@ const synthesizeValue = (
   }
 
   if (value.targets) {
-    if (value.mask) {
-      return value.mask;
-    }
     const targets = value.targets.map((target) => {
       if (typeof target === "object" && target.lookupFmapFy) {
         return lookupFMAP(
