@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 //components
 import Question from "./Question";
@@ -8,6 +8,7 @@ import synthesizeValue from "../../util/synthesize";
 import PropTypes from "prop-types";
 
 const SynthesizedValue = ({ question, ...props }) => {
+  const [displayValue, setDisplayValue] = useState();
   const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
     useSelector(
       (state) => [
@@ -20,18 +21,22 @@ const SynthesizedValue = ({ question, ...props }) => {
       shallowEqual
     );
 
-  const value = synthesizeValue(
-    question.fieldset_info,
-    allStatesData,
-    stateName,
-    stateUserAbbr,
-    chipEnrollments,
-    formData
-  ).contents;
+  useEffect(() => {
+    setDisplayValue(
+      synthesizeValue(
+        question.fieldset_info,
+        allStatesData,
+        stateName,
+        stateUserAbbr,
+        chipEnrollments,
+        formData
+      ).contents
+    );
+  }, [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData]);
 
   return (
     <div>
-      <strong>Computed:</strong> {value}
+      <strong>Computed:</strong> {displayValue}
       {question.questions &&
         question.questions.map((q) => (
           <Question key={q.id} question={q} {...props} />
