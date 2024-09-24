@@ -17,6 +17,7 @@ const Repeatables = ({
   question,
   removeRepeatableFrom,
   type,
+  printView,
 }) => {
   const ref = useRef();
 
@@ -62,6 +63,7 @@ const Repeatables = ({
               number={i + 1}
               question={q}
               type={question.typeLabel ? question.typeLabel : type}
+              printView={printView}
             />
           </AccordionItem>
         ))}
@@ -107,6 +109,7 @@ Repeatables.propTypes = {
   question: PropTypes.object.isRequired,
   removeRepeatableFrom: PropTypes.func.isRequired,
   type: PropTypes.oneOf([PropTypes.string, null]),
+  printView: PropTypes.bool,
 };
 Repeatables.defaultProps = {
   type: null,
