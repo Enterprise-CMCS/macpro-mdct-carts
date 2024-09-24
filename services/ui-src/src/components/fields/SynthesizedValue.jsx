@@ -25,22 +25,20 @@ const SynthesizedValue = ({ question, printView, ...props }) => {
   );
 
   const renderValue = () => {
-    if (showValue) {
-      return synthesizeValue(
-        question.fieldset_info,
-        allStatesData,
-        stateName,
-        stateUserAbbr,
-        chipEnrollments,
-        formData
-      ).contents;
-    }
+    return synthesizeValue(
+      question.fieldset_info,
+      allStatesData,
+      stateName,
+      stateUserAbbr,
+      chipEnrollments,
+      formData
+    ).contents;
   };
 
   return (
     showValue && (
       <div>
-        <strong>Computed:</strong> {renderValue}
+        <strong>Computed:</strong> {renderValue()}
         {question.questions &&
           question.questions.map((q) => (
             <Question key={q.id} question={q} {...props} />
