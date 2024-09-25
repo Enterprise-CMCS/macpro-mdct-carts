@@ -22,7 +22,6 @@ const SynthesizedValue = ({ question, printView, ...props }) => {
     );
 
   const showValue = !(printView && question.fieldset_info.mask === lteMask);
-
   const renderValue = () => {
     return synthesizeValue(
       question.fieldset_info,
