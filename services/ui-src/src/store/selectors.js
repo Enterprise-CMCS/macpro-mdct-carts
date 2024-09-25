@@ -24,26 +24,14 @@ export const selectSectionTitle = (state, sectionId) => {
   return null;
 };
 
-export const selectSubsectionTitleAndPartIDs = (state, subsectionId) => {
-  const subsection = selectFragment(state, subsectionId);
+export const selectSubsectionTitleAndPartIDs = (formData, subsectionId) => {
+  const subsection = selectFragment(formData, subsectionId);
 
   if (subsection) {
     return {
       parts: subsection.parts.map((part) => part.id),
       title: subsection.title,
       text: subsection.text,
-    };
-  }
-  return null;
-};
-
-export const selectPartTitle = (state, partId) => {
-  const part = selectFragment(state, partId);
-
-  if (part) {
-    return {
-      text: part.text,
-      title: part.title,
     };
   }
   return null;
@@ -63,11 +51,29 @@ export const selectQuestion = (state, id) => {
  * This function is a callback for the filter method in selectQuestionsForPart
  * @function filterDisplay
  * @param {object} question - single question from the unfilteredData array in selectQuestionsForPart.
- * @param {object} state - the application state
+ * @param {object} currentUserRole - The role of the current user. Accessed at state.currentUser.role
  * @returns {boolean} - to be evaluated by the filter method
  */
-const filterDisplay = (question, state) => {
-  if (!shouldDisplay(state, question.context_data)) {
+const filterDisplay = (
+  question,
+  currentUserRole,
+  formData,
+  reportStatus,
+  allStatesData,
+  stateUserAbbr,
+  chipEnrollments
+) => {
+  if (
+    !shouldDisplay(
+      currentUserRole,
+      formData,
+      reportStatus,
+      allStatesData,
+      stateUserAbbr,
+      chipEnrollments,
+      question.context_data
+    )
+  ) {
     // If context data and a variation of skip text exists
     if (
       question.context_data &&
@@ -100,7 +106,15 @@ const filterDisplay = (question, state) => {
     question.questions = question.questions
       .map((singleQuestion) => {
         // reassign question.questions to be a filtered version of itself
-        return filterDisplay(singleQuestion, state);
+        return filterDisplay(
+          singleQuestion,
+          currentUserRole,
+          formData,
+          reportStatus,
+          allStatesData,
+          stateUserAbbr,
+          chipEnrollments
+        );
       })
       .filter((q) => q !== false);
   }
@@ -108,24 +122,41 @@ const filterDisplay = (question, state) => {
 };
 
 // Returns an array of questions for the QuestionComponent to map through
-export const selectQuestionsForPart = (state, partId) => {
+export const selectQuestionsForPart = (
+  formData,
+  currentUserRole,
+  reportStatus,
+  allStatesData,
+  stateUserAbbr,
+  chipEnrollments,
+  partId
+) => {
   const jp = `$..[*].contents.section.subsections[*].parts[?(@ && @.id=='${partId}')].questions[*]`;
-  const unfilteredData = JSON.parse(JSON.stringify(jsonpath.query(state, jp)));
+  const unfilteredData = JSON.parse(
+    JSON.stringify(jsonpath.query(formData, jp))
+  );
 
   // Filter the array of questions based on conditional logic
   const filteredQuestions = unfilteredData
     .map((question) => {
-      return filterDisplay(question, state);
+      return filterDisplay(
+        question,
+        currentUserRole,
+        formData,
+        reportStatus,
+        allStatesData,
+        stateUserAbbr,
+        chipEnrollments
+      );
     })
     .filter((q) => q !== false);
 
   return filteredQuestions;
 };
 
-export const selectSectionsForNav = (state) => {
-  if (state.formData) {
-    const sections = state.formData;
-    return sections.map(
+export const selectSectionsForNav = (formData) => {
+  if (formData) {
+    return formData.map(
       ({
         contents: {
           section: { id, ordinal, subsections, title },
@@ -146,18 +177,18 @@ export const selectSectionsForNav = (state) => {
  * @param {object} reportStatus - the current report status object stored in state
  * @param {object} formData - The current form object stored in state
  * @param {object} stateUser - The current user object stored in state
- * @param {object} global - Global variables that will be the same regardless of users
+ * @param {object} formYear - The form year currently stored in global state.
  * @returns {object} The reportStatus object associated with the current report
  */
 export const getCurrentReportStatus = (
   reportStatus,
   formData,
   stateUser,
-  global
+  formYear
 ) => {
   let currentReport = "";
   if (stateUser.currentUser.role === AppRoles.STATE_USER) {
-    currentReport = `${stateUser.abbr}${global.formYear}`;
+    currentReport = `${stateUser.abbr}${formYear}`;
   } else {
     if (formData?.[0] === undefined) return {};
     currentReport = `${formData[0].stateId}${formData[0].year}`;
@@ -168,18 +199,25 @@ export const getCurrentReportStatus = (
 };
 
 /**
- * Determines if the report form should be editable.
- * @param {object} state - The current state object
- * @returns {boolean}
+ * Get the Status for the current report.
+ * @param {object} reportStatus - the current report status object stored in state
+ * @param {object} formData - The current form object stored in state
+ * @param {object} stateUser - The current user object stored in state
+ * @param {object} formYear - Global variables that will be the same regardless of users
+ * @returns {object} The reportStatus object associated with the current report
  */
-export const selectIsFormEditable = (state) => {
-  const { reportStatus, formData, stateUser, global } = state;
+export const selectIsFormEditable = (
+  reportStatus,
+  formData,
+  stateUser,
+  formYear
+) => {
   const { role } = stateUser.currentUser;
   const { status } = getCurrentReportStatus(
     reportStatus,
     formData,
     stateUser,
-    global
+    formYear
   );
 
   switch (status) {
@@ -239,13 +277,11 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
   };
 })();
 
-export const selectYears = (state) => {
-  const { global } = state;
-
-  let yearArray = [];
+export const selectYears = (currentYear) => {
+  const yearArray = [];
   for (
     let x = 2020;
-    x <= global.currentYear;
+    x <= currentYear;
     x++ // 2020 is the first year the new CARTS was used so there won't be an < 2020 forms
   ) {
     yearArray.push({ label: x, value: x });

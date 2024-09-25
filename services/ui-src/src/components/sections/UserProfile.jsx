@@ -1,8 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const UserProfile = ({ currentUser }) => {
+const UserProfile = () => {
+  const currentUser = useSelector((state) => state.stateUser.currentUser);
   return (
     <div className="page-info ds-l-container">
       <div className="ds-l-col--12">
@@ -38,12 +38,4 @@ const UserProfile = ({ currentUser }) => {
   );
 };
 
-UserProfile.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentUser: state.stateUser.currentUser,
-});
-
-export default connect(mapStateToProps)(UserProfile);
+export default UserProfile;

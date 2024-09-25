@@ -21,6 +21,7 @@ describe("CARTS Submit and Uncertify Integration Tests", () => {
 
     cy.get(certifySubmitButton).click();
     cy.get("button").contains("Confirm Certify and Submit").click();
+    cy.wait(3000);
     cy.get("button").contains("Return Home").click();
 
     // log in as CMS Admin (user who can uncertify)

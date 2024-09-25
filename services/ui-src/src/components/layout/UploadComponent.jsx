@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+//components
 import { Button, TextField } from "@cmsgov/design-system";
-import { setAnswerEntry } from "../../actions/initial";
-import { REPORT_STATUS, AppRoles } from "../../types";
+//utils
 import {
   recordFileInDatabaseAndGetUploadUrl,
   uploadFileToS3,
@@ -11,32 +10,37 @@ import {
   getUploadedFiles,
   deleteUploadedFile,
 } from "../../util/fileApi";
+import { setAnswerEntry } from "../../actions/initial";
+//types
+import PropTypes from "prop-types";
+import { REPORT_STATUS, AppRoles } from "../../types";
 
-class UploadComponent extends Component {
-  constructor(props) {
-    super(props);
+const UploadComponent = ({ question }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [blockFileSubmission, setBlockFileSubmission] = useState(true);
+  const [loadedFiles, setLoadedFiles] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [displayUploadedFiles, setDisplayUploadedFiles] = useState(false);
+  const [uploadedFilesRetrieved, setUploadedFilesRetrieved] = useState(false);
+  const [inputErrors, setInputErrors] = useState();
 
-    this.state = {
-      blockFileSubmission: true,
-      loadedFiles: [],
-      uploadedFiles: [],
-      displayUploadedFiles: false,
-      uploadedFilesRetrieved: false,
-    };
-  }
+  const [user, year, stateCode, reportStatus] = useSelector(
+    (state) => [
+      state.stateUser.currentUser,
+      state.formData[0].contents.section.year,
+      state.formData[0].contents.section.state,
+      state.reportStatus,
+    ],
+    shallowEqual
+  );
 
-  componentDidMount = async () => {
-    this.validateFileByExtension = this.validateFileByExtension.bind(this);
-    this.removeFile = this.removeFile.bind(this);
-    this.submitUpload = this.submitUpload.bind(this);
-    this.viewUploaded = this.viewUploaded.bind(this);
-    this.isFileTypeAllowed = this.isFileTypeAllowed.bind(this);
-    this.isFileNameValid = this.isFileNameValid.bind(this);
-    this.deleteFile = this.deleteFile.bind(this);
-    await this.viewUploaded();
-  };
+  const dispatch = useDispatch();
 
-  isFileTypeAllowed = (extension) => {
+  useEffect(() => {
+    viewUploaded();
+  }, []);
+
+  const isFileTypeAllowed = (extension) => {
     const allowedFileTypes = [
       "jpg",
       "jpeg",
@@ -53,15 +57,13 @@ class UploadComponent extends Component {
     return allowedFileTypes.indexOf(extension) > -1;
   };
 
-  isFileNameValid = (fileName) => {
+  const isFileNameValid = (fileName) => {
     let fileNameRegex = new RegExp("^[0-9a-zA-z-_.]*$");
     return fileNameRegex.test(fileName);
   };
 
-  submitUpload = async () => {
-    const { loadedFiles } = this.state;
-    const { year, stateCode } = this.props;
-    const questionId = this.props.question.id;
+  const submitUpload = async () => {
+    const questionId = question.id;
 
     for (const uploadedFile of loadedFiles) {
       const presignedPostData = await recordFileInDatabaseAndGetUploadUrl(
@@ -77,79 +79,60 @@ class UploadComponent extends Component {
         (e) => e.name !== uploadedFile.name
       );
 
-      this.setState({
-        loadedFiles: filteredStateFiles,
-        blockFileSubmission: true,
-      });
+      setLoadedFiles(filteredStateFiles);
+      setBlockFileSubmission(true);
 
-      if (this.state.displayUploadedFiles === false) {
-        await this.viewUploaded();
+      if (displayUploadedFiles === false) {
+        await viewUploaded();
       } else {
-        await this.retrieveUploadedFiles();
+        await retrieveUploadedFiles();
       }
     }
   };
 
-  viewUploaded = async () => {
-    if (this.state.displayUploadedFiles === false) {
-      this.setState({
-        displayUploadedFiles: true,
-      });
-      await this.retrieveUploadedFiles();
+  const viewUploaded = async () => {
+    if (displayUploadedFiles === false) {
+      setDisplayUploadedFiles(true);
+      await retrieveUploadedFiles();
     } else {
       // *** make sure container for files is NOT displayed
-      this.setState({
-        displayUploadedFiles: false,
-      });
+      setDisplayUploadedFiles(false);
     }
   };
 
-  removeFile = (evt) => {
-    const { loadedFiles } = this.state;
-
+  const removeFile = (evt) => {
     const filteredStateFiles = loadedFiles.filter(
       (e) => e.name !== evt.target.name
     );
-
-    this.setState({
-      loadedFiles: filteredStateFiles,
-    });
+    setLoadedFiles(filteredStateFiles);
   };
 
-  downloadFile = async (fileId) => {
-    const { year, stateCode } = this.props;
+  const downloadFile = async (fileId) => {
     window.location.href = await getFileDownloadUrl(year, stateCode, fileId);
   };
 
-  retrieveUploadedFiles = async () => {
-    const questionId = this.props.question.id;
-    const { year, stateCode } = this.props;
+  const retrieveUploadedFiles = async () => {
+    const questionId = question.id;
 
-    this.setState({
-      uploadedFilesRetrieved: false,
-    });
+    setUploadedFilesRetrieved(false);
 
     const uploadedFiles = await getUploadedFiles(year, stateCode, questionId);
     // *** hide the loading preloader
-    this.setState({
-      uploadedFilesRetrieved: true,
-      uploadedFiles: uploadedFiles,
-    });
+    setUploadedFilesRetrieved(true);
+    setUploadedFiles(uploadedFiles);
   };
 
-  deleteFile = async (fileId) => {
-    const { year, stateCode } = this.props;
-
+  const deleteFile = async (fileId) => {
     await deleteUploadedFile(year, stateCode, fileId);
 
-    await this.retrieveUploadedFiles();
+    await retrieveUploadedFiles();
   };
 
   /*
    * TODO: when one file errors, the others are loaded but the error stays
    * to duplicate: try loading all 9
    */
-  validateFileByExtension = (event) => {
+  const validateFileByExtension = (event) => {
     if (event.target.files.length > 0) {
       const filesArray = event.target.files; // All files selected by a user
       const filePayload = [];
@@ -161,8 +144,8 @@ class UploadComponent extends Component {
         const uploadName = file.name;
         const mediaSize = file.size / 1024 / 1024;
         const mediaExtension = uploadName.split(".").pop();
-        const fileTypeAllowed = this.isFileTypeAllowed(mediaExtension);
-        const fileNameInvalid = !this.isFileNameValid(uploadName);
+        const fileTypeAllowed = isFileTypeAllowed(mediaExtension);
+        const fileNameInvalid = !isFileNameValid(uploadName);
 
         if (fileTypeAllowed === true) {
           if (fileNameInvalid === true) {
@@ -182,168 +165,129 @@ class UploadComponent extends Component {
           );
         }
       }
-
-      const { loadedFiles } = this.state;
-
-      this.setState({
-        inputErrors: errorString || null,
-        loadedFiles: loadedFiles
-          ? [...loadedFiles, ...filePayload]
-          : [...filePayload],
-        blockFileSubmission: false,
-      });
+      setInputErrors(errorString || null);
+      setLoadedFiles(
+        loadedFiles ? [...loadedFiles, ...filePayload] : [...filePayload]
+      );
+      setBlockFileSubmission(false);
 
       if (errorString === "") {
-        const { setAnswer } = this.props;
-        setAnswer(event.target.name, filePayload);
+        dispatch(setAnswerEntry(event.target.name, filePayload));
       }
     }
   };
 
-  render() {
-    let submissionsAllowed = false;
-    const { year, stateCode, user, reportStatus } = this.props;
-    if (year && stateCode) {
-      const stateReportStatus = reportStatus[`${stateCode}${year}`];
-      submissionsAllowed =
-        stateReportStatus.status !== REPORT_STATUS.certified &&
-        user.role === AppRoles.STATE_USER;
-    }
-
-    return (
-      <div>
-        <div>
-          <TextField
-            accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
-            className="file_upload"
-            disabled={!submissionsAllowed}
-            errorMessage={this.state.inputErrors}
-            hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)."
-            label="Click Choose Files and make your selection(s) then click Upload to attach your files. Click View Uploaded to see a list of all files attached here."
-            multiple
-            name={this.props.question.id}
-            onChange={this.validateFileByExtension}
-            type="file"
-          />
-        </div>
-
-        {this.state.loadedFiles?.map((file, i) => (
-          <div key={file.name}>
-            <a href={encodeURIComponent(file.name)} download>
-              {" "}
-              {file.name}{" "}
-            </a>
-            <Button
-              data-testid={`unstage-${i}`}
-              name={file.name}
-              onClick={this.removeFile}
-              size="small"
-            >
-              x
-            </Button>
-          </div>
-        ))}
-
-        <Button
-          onClick={this.submitUpload}
-          size="small"
-          disabled={!submissionsAllowed}
-          className=""
-        >
-          Upload
-        </Button>
-
-        <Button
-          onClick={this.viewUploaded}
-          size="small"
-          className="margin-left-1em"
-        >
-          {this.state.displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
-        </Button>
-
-        {this.state.displayUploadedFiles &&
-        this.state.uploadedFiles?.length > 0 ? (
-          <table
-            data-testid="uploadedFilesContainer"
-            key={"uploadedFilesContainer"}
-            summary={
-              this.props.question.label ||
-              "This is a table for the CARTS Application"
-            }
-          >
-            <tbody>
-              {!this.state.uploadedFilesRetrieved ? (
-                <tr>
-                  <td>
-                    <img
-                      // eslint-disable-next-line
-                      src={`/img/bouncing_ball.gif`}
-                      alt="Retrieving uploaded files... Please wait..."
-                    />{" "}
-                    <br />
-                    <br />
-                    Loading... Please wait...
-                  </td>
-                </tr>
-              ) : (
-                this.state.uploadedFiles.map((file) => {
-                  return (
-                    <tr key={file.aws_filename}>
-                      <td>{file.filename}</td>
-                      <td>
-                        <Button
-                          size="small"
-                          onClick={() => this.downloadFile(file.fileId)}
-                        >
-                          Download
-                        </Button>
-                      </td>
-                      <td>
-                        <Button
-                          size="small"
-                          onClick={() => this.deleteFile(file.fileId)}
-                          disabled={!submissionsAllowed}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        ) : null}
-      </div>
-    );
+  let submissionsAllowed = false;
+  if (year && stateCode) {
+    const stateReportStatus = reportStatus[`${stateCode}${year}`];
+    submissionsAllowed =
+      stateReportStatus.status !== REPORT_STATUS.certified &&
+      user.role === AppRoles.STATE_USER;
   }
-}
+
+  return (
+    <div>
+      <div>
+        <TextField
+          accept=".jpg, .png, .docx, .doc, .pdf, .xlsx, .xls, .xlsm"
+          className="file_upload"
+          disabled={!submissionsAllowed}
+          errorMessage={inputErrors}
+          hint="Files must be in one of these formats: PDF, Word, Excel, or a valid image (jpg or png)."
+          label="Click Choose Files and make your selection(s) then click Upload to attach your files. Click View Uploaded to see a list of all files attached here."
+          multiple
+          name={question.id}
+          onChange={validateFileByExtension}
+          type="file"
+        />
+      </div>
+
+      {loadedFiles?.map((file, i) => (
+        <div key={file.name}>
+          <a href={encodeURIComponent(file.name)} download>
+            {file.name}
+          </a>
+          <Button
+            data-testid={`unstage-${i}`}
+            name={file.name}
+            onClick={removeFile}
+            size="small"
+          >
+            x
+          </Button>
+        </div>
+      ))}
+
+      <Button
+        onClick={submitUpload}
+        size="small"
+        disabled={!submissionsAllowed}
+        className=""
+      >
+        Upload
+      </Button>
+
+      <Button onClick={viewUploaded} size="small" className="margin-left-1em">
+        {displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
+      </Button>
+
+      {displayUploadedFiles && uploadedFiles?.length > 0 ? (
+        <table
+          data-testid="uploadedFilesContainer"
+          key={"uploadedFilesContainer"}
+          summary={
+            question.label || "This is a table for the CARTS Application"
+          }
+        >
+          <tbody>
+            {!uploadedFilesRetrieved ? (
+              <tr>
+                <td>
+                  <img
+                    // eslint-disable-next-line
+                    src={`/img/bouncing_ball.gif`}
+                    alt="Retrieving uploaded files... Please wait..."
+                  />
+                  <br />
+                  <br />
+                  Loading... Please wait...
+                </td>
+              </tr>
+            ) : (
+              uploadedFiles.map((file) => {
+                return (
+                  <tr key={file.aws_filename}>
+                    <td>{file.filename}</td>
+                    <td>
+                      <Button
+                        size="small"
+                        onClick={() => downloadFile(file.fileId)}
+                      >
+                        Download
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        size="small"
+                        onClick={() => deleteFile(file.fileId)}
+                        disabled={!submissionsAllowed}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      ) : null}
+    </div>
+  );
+};
 
 UploadComponent.propTypes = {
   question: PropTypes.any,
-  id: PropTypes.any,
 };
 
-const mapStateToProps = (state) => ({
-  USState: state.stateUser.abbr, // Currently this is meaningless dummy data
-  user: state.stateUser.currentUser,
-  year: state.formData[0].contents.section.year,
-  stateCode: state.formData[0].contents.section.state,
-  reportStatus: state.reportStatus,
-});
-
-const mapDispatchToProps = {
-  setAnswer: setAnswerEntry,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UploadComponent);
-
-/*
- * associate with US State
- * meets file validation requirements ( #517 )
- * for audit purposes, save name of user who is saving the file.
- * save to server
- * provide user with status updates - at a minimum "uploading..." and "upload complete".
- * display spinner until file upload is complete (see below for design)
- * provide user with notice if there is an error.
- */
+export default UploadComponent;
