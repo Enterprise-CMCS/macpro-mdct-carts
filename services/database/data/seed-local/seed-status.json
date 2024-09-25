@@ -2,14 +2,6 @@
   {
     "stateId": "AL",
     "status": "in_progress",
-    "year": 2024,
-    "programType": "user",
-    "username": "al@test.com",
-    "lastChanged": "2022-01-04 18:28:18.524133+00"
-  },
-  {
-    "stateId": "AL",
-    "status": "in_progress",
     "year": 2023,
     "programType": "user",
     "username": "al@test.com",
