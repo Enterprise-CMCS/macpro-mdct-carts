@@ -2668,6 +2668,7 @@
                         [
                           { "contents": "Total denials" },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-01')].answer.entry"
                             ]
@@ -2683,6 +2684,7 @@
                         [
                           { "contents": "Denied for procedural reasons" },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-02')].answer.entry"
                             ]
@@ -2698,6 +2700,7 @@
                         [
                           { "contents": "Denied for eligibility reasons" },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-03')].answer.entry"
                             ]
@@ -2713,6 +2716,7 @@
                         [
                           { "contents": "Denials for other reasons" },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-02-04')].answer.entry"
                             ]
@@ -2728,7 +2732,7 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "Number" },
+                        { "mask": "lessThanEleven", "contents": "Number" },
                         { "contents": "Percent" }
                       ]
                     },
@@ -2775,6 +2779,7 @@
                         "type": "fieldset",
                         "questions": [],
                         "fieldset_info": {
+                          "mask": "lessThanEleven",
                           "actions": ["sum"],
                           "targets": [
                             "$..*[?(@ && @.id=='2024-03-c-03-04-a')].answer.entry",
@@ -2828,6 +2833,7 @@
                             "contents": "Children screened for redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-02')].answer.entry"
                             ]
@@ -2845,6 +2851,7 @@
                             "contents": "Children retained after redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-03')].answer.entry"
                             ]
@@ -2862,6 +2869,7 @@
                             "contents": "Children disenrolled after redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-04')].answer.entry"
                             ]
@@ -2877,7 +2885,7 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "Number" },
+                        { "mask": "lessThanEleven", "contents": "Number" },
                         { "contents": "Percent" }
                       ]
                     },
@@ -2895,6 +2903,7 @@
                             "contents": "Children disenrolled after redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-04')].answer.entry"
                             ]
@@ -2912,6 +2921,7 @@
                             "contents": "Children disenrolled for procedural reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-04-a')].answer.entry"
                             ]
@@ -2929,6 +2939,7 @@
                             "contents": "Children disenrolled for eligibility reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-04-b')].answer.entry"
                             ]
@@ -2946,6 +2957,7 @@
                             "contents": "Children disenrolled for other reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-03-04-c')].answer.entry"
                             ]
@@ -2961,7 +2973,7 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "Number" },
+                        { "mask": "lessThanEleven", "contents": "Number" },
                         { "contents": "Percent" }
                       ]
                     },
@@ -3008,6 +3020,7 @@
                         "type": "fieldset",
                         "questions": [],
                         "fieldset_info": {
+                          "mask": "lessThanEleven",
                           "actions": ["sum"],
                           "targets": [
                             "$..*[?(@ && @.id=='2024-03-c-04-04-a')].answer.entry",
@@ -3061,6 +3074,7 @@
                             "contents": "Children screened for redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-02')].answer.entry"
                             ]
@@ -3078,6 +3092,7 @@
                             "contents": "Children retained after redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-03')].answer.entry"
                             ]
@@ -3095,6 +3110,7 @@
                             "contents": "Children disenrolled after redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-04')].answer.entry"
                             ]
@@ -3110,7 +3126,7 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "Number" },
+                        { "mask": "lessThanEleven", "contents": "Number" },
                         { "contents": "Percent" }
                       ]
                     },
@@ -3128,6 +3144,7 @@
                             "contents": "Children disenrolled after redetermination"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-04')].answer.entry"
                             ]
@@ -3145,6 +3162,7 @@
                             "contents": "Children disenrolled for procedural reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-04-a')].answer.entry"
                             ]
@@ -3162,6 +3180,7 @@
                             "contents": "Children disenrolled for eligibility reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-04-b')].answer.entry"
                             ]
@@ -3179,6 +3198,7 @@
                             "contents": "Children disenrolled for other reasons"
                           },
                           {
+                            "mask": "lessThanEleven",
                             "targets": [
                               "$..*[?(@ && @.id=='2024-03-c-04-04-c')].answer.entry"
                             ]
@@ -3194,7 +3214,7 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "Number" },
+                        { "mask": "lessThanEleven", "contents": "Number" },
                         { "contents": "Percent" }
                       ]
                     },
@@ -10414,20 +10434,26 @@
                     "fieldset_info": {
                       "rows": [
                         [
-                          { "contents": "Eligible children" },
                           {
+                            "mask": "lessThanEleven",
+                            "contents": "Eligible children"
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2024-05-a-03-01-a')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2024-05-a-03-01-b')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2024-05-a-03-01-c')].answer.entry"
@@ -10547,20 +10573,26 @@
                     "fieldset_info": {
                       "rows": [
                         [
-                          { "contents": "Eligible children" },
                           {
+                            "mask": "lessThanEleven",
+                            "contents": "Eligible children"
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2024-05-a-04-01-a')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2024-05-a-04-01-b')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2024-05-a-04-01-c')].answer.entry"
