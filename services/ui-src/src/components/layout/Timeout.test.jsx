@@ -4,7 +4,7 @@ import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import { screen, render, fireEvent } from "@testing-library/react";
 import Timeout from "./Timeout";
-import { add, sub } from "date-fns";
+import moment from "moment";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -17,19 +17,19 @@ const mockStore = configureMockStore();
 const store = mockStore({
   stateUser: {
     showTimeout: true,
-    expiresAt: add(Date.now(), { minutes: 5 }),
+    expiresAt: moment().add(5, "minutes"),
   },
 });
 const expiredStore = mockStore({
   stateUser: {
     showTimeout: true,
-    expiresAt: sub(Date.now(), { minutes: 5 }),
+    expiresAt: moment().subtract(5, "minutes"),
   },
 });
 const hiddenStore = mockStore({
   stateUser: {
     showTimeout: false,
-    expiresAt: add(Date.now(), { minutes: 5 }),
+    expiresAt: moment().add(5, "minutes"),
   },
 });
 const timeout = (

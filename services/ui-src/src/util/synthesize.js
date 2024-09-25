@@ -183,21 +183,28 @@ const sum = (values) => {
   return returnValue;
 };
 
-const lookupFMAP = (allStatesData, stateName, stateUserAbbr, fy) => {
+const lookupFMAP = (state, fy) => {
   // if admin and in a print view get state param
   const urlSearchParams = new URLSearchParams(window.location.search);
   const stateFromParams = urlSearchParams.get("state");
 
-  if (allStatesData && (stateName || stateUserAbbr || stateFromParams)) {
+  if (
+    state.allStatesData &&
+    (state.global.stateName || state.stateUser.abbr || stateFromParams)
+  ) {
     let stateData = "";
-    if (stateUserAbbr) {
-      stateData = allStatesData.filter((st) => st.code === stateUserAbbr)[0];
+    if (state.stateUser.abbr) {
+      stateData = state.allStatesData.filter(
+        (st) => st.code === state.stateUser.abbr
+      )[0];
     } else if (stateFromParams) {
-      stateData = allStatesData.filter(
+      stateData = state.allStatesData.filter(
         (st) => st.code.toLowerCase() === stateFromParams.toLowerCase()
       )[0];
     } else {
-      stateData = allStatesData.filter((st) => st.name === stateName)[0];
+      stateData = state.allStatesData.filter(
+        (st) => st.name === state.global.stateName
+      )[0];
     }
     const fmap =
       stateData?.fmapSet.filter((year) => year.fiscalYear === +fy)[0]
@@ -215,20 +222,6 @@ const snakeToCamel = (str) =>
       group.toUpperCase().replace("-", "").replace("_", "")
     );
 
-// returns the state abbreviation for the associated report
-const getStateAbbr = (stateUserAbbr) => {
-  if (stateUserAbbr) return stateUserAbbr;
-  const windowPathName = window.location.pathname;
-  // if admin, grab the state from the URL
-  const stateFromURL = windowPathName.split("/")[3];
-
-  // if admin and in a print view get state param
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const stateFromParams = urlSearchParams.get("state");
-
-  return windowPathName.includes("print") ? stateFromParams : stateFromURL;
-};
-
 /**
  * Retrieve acsSet from state and return for individual state.
  *
@@ -237,20 +230,35 @@ const getStateAbbr = (stateUserAbbr) => {
  * @param {string} acsProperty
  * @returns {string}
  */
-const lookupAcs = (allStatesData, stateUserAbbr, { ffy, acsProperty }) => {
+const lookupAcs = (state, { ffy, acsProperty }) => {
   let returnValue = "Not Available";
   // Support prior lookup syntax in form lookups
   const acsPropQuery = acsProperty.includes("_")
     ? snakeToCamel(acsProperty)
     : acsProperty;
 
-  // if allStatesData is a populated array
-  if (allStatesData?.length > 0) {
-    const stateAbbr = getStateAbbr(stateUserAbbr);
+  // if allStatesData and stateUser are available
+  if (state.allStatesData && state.stateUser) {
+    const windowPathName = window.location.pathname;
+    // if admin, grab the state from the URL
+    const stateFromURL = windowPathName.split("/")[3];
 
-    // Find data for matching state
-    const stateData = allStatesData.find((st) => st.code === stateAbbr);
-    const acs = stateData?.acsSet.find((year) => year.year === +ffy);
+    // if admin and in a print view get state param
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const stateFromParams = urlSearchParams.get("state");
+
+    // Get stateUser state or fallback to the URL, if an admin
+    const stateAbbr =
+      state.stateUser.abbr ||
+      (windowPathName.includes("print") ? stateFromParams : stateFromURL);
+
+    // Filter for only matching state
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+
+    // Filter for matching state from JSON
+    const acs = stateData?.acsSet.filter((year) => year.year === +ffy)[0];
 
     // If acs exists, return the value from the object
     if (acs) {
@@ -266,32 +274,32 @@ const lookupAcs = (allStatesData, stateUserAbbr, { ffy, acsProperty }) => {
 /**
  * Retrieve acsSet from state and return percentage change for 2 given years.
  *
- * @param {object} allStatesData
- * @param {string} stateUserAbbr
+ * @param {string} state
  * @param {string} ffy1
  * @param {string} ffy2
  * @param {string} acsProperty
  * @returns {(string|float)}
  */
-export const compareACS = (
-  allStatesData,
-  stateUserAbbr,
-  { ffy1, ffy2, acsProperty }
-) => {
+export const compareACS = (state, { ffy1, ffy2, acsProperty }) => {
   const percentagePrecision = 2;
   let returnValue = "Not Available";
-  // if allStatesData is a populated array
-  if (allStatesData?.length > 0) {
-    const stateAbbr = getStateAbbr(stateUserAbbr);
-    const stateData = allStatesData.find((st) => st.code === stateAbbr);
+  // if allStatesData and stateUser are available
+  if (state.allStatesData && state.stateUser) {
+    // Get stateUser state
+    const stateAbbr = state.stateUser.abbr;
 
-    // Find the correct year of state data
-    const startACS = stateData?.acsSet.find(
+    // Filter for only matching state
+    const stateData = state.allStatesData.filter(
+      (st) => st.code === stateAbbr
+    )[0];
+
+    // Filter for the correct year of state data
+    const startACS = stateData?.acsSet.filter(
       (year) => year.year === parseInt(ffy1, 10)
-    );
-    const endACS = stateData?.acsSet.find(
+    )[0];
+    const endACS = stateData?.acsSet.filter(
       (year) => year.year === parseInt(ffy2, 10)
-    );
+    )[0];
 
     // If start year and end year of ACS exist, return the calculated value (percent change) from the objects
     if (startACS && endACS) {
@@ -311,12 +319,15 @@ export const compareACS = (
 };
 
 export const lookupChipEnrollments = (
-  chipEnrollments,
+  state,
   { ffy, enrollmentType, index }
 ) => {
   let returnValue = "Not Available";
-  if (chipEnrollments && chipEnrollments.length > 0) {
-    let targetValue = chipEnrollments.find(
+  if (
+    state.enrollmentCounts &&
+    state.enrollmentCounts.chipEnrollments.length > 0
+  ) {
+    let targetValue = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
         enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === index &&
@@ -324,7 +335,7 @@ export const lookupChipEnrollments = (
     );
     // Lookup the primary stat for the past year if missing
     if (!targetValue && index == 1) {
-      targetValue = chipEnrollments.find(
+      targetValue = state.enrollmentCounts.chipEnrollments.find(
         (enrollment) =>
           enrollment.yearToModify == ffy - 1 &&
           enrollment.indexToUpdate === index + 1 &&
@@ -338,20 +349,20 @@ export const lookupChipEnrollments = (
   return returnValue;
 };
 
-export const compareChipEnrollements = (
-  chipEnrollments,
-  { ffy, enrollmentType }
-) => {
+export const compareChipEnrollements = (state, { ffy, enrollmentType }) => {
   let returnValue = "Not Available";
-  if (chipEnrollments && chipEnrollments.length > 0) {
+  if (
+    state.enrollmentCounts &&
+    state.enrollmentCounts.chipEnrollments.length > 0
+  ) {
     // Retrieve Values
-    let oldCount = chipEnrollments.find(
+    let oldCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
         enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === 1 &&
         enrollment.typeOfEnrollment === enrollmentType
     );
-    const newCount = chipEnrollments.find(
+    const newCount = state.enrollmentCounts.chipEnrollments.find(
       (enrollment) =>
         enrollment.yearToModify == ffy &&
         enrollment.indexToUpdate === 2 &&
@@ -362,7 +373,7 @@ export const compareChipEnrollements = (
        * In case this year's data has been sent, but last year's wasn't included
        * we still can look it up as the last year's current value
        */
-      oldCount = chipEnrollments.find(
+      oldCount = state.enrollmentCounts.chipEnrollments.find(
         (enrollment) =>
           enrollment.yearToModify == ffy - 1 &&
           enrollment.indexToUpdate === 2 &&
@@ -384,68 +395,41 @@ export const compareChipEnrollements = (
   return returnValue;
 };
 
-const synthesizeValue = (
-  value,
-  allStatesData,
-  stateName,
-  stateUserAbbr,
-  chipEnrollments,
-  formData
-) => {
+const synthesizeValue = (value, state) => {
   if (value.contents) {
     return value;
   }
 
   if (value.lookupFmapFy) {
-    return {
-      contents: lookupFMAP(
-        allStatesData,
-        stateName,
-        stateUserAbbr,
-        value.lookupFmapFy
-      ),
-    };
+    return { contents: lookupFMAP(state, value.lookupFmapFy) };
   }
 
   if (value.lookupAcs) {
-    return {
-      contents: [lookupAcs(allStatesData, stateUserAbbr, value.lookupAcs)],
-    };
+    return { contents: [lookupAcs(state, value.lookupAcs)] };
   }
 
   if (value.compareACS) {
-    return {
-      contents: [compareACS(allStatesData, stateUserAbbr, value.compareACS)],
-    };
+    return { contents: [compareACS(state, value.compareACS)] };
   }
 
   if (value.lookupChipEnrollments) {
     return {
-      contents: [
-        lookupChipEnrollments(chipEnrollments, value.lookupChipEnrollments),
-      ],
+      contents: [lookupChipEnrollments(state, value.lookupChipEnrollments)],
     };
   }
 
   if (value.compareChipEnrollements) {
     return {
-      contents: [
-        compareChipEnrollements(chipEnrollments, value.compareChipEnrollements),
-      ],
+      contents: [compareChipEnrollements(state, value.compareChipEnrollements)],
     };
   }
 
   if (value.targets) {
     const targets = value.targets.map((target) => {
       if (typeof target === "object" && target.lookupFmapFy) {
-        return lookupFMAP(
-          allStatesData,
-          stateName,
-          stateUserAbbr,
-          target.lookupFmapFy
-        );
+        return lookupFMAP(state, target.lookupFmapFy);
       }
-      return jsonpath.query(formData, target)[0];
+      return jsonpath.query(state, target)[0];
     });
 
     if (value.actions) {

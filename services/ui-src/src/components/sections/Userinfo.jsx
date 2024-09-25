@@ -1,8 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const UserInfo = () => {
-  const currentUser = useSelector((state) => state.stateUser.currentUser);
+const Userinfo = ({ currentUser }) => {
   const info = Object.entries(currentUser).map(([key, value]) => {
     if (key === "state") {
       return (
@@ -26,4 +26,12 @@ const UserInfo = () => {
   );
 };
 
-export default UserInfo;
+Userinfo.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  currentUser: state.stateUser.currentUser,
+});
+
+export default connect(mapStateToProps)(Userinfo);

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector, shallowEqual } from "react-redux";
-// components
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-//types
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { AppRoles } from "../../types";
 
 /**
@@ -13,37 +12,20 @@ import { AppRoles } from "../../types";
  * @returns {JSX.Element}
  * @constructor
  */
-const FormActions = () => {
-  const [currentUser, formYear] = useSelector(
-    (state) => [state.stateUser.currentUser, state.global.formYear],
-    shallowEqual
-  );
-
+const FormActions = (props) => {
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
+  const { currentUser, formYear } = props;
 
   // Get section IDs and subsection IDs for printing single section
-  let searchParams = "";
-  let sectionId = "";
+  let searchParams = document.location.pathname
+    .toString()
+    .replace("/sections/", "")
+    .replace(formYear + "/", "");
 
-  if (currentUser.role === AppRoles.CMS_ADMIN) {
-    const stateId = window.location.href.split("/")[5];
-    searchParams = document.location.pathname
-      .toString()
-      .replace(`views/sections/${stateId}/`, "")
-      .replace(formYear + "/", "");
-
-    sectionId = formYear + "-" + searchParams.substring(1, 3);
-  } else {
-    searchParams = document.location.pathname
-      .toString()
-      .replace("/sections/", "")
-      .replace(formYear + "/", "");
-
-    sectionId = formYear + "-" + searchParams.substring(0, 2);
-  }
-
+  const sectionId = formYear + "-" + searchParams.substring(0, 2);
   let subsectionId = sectionId + "-";
+
   if (sectionId.slice(-2) === "03") {
     subsectionId += searchParams.slice(-1);
   } else {
@@ -181,4 +163,15 @@ const FormActions = () => {
   );
 };
 
-export default FormActions;
+FormActions.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  formYear: PropTypes.number.isRequired,
+};
+
+export const mapStateToProps = (state) => ({
+  currentUser: state.stateUser.currentUser,
+  formYear: state.global.formYear,
+  printType: state.global.printType,
+});
+
+export default connect(mapStateToProps)(FormActions);

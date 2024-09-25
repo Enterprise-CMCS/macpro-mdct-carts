@@ -88,15 +88,7 @@ describe("shouldDisplay", () => {
       conditional_display: null,
       show_if_state_program_type_in: ["a different program"],
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -123,15 +115,7 @@ describe("shouldDisplay", () => {
       conditional_display: null,
       show_if_state_program_type_in: ["test program"],
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -159,15 +143,7 @@ describe("shouldDisplay", () => {
       conditional_display: null,
       show_if_state_program_type_in: ["test program"],
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
     expect(selectFragmentById).toHaveBeenCalledTimes(1);
   });
@@ -196,15 +172,7 @@ describe("shouldDisplay", () => {
       conditional_display: null,
       show_if_state_program_type_in: ["test program"],
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
     expect(selectFragmentById).toHaveBeenCalledTimes(1);
   });
@@ -234,15 +202,7 @@ describe("shouldDisplay", () => {
       conditional_display: null,
       show_if_state_program_type_in: ["test program"],
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
     expect(selectFragmentById).toHaveBeenCalledTimes(2);
   });
@@ -254,10 +214,8 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-      formData: {
-        foo: {
-          bar: "baz",
-        },
+      foo: {
+        bar: "baz",
       },
     };
     const context = {
@@ -270,15 +228,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      null,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -289,10 +239,8 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-      formData: {
-        foo: {
-          bar: "quux",
-        },
+      foo: {
+        bar: "quux",
       },
     };
     const context = {
@@ -305,15 +253,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -324,13 +264,11 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-      formData: {
-        foo: {
-          // All of these are in values.interactive
-          bar: "baz",
-          bbr: "bbz",
-          bcr: "baz",
-        },
+      foo: {
+        // All of these are in values.interactive
+        bar: "baz",
+        bbr: "bbz",
+        bcr: "baz",
       },
     };
     const context = {
@@ -343,15 +281,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -362,13 +292,11 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-      formData: {
-        foo: {
-          // One of these is not in values.interactive
-          bar: "baz",
-          bbr: "bbz",
-          bcr: "quux",
-        },
+      foo: {
+        // One of these is not in values.interactive
+        bar: "baz",
+        bbr: "bbz",
+        bcr: "quux",
       },
     };
     const context = {
@@ -381,15 +309,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -400,11 +320,9 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-      formData: {
-        foo: {
-          // At least one of these is in values.interactive
-          bar: ["baz", "quux"],
-        },
+      foo: {
+        // At least one of these is in values.interactive
+        bar: ["baz", "quux"],
       },
     };
     const context = {
@@ -417,15 +335,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 
@@ -436,11 +346,9 @@ describe("shouldDisplay", () => {
           role: "test role",
         },
       },
-      formData: {
-        foo: {
-          // None of these are in values.interactive
-          bar: ["corge", "quux"],
-        },
+      foo: {
+        // None of these are in values.interactive
+        bar: ["corge", "quux"],
       },
     };
     const context = {
@@ -453,15 +361,7 @@ describe("shouldDisplay", () => {
         },
       },
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      state.formData,
-      state.reportStatus,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(false);
   });
 
@@ -476,15 +376,7 @@ describe("shouldDisplay", () => {
     const context = {
       conditional_display: {},
     };
-    const result = shouldDisplay(
-      state.stateUser.currentUser.role,
-      null,
-      null,
-      null,
-      null,
-      null,
-      context
-    );
+    const result = shouldDisplay(state, context);
     expect(result).toBe(true);
   });
 });

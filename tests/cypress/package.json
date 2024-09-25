@@ -25,5 +25,8 @@
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true,
     "stepDefinitions": "tests"
+  },
+  "dependencies": {
+    "cypress-tags": "^1.1.2"
   }
 }

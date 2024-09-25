@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Integer from "./Integer";
+import { Integer } from "./Integer";
 
 const Money = ({ ...props }) => {
   return <Integer {...props} inputMode="currency" mask="currency" />;

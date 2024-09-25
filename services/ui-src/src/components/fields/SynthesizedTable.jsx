@@ -1,40 +1,9 @@
 import React from "react";
-import { useSelector, shallowEqual } from "react-redux";
-//utils
-import synthesizeValue from "../../util/synthesize";
-//types
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import synthesizeValue from "../../util/synthesize";
 
-const SynthesizedTable = ({ question, tableTitle }) => {
-  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
-    useSelector(
-      (state) => [
-        state.allStatesData,
-        state.global.stateName,
-        state.stateUser.abbr,
-        state.enrollmentCounts.chipEnrollments,
-        state.formData,
-      ],
-      shallowEqual
-    );
-
-  const rows = question.fieldset_info.rows.map((row) =>
-    row.map((cell) => {
-      const value = synthesizeValue(
-        cell,
-        allStatesData,
-        stateName,
-        stateUserAbbr,
-        chipEnrollments,
-        formData
-      );
-
-      return typeof value.contents === "number" && Number.isNaN(value.contents)
-        ? { contents: "Not Available" }
-        : value;
-    })
-  );
-
+const SynthesizedTable = ({ rows, question, tableTitle }) => {
   return (
     <div className="synthesized-table ds-u-margin-top--2">
       <table
@@ -91,7 +60,24 @@ const SynthesizedTable = ({ question, tableTitle }) => {
 };
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
-  tableTitle: PropTypes.string.isOptional,
+  rows: PropTypes.array.isRequired,
 };
 
-export default SynthesizedTable;
+const mapStateToProps = (state, { question }) => {
+  const rows = question.fieldset_info.rows.map((row) =>
+    row.map((cell) => {
+      const value = synthesizeValue(cell, state);
+
+      return typeof value.contents === "number" && Number.isNaN(value.contents)
+        ? { contents: "Not Available" }
+        : value;
+    })
+  );
+
+  return { rows };
+};
+
+const ConnectedSynthesizedTable = connect(mapStateToProps)(SynthesizedTable);
+
+export { ConnectedSynthesizedTable as SynthesizedTable };
+export default ConnectedSynthesizedTable;

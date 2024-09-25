@@ -21,7 +21,7 @@ export const print = handler(async (event, _context) => {
   if (DOMPurify.isSupported) {
     sanitizedHtml = DOMPurify.sanitize(rawHtml, {
       WHOLE_DOCUMENT: true,
-      ADD_TAGS: ["head", "link", "base"],
+      ADD_TAGS: ["head"],
     });
   }
   if (!sanitizedHtml) {
@@ -39,7 +39,7 @@ export const print = handler(async (event, _context) => {
       document_content: rawHtml,
       type: "pdf" as const,
       // This tag differentiates QMR and CARTS requests in DocRaptor's logs.
-      tag: `CARTS ${stage}`,
+      tag: "CARTS",
       test: stage !== "production",
       prince_options: {
         profile: "PDF/UA-1" as const,

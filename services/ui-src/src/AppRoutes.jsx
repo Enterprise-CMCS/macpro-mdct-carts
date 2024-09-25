@@ -5,7 +5,7 @@ import Home from "./components/layout/Home";
 import Footer from "./components/layout/Footer";
 import Print from "./components/sections/Print";
 import Spinner from "./components/utils/Spinner";
-import UserInfo from "./components/sections/UserInfo";
+import Userinfo from "./components/sections/Userinfo";
 import UserProfile from "./components/sections/UserProfile";
 import { LocalLogins } from "./components/sections/login/LocalLogins";
 import { useUser } from "./hooks/authHooks";
@@ -45,7 +45,7 @@ const AppRoutes = () => {
           <Home role={user?.userRole || ""} />
           <Timeout />
           {/* These routes are available to everyone, so define them here */}
-          <Route exact path="/userinfo" component={UserInfo} />
+          <Route exact path="/userinfo" component={Userinfo} />
           <Route path="/user/profile" component={UserProfile} />
           <Route path="/print" component={Print} />
           <Route path="/get-help" component={GetHelp} />

@@ -4888,7 +4888,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -5639,7 +5640,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -5734,7 +5736,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -5829,7 +5832,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -5925,7 +5929,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -6020,7 +6025,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -6122,7 +6128,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -6217,7 +6224,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -6312,7 +6320,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -6408,7 +6417,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {
@@ -6503,7 +6513,8 @@
                         "type": "integer",
                         "label": "Total for all ages (0-16)",
                         "answer": {
-                          "entry": null
+                          "entry": null,
+                          "readonly": true
                         },
                         "context_data": {
                           "conditional_display": {

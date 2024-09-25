@@ -1,69 +1,114 @@
-import React, { useEffect, useState } from "react";
-//components
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { TextField } from "@cmsgov/design-system";
-//types
 import PropTypes from "prop-types";
 
-const DateRange = ({ onChange, question, year, ...props }) => {
-  const [endRangeErr, setEndRangeErr] = useState(false);
-  const [monthStart, setMonthStart] = useState("");
-  const [monthEnd, setMonthEnd] = useState("");
-  const [yearStart, setYearStart] = useState("");
-  const [yearEnd, setYearEnd] = useState("");
-  const [startErrorMessage, setStartErrorMessage] = useState([]);
-  const [endErrorMessage, setEndErrorMessage] = useState([]);
+/*
+ * This method checks that month input is appropriate:
+ * (not empty, max of 2 digits, no letters, between 1 & 12)
+ */
+const validateMonth = (input) => {
+  let returnString;
 
-  useEffect(() => {
+  // Handles an empty input field
+  if (input === "") {
+    returnString = "Month field cannot be empty";
+  }
+
+  // Prevents users from putting in more than 2 characters
+  if (input.length > 2) {
+    returnString = "Month length must not exceed 2";
+  }
+
+  // Checks for non-numeric characters
+  if (Number.isNaN(parseInt(input, 10)) || /^\d+$/.test(input) === false) {
+    returnString = "Please enter a number";
+  }
+
+  if (parseInt(input, 10) < 1 || parseInt(input, 10) > 12) {
+    // Checks that the month value is within a normal range
+    returnString = "Please enter a valid month number";
+  }
+  return returnString;
+};
+
+class DateRange extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      endRangeErr: false,
+      monthStart: "",
+      yearStart: "",
+      monthEnd: "",
+      yearEnd: "",
+      startErrorMessage: [],
+      endErrorMessage: [],
+    };
+    this.handleInput = this.handleInput.bind(this);
+
+    this.checkChronology = this.checkChronology.bind(this);
+
+    this.validateStartInput = this.validateStartInput.bind(this);
+    this.validateEndInput = this.validateEndInput.bind(this);
+
+    this.validateYear = this.validateYear.bind(this);
+  }
+
+  componentDidMount() {
     // Stored value example: ['2019-11-01', '2020-09-01']
+    const { question } = this.props;
     const storedValue = question.answer.entry;
+
     if (storedValue) {
       // Split each date string into an array and extract month and year variables with destructuring
       const [yearStartValue, monthStartValue] = storedValue[0].split("-"); // ie: '2019' and '11'
       const [yearEndValue, monthEndValue] = storedValue[1].split("-"); // ie: '2020' and '09'
 
-      setMonthStart(monthStartValue ?? "");
-      setMonthEnd(monthEndValue ?? "");
-      setYearStart(yearStartValue ?? "");
-      setYearEnd(yearEndValue ?? "");
+      this.setState({
+        monthStart: monthStartValue ?? "",
+        monthEnd: monthEndValue ?? "",
+        yearStart: yearStartValue ?? "",
+        yearEnd: yearEndValue ?? "",
+      });
     } else {
-      setMonthStart("");
-      setMonthEnd("");
-      setYearStart("");
-      setYearEnd("");
+      this.setState({
+        monthStart: "",
+        monthEnd: "",
+        yearStart: "",
+        yearEnd: "",
+      });
     }
-  }, []);
-
-  useEffect(() => {
-    checkChronology();
-  }, [startErrorMessage, endErrorMessage]);
+  }
 
   // This method checks all 4 fields to confirm that the start range is before the end range
-  const checkChronology = () => {
+  checkChronology() {
+    const { onChange, question } = this.props;
+    const { yearStart, yearEnd, startErrorMessage, endErrorMessage } =
+      this.state;
     const errorCheck = [...startErrorMessage, ...endErrorMessage]; // Array of all input errors in state
 
-    let monthS = monthStart;
-    let monthE = monthEnd;
-    let yearS = yearStart;
-    let yearE = yearEnd;
-
+    let { monthStart, monthEnd } = this.state;
     let chronologyError;
 
     // Ensure that all 4 fields are filled in
-
-    if (monthS && monthE && yearS && yearE) {
+    if (monthStart && monthEnd && yearStart && yearEnd) {
       // Turn the input into date objects for easy comparison
-      const startDate = new Date(yearS, monthS - 1);
-      const endDate = new Date(yearE, monthE - 1);
 
-      monthS = monthS.padStart(2, "0");
-      monthE = monthE.padStart(2, "0");
+      const startDate = new Date(yearStart, monthStart - 1);
+      const endDate = new Date(yearEnd, monthEnd - 1);
+
+      monthStart = monthStart.padStart(2, "0");
+      monthEnd = monthEnd.padStart(2, "0");
 
       /*
        * The entry value for daterange must be sent to the server as an array of two strings
        * The format must be an ISO 8601 Date format.
        * Because we are only asking for month/year, the last digit is a placeholder of '01'
        */
-      const payload = [`${yearS}-${monthS}-01`, `${yearE}-${monthE}-01`];
+      const payload = [
+        `${yearStart}-${monthStart}-01`,
+        `${yearEnd}-${monthEnd}-01`,
+      ];
 
       if (startDate > endDate) {
         chronologyError = true;
@@ -74,44 +119,20 @@ const DateRange = ({ onChange, question, year, ...props }) => {
           onChange([question.id, payload]); // Chronology is correct, no errors present, send data to redux
         }
       }
-      setEndRangeErr(chronologyError);
-    }
-  };
 
-  /*
-   * This method checks that month input is appropriate:
-   * (not empty, max of 2 digits, no letters, between 1 & 12)
-   */
-  const validateMonth = (input) => {
-    let returnString;
-
-    // Handles an empty input field
-    if (input === "") {
-      returnString = "Month field cannot be empty";
+      this.setState({
+        endRangeErr: chronologyError,
+      });
     }
-
-    // Prevents users from putting in more than 2 characters
-    if (input.length > 2) {
-      returnString = "Month length must not exceed 2";
-    }
-
-    // Checks for non-numeric characters
-    if (Number.isNaN(parseInt(input, 10)) || /^\d+$/.test(input) === false) {
-      returnString = "Please enter a number";
-    }
-
-    if (parseInt(input, 10) < 1 || parseInt(input, 10) > 12) {
-      // Checks that the month value is within a normal range
-      returnString = "Please enter a valid month number";
-    }
-    return returnString;
-  };
+  }
 
   /*
    * This method checks that year input is appropriate
    * (not empty, max of 4 digits, no letters, reasonable year)
    */
-  const validateYear = (input) => {
+  validateYear(input) {
+    const { year } = this.props;
+
     let returnString;
     // Handles an empty input field
     if (input === "") {
@@ -139,143 +160,163 @@ const DateRange = ({ onChange, question, year, ...props }) => {
       returnString = "Please enter a valid Year";
     }
     return returnString;
-  };
+  }
 
   // This method checks the first month/year input range and sets any validation errors to state
-  const validateStartInput = () => {
+  validateStartInput() {
     const startErrorArray = [];
 
-    startErrorArray.push(validateMonth(monthStart));
-    startErrorArray.push(validateYear(yearStart));
+    const { monthStart, yearStart } = this.state;
 
-    setStartErrorMessage(startErrorArray);
-  };
+    startErrorArray.push(validateMonth(monthStart));
+    startErrorArray.push(this.validateYear(yearStart));
+
+    this.setState(
+      {
+        startErrorMessage: startErrorArray,
+      },
+      () => {
+        this.checkChronology();
+      }
+    );
+  }
 
   // This method checks the second month/year input range and sets any validation errors to state
-  const validateEndInput = () => {
+  validateEndInput() {
     const endErrorArray = [];
 
-    endErrorArray.push(validateMonth(monthEnd));
-    endErrorArray.push(validateYear(yearEnd));
+    const { monthEnd, yearEnd } = this.state;
 
-    setEndErrorMessage(endErrorArray);
-  };
+    endErrorArray.push(validateMonth(monthEnd));
+    endErrorArray.push(this.validateYear(yearEnd));
+
+    this.setState(
+      {
+        endErrorMessage: endErrorArray,
+      },
+      () => {
+        this.checkChronology();
+      }
+    );
+  }
 
   // This method takes all user input and sets it to state
-  const handleInput = (event) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "monthStart":
-        setMonthStart(value || "");
-        break;
-      case "monthEnd":
-        setMonthEnd(value || "");
-        break;
-      case "yearStart":
-        setYearStart(value || "");
-        break;
-      case "yearEnd":
-        setYearEnd(value || "");
-        break;
-      default:
-        throw new Error(
-          "Input name not supported. Unable to update date input!"
-        );
-    }
-  };
+  handleInput(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value ? evt.target.value : "",
+    });
+  }
 
-  return (
-    <div className="date-range" data-test="component-date-range">
-      <div className="date-range-start">
-        <span className="question-inner-header span-pdf-no-bookmark">
-          {question.answer.labels[0] ? question.answer.labels[0] : "Start"}
-        </span>
-        <div className="ds-c-field__hint" aria-label="Date range hint">
-          mm/yyyy
+  // Store input values temporarily via input refs
+
+  render() {
+    const { question } = this.props;
+    const {
+      startErrorMessage,
+      endErrorMessage,
+      endRangeErr,
+      monthStart,
+      monthEnd,
+      yearStart,
+      yearEnd,
+    } = this.state;
+
+    return (
+      <div className="date-range" data-test="component-date-range">
+        <div className="date-range-start">
+          <span className="question-inner-header span-pdf-no-bookmark">
+            {question.answer.labels[0] ? question.answer.labels[0] : "Start"}
+          </span>
+          <div className="ds-c-field__hint" aria-label="Date range hint">
+            {" "}
+            mm/yyyy
+          </div>
+          <div className="errors">
+            {startErrorMessage.map((e) => {
+              if (e !== undefined) {
+                return <div key={crypto.randomUUID()}> {e} </div>;
+              }
+              return false;
+            })}
+          </div>
+          <div className="date-range-start-wrapper">
+            <TextField
+              className="ds-c-field--small"
+              data-test="component-daterange-monthstart"
+              name="monthStart"
+              numeric
+              label="range start month"
+              onChange={this.handleInput}
+              onBlur={this.validateStartInput}
+              value={monthStart}
+              disabled={this.props.disabled}
+            />
+            <div className="ds-c-datefield__separator">/</div>
+            <TextField
+              className="ds-c-field--small"
+              name="yearStart"
+              label="range start year"
+              onChange={this.handleInput}
+              onBlur={this.validateStartInput}
+              numeric
+              value={yearStart}
+              disabled={this.props.disabled}
+            />
+          </div>
         </div>
-        <div className="errors">
-          {startErrorMessage.map((e) => {
-            if (e !== undefined) {
-              return <div key={crypto.randomUUID()}> {e} </div>;
-            }
-            return false;
-          })}
-        </div>
-        <div className="date-range-start-wrapper">
-          <TextField
-            className="ds-c-field--small"
-            data-test="component-daterange-monthstart"
-            name="monthStart"
-            numeric
-            label="range start month"
-            onChange={handleInput}
-            onBlur={validateStartInput}
-            value={monthStart}
-            disabled={props.disabled}
-          />
-          <div className="ds-c-datefield__separator">/</div>
-          <TextField
-            className="ds-c-field--small"
-            name="yearStart"
-            label="range start year"
-            onChange={handleInput}
-            onBlur={validateStartInput}
-            numeric
-            value={yearStart}
-            disabled={props.disabled}
-          />
+
+        <div className="date-range-start">
+          <h3 className="question-inner-header">
+            {" "}
+            {question.answer.labels[1] ? question.answer.labels[1] : "End"}{" "}
+          </h3>
+          <div className="ds-c-field__hint" aria-label="Date range hint">
+            {" "}
+            mm/yyyy
+          </div>
+          <div className="errors">
+            {endErrorMessage.map((e) => {
+              if (e !== undefined) {
+                return <div key={crypto.randomUUID()}> {e} </div>;
+              }
+              return false;
+            })}
+          </div>
+
+          <div className="date-range-end-wrapper">
+            <TextField
+              className="ds-c-field--small"
+              name="monthEnd"
+              numeric
+              label="range end month"
+              onChange={this.handleInput}
+              onBlur={this.validateEndInput}
+              value={monthEnd}
+              disabled={this.props.disabled}
+            />
+            <div className="ds-c-datefield__separator">/</div>
+
+            <TextField
+              className="ds-c-field--small"
+              name="yearEnd"
+              label="range end year"
+              onChange={this.handleInput}
+              onBlur={this.validateEndInput}
+              numeric
+              value={yearEnd}
+              disabled={this.props.disabled}
+            />
+          </div>
+          <div className="errors">
+            {endRangeErr === true ? (
+              <div> End date must come after start date</div>
+            ) : null}
+          </div>
         </div>
       </div>
-
-      <div className="date-range-start">
-        <h3 className="question-inner-header">
-          {question.answer.labels[1] ? question.answer.labels[1] : "End"}{" "}
-        </h3>
-        <div className="ds-c-field__hint" aria-label="Date range hint">
-          mm/yyyy
-        </div>
-        <div className="errors">
-          {endErrorMessage.map((e) => {
-            if (e !== undefined) {
-              return <div key={crypto.randomUUID()}> {e} </div>;
-            }
-            return false;
-          })}
-        </div>
-
-        <div className="date-range-end-wrapper">
-          <TextField
-            className="ds-c-field--small"
-            name="monthEnd"
-            numeric
-            label="range end month"
-            onChange={handleInput}
-            onBlur={validateEndInput}
-            value={monthEnd}
-            disabled={props.disabled}
-          />
-          <div className="ds-c-datefield__separator">/</div>
-
-          <TextField
-            className="ds-c-field--small"
-            name="yearEnd"
-            label="range end year"
-            onChange={handleInput}
-            onBlur={validateEndInput}
-            numeric
-            value={yearEnd}
-            disabled={props.disabled}
-          />
-        </div>
-        <div className="errors">
-          {endRangeErr === true ? (
-            <div>End date must come after start date</div>
-          ) : null}
-        </div>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 DateRange.propTypes = {
   question: PropTypes.object.isRequired,
@@ -287,4 +328,8 @@ DateRange.defaultProps = {
   year: new Date().getFullYear().toString(), // Returns the current year as a default
 };
 
-export default DateRange;
+const mapStateToProps = (state) => ({
+  year: state.global.formYear,
+});
+
+export default connect(mapStateToProps)(DateRange);

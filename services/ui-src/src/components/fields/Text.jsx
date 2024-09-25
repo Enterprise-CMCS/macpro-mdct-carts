@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, shallowEqual } from "react-redux";
-//components
-import { TextField } from "@cmsgov/design-system";
-//utils
-import { generateQuestionNumber } from "../utils/helperFunctions";
-// types
 import PropTypes from "prop-types";
+import { TextField } from "@cmsgov/design-system";
+import { connect } from "react-redux";
+import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const Text = ({ question, ...props }) => {
+const Text = ({ question, state, lastYearFormData, ...props }) => {
   const [prevYearValue, setPrevYearValue] = useState();
-  const [state, lastYearFormData] = useSelector(
-    (state) => [
-      state.formData[0].contents?.section?.state,
-      state.lastYearFormData,
-    ],
-    shallowEqual
-  );
 
   const getPrevYearValue = async () => {
     // Create array from id
@@ -24,7 +14,7 @@ const Text = ({ question, ...props }) => {
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
 
-    // If question is on an odd year form, section 3c, part 5 or 6, and question 9
+    // If question is Part 6, section 3c, question 9
     if (
       shouldGetPriorYear &&
       splitID[1] === "03" &&
@@ -98,7 +88,16 @@ const Text = ({ question, ...props }) => {
 };
 Text.propTypes = {
   question: PropTypes.object.isRequired,
+  state: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  year: PropTypes.number.isRequired,
+  lastYearFormData: PropTypes.array.isRequired,
 };
 
-export default Text;
+const mapState = (state) => ({
+  state: state.formData[0].contents?.section?.state,
+  year: state.formData[0].contents.section.year,
+  lastYearFormData: state.lastYearFormData,
+});
+
+export default connect(mapState)(Text);

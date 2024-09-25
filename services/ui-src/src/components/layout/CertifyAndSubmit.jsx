@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import moment from "moment";
+import PropTypes from "prop-types";
 import { Button, Dialog } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
-import { format } from "date-fns";
-// components
-import PageInfo from "./PageInfo";
-import FormActions from "./FormActions";
-// utils
 import { loadForm } from "../../actions/initial";
 import { certifyAndSubmit } from "../../actions/certify";
+import PageInfo from "./PageInfo";
 import {
   getCurrentReportStatus,
   selectIsFormEditable,
 } from "../../store/selectors";
-import useModal from "../../hooks/useModal";
-// types
+import FormActions from "./FormActions";
 import { AppRoles } from "../../types";
-import PropTypes from "prop-types";
+import useModal from "../../hooks/useModal";
 
 const Submit = ({ openCertifyConfirmation }) => (
   <>
@@ -43,25 +40,15 @@ const Submit = ({ openCertifyConfirmation }) => (
 
 Submit.propTypes = { openCertifyConfirmation: PropTypes.func.isRequired };
 
-const Thanks = ({ done: doneDispatch, submitterUsername }) => {
-  const lastSave = useSelector(
-    (state) =>
-      getCurrentReportStatus(
-        state.reportStatus,
-        state.formData,
-        state.stateUser,
-        state.global.formYear
-      ).lastChanged
-  );
-  const formattedDate = lastSave ? format(lastSave, "PPP") : "";
-  const formattedTime = lastSave ? format(lastSave, "p") : "";
+const Thanks = ({ done: doneDispatch, lastSave, user }) => {
   return (
     <>
       <h3 data-testid={"certifyThankYou"}>
         Thank you for submitting your CARTS report!
       </h3>
       <p>
-        Submitted on {formattedDate} at {formattedTime} by {submitterUsername}.
+        Submitted on {lastSave.format("MMMM Do, YYYY")} at{" "}
+        {lastSave.format("h:mm A")} by {user}.
       </p>
       <h3>What to expect next</h3>
       <p>You‘ll hear from CMS if they have any questions about your report.</p>
@@ -74,39 +61,28 @@ const Thanks = ({ done: doneDispatch, submitterUsername }) => {
 
 Thanks.propTypes = {
   done: PropTypes.func.isRequired,
-  submitterUsername: PropTypes.string.isRequired,
+  lastSave: PropTypes.object.isRequired,
+  user: PropTypes.string.isRequired,
 };
 
-const CertifyAndSubmit = () => {
+const CertifyAndSubmit = ({
+  certifyAndSubmit: certifyAction,
+  isCertified,
+  lastSave,
+  user,
+  currentUserRole,
+  state,
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isShowing, toggleModal } = useModal();
-  const [isCertified, submitterUsername, currentUserRole, state] = useSelector(
-    (state) => [
-      !selectIsFormEditable(
-        state.reportStatus,
-        state.formData,
-        state.stateUser,
-        state.global.formYear
-      ),
-      getCurrentReportStatus(
-        state.reportStatus,
-        state.formData,
-        state.stateUser,
-        state.global.formYear
-      ).username,
-      state.stateUser.currentUser.role,
-      state.stateUser.abbr,
-    ],
-    shallowEqual
-  );
 
   useEffect(() => {
     dispatch(loadForm(state));
-  }, [submitterUsername]);
+  }, [user]);
 
   const confirmCertifyAction = () => {
-    dispatch(certifyAndSubmit());
+    certifyAction();
     toggleModal();
   };
 
@@ -149,7 +125,7 @@ const CertifyAndSubmit = () => {
         <PageInfo />
         {currentUserRole === AppRoles.STATE_USER && <h2>Certify and Submit</h2>}
         {isCertified ? (
-          <Thanks done={doneClick} submitterUsername={submitterUsername} />
+          <Thanks done={doneClick} lastSave={lastSave} user={user} />
         ) : (
           <Submit openCertifyConfirmation={toggleModal} />
         )}
@@ -159,4 +135,38 @@ const CertifyAndSubmit = () => {
   );
 };
 
-export default CertifyAndSubmit;
+CertifyAndSubmit.propTypes = {
+  certifyAndSubmit: PropTypes.func.isRequired,
+  isCertified: PropTypes.bool.isRequired,
+  lastSave: PropTypes.object.isRequired,
+  user: PropTypes.oneOf([PropTypes.string, null]),
+  currentUserRole: PropTypes.string.isRequired,
+};
+
+CertifyAndSubmit.defaultProps = {
+  user: null,
+};
+
+const mapState = (state) => ({
+  isCertified: !selectIsFormEditable(state),
+  lastSave: moment(
+    getCurrentReportStatus(
+      state.reportStatus,
+      state.formData,
+      state.stateUser,
+      state.global
+    ).lastChanged
+  ),
+  user: getCurrentReportStatus(
+    state.reportStatus,
+    state.formData,
+    state.stateUser,
+    state.global
+  ).username,
+  currentUserRole: state.stateUser.currentUser.role,
+  state: state.stateUser.abbr,
+});
+
+const mapDispatch = { certifyAndSubmit };
+
+export default connect(mapState, mapDispatch)(CertifyAndSubmit);
